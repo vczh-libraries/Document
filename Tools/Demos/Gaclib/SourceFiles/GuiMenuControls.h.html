@@ -171,6 +171,8 @@ MenuButton
 
 				<div class="token cpp_keyword ">using</div> <div class="def" id="NI$vl::presentation::controls::GuiMenuButton::IEventHandler"><div><div class="token cpp_type">IEventHandler</div></div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions'], [], [])">compositions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions::IGuiGraphicsEventHandler'], [], [])"><div class="token cpp_type">IGuiGraphicsEventHandler</div></div>;
 			<div class="token cpp_keyword ">protected</div>:
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::IEventHandler'], [], [])"><div class="token cpp_type">IEventHandler</div></div>&gt;						<div class="def" id="NI$vl::presentation::controls::GuiMenuButton::subMenuWindowOpenedHandler"><div><div class="token cpp_field">subMenuWindowOpenedHandler</div></div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::IEventHandler'], [], [])"><div class="token cpp_type">IEventHandler</div></div>&gt;						<div class="def" id="NI$vl::presentation::controls::GuiMenuButton::subMenuWindowClosedHandler"><div><div class="token cpp_field">subMenuWindowClosedHandler</div></div></div>;
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::IEventHandler'], [], [])"><div class="token cpp_type">IEventHandler</div></div>&gt;						<div class="def" id="NI$vl::presentation::controls::GuiMenuButton::hostClickedHandler"><div><div class="token cpp_field">hostClickedHandler</div></div></div>;
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::IEventHandler'], [], [])"><div class="token cpp_type">IEventHandler</div></div>&gt;						<div class="def" id="NI$vl::presentation::controls::GuiMenuButton::hostMouseEnterHandler"><div><div class="token cpp_field">hostMouseEnterHandler</div></div></div>;
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::GuiImageData'], [], [])"><div class="token cpp_type">GuiImageData</div></div>&gt;						<div class="def" id="NI$vl::presentation::controls::GuiMenuButton::image"><div><div class="token cpp_field">image</div></div></div>;
@@ -195,6 +197,7 @@ MenuButton
 				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::IGuiMenuService'], [], [])"><div class="token cpp_type">IGuiMenuService</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::IGuiMenuService::Direction'], [], [])"><div class="token cpp_type">Direction</div></div>		<div class="def" id="FB$vl::presentation::controls::GuiMenuButton::GetSubMenuDirection@::vl::presentation::controls::IGuiMenuService::Direction()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::GetSubMenuDirection@::vl::presentation::controls::IGuiMenuService::Direction()'], [], [])"><div class="token cpp_function">GetSubMenuDirection</div></div></div>();
 
 			<div class="token cpp_keyword ">private</div>:
+				<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()'], [], [])"><div class="token cpp_function">DetachSubMenu</div></div></div>();
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu'], [], [])"><div class="token cpp_type">GuiMenu</div></div>*								<div class="def" id="FB$vl::presentation::controls::GuiMenuButton::ProvideDropdownMenu@::vl::presentation::controls::GuiMenu *()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::ProvideDropdownMenu@::vl::presentation::controls::GuiMenu *()'], [], [])"><div class="token cpp_function">ProvideDropdownMenu</div></div></div>()<div class="token cpp_keyword ">override</div>;
 
 			<div class="token cpp_keyword ">public</div>:
@@ -1596,6 +1599,15 @@ referencedSymbols = {
             'FB$vl::presentation::controls::GuiMenuButton::DestroySubMenu@void()[decl0]'
         ]
     },
+    'vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()': {
+        'displayNameInHtml': '<span class="cpp_type">GuiMenuButton</span>::<span class="cpp_function">DetachSubMenu</span>()',
+        'impls': [
+            'FB$vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()[decl0]'
+        ]
+    },
     'vl::presentation::controls::GuiMenuButton::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()': {
         'displayNameInHtml': '<span class="cpp_type">GuiMenuButton</span>::<span class="cpp_function">GetActivatingAltHost</span>()',
         'impls': [
@@ -2152,6 +2164,8 @@ symbolToFiles = {
     'FB$vl::presentation::controls::GuiMenuButton::CreateSubMenu@::vl::presentation::controls::GuiMenu *(::vl::presentation::TemplateProperty<::vl::presentation::templates::GuiMenuTemplate>)[impl0]': { 'htmlFileName': 'GuiMenuControls.cpp', 'displayName': 'GuiMenuControls.cpp' },
     'FB$vl::presentation::controls::GuiMenuButton::DestroySubMenu@void()[decl0]': null,
     'FB$vl::presentation::controls::GuiMenuButton::DestroySubMenu@void()[impl0]': { 'htmlFileName': 'GuiMenuControls.cpp', 'displayName': 'GuiMenuControls.cpp' },
+    'FB$vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()[decl0]': null,
+    'FB$vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()[impl0]': { 'htmlFileName': 'GuiMenuControls.cpp', 'displayName': 'GuiMenuControls.cpp' },
     'FB$vl::presentation::controls::GuiMenuButton::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()[decl0]': null,
     'FB$vl::presentation::controls::GuiMenuButton::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()[impl0]': { 'htmlFileName': 'GuiMenuControls.cpp', 'displayName': 'GuiMenuControls.cpp' },
     'FB$vl::presentation::controls::GuiMenuButton::GetCascadeAction@bool()[decl0]': null,

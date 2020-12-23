@@ -103,6 +103,10 @@
       <document name="function GetFrameIndex" docId="vl::presentation::GuiImageData::GetFrameIndex@::vl::vint()" file="VL__PRESENTATION__GUIIMAGEDATA__GETFRAMEINDEX@__VL__VINT()"/>
       <document name="function GetImage" docId="vl::presentation::GuiImageData::GetImage@::vl::Ptr&lt;::vl::presentation::INativeImage&gt;()" file="VL__PRESENTATION__GUIIMAGEDATA__GETIMAGE@__VL__PTR___VL__PRESENT"/>
     </document>
+    <document name="function GuiIqConvertParsingTreeNode" docId="vl::presentation::GuiIqConvertParsingTreeNode@::vl::Ptr&lt;::vl::parsing::ParsingTreeCustomBase&gt;(::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;, ::vl::collections::List&lt;::vl::regex::RegexToken&gt; const &amp;)" file="VL__PRESENTATION__GUIIQCONVERTPARSINGTREENODE@__VL__PTR___VL__PA"/>
+    <document name="function GuiIqGetParserTextBuffer" docId="vl::presentation::GuiIqGetParserTextBuffer@::vl::WString()" file="VL__PRESENTATION__GUIIQGETPARSERTEXTBUFFER@__VL__WSTRING()"/>
+    <document name="function GuiIqLoadTable" docId="vl::presentation::GuiIqLoadTable@::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;()" file="VL__PRESENTATION__GUIIQLOADTABLE@__VL__PTR___VL__PARSING__TABLIN"/>
+    <document name="enum class GuiIqParserTokenIndex" docId="vl::presentation::GuiIqParserTokenIndex" file="VL__PRESENTATION__GUIIQPARSERTOKENINDEX"/>
     <document name="class GuiResource" docId="vl::presentation::GuiResource" file="VL__PRESENTATION__GUIRESOURCE">
       <document name="function $__ctor" docId="vl::presentation::GuiResource::$__ctor@()" file="VL__PRESENTATION__GUIRESOURCE__$__CTOR@()"/>
       <document name="function GetDocumentByPath" docId="vl::presentation::GuiResource::GetDocumentByPath@::vl::Ptr&lt;::vl::presentation::DocumentModel&gt;(::vl::WString const &amp;)" file="VL__PRESENTATION__GUIRESOURCE__GETDOCUMENTBYPATH@__VL__PTR___VL_"/>
@@ -2661,5 +2665,8 @@
     <document name="function RegisterTheme" docId="vl::presentation::theme::RegisterTheme@bool(::vl::Ptr&lt;::vl::presentation::theme::ThemeTemplates&gt;)" file="VL__PRESENTATION__THEME__REGISTERTHEME@BOOL(__VL__PTR___VL__PRES"/>
     <document name="class ThemeTemplates" docId="vl::presentation::theme::ThemeTemplates" file="VL__PRESENTATION__THEME__THEMETEMPLATES"/>
     <document name="function UnregisterTheme" docId="vl::presentation::theme::UnregisterTheme@::vl::Ptr&lt;::vl::presentation::theme::ThemeTemplates&gt;(::vl::WString const &amp;)" file="VL__PRESENTATION__THEME__UNREGISTERTHEME@__VL__PTR___VL__PRESENT"/>
+  </namespace>
+  <namespace name="::vl::reflection::description">
+    <document name="function GuiIqLoadTypes" docId="vl::reflection::description::GuiIqLoadTypes@bool()" file="VL__REFLECTION__DESCRIPTION__GUIIQLOADTYPES@BOOL()"/>
   </namespace>
 </reference>

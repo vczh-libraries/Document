@@ -361,6 +361,19 @@ GuiMenuButton
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::ownerMenuService'], [], [])"><div class="token cpp_field">ownerMenuService</div></div>?<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::ownerMenuService'], [], [])"><div class="token cpp_field">ownerMenuService</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::IGuiMenuService::GetPreferredDirection@::vl::presentation::controls::IGuiMenuService::Direction()'], ['vl::presentation::controls::IGuiMenuService::GetPreferredDirection@::vl::presentation::controls::IGuiMenuService::Direction()'], [], [])"><div class="token cpp_function">GetPreferredDirection</div></div>():<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::IGuiMenuService'], [], [])"><div class="token cpp_type">IGuiMenuService</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::IGuiMenuService::Direction::Horizontal'], [], [])"><div class="token cpp_enum">Horizontal</div></div>;
 			}
 
+			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton'], [], [])"><div class="token cpp_type">GuiMenuButton</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()'], [], [])"><div class="token cpp_function">DetachSubMenu</div></div></div>()
+			{
+				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div>)
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControlHost::WindowOpened'], [], [])"><div class="token cpp_field">WindowOpened</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsEvent::Detach@bool(::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>)'], ['vl::presentation::compositions::GuiGraphicsEvent::Detach@bool(::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>)'], [], [])"><div class="token cpp_function">Detach</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenuWindowOpenedHandler'], [], [])"><div class="token cpp_field">subMenuWindowOpenedHandler</div></div>);
+					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControlHost::WindowClosed'], [], [])"><div class="token cpp_field">WindowClosed</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsEvent::Detach@bool(::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>)'], ['vl::presentation::compositions::GuiGraphicsEvent::Detach@bool(::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>)'], [], [])"><div class="token cpp_function">Detach</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenuWindowClosedHandler'], [], [])"><div class="token cpp_field">subMenuWindowClosedHandler</div></div>);
+					<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::ownedSubMenu'], [], [])"><div class="token cpp_field">ownedSubMenu</div></div>)
+					{
+						<div class="token cpp_keyword ">delete</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div>;
+					}
+				}
+			}
+
 			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu'], [], [])"><div class="token cpp_type">GuiMenu</div></div>* <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton'], [], [])"><div class="token cpp_type">GuiMenuButton</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiMenuButton::ProvideDropdownMenu@::vl::presentation::controls::GuiMenu *()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::ProvideDropdownMenu@::vl::presentation::controls::GuiMenu *()'], [], [])"><div class="token cpp_function">ProvideDropdownMenu</div></div></div>()
 			{
 				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiMenuButton::GetSubMenu@::vl::presentation::controls::GuiMenu *()'], ['vl::presentation::controls::GuiMenuButton::GetSubMenu@::vl::presentation::controls::GuiMenu *()'], [], [])"><div class="token cpp_function">GetSubMenu</div></div>();
@@ -383,10 +396,7 @@ GuiMenuButton
 
 			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton'], [], [])"><div class="token cpp_type">GuiMenuButton</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiMenuButton::~GuiMenuButton@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::~GuiMenuButton@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">GuiMenuButton</div></div></div>()
 			{
-				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::ownedSubMenu'], [], [])"><div class="token cpp_field">ownedSubMenu</div></div>)
-				{
-					<div class="token cpp_keyword ">delete</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div>;
-				}
+				<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()'], ['vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()'], [], [])"><div class="token cpp_function">DetachSubMenu</div></div>();
 			}
 
 			<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::GuiImageData'], [], [])"><div class="token cpp_type">GuiImageData</div></div>&gt; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton'], [], [])"><div class="token cpp_type">GuiMenuButton</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiMenuButton::GetLargeImage@::vl::Ptr<::vl::presentation::GuiImageData>()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::GetLargeImage@::vl::Ptr<::vl::presentation::GuiImageData>()'], [], [])"><div class="token cpp_function">GetLargeImage</div></div></div>()
@@ -459,17 +469,14 @@ GuiMenuButton
 			{
 				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div>)
 				{
-					<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::ownedSubMenu'], [], [])"><div class="token cpp_field">ownedSubMenu</div></div>)
-					{
-						<div class="token cpp_keyword ">delete</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div>;
-					}
+					<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()'], ['vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()'], [], [])"><div class="token cpp_function">DetachSubMenu</div></div>();
 				}
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::SetSubMenu@void(::vl::presentation::controls::GuiMenu *, bool)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>;
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::ownedSubMenu'], [], [])"><div class="token cpp_field">ownedSubMenu</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::SetSubMenu@void(::vl::presentation::controls::GuiMenu *, bool)[impl0]::owned'], [], [])"><div class="token cpp_argument">owned</div></div>;
 				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div>)
 				{
-					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControlHost::WindowOpened'], [], [])"><div class="token cpp_field">WindowOpened</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], ['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], [], [])"><div class="token cpp_function">AttachMethod</div></div>(<div class="token cpp_keyword ">this</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton'], [], [])"><div class="token cpp_type">GuiMenuButton</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::OnSubMenuWindowOpened@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)'], [], [])"><div class="token cpp_function">OnSubMenuWindowOpened</div></div>);
-					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControlHost::WindowClosed'], [], [])"><div class="token cpp_field">WindowClosed</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], ['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], [], [])"><div class="token cpp_function">AttachMethod</div></div>(<div class="token cpp_keyword ">this</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton'], [], [])"><div class="token cpp_type">GuiMenuButton</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::OnSubMenuWindowClosed@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)'], [], [])"><div class="token cpp_function">OnSubMenuWindowClosed</div></div>);
+					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenuWindowOpenedHandler'], [], [])"><div class="token cpp_field">subMenuWindowOpenedHandler</div></div> <div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> &&)'], [], [], [])"><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControlHost::WindowOpened'], [], [])"><div class="token cpp_field">WindowOpened</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], ['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], [], [])"><div class="token cpp_function">AttachMethod</div></div>(<div class="token cpp_keyword ">this</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton'], [], [])"><div class="token cpp_type">GuiMenuButton</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::OnSubMenuWindowOpened@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)'], [], [])"><div class="token cpp_function">OnSubMenuWindowOpened</div></div>);
+					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenuWindowClosedHandler'], [], [])"><div class="token cpp_field">subMenuWindowClosedHandler</div></div> <div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> &&)'], [], [], [])"><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControlHost::WindowClosed'], [], [])"><div class="token cpp_field">WindowClosed</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], ['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], [], [])"><div class="token cpp_function">AttachMethod</div></div>(<div class="token cpp_keyword ">this</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton'], [], [])"><div class="token cpp_type">GuiMenuButton</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::OnSubMenuWindowClosed@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)'], [], [])"><div class="token cpp_function">OnSubMenuWindowClosed</div></div>);
 				}
 				<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiMenuButton::GetControlTemplateObject@::vl::presentation::templates::GuiToolstripButtonTemplate *(bool)'], ['vl::presentation::controls::GuiMenuButton::GetControlTemplateObject@::vl::presentation::templates::GuiToolstripButtonTemplate *(bool)'], [], [])"><div class="token cpp_function">GetControlTemplateObject</div></div>(<div class="token cpp_keyword ">true</div>)-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::templates::GuiToolstripButtonTemplate::SetSubMenuExisting@void(bool const &)'], [], [])"><div class="token cpp_function">SetSubMenuExisting</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div> != <div class="token cpp_keyword ">nullptr</div>);
 			}
@@ -478,10 +485,7 @@ GuiMenuButton
 			{
 				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div>)
 				{
-					<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::ownedSubMenu'], [], [])"><div class="token cpp_field">ownedSubMenu</div></div>)
-					{
-						<div class="token cpp_keyword ">delete</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div>;
-					}
+					<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()'], ['vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()'], [], [])"><div class="token cpp_function">DetachSubMenu</div></div>();
 					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::subMenu'], [], [])"><div class="token cpp_field">subMenu</div></div>=<div class="token cpp_number ">0</div>;
 					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenuButton::ownedSubMenu'], [], [])"><div class="token cpp_field">ownedSubMenu</div></div>=<div class="token cpp_keyword ">false</div>;
 					<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiMenuButton::GetControlTemplateObject@::vl::presentation::templates::GuiToolstripButtonTemplate *(bool)'], ['vl::presentation::controls::GuiMenuButton::GetControlTemplateObject@::vl::presentation::templates::GuiToolstripButtonTemplate *(bool)'], [], [])"><div class="token cpp_function">GetControlTemplateObject</div></div>(<div class="token cpp_keyword ">true</div>)-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::templates::GuiToolstripButtonTemplate::SetSubMenuExisting@void(bool const &)'], ['vl::presentation::templates::GuiToolstripButtonTemplate::SetSubMenuExisting@void(bool const &)'], [], [])"><div class="token cpp_function">SetSubMenuExisting</div></div>(<div class="token cpp_keyword ">false</div>);
@@ -2182,6 +2186,15 @@ referencedSymbols = {
             'FB$vl::presentation::controls::GuiMenuButton::DestroySubMenu@void()[decl0]'
         ]
     },
+    'vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()': {
+        'displayNameInHtml': '<span class="cpp_type">GuiMenuButton</span>::<span class="cpp_function">DetachSubMenu</span>()',
+        'impls': [
+            'FB$vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()[decl0]'
+        ]
+    },
     'vl::presentation::controls::GuiMenuButton::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()': {
         'displayNameInHtml': '<span class="cpp_type">GuiMenuButton</span>::<span class="cpp_function">GetActivatingAltHost</span>()',
         'impls': [
@@ -2611,6 +2624,20 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">GuiMenuButton</span>::<span class="cpp_field">subMenu</span>',
         'impls': [
             'NI$vl::presentation::controls::GuiMenuButton::subMenu'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiMenuButton::subMenuWindowClosedHandler': {
+        'displayNameInHtml': '<span class="cpp_type">GuiMenuButton</span>::<span class="cpp_field">subMenuWindowClosedHandler</span>',
+        'impls': [
+            'NI$vl::presentation::controls::GuiMenuButton::subMenuWindowClosedHandler'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiMenuButton::subMenuWindowOpenedHandler': {
+        'displayNameInHtml': '<span class="cpp_type">GuiMenuButton</span>::<span class="cpp_field">subMenuWindowOpenedHandler</span>',
+        'impls': [
+            'NI$vl::presentation::controls::GuiMenuButton::subMenuWindowOpenedHandler'
         ],
         'decls': []
     },
@@ -3070,6 +3097,8 @@ symbolToFiles = {
     'FB$vl::presentation::controls::GuiMenuButton::CreateSubMenu@::vl::presentation::controls::GuiMenu *(::vl::presentation::TemplateProperty<::vl::presentation::templates::GuiMenuTemplate>)[impl0]': null,
     'FB$vl::presentation::controls::GuiMenuButton::DestroySubMenu@void()[decl0]': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
     'FB$vl::presentation::controls::GuiMenuButton::DestroySubMenu@void()[impl0]': null,
+    'FB$vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()[decl0]': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
+    'FB$vl::presentation::controls::GuiMenuButton::DetachSubMenu@void()[impl0]': null,
     'FB$vl::presentation::controls::GuiMenuButton::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()[decl0]': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
     'FB$vl::presentation::controls::GuiMenuButton::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()[impl0]': null,
     'FB$vl::presentation::controls::GuiMenuButton::GetCascadeAction@bool()[decl0]': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
@@ -4089,6 +4118,8 @@ symbolToFiles = {
     'NI$vl::presentation::controls::GuiMenuButton::preferredMenuClientSize': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
     'NI$vl::presentation::controls::GuiMenuButton::shortcutText': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
     'NI$vl::presentation::controls::GuiMenuButton::subMenu': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
+    'NI$vl::presentation::controls::GuiMenuButton::subMenuWindowClosedHandler': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
+    'NI$vl::presentation::controls::GuiMenuButton::subMenuWindowOpenedHandler': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
     'NI$vl::presentation::controls::GuiPopup': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'NI$vl::presentation::controls::GuiSelectableButton': { 'htmlFileName': 'GuiButtonControls.h', 'displayName': 'GuiButtonControls.h' },
     'NI$vl::presentation::controls::GuiWindow': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },

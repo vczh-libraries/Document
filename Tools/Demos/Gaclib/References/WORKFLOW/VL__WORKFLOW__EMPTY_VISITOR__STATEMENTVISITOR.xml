@@ -1,0 +1,4 @@
+<Document symbolId="vl::workflow::empty_visitor::StatementVisitor" accessor="" category="Class" name="StatementVisitor" declFile="WfExpression_Empty.h" declId="NI$vl::workflow::empty_visitor::StatementVisitor"><summary>An empty visitor, overriding all abstract methods with empty implementations.</summary><signature><![CDATA[class StatementVisitor
+    : Object
+    , WfStatement::IVisitor;
+]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IVisitor" declFile="WfExpression_Ast.h" declId="NI$vl::workflow::WfStatement::IVisitor"/></basetypes></Document>

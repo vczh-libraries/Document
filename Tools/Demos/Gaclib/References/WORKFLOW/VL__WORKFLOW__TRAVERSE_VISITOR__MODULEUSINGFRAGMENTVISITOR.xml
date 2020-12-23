@@ -1,0 +1,4 @@
+<Document symbolId="vl::workflow::traverse_visitor::ModuleUsingFragmentVisitor" accessor="" category="Class" name="ModuleUsingFragmentVisitor" declFile="WfExpression_Traverse.h" declId="NI$vl::workflow::traverse_visitor::ModuleUsingFragmentVisitor"><summary>A copy visitor, overriding all abstract methods with AST traversing code that looks into child nodes.</summary><signature><![CDATA[class ModuleUsingFragmentVisitor
+    : Object
+    , WfModuleUsingFragment::IVisitor;
+]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IVisitor" declFile="WfExpression_Ast.h" declId="NI$vl::workflow::WfModuleUsingFragment::IVisitor"/></basetypes></Document>

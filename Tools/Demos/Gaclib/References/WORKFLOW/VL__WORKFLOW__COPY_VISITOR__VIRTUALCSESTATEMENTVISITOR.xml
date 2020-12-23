@@ -1,0 +1,4 @@
+<Document symbolId="vl::workflow::copy_visitor::VirtualCseStatementVisitor" accessor="" category="Class" name="VirtualCseStatementVisitor" declFile="WfExpression_Copy.h" declId="NI$vl::workflow::copy_visitor::VirtualCseStatementVisitor"><summary>A copy visitor, overriding all abstract methods with AST copying code.</summary><signature><![CDATA[class VirtualCseStatementVisitor
+    : VisitorBase
+    , WfVirtualCseStatement::IVisitor;
+]]></signature><basetypes><symbol name="IVisitor" declFile="WfExpression_Ast.h" declId="NI$vl::workflow::WfVirtualCseStatement::IVisitor"/><symbol name="VisitorBase" declFile="WfExpression_Copy.h" declId="NI$vl::workflow::copy_visitor::VisitorBase"/></basetypes></Document>

@@ -46,6 +46,7 @@
     <document name="class Localization" docId="vl::reflection::description::Localization" file="VL__REFLECTION__DESCRIPTION__LOCALIZATION"/>
     <document name="class Math" docId="vl::reflection::description::Math" file="VL__REFLECTION__DESCRIPTION__MATH"/>
     <document name="class Sys" docId="vl::reflection::description::Sys" file="VL__REFLECTION__DESCRIPTION__SYS"/>
+    <document name="function WfLoadTypes" docId="vl::reflection::description::WfLoadTypes@bool()" file="VL__REFLECTION__DESCRIPTION__WFLOADTYPES@BOOL()"/>
   </namespace>
   <namespace name="::vl::workflow">
     <document name="class IWfCompilerCallback" docId="vl::workflow::IWfCompilerCallback" file="VL__WORKFLOW__IWFCOMPILERCALLBACK">
@@ -56,6 +57,10 @@
       <document name="function OnLoadEnvironment" docId="vl::workflow::IWfCompilerCallback::OnLoadEnvironment@void()" file="VL__WORKFLOW__IWFCOMPILERCALLBACK__ONLOADENVIRONMENT@VOID()"/>
       <document name="function OnValidateModule" docId="vl::workflow::IWfCompilerCallback::OnValidateModule@void(::vl::Ptr&lt;::vl::workflow::WfModule&gt;)" file="VL__WORKFLOW__IWFCOMPILERCALLBACK__ONVALIDATEMODULE@VOID(__VL__P"/>
     </document>
+    <document name="function WfConvertParsingTreeNode" docId="vl::workflow::WfConvertParsingTreeNode@::vl::Ptr&lt;::vl::parsing::ParsingTreeCustomBase&gt;(::vl::Ptr&lt;::vl::parsing::ParsingTreeNode&gt;, ::vl::collections::List&lt;::vl::regex::RegexToken&gt; const &amp;)" file="VL__WORKFLOW__WFCONVERTPARSINGTREENODE@__VL__PTR___VL__PARSING__"/>
+    <document name="function WfGetParserTextBuffer" docId="vl::workflow::WfGetParserTextBuffer@::vl::WString()" file="VL__WORKFLOW__WFGETPARSERTEXTBUFFER@__VL__WSTRING()"/>
+    <document name="function WfLoadTable" docId="vl::workflow::WfLoadTable@::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;()" file="VL__WORKFLOW__WFLOADTABLE@__VL__PTR___VL__PARSING__TABLING__PARS"/>
+    <document name="enum class WfParserTokenIndex" docId="vl::workflow::WfParserTokenIndex" file="VL__WORKFLOW__WFPARSERTOKENINDEX"/>
     <document name="function WfPrint" docId="vl::workflow::WfPrint@void(::vl::Ptr&lt;::vl::workflow::WfAttribute&gt;, ::vl::WString const &amp;, ::vl::parsing::ParsingWriter &amp;)" file="VL__WORKFLOW__WFPRINT@VOID(__VL__PTR___VL__WORKFLOW__WFATTRIBUTE"/>
     <document name="function WfPrint" docId="vl::workflow::WfPrint@void(::vl::Ptr&lt;::vl::workflow::WfType&gt;, ::vl::WString const &amp;, ::vl::parsing::ParsingWriter &amp;)" file="VL__WORKFLOW__WFPRINT@VOID(__VL__PTR___VL__WORKFLOW__WFTYPE_,___"/>
     <document name="function WfPrint" docId="vl::workflow::WfPrint@void(::vl::Ptr&lt;::vl::workflow::WfExpression&gt;, ::vl::WString const &amp;, ::vl::parsing::ParsingWriter &amp;)" file="VL__WORKFLOW__WFPRINT@VOID(__VL__PTR___VL__WORKFLOW__WFEXPRESSIO"/>
@@ -80,10 +85,39 @@
       <document name="function Rebuild" docId="vl::workflow::analyzer::WfLexicalScopeManager::Rebuild@void(bool, ::vl::workflow::IWfCompilerCallback *)" file="VL__WORKFLOW__ANALYZER__WFLEXICALSCOPEMANAGER__REBUILD@VOID(BOOL"/>
     </document>
   </namespace>
+  <namespace name="::vl::workflow::copy_visitor">
+    <document name="class CoroutineStatementVisitor" docId="vl::workflow::copy_visitor::CoroutineStatementVisitor" file="VL__WORKFLOW__COPY_VISITOR__COROUTINESTATEMENTVISITOR"/>
+    <document name="class DeclarationVisitor" docId="vl::workflow::copy_visitor::DeclarationVisitor" file="VL__WORKFLOW__COPY_VISITOR__DECLARATIONVISITOR"/>
+    <document name="class ExpressionVisitor" docId="vl::workflow::copy_visitor::ExpressionVisitor" file="VL__WORKFLOW__COPY_VISITOR__EXPRESSIONVISITOR"/>
+    <document name="class ModuleUsingFragmentVisitor" docId="vl::workflow::copy_visitor::ModuleUsingFragmentVisitor" file="VL__WORKFLOW__COPY_VISITOR__MODULEUSINGFRAGMENTVISITOR"/>
+    <document name="class ModuleVisitor" docId="vl::workflow::copy_visitor::ModuleVisitor" file="VL__WORKFLOW__COPY_VISITOR__MODULEVISITOR"/>
+    <document name="class StateMachineStatementVisitor" docId="vl::workflow::copy_visitor::StateMachineStatementVisitor" file="VL__WORKFLOW__COPY_VISITOR__STATEMACHINESTATEMENTVISITOR"/>
+    <document name="class StatementVisitor" docId="vl::workflow::copy_visitor::StatementVisitor" file="VL__WORKFLOW__COPY_VISITOR__STATEMENTVISITOR"/>
+    <document name="class TypeVisitor" docId="vl::workflow::copy_visitor::TypeVisitor" file="VL__WORKFLOW__COPY_VISITOR__TYPEVISITOR"/>
+    <document name="class VirtualCfeDeclarationVisitor" docId="vl::workflow::copy_visitor::VirtualCfeDeclarationVisitor" file="VL__WORKFLOW__COPY_VISITOR__VIRTUALCFEDECLARATIONVISITOR"/>
+    <document name="class VirtualCfeExpressionVisitor" docId="vl::workflow::copy_visitor::VirtualCfeExpressionVisitor" file="VL__WORKFLOW__COPY_VISITOR__VIRTUALCFEEXPRESSIONVISITOR"/>
+    <document name="class VirtualCseDeclarationVisitor" docId="vl::workflow::copy_visitor::VirtualCseDeclarationVisitor" file="VL__WORKFLOW__COPY_VISITOR__VIRTUALCSEDECLARATIONVISITOR"/>
+    <document name="class VirtualCseExpressionVisitor" docId="vl::workflow::copy_visitor::VirtualCseExpressionVisitor" file="VL__WORKFLOW__COPY_VISITOR__VIRTUALCSEEXPRESSIONVISITOR"/>
+    <document name="class VirtualCseStatementVisitor" docId="vl::workflow::copy_visitor::VirtualCseStatementVisitor" file="VL__WORKFLOW__COPY_VISITOR__VIRTUALCSESTATEMENTVISITOR"/>
+  </namespace>
   <namespace name="::vl::workflow::emitter">
     <document name="function Compile" docId="vl::workflow::emitter::Compile@::vl::Ptr&lt;::vl::workflow::runtime::WfAssembly&gt;(::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::collections::List&lt;::vl::WString&gt; &amp;, ::vl::collections::List&lt;::vl::Ptr&lt;::vl::parsing::ParsingError&gt;&gt; &amp;)" file="VL__WORKFLOW__EMITTER__COMPILE@__VL__PTR___VL__WORKFLOW__RUNTIME"/>
     <document name="function Compile" docId="vl::workflow::emitter::Compile@::vl::Ptr&lt;::vl::workflow::runtime::WfAssembly&gt;(::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;, ::vl::collections::List&lt;::vl::WString&gt; &amp;, ::vl::collections::List&lt;::vl::Ptr&lt;::vl::parsing::ParsingError&gt;&gt; &amp;)" file="VL__WORKFLOW__EMITTER__COMPILE@__VL__PTR___VL__WORKFLOW__RUNTIME2"/>
     <document name="function GenerateAssembly" docId="vl::workflow::emitter::GenerateAssembly@::vl::Ptr&lt;::vl::workflow::runtime::WfAssembly&gt;(::vl::workflow::analyzer::WfLexicalScopeManager *, ::vl::workflow::IWfCompilerCallback *)" file="VL__WORKFLOW__EMITTER__GENERATEASSEMBLY@__VL__PTR___VL__WORKFLOW"/>
+  </namespace>
+  <namespace name="::vl::workflow::empty_visitor">
+    <document name="class CoroutineStatementVisitor" docId="vl::workflow::empty_visitor::CoroutineStatementVisitor" file="VL__WORKFLOW__EMPTY_VISITOR__COROUTINESTATEMENTVISITOR"/>
+    <document name="class DeclarationVisitor" docId="vl::workflow::empty_visitor::DeclarationVisitor" file="VL__WORKFLOW__EMPTY_VISITOR__DECLARATIONVISITOR"/>
+    <document name="class ExpressionVisitor" docId="vl::workflow::empty_visitor::ExpressionVisitor" file="VL__WORKFLOW__EMPTY_VISITOR__EXPRESSIONVISITOR"/>
+    <document name="class ModuleUsingFragmentVisitor" docId="vl::workflow::empty_visitor::ModuleUsingFragmentVisitor" file="VL__WORKFLOW__EMPTY_VISITOR__MODULEUSINGFRAGMENTVISITOR"/>
+    <document name="class StateMachineStatementVisitor" docId="vl::workflow::empty_visitor::StateMachineStatementVisitor" file="VL__WORKFLOW__EMPTY_VISITOR__STATEMACHINESTATEMENTVISITOR"/>
+    <document name="class StatementVisitor" docId="vl::workflow::empty_visitor::StatementVisitor" file="VL__WORKFLOW__EMPTY_VISITOR__STATEMENTVISITOR"/>
+    <document name="class TypeVisitor" docId="vl::workflow::empty_visitor::TypeVisitor" file="VL__WORKFLOW__EMPTY_VISITOR__TYPEVISITOR"/>
+    <document name="class VirtualCfeDeclarationVisitor" docId="vl::workflow::empty_visitor::VirtualCfeDeclarationVisitor" file="VL__WORKFLOW__EMPTY_VISITOR__VIRTUALCFEDECLARATIONVISITOR"/>
+    <document name="class VirtualCfeExpressionVisitor" docId="vl::workflow::empty_visitor::VirtualCfeExpressionVisitor" file="VL__WORKFLOW__EMPTY_VISITOR__VIRTUALCFEEXPRESSIONVISITOR"/>
+    <document name="class VirtualCseDeclarationVisitor" docId="vl::workflow::empty_visitor::VirtualCseDeclarationVisitor" file="VL__WORKFLOW__EMPTY_VISITOR__VIRTUALCSEDECLARATIONVISITOR"/>
+    <document name="class VirtualCseExpressionVisitor" docId="vl::workflow::empty_visitor::VirtualCseExpressionVisitor" file="VL__WORKFLOW__EMPTY_VISITOR__VIRTUALCSEEXPRESSIONVISITOR"/>
+    <document name="class VirtualCseStatementVisitor" docId="vl::workflow::empty_visitor::VirtualCseStatementVisitor" file="VL__WORKFLOW__EMPTY_VISITOR__VIRTUALCSESTATEMENTVISITOR"/>
   </namespace>
   <namespace name="::vl::workflow::runtime">
     <document name="function GetDebuggerForCurrentThread" docId="vl::workflow::runtime::GetDebuggerForCurrentThread@::vl::Ptr&lt;::vl::workflow::runtime::WfDebugger&gt;()" file="VL__WORKFLOW__RUNTIME__GETDEBUGGERFORCURRENTTHREAD@__VL__PTR___V"/>
@@ -194,5 +228,20 @@
     <document name="class WfRuntimeVariableContext" docId="vl::workflow::runtime::WfRuntimeVariableContext" file="VL__WORKFLOW__RUNTIME__WFRUNTIMEVARIABLECONTEXT">
       <document name="variable variables" docId="vl::workflow::runtime::WfRuntimeVariableContext::variables" file="VL__WORKFLOW__RUNTIME__WFRUNTIMEVARIABLECONTEXT__VARIABLES"/>
     </document>
+  </namespace>
+  <namespace name="::vl::workflow::traverse_visitor">
+    <document name="class CoroutineStatementVisitor" docId="vl::workflow::traverse_visitor::CoroutineStatementVisitor" file="VL__WORKFLOW__TRAVERSE_VISITOR__COROUTINESTATEMENTVISITOR"/>
+    <document name="class DeclarationVisitor" docId="vl::workflow::traverse_visitor::DeclarationVisitor" file="VL__WORKFLOW__TRAVERSE_VISITOR__DECLARATIONVISITOR"/>
+    <document name="class ExpressionVisitor" docId="vl::workflow::traverse_visitor::ExpressionVisitor" file="VL__WORKFLOW__TRAVERSE_VISITOR__EXPRESSIONVISITOR"/>
+    <document name="class ModuleUsingFragmentVisitor" docId="vl::workflow::traverse_visitor::ModuleUsingFragmentVisitor" file="VL__WORKFLOW__TRAVERSE_VISITOR__MODULEUSINGFRAGMENTVISITOR"/>
+    <document name="class ModuleVisitor" docId="vl::workflow::traverse_visitor::ModuleVisitor" file="VL__WORKFLOW__TRAVERSE_VISITOR__MODULEVISITOR"/>
+    <document name="class StateMachineStatementVisitor" docId="vl::workflow::traverse_visitor::StateMachineStatementVisitor" file="VL__WORKFLOW__TRAVERSE_VISITOR__STATEMACHINESTATEMENTVISITOR"/>
+    <document name="class StatementVisitor" docId="vl::workflow::traverse_visitor::StatementVisitor" file="VL__WORKFLOW__TRAVERSE_VISITOR__STATEMENTVISITOR"/>
+    <document name="class TypeVisitor" docId="vl::workflow::traverse_visitor::TypeVisitor" file="VL__WORKFLOW__TRAVERSE_VISITOR__TYPEVISITOR"/>
+    <document name="class VirtualCfeDeclarationVisitor" docId="vl::workflow::traverse_visitor::VirtualCfeDeclarationVisitor" file="VL__WORKFLOW__TRAVERSE_VISITOR__VIRTUALCFEDECLARATIONVISITOR"/>
+    <document name="class VirtualCfeExpressionVisitor" docId="vl::workflow::traverse_visitor::VirtualCfeExpressionVisitor" file="VL__WORKFLOW__TRAVERSE_VISITOR__VIRTUALCFEEXPRESSIONVISITOR"/>
+    <document name="class VirtualCseDeclarationVisitor" docId="vl::workflow::traverse_visitor::VirtualCseDeclarationVisitor" file="VL__WORKFLOW__TRAVERSE_VISITOR__VIRTUALCSEDECLARATIONVISITOR"/>
+    <document name="class VirtualCseExpressionVisitor" docId="vl::workflow::traverse_visitor::VirtualCseExpressionVisitor" file="VL__WORKFLOW__TRAVERSE_VISITOR__VIRTUALCSEEXPRESSIONVISITOR"/>
+    <document name="class VirtualCseStatementVisitor" docId="vl::workflow::traverse_visitor::VirtualCseStatementVisitor" file="VL__WORKFLOW__TRAVERSE_VISITOR__VIRTUALCSESTATEMENTVISITOR"/>
   </namespace>
 </reference>

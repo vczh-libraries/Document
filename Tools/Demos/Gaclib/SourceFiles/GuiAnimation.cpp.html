@@ -82,6 +82,7 @@ GuiFiniteAnimation
 			{
 			<div class="token cpp_keyword ">protected</div>:
 				<div class="ref" onclick="jumpToSymbol([], ['vl::vuint64_t'], [], [])"><div class="token cpp_type">vuint64_t</div></div>						<div class="def" id="NI$vl::presentation::controls::GuiFiniteAnimation::length"><div><div class="token cpp_field">length</div></div></div> = <div class="token cpp_number ">0</div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::vuint64_t'], [], [])"><div class="token cpp_type">vuint64_t</div></div>						<div class="def" id="NI$vl::presentation::controls::GuiFiniteAnimation::currentTime"><div><div class="token cpp_field">currentTime</div></div></div> = <div class="token cpp_number ">0</div>;
 				<div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>'], ['vl::Func'], [], [])"><div class="token cpp_type">Func</div></div>&lt;<div class="token cpp_keyword ">void</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vuint64_t'], [], [])"><div class="token cpp_type">vuint64_t</div></div>)&gt;			<div class="def" id="NI$vl::presentation::controls::GuiFiniteAnimation::run"><div><div class="token cpp_field">run</div></div></div>;
 
 			<div class="token cpp_keyword ">public</div>:
@@ -97,16 +98,16 @@ GuiFiniteAnimation
 
 				<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::presentation::controls::GuiFiniteAnimation::Run@void()[impl0]"><div><div class="token cpp_function">Run</div></div></div>()<div class="token cpp_keyword ">override</div>
 				{
-					<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::controls::GuiFiniteAnimation::Run@void()[impl0]::currentTime"><div>currentTime</div></div> = <div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiTimedAnimation::GetTime@::vl::vuint64_t()'], ['vl::presentation::controls::GuiTimedAnimation::GetTime@::vl::vuint64_t()'], [], [])"><div class="token cpp_function">GetTime</div></div>();
-					<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiFiniteAnimation::Run@void()[impl0]::currentTime'], [], [])">currentTime</div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiFiniteAnimation::length'], [], [])"><div class="token cpp_field">length</div></div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiFiniteAnimation::run'], [], [])"><div class="token cpp_field">run</div></div>)
+					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiFiniteAnimation::currentTime'], [], [])"><div class="token cpp_field">currentTime</div></div> = <div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiTimedAnimation::GetTime@::vl::vuint64_t()'], ['vl::presentation::controls::GuiTimedAnimation::GetTime@::vl::vuint64_t()'], [], [])"><div class="token cpp_function">GetTime</div></div>();
+					<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiFiniteAnimation::currentTime'], [], [])"><div class="token cpp_field">currentTime</div></div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiFiniteAnimation::length'], [], [])"><div class="token cpp_field">length</div></div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiFiniteAnimation::run'], [], [])"><div class="token cpp_field">run</div></div>)
 					{
-						<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiFiniteAnimation::run'], [], [])"><div class="token cpp_field">run</div></div><div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>::operator ()@[R]([TArgs]...)'], [], [], [])"><div class="token cpp_function">(</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiFiniteAnimation::Run@void()[impl0]::currentTime'], [], [])">currentTime</div>);
+						<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiFiniteAnimation::run'], [], [])"><div class="token cpp_field">run</div></div><div class="ref" onclick="jumpToSymbol(['vl::Func@<[R]([TArgs]...)>::operator ()@[R]([TArgs]...)'], [], [], [])"><div class="token cpp_function">(</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiFiniteAnimation::currentTime'], [], [])"><div class="token cpp_field">currentTime</div></div>);
 					}
 				}
 
 				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::presentation::controls::GuiFiniteAnimation::GetStopped@bool()[impl0]"><div><div class="token cpp_function">GetStopped</div></div></div>()<div class="token cpp_keyword ">override</div>
 				{
-					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiTimedAnimation::GetTime@::vl::vuint64_t()'], ['vl::presentation::controls::GuiTimedAnimation::GetTime@::vl::vuint64_t()'], [], [])"><div class="token cpp_function">GetTime</div></div>() &gt;= <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiFiniteAnimation::length'], [], [])"><div class="token cpp_field">length</div></div>;
+					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiFiniteAnimation::currentTime'], [], [])"><div class="token cpp_field">currentTime</div></div> &gt;= <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiFiniteAnimation::length'], [], [])"><div class="token cpp_field">length</div></div>;
 				}
 			};
 
@@ -1555,10 +1556,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vl::presentation::controls::GuiFiniteAnimation::Run@void()[impl0]::currentTime': {
-        'displayNameInHtml': 'currentTime',
+    'vl::presentation::controls::GuiFiniteAnimation::currentTime': {
+        'displayNameInHtml': '<span class="cpp_type">GuiFiniteAnimation</span>::<span class="cpp_field">currentTime</span>',
         'impls': [
-            'NI$vl::presentation::controls::GuiFiniteAnimation::Run@void()[impl0]::currentTime'
+            'NI$vl::presentation::controls::GuiFiniteAnimation::currentTime'
         ],
         'decls': []
     },
@@ -3023,7 +3024,7 @@ symbolToFiles = {
     'NI$vl::presentation::controls::GuiFiniteAnimation': null,
     'NI$vl::presentation::controls::GuiFiniteAnimation::$__ctor@(::vl::Func<void(::vl::vuint64_t)> const &, ::vl::vuint64_t)[impl0]::_length': null,
     'NI$vl::presentation::controls::GuiFiniteAnimation::$__ctor@(::vl::Func<void(::vl::vuint64_t)> const &, ::vl::vuint64_t)[impl0]::_run': null,
-    'NI$vl::presentation::controls::GuiFiniteAnimation::Run@void()[impl0]::currentTime': null,
+    'NI$vl::presentation::controls::GuiFiniteAnimation::currentTime': null,
     'NI$vl::presentation::controls::GuiFiniteAnimation::length': null,
     'NI$vl::presentation::controls::GuiFiniteAnimation::run': null,
     'NI$vl::presentation::controls::GuiInfiniteAnimation': null,

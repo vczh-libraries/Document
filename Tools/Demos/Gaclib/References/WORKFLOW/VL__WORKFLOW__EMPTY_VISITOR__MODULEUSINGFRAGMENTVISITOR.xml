@@ -1,0 +1,4 @@
+<Document symbolId="vl::workflow::empty_visitor::ModuleUsingFragmentVisitor" accessor="" category="Class" name="ModuleUsingFragmentVisitor" declFile="WfExpression_Empty.h" declId="NI$vl::workflow::empty_visitor::ModuleUsingFragmentVisitor"><summary>An empty visitor, overriding all abstract methods with empty implementations.</summary><signature><![CDATA[class ModuleUsingFragmentVisitor
+    : Object
+    , WfModuleUsingFragment::IVisitor;
+]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IVisitor" declFile="WfExpression_Ast.h" declId="NI$vl::workflow::WfModuleUsingFragment::IVisitor"/></basetypes></Document>
