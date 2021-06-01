@@ -392,6 +392,16 @@ ControllerListener
 					}
 				}
 
+				<div class="def" id="FB$vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">Direct2DWindowsNativeControllerListener</div></div></div>()
+				{
+					<div class="token cpp_keyword ">for</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::i"><div>i</div></div> = <div class="token cpp_number ">0</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::i'], [], [])">i</div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::Direct2DWindowsNativeControllerListener::nativeWindowListeners'], [], [])"><div class="token cpp_field">nativeWindowListeners</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Count@::vl::vint()'], ['vl::collections::Dictionary::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>(); <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::i'], [], [])">i</div>++)
+					{
+						<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::window"><div>window</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::Direct2DWindowsNativeControllerListener::nativeWindowListeners'], [], [])"><div class="token cpp_field">nativeWindowListeners</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()'], ['vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()'], [], [])"><div class="token cpp_function">Keys</div></div>()<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::i'], [], [])">i</div>];
+						<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::listener"><div>listener</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::Direct2DWindowsNativeControllerListener::nativeWindowListeners'], [], [])"><div class="token cpp_field">nativeWindowListeners</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()'], ['vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()'], [], [])"><div class="token cpp_function">Values</div></div>()<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::i'], [], [])">i</div>];
+						<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::window'], [], [])">window</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindow::UninstallListener@bool(::vl::presentation::INativeWindowListener *)'], ['vl::presentation::INativeWindow::UninstallListener@bool(::vl::presentation::INativeWindowListener *)'], [], [])"><div class="token cpp_function">UninstallListener</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::listener'], [], [])">listener</div>.<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Obj@[T] *()'], ['vl::Ptr::Obj@[T] *()'], [], [])"><div class="token cpp_function">Obj</div></div>());
+					}
+				}
+
 				<div class="ref" onclick="jumpToSymbol([], ['vl::ComPtr'], [], [])"><div class="token cpp_type">ComPtr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['ID3D11Device'], [], [])"><div class="token cpp_type">ID3D11Device</div></div>&gt; <div class="def" id="FB$vl::presentation::windows::Direct2DWindowsNativeControllerListener::CreateD3D11Device@::vl::ComPtr<::ID3D11Device>(::D3D_DRIVER_TYPE)[impl0]"><div><div class="token cpp_function">CreateD3D11Device</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['D3D_DRIVER_TYPE'], [], [])"><div class="token cpp_type">D3D_DRIVER_TYPE</div></div> <div class="def" id="NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::CreateD3D11Device@::vl::ComPtr<::ID3D11Device>(::D3D_DRIVER_TYPE)[impl0]::driverType"><div><div class="token cpp_argument">driverType</div></div></div>)
 				{
 					<div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::CreateD3D11Device@::vl::ComPtr<::ID3D11Device>(::D3D_DRIVER_TYPE)[impl0]::flags"><div>flags</div></div> = <div class="ref" onclick="jumpToSymbol([], ['D3D11_CREATE_DEVICE_FLAG::D3D11_CREATE_DEVICE_BGRA_SUPPORT'], [], [])"><div class="token cpp_enum">D3D11_CREATE_DEVICE_BGRA_SUPPORT</div></div>;
@@ -2025,6 +2035,13 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ArrayBase</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator []</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
     'vl::collections::Dictionary': {
         'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;',
         'impls': [
@@ -2043,6 +2060,13 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">KT</span> <span class="cpp_keyword">const</span> &, <span class="cpp_type">VT</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::Dictionary::Count@::vl::vint()': {
+        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Count</span>()',
+        'impls': [
+            'FB$vl::collections::Dictionary::Count@::vl::vint()[impl0]'
         ],
         'decls': []
     },
@@ -2937,6 +2961,27 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::listener': {
+        'displayNameInHtml': 'listener',
+        'impls': [
+            'NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::listener'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::window': {
+        'displayNameInHtml': 'window',
+        'impls': [
+            'NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::window'
+        ],
+        'decls': []
+    },
     'vl::presentation::windows::Direct2DWindowsNativeWindowListener': {
         'displayNameInHtml': '<span class="cpp_type">Direct2DWindowsNativeWindowListener</span>',
         'impls': [
@@ -3686,8 +3731,10 @@ symbolToFiles = {
     'FB$vl::Ptr::Obj@[T] *()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
     'FB$vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
     'FB$vl::collections::ArrayBase::Get@[T] const &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
     'FB$vl::collections::Dictionary::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
     'FB$vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'FB$vl::collections::Dictionary::Count@::vl::vint()[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
     'FB$vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
     'FB$vl::collections::Dictionary::Remove@bool([KK] const &)[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
     'FB$vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
@@ -4668,6 +4715,9 @@ symbolToFiles = {
     'NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::d3d11Device': null,
     'NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::dwrite': null,
     'NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::nativeWindowListeners': null,
+    'NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::i': null,
+    'NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::listener': null,
+    'NI$vl::presentation::windows::Direct2DWindowsNativeControllerListener::~Direct2DWindowsNativeControllerListener@()[impl0]::window': null,
     'NI$vl::presentation::windows::Direct2DWindowsNativeWindowListener': null,
     'NI$vl::presentation::windows::Direct2DWindowsNativeWindowListener::$__ctor@(::vl::presentation::INativeWindow *, ::ID2D1Factory *)[impl0]::_d2dFactory': null,
     'NI$vl::presentation::windows::Direct2DWindowsNativeWindowListener::$__ctor@(::vl::presentation::INativeWindow *, ::ID2D1Factory *)[impl0]::_window': null,

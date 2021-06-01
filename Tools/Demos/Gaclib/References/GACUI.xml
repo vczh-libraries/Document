@@ -283,13 +283,8 @@
     <document name="class INativeControllerListener" docId="vl::presentation::INativeControllerListener" file="VL__PRESENTATION__INATIVECONTROLLERLISTENER">
       <document name="function ClipboardUpdated" docId="vl::presentation::INativeControllerListener::ClipboardUpdated@void()" file="VL__PRESENTATION__INATIVECONTROLLERLISTENER__CLIPBOARDUPDATED@VO"/>
       <document name="function GlobalTimer" docId="vl::presentation::INativeControllerListener::GlobalTimer@void()" file="VL__PRESENTATION__INATIVECONTROLLERLISTENER__GLOBALTIMER@VOID()"/>
-      <document name="function LeftButtonDown" docId="vl::presentation::INativeControllerListener::LeftButtonDown@void(::vl::presentation::NativePoint)" file="VL__PRESENTATION__INATIVECONTROLLERLISTENER__LEFTBUTTONDOWN@VOID"/>
-      <document name="function LeftButtonUp" docId="vl::presentation::INativeControllerListener::LeftButtonUp@void(::vl::presentation::NativePoint)" file="VL__PRESENTATION__INATIVECONTROLLERLISTENER__LEFTBUTTONUP@VOID(_"/>
-      <document name="function MouseMoving" docId="vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)" file="VL__PRESENTATION__INATIVECONTROLLERLISTENER__MOUSEMOVING@VOID(__"/>
       <document name="function NativeWindowCreated" docId="vl::presentation::INativeControllerListener::NativeWindowCreated@void(::vl::presentation::INativeWindow *)" file="VL__PRESENTATION__INATIVECONTROLLERLISTENER__NATIVEWINDOWCREATED"/>
       <document name="function NativeWindowDestroying" docId="vl::presentation::INativeControllerListener::NativeWindowDestroying@void(::vl::presentation::INativeWindow *)" file="VL__PRESENTATION__INATIVECONTROLLERLISTENER__NATIVEWINDOWDESTROY"/>
-      <document name="function RightButtonDown" docId="vl::presentation::INativeControllerListener::RightButtonDown@void(::vl::presentation::NativePoint)" file="VL__PRESENTATION__INATIVECONTROLLERLISTENER__RIGHTBUTTONDOWN@VOI"/>
-      <document name="function RightButtonUp" docId="vl::presentation::INativeControllerListener::RightButtonUp@void(::vl::presentation::NativePoint)" file="VL__PRESENTATION__INATIVECONTROLLERLISTENER__RIGHTBUTTONUP@VOID("/>
     </document>
     <document name="class INativeCursor" docId="vl::presentation::INativeCursor" file="VL__PRESENTATION__INATIVECURSOR">
       <document name="function GetSystemCursorType" docId="vl::presentation::INativeCursor::GetSystemCursorType@::vl::presentation::INativeCursor::SystemCursorType()" file="VL__PRESENTATION__INATIVECURSOR__GETSYSTEMCURSORTYPE@__VL__PRESE"/>
@@ -343,13 +338,10 @@
     <document name="class INativeInputService" docId="vl::presentation::INativeInputService" file="VL__PRESENTATION__INATIVEINPUTSERVICE">
       <document name="function GetKey" docId="vl::presentation::INativeInputService::GetKey@::vl::presentation::VKEY(::vl::WString const &amp;)" file="VL__PRESENTATION__INATIVEINPUTSERVICE__GETKEY@__VL__PRESENTATION"/>
       <document name="function GetKeyName" docId="vl::presentation::INativeInputService::GetKeyName@::vl::WString(::vl::presentation::VKEY)" file="VL__PRESENTATION__INATIVEINPUTSERVICE__GETKEYNAME@__VL__WSTRING("/>
-      <document name="function IsHookingMouse" docId="vl::presentation::INativeInputService::IsHookingMouse@bool()" file="VL__PRESENTATION__INATIVEINPUTSERVICE__ISHOOKINGMOUSE@BOOL()"/>
       <document name="function IsKeyPressing" docId="vl::presentation::INativeInputService::IsKeyPressing@bool(::vl::presentation::VKEY)" file="VL__PRESENTATION__INATIVEINPUTSERVICE__ISKEYPRESSING@BOOL(__VL__"/>
       <document name="function IsKeyToggled" docId="vl::presentation::INativeInputService::IsKeyToggled@bool(::vl::presentation::VKEY)" file="VL__PRESENTATION__INATIVEINPUTSERVICE__ISKEYTOGGLED@BOOL(__VL__P"/>
       <document name="function IsTimerEnabled" docId="vl::presentation::INativeInputService::IsTimerEnabled@bool()" file="VL__PRESENTATION__INATIVEINPUTSERVICE__ISTIMERENABLED@BOOL()"/>
-      <document name="function StartHookMouse" docId="vl::presentation::INativeInputService::StartHookMouse@void()" file="VL__PRESENTATION__INATIVEINPUTSERVICE__STARTHOOKMOUSE@VOID()"/>
       <document name="function StartTimer" docId="vl::presentation::INativeInputService::StartTimer@void()" file="VL__PRESENTATION__INATIVEINPUTSERVICE__STARTTIMER@VOID()"/>
-      <document name="function StopHookMouse" docId="vl::presentation::INativeInputService::StopHookMouse@void()" file="VL__PRESENTATION__INATIVEINPUTSERVICE__STOPHOOKMOUSE@VOID()"/>
       <document name="function StopTimer" docId="vl::presentation::INativeInputService::StopTimer@void()" file="VL__PRESENTATION__INATIVEINPUTSERVICE__STOPTIMER@VOID()"/>
     </document>
     <document name="class INativeResourceService" docId="vl::presentation::INativeResourceService" file="VL__PRESENTATION__INATIVERESOURCESERVICE">
@@ -384,7 +376,6 @@
       <document name="function Enable" docId="vl::presentation::INativeWindow::Enable@void()" file="VL__PRESENTATION__INATIVEWINDOW__ENABLE@VOID()"/>
       <document name="function EnableActivate" docId="vl::presentation::INativeWindow::EnableActivate@void()" file="VL__PRESENTATION__INATIVEWINDOW__ENABLEACTIVATE@VOID()"/>
       <document name="function EnableCustomFrameMode" docId="vl::presentation::INativeWindow::EnableCustomFrameMode@void()" file="VL__PRESENTATION__INATIVEWINDOW__ENABLECUSTOMFRAMEMODE@VOID()"/>
-      <document name="function GetAlwaysPassFocusToParent" docId="vl::presentation::INativeWindow::GetAlwaysPassFocusToParent@bool()" file="VL__PRESENTATION__INATIVEWINDOW__GETALWAYSPASSFOCUSTOPARENT@BOOL"/>
       <document name="function GetBorder" docId="vl::presentation::INativeWindow::GetBorder@bool()" file="VL__PRESENTATION__INATIVEWINDOW__GETBORDER@BOOL()"/>
       <document name="function GetBounds" docId="vl::presentation::INativeWindow::GetBounds@::vl::presentation::NativeRect()" file="VL__PRESENTATION__INATIVEWINDOW__GETBOUNDS@__VL__PRESENTATION__N"/>
       <document name="function GetCaretPoint" docId="vl::presentation::INativeWindow::GetCaretPoint@::vl::presentation::NativePoint()" file="VL__PRESENTATION__INATIVEWINDOW__GETCARETPOINT@__VL__PRESENTATIO"/>
@@ -402,6 +393,7 @@
       <document name="function GetTitleBar" docId="vl::presentation::INativeWindow::GetTitleBar@bool()" file="VL__PRESENTATION__INATIVEWINDOW__GETTITLEBAR@BOOL()"/>
       <document name="function GetTopMost" docId="vl::presentation::INativeWindow::GetTopMost@bool()" file="VL__PRESENTATION__INATIVEWINDOW__GETTOPMOST@BOOL()"/>
       <document name="function GetWindowCursor" docId="vl::presentation::INativeWindow::GetWindowCursor@::vl::presentation::INativeCursor *()" file="VL__PRESENTATION__INATIVEWINDOW__GETWINDOWCURSOR@__VL__PRESENTAT"/>
+      <document name="function GetWindowMode" docId="vl::presentation::INativeWindow::GetWindowMode@::vl::presentation::INativeWindow::WindowMode()" file="VL__PRESENTATION__INATIVEWINDOW__GETWINDOWMODE@__VL__PRESENTATIO"/>
       <document name="function Hide" docId="vl::presentation::INativeWindow::Hide@void(bool)" file="VL__PRESENTATION__INATIVEWINDOW__HIDE@VOID(BOOL)"/>
       <document name="function HideInTaskBar" docId="vl::presentation::INativeWindow::HideInTaskBar@void()" file="VL__PRESENTATION__INATIVEWINDOW__HIDEINTASKBAR@VOID()"/>
       <document name="function InstallListener" docId="vl::presentation::INativeWindow::InstallListener@bool(::vl::presentation::INativeWindowListener *)" file="VL__PRESENTATION__INATIVEWINDOW__INSTALLLISTENER@BOOL(__VL__PRES"/>
@@ -417,7 +409,6 @@
       <document name="function ReleaseCapture" docId="vl::presentation::INativeWindow::ReleaseCapture@bool()" file="VL__PRESENTATION__INATIVEWINDOW__RELEASECAPTURE@BOOL()"/>
       <document name="function RequireCapture" docId="vl::presentation::INativeWindow::RequireCapture@bool()" file="VL__PRESENTATION__INATIVEWINDOW__REQUIRECAPTURE@BOOL()"/>
       <document name="function SetActivate" docId="vl::presentation::INativeWindow::SetActivate@void()" file="VL__PRESENTATION__INATIVEWINDOW__SETACTIVATE@VOID()"/>
-      <document name="function SetAlwaysPassFocusToParent" docId="vl::presentation::INativeWindow::SetAlwaysPassFocusToParent@void(bool)" file="VL__PRESENTATION__INATIVEWINDOW__SETALWAYSPASSFOCUSTOPARENT@VOID"/>
       <document name="function SetBorder" docId="vl::presentation::INativeWindow::SetBorder@void(bool)" file="VL__PRESENTATION__INATIVEWINDOW__SETBORDER@VOID(BOOL)"/>
       <document name="function SetBounds" docId="vl::presentation::INativeWindow::SetBounds@void(::vl::presentation::NativeRect const &amp;)" file="VL__PRESENTATION__INATIVEWINDOW__SETBOUNDS@VOID(__VL__PRESENTATI"/>
       <document name="function SetCaretPoint" docId="vl::presentation::INativeWindow::SetCaretPoint@void(::vl::presentation::NativePoint)" file="VL__PRESENTATION__INATIVEWINDOW__SETCARETPOINT@VOID(__VL__PRESEN"/>
@@ -433,6 +424,7 @@
       <document name="function SetTitleBar" docId="vl::presentation::INativeWindow::SetTitleBar@void(bool)" file="VL__PRESENTATION__INATIVEWINDOW__SETTITLEBAR@VOID(BOOL)"/>
       <document name="function SetTopMost" docId="vl::presentation::INativeWindow::SetTopMost@void(bool)" file="VL__PRESENTATION__INATIVEWINDOW__SETTOPMOST@VOID(BOOL)"/>
       <document name="function SetWindowCursor" docId="vl::presentation::INativeWindow::SetWindowCursor@void(::vl::presentation::INativeCursor *)" file="VL__PRESENTATION__INATIVEWINDOW__SETWINDOWCURSOR@VOID(__VL__PRES"/>
+      <document name="function SetWindowMode" docId="vl::presentation::INativeWindow::SetWindowMode@void(::vl::presentation::INativeWindow::WindowMode)" file="VL__PRESENTATION__INATIVEWINDOW__SETWINDOWMODE@VOID(__VL__PRESEN"/>
       <document name="function Show" docId="vl::presentation::INativeWindow::Show@void()" file="VL__PRESENTATION__INATIVEWINDOW__SHOW@VOID()"/>
       <document name="function ShowDeactivated" docId="vl::presentation::INativeWindow::ShowDeactivated@void()" file="VL__PRESENTATION__INATIVEWINDOW__SHOWDEACTIVATED@VOID()"/>
       <document name="function ShowInTaskBar" docId="vl::presentation::INativeWindow::ShowInTaskBar@void()" file="VL__PRESENTATION__INATIVEWINDOW__SHOWINTASKBAR@VOID()"/>
@@ -441,6 +433,7 @@
       <document name="function ShowRestored" docId="vl::presentation::INativeWindow::ShowRestored@void()" file="VL__PRESENTATION__INATIVEWINDOW__SHOWRESTORED@VOID()"/>
       <document name="function SupressAlt" docId="vl::presentation::INativeWindow::SupressAlt@void()" file="VL__PRESENTATION__INATIVEWINDOW__SUPRESSALT@VOID()"/>
       <document name="function UninstallListener" docId="vl::presentation::INativeWindow::UninstallListener@bool(::vl::presentation::INativeWindowListener *)" file="VL__PRESENTATION__INATIVEWINDOW__UNINSTALLLISTENER@BOOL(__VL__PR"/>
+      <document name="enum WindowMode" docId="vl::presentation::INativeWindow::WindowMode" file="VL__PRESENTATION__INATIVEWINDOW__WINDOWMODE"/>
       <document name="enum WindowSizeState" docId="vl::presentation::INativeWindow::WindowSizeState" file="VL__PRESENTATION__INATIVEWINDOW__WINDOWSIZESTATE"/>
     </document>
     <document name="class INativeWindowListener" docId="vl::presentation::INativeWindowListener" file="VL__PRESENTATION__INATIVEWINDOWLISTENER">
@@ -1490,7 +1483,8 @@
       <document name="function ShowDialog" docId="vl::presentation::controls::GuiOpenFileDialog::ShowDialog@bool()" file="VL__PRESENTATION__CONTROLS__GUIOPENFILEDIALOG__SHOWDIALOG@BOOL()"/>
     </document>
     <document name="class GuiPopup" docId="vl::presentation::controls::GuiPopup" file="VL__PRESENTATION__CONTROLS__GUIPOPUP">
-      <document name="function $__ctor" docId="vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName)" file="VL__PRESENTATION__CONTROLS__GUIPOPUP__$__CTOR@(__VL__PRESENTATIO"/>
+      <document name="function $__ctor" docId="vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)" file="VL__PRESENTATION__CONTROLS__GUIPOPUP__$__CTOR@(__VL__PRESENTATIO"/>
+      <document name="function $__ctor" docId="vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName)" file="VL__PRESENTATION__CONTROLS__GUIPOPUP__$__CTOR@(__VL__PRESENTATIO2"/>
       <document name="function IsClippedByScreen" docId="vl::presentation::controls::GuiPopup::IsClippedByScreen@bool(::vl::presentation::Point)" file="VL__PRESENTATION__CONTROLS__GUIPOPUP__ISCLIPPEDBYSCREEN@BOOL(__V2"/>
       <document name="function ShowPopup" docId="vl::presentation::controls::GuiPopup::ShowPopup@void(::vl::presentation::NativePoint, ::vl::presentation::INativeScreen *)" file="VL__PRESENTATION__CONTROLS__GUIPOPUP__SHOWPOPUP@VOID(__VL__PRESE"/>
       <document name="function ShowPopup" docId="vl::presentation::controls::GuiPopup::ShowPopup@void(::vl::presentation::controls::GuiControl *, ::vl::presentation::Rect, bool)" file="VL__PRESENTATION__CONTROLS__GUIPOPUP__SHOWPOPUP@VOID(__VL__PRESE2"/>
@@ -1843,7 +1837,8 @@
       <document name="function $__ctor" docId="vl::presentation::controls::GuiVirtualTreeView::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::Ptr&lt;::vl::presentation::controls::tree::INodeRootProvider&gt;)" file="VL__PRESENTATION__CONTROLS__GUIVIRTUALTREEVIEW__$__CTOR@(__VL__P"/>
     </document>
     <document name="class GuiWindow" docId="vl::presentation::controls::GuiWindow" file="VL__PRESENTATION__CONTROLS__GUIWINDOW">
-      <document name="function $__ctor" docId="vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)" file="VL__PRESENTATION__CONTROLS__GUIWINDOW__$__CTOR@(__VL__PRESENTATI"/>
+      <document name="function $__ctor" docId="vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)" file="VL__PRESENTATION__CONTROLS__GUIWINDOW__$__CTOR@(__VL__PRESENTATI"/>
+      <document name="function $__ctor" docId="vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)" file="VL__PRESENTATION__CONTROLS__GUIWINDOW__$__CTOR@(__VL__PRESENTATI2"/>
       <document name="variable ClipboardUpdated" docId="vl::presentation::controls::GuiWindow::ClipboardUpdated" file="VL__PRESENTATION__CONTROLS__GUIWINDOW__CLIPBOARDUPDATED"/>
       <document name="function GetBorder" docId="vl::presentation::controls::GuiWindow::GetBorder@bool()" file="VL__PRESENTATION__CONTROLS__GUIWINDOW__GETBORDER@BOOL()"/>
       <document name="function GetIcon" docId="vl::presentation::controls::GuiWindow::GetIcon@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()" file="VL__PRESENTATION__CONTROLS__GUIWINDOW__GETICON@__VL__PTR___VL__P"/>
@@ -2428,13 +2423,12 @@
     </document>
     <document name="class GuiGraphicsResourceManager" docId="vl::presentation::elements::GuiGraphicsResourceManager" file="VL__PRESENTATION__ELEMENTS__GUIGRAPHICSRESOURCEMANAGER">
       <document name="function $__ctor" docId="vl::presentation::elements::GuiGraphicsResourceManager::$__ctor@()" file="VL__PRESENTATION__ELEMENTS__GUIGRAPHICSRESOURCEMANAGER__$__CTOR@"/>
-      <document name="function GetElementFactory" docId="vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &amp;)" file="VL__PRESENTATION__ELEMENTS__GUIGRAPHICSRESOURCEMANAGER__GETELEME"/>
       <document name="function GetLayoutProvider" docId="vl::presentation::elements::GuiGraphicsResourceManager::GetLayoutProvider@::vl::presentation::elements::IGuiGraphicsLayoutProvider *()" file="VL__PRESENTATION__ELEMENTS__GUIGRAPHICSRESOURCEMANAGER__GETLAYOU"/>
       <document name="function GetRenderTarget" docId="vl::presentation::elements::GuiGraphicsResourceManager::GetRenderTarget@::vl::presentation::elements::IGuiGraphicsRenderTarget *(::vl::presentation::INativeWindow *)" file="VL__PRESENTATION__ELEMENTS__GUIGRAPHICSRESOURCEMANAGER__GETRENDE"/>
-      <document name="function GetRendererFactory" docId="vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &amp;)" file="VL__PRESENTATION__ELEMENTS__GUIGRAPHICSRESOURCEMANAGER__GETRENDE2"/>
+      <document name="function GetRendererFactory" docId="vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::vint)" file="VL__PRESENTATION__ELEMENTS__GUIGRAPHICSRESOURCEMANAGER__GETRENDE2"/>
       <document name="function RecreateRenderTarget" docId="vl::presentation::elements::GuiGraphicsResourceManager::RecreateRenderTarget@void(::vl::presentation::INativeWindow *)" file="VL__PRESENTATION__ELEMENTS__GUIGRAPHICSRESOURCEMANAGER__RECREATE"/>
-      <document name="function RegisterElementFactory" docId="vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)" file="VL__PRESENTATION__ELEMENTS__GUIGRAPHICSRESOURCEMANAGER__REGISTER"/>
-      <document name="function RegisterRendererFactory" docId="vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &amp;, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)" file="VL__PRESENTATION__ELEMENTS__GUIGRAPHICSRESOURCEMANAGER__REGISTER2"/>
+      <document name="function RegisterElementType" docId="vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &amp;)" file="VL__PRESENTATION__ELEMENTS__GUIGRAPHICSRESOURCEMANAGER__REGISTER"/>
+      <document name="function RegisterRendererFactory" docId="vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr&lt;::vl::presentation::elements::IGuiGraphicsRendererFactory&gt;)" file="VL__PRESENTATION__ELEMENTS__GUIGRAPHICSRESOURCEMANAGER__REGISTER2"/>
       <document name="function ResizeRenderTarget" docId="vl::presentation::elements::GuiGraphicsResourceManager::ResizeRenderTarget@void(::vl::presentation::INativeWindow *)" file="VL__PRESENTATION__ELEMENTS__GUIGRAPHICSRESOURCEMANAGER__RESIZERE"/>
     </document>
     <document name="class GuiImageFrameElement" docId="vl::presentation::elements::GuiImageFrameElement" file="VL__PRESENTATION__ELEMENTS__GUIIMAGEFRAMEELEMENT">
@@ -2506,13 +2500,8 @@
       <document name="function SetWrapLineHeightCalculation" docId="vl::presentation::elements::GuiSolidLabelElement::SetWrapLineHeightCalculation@void(bool)" file="VL__PRESENTATION__ELEMENTS__GUISOLIDLABELELEMENT__SETWRAPLINEHEI"/>
     </document>
     <document name="class IGuiGraphicsElement" docId="vl::presentation::elements::IGuiGraphicsElement" file="VL__PRESENTATION__ELEMENTS__IGUIGRAPHICSELEMENT">
-      <document name="function GetFactory" docId="vl::presentation::elements::IGuiGraphicsElement::GetFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *()" file="VL__PRESENTATION__ELEMENTS__IGUIGRAPHICSELEMENT__GETFACTORY@__VL"/>
       <document name="function GetOwnerComposition" docId="vl::presentation::elements::IGuiGraphicsElement::GetOwnerComposition@::vl::presentation::compositions::GuiGraphicsComposition *()" file="VL__PRESENTATION__ELEMENTS__IGUIGRAPHICSELEMENT__GETOWNERCOMPOSI"/>
       <document name="function GetRenderer" docId="vl::presentation::elements::IGuiGraphicsElement::GetRenderer@::vl::presentation::elements::IGuiGraphicsRenderer *()" file="VL__PRESENTATION__ELEMENTS__IGUIGRAPHICSELEMENT__GETRENDERER@__V"/>
-    </document>
-    <document name="class IGuiGraphicsElementFactory" docId="vl::presentation::elements::IGuiGraphicsElementFactory" file="VL__PRESENTATION__ELEMENTS__IGUIGRAPHICSELEMENTFACTORY">
-      <document name="function Create" docId="vl::presentation::elements::IGuiGraphicsElementFactory::Create@::vl::presentation::elements::IGuiGraphicsElement *()" file="VL__PRESENTATION__ELEMENTS__IGUIGRAPHICSELEMENTFACTORY__CREATE@_"/>
-      <document name="function GetElementTypeName" docId="vl::presentation::elements::IGuiGraphicsElementFactory::GetElementTypeName@::vl::WString()" file="VL__PRESENTATION__ELEMENTS__IGUIGRAPHICSELEMENTFACTORY__GETELEME"/>
     </document>
     <document name="class IGuiGraphicsLayoutProvider" docId="vl::presentation::elements::IGuiGraphicsLayoutProvider" file="VL__PRESENTATION__ELEMENTS__IGUIGRAPHICSLAYOUTPROVIDER">
       <document name="function CreateParagraph" docId="vl::presentation::elements::IGuiGraphicsLayoutProvider::CreateParagraph@::vl::Ptr&lt;::vl::presentation::elements::IGuiGraphicsParagraph&gt;(::vl::WString const &amp;, ::vl::presentation::elements::IGuiGraphicsRenderTarget *, ::vl::presentation::elements::IGuiGraphicsParagraphCallback *)" file="VL__PRESENTATION__ELEMENTS__IGUIGRAPHICSLAYOUTPROVIDER__CREATEPA"/>
@@ -2578,7 +2567,6 @@
     <document name="class IGuiGraphicsRendererFactory" docId="vl::presentation::elements::IGuiGraphicsRendererFactory" file="VL__PRESENTATION__ELEMENTS__IGUIGRAPHICSRENDERERFACTORY">
       <document name="function Create" docId="vl::presentation::elements::IGuiGraphicsRendererFactory::Create@::vl::presentation::elements::IGuiGraphicsRenderer *()" file="VL__PRESENTATION__ELEMENTS__IGUIGRAPHICSRENDERERFACTORY__CREATE@"/>
     </document>
-    <document name="function RegisterFactories" docId="vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)" file="VL__PRESENTATION__ELEMENTS__REGISTERFACTORIES@BOOL(__VL__PRESENT"/>
     <document name="function SetGuiGraphicsResourceManager" docId="vl::presentation::elements::SetGuiGraphicsResourceManager@void(::vl::presentation::elements::GuiGraphicsResourceManager *)" file="VL__PRESENTATION__ELEMENTS__SETGUIGRAPHICSRESOURCEMANAGER@VOID(_"/>
   </namespace>
   <namespace name="::vl::presentation::elements::text">

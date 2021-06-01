@@ -54,58 +54,6 @@ WindowsCallbackService
 				}
 			}
 
-			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService'], [], [])"><div class="token cpp_type">WindowsCallbackService</div></div>::<div class="def" id="FB$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)'], [], [])"><div class="token cpp_function">InvokeMouseHook</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['WPARAM'], [], [])"><div class="token cpp_type">WPARAM</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::message"><div><div class="token cpp_argument">message</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativePoint'], [], [])"><div class="token cpp_type">NativePoint</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::location"><div><div class="token cpp_argument">location</div></div></div>)
-			{
-				<div class="token cpp_keyword ">switch</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::message'], [], [])"><div class="token cpp_argument">message</div></div>)
-				{
-<div class="expandable"><div class="disabled">				case WM_LBUTTONDOWN:</div>
-<div class="expanded">				<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0201</div>:</div></div>
-					{
-						<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::listeners'], [], [])"><div class="token cpp_field">listeners</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i'], [], [])">i</div>++)
-						{
-							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::listeners'], [], [])"><div class="token cpp_field">listeners</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i'], [], [])">i</div>]-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeControllerListener::LeftButtonDown@void(::vl::presentation::NativePoint)'], ['vl::presentation::INativeControllerListener::LeftButtonDown@void(::vl::presentation::NativePoint)'], [], [])"><div class="token cpp_function">LeftButtonDown</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::location'], [], [])"><div class="token cpp_argument">location</div></div>);
-						}
-					}
-					<div class="token cpp_keyword ">break</div>;
-<div class="expandable"><div class="disabled">				case WM_LBUTTONUP:</div>
-<div class="expanded">				<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0202</div>:</div></div>
-					{
-						<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i2"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i2'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::listeners'], [], [])"><div class="token cpp_field">listeners</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i2'], [], [])">i</div>++)
-						{
-							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::listeners'], [], [])"><div class="token cpp_field">listeners</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i2'], [], [])">i</div>]-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeControllerListener::LeftButtonUp@void(::vl::presentation::NativePoint)'], ['vl::presentation::INativeControllerListener::LeftButtonUp@void(::vl::presentation::NativePoint)'], [], [])"><div class="token cpp_function">LeftButtonUp</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::location'], [], [])"><div class="token cpp_argument">location</div></div>);
-						}
-					}
-					<div class="token cpp_keyword ">break</div>;
-<div class="expandable"><div class="disabled">				case WM_RBUTTONDOWN:</div>
-<div class="expanded">				<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0204</div>:</div></div>
-					{
-						<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i3"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i3'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::listeners'], [], [])"><div class="token cpp_field">listeners</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i3'], [], [])">i</div>++)
-						{
-							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::listeners'], [], [])"><div class="token cpp_field">listeners</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i3'], [], [])">i</div>]-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeControllerListener::RightButtonDown@void(::vl::presentation::NativePoint)'], ['vl::presentation::INativeControllerListener::RightButtonDown@void(::vl::presentation::NativePoint)'], [], [])"><div class="token cpp_function">RightButtonDown</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::location'], [], [])"><div class="token cpp_argument">location</div></div>);
-						}
-					}
-					<div class="token cpp_keyword ">break</div>;
-<div class="expandable"><div class="disabled">				case WM_RBUTTONUP:</div>
-<div class="expanded">				<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0205</div>:</div></div>
-					{
-						<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i4"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i4'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::listeners'], [], [])"><div class="token cpp_field">listeners</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i4'], [], [])">i</div>++)
-						{
-							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::listeners'], [], [])"><div class="token cpp_field">listeners</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i4'], [], [])">i</div>]-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeControllerListener::RightButtonUp@void(::vl::presentation::NativePoint)'], ['vl::presentation::INativeControllerListener::RightButtonUp@void(::vl::presentation::NativePoint)'], [], [])"><div class="token cpp_function">RightButtonUp</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::location'], [], [])"><div class="token cpp_argument">location</div></div>);
-						}
-					}
-					<div class="token cpp_keyword ">break</div>;
-<div class="expandable"><div class="disabled">				case WM_MOUSEMOVE:</div>
-<div class="expanded">				<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0200</div>:</div></div>
-					{
-						<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i5"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i5'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::listeners'], [], [])"><div class="token cpp_field">listeners</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i5'], [], [])">i</div>++)
-						{
-							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::listeners'], [], [])"><div class="token cpp_field">listeners</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i5'], [], [])">i</div>]-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)'], ['vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)'], [], [])"><div class="token cpp_function">MouseMoving</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::location'], [], [])"><div class="token cpp_argument">location</div></div>);
-						}
-					}
-					<div class="token cpp_keyword ">break</div>;
-				}
-			}
-
 			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService'], [], [])"><div class="token cpp_type">WindowsCallbackService</div></div>::<div class="def" id="FB$vl::presentation::windows::WindowsCallbackService::InvokeGlobalTimer@void()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeGlobalTimer@void()'], [], [])"><div class="token cpp_function">InvokeGlobalTimer</div></div></div>()
 			{
 				<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsCallbackService::InvokeGlobalTimer@void()[impl0]::i"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeGlobalTimer@void()[impl0]::i'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::listeners'], [], [])"><div class="token cpp_field">listeners</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService::InvokeGlobalTimer@void()[impl0]::i'], [], [])">i</div>++)
@@ -143,13 +91,6 @@ WindowsCallbackService
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    'WPARAM': {
-        'displayNameInHtml': '<span class="cpp_type">WPARAM</span>',
-        'impls': [
-            'NI$WPARAM'
-        ],
-        'decls': []
-    },
     'vl': {
         'displayNameInHtml': 'vl',
         'impls': [],
@@ -935,33 +876,6 @@ referencedSymbols = {
             'FB$vl::presentation::INativeControllerListener::GlobalTimer@void()[decl0]'
         ]
     },
-    'vl::presentation::INativeControllerListener::LeftButtonDown@void(::vl::presentation::NativePoint)': {
-        'displayNameInHtml': '<span class="cpp_type">INativeControllerListener</span>::<span class="cpp_function">LeftButtonDown</span>(<span class="cpp_type">NativePoint</span>)',
-        'impls': [
-            'FB$vl::presentation::INativeControllerListener::LeftButtonDown@void(::vl::presentation::NativePoint)[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::INativeControllerListener::LeftButtonDown@void(::vl::presentation::NativePoint)[decl0]'
-        ]
-    },
-    'vl::presentation::INativeControllerListener::LeftButtonUp@void(::vl::presentation::NativePoint)': {
-        'displayNameInHtml': '<span class="cpp_type">INativeControllerListener</span>::<span class="cpp_function">LeftButtonUp</span>(<span class="cpp_type">NativePoint</span>)',
-        'impls': [
-            'FB$vl::presentation::INativeControllerListener::LeftButtonUp@void(::vl::presentation::NativePoint)[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::INativeControllerListener::LeftButtonUp@void(::vl::presentation::NativePoint)[decl0]'
-        ]
-    },
-    'vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)': {
-        'displayNameInHtml': '<span class="cpp_type">INativeControllerListener</span>::<span class="cpp_function">MouseMoving</span>(<span class="cpp_type">NativePoint</span>)',
-        'impls': [
-            'FB$vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)[decl0]'
-        ]
-    },
     'vl::presentation::INativeControllerListener::NativeWindowCreated@void(::vl::presentation::INativeWindow *)': {
         'displayNameInHtml': '<span class="cpp_type">INativeControllerListener</span>::<span class="cpp_function">NativeWindowCreated</span>(<span class="cpp_type">INativeWindow</span> *)',
         'impls': [
@@ -980,24 +894,6 @@ referencedSymbols = {
             'FB$vl::presentation::INativeControllerListener::NativeWindowDestroying@void(::vl::presentation::INativeWindow *)[decl0]'
         ]
     },
-    'vl::presentation::INativeControllerListener::RightButtonDown@void(::vl::presentation::NativePoint)': {
-        'displayNameInHtml': '<span class="cpp_type">INativeControllerListener</span>::<span class="cpp_function">RightButtonDown</span>(<span class="cpp_type">NativePoint</span>)',
-        'impls': [
-            'FB$vl::presentation::INativeControllerListener::RightButtonDown@void(::vl::presentation::NativePoint)[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::INativeControllerListener::RightButtonDown@void(::vl::presentation::NativePoint)[decl0]'
-        ]
-    },
-    'vl::presentation::INativeControllerListener::RightButtonUp@void(::vl::presentation::NativePoint)': {
-        'displayNameInHtml': '<span class="cpp_type">INativeControllerListener</span>::<span class="cpp_function">RightButtonUp</span>(<span class="cpp_type">NativePoint</span>)',
-        'impls': [
-            'FB$vl::presentation::INativeControllerListener::RightButtonUp@void(::vl::presentation::NativePoint)[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::INativeControllerListener::RightButtonUp@void(::vl::presentation::NativePoint)[decl0]'
-        ]
-    },
     'vl::presentation::INativeWindow': {
         'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>',
         'impls': [
@@ -1006,13 +902,6 @@ referencedSymbols = {
         'decls': [
             'NF[0]$vl::presentation::INativeWindow'
         ]
-    },
-    'vl::presentation::NativePoint': {
-        'displayNameInHtml': '<span class="cpp_type">NativePoint</span>',
-        'impls': [
-            'NI$vl::presentation::NativePoint'
-        ],
-        'decls': []
     },
     'vl::presentation::windows': {
         'displayNameInHtml': 'vl::presentation::windows',
@@ -1110,64 +999,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)': {
-        'displayNameInHtml': '<span class="cpp_type">WindowsCallbackService</span>::<span class="cpp_function">InvokeMouseHook</span>(<span class="cpp_type">WPARAM</span>, <span class="cpp_type">NativePoint</span>)',
-        'impls': [
-            'FB$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[decl0]'
-        ]
-    },
-    'vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i': {
-        'displayNameInHtml': 'i',
-        'impls': [
-            'NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i'
-        ],
-        'decls': []
-    },
-    'vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i2': {
-        'displayNameInHtml': 'i',
-        'impls': [
-            'NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i2'
-        ],
-        'decls': []
-    },
-    'vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i3': {
-        'displayNameInHtml': 'i',
-        'impls': [
-            'NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i3'
-        ],
-        'decls': []
-    },
-    'vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i4': {
-        'displayNameInHtml': 'i',
-        'impls': [
-            'NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i4'
-        ],
-        'decls': []
-    },
-    'vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i5': {
-        'displayNameInHtml': 'i',
-        'impls': [
-            'NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i5'
-        ],
-        'decls': []
-    },
-    'vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::location': {
-        'displayNameInHtml': 'location',
-        'impls': [
-            'NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::location'
-        ],
-        'decls': []
-    },
-    'vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::message': {
-        'displayNameInHtml': 'message',
-        'impls': [
-            'NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::message'
-        ],
-        'decls': []
-    },
     'vl::presentation::windows::WindowsCallbackService::InvokeNativeWindowCreated@void(::vl::presentation::INativeWindow *)': {
         'displayNameInHtml': '<span class="cpp_type">WindowsCallbackService</span>::<span class="cpp_function">InvokeNativeWindowCreated</span>(<span class="cpp_type">INativeWindow</span> *)',
         'impls': [
@@ -1255,20 +1086,10 @@ symbolToFiles = {
     'FB$vl::presentation::INativeControllerListener::ClipboardUpdated@void()[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
     'FB$vl::presentation::INativeControllerListener::GlobalTimer@void()[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'FB$vl::presentation::INativeControllerListener::GlobalTimer@void()[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
-    'FB$vl::presentation::INativeControllerListener::LeftButtonDown@void(::vl::presentation::NativePoint)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
-    'FB$vl::presentation::INativeControllerListener::LeftButtonDown@void(::vl::presentation::NativePoint)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
-    'FB$vl::presentation::INativeControllerListener::LeftButtonUp@void(::vl::presentation::NativePoint)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
-    'FB$vl::presentation::INativeControllerListener::LeftButtonUp@void(::vl::presentation::NativePoint)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
-    'FB$vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
-    'FB$vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
     'FB$vl::presentation::INativeControllerListener::NativeWindowCreated@void(::vl::presentation::INativeWindow *)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'FB$vl::presentation::INativeControllerListener::NativeWindowCreated@void(::vl::presentation::INativeWindow *)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
     'FB$vl::presentation::INativeControllerListener::NativeWindowDestroying@void(::vl::presentation::INativeWindow *)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'FB$vl::presentation::INativeControllerListener::NativeWindowDestroying@void(::vl::presentation::INativeWindow *)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
-    'FB$vl::presentation::INativeControllerListener::RightButtonDown@void(::vl::presentation::NativePoint)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
-    'FB$vl::presentation::INativeControllerListener::RightButtonDown@void(::vl::presentation::NativePoint)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
-    'FB$vl::presentation::INativeControllerListener::RightButtonUp@void(::vl::presentation::NativePoint)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
-    'FB$vl::presentation::INativeControllerListener::RightButtonUp@void(::vl::presentation::NativePoint)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
     'FB$vl::presentation::windows::WindowsCallbackService::$__ctor@()[decl0]': { 'htmlFileName': 'WindowsCallbackService.h', 'displayName': 'WindowsCallbackService.h' },
     'FB$vl::presentation::windows::WindowsCallbackService::$__ctor@()[impl0]': null,
     'FB$vl::presentation::windows::WindowsCallbackService::InstallListener@bool(::vl::presentation::INativeControllerListener *)[decl0]': { 'htmlFileName': 'WindowsCallbackService.h', 'displayName': 'WindowsCallbackService.h' },
@@ -1277,8 +1098,6 @@ symbolToFiles = {
     'FB$vl::presentation::windows::WindowsCallbackService::InvokeClipboardUpdated@void()[impl0]': null,
     'FB$vl::presentation::windows::WindowsCallbackService::InvokeGlobalTimer@void()[decl0]': { 'htmlFileName': 'WindowsCallbackService.h', 'displayName': 'WindowsCallbackService.h' },
     'FB$vl::presentation::windows::WindowsCallbackService::InvokeGlobalTimer@void()[impl0]': null,
-    'FB$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[decl0]': { 'htmlFileName': 'WindowsCallbackService.h', 'displayName': 'WindowsCallbackService.h' },
-    'FB$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]': null,
     'FB$vl::presentation::windows::WindowsCallbackService::InvokeNativeWindowCreated@void(::vl::presentation::INativeWindow *)[decl0]': { 'htmlFileName': 'WindowsCallbackService.h', 'displayName': 'WindowsCallbackService.h' },
     'FB$vl::presentation::windows::WindowsCallbackService::InvokeNativeWindowCreated@void(::vl::presentation::INativeWindow *)[impl0]': null,
     'FB$vl::presentation::windows::WindowsCallbackService::InvokeNativeWindowDestroyed@void(::vl::presentation::INativeWindow *)[decl0]': { 'htmlFileName': 'WindowsCallbackService.h', 'displayName': 'WindowsCallbackService.h' },
@@ -2024,21 +1843,12 @@ symbolToFiles = {
     'NF[9]$vl': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
     'NF[9]$vl::presentation': { 'htmlFileName': 'IncludeForward.h', 'displayName': 'IncludeForward.h' },
     'NF[9]$vl::presentation::windows': { 'htmlFileName': 'WinGDIApplication.h', 'displayName': 'WinGDIApplication.h' },
-    'NI$WPARAM': { 'htmlFileName': 'minwindef.h', 'displayName': 'minwindef.h' },
     'NI$vl::presentation::INativeControllerListener': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'NI$vl::presentation::INativeWindow': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
-    'NI$vl::presentation::NativePoint': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
     'NI$vl::presentation::windows::WindowsCallbackService': { 'htmlFileName': 'WindowsCallbackService.h', 'displayName': 'WindowsCallbackService.h' },
     'NI$vl::presentation::windows::WindowsCallbackService::InstallListener@bool(::vl::presentation::INativeControllerListener *)[impl0]::listener': null,
     'NI$vl::presentation::windows::WindowsCallbackService::InvokeClipboardUpdated@void()[impl0]::i': null,
     'NI$vl::presentation::windows::WindowsCallbackService::InvokeGlobalTimer@void()[impl0]::i': null,
-    'NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i': null,
-    'NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i2': null,
-    'NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i3': null,
-    'NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i4': null,
-    'NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::i5': null,
-    'NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::location': null,
-    'NI$vl::presentation::windows::WindowsCallbackService::InvokeMouseHook@void(::WPARAM, ::vl::presentation::NativePoint)[impl0]::message': null,
     'NI$vl::presentation::windows::WindowsCallbackService::InvokeNativeWindowCreated@void(::vl::presentation::INativeWindow *)[impl0]::i': null,
     'NI$vl::presentation::windows::WindowsCallbackService::InvokeNativeWindowCreated@void(::vl::presentation::INativeWindow *)[impl0]::window': null,
     'NI$vl::presentation::windows::WindowsCallbackService::InvokeNativeWindowDestroyed@void(::vl::presentation::INativeWindow *)[impl0]::i': null,

@@ -35,9 +35,7 @@ Interfaces:
 			{
 			<div class="token cpp_keyword ">protected</div>:
 				<div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div>									<div class="def" id="NI$vl::presentation::windows::WindowsInputService::ownerHandle"><div><div class="token cpp_field">ownerHandle</div></div></div>;
-				<div class="ref" onclick="jumpToSymbol([], ['HHOOK'], [], [])"><div class="token cpp_type">HHOOK</div></div>									<div class="def" id="NI$vl::presentation::windows::WindowsInputService::mouseHook"><div><div class="token cpp_field">mouseHook</div></div></div>;
 				<div class="token cpp_keyword ">bool</div>									<div class="def" id="NI$vl::presentation::windows::WindowsInputService::isTimerEnabled"><div><div class="token cpp_field">isTimerEnabled</div></div></div>;
-				<div class="ref" onclick="jumpToSymbol([], ['HOOKPROC'], [], [])"><div class="token cpp_type">HOOKPROC</div></div>								<div class="def" id="NI$vl::presentation::windows::WindowsInputService::mouseProc"><div><div class="token cpp_field">mouseProc</div></div></div>;
 
 				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Array'], [], [])"><div class="token cpp_type">Array</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&gt;				<div class="def" id="NI$vl::presentation::windows::WindowsInputService::keyNames"><div><div class="token cpp_field">keyNames</div></div></div>;
 				<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::VKEY'], [], [])"><div class="token cpp_type">VKEY</div></div>&gt;	<div class="def" id="NI$vl::presentation::windows::WindowsInputService::keys"><div><div class="token cpp_field">keys</div></div></div>;
@@ -45,12 +43,9 @@ Interfaces:
 				<div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>									<div class="def" id="FB$vl::presentation::windows::WindowsInputService::GetKeyNameInternal@::vl::WString(::vl::presentation::VKEY)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsInputService::GetKeyNameInternal@::vl::WString(::vl::presentation::VKEY)'], [], [])"><div class="token cpp_function">GetKeyNameInternal</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::VKEY'], [], [])"><div class="token cpp_type">VKEY</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsInputService::GetKeyNameInternal@::vl::WString(::vl::presentation::VKEY)[decl0]::code"><div>code</div></div>);
 				<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::presentation::windows::WindowsInputService::InitializeKeyNames@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsInputService::InitializeKeyNames@void()'], [], [])"><div class="token cpp_function">InitializeKeyNames</div></div></div>();
 			<div class="token cpp_keyword ">public</div>:
-				<div class="def" id="FB$vl::presentation::windows::WindowsInputService::$__ctor@(::HOOKPROC)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsInputService::$__ctor@(::HOOKPROC)'], [], [])"><div class="token cpp_function">WindowsInputService</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['HOOKPROC'], [], [])"><div class="token cpp_type">HOOKPROC</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsInputService::$__ctor@(::HOOKPROC)[decl0]::_mouseProc"><div>_mouseProc</div></div>);
+				<div class="def" id="FB$vl::presentation::windows::WindowsInputService::$__ctor@()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsInputService::$__ctor@()'], [], [])"><div class="token cpp_function">WindowsInputService</div></div></div>();
 
 				<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::presentation::windows::WindowsInputService::SetOwnerHandle@void(::HWND)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsInputService::SetOwnerHandle@void(::HWND)'], [], [])"><div class="token cpp_function">SetOwnerHandle</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsInputService::SetOwnerHandle@void(::HWND)[decl0]::handle"><div>handle</div></div>);
-				<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::presentation::windows::WindowsInputService::StartHookMouse@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsInputService::StartHookMouse@void()'], [], [])"><div class="token cpp_function">StartHookMouse</div></div></div>()<div class="token cpp_keyword ">override</div>;
-				<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::presentation::windows::WindowsInputService::StopHookMouse@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsInputService::StopHookMouse@void()'], [], [])"><div class="token cpp_function">StopHookMouse</div></div></div>()<div class="token cpp_keyword ">override</div>;
-				<div class="token cpp_keyword ">bool</div>									<div class="def" id="FB$vl::presentation::windows::WindowsInputService::IsHookingMouse@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsInputService::IsHookingMouse@bool()'], [], [])"><div class="token cpp_function">IsHookingMouse</div></div></div>()<div class="token cpp_keyword ">override</div>;
 				<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::presentation::windows::WindowsInputService::StartTimer@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsInputService::StartTimer@void()'], [], [])"><div class="token cpp_function">StartTimer</div></div></div>()<div class="token cpp_keyword ">override</div>;
 				<div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::presentation::windows::WindowsInputService::StopTimer@void()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsInputService::StopTimer@void()'], [], [])"><div class="token cpp_function">StopTimer</div></div></div>()<div class="token cpp_keyword ">override</div>;
 				<div class="token cpp_keyword ">bool</div>									<div class="def" id="FB$vl::presentation::windows::WindowsInputService::IsTimerEnabled@bool()[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsInputService::IsTimerEnabled@bool()'], [], [])"><div class="token cpp_function">IsTimerEnabled</div></div></div>()<div class="token cpp_keyword ">override</div>;
@@ -70,20 +65,6 @@ Interfaces:
 </div></div>
 <script type="text/javascript">
 referencedSymbols = {
-    'HHOOK': {
-        'displayNameInHtml': '<span class="cpp_type">HHOOK</span>',
-        'impls': [
-            'NI$HHOOK'
-        ],
-        'decls': []
-    },
-    'HOOKPROC': {
-        'displayNameInHtml': '<span class="cpp_type">HOOKPROC</span>',
-        'impls': [
-            'NI$HOOKPROC'
-        ],
-        'decls': []
-    },
     'HWND': {
         'displayNameInHtml': '<span class="cpp_type">HWND</span>',
         'impls': [
@@ -934,13 +915,13 @@ referencedSymbols = {
             'FB$vl::presentation::windows::WinIsKeyToggled@bool(::vl::presentation::VKEY)[decl0]'
         ]
     },
-    'vl::presentation::windows::WindowsInputService::$__ctor@(::HOOKPROC)': {
-        'displayNameInHtml': '<span class="cpp_type">WindowsInputService</span>::<span class="cpp_function">$__ctor</span>(<span class="cpp_type">HOOKPROC</span>)',
+    'vl::presentation::windows::WindowsInputService::$__ctor@()': {
+        'displayNameInHtml': '<span class="cpp_type">WindowsInputService</span>::<span class="cpp_function">$__ctor</span>()',
         'impls': [
-            'FB$vl::presentation::windows::WindowsInputService::$__ctor@(::HOOKPROC)[impl0]'
+            'FB$vl::presentation::windows::WindowsInputService::$__ctor@()[impl0]'
         ],
         'decls': [
-            'FB$vl::presentation::windows::WindowsInputService::$__ctor@(::HOOKPROC)[decl0]'
+            'FB$vl::presentation::windows::WindowsInputService::$__ctor@()[decl0]'
         ]
     },
     'vl::presentation::windows::WindowsInputService::GetKey@::vl::presentation::VKEY(::vl::WString const &)': {
@@ -979,15 +960,6 @@ referencedSymbols = {
             'FB$vl::presentation::windows::WindowsInputService::InitializeKeyNames@void()[decl0]'
         ]
     },
-    'vl::presentation::windows::WindowsInputService::IsHookingMouse@bool()': {
-        'displayNameInHtml': '<span class="cpp_type">WindowsInputService</span>::<span class="cpp_function">IsHookingMouse</span>()',
-        'impls': [
-            'FB$vl::presentation::windows::WindowsInputService::IsHookingMouse@bool()[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::windows::WindowsInputService::IsHookingMouse@bool()[decl0]'
-        ]
-    },
     'vl::presentation::windows::WindowsInputService::IsKeyPressing@bool(::vl::presentation::VKEY)': {
         'displayNameInHtml': '<span class="cpp_type">WindowsInputService</span>::<span class="cpp_function">IsKeyPressing</span>(<span class="cpp_type">VKEY</span>)',
         'impls': [
@@ -1024,15 +996,6 @@ referencedSymbols = {
             'FB$vl::presentation::windows::WindowsInputService::SetOwnerHandle@void(::HWND)[decl0]'
         ]
     },
-    'vl::presentation::windows::WindowsInputService::StartHookMouse@void()': {
-        'displayNameInHtml': '<span class="cpp_type">WindowsInputService</span>::<span class="cpp_function">StartHookMouse</span>()',
-        'impls': [
-            'FB$vl::presentation::windows::WindowsInputService::StartHookMouse@void()[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::windows::WindowsInputService::StartHookMouse@void()[decl0]'
-        ]
-    },
     'vl::presentation::windows::WindowsInputService::StartTimer@void()': {
         'displayNameInHtml': '<span class="cpp_type">WindowsInputService</span>::<span class="cpp_function">StartTimer</span>()',
         'impls': [
@@ -1040,15 +1003,6 @@ referencedSymbols = {
         ],
         'decls': [
             'FB$vl::presentation::windows::WindowsInputService::StartTimer@void()[decl0]'
-        ]
-    },
-    'vl::presentation::windows::WindowsInputService::StopHookMouse@void()': {
-        'displayNameInHtml': '<span class="cpp_type">WindowsInputService</span>::<span class="cpp_function">StopHookMouse</span>()',
-        'impls': [
-            'FB$vl::presentation::windows::WindowsInputService::StopHookMouse@void()[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::windows::WindowsInputService::StopHookMouse@void()[decl0]'
         ]
     },
     'vl::presentation::windows::WindowsInputService::StopTimer@void()': {
@@ -1066,8 +1020,8 @@ symbolToFiles = {
     'FB$vl::presentation::windows::WinIsKeyPressing@bool(::vl::presentation::VKEY)[impl0]': { 'htmlFileName': 'WindowsInputService.cpp', 'displayName': 'WindowsInputService.cpp' },
     'FB$vl::presentation::windows::WinIsKeyToggled@bool(::vl::presentation::VKEY)[decl0]': null,
     'FB$vl::presentation::windows::WinIsKeyToggled@bool(::vl::presentation::VKEY)[impl0]': { 'htmlFileName': 'WindowsInputService.cpp', 'displayName': 'WindowsInputService.cpp' },
-    'FB$vl::presentation::windows::WindowsInputService::$__ctor@(::HOOKPROC)[decl0]': null,
-    'FB$vl::presentation::windows::WindowsInputService::$__ctor@(::HOOKPROC)[impl0]': { 'htmlFileName': 'WindowsInputService.cpp', 'displayName': 'WindowsInputService.cpp' },
+    'FB$vl::presentation::windows::WindowsInputService::$__ctor@()[decl0]': null,
+    'FB$vl::presentation::windows::WindowsInputService::$__ctor@()[impl0]': { 'htmlFileName': 'WindowsInputService.cpp', 'displayName': 'WindowsInputService.cpp' },
     'FB$vl::presentation::windows::WindowsInputService::GetKey@::vl::presentation::VKEY(::vl::WString const &)[decl0]': null,
     'FB$vl::presentation::windows::WindowsInputService::GetKey@::vl::presentation::VKEY(::vl::WString const &)[impl0]': { 'htmlFileName': 'WindowsInputService.cpp', 'displayName': 'WindowsInputService.cpp' },
     'FB$vl::presentation::windows::WindowsInputService::GetKeyName@::vl::WString(::vl::presentation::VKEY)[decl0]': null,
@@ -1076,8 +1030,6 @@ symbolToFiles = {
     'FB$vl::presentation::windows::WindowsInputService::GetKeyNameInternal@::vl::WString(::vl::presentation::VKEY)[impl0]': { 'htmlFileName': 'WindowsInputService.cpp', 'displayName': 'WindowsInputService.cpp' },
     'FB$vl::presentation::windows::WindowsInputService::InitializeKeyNames@void()[decl0]': null,
     'FB$vl::presentation::windows::WindowsInputService::InitializeKeyNames@void()[impl0]': { 'htmlFileName': 'WindowsInputService.cpp', 'displayName': 'WindowsInputService.cpp' },
-    'FB$vl::presentation::windows::WindowsInputService::IsHookingMouse@bool()[decl0]': null,
-    'FB$vl::presentation::windows::WindowsInputService::IsHookingMouse@bool()[impl0]': { 'htmlFileName': 'WindowsInputService.cpp', 'displayName': 'WindowsInputService.cpp' },
     'FB$vl::presentation::windows::WindowsInputService::IsKeyPressing@bool(::vl::presentation::VKEY)[decl0]': null,
     'FB$vl::presentation::windows::WindowsInputService::IsKeyPressing@bool(::vl::presentation::VKEY)[impl0]': { 'htmlFileName': 'WindowsInputService.cpp', 'displayName': 'WindowsInputService.cpp' },
     'FB$vl::presentation::windows::WindowsInputService::IsKeyToggled@bool(::vl::presentation::VKEY)[decl0]': null,
@@ -1086,12 +1038,8 @@ symbolToFiles = {
     'FB$vl::presentation::windows::WindowsInputService::IsTimerEnabled@bool()[impl0]': { 'htmlFileName': 'WindowsInputService.cpp', 'displayName': 'WindowsInputService.cpp' },
     'FB$vl::presentation::windows::WindowsInputService::SetOwnerHandle@void(::HWND)[decl0]': null,
     'FB$vl::presentation::windows::WindowsInputService::SetOwnerHandle@void(::HWND)[impl0]': { 'htmlFileName': 'WindowsInputService.cpp', 'displayName': 'WindowsInputService.cpp' },
-    'FB$vl::presentation::windows::WindowsInputService::StartHookMouse@void()[decl0]': null,
-    'FB$vl::presentation::windows::WindowsInputService::StartHookMouse@void()[impl0]': { 'htmlFileName': 'WindowsInputService.cpp', 'displayName': 'WindowsInputService.cpp' },
     'FB$vl::presentation::windows::WindowsInputService::StartTimer@void()[decl0]': null,
     'FB$vl::presentation::windows::WindowsInputService::StartTimer@void()[impl0]': { 'htmlFileName': 'WindowsInputService.cpp', 'displayName': 'WindowsInputService.cpp' },
-    'FB$vl::presentation::windows::WindowsInputService::StopHookMouse@void()[decl0]': null,
-    'FB$vl::presentation::windows::WindowsInputService::StopHookMouse@void()[impl0]': { 'htmlFileName': 'WindowsInputService.cpp', 'displayName': 'WindowsInputService.cpp' },
     'FB$vl::presentation::windows::WindowsInputService::StopTimer@void()[decl0]': null,
     'FB$vl::presentation::windows::WindowsInputService::StopTimer@void()[impl0]': { 'htmlFileName': 'WindowsInputService.cpp', 'displayName': 'WindowsInputService.cpp' },
     'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
@@ -1853,8 +1801,6 @@ symbolToFiles = {
     'NF[9]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
     'NF[9]$vl::presentation': { 'htmlFileName': 'IncludeForward.h', 'displayName': 'IncludeForward.h' },
     'NF[9]$vl::presentation::windows': { 'htmlFileName': 'WinGDIApplication.h', 'displayName': 'WinGDIApplication.h' },
-    'NI$HHOOK': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
-    'NI$HOOKPROC': { 'htmlFileName': 'WinUser.h', 'displayName': 'WinUser.h' },
     'NI$HWND': { 'htmlFileName': 'windef.h', 'displayName': 'windef.h' },
     'NI$vl::Object': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
     'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },

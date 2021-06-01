@@ -569,6 +569,8 @@ Locale
 <div class="disabled">				return wcscmp(s1.Buffer(), s2.Buffer());</div>
 <div class="disabled">			case Normalization::IgnoreCase:</div>
 <div class="disabled">				return wcscasecmp(s1.Buffer(), s2.Buffer());</div>
+<div class="disabled">			default:</div>
+<div class="disabled">				return 0;</div>
 <div class="disabled">		}
 #endif</div>
 	}
@@ -718,7 +720,8 @@ Locale
 <div class="disabled">				return wcsncmp(text.Buffer(), find.Buffer(), find.Length()) == 0;</div>
 <div class="disabled">			case Normalization::IgnoreCase:</div>
 <div class="disabled">				return wcsncasecmp(text.Buffer(), find.Buffer(), find.Length()) == 0;</div>
-<div class="disabled">		}
+<div class="disabled">		}</div>
+<div class="disabled">		return false;
 #endif</div>
 	}
 
@@ -739,7 +742,8 @@ Locale
 <div class="disabled">				return wcsncmp(text.Buffer() + text.Length() - find.Length(), find.Buffer(), find.Length()) == 0;</div>
 <div class="disabled">			case Normalization::IgnoreCase:</div>
 <div class="disabled">				return wcsncasecmp(text.Buffer() + text.Length() - find.Length(), find.Buffer(), find.Length()) == 0;</div>
-<div class="disabled">		}
+<div class="disabled">		}</div>
+<div class="disabled">		return false;
 #endif</div>
 	}
 }

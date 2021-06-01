@@ -1,0 +1,27 @@
+<Document symbolId="vl::presentation::INativeWindow::WindowMode" accessor="public" category="Enum" name="WindowMode" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow::WindowMode"><summary>
+ Window mode
+ </summary><enumitem name="Menu">
+ A menu window.
+ Such window is expected to be disabled activation, <symbol name="DisableActivate" docId="vl::presentation::INativeWindow::DisableActivate@void()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::DisableActivate@void()[decl0]"/> must be called manually.
+ Such window is expected to have a parent window, <symbol name="SetParent" docId="vl::presentation::INativeWindow::SetParent@void(::vl::presentation::INativeWindow *)" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetParent@void(::vl::presentation::INativeWindow *)[decl0]"/> must be called before <symbol name="ShowDeactivated" docId="vl::presentation::INativeWindow::ShowDeactivated@void()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::ShowDeactivated@void()[decl0]"/>.
+ This window is automatically closed when the top level window is deactivated or clicked.
+ </enumitem><enumitem name="Normal">
+ A normal window.
+ </enumitem><enumitem name="Popup">
+ A popup window.
+ Such window is expected to be disabled activation, <symbol name="DisableActivate" docId="vl::presentation::INativeWindow::DisableActivate@void()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::DisableActivate@void()[decl0]"/> must be called manually.
+ Such window is expected to have a parent window, <symbol name="SetParent" docId="vl::presentation::INativeWindow::SetParent@void(::vl::presentation::INativeWindow *)" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetParent@void(::vl::presentation::INativeWindow *)[decl0]"/> must be called before <symbol name="ShowDeactivated" docId="vl::presentation::INativeWindow::ShowDeactivated@void()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::ShowDeactivated@void()[decl0]"/>.
+ This window is automatically closed when the top level window is deactivated or clicked.
+ </enumitem><enumitem name="Tooltip">
+ A tooltip window.
+ Such window is expected to be disabled activation, <symbol name="DisableActivate" docId="vl::presentation::INativeWindow::DisableActivate@void()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::DisableActivate@void()[decl0]"/> must be called manually.
+ Such window is expected to have a parent window, <symbol name="SetParent" docId="vl::presentation::INativeWindow::SetParent@void(::vl::presentation::INativeWindow *)" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetParent@void(::vl::presentation::INativeWindow *)[decl0]"/> must be called before <symbol name="ShowDeactivated" docId="vl::presentation::INativeWindow::ShowDeactivated@void()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::ShowDeactivated@void()[decl0]"/>.
+ This window is automatically closed when the top level window is deactivated or clicked.
+ </enumitem><signature><![CDATA[enum WindowMode
+{
+    Normal,
+    Tooltip,
+    Popup,
+    Menu,
+};
+]]></signature></Document>

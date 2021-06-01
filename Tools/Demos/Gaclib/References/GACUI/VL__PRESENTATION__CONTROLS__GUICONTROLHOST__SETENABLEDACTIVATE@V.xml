@@ -1,4 +1,8 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::SetEnabledActivate@void(bool)" accessor="public" category="Function" name="SetEnabledActivate" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::SetEnabledActivate@void(bool)[decl0]"><summary>Allow or forbid the window to be activated.</summary><param name="value">Set to true to allow the window to be activated.</param><signature><![CDATA[void SetEnabledActivate(
+<Document symbolId="vl::presentation::controls::GuiControlHost::SetEnabledActivate@void(bool)" accessor="public" category="Function" name="SetEnabledActivate" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::SetEnabledActivate@void(bool)[decl0]"><summary>
+ Allow or forbid the window to be activated.
+ Clicking a window with activation disabled doesn&apos;t bring activation and focus.
+ Activation will be automatically enabled by calling <symbol name="Show" docId="vl::presentation::controls::GuiControlHost::Show@void()" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::Show@void()[decl0]"/> or <symbol name="SetActivated" docId="vl::presentation::controls::GuiControlHost::SetActivated@void()" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::SetActivated@void()[decl0]"/>.
+ </summary><param name="value">Set to true to allow the window to be activated.</param><signature><![CDATA[void SetEnabledActivate(
     bool value
 );
 ]]></signature></Document>

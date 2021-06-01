@@ -433,7 +433,8 @@ Native Window
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>				<div class="def" id="FB$vl::presentation::INativeWindow::SetCaretPoint@void(::vl::presentation::NativePoint)[decl0]"><div><div class="token cpp_function">SetCaretPoint</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativePoint'], [], [])"><div class="token cpp_type">NativePoint</div></div> <div class="def" id="NI$vl::presentation::INativeWindow::SetCaretPoint@void(::vl::presentation::NativePoint)[decl0]::point"><div>point</div></div>)=<div class="token cpp_number ">0</div>;
 			
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// Get the parent window. A parent window doesn&apos;t contain a child window. It always displayed below the child windows. When a parent window is minimized or restored, so as its child windows.</div>
+			<div class="token cpp_comment ">/// Get the parent window.</div>
+			<div class="token cpp_comment ">/// A parent window doesn&apos;t contain a child window. It always displayed below the child windows. When a parent window is minimized or restored, so as its child windows.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;returns&gt;The parent window.&lt;/returns&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow'], [], [])"><div class="token cpp_type">INativeWindow</div></div>*		<div class="def" id="FB$vl::presentation::INativeWindow::GetParent@::vl::presentation::INativeWindow *()[decl0]"><div><div class="token cpp_function">GetParent</div></div></div>()=<div class="token cpp_number ">0</div>;
@@ -442,16 +443,49 @@ Native Window
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;parent&quot;&gt;The parent window.&lt;/param&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>				<div class="def" id="FB$vl::presentation::INativeWindow::SetParent@void(::vl::presentation::INativeWindow *)[decl0]"><div><div class="token cpp_function">SetParent</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow'], [], [])"><div class="token cpp_type">INativeWindow</div></div>* <div class="def" id="NI$vl::presentation::INativeWindow::SetParent@void(::vl::presentation::INativeWindow *)[decl0]::parent"><div>parent</div></div>)=<div class="token cpp_number ">0</div>;
+
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// Test is the window always pass the focus to its parent window.</div>
+			<div class="token cpp_comment ">/// Window mode</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the window always pass the focus to its parent window.&lt;/returns&gt;</div>
-			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>				<div class="def" id="FB$vl::presentation::INativeWindow::GetAlwaysPassFocusToParent@bool()[decl0]"><div><div class="token cpp_function">GetAlwaysPassFocusToParent</div></div></div>()=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_keyword ">enum</div> <div class="def" id="NI$vl::presentation::INativeWindow::WindowMode"><div><div class="token cpp_type">WindowMode</div></div></div>
+			{
+				<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+				<div class="token cpp_comment ">/// A normal window.</div>
+				<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+				<div class="def" id="NI$vl::presentation::INativeWindow::WindowMode::Normal"><div><div class="token cpp_enum">Normal</div></div></div>,
+				<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+				<div class="token cpp_comment ">/// A tooltip window.</div>
+				<div class="token cpp_comment ">/// Such window is expected to be disabled activation, [M:vl.presentation.INativeWindow.DisableActivate] must be called manually.</div>
+				<div class="token cpp_comment ">/// Such window is expected to have a parent window, [M:vl.presentation.INativeWindow.SetParent] must be called before [M:vl.presentation.INativeWindow.ShowDeactivated].</div>
+				<div class="token cpp_comment ">/// This window is automatically closed when the top level window is deactivated or clicked.</div>
+				<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+				<div class="def" id="NI$vl::presentation::INativeWindow::WindowMode::Tooltip"><div><div class="token cpp_enum">Tooltip</div></div></div>,
+				<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+				<div class="token cpp_comment ">/// A popup window.</div>
+				<div class="token cpp_comment ">/// Such window is expected to be disabled activation, [M:vl.presentation.INativeWindow.DisableActivate] must be called manually.</div>
+				<div class="token cpp_comment ">/// Such window is expected to have a parent window, [M:vl.presentation.INativeWindow.SetParent] must be called before [M:vl.presentation.INativeWindow.ShowDeactivated].</div>
+				<div class="token cpp_comment ">/// This window is automatically closed when the top level window is deactivated or clicked.</div>
+				<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+				<div class="def" id="NI$vl::presentation::INativeWindow::WindowMode::Popup"><div><div class="token cpp_enum">Popup</div></div></div>,
+				<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+				<div class="token cpp_comment ">/// A menu window.</div>
+				<div class="token cpp_comment ">/// Such window is expected to be disabled activation, [M:vl.presentation.INativeWindow.DisableActivate] must be called manually.</div>
+				<div class="token cpp_comment ">/// Such window is expected to have a parent window, [M:vl.presentation.INativeWindow.SetParent] must be called before [M:vl.presentation.INativeWindow.ShowDeactivated].</div>
+				<div class="token cpp_comment ">/// This window is automatically closed when the top level window is deactivated or clicked.</div>
+				<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+				<div class="def" id="NI$vl::presentation::INativeWindow::WindowMode::Menu"><div><div class="token cpp_enum">Menu</div></div></div>,
+			};
+
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// Enable or disble always passing the focus to its parent window.</div>
+			<div class="token cpp_comment ">/// Get the window mode. </div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;value&quot;&gt;True to enable always passing the focus to its parent window.&lt;/param&gt;</div>
-			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>				<div class="def" id="FB$vl::presentation::INativeWindow::SetAlwaysPassFocusToParent@void(bool)[decl0]"><div><div class="token cpp_function">SetAlwaysPassFocusToParent</div></div></div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::INativeWindow::SetAlwaysPassFocusToParent@void(bool)[decl0]::value"><div>value</div></div>)=<div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;returns&gt;The window mode.&lt;/summary&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow::WindowMode'], [], [])"><div class="token cpp_type">WindowMode</div></div>			<div class="def" id="FB$vl::presentation::INativeWindow::GetWindowMode@::vl::presentation::INativeWindow::WindowMode()[decl0]"><div><div class="token cpp_function">GetWindowMode</div></div></div>() = <div class="token cpp_number ">0</div>;
+			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
+			<div class="token cpp_comment ">/// Set the window mode</div>
+			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;mode&quot;&gt;The window mode.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>				<div class="def" id="FB$vl::presentation::INativeWindow::SetWindowMode@void(::vl::presentation::INativeWindow::WindowMode)[decl0]"><div><div class="token cpp_function">SetWindowMode</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow::WindowMode'], [], [])"><div class="token cpp_type">WindowMode</div></div> <div class="def" id="NI$vl::presentation::INativeWindow::SetWindowMode@void(::vl::presentation::INativeWindow::WindowMode)[decl0]::mode"><div>mode</div></div>) = <div class="token cpp_number ">0</div>;
 
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
 			<div class="token cpp_comment ">/// Enable the window customized frame mode.</div>
@@ -501,6 +535,7 @@ Native Window
 			<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow::WindowSizeState'], [], [])"><div class="token cpp_type">WindowSizeState</div></div>		<div class="def" id="FB$vl::presentation::INativeWindow::GetSizeState@::vl::presentation::INativeWindow::WindowSizeState()[decl0]"><div><div class="token cpp_function">GetSizeState</div></div></div>()=<div class="token cpp_number ">0</div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
 			<div class="token cpp_comment ">/// Show the window.</div>
+			<div class="token cpp_comment ">/// If the window disabled activation, this function enables it again.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>				<div class="def" id="FB$vl::presentation::INativeWindow::Show@void()[decl0]"><div><div class="token cpp_function">Show</div></div></div>()=<div class="token cpp_number ">0</div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
@@ -546,6 +581,7 @@ Native Window
 			
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
 			<div class="token cpp_comment ">/// Set focus to the window.</div>
+			<div class="token cpp_comment ">/// A window with activation disabled cannot receive focus.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>				<div class="def" id="FB$vl::presentation::INativeWindow::SetFocus@void()[decl0]"><div><div class="token cpp_function">SetFocus</div></div></div>()=<div class="token cpp_number ">0</div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
@@ -555,6 +591,7 @@ Native Window
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>				<div class="def" id="FB$vl::presentation::INativeWindow::IsFocused@bool()[decl0]"><div><div class="token cpp_function">IsFocused</div></div></div>()=<div class="token cpp_number ">0</div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
 			<div class="token cpp_comment ">/// Activate to the window.</div>
+			<div class="token cpp_comment ">/// If the window disabled activation, this function enables it again.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>				<div class="def" id="FB$vl::presentation::INativeWindow::SetActivate@void()[decl0]"><div><div class="token cpp_function">SetActivate</div></div></div>()=<div class="token cpp_number ">0</div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
@@ -583,6 +620,8 @@ Native Window
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>				<div class="def" id="FB$vl::presentation::INativeWindow::EnableActivate@void()[decl0]"><div><div class="token cpp_function">EnableActivate</div></div></div>()=<div class="token cpp_number ">0</div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
 			<div class="token cpp_comment ">/// Disable activation to the window.</div>
+			<div class="token cpp_comment ">/// Clicking a window with activation disabled doesn&apos;t bring activation and focus.</div>
+			<div class="token cpp_comment ">/// Activation will be automatically enabled by calling &lt;see cref=&quot;Show&quot;/&gt; or &lt;see cref=&quot;SetActivate&quot;/&gt;.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>				<div class="def" id="FB$vl::presentation::INativeWindow::DisableActivate@void()[decl0]"><div><div class="token cpp_function">DisableActivate</div></div></div>()=<div class="token cpp_number ">0</div>;
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
@@ -1225,21 +1264,7 @@ Native Window Services
 		<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::presentation::INativeInputService"><div><div class="token cpp_type">INativeInputService</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::IDescriptable'], [], [])"><div class="token cpp_type">IDescriptable</div></div>, <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::reflection::Description'], [], [])"><div class="token cpp_type">Description</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeInputService'], [], [])"><div class="token cpp_type">INativeInputService</div></div>&gt;
 		{
-		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// Start to reveive global mouse message.</div>
-			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
-			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::presentation::INativeInputService::StartHookMouse@void()[decl0]"><div><div class="token cpp_function">StartHookMouse</div></div></div>()=<div class="token cpp_number ">0</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// Stop to receive global mouse message.</div>
-			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
-			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::presentation::INativeInputService::StopHookMouse@void()[decl0]"><div><div class="token cpp_function">StopHookMouse</div></div></div>()=<div class="token cpp_number ">0</div>;
-			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// Test is the global mouse message receiving enabled.</div>
-			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if the global mouse message receiving is enabled.&lt;/returns&gt;</div>
-			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">bool</div>					<div class="def" id="FB$vl::presentation::INativeInputService::IsHookingMouse@bool()[decl0]"><div><div class="token cpp_function">IsHookingMouse</div></div></div>()=<div class="token cpp_number ">0</div>;
-			
+		<div class="token cpp_keyword ">public</div>:			
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
 			<div class="token cpp_comment ">/// Start to reveive global timer message.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
@@ -1573,31 +1598,6 @@ Native Window Controller
 		<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::presentation::INativeControllerListener"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeControllerListener'], [], [])"><div class="token cpp_type">INativeControllerListener</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Interface'], [], [])"><div class="token cpp_type">Interface</div></div>
 		{
 		<div class="token cpp_keyword ">public</div>:
-			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// Called when the left mouse button is pressed. To receive or not receive this message, use &lt;see cref=&quot;INativeInputService::StartHookMouse&quot;/&gt; or &lt;see cref=&quot;INativeInputService::StopHookMouse&quot;/&gt;.</div>
-			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;position&quot;&gt;The mouse position in the screen space.&lt;/param&gt;</div>
-			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::presentation::INativeControllerListener::LeftButtonDown@void(::vl::presentation::NativePoint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeControllerListener::LeftButtonDown@void(::vl::presentation::NativePoint)'], [], [])"><div class="token cpp_function">LeftButtonDown</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativePoint'], [], [])"><div class="token cpp_type">NativePoint</div></div> <div class="def" id="NI$vl::presentation::INativeControllerListener::LeftButtonDown@void(::vl::presentation::NativePoint)[decl0]::position"><div>position</div></div>);
-			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// Called when the left mouse button is released. To receive or not receive this message, use &lt;see cref=&quot;INativeInputService::StartHookMouse&quot;/&gt; or &lt;see cref=&quot;INativeInputService::StopHookMouse&quot;/&gt;</div>
-			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;position&quot;&gt;The mouse position in the screen space.&lt;/param&gt;</div>
-			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::presentation::INativeControllerListener::LeftButtonUp@void(::vl::presentation::NativePoint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeControllerListener::LeftButtonUp@void(::vl::presentation::NativePoint)'], [], [])"><div class="token cpp_function">LeftButtonUp</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativePoint'], [], [])"><div class="token cpp_type">NativePoint</div></div> <div class="def" id="NI$vl::presentation::INativeControllerListener::LeftButtonUp@void(::vl::presentation::NativePoint)[decl0]::position"><div>position</div></div>);
-			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// Called when the right mouse button is pressed. To receive or not receive this message, use &lt;see cref=&quot;INativeInputService::StartHookMouse&quot;/&gt; or &lt;see cref=&quot;INativeInputService::StopHookMouse&quot;/&gt;</div>
-			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;position&quot;&gt;The mouse position in the screen space.&lt;/param&gt;</div>
-			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::presentation::INativeControllerListener::RightButtonDown@void(::vl::presentation::NativePoint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeControllerListener::RightButtonDown@void(::vl::presentation::NativePoint)'], [], [])"><div class="token cpp_function">RightButtonDown</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativePoint'], [], [])"><div class="token cpp_type">NativePoint</div></div> <div class="def" id="NI$vl::presentation::INativeControllerListener::RightButtonDown@void(::vl::presentation::NativePoint)[decl0]::position"><div>position</div></div>);
-			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// Called when the right mouse button is released. To receive or not receive this message, use &lt;see cref=&quot;INativeInputService::StartHookMouse&quot;/&gt; or &lt;see cref=&quot;INativeInputService::StopHookMouse&quot;/&gt;</div>
-			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;position&quot;&gt;The mouse position in the screen space.&lt;/param&gt;</div>
-			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::presentation::INativeControllerListener::RightButtonUp@void(::vl::presentation::NativePoint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeControllerListener::RightButtonUp@void(::vl::presentation::NativePoint)'], [], [])"><div class="token cpp_function">RightButtonUp</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativePoint'], [], [])"><div class="token cpp_type">NativePoint</div></div> <div class="def" id="NI$vl::presentation::INativeControllerListener::RightButtonUp@void(::vl::presentation::NativePoint)[decl0]::position"><div>position</div></div>);
-			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-			<div class="token cpp_comment ">/// Called when the mouse is moving. To receive or not receive this message, use &lt;see cref=&quot;INativeInputService::StartHookMouse&quot;/&gt; or &lt;see cref=&quot;INativeInputService::StopHookMouse&quot;/&gt;</div>
-			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;position&quot;&gt;The mouse position in the screen space.&lt;/param&gt;</div>
-			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>					<div class="def" id="FB$vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)'], [], [])"><div class="token cpp_function">MouseMoving</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativePoint'], [], [])"><div class="token cpp_type">NativePoint</div></div> <div class="def" id="NI$vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)[decl0]::position"><div>position</div></div>);
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
 			<div class="token cpp_comment ">/// Called when the global timer message raised. To receive or not receive this message, use &lt;see cref=&quot;INativeInputService::StartTimer&quot;/&gt; or &lt;see cref=&quot;INativeInputService::StopTimer&quot;/&gt;</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
@@ -2548,33 +2548,6 @@ referencedSymbols = {
             'FB$vl::presentation::INativeControllerListener::GlobalTimer@void()[decl0]'
         ]
     },
-    'vl::presentation::INativeControllerListener::LeftButtonDown@void(::vl::presentation::NativePoint)': {
-        'displayNameInHtml': '<span class="cpp_type">INativeControllerListener</span>::<span class="cpp_function">LeftButtonDown</span>(<span class="cpp_type">NativePoint</span>)',
-        'impls': [
-            'FB$vl::presentation::INativeControllerListener::LeftButtonDown@void(::vl::presentation::NativePoint)[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::INativeControllerListener::LeftButtonDown@void(::vl::presentation::NativePoint)[decl0]'
-        ]
-    },
-    'vl::presentation::INativeControllerListener::LeftButtonUp@void(::vl::presentation::NativePoint)': {
-        'displayNameInHtml': '<span class="cpp_type">INativeControllerListener</span>::<span class="cpp_function">LeftButtonUp</span>(<span class="cpp_type">NativePoint</span>)',
-        'impls': [
-            'FB$vl::presentation::INativeControllerListener::LeftButtonUp@void(::vl::presentation::NativePoint)[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::INativeControllerListener::LeftButtonUp@void(::vl::presentation::NativePoint)[decl0]'
-        ]
-    },
-    'vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)': {
-        'displayNameInHtml': '<span class="cpp_type">INativeControllerListener</span>::<span class="cpp_function">MouseMoving</span>(<span class="cpp_type">NativePoint</span>)',
-        'impls': [
-            'FB$vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)[decl0]'
-        ]
-    },
     'vl::presentation::INativeControllerListener::NativeWindowCreated@void(::vl::presentation::INativeWindow *)': {
         'displayNameInHtml': '<span class="cpp_type">INativeControllerListener</span>::<span class="cpp_function">NativeWindowCreated</span>(<span class="cpp_type">INativeWindow</span> *)',
         'impls': [
@@ -2591,24 +2564,6 @@ referencedSymbols = {
         ],
         'decls': [
             'FB$vl::presentation::INativeControllerListener::NativeWindowDestroying@void(::vl::presentation::INativeWindow *)[decl0]'
-        ]
-    },
-    'vl::presentation::INativeControllerListener::RightButtonDown@void(::vl::presentation::NativePoint)': {
-        'displayNameInHtml': '<span class="cpp_type">INativeControllerListener</span>::<span class="cpp_function">RightButtonDown</span>(<span class="cpp_type">NativePoint</span>)',
-        'impls': [
-            'FB$vl::presentation::INativeControllerListener::RightButtonDown@void(::vl::presentation::NativePoint)[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::INativeControllerListener::RightButtonDown@void(::vl::presentation::NativePoint)[decl0]'
-        ]
-    },
-    'vl::presentation::INativeControllerListener::RightButtonUp@void(::vl::presentation::NativePoint)': {
-        'displayNameInHtml': '<span class="cpp_type">INativeControllerListener</span>::<span class="cpp_function">RightButtonUp</span>(<span class="cpp_type">NativePoint</span>)',
-        'impls': [
-            'FB$vl::presentation::INativeControllerListener::RightButtonUp@void(::vl::presentation::NativePoint)[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::INativeControllerListener::RightButtonUp@void(::vl::presentation::NativePoint)[decl0]'
         ]
     },
     'vl::presentation::INativeCursor': {
@@ -2835,6 +2790,13 @@ referencedSymbols = {
         'decls': [
             'NF[0]$vl::presentation::INativeWindow'
         ]
+    },
+    'vl::presentation::INativeWindow::WindowMode': {
+        'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_type">WindowMode</span>',
+        'impls': [
+            'NI$vl::presentation::INativeWindow::WindowMode'
+        ],
+        'decls': []
     },
     'vl::presentation::INativeWindow::WindowSizeState': {
         'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_type">WindowSizeState</span>',
@@ -3387,20 +3349,10 @@ symbolToFiles = {
     'FB$vl::presentation::INativeControllerListener::ClipboardUpdated@void()[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
     'FB$vl::presentation::INativeControllerListener::GlobalTimer@void()[decl0]': null,
     'FB$vl::presentation::INativeControllerListener::GlobalTimer@void()[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
-    'FB$vl::presentation::INativeControllerListener::LeftButtonDown@void(::vl::presentation::NativePoint)[decl0]': null,
-    'FB$vl::presentation::INativeControllerListener::LeftButtonDown@void(::vl::presentation::NativePoint)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
-    'FB$vl::presentation::INativeControllerListener::LeftButtonUp@void(::vl::presentation::NativePoint)[decl0]': null,
-    'FB$vl::presentation::INativeControllerListener::LeftButtonUp@void(::vl::presentation::NativePoint)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
-    'FB$vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)[decl0]': null,
-    'FB$vl::presentation::INativeControllerListener::MouseMoving@void(::vl::presentation::NativePoint)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
     'FB$vl::presentation::INativeControllerListener::NativeWindowCreated@void(::vl::presentation::INativeWindow *)[decl0]': null,
     'FB$vl::presentation::INativeControllerListener::NativeWindowCreated@void(::vl::presentation::INativeWindow *)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
     'FB$vl::presentation::INativeControllerListener::NativeWindowDestroying@void(::vl::presentation::INativeWindow *)[decl0]': null,
     'FB$vl::presentation::INativeControllerListener::NativeWindowDestroying@void(::vl::presentation::INativeWindow *)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
-    'FB$vl::presentation::INativeControllerListener::RightButtonDown@void(::vl::presentation::NativePoint)[decl0]': null,
-    'FB$vl::presentation::INativeControllerListener::RightButtonDown@void(::vl::presentation::NativePoint)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
-    'FB$vl::presentation::INativeControllerListener::RightButtonUp@void(::vl::presentation::NativePoint)[decl0]': null,
-    'FB$vl::presentation::INativeControllerListener::RightButtonUp@void(::vl::presentation::NativePoint)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
     'FB$vl::presentation::INativeWindowListener::Activated@void()[decl0]': null,
     'FB$vl::presentation::INativeWindowListener::Activated@void()[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
     'FB$vl::presentation::INativeWindowListener::Char@void(::vl::presentation::NativeWindowCharInfo const &)[decl0]': null,
@@ -4287,6 +4239,7 @@ symbolToFiles = {
     'NI$vl::presentation::INativeScreen': null,
     'NI$vl::presentation::INativeScreenService': null,
     'NI$vl::presentation::INativeWindow': null,
+    'NI$vl::presentation::INativeWindow::WindowMode': null,
     'NI$vl::presentation::INativeWindow::WindowSizeState': null,
     'NI$vl::presentation::INativeWindowListener': null,
     'NI$vl::presentation::INativeWindowListener::HitTestResult': null,

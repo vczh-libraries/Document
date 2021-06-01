@@ -1,5 +1,6 @@
 <Document symbolId="vl::presentation::INativeWindow::SetFocus@void()" accessor="public" category="Function" name="SetFocus" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetFocus@void()[decl0]"><summary>
  Set focus to the window.
+ A window with activation disabled cannot receive focus.
  </summary><signature><![CDATA[void SetFocus(
 );
 ]]></signature></Document>

@@ -1,5 +1,7 @@
 <Document symbolId="vl::presentation::INativeWindow::DisableActivate@void()" accessor="public" category="Function" name="DisableActivate" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::DisableActivate@void()[decl0]"><summary>
  Disable activation to the window.
+ Clicking a window with activation disabled doesn&apos;t bring activation and focus.
+ Activation will be automatically enabled by calling <symbol name="Show" docId="vl::presentation::INativeWindow::Show@void()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::Show@void()[decl0]"/> or <symbol name="SetActivate" docId="vl::presentation::INativeWindow::SetActivate@void()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetActivate@void()[decl0]"/>.
  </summary><signature><![CDATA[void DisableActivate(
 );
 ]]></signature></Document>

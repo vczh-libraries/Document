@@ -14,6 +14,7 @@
 <div class="codebox"><div class="cpp_default"><div class="disabled">#include &quot;WinGDIApplication.h&quot;</div>
 <div class="disabled">#include &quot;..\..\..\GraphicsElement\WindowsGDI\GuiGraphicsWindowsGDI.h&quot;</div>
 <div class="disabled">#include &lt;ShellScalingApi.h&gt;</div>
+<div class="disabled">#include &quot;..\ServicesImpl\WindowsCallbackService.h&quot;</div>
 
 <div class="token cpp_keyword ">namespace</div> <div class="def" id="NF[409]$vl"><div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div></div>
 {
@@ -28,6 +29,7 @@
 			<div class="token cpp_keyword ">protected</div>:
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WinBitmap'], [], [])"><div class="token cpp_type">WinBitmap</div></div>&gt;					<div class="def" id="NI$vl::presentation::windows::GdiWindowsNativeWindowListener::buffer"><div><div class="token cpp_field">buffer</div></div></div>;
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow'], [], [])"><div class="token cpp_type">INativeWindow</div></div>*					<div class="def" id="NI$vl::presentation::windows::GdiWindowsNativeWindowListener::window"><div><div class="token cpp_field">window</div></div></div>;
+				<div class="token cpp_keyword ">bool</div>							<div class="def" id="NI$vl::presentation::windows::GdiWindowsNativeWindowListener::needPaintAfterResize"><div><div class="token cpp_field">needPaintAfterResize</div></div></div> = <div class="token cpp_keyword ">false</div>;
 
 				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="FB$vl::presentation::windows::GdiWindowsNativeWindowListener::DetermineBufferLength@::vl::vint(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]"><div><div class="token cpp_function">DetermineBufferLength</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::GdiWindowsNativeWindowListener::DetermineBufferLength@::vl::vint(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::minSize"><div><div class="token cpp_argument">minSize</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::GdiWindowsNativeWindowListener::DetermineBufferLength@::vl::vint(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::minBound"><div><div class="token cpp_argument">minBound</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::GdiWindowsNativeWindowListener::DetermineBufferLength@::vl::vint(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::maxBound"><div><div class="token cpp_argument">maxBound</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::GdiWindowsNativeWindowListener::DetermineBufferLength@::vl::vint(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::currentSize"><div><div class="token cpp_argument">currentSize</div></div></div>)
 				{
@@ -62,6 +64,7 @@
 						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeWindowListener::buffer'], [], [])"><div class="token cpp_field">buffer</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WinBitmap::GetWidth@::vl::vint()'], ['vl::presentation::windows::WinBitmap::GetWidth@::vl::vint()'], [], [])"><div class="token cpp_function">GetWidth</div></div>() != <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeWindowListener::RebuildCanvas@void(::vl::presentation::NativeSize)[impl0]::size'], [], [])"><div class="token cpp_argument">size</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::Size_::x'], [], [])"><div class="token cpp_field">x</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativeCoordinate::value'], [], [])"><div class="token cpp_field">value</div></div> || <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeWindowListener::buffer'], [], [])"><div class="token cpp_field">buffer</div></div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WinBitmap::GetHeight@::vl::vint()'], ['vl::presentation::windows::WinBitmap::GetHeight@::vl::vint()'], [], [])"><div class="token cpp_function">GetHeight</div></div>() != <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeWindowListener::RebuildCanvas@void(::vl::presentation::NativeSize)[impl0]::size'], [], [])"><div class="token cpp_argument">size</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::Size_::y'], [], [])"><div class="token cpp_field">y</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativeCoordinate::value'], [], [])"><div class="token cpp_field">value</div></div>)
 						{
 							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeWindowListener::buffer'], [], [])"><div class="token cpp_field">buffer</div></div> <div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)'], [], [], [])"><div class="token cpp_function">=</div></div> <div class="token cpp_number ">0</div>;
+							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeWindowListener::needPaintAfterResize'], [], [])"><div class="token cpp_field">needPaintAfterResize</div></div> = <div class="token cpp_keyword ">true</div>;
 						}
 					}
 					<div class="token cpp_keyword ">if</div> (!<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeWindowListener::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>)
@@ -83,6 +86,16 @@
 
 				<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::presentation::windows::GdiWindowsNativeWindowListener::Paint@void()[impl0]"><div><div class="token cpp_function">Paint</div></div></div>()
 				{
+					<div class="token cpp_comment ">// for the first Paint() call after Moved()</div>
+					<div class="token cpp_comment ">// trigger the global timer so that all GuiGraphicsHost with needToRender=true will call Render(false)</div>
+					<div class="token cpp_comment ">// so that to fill the buffer to prevent from seeing a black frame</div>
+					<div class="token cpp_comment ">// but it still leave some black color since the layout may needs more than 1 frame to finish</div>
+					<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeWindowListener::needPaintAfterResize'], [], [])"><div class="token cpp_field">needPaintAfterResize</div></div>)
+					{
+						<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeWindowListener::needPaintAfterResize'], [], [])"><div class="token cpp_field">needPaintAfterResize</div></div> = <div class="token cpp_keyword ">false</div>;
+						<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::windows::GdiWindowsNativeWindowListener::Paint@void()[impl0]::callbackService"><div>callbackService</div></div> = <div class="ref" onclick="jumpToSymbol(['vl::presentation::GetCurrentController@::vl::presentation::INativeController *()'], ['vl::presentation::GetCurrentController@::vl::presentation::INativeController *()'], [], [])"><div class="token cpp_function">GetCurrentController</div></div>()-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeController::CallbackService@::vl::presentation::INativeCallbackService *()'], ['vl::presentation::INativeController::CallbackService@::vl::presentation::INativeCallbackService *()'], [], [])"><div class="token cpp_function">CallbackService</div></div>();
+						<div class="token cpp_keyword ">dynamic_cast</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsCallbackService'], [], [])"><div class="token cpp_type">WindowsCallbackService</div></div>*&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeWindowListener::Paint@void()[impl0]::callbackService'], [], [])">callbackService</div>)-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WindowsCallbackService::InvokeGlobalTimer@void()'], ['vl::presentation::windows::WindowsCallbackService::InvokeGlobalTimer@void()'], [], [])"><div class="token cpp_function">InvokeGlobalTimer</div></div>();
+					}
 					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::IWindowsForm'], [], [])"><div class="token cpp_type">IWindowsForm</div></div>* <div class="def" id="NI$vl::presentation::windows::GdiWindowsNativeWindowListener::Paint@void()[impl0]::form"><div>form</div></div>=<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::GetWindowsForm@::vl::presentation::windows::IWindowsForm *(::vl::presentation::INativeWindow *)'], ['vl::presentation::windows::GetWindowsForm@::vl::presentation::windows::IWindowsForm *(::vl::presentation::INativeWindow *)'], [], [])"><div class="token cpp_function">GetWindowsForm</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeWindowListener::window'], [], [])"><div class="token cpp_field">window</div></div>);
 					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WinControlDC'], [], [])"><div class="token cpp_type">WinControlDC</div></div> <div class="def" id="NI$vl::presentation::windows::GdiWindowsNativeWindowListener::Paint@void()[impl0]::controlDC"><div>controlDC</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeWindowListener::Paint@void()[impl0]::form'], [], [])">form</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::IWindowsForm::GetWindowHandle@::HWND()'], ['vl::presentation::windows::IWindowsForm::GetWindowHandle@::HWND()'], [], [])"><div class="token cpp_function">GetWindowHandle</div></div>());
 					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeWindowListener::Paint@void()[impl0]::controlDC'], [], [])">controlDC</div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WinDC::Draw@void(::vl::vint, ::vl::vint, ::vl::presentation::windows::WinBitmap::Ptr)'], ['vl::presentation::windows::WinDC::Draw@void(::POINT, ::vl::presentation::windows::WinBitmap::Ptr)', 'vl::presentation::windows::WinDC::Draw@void(::POINT, ::vl::presentation::windows::WinBitmap::Ptr, unsigned char)', 'vl::presentation::windows::WinDC::Draw@void(::POINT, ::vl::presentation::windows::WinMetaFile *)', 'vl::presentation::windows::WinDC::Draw@void(::RECT, ::vl::presentation::windows::WinBitmap::Ptr)', 'vl::presentation::windows::WinDC::Draw@void(::RECT, ::vl::presentation::windows::WinBitmap::Ptr, ::POINT)', 'vl::presentation::windows::WinDC::Draw@void(::RECT, ::vl::presentation::windows::WinBitmap::Ptr, ::POINT, unsigned char)', 'vl::presentation::windows::WinDC::Draw@void(::RECT, ::vl::presentation::windows::WinBitmap::Ptr, ::RECT)', 'vl::presentation::windows::WinDC::Draw@void(::RECT, ::vl::presentation::windows::WinBitmap::Ptr, ::RECT, unsigned char)', 'vl::presentation::windows::WinDC::Draw@void(::RECT, ::vl::presentation::windows::WinBitmap::Ptr, unsigned char)', 'vl::presentation::windows::WinDC::Draw@void(::RECT, ::vl::presentation::windows::WinMetaFile *)', 'vl::presentation::windows::WinDC::Draw@void(::vl::vint, ::vl::vint, ::vl::presentation::windows::WinBitmap::Ptr)', 'vl::presentation::windows::WinDC::Draw@void(::vl::vint, ::vl::vint, ::vl::presentation::windows::WinBitmap::Ptr, unsigned char)', 'vl::presentation::windows::WinDC::Draw@void(::vl::vint, ::vl::vint, ::vl::presentation::windows::WinMetaFile *)', 'vl::presentation::windows::WinDC::Draw@void(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::presentation::windows::WinBitmap::Ptr)', 'vl::presentation::windows::WinDC::Draw@void(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::presentation::windows::WinBitmap::Ptr, ::vl::vint, ::vl::vint)', 'vl::presentation::windows::WinDC::Draw@void(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::presentation::windows::WinBitmap::Ptr, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)', 'vl::presentation::windows::WinDC::Draw@void(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::presentation::windows::WinBitmap::Ptr, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, unsigned char)', 'vl::presentation::windows::WinDC::Draw@void(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::presentation::windows::WinBitmap::Ptr, ::vl::vint, ::vl::vint, unsigned char)', 'vl::presentation::windows::WinDC::Draw@void(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::presentation::windows::WinBitmap::Ptr, unsigned char)', 'vl::presentation::windows::WinDC::Draw@void(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint, ::vl::presentation::windows::WinMetaFile *)'], [], [])"><div class="token cpp_function">Draw</div></div>(<div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeWindowListener::buffer'], [], [])"><div class="token cpp_field">buffer</div></div>);
@@ -99,6 +112,16 @@
 			{
 			<div class="token cpp_keyword ">public</div>:
 				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::Dictionary'], [], [])"><div class="token cpp_type">Dictionary</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow'], [], [])"><div class="token cpp_type">INativeWindow</div></div>*, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeWindowListener'], [], [])"><div class="token cpp_type">GdiWindowsNativeWindowListener</div></div>&gt;&gt;		<div class="def" id="NI$vl::presentation::windows::GdiWindowsNativeControllerListener::nativeWindowListeners"><div><div class="token cpp_field">nativeWindowListeners</div></div></div>;
+
+				<div class="def" id="FB$vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]"><div><div class="token cpp_function">~</div><div class="token cpp_function">GdiWindowsNativeControllerListener</div></div></div>()
+				{
+					<div class="token cpp_keyword ">for</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::i"><div>i</div></div> = <div class="token cpp_number ">0</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::i'], [], [])">i</div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeControllerListener::nativeWindowListeners'], [], [])"><div class="token cpp_field">nativeWindowListeners</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Count@::vl::vint()'], ['vl::collections::Dictionary::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>(); <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::i'], [], [])">i</div>++)
+					{
+						<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::window"><div>window</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeControllerListener::nativeWindowListeners'], [], [])"><div class="token cpp_field">nativeWindowListeners</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()'], ['vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()'], [], [])"><div class="token cpp_function">Keys</div></div>()<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::i'], [], [])">i</div>];
+						<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::listener"><div>listener</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeControllerListener::nativeWindowListeners'], [], [])"><div class="token cpp_field">nativeWindowListeners</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()'], ['vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()'], [], [])"><div class="token cpp_function">Values</div></div>()<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::i'], [], [])">i</div>];
+						<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::window'], [], [])">window</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindow::UninstallListener@bool(::vl::presentation::INativeWindowListener *)'], ['vl::presentation::INativeWindow::UninstallListener@bool(::vl::presentation::INativeWindowListener *)'], [], [])"><div class="token cpp_function">UninstallListener</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::listener'], [], [])">listener</div>.<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Obj@[T] *()'], ['vl::Ptr::Obj@[T] *()'], [], [])"><div class="token cpp_function">Obj</div></div>());
+					}
+				}
 
 				<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::presentation::windows::GdiWindowsNativeControllerListener::NativeWindowCreated@void(::vl::presentation::INativeWindow *)[impl0]"><div><div class="token cpp_function">NativeWindowCreated</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow'], [], [])"><div class="token cpp_type">INativeWindow</div></div>* <div class="def" id="NI$vl::presentation::windows::GdiWindowsNativeControllerListener::NativeWindowCreated@void(::vl::presentation::INativeWindow *)[impl0]::window"><div><div class="token cpp_argument">window</div></div></div>)
 				{
@@ -942,6 +965,13 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">ArrayBase</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator []</span>(<span class="cpp_type">vint</span>)',
+        'impls': [
+            'FB$vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)[impl0]'
+        ],
+        'decls': []
+    },
     'vl::collections::Dictionary': {
         'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;',
         'impls': [
@@ -960,6 +990,13 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">KT</span> <span class="cpp_keyword">const</span> &, <span class="cpp_type">VT</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
             'FB$vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::collections::Dictionary::Count@::vl::vint()': {
+        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Count</span>()',
+        'impls': [
+            'FB$vl::collections::Dictionary::Count@::vl::vint()[impl0]'
         ],
         'decls': []
     },
@@ -1243,6 +1280,15 @@ referencedSymbols = {
             'NF[238]$vl::presentation',
             'NF[239]$vl::presentation',
             'NF[240]$vl::presentation'
+        ]
+    },
+    'vl::presentation::GetCurrentController@::vl::presentation::INativeController *()': {
+        'displayNameInHtml': '<span class="cpp_function">GetCurrentController</span>()',
+        'impls': [
+            'FB$vl::presentation::GetCurrentController@::vl::presentation::INativeController *()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::GetCurrentController@::vl::presentation::INativeController *()[decl0]'
         ]
     },
     'vl::presentation::INativeCallbackService::InstallListener@bool(::vl::presentation::INativeControllerListener *)': {
@@ -1587,6 +1633,27 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::listener': {
+        'displayNameInHtml': 'listener',
+        'impls': [
+            'NI$vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::listener'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::window': {
+        'displayNameInHtml': 'window',
+        'impls': [
+            'NI$vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::window'
+        ],
+        'decls': []
+    },
     'vl::presentation::windows::GdiWindowsNativeWindowListener': {
         'displayNameInHtml': '<span class="cpp_type">GdiWindowsNativeWindowListener</span>',
         'impls': [
@@ -1706,6 +1773,13 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::presentation::windows::GdiWindowsNativeWindowListener::Paint@void()[impl0]::callbackService': {
+        'displayNameInHtml': 'callbackService',
+        'impls': [
+            'NI$vl::presentation::windows::GdiWindowsNativeWindowListener::Paint@void()[impl0]::callbackService'
+        ],
+        'decls': []
+    },
     'vl::presentation::windows::GdiWindowsNativeWindowListener::Paint@void()[impl0]::controlDC': {
         'displayNameInHtml': 'controlDC',
         'impls': [
@@ -1738,6 +1812,13 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">GdiWindowsNativeWindowListener</span>::<span class="cpp_field">buffer</span>',
         'impls': [
             'NI$vl::presentation::windows::GdiWindowsNativeWindowListener::buffer'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::GdiWindowsNativeWindowListener::needPaintAfterResize': {
+        'displayNameInHtml': '<span class="cpp_type">GdiWindowsNativeWindowListener</span>::<span class="cpp_field">needPaintAfterResize</span>',
+        'impls': [
+            'NI$vl::presentation::windows::GdiWindowsNativeWindowListener::needPaintAfterResize'
         ],
         'decls': []
     },
@@ -2115,6 +2196,22 @@ referencedSymbols = {
             'FB$vl::presentation::windows::WinDC::SetBackTransparent@void(bool)[decl0]'
         ]
     },
+    'vl::presentation::windows::WindowsCallbackService': {
+        'displayNameInHtml': '<span class="cpp_type">WindowsCallbackService</span>',
+        'impls': [
+            'NI$vl::presentation::windows::WindowsCallbackService'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::WindowsCallbackService::InvokeGlobalTimer@void()': {
+        'displayNameInHtml': '<span class="cpp_type">WindowsCallbackService</span>::<span class="cpp_function">InvokeGlobalTimer</span>()',
+        'impls': [
+            'FB$vl::presentation::windows::WindowsCallbackService::InvokeGlobalTimer@void()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::windows::WindowsCallbackService::InvokeGlobalTimer@void()[decl0]'
+        ]
+    },
     'vl::presentation::windows::gdiListener': {
         'displayNameInHtml': 'gdiListener',
         'impls': [
@@ -2145,13 +2242,17 @@ symbolToFiles = {
     'FB$vl::Ptr::operator ->@[T] *()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
     'FB$vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
     'FB$vl::collections::ArrayBase::Get@[T] const &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
     'FB$vl::collections::Dictionary::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
     'FB$vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
+    'FB$vl::collections::Dictionary::Count@::vl::vint()[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
     'FB$vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
     'FB$vl::collections::Dictionary::Remove@bool([KK] const &)[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
     'FB$vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
     'FB$vl::collections::Dictionary::operator []@[VT] const &([KK] const &)[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
     'FB$vl::collections::SortedList::IndexOf@::vl::vint([K] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::presentation::GetCurrentController@::vl::presentation::INativeController *()[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
+    'FB$vl::presentation::GetCurrentController@::vl::presentation::INativeController *()[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
     'FB$vl::presentation::INativeCallbackService::InstallListener@bool(::vl::presentation::INativeControllerListener *)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'FB$vl::presentation::INativeCallbackService::UninstallListener@bool(::vl::presentation::INativeControllerListener *)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'FB$vl::presentation::INativeController::CallbackService@::vl::presentation::INativeCallbackService *()[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
@@ -2241,6 +2342,8 @@ symbolToFiles = {
     'FB$vl::presentation::windows::WinDC::GetHandle@::HDC()[impl0]': { 'htmlFileName': 'WinGDI.cpp', 'displayName': 'WinGDI.cpp' },
     'FB$vl::presentation::windows::WinDC::SetBackTransparent@void(bool)[decl0]': { 'htmlFileName': 'WinGDI.h2', 'displayName': 'WinGDI.h' },
     'FB$vl::presentation::windows::WinDC::SetBackTransparent@void(bool)[impl0]': { 'htmlFileName': 'WinGDI.cpp', 'displayName': 'WinGDI.cpp' },
+    'FB$vl::presentation::windows::WindowsCallbackService::InvokeGlobalTimer@void()[decl0]': { 'htmlFileName': 'WindowsCallbackService.h', 'displayName': 'WindowsCallbackService.h' },
+    'FB$vl::presentation::windows::WindowsCallbackService::InvokeGlobalTimer@void()[impl0]': { 'htmlFileName': 'WindowsCallbackService.cpp', 'displayName': 'WindowsCallbackService.cpp' },
     'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
     'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
     'NF[0]$vl::presentation': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
@@ -3061,6 +3164,9 @@ symbolToFiles = {
     'NI$vl::presentation::windows::GdiWindowsNativeControllerListener::NativeWindowDestroying@void(::vl::presentation::INativeWindow *)[impl0]::listener': null,
     'NI$vl::presentation::windows::GdiWindowsNativeControllerListener::NativeWindowDestroying@void(::vl::presentation::INativeWindow *)[impl0]::window': null,
     'NI$vl::presentation::windows::GdiWindowsNativeControllerListener::nativeWindowListeners': null,
+    'NI$vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::i': null,
+    'NI$vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::listener': null,
+    'NI$vl::presentation::windows::GdiWindowsNativeControllerListener::~GdiWindowsNativeControllerListener@()[impl0]::window': null,
     'NI$vl::presentation::windows::GdiWindowsNativeWindowListener': null,
     'NI$vl::presentation::windows::GdiWindowsNativeWindowListener::$__ctor@(::vl::presentation::INativeWindow *)[impl0]::_window': null,
     'NI$vl::presentation::windows::GdiWindowsNativeWindowListener::CalculateBufferSize@::vl::presentation::NativeSize()[impl0]::currentSize': null,
@@ -3074,10 +3180,12 @@ symbolToFiles = {
     'NI$vl::presentation::windows::GdiWindowsNativeWindowListener::DetermineBufferLength@::vl::vint(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::maxBound': null,
     'NI$vl::presentation::windows::GdiWindowsNativeWindowListener::DetermineBufferLength@::vl::vint(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::minBound': null,
     'NI$vl::presentation::windows::GdiWindowsNativeWindowListener::DetermineBufferLength@::vl::vint(::vl::vint, ::vl::vint, ::vl::vint, ::vl::vint)[impl0]::minSize': null,
+    'NI$vl::presentation::windows::GdiWindowsNativeWindowListener::Paint@void()[impl0]::callbackService': null,
     'NI$vl::presentation::windows::GdiWindowsNativeWindowListener::Paint@void()[impl0]::controlDC': null,
     'NI$vl::presentation::windows::GdiWindowsNativeWindowListener::Paint@void()[impl0]::form': null,
     'NI$vl::presentation::windows::GdiWindowsNativeWindowListener::RebuildCanvas@void(::vl::presentation::NativeSize)[impl0]::size': null,
     'NI$vl::presentation::windows::GdiWindowsNativeWindowListener::buffer': null,
+    'NI$vl::presentation::windows::GdiWindowsNativeWindowListener::needPaintAfterResize': null,
     'NI$vl::presentation::windows::GdiWindowsNativeWindowListener::window': null,
     'NI$vl::presentation::windows::GetNativeWindowDC@::vl::presentation::windows::WinDC *(::vl::presentation::INativeWindow *)[impl0]::index': null,
     'NI$vl::presentation::windows::GetNativeWindowDC@::vl::presentation::windows::WinDC *(::vl::presentation::INativeWindow *)[impl0]::window': null,
@@ -3088,6 +3196,7 @@ symbolToFiles = {
     'NI$vl::presentation::windows::WinBitmap::BitmapBits::vbb32Bits': { 'htmlFileName': 'WinGDI.h2', 'displayName': 'WinGDI.h' },
     'NI$vl::presentation::windows::WinControlDC': { 'htmlFileName': 'WinGDI.h2', 'displayName': 'WinGDI.h' },
     'NI$vl::presentation::windows::WinDC': { 'htmlFileName': 'WinGDI.h2', 'displayName': 'WinGDI.h' },
+    'NI$vl::presentation::windows::WindowsCallbackService': { 'htmlFileName': 'WindowsCallbackService.h', 'displayName': 'WindowsCallbackService.h' },
     'NI$vl::presentation::windows::gdiListener': null,
     'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' }
 };

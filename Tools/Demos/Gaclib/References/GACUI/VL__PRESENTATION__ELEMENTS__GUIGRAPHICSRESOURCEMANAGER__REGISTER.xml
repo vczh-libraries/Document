@@ -1,6 +1,7 @@
-<Document symbolId="vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)" accessor="public" category="Function" name="RegisterElementFactory" declFile="GuiGraphicsResourceManager.h" declId="FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)[decl0]"><summary>
- Register a <symbol name="IGuiGraphicsElementFactory" docId="vl::presentation::elements::IGuiGraphicsElementFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElementFactory"/> using the element type from <symbol name="GetElementTypeName" docId="vl::presentation::elements::IGuiGraphicsElementFactory::GetElementTypeName@::vl::WString()" declFile="GuiGraphicsElementInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsElementFactory::GetElementTypeName@::vl::WString()[decl0]"/>.
- </summary><param name="factory">The instance of the graphics element factory to register.</param><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool RegisterElementFactory(
-    IGuiGraphicsElementFactory * factory
+<Document symbolId="vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &amp;)" accessor="public" category="Function" name="RegisterElementType" declFile="GuiGraphicsResourceManager.h" declId="FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &amp;)[decl0]"><summary>
+ Register a element type name.
+ This function crashes when an element type has already been registered.
+ </summary><param name="elementTypeName">The element type.</param><returns>A number identifies this element type.</returns><signature><![CDATA[vint RegisterElementType(
+    WString const & elementTypeName
 );
-]]></signature><seealsos><symbol name="IGuiGraphicsElementFactory" docId="vl::presentation::elements::IGuiGraphicsElementFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElementFactory"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

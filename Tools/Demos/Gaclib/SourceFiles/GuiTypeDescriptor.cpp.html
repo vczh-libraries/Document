@@ -169,9 +169,12 @@ DescriptableObject
 		{
 		}
 
-<div class="disabled">#if defined(VCZH_GCC) &amp;&amp; defined(__clang__)</div>
+<div class="disabled">#if defined(__clang__)</div>
 <div class="disabled">#pragma clang diagnostic push</div>
 <div class="disabled">#pragma clang diagnostic ignored &quot;-Wexceptions&quot;
+#elif defined(__GNUC__)</div>
+<div class="disabled">#pragma GCC diagnostic push</div>
+<div class="disabled">#pragma GCC diagnostic ignored &quot;-Wterminate&quot;
 #endif</div>
 		<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject'], [], [])"><div class="token cpp_type">DescriptableObject</div></div>::<div class="def" id="FB$vl::reflection::DescriptableObject::~DescriptableObject@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::reflection::DescriptableObject::~DescriptableObject@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">DescriptableObject</div></div></div>()
 		{
@@ -205,8 +208,10 @@ DescriptableObject
 			}
 <div class="disabled">#endif</div>
 		}
-<div class="disabled">#if defined(VCZH_GCC) &amp;&amp; defined(__clang__)</div>
+<div class="disabled">#if defined(__clang__)</div>
 <div class="disabled">#pragma clang diagnostic pop
+#elif defined(__GNUC__)</div>
+<div class="disabled">#pragma GCC diagnostic pop
 #endif</div>
 
 <div class="disabled">#ifndef VCZH_DEBUG_NO_REFLECTION</div>

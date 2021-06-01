@@ -1,5 +1,0 @@
-<Document symbolId="vl::presentation::INativeInputService::StartHookMouse@void()" accessor="public" category="Function" name="StartHookMouse" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeInputService::StartHookMouse@void()[decl0]"><summary>
- Start to reveive global mouse message.
- </summary><signature><![CDATA[void StartHookMouse(
-);
-]]></signature></Document>

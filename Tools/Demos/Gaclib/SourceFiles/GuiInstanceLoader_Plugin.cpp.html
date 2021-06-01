@@ -209,13 +209,6 @@ GuiControlInstanceLoader
 GuiPredefinedInstanceLoadersPlugin
 ***********************************************************************/</div>
 
-			<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfExpression'], [], [])"><div class="token cpp_type">WfExpression</div></div>&gt; <div class="def" id="FB$vl::presentation::instance_loaders::CreateTrue@::vl::Ptr<::vl::workflow::WfExpression>(::vl::presentation::IGuiInstanceLoader::ArgumentMap &)[impl0]"><div><div class="token cpp_function">CreateTrue</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::IGuiInstanceLoader'], [], [])"><div class="token cpp_type">IGuiInstanceLoader</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::IGuiInstanceLoader::ArgumentMap'], [], [])"><div class="token cpp_type">ArgumentMap</div></div>&amp;)
-			{
-				<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::instance_loaders::CreateTrue@::vl::Ptr<::vl::workflow::WfExpression>(::vl::presentation::IGuiInstanceLoader::ArgumentMap &)[impl0]::expr"><div>expr</div></div> = <div class="ref" onclick="jumpToSymbol(['vl::MakePtr@::vl::Ptr<[T]>([TArgs]...)'], ['vl::MakePtr@::vl::Ptr<[T]>([TArgs]...)'], [], [])"><div class="token cpp_function">MakePtr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfLiteralExpression'], [], [])"><div class="token cpp_type">WfLiteralExpression</div></div>&gt;();
-				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::instance_loaders::CreateTrue@::vl::Ptr<::vl::workflow::WfExpression>(::vl::presentation::IGuiInstanceLoader::ArgumentMap &)[impl0]::expr'], [], [])">expr</div><div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfLiteralExpression::value'], [], [])"><div class="token cpp_field">value</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfLiteralValue'], [], [])"><div class="token cpp_type">WfLiteralValue</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfLiteralValue::True'], [], [])"><div class="token cpp_enum">True</div></div>;
-				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::instance_loaders::CreateTrue@::vl::Ptr<::vl::workflow::WfExpression>(::vl::presentation::IGuiInstanceLoader::ArgumentMap &)[impl0]::expr'], [], [])">expr</div>;
-			}
-
 			<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::presentation::instance_loaders::InitializeTrackerProgressBar@void(::vl::WString const &, ::vl::Ptr<::vl::workflow::WfBlockStatement>)[impl0]"><div><div class="token cpp_function">InitializeTrackerProgressBar</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::presentation::instance_loaders::InitializeTrackerProgressBar@void(::vl::WString const &, ::vl::Ptr<::vl::workflow::WfBlockStatement>)[impl0]::variableName"><div><div class="token cpp_argument">variableName</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfBlockStatement'], [], [])"><div class="token cpp_type">WfBlockStatement</div></div>&gt; <div class="def" id="NI$vl::presentation::instance_loaders::InitializeTrackerProgressBar@void(::vl::WString const &, ::vl::Ptr<::vl::workflow::WfBlockStatement>)[impl0]::block"><div><div class="token cpp_argument">block</div></div></div>)
 			{
 				<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::instance_loaders::InitializeTrackerProgressBar@void(::vl::WString const &, ::vl::Ptr<::vl::workflow::WfBlockStatement>)[impl0]::refVariable"><div>refVariable</div></div> = <div class="ref" onclick="jumpToSymbol(['vl::MakePtr@::vl::Ptr<[T]>([TArgs]...)'], ['vl::MakePtr@::vl::Ptr<[T]>([TArgs]...)'], [], [])"><div class="token cpp_function">MakePtr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::WfReferenceExpression'], [], [])"><div class="token cpp_type">WfReferenceExpression</div></div>&gt;();
@@ -1902,13 +1895,6 @@ referencedSymbols = {
             'NF[6]$vl::presentation::instance_loaders'
         ]
     },
-    'vl::presentation::instance_loaders::CreateTrue@::vl::Ptr<::vl::workflow::WfExpression>(::vl::presentation::IGuiInstanceLoader::ArgumentMap &)[impl0]::expr': {
-        'displayNameInHtml': 'expr',
-        'impls': [
-            'NI$vl::presentation::instance_loaders::CreateTrue@::vl::Ptr<::vl::workflow::WfExpression>(::vl::presentation::IGuiInstanceLoader::ArgumentMap &)[impl0]::expr'
-        ],
-        'decls': []
-    },
     'vl::presentation::instance_loaders::GuiControlInstanceLoader': {
         'displayNameInHtml': '<span class="cpp_type">GuiControlInstanceLoader</span>',
         'impls': [
@@ -2955,36 +2941,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vl::workflow::WfLiteralExpression': {
-        'displayNameInHtml': '<span class="cpp_type">WfLiteralExpression</span>',
-        'impls': [
-            'NI$vl::workflow::WfLiteralExpression'
-        ],
-        'decls': [
-            'NF[0]$vl::workflow::WfLiteralExpression'
-        ]
-    },
-    'vl::workflow::WfLiteralExpression::value': {
-        'displayNameInHtml': '<span class="cpp_type">WfLiteralExpression</span>::<span class="cpp_field">value</span>',
-        'impls': [
-            'NI$vl::workflow::WfLiteralExpression::value'
-        ],
-        'decls': []
-    },
-    'vl::workflow::WfLiteralValue': {
-        'displayNameInHtml': '<span class="cpp_type">WfLiteralValue</span>',
-        'impls': [
-            'NI$vl::workflow::WfLiteralValue'
-        ],
-        'decls': []
-    },
-    'vl::workflow::WfLiteralValue::True': {
-        'displayNameInHtml': '<span class="cpp_type">WfLiteralValue</span>::<span class="cpp_enum">True</span>',
-        'impls': [
-            'NI$vl::workflow::WfLiteralValue::True'
-        ],
-        'decls': []
-    },
     'vl::workflow::WfMemberExpression': {
         'displayNameInHtml': '<span class="cpp_type">WfMemberExpression</span>',
         'impls': [
@@ -3134,7 +3090,6 @@ symbolToFiles = {
     'NF[0]$vl::workflow::WfExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
     'NF[0]$vl::workflow::WfExpressionStatement': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
     'NF[0]$vl::workflow::WfIntegerExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
-    'NF[0]$vl::workflow::WfLiteralExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
     'NF[0]$vl::workflow::WfMemberExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
     'NF[0]$vl::workflow::WfReferenceExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
     'NF[0]$vl::workflow::WfStatement': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
@@ -4154,7 +4109,6 @@ symbolToFiles = {
     'NI$vl::presentation::controls::GuiToolstripButton': { 'htmlFileName': 'GuiToolstripMenu.h', 'displayName': 'GuiToolstripMenu.h' },
     'NI$vl::presentation::controls::GuiWindow': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'NI$vl::presentation::controls::IGuiPlugin': { 'htmlFileName': 'GuiApplication.h', 'displayName': 'GuiApplication.h' },
-    'NI$vl::presentation::instance_loaders::CreateTrue@::vl::Ptr<::vl::workflow::WfExpression>(::vl::presentation::IGuiInstanceLoader::ArgumentMap &)[impl0]::expr': null,
     'NI$vl::presentation::instance_loaders::GuiControlInstanceLoader': null,
     'NI$vl::presentation::instance_loaders::GuiControlInstanceLoader::AssignParameters@::vl::Ptr<::vl::workflow::WfStatement>(::vl::presentation::GuiResourcePrecompileContext &, ::vl::presentation::types::ResolvingResult &, ::vl::presentation::IGuiInstanceLoader::TypeInfo const &, ::vl::presentation::GlobalStringKey, ::vl::presentation::IGuiInstanceLoader::ArgumentMap &, ::vl::presentation::GuiResourceTextPos, ::vl::presentation::GuiResourceError::List &)[impl0]::__foreach_iterator__': null,
     'NI$vl::presentation::instance_loaders::GuiControlInstanceLoader::AssignParameters@::vl::Ptr<::vl::workflow::WfStatement>(::vl::presentation::GuiResourcePrecompileContext &, ::vl::presentation::types::ResolvingResult &, ::vl::presentation::IGuiInstanceLoader::TypeInfo const &, ::vl::presentation::GlobalStringKey, ::vl::presentation::IGuiInstanceLoader::ArgumentMap &, ::vl::presentation::GuiResourceTextPos, ::vl::presentation::GuiResourceError::List &)[impl0]::__scope_variable_flag__': null,
@@ -4266,10 +4220,6 @@ symbolToFiles = {
     'NI$vl::workflow::WfExpressionStatement::expression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
     'NI$vl::workflow::WfIntegerExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
     'NI$vl::workflow::WfIntegerExpression::value': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
-    'NI$vl::workflow::WfLiteralExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
-    'NI$vl::workflow::WfLiteralExpression::value': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
-    'NI$vl::workflow::WfLiteralValue': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
-    'NI$vl::workflow::WfLiteralValue::True': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
     'NI$vl::workflow::WfMemberExpression': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
     'NI$vl::workflow::WfMemberExpression::name': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },
     'NI$vl::workflow::WfMemberExpression::parent': { 'htmlFileName': 'WfExpression_Ast.h', 'displayName': 'WfExpression_Ast.h' },

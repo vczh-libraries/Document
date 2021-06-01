@@ -714,16 +714,16 @@ GuiWindow
 			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow'], [], [])"><div class="token cpp_type">GuiWindow</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiWindow::OnNativeWindowChanged@void()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::OnNativeWindowChanged@void()'], [], [])"><div class="token cpp_function">OnNativeWindowChanged</div></div></div>()
 			{
 				<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiWindow::SyncNativeWindowProperties@void()'], ['vl::presentation::controls::GuiWindow::SyncNativeWindowProperties@void()'], [], [])"><div class="token cpp_function">SyncNativeWindowProperties</div></div>();
+				<div class="token cpp_keyword ">if</div> (<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::controls::GuiWindow::OnNativeWindowChanged@void()[impl0]::window"><div>window</div></div> = <div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControlHost::GetNativeWindow@::vl::presentation::INativeWindow *()'], ['vl::presentation::controls::GuiControlHost::GetNativeWindow@::vl::presentation::INativeWindow *()'], [], [])"><div class="token cpp_function">GetNativeWindow</div></div>())
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::OnNativeWindowChanged@void()[impl0]::window'], [], [])">window</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindow::SetWindowMode@void(::vl::presentation::INativeWindow::WindowMode)'], ['vl::presentation::INativeWindow::SetWindowMode@void(::vl::presentation::INativeWindow::WindowMode)'], [], [])"><div class="token cpp_function">SetWindowMode</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::windowMode'], [], [])"><div class="token cpp_field">windowMode</div></div>);
+				}
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControlHost'], [], [])"><div class="token cpp_type">GuiControlHost</div></div>::<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControlHost::OnNativeWindowChanged@void()'], ['vl::presentation::controls::GuiControlHost::OnNativeWindowChanged@void()'], [], [])"><div class="token cpp_function">OnNativeWindowChanged</div></div>();
 			}
 
 			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow'], [], [])"><div class="token cpp_type">GuiWindow</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiWindow::OnVisualStatusChanged@void()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::OnVisualStatusChanged@void()'], [], [])"><div class="token cpp_function">OnVisualStatusChanged</div></div></div>()
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControlHost'], [], [])"><div class="token cpp_type">GuiControlHost</div></div>::<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControlHost::OnVisualStatusChanged@void()'], ['vl::presentation::controls::GuiControlHost::OnVisualStatusChanged@void()'], [], [])"><div class="token cpp_function">OnVisualStatusChanged</div></div>();
-			}
-
-			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow'], [], [])"><div class="token cpp_type">GuiWindow</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiWindow::MouseClickedOnOtherWindow@void(::vl::presentation::controls::GuiWindow *)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::MouseClickedOnOtherWindow@void(::vl::presentation::controls::GuiWindow *)'], [], [])"><div class="token cpp_function">MouseClickedOnOtherWindow</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow'], [], [])"><div class="token cpp_type">GuiWindow</div></div>* <div class="def" id="NI$vl::presentation::controls::GuiWindow::MouseClickedOnOtherWindow@void(::vl::presentation::controls::GuiWindow *)[impl0]::window"><div><div class="token cpp_argument">window</div></div></div>)
-			{
 			}
 
 			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow'], [], [])"><div class="token cpp_type">GuiWindow</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiWindow::OnWindowActivated@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::OnWindowActivated@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)'], [], [])"><div class="token cpp_function">OnWindowActivated</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions'], [], [])">compositions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions::GuiGraphicsComposition'], [], [])"><div class="token cpp_type">GuiGraphicsComposition</div></div>* <div class="def" id="NI$vl::presentation::controls::GuiWindow::OnWindowActivated@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[impl0]::sender"><div><div class="token cpp_argument">sender</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions'], [], [])">compositions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions::GuiEventArgs'], [], [])"><div class="token cpp_type">GuiEventArgs</div></div>&amp; <div class="def" id="NI$vl::presentation::controls::GuiWindow::OnWindowActivated@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[impl0]::arguments"><div><div class="token cpp_argument">arguments</div></div></div>)
@@ -742,19 +742,25 @@ GuiWindow
 				}
 			}
 
-			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow'], [], [])"><div class="token cpp_type">GuiWindow</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)'], [], [])"><div class="token cpp_function">GuiWindow</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::theme'], [], [])">theme</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::theme::ThemeName'], [], [])"><div class="token cpp_type">ThemeName</div></div> <div class="def" id="NI$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::themeName"><div><div class="token cpp_argument">themeName</div></div></div>)
-				:<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControlHost'], [], [])"><div class="token cpp_type">GuiControlHost</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::themeName'], [], [])"><div class="token cpp_argument">themeName</div></div>)
+			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow'], [], [])"><div class="token cpp_type">GuiWindow</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)'], [], [])"><div class="token cpp_function">GuiWindow</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::theme'], [], [])">theme</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::theme::ThemeName'], [], [])"><div class="token cpp_type">ThemeName</div></div> <div class="def" id="NI$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::themeName"><div><div class="token cpp_argument">themeName</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow'], [], [])"><div class="token cpp_type">INativeWindow</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow::WindowMode'], [], [])"><div class="token cpp_type">WindowMode</div></div> <div class="def" id="NI$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::mode"><div><div class="token cpp_argument">mode</div></div></div>)
+				:<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControlHost'], [], [])"><div class="token cpp_type">GuiControlHost</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::themeName'], [], [])"><div class="token cpp_argument">themeName</div></div>)
+				, windowMode(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::mode'], [], [])"><div class="token cpp_argument">mode</div></div>)
 			{
 				<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiAltActionHostBase::SetAltComposition@void(::vl::presentation::compositions::GuiGraphicsComposition *)'], ['vl::presentation::compositions::GuiAltActionHostBase::SetAltComposition@void(::vl::presentation::compositions::GuiGraphicsComposition *)'], [], [])"><div class="token cpp_function">SetAltComposition</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControl::boundsComposition'], [], [])"><div class="token cpp_field">boundsComposition</div></div>);
 				<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiAltActionHostBase::SetAltControl@void(::vl::presentation::controls::GuiControl *, bool)'], ['vl::presentation::compositions::GuiAltActionHostBase::SetAltControl@void(::vl::presentation::controls::GuiControl *, bool)'], [], [])"><div class="token cpp_function">SetAltControl</div></div>(<div class="token cpp_keyword ">this</div>, <div class="token cpp_keyword ">true</div>);
 
-				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow'], [], [])"><div class="token cpp_type">INativeWindow</div></div>* <div class="def" id="NI$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::window"><div>window</div></div> = <div class="ref" onclick="jumpToSymbol(['vl::presentation::GetCurrentController@::vl::presentation::INativeController *()'], ['vl::presentation::GetCurrentController@::vl::presentation::INativeController *()'], [], [])"><div class="token cpp_function">GetCurrentController</div></div>()-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeController::WindowService@::vl::presentation::INativeWindowService *()'], ['vl::presentation::INativeController::WindowService@::vl::presentation::INativeWindowService *()'], [], [])"><div class="token cpp_function">WindowService</div></div>()-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindowService::CreateNativeWindow@::vl::presentation::INativeWindow *()'], ['vl::presentation::INativeWindowService::CreateNativeWindow@::vl::presentation::INativeWindow *()'], [], [])"><div class="token cpp_function">CreateNativeWindow</div></div>();
-				<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControlHost::SetNativeWindow@void(::vl::presentation::INativeWindow *)'], ['vl::presentation::controls::GuiControlHost::SetNativeWindow@void(::vl::presentation::INativeWindow *)'], [], [])"><div class="token cpp_function">SetNativeWindow</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::window'], [], [])">window</div>);
+				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow'], [], [])"><div class="token cpp_type">INativeWindow</div></div>* <div class="def" id="NI$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::window"><div>window</div></div> = <div class="ref" onclick="jumpToSymbol(['vl::presentation::GetCurrentController@::vl::presentation::INativeController *()'], ['vl::presentation::GetCurrentController@::vl::presentation::INativeController *()'], [], [])"><div class="token cpp_function">GetCurrentController</div></div>()-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeController::WindowService@::vl::presentation::INativeWindowService *()'], ['vl::presentation::INativeController::WindowService@::vl::presentation::INativeWindowService *()'], [], [])"><div class="token cpp_function">WindowService</div></div>()-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindowService::CreateNativeWindow@::vl::presentation::INativeWindow *()'], ['vl::presentation::INativeWindowService::CreateNativeWindow@::vl::presentation::INativeWindow *()'], [], [])"><div class="token cpp_function">CreateNativeWindow</div></div>();
+				<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControlHost::SetNativeWindow@void(::vl::presentation::INativeWindow *)'], ['vl::presentation::controls::GuiControlHost::SetNativeWindow@void(::vl::presentation::INativeWindow *)'], [], [])"><div class="token cpp_function">SetNativeWindow</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::window'], [], [])">window</div>);
 				<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GetApplication@::vl::presentation::controls::GuiApplication *()'], ['vl::presentation::controls::GetApplication@::vl::presentation::controls::GuiApplication *()'], [], [])"><div class="token cpp_function">GetApplication</div></div>()-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiApplication::RegisterWindow@void(::vl::presentation::controls::GuiWindow *)'], ['vl::presentation::controls::GuiApplication::RegisterWindow@void(::vl::presentation::controls::GuiWindow *)'], [], [])"><div class="token cpp_function">RegisterWindow</div></div>(<div class="token cpp_keyword ">this</div>);
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::ClipboardUpdated'], [], [])"><div class="token cpp_field">ClipboardUpdated</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsEvent::SetAssociatedComposition@void(::vl::presentation::compositions::GuiGraphicsComposition *)'], ['vl::presentation::compositions::GuiGraphicsEvent::SetAssociatedComposition@void(::vl::presentation::compositions::GuiGraphicsComposition *)'], [], [])"><div class="token cpp_function">SetAssociatedComposition</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControl::boundsComposition'], [], [])"><div class="token cpp_field">boundsComposition</div></div>);
 
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControlHost::WindowActivated'], [], [])"><div class="token cpp_field">WindowActivated</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], ['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], [], [])"><div class="token cpp_function">AttachMethod</div></div>(<div class="token cpp_keyword ">this</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow'], [], [])"><div class="token cpp_type">GuiWindow</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::OnWindowActivated@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)'], [], [])"><div class="token cpp_function">OnWindowActivated</div></div>);
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControlHost::WindowDeactivated'], [], [])"><div class="token cpp_field">WindowDeactivated</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], ['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], [], [])"><div class="token cpp_function">AttachMethod</div></div>(<div class="token cpp_keyword ">this</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow'], [], [])"><div class="token cpp_type">GuiWindow</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::OnWindowDeactivated@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)'], [], [])"><div class="token cpp_function">OnWindowDeactivated</div></div>);
+			}
+
+			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow'], [], [])"><div class="token cpp_type">GuiWindow</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)'], [], [])"><div class="token cpp_function">GuiWindow</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::theme'], [], [])">theme</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::theme::ThemeName'], [], [])"><div class="token cpp_type">ThemeName</div></div> <div class="def" id="NI$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::themeName"><div><div class="token cpp_argument">themeName</div></div></div>)
+				:<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow'], [], [])"><div class="token cpp_type">GuiWindow</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::themeName'], [], [])"><div class="token cpp_argument">themeName</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow'], [], [])"><div class="token cpp_type">INativeWindow</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow::WindowMode::Normal'], [], [])"><div class="token cpp_enum">Normal</div></div>)
+			{
 			}
 
 			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow'], [], [])"><div class="token cpp_type">GuiWindow</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiWindow::~GuiWindow@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow::~GuiWindow@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">GuiWindow</div></div></div>()
@@ -932,11 +938,6 @@ GuiPopup
 				}
 			}
 
-			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup'], [], [])"><div class="token cpp_type">GuiPopup</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiPopup::MouseClickedOnOtherWindow@void(::vl::presentation::controls::GuiWindow *)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::MouseClickedOnOtherWindow@void(::vl::presentation::controls::GuiWindow *)'], [], [])"><div class="token cpp_function">MouseClickedOnOtherWindow</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow'], [], [])"><div class="token cpp_type">GuiWindow</div></div>* <div class="def" id="NI$vl::presentation::controls::GuiPopup::MouseClickedOnOtherWindow@void(::vl::presentation::controls::GuiWindow *)[impl0]::window"><div><div class="token cpp_argument">window</div></div></div>)
-			{
-				<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControlHost::Hide@void()'], ['vl::presentation::controls::GuiControlHost::Hide@void()'], [], [])"><div class="token cpp_function">Hide</div></div>();
-			}
-
 			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup'], [], [])"><div class="token cpp_type">GuiPopup</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiPopup::PopupOpened@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::PopupOpened@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)'], [], [])"><div class="token cpp_function">PopupOpened</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions'], [], [])">compositions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions::GuiGraphicsComposition'], [], [])"><div class="token cpp_type">GuiGraphicsComposition</div></div>* <div class="def" id="NI$vl::presentation::controls::GuiPopup::PopupOpened@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[impl0]::sender"><div><div class="token cpp_argument">sender</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions'], [], [])">compositions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions::GuiEventArgs'], [], [])"><div class="token cpp_type">GuiEventArgs</div></div>&amp; <div class="def" id="NI$vl::presentation::controls::GuiPopup::PopupOpened@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[impl0]::arguments"><div><div class="token cpp_argument">arguments</div></div></div>)
 			{
 				<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GetApplication@::vl::presentation::controls::GuiApplication *()'], ['vl::presentation::controls::GetApplication@::vl::presentation::controls::GuiApplication *()'], [], [])"><div class="token cpp_function">GetApplication</div></div>()-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiApplication::RegisterPopupOpened@void(::vl::presentation::controls::GuiPopup *)'], ['vl::presentation::controls::GuiApplication::RegisterPopupOpened@void(::vl::presentation::controls::GuiPopup *)'], [], [])"><div class="token cpp_function">RegisterPopupOpened</div></div>(<div class="token cpp_keyword ">this</div>);
@@ -1079,17 +1080,18 @@ GuiPopup
 				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::ShowPopupInternal@void()[impl0]::controlWindow'], [], [])">controlWindow</div>)
 				{
 					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::ShowPopupInternal@void()[impl0]::window'], [], [])">window</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindow::SetParent@void(::vl::presentation::INativeWindow *)'], ['vl::presentation::INativeWindow::SetParent@void(::vl::presentation::INativeWindow *)'], [], [])"><div class="token cpp_function">SetParent</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::ShowPopupInternal@void()[impl0]::controlWindow'], [], [])">controlWindow</div>);
-					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::ShowPopupInternal@void()[impl0]::window'], [], [])">window</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindow::SetTopMost@void(bool)'], ['vl::presentation::INativeWindow::SetTopMost@void(bool)'], [], [])"><div class="token cpp_function">SetTopMost</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::ShowPopupInternal@void()[impl0]::controlWindow'], [], [])">controlWindow</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindow::GetTopMost@bool()'], ['vl::presentation::INativeWindow::GetTopMost@bool()'], [], [])"><div class="token cpp_function">GetTopMost</div></div>());
+					<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControlHost::SetTopMost@void(bool)'], ['vl::presentation::controls::GuiControlHost::SetTopMost@void(bool)'], [], [])"><div class="token cpp_function">SetTopMost</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::ShowPopupInternal@void()[impl0]::controlWindow'], [], [])">controlWindow</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindow::GetTopMost@bool()'], ['vl::presentation::INativeWindow::GetTopMost@bool()'], [], [])"><div class="token cpp_function">GetTopMost</div></div>());
 				}
 				<div class="token cpp_keyword ">else</div>
 				{
-					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::ShowPopupInternal@void()[impl0]::window'], [], [])">window</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindow::SetTopMost@void(bool)'], ['vl::presentation::INativeWindow::SetTopMost@void(bool)'], [], [])"><div class="token cpp_function">SetTopMost</div></div>(<div class="token cpp_keyword ">true</div>);
+					<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControlHost::SetTopMost@void(bool)'], ['vl::presentation::controls::GuiControlHost::SetTopMost@void(bool)'], [], [])"><div class="token cpp_function">SetTopMost</div></div>(<div class="token cpp_keyword ">true</div>);
 				}
+				<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControlHost::SetEnabledActivate@void(bool)'], ['vl::presentation::controls::GuiControlHost::SetEnabledActivate@void(bool)'], [], [])"><div class="token cpp_function">SetEnabledActivate</div></div>(<div class="token cpp_keyword ">false</div>);
 				<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControlHost::ShowDeactivated@void()'], ['vl::presentation::controls::GuiControlHost::ShowDeactivated@void()'], [], [])"><div class="token cpp_function">ShowDeactivated</div></div>();
 			}
 
-			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup'], [], [])"><div class="token cpp_type">GuiPopup</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName)'], [], [])"><div class="token cpp_function">GuiPopup</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::theme'], [], [])">theme</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::theme::ThemeName'], [], [])"><div class="token cpp_type">ThemeName</div></div> <div class="def" id="NI$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::themeName"><div><div class="token cpp_argument">themeName</div></div></div>)
-				:<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow'], [], [])"><div class="token cpp_type">GuiWindow</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::themeName'], [], [])"><div class="token cpp_argument">themeName</div></div>)
+			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup'], [], [])"><div class="token cpp_type">GuiPopup</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)'], [], [])"><div class="token cpp_function">GuiPopup</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::theme'], [], [])">theme</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::theme::ThemeName'], [], [])"><div class="token cpp_type">ThemeName</div></div> <div class="def" id="NI$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::themeName"><div><div class="token cpp_argument">themeName</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow'], [], [])"><div class="token cpp_type">INativeWindow</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow::WindowMode'], [], [])"><div class="token cpp_type">WindowMode</div></div> <div class="def" id="NI$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::mode"><div><div class="token cpp_argument">mode</div></div></div>)
+				:<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiWindow'], [], [])"><div class="token cpp_type">GuiWindow</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::themeName'], [], [])"><div class="token cpp_argument">themeName</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::mode'], [], [])"><div class="token cpp_argument">mode</div></div>)
 			{
 				<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiWindow::SetMinimizedBox@void(bool)'], ['vl::presentation::controls::GuiWindow::SetMinimizedBox@void(bool)'], [], [])"><div class="token cpp_function">SetMinimizedBox</div></div>(<div class="token cpp_keyword ">false</div>);
 				<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiWindow::SetMaximizedBox@void(bool)'], ['vl::presentation::controls::GuiWindow::SetMaximizedBox@void(bool)'], [], [])"><div class="token cpp_function">SetMaximizedBox</div></div>(<div class="token cpp_keyword ">false</div>);
@@ -1100,6 +1102,11 @@ GuiPopup
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControlHost::WindowOpened'], [], [])"><div class="token cpp_field">WindowOpened</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], ['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], [], [])"><div class="token cpp_function">AttachMethod</div></div>(<div class="token cpp_keyword ">this</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup'], [], [])"><div class="token cpp_type">GuiPopup</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::PopupOpened@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)'], [], [])"><div class="token cpp_function">PopupOpened</div></div>);
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControlHost::WindowClosed'], [], [])"><div class="token cpp_field">WindowClosed</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], ['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], [], [])"><div class="token cpp_function">AttachMethod</div></div>(<div class="token cpp_keyword ">this</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup'], [], [])"><div class="token cpp_type">GuiPopup</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::PopupClosed@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)'], [], [])"><div class="token cpp_function">PopupClosed</div></div>);
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControl::boundsComposition'], [], [])"><div class="token cpp_field">boundsComposition</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsComposition::GetEventReceiver@::vl::presentation::compositions::GuiGraphicsEventReceiver *()'], ['vl::presentation::compositions::GuiGraphicsComposition::GetEventReceiver@::vl::presentation::compositions::GuiGraphicsEventReceiver *()'], [], [])"><div class="token cpp_function">GetEventReceiver</div></div>()-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions::GuiGraphicsEventReceiver::keyDown'], [], [])"><div class="token cpp_field">keyDown</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], ['vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)'], [], [])"><div class="token cpp_function">AttachMethod</div></div>(<div class="token cpp_keyword ">this</div>, &amp;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup'], [], [])"><div class="token cpp_type">GuiPopup</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::OnKeyDown@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiKeyEventArgs &)'], [], [])"><div class="token cpp_function">OnKeyDown</div></div>);
+			}
+
+			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup'], [], [])"><div class="token cpp_type">GuiPopup</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName)'], [], [])"><div class="token cpp_function">GuiPopup</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::theme'], [], [])">theme</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::theme::ThemeName'], [], [])"><div class="token cpp_type">ThemeName</div></div> <div class="def" id="NI$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::themeName"><div><div class="token cpp_argument">themeName</div></div></div>)
+				:<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup'], [], [])"><div class="token cpp_type">GuiPopup</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::themeName'], [], [])"><div class="token cpp_argument">themeName</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow'], [], [])"><div class="token cpp_type">INativeWindow</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow::WindowMode::Popup'], [], [])"><div class="token cpp_enum">Popup</div></div>)
+			{
 			}
 
 			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup'], [], [])"><div class="token cpp_type">GuiPopup</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiPopup::~GuiPopup@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup::~GuiPopup@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">GuiPopup</div></div></div>()
@@ -1198,8 +1205,7 @@ GuiPopup
 			}
 
 			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiTooltip'], [], [])"><div class="token cpp_type">GuiTooltip</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiTooltip::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiTooltip::$__ctor@(::vl::presentation::theme::ThemeName)'], [], [])"><div class="token cpp_function">GuiTooltip</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::theme'], [], [])">theme</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::theme::ThemeName'], [], [])"><div class="token cpp_type">ThemeName</div></div> <div class="def" id="NI$vl::presentation::controls::GuiTooltip::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::themeName"><div><div class="token cpp_argument">themeName</div></div></div>)
-				:<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup'], [], [])"><div class="token cpp_type">GuiPopup</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiTooltip::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::themeName'], [], [])"><div class="token cpp_argument">themeName</div></div>)
-				,temporaryContentControl(<div class="token cpp_number ">0</div>)
+				: <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup'], [], [])"><div class="token cpp_type">GuiPopup</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiTooltip::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::themeName'], [], [])"><div class="token cpp_argument">themeName</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow'], [], [])"><div class="token cpp_type">INativeWindow</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow::WindowMode::Tooltip'], [], [])"><div class="token cpp_enum">Tooltip</div></div>)
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControl::containerComposition'], [], [])"><div class="token cpp_field">containerComposition</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsComposition::SetMinSizeLimitation@void(::vl::presentation::compositions::GuiGraphicsComposition::MinSizeLimitation)'], ['vl::presentation::compositions::GuiGraphicsComposition::SetMinSizeLimitation@void(::vl::presentation::compositions::GuiGraphicsComposition::MinSizeLimitation)'], [], [])"><div class="token cpp_function">SetMinSizeLimitation</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions::GuiGraphicsComposition'], [], [])"><div class="token cpp_type">GuiGraphicsComposition</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions::GuiGraphicsComposition::MinSizeLimitation::LimitToElementAndChildren'], [], [])"><div class="token cpp_enum">LimitToElementAndChildren</div></div>);
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControl::containerComposition'], [], [])"><div class="token cpp_field">containerComposition</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsComposition::SetPreferredMinSize@void(::vl::presentation::Size)'], ['vl::presentation::compositions::GuiGraphicsComposition::SetPreferredMinSize@void(::vl::presentation::Size)'], [], [])"><div class="token cpp_function">SetPreferredMinSize</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::Size'], [], [])"><div class="token cpp_type">Size</div></div>(<div class="token cpp_number ">20</div>, <div class="token cpp_number ">10</div>));
@@ -2497,6 +2503,13 @@ referencedSymbols = {
             'FB$vl::presentation::INativeWindow::SetTopMost@void(bool)[decl0]'
         ]
     },
+    'vl::presentation::INativeWindow::SetWindowMode@void(::vl::presentation::INativeWindow::WindowMode)': {
+        'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_function">SetWindowMode</span>(<span class="cpp_type">WindowMode</span>)',
+        'impls': [],
+        'decls': [
+            'FB$vl::presentation::INativeWindow::SetWindowMode@void(::vl::presentation::INativeWindow::WindowMode)[decl0]'
+        ]
+    },
     'vl::presentation::INativeWindow::Show@void()': {
         'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_function">Show</span>()',
         'impls': [],
@@ -2545,6 +2558,34 @@ referencedSymbols = {
         'decls': [
             'FB$vl::presentation::INativeWindow::UninstallListener@bool(::vl::presentation::INativeWindowListener *)[decl0]'
         ]
+    },
+    'vl::presentation::INativeWindow::WindowMode': {
+        'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_type">WindowMode</span>',
+        'impls': [
+            'NI$vl::presentation::INativeWindow::WindowMode'
+        ],
+        'decls': []
+    },
+    'vl::presentation::INativeWindow::WindowMode::Normal': {
+        'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_type">WindowMode</span>::<span class="cpp_enum">Normal</span>',
+        'impls': [
+            'NI$vl::presentation::INativeWindow::WindowMode::Normal'
+        ],
+        'decls': []
+    },
+    'vl::presentation::INativeWindow::WindowMode::Popup': {
+        'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_type">WindowMode</span>::<span class="cpp_enum">Popup</span>',
+        'impls': [
+            'NI$vl::presentation::INativeWindow::WindowMode::Popup'
+        ],
+        'decls': []
+    },
+    'vl::presentation::INativeWindow::WindowMode::Tooltip': {
+        'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_type">WindowMode</span>::<span class="cpp_enum">Tooltip</span>',
+        'impls': [
+            'NI$vl::presentation::INativeWindow::WindowMode::Tooltip'
+        ],
+        'decls': []
     },
     'vl::presentation::INativeWindow::WindowSizeState::Maximized': {
         'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_type">WindowSizeState</span>::<span class="cpp_enum">Maximized</span>',
@@ -4537,6 +4578,29 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)': {
+        'displayNameInHtml': '<span class="cpp_type">GuiPopup</span>::<span class="cpp_function">$__ctor</span>(theme::<span class="cpp_type">ThemeName</span>, <span class="cpp_type">INativeWindow</span>::<span class="cpp_type">WindowMode</span>)',
+        'impls': [
+            'FB$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[decl0]'
+        ]
+    },
+    'vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::mode': {
+        'displayNameInHtml': 'mode',
+        'impls': [
+            'NI$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::mode'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::themeName': {
+        'displayNameInHtml': 'themeName',
+        'impls': [
+            'NI$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::themeName'
+        ],
+        'decls': []
+    },
     'vl::presentation::controls::GuiPopup::CalculatePopupPosition@::vl::presentation::NativePoint(::vl::presentation::NativeSize, ::vl::presentation::NativePoint, ::vl::presentation::INativeScreen *)': {
         'displayNameInHtml': '<span class="cpp_type">GuiPopup</span>::<span class="cpp_function">CalculatePopupPosition</span>(<span class="cpp_type">NativeSize</span>, <span class="cpp_type">NativePoint</span>, <span class="cpp_type">INativeScreen</span> *)',
         'impls': [
@@ -4855,15 +4919,6 @@ referencedSymbols = {
         'impls': [],
         'decls': [
             'FB$vl::presentation::controls::GuiPopup::IsClippedByScreen@bool(::vl::presentation::Point)[decl0]'
-        ]
-    },
-    'vl::presentation::controls::GuiPopup::MouseClickedOnOtherWindow@void(::vl::presentation::controls::GuiWindow *)': {
-        'displayNameInHtml': '<span class="cpp_type">GuiPopup</span>::<span class="cpp_function">MouseClickedOnOtherWindow</span>(<span class="cpp_type">GuiWindow</span> *)',
-        'impls': [
-            'FB$vl::presentation::controls::GuiPopup::MouseClickedOnOtherWindow@void(::vl::presentation::controls::GuiWindow *)[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::controls::GuiPopup::MouseClickedOnOtherWindow@void(::vl::presentation::controls::GuiWindow *)[decl0]'
         ]
     },
     'vl::presentation::controls::GuiPopup::OnKeyDown@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiKeyEventArgs &)': {
@@ -5430,10 +5485,33 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::window': {
+    'vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)': {
+        'displayNameInHtml': '<span class="cpp_type">GuiWindow</span>::<span class="cpp_function">$__ctor</span>(theme::<span class="cpp_type">ThemeName</span>, <span class="cpp_type">INativeWindow</span>::<span class="cpp_type">WindowMode</span>)',
+        'impls': [
+            'FB$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[decl0]'
+        ]
+    },
+    'vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::mode': {
+        'displayNameInHtml': 'mode',
+        'impls': [
+            'NI$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::mode'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::themeName': {
+        'displayNameInHtml': 'themeName',
+        'impls': [
+            'NI$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::themeName'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::window': {
         'displayNameInHtml': 'window',
         'impls': [
-            'NI$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::window'
+            'NI$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::window'
         ],
         'decls': []
     },
@@ -5562,15 +5640,6 @@ referencedSymbols = {
             'FB$vl::presentation::controls::GuiWindow::GetTitleBar@bool()[decl0]'
         ]
     },
-    'vl::presentation::controls::GuiWindow::MouseClickedOnOtherWindow@void(::vl::presentation::controls::GuiWindow *)': {
-        'displayNameInHtml': '<span class="cpp_type">GuiWindow</span>::<span class="cpp_function">MouseClickedOnOtherWindow</span>(<span class="cpp_type">GuiWindow</span> *)',
-        'impls': [
-            'FB$vl::presentation::controls::GuiWindow::MouseClickedOnOtherWindow@void(::vl::presentation::controls::GuiWindow *)[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::controls::GuiWindow::MouseClickedOnOtherWindow@void(::vl::presentation::controls::GuiWindow *)[decl0]'
-        ]
-    },
     'vl::presentation::controls::GuiWindow::MoveToScreenCenter@void()': {
         'displayNameInHtml': '<span class="cpp_type">GuiWindow</span>::<span class="cpp_function">MoveToScreenCenter</span>()',
         'impls': [
@@ -5634,6 +5703,13 @@ referencedSymbols = {
         'decls': [
             'FB$vl::presentation::controls::GuiWindow::OnNativeWindowChanged@void()[decl0]'
         ]
+    },
+    'vl::presentation::controls::GuiWindow::OnNativeWindowChanged@void()[impl0]::window': {
+        'displayNameInHtml': 'window',
+        'impls': [
+            'NI$vl::presentation::controls::GuiWindow::OnNativeWindowChanged@void()[impl0]::window'
+        ],
+        'decls': []
     },
     'vl::presentation::controls::GuiWindow::OnVisualStatusChanged@void()': {
         'displayNameInHtml': '<span class="cpp_type">GuiWindow</span>::<span class="cpp_function">OnVisualStatusChanged</span>()',
@@ -6070,6 +6146,13 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">GuiWindow</span>::<span class="cpp_field">isIconVisible</span>',
         'impls': [
             'NI$vl::presentation::controls::GuiWindow::isIconVisible'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiWindow::windowMode': {
+        'displayNameInHtml': '<span class="cpp_type">GuiWindow</span>::<span class="cpp_field">windowMode</span>',
+        'impls': [
+            'NI$vl::presentation::controls::GuiWindow::windowMode'
         ],
         'decls': []
     },
@@ -6560,6 +6643,7 @@ symbolToFiles = {
     'FB$vl::presentation::INativeWindow::SetTitle@void(::vl::WString)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'FB$vl::presentation::INativeWindow::SetTitleBar@void(bool)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'FB$vl::presentation::INativeWindow::SetTopMost@void(bool)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
+    'FB$vl::presentation::INativeWindow::SetWindowMode@void(::vl::presentation::INativeWindow::WindowMode)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'FB$vl::presentation::INativeWindow::Show@void()[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'FB$vl::presentation::INativeWindow::ShowDeactivated@void()[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'FB$vl::presentation::INativeWindow::ShowInTaskBar@void()[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
@@ -6801,6 +6885,8 @@ symbolToFiles = {
     'FB$vl::presentation::controls::GuiInstanceRootObject::FinalizeInstanceRecursively@void(::vl::presentation::templates::GuiTemplate *)[impl0]': { 'htmlFileName': 'GuiControlShared.cpp', 'displayName': 'GuiControlShared.cpp' },
     'FB$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName)[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'FB$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]': null,
+    'FB$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
+    'FB$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]': null,
     'FB$vl::presentation::controls::GuiPopup::CalculatePopupPosition@::vl::presentation::NativePoint(::vl::presentation::NativeSize, ::vl::presentation::NativePoint, ::vl::presentation::INativeScreen *)[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'FB$vl::presentation::controls::GuiPopup::CalculatePopupPosition@::vl::presentation::NativePoint(::vl::presentation::NativeSize, ::vl::presentation::NativePoint, ::vl::presentation::INativeScreen *)[impl0]': null,
     'FB$vl::presentation::controls::GuiPopup::CalculatePopupPosition@::vl::presentation::NativePoint(::vl::presentation::NativeSize, ::vl::presentation::controls::GuiControl *, ::vl::presentation::INativeWindow *, ::vl::presentation::Point)[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
@@ -6814,8 +6900,6 @@ symbolToFiles = {
     'FB$vl::presentation::controls::GuiPopup::IsClippedByScreen@bool(::vl::presentation::NativeSize, ::vl::presentation::NativePoint, ::vl::presentation::INativeScreen *)[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'FB$vl::presentation::controls::GuiPopup::IsClippedByScreen@bool(::vl::presentation::NativeSize, ::vl::presentation::NativePoint, ::vl::presentation::INativeScreen *)[impl0]': null,
     'FB$vl::presentation::controls::GuiPopup::IsClippedByScreen@bool(::vl::presentation::Point)[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
-    'FB$vl::presentation::controls::GuiPopup::MouseClickedOnOtherWindow@void(::vl::presentation::controls::GuiWindow *)[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
-    'FB$vl::presentation::controls::GuiPopup::MouseClickedOnOtherWindow@void(::vl::presentation::controls::GuiWindow *)[impl0]': null,
     'FB$vl::presentation::controls::GuiPopup::OnKeyDown@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiKeyEventArgs &)[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'FB$vl::presentation::controls::GuiPopup::OnKeyDown@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiKeyEventArgs &)[impl0]': null,
     'FB$vl::presentation::controls::GuiPopup::PopupClosed@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
@@ -6856,6 +6940,8 @@ symbolToFiles = {
     'FB$vl::presentation::controls::GuiTooltip::~GuiTooltip@()[impl0]': null,
     'FB$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'FB$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]': null,
+    'FB$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
+    'FB$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]': null,
     'FB$vl::presentation::controls::GuiWindow::AfterControlTemplateInstalled_@void(bool)[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'FB$vl::presentation::controls::GuiWindow::AfterControlTemplateInstalled_@void(bool)[impl0]': null,
     'FB$vl::presentation::controls::GuiWindow::BeforeControlTemplateUninstalled_@void()[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
@@ -6877,8 +6963,6 @@ symbolToFiles = {
     'FB$vl::presentation::controls::GuiWindow::GetSizeBox@bool()[impl0]': null,
     'FB$vl::presentation::controls::GuiWindow::GetTitleBar@bool()[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'FB$vl::presentation::controls::GuiWindow::GetTitleBar@bool()[impl0]': null,
-    'FB$vl::presentation::controls::GuiWindow::MouseClickedOnOtherWindow@void(::vl::presentation::controls::GuiWindow *)[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
-    'FB$vl::presentation::controls::GuiWindow::MouseClickedOnOtherWindow@void(::vl::presentation::controls::GuiWindow *)[impl0]': null,
     'FB$vl::presentation::controls::GuiWindow::MoveToScreenCenter@void()[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'FB$vl::presentation::controls::GuiWindow::MoveToScreenCenter@void()[impl0]': null,
     'FB$vl::presentation::controls::GuiWindow::MoveToScreenCenter@void(::vl::presentation::INativeScreen *)[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
@@ -7952,6 +8036,10 @@ symbolToFiles = {
     'NI$vl::presentation::GuiImageData': { 'htmlFileName': 'GuiResource.h', 'displayName': 'GuiResource.h' },
     'NI$vl::presentation::INativeScreen': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'NI$vl::presentation::INativeWindow': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
+    'NI$vl::presentation::INativeWindow::WindowMode': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
+    'NI$vl::presentation::INativeWindow::WindowMode::Normal': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
+    'NI$vl::presentation::INativeWindow::WindowMode::Popup': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
+    'NI$vl::presentation::INativeWindow::WindowMode::Tooltip': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'NI$vl::presentation::INativeWindow::WindowSizeState::Maximized': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'NI$vl::presentation::Margin': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
     'NI$vl::presentation::NativeCoordinate': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
@@ -8052,6 +8140,8 @@ symbolToFiles = {
     'NI$vl::presentation::controls::GuiControlHost::tooltipOpenDelay': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'NI$vl::presentation::controls::GuiPopup': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'NI$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::themeName': null,
+    'NI$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::mode': null,
+    'NI$vl::presentation::controls::GuiPopup::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::themeName': null,
     'NI$vl::presentation::controls::GuiPopup::CalculatePopupPosition@::vl::presentation::NativePoint(::vl::presentation::NativeSize, ::vl::presentation::NativePoint, ::vl::presentation::INativeScreen *)[impl0]::location': null,
     'NI$vl::presentation::controls::GuiPopup::CalculatePopupPosition@::vl::presentation::NativePoint(::vl::presentation::NativeSize, ::vl::presentation::NativePoint, ::vl::presentation::INativeScreen *)[impl0]::screen': null,
     'NI$vl::presentation::controls::GuiPopup::CalculatePopupPosition@::vl::presentation::NativePoint(::vl::presentation::NativeSize, ::vl::presentation::NativePoint, ::vl::presentation::INativeScreen *)[impl0]::screenBounds': null,
@@ -8143,7 +8233,9 @@ symbolToFiles = {
     'NI$vl::presentation::controls::GuiTooltip::temporaryContentControl': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'NI$vl::presentation::controls::GuiWindow': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'NI$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::themeName': null,
-    'NI$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::window': null,
+    'NI$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::mode': null,
+    'NI$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::themeName': null,
+    'NI$vl::presentation::controls::GuiWindow::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[impl0]::window': null,
     'NI$vl::presentation::controls::GuiWindow::AfterControlTemplateInstalled_@void(bool)[impl0]::ct': null,
     'NI$vl::presentation::controls::GuiWindow::AfterControlTemplateInstalled_@void(bool)[impl0]::window': null,
     'NI$vl::presentation::controls::GuiWindow::ClipboardUpdated': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
@@ -8152,6 +8244,7 @@ symbolToFiles = {
     'NI$vl::presentation::controls::GuiWindow::MoveToScreenCenter@void(::vl::presentation::INativeScreen *)[impl0]::screenBounds': null,
     'NI$vl::presentation::controls::GuiWindow::MoveToScreenCenter@void(::vl::presentation::INativeScreen *)[impl0]::window': null,
     'NI$vl::presentation::controls::GuiWindow::MoveToScreenCenter@void(::vl::presentation::INativeScreen *)[impl0]::windowSize': null,
+    'NI$vl::presentation::controls::GuiWindow::OnNativeWindowChanged@void()[impl0]::window': null,
     'NI$vl::presentation::controls::GuiWindow::OnWindowActivated@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[impl0]::ct': null,
     'NI$vl::presentation::controls::GuiWindow::OnWindowDeactivated@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[impl0]::ct': null,
     'NI$vl::presentation::controls::GuiWindow::QueryService@::vl::reflection::IDescriptable *(::vl::WString const &)[impl0]::identifier': null,
@@ -8194,6 +8287,7 @@ symbolToFiles = {
     'NI$vl::presentation::controls::GuiWindow::hasTitleBar': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'NI$vl::presentation::controls::GuiWindow::icon': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'NI$vl::presentation::controls::GuiWindow::isIconVisible': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
+    'NI$vl::presentation::controls::GuiWindow::windowMode': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'NI$vl::presentation::controls::GuiWindow::~GuiWindow@()[impl0]::window': null,
     'NI$vl::presentation::templates::BoolOption': { 'htmlFileName': 'GuiControlTemplates.h', 'displayName': 'GuiControlTemplates.h' },
     'NI$vl::presentation::templates::BoolOption::AlwaysFalse': { 'htmlFileName': 'GuiControlTemplates.h', 'displayName': 'GuiControlTemplates.h' },

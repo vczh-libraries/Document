@@ -33,42 +33,31 @@ GuiGraphicsResourceManager
 			{
 			}
 
-			<div class="token cpp_keyword ">bool</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager'], [], [])"><div class="token cpp_type">GuiGraphicsResourceManager</div></div>::<div class="def" id="FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)'], [], [])"><div class="token cpp_function">RegisterElementFactory</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::IGuiGraphicsElementFactory'], [], [])"><div class="token cpp_type">IGuiGraphicsElementFactory</div></div>* <div class="def" id="NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)[impl0]::factory"><div><div class="token cpp_argument">factory</div></div></div>)
+			<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager'], [], [])"><div class="token cpp_type">GuiGraphicsResourceManager</div></div>::<div class="def" id="FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &)'], [], [])"><div class="token cpp_function">RegisterElementType</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &)[impl0]::elementTypeName"><div><div class="token cpp_argument">elementTypeName</div></div></div>)
 			{
-				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::elementFactories'], [], [])"><div class="token cpp_field">elementFactories</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()'], ['vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()'], [], [])"><div class="token cpp_function">Keys</div></div>().<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::Contains@bool([K] const &)'], ['vl::collections::SortedList::Contains@bool([K] const &)'], [], [])"><div class="token cpp_function">Contains</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)[impl0]::factory'], [], [])"><div class="token cpp_argument">factory</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::elements::IGuiGraphicsElementFactory::GetElementTypeName@::vl::WString()'], ['vl::presentation::elements::IGuiGraphicsElementFactory::GetElementTypeName@::vl::WString()'], [], [])"><div class="token cpp_function">GetElementTypeName</div></div>()))
+<div class="expandable"><div class="disabled">				CHECK_ERROR(!elementTypes.Contains(elementTypeName), L&quot;GuiGraphicsResourceManager::RegisterElementType(const WString&amp;)#This element type has already been registered.&quot;);</div>
+<div class="expanded">				<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(!<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::elementTypes'], [], [])"><div class="token cpp_field">elementTypes</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::List::Contains@bool([K] const &)'], ['vl::collections::List::Contains@bool([K] const &)'], [], [])"><div class="token cpp_function">Contains</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &)[impl0]::elementTypeName'], [], [])"><div class="token cpp_argument">elementTypeName</div></div>)))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;GuiGraphicsResourceManager::RegisterElementType(const WString&amp;)#This element type has already been registered.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::elementTypes'], [], [])"><div class="token cpp_field">elementTypes</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::List::Add@::vl::vint([T] const &)'], ['vl::collections::List::Add@::vl::vint([T] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &)[impl0]::elementTypeName'], [], [])"><div class="token cpp_argument">elementTypeName</div></div>);
+			}
+
+			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager'], [], [])"><div class="token cpp_type">GuiGraphicsResourceManager</div></div>::<div class="def" id="FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)'], [], [])"><div class="token cpp_function">RegisterRendererFactory</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]::elementType"><div><div class="token cpp_argument">elementType</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::IGuiGraphicsRendererFactory'], [], [])"><div class="token cpp_type">IGuiGraphicsRendererFactory</div></div>&gt; <div class="def" id="NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]::factory"><div><div class="token cpp_argument">factory</div></div></div>)
+			{
+				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::rendererFactories'], [], [])"><div class="token cpp_field">rendererFactories</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>() &lt;= <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]::elementType'], [], [])"><div class="token cpp_argument">elementType</div></div>)
 				{
-					<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;
+					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::rendererFactories'], [], [])"><div class="token cpp_field">rendererFactories</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Array::Resize@void(::vl::vint)'], ['vl::collections::Array::Resize@void(::vl::vint)'], [], [])"><div class="token cpp_function">Resize</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]::elementType'], [], [])"><div class="token cpp_argument">elementType</div></div> + <div class="token cpp_number ">1</div>);
+					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::rendererFactories'], [], [])"><div class="token cpp_field">rendererFactories</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]::elementType'], [], [])"><div class="token cpp_argument">elementType</div></div>] <div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)'], [], [], [])"><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]::factory'], [], [])"><div class="token cpp_argument">factory</div></div>;
 				}
 				<div class="token cpp_keyword ">else</div>
 				{
-					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::elementFactories'], [], [])"><div class="token cpp_field">elementFactories</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)'], ['vl::collections::Dictionary::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)', 'vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)[impl0]::factory'], [], [])"><div class="token cpp_argument">factory</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::elements::IGuiGraphicsElementFactory::GetElementTypeName@::vl::WString()'], ['vl::presentation::elements::IGuiGraphicsElementFactory::GetElementTypeName@::vl::WString()'], [], [])"><div class="token cpp_function">GetElementTypeName</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)[impl0]::factory'], [], [])"><div class="token cpp_argument">factory</div></div>);
-					<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
+<div class="expandable"><div class="disabled">					CHECK_ERROR(!rendererFactories[elementType], L&quot;GuiGraphicsResourceManager::RegisterRendererFactory(vint, Ptr&lt;IGuiGraphicsRendererFactory&gt;)#This element type has already been binded a renderer factory.&quot;);</div>
+<div class="expanded">					<div class="token cpp_keyword ">do</div>{<div class="token cpp_keyword ">if</div>(!(!<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::rendererFactories'], [], [])"><div class="token cpp_field">rendererFactories</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]::elementType'], [], [])"><div class="token cpp_argument">elementType</div></div>]))<div class="token cpp_keyword ">throw</div> <div class="ref" onclick="jumpToSymbol([], ['vl::Error'], [], [])"><div class="token cpp_type">Error</div></div>(<div class="token cpp_string ">L&quot;GuiGraphicsResourceManager::RegisterRendererFactory(vint, Ptr&lt;IGuiGraphicsRendererFactory&gt;)#This element type has already been binded a renderer factory.&quot;</div>);}<div class="token cpp_keyword ">while</div>(<div class="token cpp_number ">0</div>);</div></div>
+					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::rendererFactories'], [], [])"><div class="token cpp_field">rendererFactories</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]::elementType'], [], [])"><div class="token cpp_argument">elementType</div></div>] <div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)'], [], [], [])"><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]::factory'], [], [])"><div class="token cpp_argument">factory</div></div>;
 				}
 			}
 
-			<div class="token cpp_keyword ">bool</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager'], [], [])"><div class="token cpp_type">GuiGraphicsResourceManager</div></div>::<div class="def" id="FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)'], [], [])"><div class="token cpp_function">RegisterRendererFactory</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::elementTypeName"><div><div class="token cpp_argument">elementTypeName</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::IGuiGraphicsRendererFactory'], [], [])"><div class="token cpp_type">IGuiGraphicsRendererFactory</div></div>* <div class="def" id="NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::factory"><div><div class="token cpp_argument">factory</div></div></div>)
+			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::IGuiGraphicsRendererFactory'], [], [])"><div class="token cpp_type">IGuiGraphicsRendererFactory</div></div>* <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager'], [], [])"><div class="token cpp_type">GuiGraphicsResourceManager</div></div>::<div class="def" id="FB$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::vint)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::vint)'], [], [])"><div class="token cpp_function">GetRendererFactory</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::vint)[impl0]::elementType"><div><div class="token cpp_argument">elementType</div></div></div>)
 			{
-				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::rendererFactories'], [], [])"><div class="token cpp_field">rendererFactories</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()'], ['vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()'], [], [])"><div class="token cpp_function">Keys</div></div>().<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::Contains@bool([K] const &)'], ['vl::collections::SortedList::Contains@bool([K] const &)'], [], [])"><div class="token cpp_function">Contains</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::elementTypeName'], [], [])"><div class="token cpp_argument">elementTypeName</div></div>))
-				{
-					<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;
-				}
-				<div class="token cpp_keyword ">else</div>
-				{
-					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::rendererFactories'], [], [])"><div class="token cpp_field">rendererFactories</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)'], ['vl::collections::Dictionary::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)', 'vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::elementTypeName'], [], [])"><div class="token cpp_argument">elementTypeName</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::factory'], [], [])"><div class="token cpp_argument">factory</div></div>);
-					<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
-				}
-			}
-
-			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::IGuiGraphicsElementFactory'], [], [])"><div class="token cpp_type">IGuiGraphicsElementFactory</div></div>* <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager'], [], [])"><div class="token cpp_type">GuiGraphicsResourceManager</div></div>::<div class="def" id="FB$vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)'], [], [])"><div class="token cpp_function">GetElementFactory</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)[impl0]::elementTypeName"><div><div class="token cpp_argument">elementTypeName</div></div></div>)
-			{
-				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)[impl0]::index"><div>index</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::elementFactories'], [], [])"><div class="token cpp_field">elementFactories</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()'], ['vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()'], [], [])"><div class="token cpp_function">Keys</div></div>().<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], ['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], [], [])"><div class="token cpp_function">IndexOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)[impl0]::elementTypeName'], [], [])"><div class="token cpp_argument">elementTypeName</div></div>);
-				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)[impl0]::index'], [], [])">index</div>==-<div class="token cpp_number ">1</div>?<div class="token cpp_number ">0</div>:<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::elementFactories'], [], [])"><div class="token cpp_field">elementFactories</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()'], ['vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()'], [], [])"><div class="token cpp_function">Values</div></div>().<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], ['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], [], [])"><div class="token cpp_function">Get</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)[impl0]::index'], [], [])">index</div>).<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Obj@[T] *()'], ['vl::Ptr::Obj@[T] *()'], [], [])"><div class="token cpp_function">Obj</div></div>();
-			}
-
-			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::IGuiGraphicsRendererFactory'], [], [])"><div class="token cpp_type">IGuiGraphicsRendererFactory</div></div>* <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager'], [], [])"><div class="token cpp_type">GuiGraphicsResourceManager</div></div>::<div class="def" id="FB$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)'], [], [])"><div class="token cpp_function">GetRendererFactory</div></div></div>(<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="NI$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)[impl0]::elementTypeName"><div><div class="token cpp_argument">elementTypeName</div></div></div>)
-			{
-				<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)[impl0]::index"><div>index</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::rendererFactories'], [], [])"><div class="token cpp_field">rendererFactories</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()'], ['vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()'], [], [])"><div class="token cpp_function">Keys</div></div>().<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], ['vl::collections::SortedList::IndexOf@::vl::vint([K] const &)'], [], [])"><div class="token cpp_function">IndexOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)[impl0]::elementTypeName'], [], [])"><div class="token cpp_argument">elementTypeName</div></div>);
-				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)[impl0]::index'], [], [])">index</div>==-<div class="token cpp_number ">1</div>?<div class="token cpp_keyword ">nullptr</div>:<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::rendererFactories'], [], [])"><div class="token cpp_field">rendererFactories</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()'], ['vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()'], [], [])"><div class="token cpp_function">Values</div></div>().<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], ['vl::collections::ArrayBase::Get@[T] const &(::vl::vint)'], [], [])"><div class="token cpp_function">Get</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)[impl0]::index'], [], [])">index</div>).<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Obj@[T] *()'], ['vl::Ptr::Obj@[T] *()'], [], [])"><div class="token cpp_function">Obj</div></div>();
+				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::rendererFactories'], [], [])"><div class="token cpp_field">rendererFactories</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>() &gt; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::vint)[impl0]::elementType'], [], [])"><div class="token cpp_argument">elementType</div></div> ? <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::rendererFactories'], [], [])"><div class="token cpp_field">rendererFactories</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::vint)[impl0]::elementType'], [], [])"><div class="token cpp_argument">elementType</div></div>].<div class="ref" onclick="jumpToSymbol(['vl::Ptr::Obj@[T] *()'], ['vl::Ptr::Obj@[T] *()'], [], [])"><div class="token cpp_function">Obj</div></div>() : <div class="token cpp_keyword ">nullptr</div>;
 			}
 
 			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager'], [], [])"><div class="token cpp_type">GuiGraphicsResourceManager</div></div>* <div class="def" id="NI$vl::presentation::elements::guiGraphicsResourceManager"><div>guiGraphicsResourceManager</div></div>=<div class="token cpp_number ">0</div>;
@@ -81,21 +70,6 @@ GuiGraphicsResourceManager
 			<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::presentation::elements::SetGuiGraphicsResourceManager@void(::vl::presentation::elements::GuiGraphicsResourceManager *)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::SetGuiGraphicsResourceManager@void(::vl::presentation::elements::GuiGraphicsResourceManager *)'], [], [])"><div class="token cpp_function">SetGuiGraphicsResourceManager</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::GuiGraphicsResourceManager'], [], [])"><div class="token cpp_type">GuiGraphicsResourceManager</div></div>* <div class="def" id="NI$vl::presentation::elements::SetGuiGraphicsResourceManager@void(::vl::presentation::elements::GuiGraphicsResourceManager *)[impl0]::resourceManager"><div><div class="token cpp_argument">resourceManager</div></div></div>)
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::guiGraphicsResourceManager'], [], [])">guiGraphicsResourceManager</div>=<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::SetGuiGraphicsResourceManager@void(::vl::presentation::elements::GuiGraphicsResourceManager *)[impl0]::resourceManager'], [], [])"><div class="token cpp_argument">resourceManager</div></div>;
-			}
-
-			<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)'], [], [])"><div class="token cpp_function">RegisterFactories</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::IGuiGraphicsElementFactory'], [], [])"><div class="token cpp_type">IGuiGraphicsElementFactory</div></div>* <div class="def" id="NI$vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::elementFactory"><div><div class="token cpp_argument">elementFactory</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::IGuiGraphicsRendererFactory'], [], [])"><div class="token cpp_type">IGuiGraphicsRendererFactory</div></div>* <div class="def" id="NI$vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::rendererFactory"><div><div class="token cpp_argument">rendererFactory</div></div></div>)
-			{
-				<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::guiGraphicsResourceManager'], [], [])">guiGraphicsResourceManager</div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::elementFactory'], [], [])"><div class="token cpp_argument">elementFactory</div></div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::rendererFactory'], [], [])"><div class="token cpp_argument">rendererFactory</div></div>)
-				{
-					<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::guiGraphicsResourceManager'], [], [])">guiGraphicsResourceManager</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)'], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)'], [], [])"><div class="token cpp_function">RegisterElementFactory</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::elementFactory'], [], [])"><div class="token cpp_argument">elementFactory</div></div>))
-					{
-						<div class="token cpp_keyword ">if</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::guiGraphicsResourceManager'], [], [])">guiGraphicsResourceManager</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)'], ['vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)'], [], [])"><div class="token cpp_function">RegisterRendererFactory</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::elementFactory'], [], [])"><div class="token cpp_argument">elementFactory</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::elements::IGuiGraphicsElementFactory::GetElementTypeName@::vl::WString()'], ['vl::presentation::elements::IGuiGraphicsElementFactory::GetElementTypeName@::vl::WString()'], [], [])"><div class="token cpp_function">GetElementTypeName</div></div>(), <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::rendererFactory'], [], [])"><div class="token cpp_argument">rendererFactory</div></div>))
-						{
-							<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">true</div>;
-						}
-					}
-				}
-				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">false</div>;
 			}
 		}
 	}
@@ -579,10 +553,31 @@ referencedSymbols = {
             'NF[469]$vl'
         ]
     },
+    'vl::Error': {
+        'displayNameInHtml': '<span class="cpp_type">Error</span>',
+        'impls': [
+            'NI$vl::Error'
+        ],
+        'decls': []
+    },
+    'vl::Ptr': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;',
+        'impls': [
+            'NI$vl::Ptr'
+        ],
+        'decls': []
+    },
     'vl::Ptr::Obj@[T] *()': {
         'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Obj</span>()',
         'impls': [
             'FB$vl::Ptr::Obj@[T] *()[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)': {
+        'displayNameInHtml': '<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator =</span>(<span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">T</span>&gt; <span class="cpp_keyword">const</span> &)',
+        'impls': [
+            'FB$vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)[impl0]'
         ],
         'decls': []
     },
@@ -621,52 +616,38 @@ referencedSymbols = {
             'NF[21]$vl::collections'
         ]
     },
-    'vl::collections::ArrayBase::Get@[T] const &(::vl::vint)': {
-        'displayNameInHtml': '<span class="cpp_type">ArrayBase</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Get</span>(<span class="cpp_type">vint</span>)',
+    'vl::collections::Array::Resize@void(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">Array</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Resize</span>(<span class="cpp_type">vint</span>)',
         'impls': [
-            'FB$vl::collections::ArrayBase::Get@[T] const &(::vl::vint)[impl0]'
+            'FB$vl::collections::Array::Resize@void(::vl::vint)[impl0]'
         ],
         'decls': []
     },
-    'vl::collections::Dictionary::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)': {
-        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">Pair</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>&gt; <span class="cpp_keyword">const</span> &)',
+    'vl::collections::Array::operator []@[T] &(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">Array</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">operator []</span>(<span class="cpp_type">vint</span>)',
         'impls': [
-            'FB$vl::collections::Dictionary::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)[impl0]'
+            'FB$vl::collections::Array::operator []@[T] &(::vl::vint)[impl0]'
         ],
         'decls': []
     },
-    'vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">KT</span> <span class="cpp_keyword">const</span> &, <span class="cpp_type">VT</span> <span class="cpp_keyword">const</span> &)',
+    'vl::collections::ArrayBase::Count@::vl::vint()': {
+        'displayNameInHtml': '<span class="cpp_type">ArrayBase</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">Count</span>()',
         'impls': [
-            'FB$vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)[impl0]'
+            'FB$vl::collections::ArrayBase::Count@::vl::vint()[impl0]'
         ],
         'decls': []
     },
-    'vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()': {
-        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Keys</span>()',
+    'vl::collections::List::Add@::vl::vint([T] const &)': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">T</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
-            'FB$vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()[impl0]'
+            'FB$vl::collections::List::Add@::vl::vint([T] const &)[impl0]'
         ],
         'decls': []
     },
-    'vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()': {
-        'displayNameInHtml': '<span class="cpp_type">Dictionary</span>&lt;<span class="cpp_type">KT</span>, <span class="cpp_type">VT</span>, <span class="cpp_type">KK</span>, <span class="cpp_type">VK</span>&gt;::<span class="cpp_function">Values</span>()',
+    'vl::collections::List::Contains@bool([K] const &)': {
+        'displayNameInHtml': '<span class="cpp_type">List</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Contains</span>(<span class="cpp_type">K</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
-            'FB$vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()[impl0]'
-        ],
-        'decls': []
-    },
-    'vl::collections::SortedList::Contains@bool([K] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Contains</span>(<span class="cpp_type">K</span> <span class="cpp_keyword">const</span> &)',
-        'impls': [
-            'FB$vl::collections::SortedList::Contains@bool([K] const &)[impl0]'
-        ],
-        'decls': []
-    },
-    'vl::collections::SortedList::IndexOf@::vl::vint([K] const &)': {
-        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">IndexOf</span>(<span class="cpp_type">K</span> <span class="cpp_keyword">const</span> &)',
-        'impls': [
-            'FB$vl::collections::SortedList::IndexOf@::vl::vint([K] const &)[impl0]'
+            'FB$vl::collections::List::Contains@bool([K] const &)[impl0]'
         ],
         'decls': []
     },
@@ -962,95 +943,65 @@ referencedSymbols = {
             'FB$vl::presentation::elements::GuiGraphicsResourceManager::$__ctor@()[decl0]'
         ]
     },
-    'vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)': {
-        'displayNameInHtml': '<span class="cpp_type">GuiGraphicsResourceManager</span>::<span class="cpp_function">GetElementFactory</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
+    'vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::vint)': {
+        'displayNameInHtml': '<span class="cpp_type">GuiGraphicsResourceManager</span>::<span class="cpp_function">GetRendererFactory</span>(<span class="cpp_type">vint</span>)',
         'impls': [
-            'FB$vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)[impl0]'
+            'FB$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::vint)[impl0]'
         ],
         'decls': [
-            'FB$vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)[decl0]'
+            'FB$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::vint)[decl0]'
         ]
     },
-    'vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)[impl0]::elementTypeName': {
+    'vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::vint)[impl0]::elementType': {
+        'displayNameInHtml': 'elementType',
+        'impls': [
+            'NI$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::vint)[impl0]::elementType'
+        ],
+        'decls': []
+    },
+    'vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &)': {
+        'displayNameInHtml': '<span class="cpp_type">GuiGraphicsResourceManager</span>::<span class="cpp_function">RegisterElementType</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
+        'impls': [
+            'FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &)[decl0]'
+        ]
+    },
+    'vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &)[impl0]::elementTypeName': {
         'displayNameInHtml': 'elementTypeName',
         'impls': [
-            'NI$vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)[impl0]::elementTypeName'
+            'NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &)[impl0]::elementTypeName'
         ],
         'decls': []
     },
-    'vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)[impl0]::index': {
-        'displayNameInHtml': 'index',
+    'vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)': {
+        'displayNameInHtml': '<span class="cpp_type">GuiGraphicsResourceManager</span>::<span class="cpp_function">RegisterRendererFactory</span>(<span class="cpp_type">vint</span>, <span class="cpp_type">Ptr</span>&lt;<span class="cpp_type">IGuiGraphicsRendererFactory</span>&gt;)',
         'impls': [
-            'NI$vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)[impl0]::index'
-        ],
-        'decls': []
-    },
-    'vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)': {
-        'displayNameInHtml': '<span class="cpp_type">GuiGraphicsResourceManager</span>::<span class="cpp_function">GetRendererFactory</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &)',
-        'impls': [
-            'FB$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)[impl0]'
+            'FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]'
         ],
         'decls': [
-            'FB$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)[decl0]'
+            'FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[decl0]'
         ]
     },
-    'vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)[impl0]::elementTypeName': {
-        'displayNameInHtml': 'elementTypeName',
+    'vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]::elementType': {
+        'displayNameInHtml': 'elementType',
         'impls': [
-            'NI$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)[impl0]::elementTypeName'
+            'NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]::elementType'
         ],
         'decls': []
     },
-    'vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)[impl0]::index': {
-        'displayNameInHtml': 'index',
-        'impls': [
-            'NI$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)[impl0]::index'
-        ],
-        'decls': []
-    },
-    'vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)': {
-        'displayNameInHtml': '<span class="cpp_type">GuiGraphicsResourceManager</span>::<span class="cpp_function">RegisterElementFactory</span>(<span class="cpp_type">IGuiGraphicsElementFactory</span> *)',
-        'impls': [
-            'FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)[decl0]'
-        ]
-    },
-    'vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)[impl0]::factory': {
+    'vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]::factory': {
         'displayNameInHtml': 'factory',
         'impls': [
-            'NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)[impl0]::factory'
+            'NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]::factory'
         ],
         'decls': []
     },
-    'vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)': {
-        'displayNameInHtml': '<span class="cpp_type">GuiGraphicsResourceManager</span>::<span class="cpp_function">RegisterRendererFactory</span>(<span class="cpp_type">WString</span> <span class="cpp_keyword">const</span> &, <span class="cpp_type">IGuiGraphicsRendererFactory</span> *)',
+    'vl::presentation::elements::GuiGraphicsResourceManager::elementTypes': {
+        'displayNameInHtml': '<span class="cpp_type">GuiGraphicsResourceManager</span>::<span class="cpp_field">elementTypes</span>',
         'impls': [
-            'FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[decl0]'
-        ]
-    },
-    'vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::elementTypeName': {
-        'displayNameInHtml': 'elementTypeName',
-        'impls': [
-            'NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::elementTypeName'
-        ],
-        'decls': []
-    },
-    'vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::factory': {
-        'displayNameInHtml': 'factory',
-        'impls': [
-            'NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::factory'
-        ],
-        'decls': []
-    },
-    'vl::presentation::elements::GuiGraphicsResourceManager::elementFactories': {
-        'displayNameInHtml': '<span class="cpp_type">GuiGraphicsResourceManager</span>::<span class="cpp_field">elementFactories</span>',
-        'impls': [
-            'NI$vl::presentation::elements::GuiGraphicsResourceManager::elementFactories'
+            'NI$vl::presentation::elements::GuiGraphicsResourceManager::elementTypes'
         ],
         'decls': []
     },
@@ -1070,22 +1021,6 @@ referencedSymbols = {
             'FB$vl::presentation::elements::GuiGraphicsResourceManager::~GuiGraphicsResourceManager@()[decl0]'
         ]
     },
-    'vl::presentation::elements::IGuiGraphicsElementFactory': {
-        'displayNameInHtml': '<span class="cpp_type">IGuiGraphicsElementFactory</span>',
-        'impls': [
-            'NI$vl::presentation::elements::IGuiGraphicsElementFactory'
-        ],
-        'decls': [
-            'NF[0]$vl::presentation::elements::IGuiGraphicsElementFactory'
-        ]
-    },
-    'vl::presentation::elements::IGuiGraphicsElementFactory::GetElementTypeName@::vl::WString()': {
-        'displayNameInHtml': '<span class="cpp_type">IGuiGraphicsElementFactory</span>::<span class="cpp_function">GetElementTypeName</span>()',
-        'impls': [],
-        'decls': [
-            'FB$vl::presentation::elements::IGuiGraphicsElementFactory::GetElementTypeName@::vl::WString()[decl0]'
-        ]
-    },
     'vl::presentation::elements::IGuiGraphicsRendererFactory': {
         'displayNameInHtml': '<span class="cpp_type">IGuiGraphicsRendererFactory</span>',
         'impls': [
@@ -1094,29 +1029,6 @@ referencedSymbols = {
         'decls': [
             'NF[0]$vl::presentation::elements::IGuiGraphicsRendererFactory'
         ]
-    },
-    'vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)': {
-        'displayNameInHtml': '<span class="cpp_function">RegisterFactories</span>(<span class="cpp_type">IGuiGraphicsElementFactory</span> *, <span class="cpp_type">IGuiGraphicsRendererFactory</span> *)',
-        'impls': [
-            'FB$vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]'
-        ],
-        'decls': [
-            'FB$vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[decl0]'
-        ]
-    },
-    'vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::elementFactory': {
-        'displayNameInHtml': 'elementFactory',
-        'impls': [
-            'NI$vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::elementFactory'
-        ],
-        'decls': []
-    },
-    'vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::rendererFactory': {
-        'displayNameInHtml': 'rendererFactory',
-        'impls': [
-            'NI$vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::rendererFactory'
-        ],
-        'decls': []
     },
     'vl::presentation::elements::SetGuiGraphicsResourceManager@void(::vl::presentation::elements::GuiGraphicsResourceManager *)': {
         'displayNameInHtml': '<span class="cpp_function">SetGuiGraphicsResourceManager</span>(<span class="cpp_type">GuiGraphicsResourceManager</span> *)',
@@ -1151,37 +1063,30 @@ referencedSymbols = {
 };
 symbolToFiles = {
     'FB$vl::Ptr::Obj@[T] *()[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
-    'FB$vl::collections::ArrayBase::Get@[T] const &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
-    'FB$vl::collections::Dictionary::Add@bool(::vl::collections::Pair<[KT], [VT]> const &)[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
-    'FB$vl::collections::Dictionary::Add@bool([KT] const &, [VT] const &)[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
-    'FB$vl::collections::Dictionary::Keys@::vl::collections::Dictionary::KeyContainer const &()[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
-    'FB$vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()[impl0]': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
-    'FB$vl::collections::SortedList::Contains@bool([K] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
-    'FB$vl::collections::SortedList::IndexOf@::vl::vint([K] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::collections::Array::Resize@void(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::Array::operator []@[T] &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::ArrayBase::Count@::vl::vint()[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::List::Add@::vl::vint([T] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::List::Contains@bool([K] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
     'FB$vl::presentation::elements::GetGuiGraphicsResourceManager@::vl::presentation::elements::GuiGraphicsResourceManager *()[decl0]': { 'htmlFileName': 'GuiGraphicsResourceManager.h', 'displayName': 'GuiGraphicsResourceManager.h' },
     'FB$vl::presentation::elements::GetGuiGraphicsResourceManager@::vl::presentation::elements::GuiGraphicsResourceManager *()[impl0]': null,
     'FB$vl::presentation::elements::GuiGraphicsResourceManager::$__ctor@()[decl0]': { 'htmlFileName': 'GuiGraphicsResourceManager.h', 'displayName': 'GuiGraphicsResourceManager.h' },
     'FB$vl::presentation::elements::GuiGraphicsResourceManager::$__ctor@()[impl0]': null,
-    'FB$vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)[decl0]': { 'htmlFileName': 'GuiGraphicsResourceManager.h', 'displayName': 'GuiGraphicsResourceManager.h' },
-    'FB$vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)[impl0]': null,
-    'FB$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)[decl0]': { 'htmlFileName': 'GuiGraphicsResourceManager.h', 'displayName': 'GuiGraphicsResourceManager.h' },
-    'FB$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)[impl0]': null,
-    'FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)[decl0]': { 'htmlFileName': 'GuiGraphicsResourceManager.h', 'displayName': 'GuiGraphicsResourceManager.h' },
-    'FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)[impl0]': null,
-    'FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[decl0]': { 'htmlFileName': 'GuiGraphicsResourceManager.h', 'displayName': 'GuiGraphicsResourceManager.h' },
-    'FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]': null,
+    'FB$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::vint)[decl0]': { 'htmlFileName': 'GuiGraphicsResourceManager.h', 'displayName': 'GuiGraphicsResourceManager.h' },
+    'FB$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::vint)[impl0]': null,
+    'FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &)[decl0]': { 'htmlFileName': 'GuiGraphicsResourceManager.h', 'displayName': 'GuiGraphicsResourceManager.h' },
+    'FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &)[impl0]': null,
+    'FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[decl0]': { 'htmlFileName': 'GuiGraphicsResourceManager.h', 'displayName': 'GuiGraphicsResourceManager.h' },
+    'FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]': null,
     'FB$vl::presentation::elements::GuiGraphicsResourceManager::~GuiGraphicsResourceManager@()[decl0]': { 'htmlFileName': 'GuiGraphicsResourceManager.h', 'displayName': 'GuiGraphicsResourceManager.h' },
     'FB$vl::presentation::elements::GuiGraphicsResourceManager::~GuiGraphicsResourceManager@()[impl0]': null,
-    'FB$vl::presentation::elements::IGuiGraphicsElementFactory::GetElementTypeName@::vl::WString()[decl0]': { 'htmlFileName': 'GuiGraphicsElementInterfaces.h', 'displayName': 'GuiGraphicsElementInterfaces.h' },
-    'FB$vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[decl0]': { 'htmlFileName': 'GuiGraphicsResourceManager.h', 'displayName': 'GuiGraphicsResourceManager.h' },
-    'FB$vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]': null,
     'FB$vl::presentation::elements::SetGuiGraphicsResourceManager@void(::vl::presentation::elements::GuiGraphicsResourceManager *)[decl0]': { 'htmlFileName': 'GuiGraphicsResourceManager.h', 'displayName': 'GuiGraphicsResourceManager.h' },
     'FB$vl::presentation::elements::SetGuiGraphicsResourceManager@void(::vl::presentation::elements::GuiGraphicsResourceManager *)[impl0]': null,
     'NF[0]$vl': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
     'NF[0]$vl::collections': { 'htmlFileName': 'Pair.h', 'displayName': 'Pair.h' },
     'NF[0]$vl::presentation': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
     'NF[0]$vl::presentation::elements': { 'htmlFileName': 'GuiGraphicsElementInterfaces.h', 'displayName': 'GuiGraphicsElementInterfaces.h' },
-    'NF[0]$vl::presentation::elements::IGuiGraphicsElementFactory': { 'htmlFileName': 'GuiGraphicsElementInterfaces.h', 'displayName': 'GuiGraphicsElementInterfaces.h' },
     'NF[0]$vl::presentation::elements::IGuiGraphicsRendererFactory': { 'htmlFileName': 'GuiGraphicsElementInterfaces.h', 'displayName': 'GuiGraphicsElementInterfaces.h' },
     'NF[100]$vl': { 'htmlFileName': 'ParsingJson_Ast.h', 'displayName': 'ParsingJson_Ast.h' },
     'NF[100]$vl::presentation': { 'htmlFileName': 'GuiDocumentViewer.cpp', 'displayName': 'GuiDocumentViewer.cpp' },
@@ -1926,21 +1831,17 @@ symbolToFiles = {
     'NF[9]$vl::collections': { 'htmlFileName': 'OperationSelect.h', 'displayName': 'OperationSelect.h' },
     'NF[9]$vl::presentation': { 'htmlFileName': 'IncludeForward.h', 'displayName': 'IncludeForward.h' },
     'NF[9]$vl::presentation::elements': { 'htmlFileName': 'GuiGraphicsTextElement.cpp', 'displayName': 'GuiGraphicsTextElement.cpp' },
+    'NI$vl::Error': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' },
+    'NI$vl::Ptr': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
     'NI$vl::WString': { 'htmlFileName': 'String.h', 'displayName': 'String.h' },
     'NI$vl::presentation::elements::GuiGraphicsResourceManager': { 'htmlFileName': 'GuiGraphicsResourceManager.h', 'displayName': 'GuiGraphicsResourceManager.h' },
-    'NI$vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)[impl0]::elementTypeName': null,
-    'NI$vl::presentation::elements::GuiGraphicsResourceManager::GetElementFactory@::vl::presentation::elements::IGuiGraphicsElementFactory *(::vl::WString const &)[impl0]::index': null,
-    'NI$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)[impl0]::elementTypeName': null,
-    'NI$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::WString const &)[impl0]::index': null,
-    'NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementFactory@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *)[impl0]::factory': null,
-    'NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::elementTypeName': null,
-    'NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@bool(::vl::WString const &, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::factory': null,
-    'NI$vl::presentation::elements::GuiGraphicsResourceManager::elementFactories': { 'htmlFileName': 'GuiGraphicsResourceManager.h', 'displayName': 'GuiGraphicsResourceManager.h' },
+    'NI$vl::presentation::elements::GuiGraphicsResourceManager::GetRendererFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *(::vl::vint)[impl0]::elementType': null,
+    'NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &)[impl0]::elementTypeName': null,
+    'NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]::elementType': null,
+    'NI$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr<::vl::presentation::elements::IGuiGraphicsRendererFactory>)[impl0]::factory': null,
+    'NI$vl::presentation::elements::GuiGraphicsResourceManager::elementTypes': { 'htmlFileName': 'GuiGraphicsResourceManager.h', 'displayName': 'GuiGraphicsResourceManager.h' },
     'NI$vl::presentation::elements::GuiGraphicsResourceManager::rendererFactories': { 'htmlFileName': 'GuiGraphicsResourceManager.h', 'displayName': 'GuiGraphicsResourceManager.h' },
-    'NI$vl::presentation::elements::IGuiGraphicsElementFactory': { 'htmlFileName': 'GuiGraphicsElementInterfaces.h', 'displayName': 'GuiGraphicsElementInterfaces.h' },
     'NI$vl::presentation::elements::IGuiGraphicsRendererFactory': { 'htmlFileName': 'GuiGraphicsElementInterfaces.h', 'displayName': 'GuiGraphicsElementInterfaces.h' },
-    'NI$vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::elementFactory': null,
-    'NI$vl::presentation::elements::RegisterFactories@bool(::vl::presentation::elements::IGuiGraphicsElementFactory *, ::vl::presentation::elements::IGuiGraphicsRendererFactory *)[impl0]::rendererFactory': null,
     'NI$vl::presentation::elements::SetGuiGraphicsResourceManager@void(::vl::presentation::elements::GuiGraphicsResourceManager *)[impl0]::resourceManager': null,
     'NI$vl::presentation::elements::guiGraphicsResourceManager': null,
     'NI$vl::vint': { 'htmlFileName': 'Basic.h', 'displayName': 'Basic.h' }

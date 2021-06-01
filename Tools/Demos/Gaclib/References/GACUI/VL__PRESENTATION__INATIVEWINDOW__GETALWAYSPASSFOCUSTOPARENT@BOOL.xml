@@ -1,5 +1,0 @@
-<Document symbolId="vl::presentation::INativeWindow::GetAlwaysPassFocusToParent@bool()" accessor="public" category="Function" name="GetAlwaysPassFocusToParent" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetAlwaysPassFocusToParent@bool()[decl0]"><summary>
- Test is the window always pass the focus to its parent window.
- </summary><returns>Returns true if the window always pass the focus to its parent window.</returns><signature><![CDATA[bool GetAlwaysPassFocusToParent(
-);
-]]></signature></Document>
