@@ -59,7 +59,7 @@ Basic Construction
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>									<div class="def" id="FB$vl::presentation::elements::IGuiGraphicsElement::SetOwnerComposition@void(::vl::presentation::compositions::GuiGraphicsComposition *)[decl0]"><div><div class="token cpp_function">SetOwnerComposition</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions'], [], [])">compositions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions::GuiGraphicsComposition'], [], [])"><div class="token cpp_type">GuiGraphicsComposition</div></div>* <div class="def" id="NI$vl::presentation::elements::IGuiGraphicsElement::SetOwnerComposition@void(::vl::presentation::compositions::GuiGraphicsComposition *)[decl0]::composition"><div>composition</div></div>) = <div class="token cpp_number ">0</div>;
 			<div class="token cpp_keyword ">public</div>:
 				<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-				<div class="token cpp_comment ">/// Access the associated &lt;see cref=&quot;IGuiGraphicsRenderer&quot;&gt;&lt;/see&gt; for this graphics element.</div>
+				<div class="token cpp_comment ">/// Access the associated &lt;see cref=&quot;IGuiGraphicsRenderer&quot;/&gt; for this graphics element.</div>
 				<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 				<div class="token cpp_comment ">/// &lt;returns&gt;Returns the related renderer.&lt;/returns&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::IGuiGraphicsRenderer'], [], [])"><div class="token cpp_type">IGuiGraphicsRenderer</div></div>*					<div class="def" id="FB$vl::presentation::elements::IGuiGraphicsElement::GetRenderer@::vl::presentation::elements::IGuiGraphicsRenderer *()[decl0]"><div><div class="token cpp_function">GetRenderer</div></div></div>() = <div class="token cpp_number ">0</div>;
@@ -77,13 +77,13 @@ Basic Construction
 			{
 			<div class="token cpp_keyword ">public</div>:
 				<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-				<div class="token cpp_comment ">/// Access the graphics &lt;see cref=&quot;IGuiGraphicsRendererFactory&quot;&gt;&lt;/see&gt; that is used to create this graphics renderer.</div>
+				<div class="token cpp_comment ">/// Access the graphics &lt;see cref=&quot;IGuiGraphicsRendererFactory&quot;/&gt; that is used to create this graphics renderer.</div>
 				<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 				<div class="token cpp_comment ">/// &lt;returns&gt;Returns the related factory.&lt;/returns&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::IGuiGraphicsRendererFactory'], [], [])"><div class="token cpp_type">IGuiGraphicsRendererFactory</div></div>*	<div class="def" id="FB$vl::presentation::elements::IGuiGraphicsRenderer::GetFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *()[decl0]"><div><div class="token cpp_function">GetFactory</div></div></div>()=<div class="token cpp_number ">0</div>;
 
 				<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-				<div class="token cpp_comment ">/// Initialize the grpahics renderer by binding a &lt;see cref=&quot;IGuiGraphicsElement&quot;&gt;&lt;/see&gt; to it.</div>
+				<div class="token cpp_comment ">/// Initialize the grpahics renderer by binding a &lt;see cref=&quot;IGuiGraphicsElement&quot;/&gt; to it.</div>
 				<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 				<div class="token cpp_comment ">/// &lt;param name=&quot;element&quot;&gt;The graphics element to bind.&lt;/param&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>							<div class="def" id="FB$vl::presentation::elements::IGuiGraphicsRenderer::Initialize@void(::vl::presentation::elements::IGuiGraphicsElement *)[decl0]"><div><div class="token cpp_function">Initialize</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::IGuiGraphicsElement'], [], [])"><div class="token cpp_type">IGuiGraphicsElement</div></div>* <div class="def" id="NI$vl::presentation::elements::IGuiGraphicsRenderer::Initialize@void(::vl::presentation::elements::IGuiGraphicsElement *)[decl0]::element"><div>element</div></div>)=<div class="token cpp_number ">0</div>;
@@ -92,7 +92,7 @@ Basic Construction
 				<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>							<div class="def" id="FB$vl::presentation::elements::IGuiGraphicsRenderer::Finalize@void()[decl0]"><div><div class="token cpp_function">Finalize</div></div></div>()=<div class="token cpp_number ">0</div>;
 				<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-				<div class="token cpp_comment ">/// Set a &lt;see cref=&quot;IGuiGraphicsRenderTarget&quot;&gt;&lt;/see&gt; to this element.</div>
+				<div class="token cpp_comment ">/// Set a &lt;see cref=&quot;IGuiGraphicsRenderTarget&quot;/&gt; to this element.</div>
 				<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 				<div class="token cpp_comment ">/// &lt;param name=&quot;renderTarget&quot;&gt;The graphics render target. It can be NULL.&lt;/param&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>							<div class="def" id="FB$vl::presentation::elements::IGuiGraphicsRenderer::SetRenderTarget@void(::vl::presentation::elements::IGuiGraphicsRenderTarget *)[decl0]"><div><div class="token cpp_function">SetRenderTarget</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::IGuiGraphicsRenderTarget'], [], [])"><div class="token cpp_type">IGuiGraphicsRenderTarget</div></div>* <div class="def" id="NI$vl::presentation::elements::IGuiGraphicsRenderer::SetRenderTarget@void(::vl::presentation::elements::IGuiGraphicsRenderTarget *)[decl0]::renderTarget"><div>renderTarget</div></div>)=<div class="token cpp_number ">0</div>;
@@ -120,7 +120,7 @@ Basic Construction
 			{
 			<div class="token cpp_keyword ">public</div>:
 				<div class="token cpp_comment ">/// &lt;summary&gt;</div>
-				<div class="token cpp_comment ">/// Create a &lt;see cref=&quot;IGuiGraphicsRenderer&quot;&gt;&lt;/see&gt;.</div>
+				<div class="token cpp_comment ">/// Create a &lt;see cref=&quot;IGuiGraphicsRenderer&quot;/&gt;.</div>
 				<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 				<div class="token cpp_comment ">/// &lt;returns&gt;Returns the created graphics renderer.&lt;/returns&gt;</div>
 				<div class="token cpp_keyword ">virtual</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::elements::IGuiGraphicsRenderer'], [], [])"><div class="token cpp_type">IGuiGraphicsRenderer</div></div>*			<div class="def" id="FB$vl::presentation::elements::IGuiGraphicsRendererFactory::Create@::vl::presentation::elements::IGuiGraphicsRenderer *()[decl0]"><div><div class="token cpp_function">Create</div></div></div>()=<div class="token cpp_number ">0</div>;

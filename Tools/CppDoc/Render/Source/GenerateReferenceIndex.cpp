@@ -595,13 +595,6 @@ vint ProcessDocumentRecordHyperLinksInternal(
 			if (auto node = ResolveHyperLink(global, result, symbol, decl, false, type, contents, match->Result().Value(), xmlText))
 			{
 				subNodes.Add(node);
-
-				if (decl->symbol->kind == symbol_component::SymbolKind::Enum && xmlContainer->name.value == L"enumitem" && i < 2)
-				{
-					Console::WriteLine(L"");
-					Console::WriteLine(L"<enumitem> CANNOT START WITH A HYPERLINK:");
-					Console::WriteLine(symbol->uniqueId);
-				}
 			}
 			else
 			{
