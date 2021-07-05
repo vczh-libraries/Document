@@ -1018,8 +1018,10 @@
       <document name="variable Clicked" docId="vl::presentation::controls::GuiButton::Clicked" file="VL__PRESENTATION__CONTROLS__GUIBUTTON__CLICKED"/>
       <document name="function GetAutoFocus" docId="vl::presentation::controls::GuiButton::GetAutoFocus@bool()" file="VL__PRESENTATION__CONTROLS__GUIBUTTON__GETAUTOFOCUS@BOOL()"/>
       <document name="function GetClickOnMouseUp" docId="vl::presentation::controls::GuiButton::GetClickOnMouseUp@bool()" file="VL__PRESENTATION__CONTROLS__GUIBUTTON__GETCLICKONMOUSEUP@BOOL()"/>
+      <document name="function GetIgnoreChildControlMouseEvents" docId="vl::presentation::controls::GuiButton::GetIgnoreChildControlMouseEvents@bool()" file="VL__PRESENTATION__CONTROLS__GUIBUTTON__GETIGNORECHILDCONTROLMOUS"/>
       <document name="function SetAutoFocus" docId="vl::presentation::controls::GuiButton::SetAutoFocus@void(bool)" file="VL__PRESENTATION__CONTROLS__GUIBUTTON__SETAUTOFOCUS@VOID(BOOL)"/>
       <document name="function SetClickOnMouseUp" docId="vl::presentation::controls::GuiButton::SetClickOnMouseUp@void(bool)" file="VL__PRESENTATION__CONTROLS__GUIBUTTON__SETCLICKONMOUSEUP@VOID(BO"/>
+      <document name="function SetIgnoreChildControlMouseEvents" docId="vl::presentation::controls::GuiButton::SetIgnoreChildControlMouseEvents@void(bool)" file="VL__PRESENTATION__CONTROLS__GUIBUTTON__SETIGNORECHILDCONTROLMOUS"/>
     </document>
     <document name="class GuiColorDialog" docId="vl::presentation::controls::GuiColorDialog" file="VL__PRESENTATION__CONTROLS__GUICOLORDIALOG">
       <document name="function $__ctor" docId="vl::presentation::controls::GuiColorDialog::$__ctor@()" file="VL__PRESENTATION__CONTROLS__GUICOLORDIALOG__$__CTOR@()"/>
@@ -1425,7 +1427,9 @@
     <document name="class GuiMenu" docId="vl::presentation::controls::GuiMenu" file="VL__PRESENTATION__CONTROLS__GUIMENU">
       <document name="function $__ctor" docId="vl::presentation::controls::GuiMenu::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::controls::GuiControl *)" file="VL__PRESENTATION__CONTROLS__GUIMENU__$__CTOR@(__VL__PRESENTATION"/>
       <document name="function GetHideOnDeactivateAltHost" docId="vl::presentation::controls::GuiMenu::GetHideOnDeactivateAltHost@bool()" file="VL__PRESENTATION__CONTROLS__GUIMENU__GETHIDEONDEACTIVATEALTHOST@"/>
+      <document name="function GetPreferredMenuClientSize" docId="vl::presentation::controls::GuiMenu::GetPreferredMenuClientSize@::vl::presentation::Size()" file="VL__PRESENTATION__CONTROLS__GUIMENU__GETPREFERREDMENUCLIENTSIZE@"/>
       <document name="function SetHideOnDeactivateAltHost" docId="vl::presentation::controls::GuiMenu::SetHideOnDeactivateAltHost@void(bool)" file="VL__PRESENTATION__CONTROLS__GUIMENU__SETHIDEONDEACTIVATEALTHOST@"/>
+      <document name="function SetPreferredMenuClientSize" docId="vl::presentation::controls::GuiMenu::SetPreferredMenuClientSize@void(::vl::presentation::Size)" file="VL__PRESENTATION__CONTROLS__GUIMENU__SETPREFERREDMENUCLIENTSIZE@"/>
       <document name="function UpdateMenuService" docId="vl::presentation::controls::GuiMenu::UpdateMenuService@void()" file="VL__PRESENTATION__CONTROLS__GUIMENU__UPDATEMENUSERVICE@VOID()"/>
     </document>
     <document name="class GuiMenuBar" docId="vl::presentation::controls::GuiMenuBar" file="VL__PRESENTATION__CONTROLS__GUIMENUBAR">

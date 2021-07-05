@@ -10161,6 +10161,15 @@ Basic Construction
 					return dynamic_cast<T*>(QueryService(QueryServiceHelper<T>::GetIdentifier()));
 				}
 
+				templates::GuiControlTemplate* TypedControlTemplateObject(bool ensureExists)
+				{
+					if (ensureExists)
+					{
+						EnsureControlTemplateExists();
+					}
+					return controlTemplateObject;
+				}
+
 				/// <summary>Add a service to this control dynamically. The added service cannot override existing services.</summary>
 				/// <returns>Returns true if this operation succeeded.</returns>
 				/// <param name="identifier">The identifier. You are suggested to fill this parameter using the value from the interface's GetIdentifier function, or <see cref="QueryTypedService`1"/> will not work on this service.</param>
@@ -10227,7 +10236,7 @@ Basic Construction
 					BASE_TYPE::CheckAndStoreControlTemplate(value); \
 				} \
 			public: \
-				templates::Gui##TEMPLATE* GetControlTemplateObject(bool ensureExists) \
+				templates::Gui##TEMPLATE* TypedControlTemplateObject(bool ensureExists) \
 				{ \
 					if (ensureExists) \
 					{ \
@@ -10278,6 +10287,7 @@ Buttons
 				GUI_SPECIFY_CONTROL_TEMPLATE_TYPE(ButtonTemplate, GuiControl)
 			protected:
 				bool									clickOnMouseUp = true;
+				bool									ignoreChildControlMouseEvents = true;
 				bool									autoFocus = true;
 				bool									keyPressing = false;
 				bool									mousePressing = false;
@@ -10313,11 +10323,22 @@ Buttons
 				void									SetClickOnMouseUp(bool value);
 
 				/// <summary>Test if the button gets focus when it is clicked.</summary>
-				/// <returns>Returns true if the button gets focus when it is clicked</returns>
+				/// <returns>Returns true if the button gets focus when it is clicked.</returns>
 				bool									GetAutoFocus();
 				/// <summary>Set if the button gets focus when it is clicked.</summary>
 				/// <param name="value">Set to true to make this button get focus when it is clicked.</param>
 				void									SetAutoFocus(bool value);
+
+				/// <summary>
+				/// Test if the button ignores mouse events raised in child controls.
+				/// When this property is false,
+				/// the button reacts to mouse operations even when it happens on contained child controls.
+				/// </summary>
+				/// <returns>Returns true if the button ignores mouse events raised in child controls.</returns>
+				bool									GetIgnoreChildControlMouseEvents();
+				/// <summary>Set if the button ignores mouse events raised in child controls.</summary>
+				/// <param name="value">Set to true to make this button ignore mouse events raised in child controls.</param>
+				void									SetIgnoreChildControlMouseEvents(bool value);
 			};
 
 			/// <summary>A <see cref="GuiButton"/> with a selection state.</summary>
@@ -11216,7 +11237,7 @@ Control Host
 				void											Closed()override;
 				void											Destroying()override;
 
-				virtual void									UpdateClientSizeAfterRendering(Size clientSize);
+				virtual void									UpdateClientSizeAfterRendering(Size preferredSize, Size clientSize);
 			public:
 				/// <summary>Create a control with a specified default theme.</summary>
 				/// <param name="themeName">The theme name for retriving a default control template.</param>
@@ -11536,7 +11557,7 @@ Window
 				vint									popupType = -1;
 				PopupInfo								popupInfo;
 
-				void									UpdateClientSizeAfterRendering(Size clientSize)override;
+				void									UpdateClientSizeAfterRendering(Size preferredSize, Size clientSize)override;
 				void									PopupOpened(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
 				void									PopupClosed(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
 				void									OnKeyDown(compositions::GuiGraphicsComposition* sender, compositions::GuiKeyEventArgs& arguments);
@@ -15740,6 +15761,7 @@ Menu
 			private:
 				IGuiMenuService*						parentMenuService = nullptr;
 				bool									hideOnDeactivateAltHost = true;
+				Size									preferredMenuClientSize;
 
 				IGuiMenuService*						GetParentMenuService()override;
 				Direction								GetPreferredDirection()override;
@@ -15747,6 +15769,7 @@ Menu
 				bool									IsSubMenuActivatedByMouseDown()override;
 				void									MenuItemExecuted()override;
 
+				void									UpdateClientSizeAfterRendering(Size preferredSize, Size clientSize)override;
 			protected:
 				GuiControl*								owner;
 
@@ -15770,6 +15793,13 @@ Menu
 				/// <summary>Set if this menu hide after pressing ESC key to exit to the upper level of ALT shortcuts.</summary>
 				/// <param name="value">Set to true to make this menu hide after pressing ESC key to exit to the upper level of ALT shortcuts.</param>
 				void									SetHideOnDeactivateAltHost(bool value);
+
+				/// <summary>Get the preferred client size for the menu.</summary>
+				/// <returns>The preferred client size for the menu.</returns>
+				Size									GetPreferredMenuClientSize();
+				/// <summary>Set the preferred client size for the menu.</summary>
+				/// <param name="value">The preferred client size for the menu.</param>
+				void									SetPreferredMenuClientSize(Size value);
 			};
 			
 			/// <summary>Menu bar.</summary>
@@ -15801,6 +15831,7 @@ MenuButton
 
 				using IEventHandler = compositions::IGuiGraphicsEventHandler;
 			protected:
+				Ptr<GuiDisposedFlag>					subMenuDisposeFlag;
 				Ptr<IEventHandler>						subMenuWindowOpenedHandler;
 				Ptr<IEventHandler>						subMenuWindowClosedHandler;
 				Ptr<IEventHandler>						hostClickedHandler;
@@ -17678,6 +17709,7 @@ GuiVirtualDataGrid
 
 				compositions::IGuiAltActionHost*						GetActivatingAltHost()override;
 				void													OnItemModified(vint start, vint count, vint newCount)override;
+				void													OnStyleInstalled(vint index, ItemStyle* style)override;
 				void													OnStyleUninstalled(ItemStyle* style)override;
 
 				void													NotifyCloseEditor();
@@ -18777,7 +18809,7 @@ Ribbon Containers
 			};
 
 			/// <summary>Ribbon tab page control, adding to the Pages property of a <see cref="GuiRibbonTab"/>.</summary>
-			class GuiRibbonTabPage : public GuiTabPage, public Description<GuiRibbonTabPage>
+			class GuiRibbonTabPage : public GuiTabPage, public AggregatableDescription<GuiRibbonTabPage>
 			{
 				friend class GuiRibbonGroupCollection;
 			protected:

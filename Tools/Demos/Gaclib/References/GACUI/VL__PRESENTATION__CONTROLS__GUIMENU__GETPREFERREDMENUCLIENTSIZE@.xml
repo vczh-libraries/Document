@@ -1,0 +1,3 @@
+<Document symbolId="vl::presentation::controls::GuiMenu::GetPreferredMenuClientSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetPreferredMenuClientSize" declFile="GuiMenuControls.h" declId="FB$vl::presentation::controls::GuiMenu::GetPreferredMenuClientSize@::vl::presentation::Size()[decl0]"><summary>Get the preferred client size for the menu.</summary><returns>The preferred client size for the menu.</returns><signature><![CDATA[Size GetPreferredMenuClientSize(
+);
+]]></signature><seealsos><symbol name="Size" declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>

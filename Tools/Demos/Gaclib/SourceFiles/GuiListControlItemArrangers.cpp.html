@@ -66,7 +66,7 @@ RangedItemArrangerBase
 					<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::RangedItemArrangerBase::listControl'], [], [])"><div class="token cpp_field">listControl</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiListControl::GetDisplayItemBackground@bool()'], ['vl::presentation::controls::GuiListControl::GetDisplayItemBackground@bool()'], [], [])"><div class="token cpp_function">GetDisplayItemBackground</div></div>())
 					{
 						<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::RangedItemArrangerBase::CreateStyle@::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord(::vl::vint)[impl0]::backgroundButton'], [], [])">backgroundButton</div> = <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiSelectableButton'], [], [])"><div class="token cpp_type">GuiSelectableButton</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::theme'], [], [])">theme</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::theme::ThemeName'], [], [])"><div class="token cpp_type">ThemeName</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::theme::ThemeName::ListItemBackground'], [], [])"><div class="token cpp_enum">ListItemBackground</div></div>);
-						<div class="token cpp_keyword ">if</div> (<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::controls::list::RangedItemArrangerBase::CreateStyle@::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord(::vl::vint)[impl0]::style"><div>style</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::RangedItemArrangerBase::listControl'], [], [])"><div class="token cpp_field">listControl</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiListControl::GetControlTemplateObject@::vl::presentation::templates::GuiListControlTemplate *(bool)'], ['vl::presentation::controls::GuiListControl::GetControlTemplateObject@::vl::presentation::templates::GuiListControlTemplate *(bool)'], [], [])"><div class="token cpp_function">GetControlTemplateObject</div></div>(<div class="token cpp_keyword ">true</div>)-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::templates::GuiListControlTemplate::GetBackgroundTemplate@::vl::presentation::TemplateProperty<::vl::presentation::templates::GuiSelectableButtonTemplate>()'], ['vl::presentation::templates::GuiListControlTemplate::GetBackgroundTemplate@::vl::presentation::TemplateProperty<::vl::presentation::templates::GuiSelectableButtonTemplate>()'], [], [])"><div class="token cpp_function">GetBackgroundTemplate</div></div>())
+						<div class="token cpp_keyword ">if</div> (<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::controls::list::RangedItemArrangerBase::CreateStyle@::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord(::vl::vint)[impl0]::style"><div>style</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::RangedItemArrangerBase::listControl'], [], [])"><div class="token cpp_field">listControl</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiListControl::TypedControlTemplateObject@::vl::presentation::templates::GuiListControlTemplate *(bool)'], ['vl::presentation::controls::GuiListControl::TypedControlTemplateObject@::vl::presentation::templates::GuiListControlTemplate *(bool)'], [], [])"><div class="token cpp_function">TypedControlTemplateObject</div></div>(<div class="token cpp_keyword ">true</div>)-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::templates::GuiListControlTemplate::GetBackgroundTemplate@::vl::presentation::TemplateProperty<::vl::presentation::templates::GuiSelectableButtonTemplate>()'], ['vl::presentation::templates::GuiListControlTemplate::GetBackgroundTemplate@::vl::presentation::TemplateProperty<::vl::presentation::templates::GuiSelectableButtonTemplate>()'], [], [])"><div class="token cpp_function">GetBackgroundTemplate</div></div>())
 						{
 							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::RangedItemArrangerBase::CreateStyle@::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord(::vl::vint)[impl0]::backgroundButton'], [], [])">backgroundButton</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControl::SetControlTemplate@void(::vl::presentation::controls::GuiControl::ControlTemplatePropertyType const &)'], ['vl::presentation::controls::GuiControl::SetControlTemplate@void(::vl::presentation::controls::GuiControl::ControlTemplatePropertyType const &)'], [], [])"><div class="token cpp_function">SetControlTemplate</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::RangedItemArrangerBase::CreateStyle@::vl::presentation::controls::list::RangedItemArrangerBase::ItemStyleRecord(::vl::vint)[impl0]::style'], [], [])">style</div>);
 						}
@@ -2613,13 +2613,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vl::presentation::controls::GuiListControl::GetControlTemplateObject@::vl::presentation::templates::GuiListControlTemplate *(bool)': {
-        'displayNameInHtml': '<span class="cpp_type">GuiListControl</span>::<span class="cpp_function">GetControlTemplateObject</span>(<span class="cpp_keyword">bool</span>)',
-        'impls': [
-            'FB$vl::presentation::controls::GuiListControl::GetControlTemplateObject@::vl::presentation::templates::GuiListControlTemplate *(bool)[impl0]'
-        ],
-        'decls': []
-    },
     'vl::presentation::controls::GuiListControl::GetDisplayItemBackground@bool()': {
         'displayNameInHtml': '<span class="cpp_type">GuiListControl</span>::<span class="cpp_function">GetDisplayItemBackground</span>()',
         'impls': [
@@ -2719,6 +2712,13 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">GuiListControl</span>::<span class="cpp_type">ItemStyle</span>',
         'impls': [
             'NI$vl::presentation::controls::GuiListControl::ItemStyle'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiListControl::TypedControlTemplateObject@::vl::presentation::templates::GuiListControlTemplate *(bool)': {
+        'displayNameInHtml': '<span class="cpp_type">GuiListControl</span>::<span class="cpp_function">TypedControlTemplateObject</span>(<span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::presentation::controls::GuiListControl::TypedControlTemplateObject@::vl::presentation::templates::GuiListControlTemplate *(bool)[impl0]'
         ],
         'decls': []
     },
@@ -5228,7 +5228,6 @@ symbolToFiles = {
     'FB$vl::presentation::controls::GuiControl::GetNotifyEventArguments@::vl::presentation::compositions::GuiEventArgs()[impl0]': { 'htmlFileName': 'GuiBasicControls.cpp', 'displayName': 'GuiBasicControls.cpp' },
     'FB$vl::presentation::controls::GuiControl::SetControlTemplate@void(::vl::presentation::controls::GuiControl::ControlTemplatePropertyType const &)[decl0]': { 'htmlFileName': 'GuiBasicControls.h', 'displayName': 'GuiBasicControls.h' },
     'FB$vl::presentation::controls::GuiControl::SetControlTemplate@void(::vl::presentation::controls::GuiControl::ControlTemplatePropertyType const &)[impl0]': { 'htmlFileName': 'GuiBasicControls.cpp', 'displayName': 'GuiBasicControls.cpp' },
-    'FB$vl::presentation::controls::GuiListControl::GetControlTemplateObject@::vl::presentation::templates::GuiListControlTemplate *(bool)[impl0]': { 'htmlFileName': 'GuiListControls.h', 'displayName': 'GuiListControls.h' },
     'FB$vl::presentation::controls::GuiListControl::GetDisplayItemBackground@bool()[decl0]': { 'htmlFileName': 'GuiListControls.h', 'displayName': 'GuiListControls.h' },
     'FB$vl::presentation::controls::GuiListControl::GetDisplayItemBackground@bool()[impl0]': { 'htmlFileName': 'GuiListControls.cpp', 'displayName': 'GuiListControls.cpp' },
     'FB$vl::presentation::controls::GuiListControl::IItemArrangerCallback::GetStyleBounds@::vl::presentation::Rect(::vl::presentation::compositions::GuiBoundsComposition *)[decl0]': { 'htmlFileName': 'GuiListControls.h', 'displayName': 'GuiListControls.h' },
@@ -5241,6 +5240,7 @@ symbolToFiles = {
     'FB$vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetViewLocation@void(::vl::presentation::Point)[decl0]': { 'htmlFileName': 'GuiListControls.h', 'displayName': 'GuiListControls.h' },
     'FB$vl::presentation::controls::GuiListControl::IItemProvider::Count@::vl::vint()[decl0]': { 'htmlFileName': 'GuiListControls.h', 'displayName': 'GuiListControls.h' },
     'FB$vl::presentation::controls::GuiListControl::IItemProvider::IsEditing@bool()[decl0]': { 'htmlFileName': 'GuiListControls.h', 'displayName': 'GuiListControls.h' },
+    'FB$vl::presentation::controls::GuiListControl::TypedControlTemplateObject@::vl::presentation::templates::GuiListControlTemplate *(bool)[impl0]': { 'htmlFileName': 'GuiListControls.h', 'displayName': 'GuiListControls.h' },
     'FB$vl::presentation::controls::GuiSelectableButton::SetAutoSelection@void(bool)[decl0]': { 'htmlFileName': 'GuiButtonControls.h', 'displayName': 'GuiButtonControls.h' },
     'FB$vl::presentation::controls::GuiSelectableButton::SetAutoSelection@void(bool)[impl0]': { 'htmlFileName': 'GuiButtonControls.cpp', 'displayName': 'GuiButtonControls.cpp' },
     'FB$vl::presentation::controls::GuiSelectableButton::SetSelected@void(bool)[decl0]': { 'htmlFileName': 'GuiButtonControls.h', 'displayName': 'GuiButtonControls.h' },

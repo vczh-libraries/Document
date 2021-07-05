@@ -359,6 +359,15 @@ Basic Construction
 					<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">dynamic_cast</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControl::QueryTypedService@[T] *()[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>*&gt;(<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControl::QueryService@::vl::reflection::IDescriptable *(::vl::WString const &)'], ['vl::presentation::controls::GuiControl::QueryService@::vl::reflection::IDescriptable *(::vl::WString const &)'], [], [])"><div class="token cpp_function">QueryService</div></div>(<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::QueryServiceHelper', 'vl::presentation::controls::QueryServiceHelper@<[T], ::vl::PointerConvertable::YesNoType>', 'vl::presentation::controls::QueryServiceHelper@<[T], ::vl::PointerConvertable::YesNoType>2'], ['vl::presentation::controls::QueryServiceHelper'], [], [])"><div class="token cpp_type">QueryServiceHelper</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControl::QueryTypedService@[T] *()[impl0]::T'], [], [])"><div class="token cpp_type">T</div></div>&gt;::<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::QueryServiceHelper@<[T], ::vl::PointerConvertable::YesNoType>2::GetIdentifier@::vl::WString()', 'vl::presentation::controls::QueryServiceHelper@<[T], ::vl::PointerConvertable::YesNoType>::GetIdentifier@::vl::WString()'], ['vl::presentation::controls::QueryServiceHelper@<[T], ::vl::PointerConvertable::YesNoType>2::GetIdentifier@::vl::WString()', 'vl::presentation::controls::QueryServiceHelper@<[T], ::vl::PointerConvertable::YesNoType>::GetIdentifier@::vl::WString()'], [], [])"><div class="token cpp_function">GetIdentifier</div></div>()));
 				}
 
+				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::templates'], [], [])">templates</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::templates::GuiControlTemplate'], [], [])"><div class="token cpp_type">GuiControlTemplate</div></div>* <div class="def" id="FB$vl::presentation::controls::GuiControl::TypedControlTemplateObject@::vl::presentation::templates::GuiControlTemplate *(bool)[impl0]"><div><div class="token cpp_function">TypedControlTemplateObject</div></div></div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::controls::GuiControl::TypedControlTemplateObject@::vl::presentation::templates::GuiControlTemplate *(bool)[impl0]::ensureExists"><div><div class="token cpp_argument">ensureExists</div></div></div>)
+				{
+					<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControl::TypedControlTemplateObject@::vl::presentation::templates::GuiControlTemplate *(bool)[impl0]::ensureExists'], [], [])"><div class="token cpp_argument">ensureExists</div></div>)
+					{
+						<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControl::EnsureControlTemplateExists@void()'], ['vl::presentation::controls::GuiControl::EnsureControlTemplateExists@void()'], [], [])"><div class="token cpp_function">EnsureControlTemplateExists</div></div>();
+					}
+					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControl::controlTemplateObject'], [], [])"><div class="token cpp_field">controlTemplateObject</div></div>;
+				}
+
 				<div class="token cpp_comment ">/// &lt;summary&gt;Add a service to this control dynamically. The added service cannot override existing services.&lt;/summary&gt;</div>
 				<div class="token cpp_comment ">/// &lt;returns&gt;Returns true if this operation succeeded.&lt;/returns&gt;</div>
 				<div class="token cpp_comment ">/// &lt;param name=&quot;identifier&quot;&gt;The identifier. You are suggested to fill this parameter using the value from the interface&apos;s GetIdentifier function, or &lt;see cref=&quot;QueryTypedService`1&quot;/&gt; will not work on this service.&lt;/param&gt;</div>
@@ -425,7 +434,7 @@ Basic Construction
 <div class="disabled">					BASE_TYPE::CheckAndStoreControlTemplate(value); \</div>
 <div class="disabled">				} \</div>
 <div class="disabled">			public: \</div>
-<div class="disabled">				templates::Gui##TEMPLATE* GetControlTemplateObject(bool ensureExists) \</div>
+<div class="disabled">				templates::Gui##TEMPLATE* TypedControlTemplateObject(bool ensureExists) \</div>
 <div class="disabled">				{ \</div>
 <div class="disabled">					if (ensureExists) \</div>
 <div class="disabled">					{ \</div>
@@ -2224,6 +2233,13 @@ referencedSymbols = {
             'FB$vl::presentation::controls::GuiControl::SharedPtrDestructorProc@bool(::vl::reflection::DescriptableObject *, bool)[decl0]'
         ]
     },
+    'vl::presentation::controls::GuiControl::TypedControlTemplateObject@::vl::presentation::templates::GuiControlTemplate *(bool)[impl0]::ensureExists': {
+        'displayNameInHtml': 'ensureExists',
+        'impls': [
+            'NI$vl::presentation::controls::GuiControl::TypedControlTemplateObject@::vl::presentation::templates::GuiControlTemplate *(bool)[impl0]::ensureExists'
+        ],
+        'decls': []
+    },
     'vl::presentation::controls::GuiControl::UpdateDisplayFont@void()': {
         'displayNameInHtml': '<span class="cpp_type">GuiControl</span>::<span class="cpp_function">UpdateDisplayFont</span>()',
         'impls': [
@@ -2241,6 +2257,13 @@ referencedSymbols = {
         'decls': [
             'FB$vl::presentation::controls::GuiControl::UpdateVisuallyEnabled@void()[decl0]'
         ]
+    },
+    'vl::presentation::controls::GuiControl::controlTemplateObject': {
+        'displayNameInHtml': '<span class="cpp_type">GuiControl</span>::<span class="cpp_field">controlTemplateObject</span>',
+        'impls': [
+            'NI$vl::presentation::controls::GuiControl::controlTemplateObject'
+        ],
+        'decls': []
     },
     'vl::presentation::controls::GuiControl::~GuiControl@()': {
         'displayNameInHtml': '<span class="cpp_type">GuiControl</span>::<span class="cpp_function">~GuiControl</span>()',
@@ -3717,6 +3740,8 @@ symbolToFiles = {
     'NI$vl::presentation::controls::GuiControl::ControlServiceMap': null,
     'NI$vl::presentation::controls::GuiControl::ControlTemplatePropertyType': null,
     'NI$vl::presentation::controls::GuiControl::IGuiGraphicsEventHandler': null,
+    'NI$vl::presentation::controls::GuiControl::TypedControlTemplateObject@::vl::presentation::templates::GuiControlTemplate *(bool)[impl0]::ensureExists': null,
+    'NI$vl::presentation::controls::GuiControl::controlTemplateObject': null,
     'NI$vl::presentation::controls::GuiControlHost': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'NI$vl::presentation::controls::GuiCustomControl': null,
     'NI$vl::presentation::controls::GuiDisposedFlag': null,

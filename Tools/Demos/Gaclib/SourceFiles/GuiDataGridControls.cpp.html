@@ -319,6 +319,7 @@ DefaultDataGridItemTemplate
 						{
 							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifyOpenEditor@void(::vl::vint, ::vl::presentation::controls::list::IDataEditor *)[impl0]::focusControl'], [], [])">focusControl</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControl::SetFocus@void()'], ['vl::presentation::controls::GuiControl::SetFocus@void()'], [], [])"><div class="token cpp_function">SetFocus</div></div>();
 						}
+						<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::DefaultDataGridItemTemplate::dataVisualizers'], [], [])"><div class="token cpp_field">dataVisualizers</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifyOpenEditor@void(::vl::vint, ::vl::presentation::controls::list::IDataEditor *)[impl0]::column'], [], [])"><div class="token cpp_argument">column</div></div>]<div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::list::IDataVisualizer::GetTemplate@::vl::presentation::templates::GuiGridVisualizerTemplate *()'], ['vl::presentation::controls::list::IDataVisualizer::GetTemplate@::vl::presentation::templates::GuiGridVisualizerTemplate *()'], [], [])"><div class="token cpp_function">GetTemplate</div></div>()-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsComposition::SetVisible@void(bool)'], ['vl::presentation::compositions::GuiGraphicsComposition::SetVisible@void(bool)'], [], [])"><div class="token cpp_function">SetVisible</div></div>(<div class="token cpp_keyword ">false</div>);
 					}
 				}
 
@@ -326,6 +327,10 @@ DefaultDataGridItemTemplate
 				{
 					<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::DefaultDataGridItemTemplate::currentEditor'], [], [])"><div class="token cpp_field">currentEditor</div></div>)
 					{
+						<div class="token cpp_keyword ">for</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifyCloseEditor@void()[impl0]::i"><div>i</div></div> = <div class="token cpp_number ">0</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifyCloseEditor@void()[impl0]::i'], [], [])">i</div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::DefaultDataGridItemTemplate::dataVisualizers'], [], [])"><div class="token cpp_field">dataVisualizers</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>(); <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifyCloseEditor@void()[impl0]::i'], [], [])">i</div>++)
+						{
+							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::DefaultDataGridItemTemplate::dataVisualizers'], [], [])"><div class="token cpp_field">dataVisualizers</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::Array::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifyCloseEditor@void()[impl0]::i'], [], [])">i</div>]<div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator ->@[T] *()'], [], [], [])"><div class="token cpp_function">-</div><div class="token cpp_function">&gt;</div></div><div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::list::IDataVisualizer::GetTemplate@::vl::presentation::templates::GuiGridVisualizerTemplate *()'], ['vl::presentation::controls::list::IDataVisualizer::GetTemplate@::vl::presentation::templates::GuiGridVisualizerTemplate *()'], [], [])"><div class="token cpp_function">GetTemplate</div></div>()-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsComposition::SetVisible@void(bool)'], ['vl::presentation::compositions::GuiGraphicsComposition::SetVisible@void(bool)'], [], [])"><div class="token cpp_function">SetVisible</div></div>(<div class="token cpp_keyword ">true</div>);
+						}
 						<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifyCloseEditor@void()[impl0]::composition"><div>composition</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::DefaultDataGridItemTemplate::currentEditor'], [], [])"><div class="token cpp_field">currentEditor</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::list::IDataEditor::GetTemplate@::vl::presentation::templates::GuiGridEditorTemplate *()'], ['vl::presentation::controls::list::IDataEditor::GetTemplate@::vl::presentation::templates::GuiGridEditorTemplate *()'], [], [])"><div class="token cpp_function">GetTemplate</div></div>();
 						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifyCloseEditor@void()[impl0]::composition'], [], [])">composition</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsComposition::GetParent@::vl::presentation::compositions::GuiGraphicsComposition *()'], ['vl::presentation::compositions::GuiGraphicsComposition::GetParent@::vl::presentation::compositions::GuiGraphicsComposition *()'], [], [])"><div class="token cpp_function">GetParent</div></div>())
 						{
@@ -386,6 +391,18 @@ GuiVirtualDataGrid (Editor)
 				<div class="token cpp_keyword ">if</div>(!<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiVirtualDataGrid::GetItemProvider@::vl::presentation::controls::GuiListControl::IItemProvider *()'], ['vl::presentation::controls::GuiVirtualDataGrid::GetItemProvider@::vl::presentation::controls::GuiListControl::IItemProvider *()'], [], [])"><div class="token cpp_function">GetItemProvider</div></div>()-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiListControl::IItemProvider::IsEditing@bool()'], ['vl::presentation::controls::GuiListControl::IItemProvider::IsEditing@bool()'], [], [])"><div class="token cpp_function">IsEditing</div></div>())
 				{
 					<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiVirtualDataGrid::StopEdit@void()'], ['vl::presentation::controls::GuiVirtualDataGrid::StopEdit@void()'], [], [])"><div class="token cpp_function">StopEdit</div></div>();
+				}
+			}
+
+			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiVirtualDataGrid'], [], [])"><div class="token cpp_type">GuiVirtualDataGrid</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)'], [], [])"><div class="token cpp_function">OnStyleInstalled</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::index"><div><div class="token cpp_argument">index</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiListControl::ItemStyle'], [], [])"><div class="token cpp_type">ItemStyle</div></div>* <div class="def" id="NI$vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::style"><div><div class="token cpp_argument">style</div></div></div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiVirtualListView'], [], [])"><div class="token cpp_type">GuiVirtualListView</div></div>::<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiVirtualListView::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)'], ['vl::presentation::controls::GuiVirtualListView::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)'], [], [])"><div class="token cpp_function">OnStyleInstalled</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::style'], [], [])"><div class="token cpp_argument">style</div></div>);
+				<div class="token cpp_keyword ">if</div> (<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::itemStyle"><div>itemStyle</div></div> = <div class="token cpp_keyword ">dynamic_cast</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::list::DefaultDataGridItemTemplate'], [], [])"><div class="token cpp_type">DefaultDataGridItemTemplate</div></div>*&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::style'], [], [])"><div class="token cpp_argument">style</div></div>))
+				{
+					<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiVirtualDataGrid::selectedCell'], [], [])"><div class="token cpp_field">selectedCell</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::GridPos::row'], [], [])"><div class="token cpp_field">row</div></div> == <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::index'], [], [])"><div class="token cpp_argument">index</div></div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiVirtualDataGrid::selectedCell'], [], [])"><div class="token cpp_field">selectedCell</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::GridPos::column'], [], [])"><div class="token cpp_field">column</div></div> != -<div class="token cpp_number ">1</div>)
+					{
+						<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::itemStyle'], [], [])">itemStyle</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifySelectCell@void(::vl::vint)'], ['vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifySelectCell@void(::vl::vint)'], [], [])"><div class="token cpp_function">NotifySelectCell</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiVirtualDataGrid::selectedCell'], [], [])"><div class="token cpp_field">selectedCell</div></div>.<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::GridPos::column'], [], [])"><div class="token cpp_field">column</div></div>);
+					}
 				}
 			}
 
@@ -484,7 +501,7 @@ GuiVirtualDataGrid (IDataGridContext)
 
 			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::templates'], [], [])">templates</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::templates::GuiListViewTemplate'], [], [])"><div class="token cpp_type">GuiListViewTemplate</div></div>* <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiVirtualDataGrid'], [], [])"><div class="token cpp_type">GuiVirtualDataGrid</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiVirtualDataGrid::GetListViewControlTemplate@::vl::presentation::templates::GuiListViewTemplate *()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiVirtualDataGrid::GetListViewControlTemplate@::vl::presentation::templates::GuiListViewTemplate *()'], [], [])"><div class="token cpp_function">GetListViewControlTemplate</div></div></div>()
 			{
-				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiListViewBase::GetControlTemplateObject@::vl::presentation::templates::GuiListViewTemplate *(bool)'], ['vl::presentation::controls::GuiListViewBase::GetControlTemplateObject@::vl::presentation::templates::GuiListViewTemplate *(bool)'], [], [])"><div class="token cpp_function">GetControlTemplateObject</div></div>(<div class="token cpp_keyword ">true</div>);
+				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiListViewBase::TypedControlTemplateObject@::vl::presentation::templates::GuiListViewTemplate *(bool)'], ['vl::presentation::controls::GuiListViewBase::TypedControlTemplateObject@::vl::presentation::templates::GuiListViewTemplate *(bool)'], [], [])"><div class="token cpp_function">TypedControlTemplateObject</div></div>(<div class="token cpp_keyword ">true</div>);
 			}
 
 			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiVirtualDataGrid'], [], [])"><div class="token cpp_type">GuiVirtualDataGrid</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiVirtualDataGrid::RequestSaveData@void()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiVirtualDataGrid::RequestSaveData@void()'], [], [])"><div class="token cpp_function">RequestSaveData</div></div></div>()
@@ -1868,6 +1885,15 @@ referencedSymbols = {
             'FB$vl::presentation::compositions::GuiGraphicsComposition::RemoveChild@bool(::vl::presentation::compositions::GuiGraphicsComposition *)[decl0]'
         ]
     },
+    'vl::presentation::compositions::GuiGraphicsComposition::SetVisible@void(bool)': {
+        'displayNameInHtml': '<span class="cpp_type">GuiGraphicsComposition</span>::<span class="cpp_function">SetVisible</span>(<span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::presentation::compositions::GuiGraphicsComposition::SetVisible@void(bool)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::compositions::GuiGraphicsComposition::SetVisible@void(bool)[decl0]'
+        ]
+    },
     'vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)': {
         'displayNameInHtml': '<span class="cpp_type">GuiGraphicsEvent</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">AttachMethod</span>&lt;<span class="cpp_type">TClass</span>, <span class="cpp_type">TMethod</span>&gt;(<span class="cpp_type">TClass</span> *, <span class="cpp_type">TMethod</span> <span class="cpp_type">TClass</span>:: *)',
         'impls': [
@@ -2397,10 +2423,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vl::presentation::controls::GuiListViewBase::GetControlTemplateObject@::vl::presentation::templates::GuiListViewTemplate *(bool)': {
-        'displayNameInHtml': '<span class="cpp_type">GuiListViewBase</span>::<span class="cpp_function">GetControlTemplateObject</span>(<span class="cpp_keyword">bool</span>)',
+    'vl::presentation::controls::GuiListViewBase::TypedControlTemplateObject@::vl::presentation::templates::GuiListViewTemplate *(bool)': {
+        'displayNameInHtml': '<span class="cpp_type">GuiListViewBase</span>::<span class="cpp_function">TypedControlTemplateObject</span>(<span class="cpp_keyword">bool</span>)',
         'impls': [
-            'FB$vl::presentation::controls::GuiListViewBase::GetControlTemplateObject@::vl::presentation::templates::GuiListViewTemplate *(bool)[impl0]'
+            'FB$vl::presentation::controls::GuiListViewBase::TypedControlTemplateObject@::vl::presentation::templates::GuiListViewTemplate *(bool)[impl0]'
         ],
         'decls': []
     },
@@ -2728,6 +2754,36 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)': {
+        'displayNameInHtml': '<span class="cpp_type">GuiVirtualDataGrid</span>::<span class="cpp_function">OnStyleInstalled</span>(<span class="cpp_type">vint</span>, <span class="cpp_type">ItemStyle</span> *)',
+        'impls': [
+            'FB$vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[decl0]'
+        ]
+    },
+    'vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::index': {
+        'displayNameInHtml': 'index',
+        'impls': [
+            'NI$vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::index'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::itemStyle': {
+        'displayNameInHtml': 'itemStyle',
+        'impls': [
+            'NI$vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::itemStyle'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::style': {
+        'displayNameInHtml': 'style',
+        'impls': [
+            'NI$vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::style'
+        ],
+        'decls': []
+    },
     'vl::presentation::controls::GuiVirtualDataGrid::OnStyleUninstalled@void(::vl::presentation::controls::GuiListControl::ItemStyle *)': {
         'displayNameInHtml': '<span class="cpp_type">GuiVirtualDataGrid</span>::<span class="cpp_function">OnStyleUninstalled</span>(<span class="cpp_type">ItemStyle</span> *)',
         'impls': [
@@ -2996,6 +3052,15 @@ referencedSymbols = {
             'NF[0]$vl::presentation::controls::GuiVirtualListView'
         ]
     },
+    'vl::presentation::controls::GuiVirtualListView::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)': {
+        'displayNameInHtml': '<span class="cpp_type">GuiVirtualListView</span>::<span class="cpp_function">OnStyleInstalled</span>(<span class="cpp_type">vint</span>, <span class="cpp_type">ItemStyle</span> *)',
+        'impls': [
+            'FB$vl::presentation::controls::GuiVirtualListView::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::controls::GuiVirtualListView::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[decl0]'
+        ]
+    },
     'vl::presentation::controls::list': {
         'displayNameInHtml': 'vl::presentation::controls::list',
         'impls': [],
@@ -3226,6 +3291,13 @@ referencedSymbols = {
         'displayNameInHtml': 'composition',
         'impls': [
             'NI$vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifyCloseEditor@void()[impl0]::composition'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifyCloseEditor@void()[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifyCloseEditor@void()[impl0]::i'
         ],
         'decls': []
     },
@@ -4131,6 +4203,8 @@ symbolToFiles = {
     'FB$vl::presentation::compositions::GuiGraphicsComposition::GetRelatedControl@::vl::presentation::controls::GuiControl *()[impl0]': { 'htmlFileName': 'GuiGraphicsCompositionBase.cpp', 'displayName': 'GuiGraphicsCompositionBase.cpp' },
     'FB$vl::presentation::compositions::GuiGraphicsComposition::RemoveChild@bool(::vl::presentation::compositions::GuiGraphicsComposition *)[decl0]': { 'htmlFileName': 'GuiGraphicsCompositionBase.h', 'displayName': 'GuiGraphicsCompositionBase.h' },
     'FB$vl::presentation::compositions::GuiGraphicsComposition::RemoveChild@bool(::vl::presentation::compositions::GuiGraphicsComposition *)[impl0]': { 'htmlFileName': 'GuiGraphicsCompositionBase.cpp', 'displayName': 'GuiGraphicsCompositionBase.cpp' },
+    'FB$vl::presentation::compositions::GuiGraphicsComposition::SetVisible@void(bool)[decl0]': { 'htmlFileName': 'GuiGraphicsCompositionBase.h', 'displayName': 'GuiGraphicsCompositionBase.h' },
+    'FB$vl::presentation::compositions::GuiGraphicsComposition::SetVisible@void(bool)[impl0]': { 'htmlFileName': 'GuiGraphicsCompositionBase.cpp', 'displayName': 'GuiGraphicsCompositionBase.cpp' },
     'FB$vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)[impl0]': { 'htmlFileName': 'GuiGraphicsEventReceiver.h', 'displayName': 'GuiGraphicsEventReceiver.h' },
     'FB$vl::presentation::compositions::GuiGraphicsEvent::Execute@void([T] &)[impl0]': { 'htmlFileName': 'GuiGraphicsEventReceiver.h', 'displayName': 'GuiGraphicsEventReceiver.h' },
     'FB$vl::presentation::compositions::GuiGraphicsEvent::Execute@void([T] const &)[impl0]': { 'htmlFileName': 'GuiGraphicsEventReceiver.h', 'displayName': 'GuiGraphicsEventReceiver.h' },
@@ -4182,7 +4256,7 @@ symbolToFiles = {
     'FB$vl::presentation::controls::GuiListControl::OnStyleUninstalled@void(::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]': { 'htmlFileName': 'GuiListControls.cpp', 'displayName': 'GuiListControls.cpp' },
     'FB$vl::presentation::controls::GuiListControl::SetStyleAndArranger@void(::vl::presentation::controls::GuiListControl::ItemStyleProperty, ::vl::Ptr<::vl::presentation::controls::GuiListControl::IItemArranger>)[decl0]': { 'htmlFileName': 'GuiListControls.h', 'displayName': 'GuiListControls.h' },
     'FB$vl::presentation::controls::GuiListControl::SetStyleAndArranger@void(::vl::presentation::controls::GuiListControl::ItemStyleProperty, ::vl::Ptr<::vl::presentation::controls::GuiListControl::IItemArranger>)[impl0]': { 'htmlFileName': 'GuiListControls.cpp', 'displayName': 'GuiListControls.cpp' },
-    'FB$vl::presentation::controls::GuiListViewBase::GetControlTemplateObject@::vl::presentation::templates::GuiListViewTemplate *(bool)[impl0]': { 'htmlFileName': 'GuiListViewControls.h', 'displayName': 'GuiListViewControls.h' },
+    'FB$vl::presentation::controls::GuiListViewBase::TypedControlTemplateObject@::vl::presentation::templates::GuiListViewTemplate *(bool)[impl0]': { 'htmlFileName': 'GuiListViewControls.h', 'displayName': 'GuiListViewControls.h' },
     'FB$vl::presentation::controls::GuiSelectableListControl::ClearSelection@void()[decl0]': { 'htmlFileName': 'GuiListControls.h', 'displayName': 'GuiListControls.h' },
     'FB$vl::presentation::controls::GuiSelectableListControl::ClearSelection@void()[impl0]': { 'htmlFileName': 'GuiListControls.cpp', 'displayName': 'GuiListControls.cpp' },
     'FB$vl::presentation::controls::GuiSelectableListControl::GetMultiSelect@bool()[decl0]': { 'htmlFileName': 'GuiListControls.h', 'displayName': 'GuiListControls.h' },
@@ -4217,6 +4291,8 @@ symbolToFiles = {
     'FB$vl::presentation::controls::GuiVirtualDataGrid::OnKeyUp@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiKeyEventArgs &)[impl0]': null,
     'FB$vl::presentation::controls::GuiVirtualDataGrid::OnSelectionChanged@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[decl0]': { 'htmlFileName': 'GuiDataGridControls.h', 'displayName': 'GuiDataGridControls.h' },
     'FB$vl::presentation::controls::GuiVirtualDataGrid::OnSelectionChanged@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[impl0]': null,
+    'FB$vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[decl0]': { 'htmlFileName': 'GuiDataGridControls.h', 'displayName': 'GuiDataGridControls.h' },
+    'FB$vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]': null,
     'FB$vl::presentation::controls::GuiVirtualDataGrid::OnStyleUninstalled@void(::vl::presentation::controls::GuiListControl::ItemStyle *)[decl0]': { 'htmlFileName': 'GuiDataGridControls.h', 'displayName': 'GuiDataGridControls.h' },
     'FB$vl::presentation::controls::GuiVirtualDataGrid::OnStyleUninstalled@void(::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]': null,
     'FB$vl::presentation::controls::GuiVirtualDataGrid::RequestSaveData@void()[decl0]': { 'htmlFileName': 'GuiDataGridControls.h', 'displayName': 'GuiDataGridControls.h' },
@@ -4231,6 +4307,8 @@ symbolToFiles = {
     'FB$vl::presentation::controls::GuiVirtualDataGrid::StopEdit@void()[impl0]': null,
     'FB$vl::presentation::controls::GuiVirtualDataGrid::~GuiVirtualDataGrid@()[decl0]': { 'htmlFileName': 'GuiDataGridControls.h', 'displayName': 'GuiDataGridControls.h' },
     'FB$vl::presentation::controls::GuiVirtualDataGrid::~GuiVirtualDataGrid@()[impl0]': null,
+    'FB$vl::presentation::controls::GuiVirtualListView::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[decl0]': { 'htmlFileName': 'GuiListViewControls.h', 'displayName': 'GuiListViewControls.h' },
+    'FB$vl::presentation::controls::GuiVirtualListView::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]': { 'htmlFileName': 'GuiListViewControls.cpp', 'displayName': 'GuiListViewControls.cpp' },
     'FB$vl::presentation::controls::list::DefaultDataGridItemTemplate::$__ctor@()[decl0]': { 'htmlFileName': 'GuiDataGridControls.h', 'displayName': 'GuiDataGridControls.h' },
     'FB$vl::presentation::controls::list::DefaultDataGridItemTemplate::$__ctor@()[impl0]': null,
     'FB$vl::presentation::controls::list::DefaultDataGridItemTemplate::GetCellColumnIndex@::vl::vint(::vl::presentation::compositions::GuiGraphicsComposition *)[decl0]': { 'htmlFileName': 'GuiDataGridControls.h', 'displayName': 'GuiDataGridControls.h' },
@@ -5317,6 +5395,9 @@ symbolToFiles = {
     'NI$vl::presentation::controls::GuiVirtualDataGrid::OnKeyDown@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiKeyEventArgs &)[impl0]::column': null,
     'NI$vl::presentation::controls::GuiVirtualDataGrid::OnKeyDown@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiKeyEventArgs &)[impl0]::columnOffset': null,
     'NI$vl::presentation::controls::GuiVirtualDataGrid::OnSelectionChanged@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[impl0]::row': null,
+    'NI$vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::index': null,
+    'NI$vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::itemStyle': null,
+    'NI$vl::presentation::controls::GuiVirtualDataGrid::OnStyleInstalled@void(::vl::vint, ::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::style': null,
     'NI$vl::presentation::controls::GuiVirtualDataGrid::OnStyleUninstalled@void(::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::itemStyle': null,
     'NI$vl::presentation::controls::GuiVirtualDataGrid::OnStyleUninstalled@void(::vl::presentation::controls::GuiListControl::ItemStyle *)[impl0]::style': null,
     'NI$vl::presentation::controls::GuiVirtualDataGrid::RequestSaveData@void()[impl0]::controlHost': null,
@@ -5365,6 +5446,7 @@ symbolToFiles = {
     'NI$vl::presentation::controls::list::DefaultDataGridItemTemplate::IsInEditor@bool(::vl::presentation::controls::GuiVirtualDataGrid *, ::vl::presentation::compositions::GuiMouseEventArgs &)[impl0]::editorComposition': null,
     'NI$vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifyCellEdited@void()[impl0]::i': null,
     'NI$vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifyCloseEditor@void()[impl0]::composition': null,
+    'NI$vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifyCloseEditor@void()[impl0]::i': null,
     'NI$vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifyOpenEditor@void(::vl::vint, ::vl::presentation::controls::list::IDataEditor *)[impl0]::cell': null,
     'NI$vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifyOpenEditor@void(::vl::vint, ::vl::presentation::controls::list::IDataEditor *)[impl0]::column': null,
     'NI$vl::presentation::controls::list::DefaultDataGridItemTemplate::NotifyOpenEditor@void(::vl::vint, ::vl::presentation::controls::list::IDataEditor *)[impl0]::editor': null,

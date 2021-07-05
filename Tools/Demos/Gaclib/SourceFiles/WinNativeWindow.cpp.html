@@ -327,9 +327,6 @@ WindowsForm
 
 				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]"><div><div class="token cpp_function">HandleMessageInternal</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::hwnd"><div><div class="token cpp_argument">hwnd</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::uMsg"><div><div class="token cpp_argument">uMsg</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['WPARAM'], [], [])"><div class="token cpp_type">WPARAM</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::wParam"><div><div class="token cpp_argument">wParam</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::lParam"><div><div class="token cpp_argument">lParam</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['LRESULT'], [], [])"><div class="token cpp_type">LRESULT</div></div>&amp; <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::result"><div><div class="token cpp_argument">result</div></div></div>)
 				{
-					<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::transferFocusEvent"><div>transferFocusEvent</div></div> = <div class="token cpp_keyword ">false</div>;
-					<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::nonClient"><div>nonClient</div></div> = <div class="token cpp_keyword ">false</div>;
-
 					<div class="token cpp_comment ">// handling popup windows</div>
 					{
 						<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::closeChildPopups"><div>closeChildPopups</div></div> = <div class="token cpp_keyword ">false</div>;
@@ -349,6 +346,12 @@ WindowsForm
 <div class="expanded">						<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0207</div>:</div></div>
 <div class="expandable"><div class="disabled">						case WM_RBUTTONDOWN:</div>
 <div class="expanded">						<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0204</div>:</div></div>
+<div class="expandable"><div class="disabled">						case WM_NCLBUTTONDOWN:</div>
+<div class="expanded">						<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x00A1</div>:</div></div>
+<div class="expandable"><div class="disabled">						case WM_NCMBUTTONDOWN:</div>
+<div class="expanded">						<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x00A7</div>:</div></div>
+<div class="expandable"><div class="disabled">						case WM_NCRBUTTONDOWN:</div>
+<div class="expanded">						<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x00A4</div>:</div></div>
 							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::closeChildPopups'], [], [])">closeChildPopups</div> = <div class="token cpp_keyword ">true</div>;
 							<div class="token cpp_keyword ">break</div>;
 						}
@@ -377,28 +380,8 @@ WindowsForm
 						}
 					}
 
-					<div class="token cpp_keyword ">switch</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::uMsg'], [], [])"><div class="token cpp_argument">uMsg</div></div>)
-					{
-<div class="expandable"><div class="disabled">					case WM_LBUTTONDOWN:</div>
-<div class="expanded">					<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0201</div>:</div></div>
-<div class="expandable"><div class="disabled">					case WM_LBUTTONUP:</div>
-<div class="expanded">					<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0202</div>:</div></div>
-<div class="expandable"><div class="disabled">					case WM_LBUTTONDBLCLK:</div>
-<div class="expanded">					<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0203</div>:</div></div>
-<div class="expandable"><div class="disabled">					case WM_RBUTTONDOWN:</div>
-<div class="expanded">					<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0204</div>:</div></div>
-<div class="expandable"><div class="disabled">					case WM_RBUTTONUP:</div>
-<div class="expanded">					<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0205</div>:</div></div>
-<div class="expandable"><div class="disabled">					case WM_RBUTTONDBLCLK:</div>
-<div class="expanded">					<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0206</div>:</div></div>
-<div class="expandable"><div class="disabled">					case WM_MBUTTONDOWN:</div>
-<div class="expanded">					<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0207</div>:</div></div>
-<div class="expandable"><div class="disabled">					case WM_MBUTTONUP:</div>
-<div class="expanded">					<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0208</div>:</div></div>
-<div class="expandable"><div class="disabled">					case WM_MBUTTONDBLCLK:</div>
-<div class="expanded">					<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0209</div>:</div></div>
-						<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::transferFocusEvent'], [], [])">transferFocusEvent</div>=<div class="token cpp_keyword ">true</div>;
-					}
+					<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::nonClient"><div>nonClient</div></div> = <div class="token cpp_keyword ">false</div>;
+
 					<div class="token cpp_keyword ">switch</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::uMsg'], [], [])"><div class="token cpp_argument">uMsg</div></div>)
 					{
 					<div class="token cpp_comment ">// ************************************** moving and sizing</div>
@@ -489,7 +472,7 @@ WindowsForm
 						<div class="token cpp_keyword ">break</div>;
 <div class="expandable"><div class="disabled">					case WM_MOUSEACTIVATE:</div>
 <div class="expanded">					<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0021</div>:</div></div>
-						<div class="token cpp_keyword ">if</div> (!<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WindowsForm::IsEnabledActivate@bool()'], ['vl::presentation::windows::WindowsForm::IsEnabledActivate@bool()'], [], [])"><div class="token cpp_function">IsEnabledActivate</div></div>())
+						<div class="token cpp_keyword ">if</div> (!<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::enabledActivate'], [], [])"><div class="token cpp_field">enabledActivate</div></div>)
 						{
 <div class="expandable"><div class="disabled">							result = MA_NOACTIVATE;</div>
 <div class="expanded">							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::result'], [], [])"><div class="token cpp_argument">result</div></div> = <div class="token cpp_number ">3</div>;</div></div>
@@ -1036,6 +1019,7 @@ WindowsForm
 				<div class="token cpp_keyword ">bool</div>								<div class="def" id="NI$vl::presentation::windows::WindowsForm::mouseHoving"><div><div class="token cpp_field">mouseHoving</div></div></div> = <div class="token cpp_keyword ">false</div>;
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Interface'], [], [])"><div class="token cpp_type">Interface</div></div>*							<div class="def" id="NI$vl::presentation::windows::WindowsForm::graphicsHandler"><div><div class="token cpp_field">graphicsHandler</div></div></div> = <div class="token cpp_keyword ">nullptr</div>;
 				<div class="token cpp_keyword ">bool</div>								<div class="def" id="NI$vl::presentation::windows::WindowsForm::customFrameMode"><div><div class="token cpp_field">customFrameMode</div></div></div> = <div class="token cpp_keyword ">false</div>;
+				<div class="token cpp_keyword ">bool</div>								<div class="def" id="NI$vl::presentation::windows::WindowsForm::enabledActivate"><div><div class="token cpp_field">enabledActivate</div></div></div> = <div class="token cpp_keyword ">true</div>;
 				<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::INativeMessageHandler'], [], [])"><div class="token cpp_type">INativeMessageHandler</div></div>&gt;&gt;	<div class="def" id="NI$vl::presentation::windows::WindowsForm::messageHandlers"><div><div class="token cpp_field">messageHandlers</div></div></div>;
 				<div class="token cpp_keyword ">bool</div>								<div class="def" id="NI$vl::presentation::windows::WindowsForm::supressingAlt"><div><div class="token cpp_field">supressingAlt</div></div></div> = <div class="token cpp_keyword ">false</div>;
 				<div class="ref" onclick="jumpToSymbol([], ['vl::Ptr'], [], [])"><div class="token cpp_type">Ptr</div></div>&lt;<div class="token cpp_keyword ">bool</div>&gt;							<div class="def" id="NI$vl::presentation::windows::WindowsForm::flagDisposed"><div><div class="token cpp_field">flagDisposed</div></div></div> = <div class="token cpp_keyword ">new</div> <div class="token cpp_keyword ">bool</div>(<div class="token cpp_keyword ">false</div>);
@@ -1060,13 +1044,13 @@ WindowsForm
 			<div class="token cpp_keyword ">public</div>:
 				<div class="def" id="FB$vl::presentation::windows::WindowsForm::$__ctor@(::HWND, ::vl::WString, ::HINSTANCE)[impl0]"><div><div class="token cpp_function">WindowsForm</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::$__ctor@(::HWND, ::vl::WString, ::HINSTANCE)[impl0]::parent"><div><div class="token cpp_argument">parent</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::$__ctor@(::HWND, ::vl::WString, ::HINSTANCE)[impl0]::className"><div><div class="token cpp_argument">className</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::$__ctor@(::HWND, ::vl::WString, ::HINSTANCE)[impl0]::hInstance"><div><div class="token cpp_argument">hInstance</div></div></div>)
 				{
+					<div class="token cpp_comment ">// use WS_POPUP in CreateWindowEx, because CW_USERDEFAULT is interpreted as 0, unlike WS_OVERLAPPED</div>
 <div class="expandable"><div class="disabled">					DWORD exStyle = WS_EX_APPWINDOW | WS_EX_CONTROLPARENT;</div>
 <div class="expanded">					<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::$__ctor@(::HWND, ::vl::WString, ::HINSTANCE)[impl0]::exStyle"><div>exStyle</div></div> = <div class="token cpp_number ">0x00040000L</div> | <div class="token cpp_number ">0x00010000L</div>;</div></div>
-<div class="expandable"><div class="disabled">					DWORD style = WS_BORDER | WS_CAPTION | WS_SIZEBOX | WS_SYSMENU | WS_OVERLAPPED | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_MAXIMIZEBOX | WS_MINIMIZEBOX;</div>
-<div class="expanded">					<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::$__ctor@(::HWND, ::vl::WString, ::HINSTANCE)[impl0]::style"><div>style</div></div> = <div class="token cpp_number ">0x00800000L</div> | <div class="token cpp_number ">0x00C00000L</div> | <div class="token cpp_number ">0x00040000L</div> | <div class="token cpp_number ">0x00080000L</div> | <div class="token cpp_number ">0x00000000L</div> | <div class="token cpp_number ">0x04000000L</div> | <div class="token cpp_number ">0x02000000L</div> | <div class="token cpp_number ">0x00010000L</div> | <div class="token cpp_number ">0x00020000L</div>;</div></div>
+<div class="expandable"><div class="disabled">					DWORD style = WS_BORDER | WS_CAPTION | WS_SIZEBOX | WS_SYSMENU | WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_MAXIMIZEBOX | WS_MINIMIZEBOX;</div>
+<div class="expanded">					<div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::$__ctor@(::HWND, ::vl::WString, ::HINSTANCE)[impl0]::style"><div>style</div></div> = <div class="token cpp_number ">0x00800000L</div> | <div class="token cpp_number ">0x00C00000L</div> | <div class="token cpp_number ">0x00040000L</div> | <div class="token cpp_number ">0x00080000L</div> | <div class="token cpp_number ">0x80000000L</div> | <div class="token cpp_number ">0x04000000L</div> | <div class="token cpp_number ">0x02000000L</div> | <div class="token cpp_number ">0x00010000L</div> | <div class="token cpp_number ">0x00020000L</div>;</div></div>
 <div class="expandable"><div class="disabled">					handle = CreateWindowEx(exStyle, className.Buffer(), L&quot;&quot;, style, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, parent, NULL, hInstance, NULL);</div>
 <div class="expanded">					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::handle'], [], [])"><div class="token cpp_field">handle</div></div> = <div class="ref" onclick="jumpToSymbol(['CreateWindowExW@::HWND(::DWORD, ::LPCWSTR, ::LPCWSTR, ::DWORD, int, int, int, int, ::HWND, ::HMENU, ::HINSTANCE, ::LPVOID)'], ['CreateWindowExW@::HWND(::DWORD, ::LPCWSTR, ::LPCWSTR, ::DWORD, int, int, int, int, ::HWND, ::HMENU, ::HINSTANCE, ::LPVOID)'], [], [])"><div class="token cpp_function">CreateWindowExW</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::$__ctor@(::HWND, ::vl::WString, ::HINSTANCE)[impl0]::exStyle'], [], [])">exStyle</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::$__ctor@(::HWND, ::vl::WString, ::HINSTANCE)[impl0]::className'], [], [])"><div class="token cpp_argument">className</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::ObjectString::Buffer@[T] const *()'], ['vl::ObjectString::Buffer@[T] const *()'], [], [])"><div class="token cpp_function">Buffer</div></div>(), <div class="token cpp_string ">L&quot;&quot;</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::$__ctor@(::HWND, ::vl::WString, ::HINSTANCE)[impl0]::style'], [], [])">style</div>, ((<div class="token cpp_keyword ">int</div>)<div class="token cpp_number ">0x80000000</div>), ((<div class="token cpp_keyword ">int</div>)<div class="token cpp_number ">0x80000000</div>), ((<div class="token cpp_keyword ">int</div>)<div class="token cpp_number ">0x80000000</div>), ((<div class="token cpp_keyword ">int</div>)<div class="token cpp_number ">0x80000000</div>), <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::$__ctor@(::HWND, ::vl::WString, ::HINSTANCE)[impl0]::parent'], [], [])"><div class="token cpp_argument">parent</div></div>, <div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::$__ctor@(::HWND, ::vl::WString, ::HINSTANCE)[impl0]::hInstance'], [], [])"><div class="token cpp_argument">hInstance</div></div>, <div class="token cpp_number ">0</div>);</div></div>
-
 					<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WindowsForm::UpdateDpiAwaredFields@void(bool)'], ['vl::presentation::windows::WindowsForm::UpdateDpiAwaredFields@void(bool)'], [], [])"><div class="token cpp_function">UpdateDpiAwaredFields</div></div>(<div class="token cpp_keyword ">true</div>);
 				}
 
@@ -1718,20 +1702,21 @@ WindowsForm
 
 				<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::presentation::windows::WindowsForm::EnableActivate@void()[impl0]"><div><div class="token cpp_function">EnableActivate</div></div></div>()<div class="token cpp_keyword ">override</div>
 				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::enabledActivate'], [], [])"><div class="token cpp_field">enabledActivate</div></div> = <div class="token cpp_keyword ">true</div>;
 <div class="expandable"><div class="disabled">					SetExStyle(WS_EX_NOACTIVATE, false);</div>
 <div class="expanded">					<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WindowsForm::SetExStyle@void(::LONG_PTR, bool)'], ['vl::presentation::windows::WindowsForm::SetExStyle@void(::LONG_PTR, bool)'], [], [])"><div class="token cpp_function">SetExStyle</div></div>(<div class="token cpp_number ">0x08000000L</div>, <div class="token cpp_keyword ">false</div>);</div></div>
 				}
 
 				<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::presentation::windows::WindowsForm::DisableActivate@void()[impl0]"><div><div class="token cpp_function">DisableActivate</div></div></div>()<div class="token cpp_keyword ">override</div>
 				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::enabledActivate'], [], [])"><div class="token cpp_field">enabledActivate</div></div> = <div class="token cpp_keyword ">false</div>;
 <div class="expandable"><div class="disabled">					SetExStyle(WS_EX_NOACTIVATE, true);</div>
 <div class="expanded">					<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WindowsForm::SetExStyle@void(::LONG_PTR, bool)'], ['vl::presentation::windows::WindowsForm::SetExStyle@void(::LONG_PTR, bool)'], [], [])"><div class="token cpp_function">SetExStyle</div></div>(<div class="token cpp_number ">0x08000000L</div>, <div class="token cpp_keyword ">true</div>);</div></div>
 				}
 
 				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::presentation::windows::WindowsForm::IsEnabledActivate@bool()[impl0]"><div><div class="token cpp_function">IsEnabledActivate</div></div></div>()<div class="token cpp_keyword ">override</div>
 				{
-<div class="expandable"><div class="disabled">					return !GetExStyle(WS_EX_NOACTIVATE);</div>
-<div class="expanded">					<div class="token cpp_keyword ">return</div> !<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WindowsForm::GetExStyle@bool(::LONG_PTR)'], ['vl::presentation::windows::WindowsForm::GetExStyle@bool(::LONG_PTR)'], [], [])"><div class="token cpp_function">GetExStyle</div></div>(<div class="token cpp_number ">0x08000000L</div>);</div></div>
+					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::enabledActivate'], [], [])"><div class="token cpp_field">enabledActivate</div></div>;
 				}
 
 				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::presentation::windows::WindowsForm::RequireCapture@bool()[impl0]"><div><div class="token cpp_function">RequireCapture</div></div></div>()<div class="token cpp_keyword ">override</div>
@@ -7244,13 +7229,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::transferFocusEvent': {
-        'displayNameInHtml': 'transferFocusEvent',
-        'impls': [
-            'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::transferFocusEvent'
-        ],
-        'decls': []
-    },
     'vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::uMsg': {
         'displayNameInHtml': 'uMsg',
         'impls': [
@@ -7353,13 +7331,6 @@ referencedSymbols = {
         'displayNameInHtml': 'i',
         'impls': [
             'NI$vl::presentation::windows::WindowsForm::InvokeDestroying@void()[impl0]::i'
-        ],
-        'decls': []
-    },
-    'vl::presentation::windows::WindowsForm::IsEnabledActivate@bool()': {
-        'displayNameInHtml': '<span class="cpp_type">WindowsForm</span>::<span class="cpp_function">IsEnabledActivate</span>()',
-        'impls': [
-            'FB$vl::presentation::windows::WindowsForm::IsEnabledActivate@bool()[impl0]'
         ],
         'decls': []
     },
@@ -7979,6 +7950,13 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::presentation::windows::WindowsForm::enabledActivate': {
+        'displayNameInHtml': '<span class="cpp_type">WindowsForm</span>::<span class="cpp_field">enabledActivate</span>',
+        'impls': [
+            'NI$vl::presentation::windows::WindowsForm::enabledActivate'
+        ],
+        'decls': []
+    },
     'vl::presentation::windows::WindowsForm::flagDisposed': {
         'displayNameInHtml': '<span class="cpp_type">WindowsForm</span>::<span class="cpp_field">flagDisposed</span>',
         'impls': [
@@ -8552,7 +8530,6 @@ symbolToFiles = {
     'FB$vl::presentation::windows::WindowsForm::InternalSetExStyle@void(::LONG_PTR)[impl0]': null,
     'FB$vl::presentation::windows::WindowsForm::InternalSetStyle@void(::LONG_PTR)[impl0]': null,
     'FB$vl::presentation::windows::WindowsForm::InvokeDestroying@void()[impl0]': null,
-    'FB$vl::presentation::windows::WindowsForm::IsEnabledActivate@bool()[impl0]': null,
     'FB$vl::presentation::windows::WindowsForm::IsVisible@bool()[impl0]': null,
     'FB$vl::presentation::windows::WindowsForm::SetBounds@void(::vl::presentation::NativeRect const &)[impl0]': null,
     'FB$vl::presentation::windows::WindowsForm::SetExStyle@void(::LONG_PTR, bool)[impl0]': null,
@@ -9747,7 +9724,6 @@ symbolToFiles = {
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::popup': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::rawBounds': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::result': null,
-    'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::transferFocusEvent': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::uMsg': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::wParam': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::windowLocation': null,
@@ -9831,6 +9807,7 @@ symbolToFiles = {
     'NI$vl::presentation::windows::WindowsForm::defaultIcon': null,
     'NI$vl::presentation::windows::WindowsForm::dpiX': null,
     'NI$vl::presentation::windows::WindowsForm::dpiY': null,
+    'NI$vl::presentation::windows::WindowsForm::enabledActivate': null,
     'NI$vl::presentation::windows::WindowsForm::flagDisposed': null,
     'NI$vl::presentation::windows::WindowsForm::graphicsHandler': null,
     'NI$vl::presentation::windows::WindowsForm::handle': null,

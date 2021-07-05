@@ -145,6 +145,7 @@ GuiToolstripCollection
 				:<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiToolstripCollectionBase'], [], [])"><div class="token cpp_type">GuiToolstripCollectionBase</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiToolstripCollection::$__ctor@(::vl::presentation::controls::IToolstripUpdateLayout *, ::vl::presentation::compositions::GuiStackComposition *)[impl0]::_contentCallback'], [], [])"><div class="token cpp_argument">_contentCallback</div></div>)
 				,stackComposition(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiToolstripCollection::$__ctor@(::vl::presentation::controls::IToolstripUpdateLayout *, ::vl::presentation::compositions::GuiStackComposition *)[impl0]::_stackComposition'], [], [])"><div class="token cpp_argument">_stackComposition</div></div>)
 			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiToolstripCollection::stackComposition'], [], [])"><div class="token cpp_field">stackComposition</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsComposition::SetPreferredMinSize@void(::vl::presentation::Size)'], ['vl::presentation::compositions::GuiGraphicsComposition::SetPreferredMinSize@void(::vl::presentation::Size)'], [], [])"><div class="token cpp_function">SetPreferredMinSize</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::Size'], [], [])"><div class="token cpp_type">Size</div></div>(<div class="token cpp_number ">1</div>, <div class="token cpp_number ">1</div>));
 			}
 
 			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiToolstripCollection'], [], [])"><div class="token cpp_type">GuiToolstripCollection</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiToolstripCollection::~GuiToolstripCollection@()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiToolstripCollection::~GuiToolstripCollection@()'], [], [])"><div class="token cpp_function">~</div><div class="token cpp_function">GuiToolstripCollection</div></div></div>()
@@ -371,7 +372,7 @@ GuiToolstripButton
 					}
 					<div class="token cpp_keyword ">else</div>
 					{
-						<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiToolstripButton::CreateToolstripSubMenu@void(::vl::presentation::TemplateProperty<::vl::presentation::templates::GuiMenuTemplate>)[impl0]::newSubMenu'], [], [])">newSubMenu</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControl::SetControlTemplate@void(::vl::presentation::controls::GuiControl::ControlTemplatePropertyType const &)'], ['vl::presentation::controls::GuiControl::SetControlTemplate@void(::vl::presentation::controls::GuiControl::ControlTemplatePropertyType const &)'], [], [])"><div class="token cpp_function">SetControlTemplate</div></div>(<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiMenuButton::GetControlTemplateObject@::vl::presentation::templates::GuiToolstripButtonTemplate *(bool)'], ['vl::presentation::controls::GuiMenuButton::GetControlTemplateObject@::vl::presentation::templates::GuiToolstripButtonTemplate *(bool)'], [], [])"><div class="token cpp_function">GetControlTemplateObject</div></div>(<div class="token cpp_keyword ">true</div>)-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::templates::GuiToolstripButtonTemplate::GetSubMenuTemplate@::vl::presentation::TemplateProperty<::vl::presentation::templates::GuiMenuTemplate>()'], ['vl::presentation::templates::GuiToolstripButtonTemplate::GetSubMenuTemplate@::vl::presentation::TemplateProperty<::vl::presentation::templates::GuiMenuTemplate>()'], [], [])"><div class="token cpp_function">GetSubMenuTemplate</div></div>());
+						<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiToolstripButton::CreateToolstripSubMenu@void(::vl::presentation::TemplateProperty<::vl::presentation::templates::GuiMenuTemplate>)[impl0]::newSubMenu'], [], [])">newSubMenu</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControl::SetControlTemplate@void(::vl::presentation::controls::GuiControl::ControlTemplatePropertyType const &)'], ['vl::presentation::controls::GuiControl::SetControlTemplate@void(::vl::presentation::controls::GuiControl::ControlTemplatePropertyType const &)'], [], [])"><div class="token cpp_function">SetControlTemplate</div></div>(<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiMenuButton::TypedControlTemplateObject@::vl::presentation::templates::GuiToolstripButtonTemplate *(bool)'], ['vl::presentation::controls::GuiMenuButton::TypedControlTemplateObject@::vl::presentation::templates::GuiToolstripButtonTemplate *(bool)'], [], [])"><div class="token cpp_function">TypedControlTemplateObject</div></div>(<div class="token cpp_keyword ">true</div>)-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::templates::GuiToolstripButtonTemplate::GetSubMenuTemplate@::vl::presentation::TemplateProperty<::vl::presentation::templates::GuiMenuTemplate>()'], ['vl::presentation::templates::GuiToolstripButtonTemplate::GetSubMenuTemplate@::vl::presentation::TemplateProperty<::vl::presentation::templates::GuiMenuTemplate>()'], [], [])"><div class="token cpp_function">GetSubMenuTemplate</div></div>());
 					}
 					<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiMenuButton::SetSubMenu@void(::vl::presentation::controls::GuiMenu *, bool)'], ['vl::presentation::controls::GuiMenuButton::SetSubMenu@void(::vl::presentation::controls::GuiMenu *, bool)'], [], [])"><div class="token cpp_function">SetSubMenu</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiToolstripButton::CreateToolstripSubMenu@void(::vl::presentation::TemplateProperty<::vl::presentation::templates::GuiMenuTemplate>)[impl0]::newSubMenu'], [], [])">newSubMenu</div>, <div class="token cpp_keyword ">true</div>);
 				}
@@ -1516,6 +1517,13 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::presentation::Size': {
+        'displayNameInHtml': '<span class="cpp_type">Size</span>',
+        'impls': [
+            'NI$vl::presentation::Size'
+        ],
+        'decls': []
+    },
     'vl::presentation::TemplateProperty': {
         'displayNameInHtml': '<span class="cpp_type">TemplateProperty</span>&lt;<span class="cpp_type">T</span>&gt;',
         'impls': [
@@ -1666,6 +1674,15 @@ referencedSymbols = {
         ],
         'decls': [
             'FB$vl::presentation::compositions::GuiGraphicsComposition::SetMinSizeLimitation@void(::vl::presentation::compositions::GuiGraphicsComposition::MinSizeLimitation)[decl0]'
+        ]
+    },
+    'vl::presentation::compositions::GuiGraphicsComposition::SetPreferredMinSize@void(::vl::presentation::Size)': {
+        'displayNameInHtml': '<span class="cpp_type">GuiGraphicsComposition</span>::<span class="cpp_function">SetPreferredMinSize</span>(<span class="cpp_type">Size</span>)',
+        'impls': [
+            'FB$vl::presentation::compositions::GuiGraphicsComposition::SetPreferredMinSize@void(::vl::presentation::Size)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::compositions::GuiGraphicsComposition::SetPreferredMinSize@void(::vl::presentation::Size)[decl0]'
         ]
     },
     'vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)': {
@@ -2053,13 +2070,6 @@ referencedSymbols = {
             'NF[0]$vl::presentation::controls::GuiMenuButton'
         ]
     },
-    'vl::presentation::controls::GuiMenuButton::GetControlTemplateObject@::vl::presentation::templates::GuiToolstripButtonTemplate *(bool)': {
-        'displayNameInHtml': '<span class="cpp_type">GuiMenuButton</span>::<span class="cpp_function">GetControlTemplateObject</span>(<span class="cpp_keyword">bool</span>)',
-        'impls': [
-            'FB$vl::presentation::controls::GuiMenuButton::GetControlTemplateObject@::vl::presentation::templates::GuiToolstripButtonTemplate *(bool)[impl0]'
-        ],
-        'decls': []
-    },
     'vl::presentation::controls::GuiMenuButton::GetSubMenu@::vl::presentation::controls::GuiMenu *()': {
         'displayNameInHtml': '<span class="cpp_type">GuiMenuButton</span>::<span class="cpp_function">GetSubMenu</span>()',
         'impls': [
@@ -2127,6 +2137,13 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">GuiMenuButton</span>::<span class="cpp_field">ShortcutTextChanged</span>',
         'impls': [
             'NI$vl::presentation::controls::GuiMenuButton::ShortcutTextChanged'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiMenuButton::TypedControlTemplateObject@::vl::presentation::templates::GuiToolstripButtonTemplate *(bool)': {
+        'displayNameInHtml': '<span class="cpp_type">GuiMenuButton</span>::<span class="cpp_function">TypedControlTemplateObject</span>(<span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::presentation::controls::GuiMenuButton::TypedControlTemplateObject@::vl::presentation::templates::GuiToolstripButtonTemplate *(bool)[impl0]'
         ],
         'decls': []
     },
@@ -3661,6 +3678,8 @@ symbolToFiles = {
     'FB$vl::presentation::compositions::GuiGraphicsComposition::RemoveChild@bool(::vl::presentation::compositions::GuiGraphicsComposition *)[impl0]': { 'htmlFileName': 'GuiGraphicsCompositionBase.cpp', 'displayName': 'GuiGraphicsCompositionBase.cpp' },
     'FB$vl::presentation::compositions::GuiGraphicsComposition::SetMinSizeLimitation@void(::vl::presentation::compositions::GuiGraphicsComposition::MinSizeLimitation)[decl0]': { 'htmlFileName': 'GuiGraphicsCompositionBase.h', 'displayName': 'GuiGraphicsCompositionBase.h' },
     'FB$vl::presentation::compositions::GuiGraphicsComposition::SetMinSizeLimitation@void(::vl::presentation::compositions::GuiGraphicsComposition::MinSizeLimitation)[impl0]': { 'htmlFileName': 'GuiGraphicsCompositionBase.cpp', 'displayName': 'GuiGraphicsCompositionBase.cpp' },
+    'FB$vl::presentation::compositions::GuiGraphicsComposition::SetPreferredMinSize@void(::vl::presentation::Size)[decl0]': { 'htmlFileName': 'GuiGraphicsCompositionBase.h', 'displayName': 'GuiGraphicsCompositionBase.h' },
+    'FB$vl::presentation::compositions::GuiGraphicsComposition::SetPreferredMinSize@void(::vl::presentation::Size)[impl0]': { 'htmlFileName': 'GuiGraphicsCompositionBase.cpp', 'displayName': 'GuiGraphicsCompositionBase.cpp' },
     'FB$vl::presentation::compositions::GuiGraphicsEvent::AttachMethod@::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>([TClass] *, [TMethod] ([TClass] ::) *)[impl0]': { 'htmlFileName': 'GuiGraphicsEventReceiver.h', 'displayName': 'GuiGraphicsEventReceiver.h' },
     'FB$vl::presentation::compositions::GuiGraphicsEvent::Detach@bool(::vl::Ptr<::vl::presentation::compositions::IGuiGraphicsEventHandler>)[impl0]': { 'htmlFileName': 'GuiGraphicsEventReceiver.h', 'displayName': 'GuiGraphicsEventReceiver.h' },
     'FB$vl::presentation::compositions::GuiGraphicsEvent::ExecuteWithNewSender@void([T] &, ::vl::presentation::compositions::GuiGraphicsComposition *)[impl0]': { 'htmlFileName': 'GuiGraphicsEventReceiver.h', 'displayName': 'GuiGraphicsEventReceiver.h' },
@@ -3697,7 +3716,6 @@ symbolToFiles = {
     'FB$vl::presentation::controls::GuiControl::SetEnabled@void(bool)[impl0]': { 'htmlFileName': 'GuiBasicControls.cpp', 'displayName': 'GuiBasicControls.cpp' },
     'FB$vl::presentation::controls::GuiControl::SetText@void(::vl::WString const &)[decl0]': { 'htmlFileName': 'GuiBasicControls.h', 'displayName': 'GuiBasicControls.h' },
     'FB$vl::presentation::controls::GuiControl::SetText@void(::vl::WString const &)[impl0]': { 'htmlFileName': 'GuiBasicControls.cpp', 'displayName': 'GuiBasicControls.cpp' },
-    'FB$vl::presentation::controls::GuiMenuButton::GetControlTemplateObject@::vl::presentation::templates::GuiToolstripButtonTemplate *(bool)[impl0]': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
     'FB$vl::presentation::controls::GuiMenuButton::GetSubMenu@::vl::presentation::controls::GuiMenu *()[decl0]': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
     'FB$vl::presentation::controls::GuiMenuButton::GetSubMenu@::vl::presentation::controls::GuiMenu *()[impl0]': { 'htmlFileName': 'GuiMenuControls.cpp', 'displayName': 'GuiMenuControls.cpp' },
     'FB$vl::presentation::controls::GuiMenuButton::GetSubMenuHost@::vl::presentation::controls::GuiButton *()[decl0]': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
@@ -3712,6 +3730,7 @@ symbolToFiles = {
     'FB$vl::presentation::controls::GuiMenuButton::SetShortcutText@void(::vl::WString const &)[impl0]': { 'htmlFileName': 'GuiMenuControls.cpp', 'displayName': 'GuiMenuControls.cpp' },
     'FB$vl::presentation::controls::GuiMenuButton::SetSubMenu@void(::vl::presentation::controls::GuiMenu *, bool)[decl0]': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
     'FB$vl::presentation::controls::GuiMenuButton::SetSubMenu@void(::vl::presentation::controls::GuiMenu *, bool)[impl0]': { 'htmlFileName': 'GuiMenuControls.cpp', 'displayName': 'GuiMenuControls.cpp' },
+    'FB$vl::presentation::controls::GuiMenuButton::TypedControlTemplateObject@::vl::presentation::templates::GuiToolstripButtonTemplate *(bool)[impl0]': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
     'FB$vl::presentation::controls::GuiSelectableButton::SetSelected@void(bool)[decl0]': { 'htmlFileName': 'GuiButtonControls.h', 'displayName': 'GuiButtonControls.h' },
     'FB$vl::presentation::controls::GuiSelectableButton::SetSelected@void(bool)[impl0]': { 'htmlFileName': 'GuiButtonControls.cpp', 'displayName': 'GuiButtonControls.cpp' },
     'FB$vl::presentation::controls::GuiToolstripButton::$__ctor@(::vl::presentation::theme::ThemeName)[decl0]': { 'htmlFileName': 'GuiToolstripMenu.h', 'displayName': 'GuiToolstripMenu.h' },
@@ -4737,6 +4756,7 @@ symbolToFiles = {
     'NI$vl::collections::ObservableListBase': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
     'NI$vl::collections::ObservableListBase::items': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
     'NI$vl::presentation::Margin': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
+    'NI$vl::presentation::Size': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
     'NI$vl::presentation::TemplateProperty': { 'htmlFileName': 'GuiGraphicsCompositionBase.h', 'displayName': 'GuiGraphicsCompositionBase.h' },
     'NI$vl::presentation::compositions::GuiEventArgs': { 'htmlFileName': 'GuiGraphicsEventReceiver.h', 'displayName': 'GuiGraphicsEventReceiver.h' },
     'NI$vl::presentation::compositions::GuiGraphicsComposition': { 'htmlFileName': 'GuiGraphicsCompositionBase.h', 'displayName': 'GuiGraphicsCompositionBase.h' },

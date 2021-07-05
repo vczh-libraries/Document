@@ -1,0 +1,4 @@
+<Document symbolId="vl::presentation::controls::GuiMenu::SetPreferredMenuClientSize@void(::vl::presentation::Size)" accessor="public" category="Function" name="SetPreferredMenuClientSize" declFile="GuiMenuControls.h" declId="FB$vl::presentation::controls::GuiMenu::SetPreferredMenuClientSize@void(::vl::presentation::Size)[decl0]"><summary>Set the preferred client size for the menu.</summary><param name="value">The preferred client size for the menu.</param><signature><![CDATA[void SetPreferredMenuClientSize(
+    Size value
+);
+]]></signature><seealsos><symbol name="Size" declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>
