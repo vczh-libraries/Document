@@ -1,5 +1,6 @@
-<Document symbolId="vl::presentation::INativeWindowService::CreateNativeWindow@::vl::presentation::INativeWindow *()" accessor="public" category="Function" name="CreateNativeWindow" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowService::CreateNativeWindow@::vl::presentation::INativeWindow *()[decl0]"><summary>
+<Document symbolId="vl::presentation::INativeWindowService::CreateNativeWindow@::vl::presentation::INativeWindow *(::vl::presentation::INativeWindow::WindowMode)" accessor="public" category="Function" name="CreateNativeWindow" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowService::CreateNativeWindow@::vl::presentation::INativeWindow *(::vl::presentation::INativeWindow::WindowMode)[decl0]"><summary>
  Create a window.
- </summary><returns>The created window.</returns><signature><![CDATA[INativeWindow * CreateNativeWindow(
+ </summary><returns>The created window.</returns><param name="windowMode">The window mode.</param><signature><![CDATA[INativeWindow * CreateNativeWindow(
+    INativeWindow::WindowMode windowMode
 );
-]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/><symbol name="WindowMode" docId="vl::presentation::INativeWindow::WindowMode" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow::WindowMode"/></seealsos></Document>

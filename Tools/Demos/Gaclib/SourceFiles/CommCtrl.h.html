@@ -1555,8 +1555,8 @@
 <div class="disabled">#define TB_MAPACCELERATORA      (WM_USER + 78)  // wParam == ch, lParam int * pidBtn</div>
 
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
-    <div class="token cpp_keyword ">int</div>   <div class="def" id="NI$<anonymous>623::iButton"><div><div class="token cpp_field">iButton</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$<anonymous>623::dwFlags"><div><div class="token cpp_field">dwFlags</div></div></div>;
+    <div class="token cpp_keyword ">int</div>   <div class="def" id="NI$<anonymous>624::iButton"><div><div class="token cpp_field">iButton</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$<anonymous>624::dwFlags"><div><div class="token cpp_field">dwFlags</div></div></div>;
 } <div class="def" id="NI$TBINSERTMARK"><div><div class="token cpp_type">TBINSERTMARK</div></div></div>, * <div class="def" id="NI$LPTBINSERTMARK"><div><div class="token cpp_type">LPTBINSERTMARK</div></div></div>;
 <div class="disabled">#define TBIMHT_AFTER      0x00000001 // TRUE = insert After iButton, otherwise before</div>
 <div class="disabled">#define TBIMHT_BACKGROUND 0x00000002 // TRUE iff missed buttons completely</div>
@@ -1587,11 +1587,11 @@
 #endif</div>
 
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
-    <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div>       <div class="def" id="NI$<anonymous>624::hInstOld"><div><div class="token cpp_field">hInstOld</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['UINT_PTR'], [], [])"><div class="token cpp_type">UINT_PTR</div></div>        <div class="def" id="NI$<anonymous>624::nIDOld"><div><div class="token cpp_field">nIDOld</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div>       <div class="def" id="NI$<anonymous>624::hInstNew"><div><div class="token cpp_field">hInstNew</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['UINT_PTR'], [], [])"><div class="token cpp_type">UINT_PTR</div></div>        <div class="def" id="NI$<anonymous>624::nIDNew"><div><div class="token cpp_field">nIDNew</div></div></div>;
-    <div class="token cpp_keyword ">int</div>             <div class="def" id="NI$<anonymous>624::nButtons"><div><div class="token cpp_field">nButtons</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div>       <div class="def" id="NI$<anonymous>625::hInstOld"><div><div class="token cpp_field">hInstOld</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT_PTR'], [], [])"><div class="token cpp_type">UINT_PTR</div></div>        <div class="def" id="NI$<anonymous>625::nIDOld"><div><div class="token cpp_field">nIDOld</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HINSTANCE'], [], [])"><div class="token cpp_type">HINSTANCE</div></div>       <div class="def" id="NI$<anonymous>625::hInstNew"><div><div class="token cpp_field">hInstNew</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT_PTR'], [], [])"><div class="token cpp_type">UINT_PTR</div></div>        <div class="def" id="NI$<anonymous>625::nIDNew"><div><div class="token cpp_field">nIDNew</div></div></div>;
+    <div class="token cpp_keyword ">int</div>             <div class="def" id="NI$<anonymous>625::nButtons"><div><div class="token cpp_field">nButtons</div></div></div>;
 } <div class="def" id="NI$TBREPLACEBITMAP"><div><div class="token cpp_type">TBREPLACEBITMAP</div></div></div>, *<div class="def" id="NI$LPTBREPLACEBITMAP"><div><div class="token cpp_type">LPTBREPLACEBITMAP</div></div></div>;
 
 <div class="disabled">#ifdef _WIN32</div>
@@ -1611,19 +1611,6 @@
 <div class="disabled">#define TBIF_BYINDEX            0x80000000 // this specifies that the wparam in Get/SetButtonInfo is an index, not id</div>
 
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
-    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$<anonymous>625::cbSize"><div><div class="token cpp_field">cbSize</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$<anonymous>625::dwMask"><div><div class="token cpp_field">dwMask</div></div></div>;
-    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>625::idCommand"><div><div class="token cpp_field">idCommand</div></div></div>;
-    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>625::iImage"><div><div class="token cpp_field">iImage</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['BYTE'], [], [])"><div class="token cpp_type">BYTE</div></div> <div class="def" id="NI$<anonymous>625::fsState"><div><div class="token cpp_field">fsState</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['BYTE'], [], [])"><div class="token cpp_type">BYTE</div></div> <div class="def" id="NI$<anonymous>625::fsStyle"><div><div class="token cpp_field">fsStyle</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$<anonymous>625::cx"><div><div class="token cpp_field">cx</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['DWORD_PTR'], [], [])"><div class="token cpp_type">DWORD_PTR</div></div> <div class="def" id="NI$<anonymous>625::lParam"><div><div class="token cpp_field">lParam</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$<anonymous>625::pszText"><div><div class="token cpp_field">pszText</div></div></div>;
-    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>625::cchText"><div><div class="token cpp_field">cchText</div></div></div>;
-} <div class="def" id="NI$TBBUTTONINFOA"><div><div class="token cpp_type">TBBUTTONINFOA</div></div></div>, *<div class="def" id="NI$LPTBBUTTONINFOA"><div><div class="token cpp_type">LPTBBUTTONINFOA</div></div></div>;
-
-<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
     <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$<anonymous>626::cbSize"><div><div class="token cpp_field">cbSize</div></div></div>;
     <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$<anonymous>626::dwMask"><div><div class="token cpp_field">dwMask</div></div></div>;
     <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>626::idCommand"><div><div class="token cpp_field">idCommand</div></div></div>;
@@ -1632,8 +1619,21 @@
     <div class="ref" onclick="jumpToSymbol([], ['BYTE'], [], [])"><div class="token cpp_type">BYTE</div></div> <div class="def" id="NI$<anonymous>626::fsStyle"><div><div class="token cpp_field">fsStyle</div></div></div>;
     <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$<anonymous>626::cx"><div><div class="token cpp_field">cx</div></div></div>;
     <div class="ref" onclick="jumpToSymbol([], ['DWORD_PTR'], [], [])"><div class="token cpp_type">DWORD_PTR</div></div> <div class="def" id="NI$<anonymous>626::lParam"><div><div class="token cpp_field">lParam</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$<anonymous>626::pszText"><div><div class="token cpp_field">pszText</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$<anonymous>626::pszText"><div><div class="token cpp_field">pszText</div></div></div>;
     <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>626::cchText"><div><div class="token cpp_field">cchText</div></div></div>;
+} <div class="def" id="NI$TBBUTTONINFOA"><div><div class="token cpp_type">TBBUTTONINFOA</div></div></div>, *<div class="def" id="NI$LPTBBUTTONINFOA"><div><div class="token cpp_type">LPTBBUTTONINFOA</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$<anonymous>627::cbSize"><div><div class="token cpp_field">cbSize</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$<anonymous>627::dwMask"><div><div class="token cpp_field">dwMask</div></div></div>;
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>627::idCommand"><div><div class="token cpp_field">idCommand</div></div></div>;
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>627::iImage"><div><div class="token cpp_field">iImage</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['BYTE'], [], [])"><div class="token cpp_type">BYTE</div></div> <div class="def" id="NI$<anonymous>627::fsState"><div><div class="token cpp_field">fsState</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['BYTE'], [], [])"><div class="token cpp_type">BYTE</div></div> <div class="def" id="NI$<anonymous>627::fsStyle"><div><div class="token cpp_field">fsStyle</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$<anonymous>627::cx"><div><div class="token cpp_field">cx</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD_PTR'], [], [])"><div class="token cpp_type">DWORD_PTR</div></div> <div class="def" id="NI$<anonymous>627::lParam"><div><div class="token cpp_field">lParam</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$<anonymous>627::pszText"><div><div class="token cpp_field">pszText</div></div></div>;
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>627::cchText"><div><div class="token cpp_field">cchText</div></div></div>;
 } <div class="def" id="NI$TBBUTTONINFOW"><div><div class="token cpp_type">TBBUTTONINFOW</div></div></div>, *<div class="def" id="NI$LPTBBUTTONINFOW"><div><div class="token cpp_type">LPTBBUTTONINFOW</div></div></div>;
 
 <div class="disabled">#ifdef UNICODE</div>
@@ -1699,15 +1699,15 @@
 <div class="disabled">#define TBMF_BUTTONSPACING      0x00000004</div>
 
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
-    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$<anonymous>627::cbSize"><div><div class="token cpp_field">cbSize</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$<anonymous>627::dwMask"><div><div class="token cpp_field">dwMask</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$<anonymous>628::cbSize"><div><div class="token cpp_field">cbSize</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$<anonymous>628::dwMask"><div><div class="token cpp_field">dwMask</div></div></div>;
 
-    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>627::cxPad"><div><div class="token cpp_field">cxPad</div></div></div>;        <div class="token cpp_comment ">// PAD</div>
-    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>627::cyPad"><div><div class="token cpp_field">cyPad</div></div></div>;
-    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>627::cxBarPad"><div><div class="token cpp_field">cxBarPad</div></div></div>;     <div class="token cpp_comment ">// BARPAD</div>
-    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>627::cyBarPad"><div><div class="token cpp_field">cyBarPad</div></div></div>;
-    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>627::cxButtonSpacing"><div><div class="token cpp_field">cxButtonSpacing</div></div></div>;   <div class="token cpp_comment ">// BUTTONSPACING</div>
-    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>627::cyButtonSpacing"><div><div class="token cpp_field">cyButtonSpacing</div></div></div>;
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>628::cxPad"><div><div class="token cpp_field">cxPad</div></div></div>;        <div class="token cpp_comment ">// PAD</div>
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>628::cyPad"><div><div class="token cpp_field">cyPad</div></div></div>;
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>628::cxBarPad"><div><div class="token cpp_field">cxBarPad</div></div></div>;     <div class="token cpp_comment ">// BARPAD</div>
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>628::cyBarPad"><div><div class="token cpp_field">cyBarPad</div></div></div>;
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>628::cxButtonSpacing"><div><div class="token cpp_field">cxButtonSpacing</div></div></div>;   <div class="token cpp_comment ">// BUTTONSPACING</div>
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>628::cyButtonSpacing"><div><div class="token cpp_field">cyButtonSpacing</div></div></div>;
 } <div class="def" id="NI$TBMETRICS"><div><div class="token cpp_type">TBMETRICS</div></div></div>, * <div class="def" id="NI$LPTBMETRICS"><div><div class="token cpp_type">LPTBMETRICS</div></div></div>;
 
 <div class="disabled">#define TB_GETMETRICS           (WM_USER + 101)</div>
@@ -1837,23 +1837,23 @@
 <div class="disabled">#define TBNF_DI_SETITEM         0x10000000</div>
 
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
-    <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div>  <div class="def" id="NI$<anonymous>628::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$<anonymous>628::dwMask"><div><div class="token cpp_field">dwMask</div></div></div>;     <div class="token cpp_comment ">// [in] Specifies the values requested .[out] Client ask the data to be set for future use</div>
-    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>628::idCommand"><div><div class="token cpp_field">idCommand</div></div></div>;    <div class="token cpp_comment ">// [in] id of button we&apos;re requesting info for</div>
-    <div class="ref" onclick="jumpToSymbol([], ['DWORD_PTR'], [], [])"><div class="token cpp_type">DWORD_PTR</div></div> <div class="def" id="NI$<anonymous>628::lParam"><div><div class="token cpp_field">lParam</div></div></div>;  <div class="token cpp_comment ">// [in] lParam of button</div>
-    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>628::iImage"><div><div class="token cpp_field">iImage</div></div></div>;       <div class="token cpp_comment ">// [out] image index</div>
-    <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$<anonymous>628::pszText"><div><div class="token cpp_field">pszText</div></div></div>;    <div class="token cpp_comment ">// [out] new text for item</div>
-    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>628::cchText"><div><div class="token cpp_field">cchText</div></div></div>;      <div class="token cpp_comment ">// [in] size of buffer pointed to by pszText</div>
-} <div class="def" id="NI$NMTBDISPINFOA"><div><div class="token cpp_type">NMTBDISPINFOA</div></div></div>, *<div class="def" id="NI$LPNMTBDISPINFOA"><div><div class="token cpp_type">LPNMTBDISPINFOA</div></div></div>;
-
-<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
-    <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div> <div class="def" id="NI$<anonymous>629::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$<anonymous>629::dwMask"><div><div class="token cpp_field">dwMask</div></div></div>;      <div class="token cpp_comment ">//[in] Specifies the values requested .[out] Client ask the data to be set for future use</div>
+    <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div>  <div class="def" id="NI$<anonymous>629::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$<anonymous>629::dwMask"><div><div class="token cpp_field">dwMask</div></div></div>;     <div class="token cpp_comment ">// [in] Specifies the values requested .[out] Client ask the data to be set for future use</div>
     <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>629::idCommand"><div><div class="token cpp_field">idCommand</div></div></div>;    <div class="token cpp_comment ">// [in] id of button we&apos;re requesting info for</div>
     <div class="ref" onclick="jumpToSymbol([], ['DWORD_PTR'], [], [])"><div class="token cpp_type">DWORD_PTR</div></div> <div class="def" id="NI$<anonymous>629::lParam"><div><div class="token cpp_field">lParam</div></div></div>;  <div class="token cpp_comment ">// [in] lParam of button</div>
     <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>629::iImage"><div><div class="token cpp_field">iImage</div></div></div>;       <div class="token cpp_comment ">// [out] image index</div>
-    <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$<anonymous>629::pszText"><div><div class="token cpp_field">pszText</div></div></div>;   <div class="token cpp_comment ">// [out] new text for item</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LPSTR'], [], [])"><div class="token cpp_type">LPSTR</div></div> <div class="def" id="NI$<anonymous>629::pszText"><div><div class="token cpp_field">pszText</div></div></div>;    <div class="token cpp_comment ">// [out] new text for item</div>
     <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>629::cchText"><div><div class="token cpp_field">cchText</div></div></div>;      <div class="token cpp_comment ">// [in] size of buffer pointed to by pszText</div>
+} <div class="def" id="NI$NMTBDISPINFOA"><div><div class="token cpp_type">NMTBDISPINFOA</div></div></div>, *<div class="def" id="NI$LPNMTBDISPINFOA"><div><div class="token cpp_type">LPNMTBDISPINFOA</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
+    <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div> <div class="def" id="NI$<anonymous>630::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$<anonymous>630::dwMask"><div><div class="token cpp_field">dwMask</div></div></div>;      <div class="token cpp_comment ">//[in] Specifies the values requested .[out] Client ask the data to be set for future use</div>
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>630::idCommand"><div><div class="token cpp_field">idCommand</div></div></div>;    <div class="token cpp_comment ">// [in] id of button we&apos;re requesting info for</div>
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD_PTR'], [], [])"><div class="token cpp_type">DWORD_PTR</div></div> <div class="def" id="NI$<anonymous>630::lParam"><div><div class="token cpp_field">lParam</div></div></div>;  <div class="token cpp_comment ">// [in] lParam of button</div>
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>630::iImage"><div><div class="token cpp_field">iImage</div></div></div>;       <div class="token cpp_comment ">// [out] image index</div>
+    <div class="ref" onclick="jumpToSymbol([], ['LPWSTR'], [], [])"><div class="token cpp_type">LPWSTR</div></div> <div class="def" id="NI$<anonymous>630::pszText"><div><div class="token cpp_field">pszText</div></div></div>;   <div class="token cpp_comment ">// [out] new text for item</div>
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>630::cchText"><div><div class="token cpp_field">cchText</div></div></div>;      <div class="token cpp_comment ">// [in] size of buffer pointed to by pszText</div>
 } <div class="def" id="NI$NMTBDISPINFOW"><div><div class="token cpp_type">NMTBDISPINFOW</div></div></div>, *<div class="def" id="NI$LPNMTBDISPINFOW"><div><div class="token cpp_type">LPNMTBDISPINFOW</div></div></div>;
 
 
@@ -2957,8 +2957,8 @@
 <div class="disabled">#define PBM_SETRANGE32          (WM_USER+6)  // lParam = high, wParam = low</div>
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div>
 {
-   <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>630::iLow"><div><div class="token cpp_field">iLow</div></div></div>;
-   <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>630::iHigh"><div><div class="token cpp_field">iHigh</div></div></div>;
+   <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>631::iLow"><div><div class="token cpp_field">iLow</div></div></div>;
+   <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>631::iHigh"><div><div class="token cpp_field">iHigh</div></div></div>;
 } <div class="def" id="NI$PBRANGE"><div><div class="token cpp_type">PBRANGE</div></div></div>, *<div class="def" id="NI$PPBRANGE"><div><div class="token cpp_type">PPBRANGE</div></div></div>;
 <div class="disabled">#define PBM_GETRANGE            (WM_USER+7)  // wParam = return (TRUE ? low : high). lParam = PPBRANGE or NULL</div>
 <div class="disabled">#define PBM_GETPOS              (WM_USER+8)</div>
@@ -4328,10 +4328,10 @@
 
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div>
 {
-    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$<anonymous>631::cbSize"><div><div class="token cpp_field">cbSize</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$<anonymous>631::dwFlags"><div><div class="token cpp_field">dwFlags</div></div></div>;
-    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>631::iItem"><div><div class="token cpp_field">iItem</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$<anonymous>631::dwReserved"><div><div class="token cpp_field">dwReserved</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$<anonymous>632::cbSize"><div><div class="token cpp_field">cbSize</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$<anonymous>632::dwFlags"><div><div class="token cpp_field">dwFlags</div></div></div>;
+    <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>632::iItem"><div><div class="token cpp_field">iItem</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div> <div class="def" id="NI$<anonymous>632::dwReserved"><div><div class="token cpp_field">dwReserved</div></div></div>;
 } <div class="def" id="NI$LVINSERTMARK"><div><div class="token cpp_type">LVINSERTMARK</div></div></div>, * <div class="def" id="NI$LPLVINSERTMARK"><div><div class="token cpp_type">LPLVINSERTMARK</div></div></div>;
 
 <div class="disabled">#define LVIM_AFTER      0x00000001 // TRUE = insert After iItem, otherwise before</div>
@@ -5874,13 +5874,13 @@
 
 
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
-    <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div> <div class="def" id="NI$<anonymous>634::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['COMBOBOXEXITEMA'], [], [])"><div class="token cpp_type">COMBOBOXEXITEMA</div></div> <div class="def" id="NI$<anonymous>634::ceItem"><div><div class="token cpp_field">ceItem</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div> <div class="def" id="NI$<anonymous>635::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['COMBOBOXEXITEMA'], [], [])"><div class="token cpp_type">COMBOBOXEXITEMA</div></div> <div class="def" id="NI$<anonymous>635::ceItem"><div><div class="token cpp_field">ceItem</div></div></div>;
 } <div class="def" id="NI$NMCOMBOBOXEXA"><div><div class="token cpp_type">NMCOMBOBOXEXA</div></div></div>, *<div class="def" id="NI$PNMCOMBOBOXEXA"><div><div class="token cpp_type">PNMCOMBOBOXEXA</div></div></div>;
 
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
-    <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div> <div class="def" id="NI$<anonymous>635::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['COMBOBOXEXITEMW'], [], [])"><div class="token cpp_type">COMBOBOXEXITEMW</div></div> <div class="def" id="NI$<anonymous>635::ceItem"><div><div class="token cpp_field">ceItem</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div> <div class="def" id="NI$<anonymous>636::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['COMBOBOXEXITEMW'], [], [])"><div class="token cpp_type">COMBOBOXEXITEMW</div></div> <div class="def" id="NI$<anonymous>636::ceItem"><div><div class="token cpp_field">ceItem</div></div></div>;
 } <div class="def" id="NI$NMCOMBOBOXEXW"><div><div class="token cpp_type">NMCOMBOBOXEXW</div></div></div>, *<div class="def" id="NI$PNMCOMBOBOXEXW"><div><div class="token cpp_type">PNMCOMBOBOXEXW</div></div></div>;
 
 <div class="disabled">#ifdef UNICODE</div>
@@ -5928,18 +5928,18 @@
 <div class="token cpp_comment ">// CBEN_DRAGBEGIN sends this information ...</div>
 
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
-    <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div> <div class="def" id="NI$<anonymous>636::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
-    <div class="token cpp_keyword ">int</div>   <div class="def" id="NI$<anonymous>636::iItemid"><div><div class="token cpp_field">iItemid</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div> <div class="def" id="NI$<anonymous>637::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
+    <div class="token cpp_keyword ">int</div>   <div class="def" id="NI$<anonymous>637::iItemid"><div><div class="token cpp_field">iItemid</div></div></div>;
 <div class="expandable"><div class="disabled">    WCHAR szText[CBEMAXSTRLEN];</div>
-<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div> <div class="def" id="NI$<anonymous>636::szText"><div><div class="token cpp_field">szText</div></div></div>[<div class="token cpp_number ">260</div>];</div></div>
+<div class="expanded">    <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div> <div class="def" id="NI$<anonymous>637::szText"><div><div class="token cpp_field">szText</div></div></div>[<div class="token cpp_number ">260</div>];</div></div>
 }<div class="def" id="NI$NMCBEDRAGBEGINW"><div><div class="token cpp_type">NMCBEDRAGBEGINW</div></div></div>, *<div class="def" id="NI$LPNMCBEDRAGBEGINW"><div><div class="token cpp_type">LPNMCBEDRAGBEGINW</div></div></div>, *<div class="def" id="NI$PNMCBEDRAGBEGINW"><div><div class="token cpp_type">PNMCBEDRAGBEGINW</div></div></div>;
 
 
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
-    <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div> <div class="def" id="NI$<anonymous>637::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
-    <div class="token cpp_keyword ">int</div>   <div class="def" id="NI$<anonymous>637::iItemid"><div><div class="token cpp_field">iItemid</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div> <div class="def" id="NI$<anonymous>638::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
+    <div class="token cpp_keyword ">int</div>   <div class="def" id="NI$<anonymous>638::iItemid"><div><div class="token cpp_field">iItemid</div></div></div>;
 <div class="expandable"><div class="disabled">    char szText[CBEMAXSTRLEN];</div>
-<div class="expanded">    <div class="token cpp_keyword ">char</div> <div class="def" id="NI$<anonymous>637::szText"><div><div class="token cpp_field">szText</div></div></div>[<div class="token cpp_number ">260</div>];</div></div>
+<div class="expanded">    <div class="token cpp_keyword ">char</div> <div class="def" id="NI$<anonymous>638::szText"><div><div class="token cpp_field">szText</div></div></div>[<div class="token cpp_number ">260</div>];</div></div>
 }<div class="def" id="NI$NMCBEDRAGBEGINA"><div><div class="token cpp_type">NMCBEDRAGBEGINA</div></div></div>, *<div class="def" id="NI$LPNMCBEDRAGBEGINA"><div><div class="token cpp_type">LPNMCBEDRAGBEGINA</div></div></div>, *<div class="def" id="NI$PNMCBEDRAGBEGINA"><div><div class="token cpp_type">PNMCBEDRAGBEGINA</div></div></div>;
 
 <div class="disabled">#ifdef UNICODE</div>
@@ -5957,21 +5957,21 @@
 <div class="token cpp_comment ">// iNewSelection gives what would be the new selection unless the notify is failed</div>
 <div class="token cpp_comment ">//                      iNewSelection may be CB_ERR if there&apos;s no match</div>
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
-        <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div> <div class="def" id="NI$<anonymous>638::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
-        <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$<anonymous>638::fChanged"><div><div class="token cpp_field">fChanged</div></div></div>;
-        <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>638::iNewSelection"><div><div class="token cpp_field">iNewSelection</div></div></div>;
-<div class="expandable"><div class="disabled">        WCHAR szText[CBEMAXSTRLEN];</div>
-<div class="expanded">        <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div> <div class="def" id="NI$<anonymous>638::szText"><div><div class="token cpp_field">szText</div></div></div>[<div class="token cpp_number ">260</div>];</div></div>
-        <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>638::iWhy"><div><div class="token cpp_field">iWhy</div></div></div>;
-} <div class="def" id="NI$NMCBEENDEDITW"><div><div class="token cpp_type">NMCBEENDEDITW</div></div></div>, *<div class="def" id="NI$LPNMCBEENDEDITW"><div><div class="token cpp_type">LPNMCBEENDEDITW</div></div></div>, *<div class="def" id="NI$PNMCBEENDEDITW"><div><div class="token cpp_type">PNMCBEENDEDITW</div></div></div>;
-
-<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
         <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div> <div class="def" id="NI$<anonymous>639::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
         <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$<anonymous>639::fChanged"><div><div class="token cpp_field">fChanged</div></div></div>;
         <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>639::iNewSelection"><div><div class="token cpp_field">iNewSelection</div></div></div>;
-<div class="expandable"><div class="disabled">        char szText[CBEMAXSTRLEN];</div>
-<div class="expanded">        <div class="token cpp_keyword ">char</div> <div class="def" id="NI$<anonymous>639::szText"><div><div class="token cpp_field">szText</div></div></div>[<div class="token cpp_number ">260</div>];</div></div>
+<div class="expandable"><div class="disabled">        WCHAR szText[CBEMAXSTRLEN];</div>
+<div class="expanded">        <div class="ref" onclick="jumpToSymbol([], ['WCHAR'], [], [])"><div class="token cpp_type">WCHAR</div></div> <div class="def" id="NI$<anonymous>639::szText"><div><div class="token cpp_field">szText</div></div></div>[<div class="token cpp_number ">260</div>];</div></div>
         <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>639::iWhy"><div><div class="token cpp_field">iWhy</div></div></div>;
+} <div class="def" id="NI$NMCBEENDEDITW"><div><div class="token cpp_type">NMCBEENDEDITW</div></div></div>, *<div class="def" id="NI$LPNMCBEENDEDITW"><div><div class="token cpp_type">LPNMCBEENDEDITW</div></div></div>, *<div class="def" id="NI$PNMCBEENDEDITW"><div><div class="token cpp_type">PNMCBEENDEDITW</div></div></div>;
+
+<div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
+        <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div> <div class="def" id="NI$<anonymous>640::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['BOOL'], [], [])"><div class="token cpp_type">BOOL</div></div> <div class="def" id="NI$<anonymous>640::fChanged"><div><div class="token cpp_field">fChanged</div></div></div>;
+        <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>640::iNewSelection"><div><div class="token cpp_field">iNewSelection</div></div></div>;
+<div class="expandable"><div class="disabled">        char szText[CBEMAXSTRLEN];</div>
+<div class="expanded">        <div class="token cpp_keyword ">char</div> <div class="def" id="NI$<anonymous>640::szText"><div><div class="token cpp_field">szText</div></div></div>[<div class="token cpp_number ">260</div>];</div></div>
+        <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>640::iWhy"><div><div class="token cpp_field">iWhy</div></div></div>;
 } <div class="def" id="NI$NMCBEENDEDITA"><div><div class="token cpp_type">NMCBEENDEDITA</div></div></div>, *<div class="def" id="NI$LPNMCBEENDEDITA"><div><div class="token cpp_type">LPNMCBEENDEDITA</div></div></div>,*<div class="def" id="NI$PNMCBEENDEDITA"><div><div class="token cpp_type">PNMCBEENDEDITA</div></div></div>;
 
 <div class="disabled">#ifdef UNICODE</div>
@@ -6488,16 +6488,16 @@
 
 
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
-        <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$<anonymous>640::cbSize"><div><div class="token cpp_field">cbSize</div></div></div>;
-        <div class="ref" onclick="jumpToSymbol([], ['POINT'], [], [])"><div class="token cpp_type">POINT</div></div> <div class="def" id="NI$<anonymous>640::pt"><div><div class="token cpp_field">pt</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$<anonymous>641::cbSize"><div><div class="token cpp_field">cbSize</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['POINT'], [], [])"><div class="token cpp_type">POINT</div></div> <div class="def" id="NI$<anonymous>641::pt"><div><div class="token cpp_field">pt</div></div></div>;
 
-        <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$<anonymous>640::uHit"><div><div class="token cpp_field">uHit</div></div></div>;   <div class="token cpp_comment ">// out param</div>
-        <div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div> <div class="def" id="NI$<anonymous>640::st"><div><div class="token cpp_field">st</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$<anonymous>641::uHit"><div><div class="token cpp_field">uHit</div></div></div>;   <div class="token cpp_comment ">// out param</div>
+        <div class="ref" onclick="jumpToSymbol([], ['SYSTEMTIME'], [], [])"><div class="token cpp_type">SYSTEMTIME</div></div> <div class="def" id="NI$<anonymous>641::st"><div><div class="token cpp_field">st</div></div></div>;
 <div class="disabled">#if (NTDDI_VERSION &gt;= NTDDI_VISTA)</div>
-        <div class="ref" onclick="jumpToSymbol([], ['RECT'], [], [])"><div class="token cpp_type">RECT</div></div> <div class="def" id="NI$<anonymous>640::rc"><div><div class="token cpp_field">rc</div></div></div>;
-        <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>640::iOffset"><div><div class="token cpp_field">iOffset</div></div></div>;
-        <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>640::iRow"><div><div class="token cpp_field">iRow</div></div></div>;
-        <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>640::iCol"><div><div class="token cpp_field">iCol</div></div></div>;
+        <div class="ref" onclick="jumpToSymbol([], ['RECT'], [], [])"><div class="token cpp_type">RECT</div></div> <div class="def" id="NI$<anonymous>641::rc"><div><div class="token cpp_field">rc</div></div></div>;
+        <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>641::iOffset"><div><div class="token cpp_field">iOffset</div></div></div>;
+        <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>641::iRow"><div><div class="token cpp_field">iRow</div></div></div>;
+        <div class="token cpp_keyword ">int</div> <div class="def" id="NI$<anonymous>641::iCol"><div><div class="token cpp_field">iCol</div></div></div>;
 <div class="disabled">#endif</div>
 } <div class="def" id="NI$MCHITTESTINFO"><div><div class="token cpp_type">MCHITTESTINFO</div></div></div>, *<div class="def" id="NI$PMCHITTESTINFO"><div><div class="token cpp_type">PMCHITTESTINFO</div></div></div>;
 
@@ -7195,13 +7195,13 @@
 
 <div class="token cpp_comment ">// This structure is sent along with PGN_SCROLL notifications</div>
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
-    <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div> <div class="def" id="NI$<anonymous>641::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$<anonymous>641::fwKeys"><div><div class="token cpp_field">fwKeys</div></div></div>;            <div class="token cpp_comment ">// Specifies which keys are down when this notification is send</div>
-    <div class="ref" onclick="jumpToSymbol([], ['RECT'], [], [])"><div class="token cpp_type">RECT</div></div> <div class="def" id="NI$<anonymous>641::rcParent"><div><div class="token cpp_field">rcParent</div></div></div>;          <div class="token cpp_comment ">// Contains Parent Window Rect</div>
-    <div class="token cpp_keyword ">int</div>  <div class="def" id="NI$<anonymous>641::iDir"><div><div class="token cpp_field">iDir</div></div></div>;              <div class="token cpp_comment ">// Scrolling Direction</div>
-    <div class="token cpp_keyword ">int</div>  <div class="def" id="NI$<anonymous>641::iXpos"><div><div class="token cpp_field">iXpos</div></div></div>;             <div class="token cpp_comment ">// Horizontal scroll position</div>
-    <div class="token cpp_keyword ">int</div>  <div class="def" id="NI$<anonymous>641::iYpos"><div><div class="token cpp_field">iYpos</div></div></div>;             <div class="token cpp_comment ">// Vertical scroll position</div>
-    <div class="token cpp_keyword ">int</div>  <div class="def" id="NI$<anonymous>641::iScroll"><div><div class="token cpp_field">iScroll</div></div></div>;           <div class="token cpp_comment ">// [in/out] Amount to scroll</div>
+    <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div> <div class="def" id="NI$<anonymous>642::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div> <div class="def" id="NI$<anonymous>642::fwKeys"><div><div class="token cpp_field">fwKeys</div></div></div>;            <div class="token cpp_comment ">// Specifies which keys are down when this notification is send</div>
+    <div class="ref" onclick="jumpToSymbol([], ['RECT'], [], [])"><div class="token cpp_type">RECT</div></div> <div class="def" id="NI$<anonymous>642::rcParent"><div><div class="token cpp_field">rcParent</div></div></div>;          <div class="token cpp_comment ">// Contains Parent Window Rect</div>
+    <div class="token cpp_keyword ">int</div>  <div class="def" id="NI$<anonymous>642::iDir"><div><div class="token cpp_field">iDir</div></div></div>;              <div class="token cpp_comment ">// Scrolling Direction</div>
+    <div class="token cpp_keyword ">int</div>  <div class="def" id="NI$<anonymous>642::iXpos"><div><div class="token cpp_field">iXpos</div></div></div>;             <div class="token cpp_comment ">// Horizontal scroll position</div>
+    <div class="token cpp_keyword ">int</div>  <div class="def" id="NI$<anonymous>642::iYpos"><div><div class="token cpp_field">iYpos</div></div></div>;             <div class="token cpp_comment ">// Vertical scroll position</div>
+    <div class="token cpp_keyword ">int</div>  <div class="def" id="NI$<anonymous>642::iScroll"><div><div class="token cpp_field">iScroll</div></div></div>;           <div class="token cpp_comment ">// [in/out] Amount to scroll</div>
 }<div class="def" id="NI$NMPGSCROLL"><div><div class="token cpp_type">NMPGSCROLL</div></div></div>, *<div class="def" id="NI$LPNMPGSCROLL"><div><div class="token cpp_type">LPNMPGSCROLL</div></div></div>;
 
 <div class="disabled">#ifdef _WIN32
@@ -7216,10 +7216,10 @@
 <div class="disabled">#define PGF_CALCHEIGHT      2</div>
 
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div> {
-    <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div>   <div class="def" id="NI$<anonymous>642::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
-    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$<anonymous>642::dwFlag"><div><div class="token cpp_field">dwFlag</div></div></div>;
-    <div class="token cpp_keyword ">int</div>     <div class="def" id="NI$<anonymous>642::iWidth"><div><div class="token cpp_field">iWidth</div></div></div>;
-    <div class="token cpp_keyword ">int</div>     <div class="def" id="NI$<anonymous>642::iHeight"><div><div class="token cpp_field">iHeight</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['NMHDR'], [], [])"><div class="token cpp_type">NMHDR</div></div>   <div class="def" id="NI$<anonymous>643::hdr"><div><div class="token cpp_field">hdr</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['DWORD'], [], [])"><div class="token cpp_type">DWORD</div></div>   <div class="def" id="NI$<anonymous>643::dwFlag"><div><div class="token cpp_field">dwFlag</div></div></div>;
+    <div class="token cpp_keyword ">int</div>     <div class="def" id="NI$<anonymous>643::iWidth"><div><div class="token cpp_field">iWidth</div></div></div>;
+    <div class="token cpp_keyword ">int</div>     <div class="def" id="NI$<anonymous>643::iHeight"><div><div class="token cpp_field">iHeight</div></div></div>;
 }<div class="def" id="NI$NMPGCALCSIZE"><div><div class="token cpp_type">NMPGCALCSIZE</div></div></div>, *<div class="def" id="NI$LPNMPGCALCSIZE"><div><div class="token cpp_type">LPNMPGCALCSIZE</div></div></div>;
 
 
@@ -7307,9 +7307,9 @@ flags defined in TOOLBAR:
 
 <div class="token cpp_keyword ">typedef</div> <div class="token cpp_keyword ">struct</div>
 {
-    <div class="ref" onclick="jumpToSymbol([], ['HIMAGELIST'], [], [])"><div class="token cpp_type">HIMAGELIST</div></div>  <div class="def" id="NI$<anonymous>643::himl"><div><div class="token cpp_field">himl</div></div></div>;   <div class="token cpp_comment ">// Images: Normal, Hot, Pushed, Disabled. If count is less than 4, we use index 1</div>
-    <div class="ref" onclick="jumpToSymbol([], ['RECT'], [], [])"><div class="token cpp_type">RECT</div></div>        <div class="def" id="NI$<anonymous>643::margin"><div><div class="token cpp_field">margin</div></div></div>; <div class="token cpp_comment ">// Margin around icon.</div>
-    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>        <div class="def" id="NI$<anonymous>643::uAlign"><div><div class="token cpp_field">uAlign</div></div></div>;
+    <div class="ref" onclick="jumpToSymbol([], ['HIMAGELIST'], [], [])"><div class="token cpp_type">HIMAGELIST</div></div>  <div class="def" id="NI$<anonymous>644::himl"><div><div class="token cpp_field">himl</div></div></div>;   <div class="token cpp_comment ">// Images: Normal, Hot, Pushed, Disabled. If count is less than 4, we use index 1</div>
+    <div class="ref" onclick="jumpToSymbol([], ['RECT'], [], [])"><div class="token cpp_type">RECT</div></div>        <div class="def" id="NI$<anonymous>644::margin"><div><div class="token cpp_field">margin</div></div></div>; <div class="token cpp_comment ">// Margin around icon.</div>
+    <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div>        <div class="def" id="NI$<anonymous>644::uAlign"><div><div class="token cpp_field">uAlign</div></div></div>;
 } <div class="def" id="NI$BUTTON_IMAGELIST"><div><div class="token cpp_type">BUTTON_IMAGELIST</div></div></div>, *<div class="def" id="NI$PBUTTON_IMAGELIST"><div><div class="token cpp_type">PBUTTON_IMAGELIST</div></div></div>;
 
 <div class="disabled">#define BCM_GETIDEALSIZE        (BCM_FIRST + 0x0001)</div>

@@ -424,7 +424,6 @@
       <document name="function SetTitleBar" docId="vl::presentation::INativeWindow::SetTitleBar@void(bool)" file="VL__PRESENTATION__INATIVEWINDOW__SETTITLEBAR@VOID(BOOL)"/>
       <document name="function SetTopMost" docId="vl::presentation::INativeWindow::SetTopMost@void(bool)" file="VL__PRESENTATION__INATIVEWINDOW__SETTOPMOST@VOID(BOOL)"/>
       <document name="function SetWindowCursor" docId="vl::presentation::INativeWindow::SetWindowCursor@void(::vl::presentation::INativeCursor *)" file="VL__PRESENTATION__INATIVEWINDOW__SETWINDOWCURSOR@VOID(__VL__PRES"/>
-      <document name="function SetWindowMode" docId="vl::presentation::INativeWindow::SetWindowMode@void(::vl::presentation::INativeWindow::WindowMode)" file="VL__PRESENTATION__INATIVEWINDOW__SETWINDOWMODE@VOID(__VL__PRESEN"/>
       <document name="function Show" docId="vl::presentation::INativeWindow::Show@void()" file="VL__PRESENTATION__INATIVEWINDOW__SHOW@VOID()"/>
       <document name="function ShowDeactivated" docId="vl::presentation::INativeWindow::ShowDeactivated@void()" file="VL__PRESENTATION__INATIVEWINDOW__SHOWDEACTIVATED@VOID()"/>
       <document name="function ShowInTaskBar" docId="vl::presentation::INativeWindow::ShowInTaskBar@void()" file="VL__PRESENTATION__INATIVEWINDOW__SHOWINTASKBAR@VOID()"/>
@@ -475,7 +474,7 @@
       <document name="function VerticalWheel" docId="vl::presentation::INativeWindowListener::VerticalWheel@void(::vl::presentation::NativeWindowMouseInfo const &amp;)" file="VL__PRESENTATION__INATIVEWINDOWLISTENER__VERTICALWHEEL@VOID(__VL"/>
     </document>
     <document name="class INativeWindowService" docId="vl::presentation::INativeWindowService" file="VL__PRESENTATION__INATIVEWINDOWSERVICE">
-      <document name="function CreateNativeWindow" docId="vl::presentation::INativeWindowService::CreateNativeWindow@::vl::presentation::INativeWindow *()" file="VL__PRESENTATION__INATIVEWINDOWSERVICE__CREATENATIVEWINDOW@__VL_"/>
+      <document name="function CreateNativeWindow" docId="vl::presentation::INativeWindowService::CreateNativeWindow@::vl::presentation::INativeWindow *(::vl::presentation::INativeWindow::WindowMode)" file="VL__PRESENTATION__INATIVEWINDOWSERVICE__CREATENATIVEWINDOW@__VL_"/>
       <document name="function DestroyNativeWindow" docId="vl::presentation::INativeWindowService::DestroyNativeWindow@void(::vl::presentation::INativeWindow *)" file="VL__PRESENTATION__INATIVEWINDOWSERVICE__DESTROYNATIVEWINDOW@VOID"/>
       <document name="function GetMainWindow" docId="vl::presentation::INativeWindowService::GetMainWindow@::vl::presentation::INativeWindow *()" file="VL__PRESENTATION__INATIVEWINDOWSERVICE__GETMAINWINDOW@__VL__PRES"/>
       <document name="function GetWindow" docId="vl::presentation::INativeWindowService::GetWindow@::vl::presentation::INativeWindow *(::vl::presentation::NativePoint)" file="VL__PRESENTATION__INATIVEWINDOWSERVICE__GETWINDOW@__VL__PRESENTA"/>
@@ -1114,7 +1113,7 @@
       <document name="variable VisuallyEnabledChanged" docId="vl::presentation::controls::GuiControl::VisuallyEnabledChanged" file="VL__PRESENTATION__CONTROLS__GUICONTROL__VISUALLYENABLEDCHANGED"/>
     </document>
     <document name="class GuiControlHost" docId="vl::presentation::controls::GuiControlHost" file="VL__PRESENTATION__CONTROLS__GUICONTROLHOST">
-      <document name="function $__ctor" docId="vl::presentation::controls::GuiControlHost::$__ctor@(::vl::presentation::theme::ThemeName)" file="VL__PRESENTATION__CONTROLS__GUICONTROLHOST__$__CTOR@(__VL__PRESE"/>
+      <document name="function $__ctor" docId="vl::presentation::controls::GuiControlHost::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)" file="VL__PRESENTATION__CONTROLS__GUICONTROLHOST__$__CTOR@(__VL__PRESE"/>
       <document name="function Close" docId="vl::presentation::controls::GuiControlHost::Close@void()" file="VL__PRESENTATION__CONTROLS__GUICONTROLHOST__CLOSE@VOID()"/>
       <document name="function DeleteAfterProcessingAllEvents" docId="vl::presentation::controls::GuiControlHost::DeleteAfterProcessingAllEvents@void()" file="VL__PRESENTATION__CONTROLS__GUICONTROLHOST__DELETEAFTERPROCESSIN"/>
       <document name="function ForceCalculateSizeImmediately" docId="vl::presentation::controls::GuiControlHost::ForceCalculateSizeImmediately@void()" file="VL__PRESENTATION__CONTROLS__GUICONTROLHOST__FORCECALCULATESIZEIM"/>

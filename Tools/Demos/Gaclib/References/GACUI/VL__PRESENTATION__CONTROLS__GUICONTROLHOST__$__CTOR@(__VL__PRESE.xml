@@ -1,4 +1,5 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::$__ctor@(::vl::presentation::theme::ThemeName)" accessor="public" category="Function" name="$__ctor" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::$__ctor@(::vl::presentation::theme::ThemeName)[decl0]"><summary>Create a control with a specified default theme.</summary><param name="themeName">The theme name for retriving a default control template.</param><signature><![CDATA[ GuiControlHost(
-    theme::ThemeName themeName
+<Document symbolId="vl::presentation::controls::GuiControlHost::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)" accessor="public" category="Function" name="$__ctor" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::INativeWindow::WindowMode)[decl0]"><summary>Create a control with a specified default theme.</summary><param name="themeName">The theme name for retriving a default control template.</param><param name="mode">The window mode.</param><signature><![CDATA[ GuiControlHost(
+    theme::ThemeName themeName,
+    INativeWindow::WindowMode mode
 );
-]]></signature><seealsos><symbol name="ThemeName" declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WindowMode" docId="vl::presentation::INativeWindow::WindowMode" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow::WindowMode"/><symbol name="ThemeName" declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/></seealsos></Document>
