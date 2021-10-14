@@ -860,8 +860,9 @@ Native Window
 			<div class="token cpp_comment ">/// Called when the window is moving.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
 			<div class="token cpp_comment ">/// &lt;param name=&quot;bounds&quot;&gt;The bounds. Message handler can change the bounds.&lt;/param&gt;</div>
-			<div class="token cpp_comment ">/// &lt;param name=&quot;fixSizeOnly&quot;&gt;True if the message raise only want the message handler to change the size.&lt;/param&gt;</div>
-			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>				<div class="def" id="FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)'], [], [])"><div class="token cpp_function">Moving</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativeRect'], [], [])"><div class="token cpp_type">NativeRect</div></div>&amp; <div class="def" id="NI$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)[decl0]::bounds"><div>bounds</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)[decl0]::fixSizeOnly"><div>fixSizeOnly</div></div>);
+			<div class="token cpp_comment ">/// &lt;param name=&quot;fixSizeOnly&quot;&gt;True if the message raise only want the message handler to change the size, and keep the position unchanged.&lt;/param&gt;</div>
+			<div class="token cpp_comment ">/// &lt;param name=&quot;draggingBorder&quot;&gt;True if the message raise because the user is dragging the border to change the size.&lt;/param&gt;</div>
+			<div class="token cpp_keyword ">virtual</div> <div class="token cpp_keyword ">void</div>				<div class="def" id="FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)[decl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)'], [], [])"><div class="token cpp_function">Moving</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativeRect'], [], [])"><div class="token cpp_type">NativeRect</div></div>&amp; <div class="def" id="NI$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)[decl0]::bounds"><div>bounds</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)[decl0]::fixSizeOnly"><div>fixSizeOnly</div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)[decl0]::draggingBorder"><div>draggingBorder</div></div>);
 			<div class="token cpp_comment ">/// &lt;summary&gt;</div>
 			<div class="token cpp_comment ">/// Called when the window is moved.</div>
 			<div class="token cpp_comment ">/// &lt;/summary&gt;</div>
@@ -3052,13 +3053,13 @@ referencedSymbols = {
             'FB$vl::presentation::INativeWindowListener::Moved@void()[decl0]'
         ]
     },
-    'vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)': {
-        'displayNameInHtml': '<span class="cpp_type">INativeWindowListener</span>::<span class="cpp_function">Moving</span>(<span class="cpp_type">NativeRect</span> &, <span class="cpp_keyword">bool</span>)',
+    'vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)': {
+        'displayNameInHtml': '<span class="cpp_type">INativeWindowListener</span>::<span class="cpp_function">Moving</span>(<span class="cpp_type">NativeRect</span> &, <span class="cpp_keyword">bool</span>, <span class="cpp_keyword">bool</span>)',
         'impls': [
-            'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)[impl0]'
+            'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]'
         ],
         'decls': [
-            'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)[decl0]'
+            'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)[decl0]'
         ]
     },
     'vl::presentation::INativeWindowListener::Opened@void()': {
@@ -3403,8 +3404,8 @@ symbolToFiles = {
     'FB$vl::presentation::INativeWindowListener::MouseMoving@void(::vl::presentation::NativeWindowMouseInfo const &)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
     'FB$vl::presentation::INativeWindowListener::Moved@void()[decl0]': null,
     'FB$vl::presentation::INativeWindowListener::Moved@void()[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
-    'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)[decl0]': null,
-    'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
+    'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)[decl0]': null,
+    'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
     'FB$vl::presentation::INativeWindowListener::Opened@void()[decl0]': null,
     'FB$vl::presentation::INativeWindowListener::Opened@void()[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
     'FB$vl::presentation::INativeWindowListener::Paint@void()[decl0]': null,

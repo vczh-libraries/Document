@@ -325,19 +325,55 @@ WindowsForm
 					<div class="ref" onclick="jumpToSymbol(['ImmReleaseContext@::BOOL(::HWND, ::HIMC)'], ['ImmReleaseContext@::BOOL(::HWND, ::HIMC)'], [], [])"><div class="token cpp_function">ImmReleaseContext</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::handle'], [], [])"><div class="token cpp_field">handle</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::UpdateCompositionForContent@void()[impl0]::imc'], [], [])">imc</div>);
 				}
 
+				<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::supressClosePopups"><div><div class="token cpp_field">supressClosePopups</div></div></div> = <div class="token cpp_keyword ">false</div>;
+
+				<div class="token cpp_keyword ">static</div> <div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]"><div><div class="token cpp_function">ClosePopupsOf</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm'], [], [])"><div class="token cpp_type">WindowsForm</div></div>* <div class="def" id="NI$vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::owner"><div><div class="token cpp_argument">owner</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList'], [], [])"><div class="token cpp_type">SortedList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm'], [], [])"><div class="token cpp_type">WindowsForm</div></div>*&gt;&amp; <div class="def" id="NI$vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::exceptions"><div><div class="token cpp_argument">exceptions</div></div></div>)
+				{
+					<div class="token cpp_keyword ">for</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::i"><div>i</div></div> = <div class="token cpp_number ">0</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::i'], [], [])">i</div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::owner'], [], [])"><div class="token cpp_argument">owner</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::childWindows'], [], [])"><div class="token cpp_field">childWindows</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>(); <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::i'], [], [])">i</div>++)
+					{
+						<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::popup"><div>popup</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::owner'], [], [])"><div class="token cpp_argument">owner</div></div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::childWindows'], [], [])"><div class="token cpp_field">childWindows</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::i'], [], [])">i</div>];
+						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::popup'], [], [])">popup</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::windowMode'], [], [])"><div class="token cpp_field">windowMode</div></div> != <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow::WindowMode::Normal'], [], [])"><div class="token cpp_enum">Normal</div></div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::popup'], [], [])">popup</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WindowsForm::IsVisible@bool()'], ['vl::presentation::windows::WindowsForm::IsVisible@bool()'], [], [])"><div class="token cpp_function">IsVisible</div></div>())
+						{
+							<div class="token cpp_keyword ">if</div> (!<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::exceptions'], [], [])"><div class="token cpp_argument">exceptions</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::Contains@bool([K] const &)'], ['vl::collections::SortedList::Contains@bool([K] const &)'], [], [])"><div class="token cpp_function">Contains</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::popup'], [], [])">popup</div>))
+							{
+								<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::popup'], [], [])">popup</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WindowsForm::Hide@void(bool)'], ['vl::presentation::windows::WindowsForm::Hide@void(bool)'], [], [])"><div class="token cpp_function">Hide</div></div>(<div class="token cpp_keyword ">false</div>);
+							}
+						}
+						<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)'], ['vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)'], [], [])"><div class="token cpp_function">ClosePopupsOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::popup'], [], [])">popup</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::exceptions'], [], [])"><div class="token cpp_argument">exceptions</div></div>);
+					}
+				}
+
 				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]"><div><div class="token cpp_function">HandleMessageInternal</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::hwnd"><div><div class="token cpp_argument">hwnd</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::uMsg"><div><div class="token cpp_argument">uMsg</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['WPARAM'], [], [])"><div class="token cpp_type">WPARAM</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::wParam"><div><div class="token cpp_argument">wParam</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::lParam"><div><div class="token cpp_argument">lParam</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['LRESULT'], [], [])"><div class="token cpp_type">LRESULT</div></div>&amp; <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::result"><div><div class="token cpp_argument">result</div></div></div>)
 				{
-					<div class="token cpp_comment ">// handling popup windows</div>
+					<div class="token cpp_keyword ">if</div> (!<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::supressClosePopups'], [], [])"><div class="token cpp_field">supressClosePopups</div></div>)
 					{
-						<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::closeChildPopups"><div>closeChildPopups</div></div> = <div class="token cpp_keyword ">false</div>;
+						<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::closePopups"><div>closePopups</div></div> = <div class="token cpp_keyword ">false</div>;
+						<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm'], [], [])"><div class="token cpp_type">WindowsForm</div></div>* <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::activatedWindow"><div>activatedWindow</div></div> = <div class="token cpp_keyword ">nullptr</div>;
+						<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm'], [], [])"><div class="token cpp_type">WindowsForm</div></div>* <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::rootWindow"><div>rootWindow</div></div> = <div class="token cpp_keyword ">nullptr</div>;
+						<div class="ref" onclick="jumpToSymbol([], ['vl::collections::SortedList'], [], [])"><div class="token cpp_type">SortedList</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm'], [], [])"><div class="token cpp_type">WindowsForm</div></div>*&gt; <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::exceptions"><div>exceptions</div></div>;
+
 						<div class="token cpp_keyword ">switch</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::uMsg'], [], [])"><div class="token cpp_argument">uMsg</div></div>)
 						{
+<div class="expandable"><div class="disabled">						case WM_ACTIVATEAPP:</div>
+<div class="expanded">						<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x001C</div>:</div></div>
+<div class="expandable"><div class="disabled">							if (wParam == FALSE)</div>
+<div class="expanded">							<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::wParam'], [], [])"><div class="token cpp_argument">wParam</div></div> == <div class="token cpp_number ">0</div>)</div></div>
+							{
+								<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::closePopups'], [], [])">closePopups</div> = <div class="token cpp_keyword ">true</div>;
+							}
+							<div class="token cpp_keyword ">break</div>;
 <div class="expandable"><div class="disabled">						case WM_ACTIVATE:</div>
 <div class="expanded">						<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x0006</div>:</div></div>
-<div class="expandable"><div class="disabled">							if (wParam == WA_INACTIVE &amp;&amp; windowMode == Normal)</div>
-<div class="expanded">							<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::wParam'], [], [])"><div class="token cpp_argument">wParam</div></div> == <div class="token cpp_number ">0</div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::windowMode'], [], [])"><div class="token cpp_field">windowMode</div></div> == <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow::WindowMode::Normal'], [], [])"><div class="token cpp_enum">Normal</div></div>)</div></div>
+<div class="expandable"><div class="disabled">							switch (LOWORD(wParam))</div>
+<div class="expanded">							<div class="token cpp_keyword ">switch</div> (((<div class="ref" onclick="jumpToSymbol([], ['WORD'], [], [])"><div class="token cpp_type">WORD</div></div>)(((<div class="ref" onclick="jumpToSymbol([], ['DWORD_PTR'], [], [])"><div class="token cpp_type">DWORD_PTR</div></div>)(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::wParam'], [], [])"><div class="token cpp_argument">wParam</div></div>)) &amp; <div class="token cpp_number ">0xffff</div>)))</div></div>
 							{
-								<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::closeChildPopups'], [], [])">closeChildPopups</div> = <div class="token cpp_keyword ">true</div>;
+<div class="expandable"><div class="disabled">							case WA_ACTIVE:</div>
+<div class="expanded">							<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">1</div>:</div></div>
+<div class="expandable"><div class="disabled">							case WA_CLICKACTIVE:</div>
+<div class="expanded">							<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">2</div>:</div></div>
+								<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::activatedWindow'], [], [])">activatedWindow</div> = <div class="token cpp_keyword ">this</div>;
+								<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::closePopups'], [], [])">closePopups</div> = <div class="token cpp_keyword ">true</div>;
+								<div class="token cpp_keyword ">break</div>;
 							}
 							<div class="token cpp_keyword ">break</div>;
 <div class="expandable"><div class="disabled">						case WM_LBUTTONDOWN:</div>
@@ -352,29 +388,32 @@ WindowsForm
 <div class="expanded">						<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x00A7</div>:</div></div>
 <div class="expandable"><div class="disabled">						case WM_NCRBUTTONDOWN:</div>
 <div class="expanded">						<div class="token cpp_keyword ">case</div> <div class="token cpp_number ">0x00A4</div>:</div></div>
-							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::closeChildPopups'], [], [])">closeChildPopups</div> = <div class="token cpp_keyword ">true</div>;
+							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::activatedWindow'], [], [])">activatedWindow</div> = <div class="token cpp_keyword ">this</div>;
+							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::closePopups'], [], [])">closePopups</div> = <div class="token cpp_keyword ">true</div>;
 							<div class="token cpp_keyword ">break</div>;
 						}
 
-						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::closeChildPopups'], [], [])">closeChildPopups</div>)
+						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::activatedWindow'], [], [])">activatedWindow</div>)
 						{
-							<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm'], [], [])"><div class="token cpp_type">WindowsForm</div></div>*&gt; <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::childPopups"><div>childPopups</div></div>;
-							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::childPopups'], [], [])">childPopups</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::List::Add@::vl::vint([T] const &)'], ['vl::collections::List::Add@::vl::vint([T] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="token cpp_keyword ">this</div>);
-							<div class="token cpp_keyword ">for</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::i"><div>i</div></div> = <div class="token cpp_number ">0</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::i'], [], [])">i</div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::childPopups'], [], [])">childPopups</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>(); <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::i'], [], [])">i</div>++)
+							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::rootWindow'], [], [])">rootWindow</div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::activatedWindow'], [], [])">activatedWindow</div>;
+							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::exceptions'], [], [])">exceptions</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::Add@::vl::vint([T] const &)'], ['vl::collections::SortedList::Add@::vl::vint([T] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::rootWindow'], [], [])">rootWindow</div>);
+							<div class="token cpp_keyword ">while</div> (<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::parentWindow"><div>parentWindow</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::rootWindow'], [], [])">rootWindow</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::parentWindow'], [], [])"><div class="token cpp_field">parentWindow</div></div>)
 							{
-								<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::popup"><div>popup</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::childPopups'], [], [])">childPopups</div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::i'], [], [])">i</div>];
-								<div class="token cpp_keyword ">for</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::j"><div>j</div></div> = <div class="token cpp_number ">0</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::j'], [], [])">j</div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::popup'], [], [])">popup</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::childWindows'], [], [])"><div class="token cpp_field">childWindows</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>(); <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::j'], [], [])">j</div>++)
-								{
-									<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::childPopup"><div>childPopup</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::popup'], [], [])">popup</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::childWindows'], [], [])"><div class="token cpp_field">childWindows</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::j'], [], [])">j</div>];
-									<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::childPopup'], [], [])">childPopup</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::windowMode'], [], [])"><div class="token cpp_field">windowMode</div></div> != <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow::WindowMode::Normal'], [], [])"><div class="token cpp_enum">Normal</div></div>)
-									{
-										<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::childPopups'], [], [])">childPopups</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::List::Add@::vl::vint([T] const &)'], ['vl::collections::List::Add@::vl::vint([T] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::childPopup'], [], [])">childPopup</div>);
-									}
-								}
+								<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::rootWindow'], [], [])">rootWindow</div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::parentWindow'], [], [])">parentWindow</div>;
+								<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::exceptions'], [], [])">exceptions</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::SortedList::Add@::vl::vint([T] const &)'], ['vl::collections::SortedList::Add@::vl::vint([T] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::parentWindow'], [], [])">parentWindow</div>);
+							}
+						}
 
-								<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::popup'], [], [])">popup</div> != <div class="token cpp_keyword ">this</div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::popup'], [], [])">popup</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WindowsForm::IsVisible@bool()'], ['vl::presentation::windows::WindowsForm::IsVisible@bool()'], [], [])"><div class="token cpp_function">IsVisible</div></div>())
+						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::closePopups'], [], [])">closePopups</div>)
+						{
+							<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::IWindowsForm'], [], [])"><div class="token cpp_type">IWindowsForm</div></div>*&gt; <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::allRootWindows"><div>allRootWindows</div></div>;
+							<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)'], ['vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)'], [], [])"><div class="token cpp_function">GetAllCreatedWindows</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::allRootWindows'], [], [])">allRootWindows</div>, <div class="token cpp_keyword ">true</div>);
+
+							<div class="token cpp_keyword ">for</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::i"><div>i</div></div> = <div class="token cpp_number ">0</div>; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::i'], [], [])">i</div> &lt; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::allRootWindows'], [], [])">allRootWindows</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>(); <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::i'], [], [])">i</div>++)
+							{
+								<div class="token cpp_keyword ">if</div> (<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::windowsForm"><div>windowsForm</div></div> = <div class="token cpp_keyword ">dynamic_cast</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm'], [], [])"><div class="token cpp_type">WindowsForm</div></div>*&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::allRootWindows'], [], [])">allRootWindows</div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::i'], [], [])">i</div>]))
 								{
-									<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::popup'], [], [])">popup</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WindowsForm::Hide@void(bool)'], ['vl::presentation::windows::WindowsForm::Hide@void(bool)'], [], [])"><div class="token cpp_function">Hide</div></div>(<div class="token cpp_keyword ">false</div>);
+									<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)'], ['vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)'], [], [])"><div class="token cpp_function">ClosePopupsOf</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::windowsForm'], [], [])">windowsForm</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::exceptions'], [], [])">exceptions</div>);
 								}
 							}
 						}
@@ -392,7 +431,8 @@ WindowsForm
 							<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativeRect'], [], [])"><div class="token cpp_type">NativeRect</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::bounds"><div>bounds</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::rawBounds'], [], [])">rawBounds</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['tagRECT::left'], [], [])"><div class="token cpp_field">left</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::rawBounds'], [], [])">rawBounds</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['tagRECT::top'], [], [])"><div class="token cpp_field">top</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::rawBounds'], [], [])">rawBounds</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['tagRECT::right'], [], [])"><div class="token cpp_field">right</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::rawBounds'], [], [])">rawBounds</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['tagRECT::bottom'], [], [])"><div class="token cpp_field">bottom</div></div>);
 							<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::i2"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::i2'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::listeners'], [], [])"><div class="token cpp_field">listeners</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::i2'], [], [])">i</div>++)
 							{
-								<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::listeners'], [], [])"><div class="token cpp_field">listeners</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::i2'], [], [])">i</div>]-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)'], ['vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)'], [], [])"><div class="token cpp_function">Moving</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::bounds'], [], [])">bounds</div>, <div class="token cpp_keyword ">false</div>);
+<div class="expandable"><div class="disabled">								listeners[i]-&gt;Moving(bounds, false, (uMsg == WM_SIZING));</div>
+<div class="expanded">								<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::listeners'], [], [])"><div class="token cpp_field">listeners</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::i2'], [], [])">i</div>]-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)'], ['vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)'], [], [])"><div class="token cpp_function">Moving</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::bounds'], [], [])">bounds</div>, <div class="token cpp_keyword ">false</div>, (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::uMsg'], [], [])"><div class="token cpp_argument">uMsg</div></div> == <div class="token cpp_number ">0x0214</div>));</div></div>
 							}
 							<div class="token cpp_keyword ">if</div>(		<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::rawBounds'], [], [])">rawBounds</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['tagRECT::left'], [], [])"><div class="token cpp_field">left</div></div>!=<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::bounds'], [], [])">bounds</div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::Rect_::Left@[T]()'], ['vl::presentation::Rect_::Left@[T]()'], [], [])"><div class="token cpp_function">Left</div></div>().<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativeCoordinate::value'], [], [])"><div class="token cpp_field">value</div></div>
 								||	<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::rawBounds'], [], [])">rawBounds</div>-&gt;<div class="ref" onclick="jumpToSymbol([], ['tagRECT::top'], [], [])"><div class="token cpp_field">top</div></div>!=<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::bounds'], [], [])">bounds</div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::Rect_::Top@[T]()'], ['vl::presentation::Rect_::Top@[T]()'], [], [])"><div class="token cpp_function">Top</div></div>().<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativeCoordinate::value'], [], [])"><div class="token cpp_field">value</div></div>
@@ -1220,7 +1260,7 @@ WindowsForm
 					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativeRect'], [], [])"><div class="token cpp_type">NativeRect</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::SetBounds@void(::vl::presentation::NativeRect const &)[impl0]::newBounds"><div>newBounds</div></div>=<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::SetBounds@void(::vl::presentation::NativeRect const &)[impl0]::bounds'], [], [])"><div class="token cpp_argument">bounds</div></div>;
 					<div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::vint'], [], [])"><div class="token cpp_type">vint</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::SetBounds@void(::vl::presentation::NativeRect const &)[impl0]::i"><div>i</div></div>=<div class="token cpp_number ">0</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::SetBounds@void(::vl::presentation::NativeRect const &)[impl0]::i'], [], [])">i</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::listeners'], [], [])"><div class="token cpp_field">listeners</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::Count@::vl::vint()'], ['vl::collections::ArrayBase::Count@::vl::vint()'], [], [])"><div class="token cpp_function">Count</div></div>();<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::SetBounds@void(::vl::presentation::NativeRect const &)[impl0]::i'], [], [])">i</div>++)
 					{
-						<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::listeners'], [], [])"><div class="token cpp_field">listeners</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::SetBounds@void(::vl::presentation::NativeRect const &)[impl0]::i'], [], [])">i</div>]-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)'], ['vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)'], [], [])"><div class="token cpp_function">Moving</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::SetBounds@void(::vl::presentation::NativeRect const &)[impl0]::newBounds'], [], [])">newBounds</div>, <div class="token cpp_keyword ">true</div>);
+						<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::listeners'], [], [])"><div class="token cpp_field">listeners</div></div><div class="ref" onclick="jumpToSymbol(['vl::collections::List::operator []@[T] &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::SetBounds@void(::vl::presentation::NativeRect const &)[impl0]::i'], [], [])">i</div>]-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)'], ['vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)'], [], [])"><div class="token cpp_function">Moving</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::SetBounds@void(::vl::presentation::NativeRect const &)[impl0]::newBounds'], [], [])">newBounds</div>, <div class="token cpp_keyword ">true</div>, <div class="token cpp_keyword ">false</div>);
 					}
 <div class="expandable"><div class="disabled">					MoveWindow(handle, (int)newBounds.Left().value, (int)newBounds.Top().value, (int)newBounds.Width().value, (int)newBounds.Height().value, FALSE);</div>
 <div class="expanded">					<div class="ref" onclick="jumpToSymbol(['MoveWindow@::BOOL(::HWND, int, int, int, int, ::BOOL)'], ['MoveWindow@::BOOL(::HWND, int, int, int, int, ::BOOL)'], [], [])"><div class="token cpp_function">MoveWindow</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::handle'], [], [])"><div class="token cpp_field">handle</div></div>, (<div class="token cpp_keyword ">int</div>)<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::SetBounds@void(::vl::presentation::NativeRect const &)[impl0]::newBounds'], [], [])">newBounds</div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::Rect_::Left@[T]()'], ['vl::presentation::Rect_::Left@[T]()'], [], [])"><div class="token cpp_function">Left</div></div>().<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativeCoordinate::value'], [], [])"><div class="token cpp_field">value</div></div>, (<div class="token cpp_keyword ">int</div>)<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::SetBounds@void(::vl::presentation::NativeRect const &)[impl0]::newBounds'], [], [])">newBounds</div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::Rect_::Top@[T]()'], ['vl::presentation::Rect_::Top@[T]()'], [], [])"><div class="token cpp_function">Top</div></div>().<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativeCoordinate::value'], [], [])"><div class="token cpp_field">value</div></div>, (<div class="token cpp_keyword ">int</div>)<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::SetBounds@void(::vl::presentation::NativeRect const &)[impl0]::newBounds'], [], [])">newBounds</div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::Rect_::Width@[T]()'], ['vl::presentation::Rect_::Width@[T]()'], [], [])"><div class="token cpp_function">Width</div></div>().<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativeCoordinate::value'], [], [])"><div class="token cpp_field">value</div></div>, (<div class="token cpp_keyword ">int</div>)<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::SetBounds@void(::vl::presentation::NativeRect const &)[impl0]::newBounds'], [], [])">newBounds</div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::Rect_::Height@[T]()'], ['vl::presentation::Rect_::Height@[T]()'], [], [])"><div class="token cpp_function">Height</div></div>().<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativeCoordinate::value'], [], [])"><div class="token cpp_field">value</div></div>, <div class="token cpp_number ">0</div>);</div></div>
@@ -1546,10 +1586,10 @@ WindowsForm
 						<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::windows::WindowsForm::SetIcon@void(::vl::Ptr<::vl::presentation::GuiImageData>)[impl0]::isVisible"><div>isVisible</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::IsVisible@bool()'], [], [])"><div class="token cpp_function">IsVisible</div></div>();
 <div class="expandable"><div class="disabled">						if (isVisible) SendMessage(handle, WM_SETREDRAW, (WPARAM)FALSE, NULL);</div>
 <div class="expanded">						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::SetIcon@void(::vl::Ptr<::vl::presentation::GuiImageData>)[impl0]::isVisible'], [], [])">isVisible</div>) <div class="ref" onclick="jumpToSymbol([], ['SendMessageW@::LRESULT(::HWND, ::UINT, ::WPARAM, ::LPARAM)'], [], [])"><div class="token cpp_function">SendMessageW</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::handle'], [], [])"><div class="token cpp_field">handle</div></div>, <div class="token cpp_number ">0x000B</div>, (<div class="ref" onclick="jumpToSymbol([], ['WPARAM'], [], [])"><div class="token cpp_type">WPARAM</div></div>)<div class="token cpp_number ">0</div>, <div class="token cpp_number ">0</div>);</div></div>
-<div class="expandable"><div class="disabled">						SendMessage(handle, WM_SETICON, ICON_BIG, (LPARAM)newReplacementHIcon);</div>
-<div class="expanded">						<div class="ref" onclick="jumpToSymbol([], ['SendMessageW@::LRESULT(::HWND, ::UINT, ::WPARAM, ::LPARAM)'], [], [])"><div class="token cpp_function">SendMessageW</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::handle'], [], [])"><div class="token cpp_field">handle</div></div>, <div class="token cpp_number ">0x0080</div>, <div class="token cpp_number ">1</div>, (<div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::SetIcon@void(::vl::Ptr<::vl::presentation::GuiImageData>)[impl0]::newReplacementHIcon'], [], [])">newReplacementHIcon</div>);</div></div>
-<div class="expandable"><div class="disabled">						SendMessage(handle, WM_SETICON, ICON_SMALL, (LPARAM)newReplacementHIcon);</div>
-<div class="expanded">						<div class="ref" onclick="jumpToSymbol([], ['SendMessageW@::LRESULT(::HWND, ::UINT, ::WPARAM, ::LPARAM)'], [], [])"><div class="token cpp_function">SendMessageW</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::handle'], [], [])"><div class="token cpp_field">handle</div></div>, <div class="token cpp_number ">0x0080</div>, <div class="token cpp_number ">0</div>, (<div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::SetIcon@void(::vl::Ptr<::vl::presentation::GuiImageData>)[impl0]::newReplacementHIcon'], [], [])">newReplacementHIcon</div>);</div></div>
+<div class="expandable"><div class="disabled">						SendMessage(handle, WM_SETICON, ICON_BIG, (LPARAM)hAppIcon);</div>
+<div class="expanded">						<div class="ref" onclick="jumpToSymbol([], ['SendMessageW@::LRESULT(::HWND, ::UINT, ::WPARAM, ::LPARAM)'], [], [])"><div class="token cpp_function">SendMessageW</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::handle'], [], [])"><div class="token cpp_field">handle</div></div>, <div class="token cpp_number ">0x0080</div>, <div class="token cpp_number ">1</div>, (<div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::SetIcon@void(::vl::Ptr<::vl::presentation::GuiImageData>)[impl0]::hAppIcon'], [], [])">hAppIcon</div>);</div></div>
+<div class="expandable"><div class="disabled">						SendMessage(handle, WM_SETICON, ICON_SMALL, (LPARAM)hAppIcon);</div>
+<div class="expanded">						<div class="ref" onclick="jumpToSymbol([], ['SendMessageW@::LRESULT(::HWND, ::UINT, ::WPARAM, ::LPARAM)'], [], [])"><div class="token cpp_function">SendMessageW</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::handle'], [], [])"><div class="token cpp_field">handle</div></div>, <div class="token cpp_number ">0x0080</div>, <div class="token cpp_number ">0</div>, (<div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div>)<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::SetIcon@void(::vl::Ptr<::vl::presentation::GuiImageData>)[impl0]::hAppIcon'], [], [])">hAppIcon</div>);</div></div>
 <div class="expandable"><div class="disabled">						if (isVisible) SendMessage(handle, WM_SETREDRAW, (WPARAM)TRUE, NULL);</div>
 <div class="expanded">						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::SetIcon@void(::vl::Ptr<::vl::presentation::GuiImageData>)[impl0]::isVisible'], [], [])">isVisible</div>) <div class="ref" onclick="jumpToSymbol([], ['SendMessageW@::LRESULT(::HWND, ::UINT, ::WPARAM, ::LPARAM)'], [], [])"><div class="token cpp_function">SendMessageW</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm::handle'], [], [])"><div class="token cpp_field">handle</div></div>, <div class="token cpp_number ">0x000B</div>, (<div class="ref" onclick="jumpToSymbol([], ['WPARAM'], [], [])"><div class="token cpp_type">WPARAM</div></div>)<div class="token cpp_number ">1</div>, <div class="token cpp_number ">0</div>);</div></div>
 
@@ -1920,6 +1960,25 @@ WindowsController
 					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsController::windows'], [], [])"><div class="token cpp_field">windows</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()'], ['vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()'], [], [])"><div class="token cpp_function">Values</div></div>()<div class="ref" onclick="jumpToSymbol(['vl::collections::ArrayBase::operator []@[T] const &(::vl::vint)'], [], [], [])"><div class="token cpp_function">[</div></div><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsController::GetWindowsFormFromHandle@::vl::presentation::windows::WindowsForm *(::HWND)[impl0]::index'], [], [])">index</div>];
 				}
 
+				<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]"><div><div class="token cpp_function">GetAllCreatedWindows</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::IWindowsForm'], [], [])"><div class="token cpp_type">IWindowsForm</div></div>*&gt;&amp; <div class="def" id="NI$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::createdWindows"><div><div class="token cpp_argument">createdWindows</div></div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::rootWindowOnly"><div><div class="token cpp_argument">rootWindowOnly</div></div></div>)
+				{
+					<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::rootWindowOnly'], [], [])"><div class="token cpp_argument">rootWindowOnly</div></div>)
+					{
+<div class="expandable"><div class="disabled">						FOREACH(WindowsForm*, window, windows.Values())</div>
+<div class="expanded">						<div class="token cpp_keyword ">if</div>(<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::__scope_variable_flag__"><div>__scope_variable_flag__</div></div>=<div class="token cpp_keyword ">true</div>) <div class="token cpp_keyword ">for</div>(<div class="token cpp_keyword ">const</div> ::<div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::ForEachIterator'], [], [])"><div class="token cpp_type">ForEachIterator</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm'], [], [])"><div class="token cpp_type">WindowsForm</div></div>*&gt;&amp; <div class="def" id="NI$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::__foreach_iterator__"><div>__foreach_iterator__</div></div> = ::<div class="ref" onclick="jumpToSymbol([], ['vl'], [], [])">vl</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol(['vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)'], ['vl::collections::CreateForEachIterator@::vl::collections::EnumerableForEachIterator<[T]>(::vl::collections::IEnumerable<[T]> const &)'], [], [])"><div class="token cpp_function">CreateForEachIterator</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsController::windows'], [], [])"><div class="token cpp_field">windows</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()'], ['vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()'], [], [])"><div class="token cpp_function">Values</div></div>());<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::__scope_variable_flag__'], [], [])">__scope_variable_flag__</div>;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::__scope_variable_flag__'], [], [])">__scope_variable_flag__</div>=<div class="token cpp_keyword ">false</div>) <div class="token cpp_keyword ">for</div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm'], [], [])"><div class="token cpp_type">WindowsForm</div></div>* <div class="def" id="NI$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::window"><div>window</div></div>;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::__foreach_iterator__'], [], [])">__foreach_iterator__</div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::ForEachIterator::Next@bool([T] &)'], ['vl::collections::ForEachIterator::Next@bool([T] &)'], [], [])"><div class="token cpp_function">Next</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::window'], [], [])">window</div>);)</div></div>
+						{
+							<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::window'], [], [])">window</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WindowsForm::GetWindowMode@::vl::presentation::INativeWindow::WindowMode()'], ['vl::presentation::windows::WindowsForm::GetWindowMode@::vl::presentation::INativeWindow::WindowMode()'], [], [])"><div class="token cpp_function">GetWindowMode</div></div>() == <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow'], [], [])"><div class="token cpp_type">INativeWindow</div></div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow::WindowMode::Normal'], [], [])"><div class="token cpp_enum">Normal</div></div>)
+							{
+								<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::createdWindows'], [], [])"><div class="token cpp_argument">createdWindows</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::List::Add@::vl::vint([T] const &)'], ['vl::collections::List::Add@::vl::vint([T] const &)'], [], [])"><div class="token cpp_function">Add</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::window'], [], [])">window</div>);
+							}
+						}
+					}
+					<div class="token cpp_keyword ">else</div>
+					{
+						<div class="ref" onclick="jumpToSymbol(['vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)'], ['vl::collections::CopyFrom@void(::vl::ObjectString<[D]> &, [Ss] const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, ::vl::ObjectString<[S]> const &, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, ::vl::vint, bool)', 'vl::collections::CopyFrom@void([Ds] &, [S] const *, [S] const *, bool)', 'vl::collections::CopyFrom@void([Ds] &, [Ss] const &, bool)'], [], [])"><div class="token cpp_function">CopyFrom</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::createdWindows'], [], [])"><div class="token cpp_argument">createdWindows</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsController::windows'], [], [])"><div class="token cpp_field">windows</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()'], ['vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &()'], [], [])"><div class="token cpp_function">Values</div></div>());
+					}
+				}
+
 				<div class="token cpp_keyword ">bool</div> <div class="def" id="FB$vl::presentation::windows::WindowsController::HandleMessage@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]"><div><div class="token cpp_function">HandleMessage</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['HWND'], [], [])"><div class="token cpp_type">HWND</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsController::HandleMessage@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::hwnd"><div><div class="token cpp_argument">hwnd</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['UINT'], [], [])"><div class="token cpp_type">UINT</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsController::HandleMessage@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::uMsg"><div><div class="token cpp_argument">uMsg</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['WPARAM'], [], [])"><div class="token cpp_type">WPARAM</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsController::HandleMessage@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::wParam"><div><div class="token cpp_argument">wParam</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['LPARAM'], [], [])"><div class="token cpp_type">LPARAM</div></div> <div class="def" id="NI$vl::presentation::windows::WindowsController::HandleMessage@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::lParam"><div><div class="token cpp_argument">lParam</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['LRESULT'], [], [])"><div class="token cpp_type">LRESULT</div></div>&amp; <div class="def" id="NI$vl::presentation::windows::WindowsController::HandleMessage@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::result"><div><div class="token cpp_argument">result</div></div></div>)
 				{
 					<div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::windows::WindowsController::HandleMessage@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::skipDefaultProcedure"><div>skipDefaultProcedure</div></div>=<div class="token cpp_keyword ">false</div>;
@@ -2175,12 +2234,21 @@ Windows Platform Native Controller
 				{
 					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GetWindowsFormFromHandle@::vl::presentation::windows::IWindowsForm *(::HWND)[impl0]::controller'], [], [])">controller</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WindowsController::GetWindowsFormFromHandle@::vl::presentation::windows::WindowsForm *(::HWND)'], ['vl::presentation::windows::WindowsController::GetWindowsFormFromHandle@::vl::presentation::windows::WindowsForm *(::HWND)'], [], [])"><div class="token cpp_function">GetWindowsFormFromHandle</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GetWindowsFormFromHandle@::vl::presentation::windows::IWindowsForm *(::HWND)[impl0]::hwnd'], [], [])"><div class="token cpp_argument">hwnd</div></div>);
 				}
-				<div class="token cpp_keyword ">return</div> <div class="token cpp_number ">0</div>;
+				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">nullptr</div>;
 			}
 
 			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::IWindowsForm'], [], [])"><div class="token cpp_type">IWindowsForm</div></div>* <div class="def" id="FB$vl::presentation::windows::GetWindowsForm@::vl::presentation::windows::IWindowsForm *(::vl::presentation::INativeWindow *)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GetWindowsForm@::vl::presentation::windows::IWindowsForm *(::vl::presentation::INativeWindow *)'], [], [])"><div class="token cpp_function">GetWindowsForm</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeWindow'], [], [])"><div class="token cpp_type">INativeWindow</div></div>* <div class="def" id="NI$vl::presentation::windows::GetWindowsForm@::vl::presentation::windows::IWindowsForm *(::vl::presentation::INativeWindow *)[impl0]::window"><div><div class="token cpp_argument">window</div></div></div>)
 			{
 				<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">dynamic_cast</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsForm'], [], [])"><div class="token cpp_type">WindowsForm</div></div>*&gt;(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GetWindowsForm@::vl::presentation::windows::IWindowsForm *(::vl::presentation::INativeWindow *)[impl0]::window'], [], [])"><div class="token cpp_argument">window</div></div>);
+			}
+
+			<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)'], [], [])"><div class="token cpp_function">GetAllCreatedWindows</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::collections'], [], [])">collections</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::collections::List'], [], [])"><div class="token cpp_type">List</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::IWindowsForm'], [], [])"><div class="token cpp_type">IWindowsForm</div></div>*&gt;&amp; <div class="def" id="NI$vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::windows"><div><div class="token cpp_argument">windows</div></div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::rootWindowOnly"><div><div class="token cpp_argument">rootWindowOnly</div></div></div>)
+			{
+				<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::controller"><div>controller</div></div> = <div class="token cpp_keyword ">dynamic_cast</div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::WindowsController'], [], [])"><div class="token cpp_type">WindowsController</div></div>*&gt;(<div class="ref" onclick="jumpToSymbol(['vl::presentation::GetCurrentController@::vl::presentation::INativeController *()'], ['vl::presentation::GetCurrentController@::vl::presentation::INativeController *()'], [], [])"><div class="token cpp_function">GetCurrentController</div></div>());
+				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::controller'], [], [])">controller</div>)
+				{
+					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::controller'], [], [])">controller</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)'], ['vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)'], [], [])"><div class="token cpp_function">GetAllCreatedWindows</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::windows'], [], [])"><div class="token cpp_argument">windows</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::rootWindowOnly'], [], [])"><div class="token cpp_argument">rootWindowOnly</div></div>);
+				}
 			}
 
 			<div class="token cpp_keyword ">void</div> <div class="def" id="FB$vl::presentation::windows::DestroyWindowsNativeController@void(::vl::presentation::INativeController *)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::windows::DestroyWindowsNativeController@void(::vl::presentation::INativeController *)'], [], [])"><div class="token cpp_function">DestroyWindowsNativeController</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::INativeController'], [], [])"><div class="token cpp_type">INativeController</div></div>* <div class="def" id="NI$vl::presentation::windows::DestroyWindowsNativeController@void(::vl::presentation::INativeController *)[impl0]::controller"><div><div class="token cpp_argument">controller</div></div></div>)
@@ -4030,6 +4098,20 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::collections::SortedList': {
+        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;',
+        'impls': [
+            'NI$vl::collections::SortedList'
+        ],
+        'decls': []
+    },
+    'vl::collections::SortedList::Add@::vl::vint([T] const &)': {
+        'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Add</span>(<span class="cpp_type">T</span> <span class="cpp_keyword">const</span> &)',
+        'impls': [
+            'FB$vl::collections::SortedList::Add@::vl::vint([T] const &)[impl0]'
+        ],
+        'decls': []
+    },
     'vl::collections::SortedList::Contains@bool([K] const &)': {
         'displayNameInHtml': '<span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">T</span>, <span class="cpp_type">K</span>&gt;::<span class="cpp_function">Contains</span>(<span class="cpp_type">K</span> <span class="cpp_keyword">const</span> &)',
         'impls': [
@@ -4877,13 +4959,13 @@ referencedSymbols = {
             'FB$vl::presentation::INativeWindowListener::Moved@void()[decl0]'
         ]
     },
-    'vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)': {
-        'displayNameInHtml': '<span class="cpp_type">INativeWindowListener</span>::<span class="cpp_function">Moving</span>(<span class="cpp_type">NativeRect</span> &, <span class="cpp_keyword">bool</span>)',
+    'vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)': {
+        'displayNameInHtml': '<span class="cpp_type">INativeWindowListener</span>::<span class="cpp_function">Moving</span>(<span class="cpp_type">NativeRect</span> &, <span class="cpp_keyword">bool</span>, <span class="cpp_keyword">bool</span>)',
         'impls': [
-            'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)[impl0]'
+            'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]'
         ],
         'decls': [
-            'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)[decl0]'
+            'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)[decl0]'
         ]
     },
     'vl::presentation::INativeWindowListener::Opened@void()': {
@@ -5571,6 +5653,36 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)': {
+        'displayNameInHtml': '<span class="cpp_function">GetAllCreatedWindows</span>(collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">IWindowsForm</span> *&gt; &, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[decl0]'
+        ]
+    },
+    'vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::controller': {
+        'displayNameInHtml': 'controller',
+        'impls': [
+            'NI$vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::controller'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::rootWindowOnly': {
+        'displayNameInHtml': 'rootWindowOnly',
+        'impls': [
+            'NI$vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::rootWindowOnly'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::windows': {
+        'displayNameInHtml': 'windows',
+        'impls': [
+            'NI$vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::windows'
+        ],
+        'decls': []
+    },
     'vl::presentation::windows::GetHWNDFromNativeWindowHandle@::HWND(::vl::presentation::INativeWindow *)': {
         'displayNameInHtml': '<span class="cpp_function">GetHWNDFromNativeWindowHandle</span>(<span class="cpp_type">INativeWindow</span> *)',
         'impls': [
@@ -5962,6 +6074,48 @@ referencedSymbols = {
         'displayNameInHtml': 'windowsForm',
         'impls': [
             'NI$vl::presentation::windows::WindowsController::DestroyNativeWindow@void(::vl::presentation::INativeWindow *)[impl0]::windowsForm'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)': {
+        'displayNameInHtml': '<span class="cpp_type">WindowsController</span>::<span class="cpp_function">GetAllCreatedWindows</span>(collections::<span class="cpp_type">List</span>&lt;<span class="cpp_type">IWindowsForm</span> *&gt; &, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::__foreach_iterator__': {
+        'displayNameInHtml': '__foreach_iterator__',
+        'impls': [
+            'NI$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::__foreach_iterator__'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::__scope_variable_flag__': {
+        'displayNameInHtml': '__scope_variable_flag__',
+        'impls': [
+            'NI$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::__scope_variable_flag__'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::createdWindows': {
+        'displayNameInHtml': 'createdWindows',
+        'impls': [
+            'NI$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::createdWindows'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::rootWindowOnly': {
+        'displayNameInHtml': 'rootWindowOnly',
+        'impls': [
+            'NI$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::rootWindowOnly'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::window': {
+        'displayNameInHtml': 'window',
+        'impls': [
+            'NI$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::window'
         ],
         'decls': []
     },
@@ -6366,6 +6520,41 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)': {
+        'displayNameInHtml': '<span class="cpp_type">WindowsForm</span>::<span class="cpp_function">ClosePopupsOf</span>(<span class="cpp_type">WindowsForm</span> *, <span class="cpp_type">SortedList</span>&lt;<span class="cpp_type">WindowsForm</span> *&gt; &)',
+        'impls': [
+            'FB$vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::exceptions': {
+        'displayNameInHtml': 'exceptions',
+        'impls': [
+            'NI$vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::exceptions'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::i': {
+        'displayNameInHtml': 'i',
+        'impls': [
+            'NI$vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::i'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::owner': {
+        'displayNameInHtml': 'owner',
+        'impls': [
+            'NI$vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::owner'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::popup': {
+        'displayNameInHtml': 'popup',
+        'impls': [
+            'NI$vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::popup'
+        ],
+        'decls': []
+    },
     'vl::presentation::windows::WindowsForm::Convert@::vl::presentation::Margin(::vl::presentation::NativeMargin)[impl0]::value': {
         'displayNameInHtml': 'value',
         'impls': [
@@ -6765,6 +6954,20 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::activatedWindow': {
+        'displayNameInHtml': 'activatedWindow',
+        'impls': [
+            'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::activatedWindow'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::allRootWindows': {
+        'displayNameInHtml': 'allRootWindows',
+        'impls': [
+            'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::allRootWindows'
+        ],
+        'decls': []
+    },
     'vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::bounds': {
         'displayNameInHtml': 'bounds',
         'impls': [
@@ -6779,24 +6982,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::childPopup': {
-        'displayNameInHtml': 'childPopup',
+    'vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::closePopups': {
+        'displayNameInHtml': 'closePopups',
         'impls': [
-            'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::childPopup'
-        ],
-        'decls': []
-    },
-    'vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::childPopups': {
-        'displayNameInHtml': 'childPopups',
-        'impls': [
-            'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::childPopups'
-        ],
-        'decls': []
-    },
-    'vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::closeChildPopups': {
-        'displayNameInHtml': 'closeChildPopups',
-        'impls': [
-            'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::closeChildPopups'
+            'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::closePopups'
         ],
         'decls': []
     },
@@ -6804,6 +6993,13 @@ referencedSymbols = {
         'displayNameInHtml': 'cursorHandle',
         'impls': [
             'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::cursorHandle'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::exceptions': {
+        'displayNameInHtml': 'exceptions',
+        'impls': [
+            'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::exceptions'
         ],
         'decls': []
     },
@@ -7178,13 +7374,6 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::j': {
-        'displayNameInHtml': 'j',
-        'impls': [
-            'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::j'
-        ],
-        'decls': []
-    },
     'vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::lParam': {
         'displayNameInHtml': 'lParam',
         'impls': [
@@ -7220,10 +7409,10 @@ referencedSymbols = {
         ],
         'decls': []
     },
-    'vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::popup': {
-        'displayNameInHtml': 'popup',
+    'vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::parentWindow': {
+        'displayNameInHtml': 'parentWindow',
         'impls': [
-            'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::popup'
+            'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::parentWindow'
         ],
         'decls': []
     },
@@ -7238,6 +7427,13 @@ referencedSymbols = {
         'displayNameInHtml': 'result',
         'impls': [
             'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::result'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::rootWindow': {
+        'displayNameInHtml': 'rootWindow',
+        'impls': [
+            'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::rootWindow'
         ],
         'decls': []
     },
@@ -7259,6 +7455,13 @@ referencedSymbols = {
         'displayNameInHtml': 'windowLocation',
         'impls': [
             'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::windowLocation'
+        ],
+        'decls': []
+    },
+    'vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::windowsForm': {
+        'displayNameInHtml': 'windowsForm',
+        'impls': [
+            'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::windowsForm'
         ],
         'decls': []
     },
@@ -8032,6 +8235,13 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::presentation::windows::WindowsForm::supressClosePopups': {
+        'displayNameInHtml': '<span class="cpp_type">WindowsForm</span>::<span class="cpp_field">supressClosePopups</span>',
+        'impls': [
+            'NI$vl::presentation::windows::WindowsForm::supressClosePopups'
+        ],
+        'decls': []
+    },
     'vl::presentation::windows::WindowsForm::supressingAlt': {
         'displayNameInHtml': '<span class="cpp_type">WindowsForm</span>::<span class="cpp_field">supressingAlt</span>',
         'impls': [
@@ -8354,6 +8564,7 @@ symbolToFiles = {
     'FB$vl::collections::List::Remove@bool([K] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
     'FB$vl::collections::List::operator []@[T] &(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
     'FB$vl::collections::ListBase::RemoveAt@bool(::vl::vint)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'FB$vl::collections::SortedList::Add@::vl::vint([T] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
     'FB$vl::collections::SortedList::Contains@bool([K] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
     'FB$vl::collections::SortedList::IndexOf@::vl::vint([K] const &)[impl0]': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
     'FB$vl::presentation::GetCurrentController@::vl::presentation::INativeController *()[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
@@ -8420,8 +8631,8 @@ symbolToFiles = {
     'FB$vl::presentation::INativeWindowListener::MouseMoving@void(::vl::presentation::NativeWindowMouseInfo const &)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
     'FB$vl::presentation::INativeWindowListener::Moved@void()[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'FB$vl::presentation::INativeWindowListener::Moved@void()[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
-    'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
-    'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
+    'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
+    'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
     'FB$vl::presentation::INativeWindowListener::Opened@void()[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'FB$vl::presentation::INativeWindowListener::Opened@void()[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
     'FB$vl::presentation::INativeWindowListener::Paint@void()[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
@@ -8467,6 +8678,8 @@ symbolToFiles = {
     'FB$vl::presentation::windows::DpiAwared_GetSystemMetrics@int(int, ::UINT)[impl0]': { 'htmlFileName': 'WinNativeDpiAwareness.cpp', 'displayName': 'WinNativeDpiAwareness.cpp' },
     'FB$vl::presentation::windows::EnableCrossKernelCrashing@void()[decl0]': { 'htmlFileName': 'WinNativeWindow.h', 'displayName': 'WinNativeWindow.h' },
     'FB$vl::presentation::windows::EnableCrossKernelCrashing@void()[impl0]': null,
+    'FB$vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[decl0]': { 'htmlFileName': 'WinNativeWindow.h', 'displayName': 'WinNativeWindow.h' },
+    'FB$vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]': null,
     'FB$vl::presentation::windows::GetHWNDFromNativeWindowHandle@::HWND(::vl::presentation::INativeWindow *)[impl0]': null,
     'FB$vl::presentation::windows::GetWICBitmap@::IWICBitmap *(::vl::presentation::INativeImageFrame *)[decl0]': { 'htmlFileName': 'WindowsImageService.h', 'displayName': 'WindowsImageService.h' },
     'FB$vl::presentation::windows::GetWICBitmap@::IWICBitmap *(::vl::presentation::INativeImageFrame *)[impl0]': { 'htmlFileName': 'WindowsImageService.cpp', 'displayName': 'WindowsImageService.cpp' },
@@ -8501,12 +8714,14 @@ symbolToFiles = {
     'FB$vl::presentation::windows::WindowsClipboardService::SetOwnerHandle@void(::HWND)[decl0]': { 'htmlFileName': 'WindowsClipboardService.h', 'displayName': 'WindowsClipboardService.h' },
     'FB$vl::presentation::windows::WindowsClipboardService::SetOwnerHandle@void(::HWND)[impl0]': { 'htmlFileName': 'WindowsClipboardService.cpp', 'displayName': 'WindowsClipboardService.cpp' },
     'FB$vl::presentation::windows::WindowsController::DestroyNativeWindow@void(::vl::presentation::INativeWindow *)[impl0]': null,
+    'FB$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]': null,
     'FB$vl::presentation::windows::WindowsController::GetWindowsFormFromHandle@::vl::presentation::windows::WindowsForm *(::HWND)[impl0]': null,
     'FB$vl::presentation::windows::WindowsController::HandleMessage@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]': null,
     'FB$vl::presentation::windows::WindowsController::InvokeClipboardUpdated@void()[impl0]': null,
     'FB$vl::presentation::windows::WindowsController::InvokeGlobalTimer@void()[impl0]': null,
     'FB$vl::presentation::windows::WindowsCursor::GetCursorHandle@::HCURSOR()[decl0]': { 'htmlFileName': 'WindowsResourceService.h', 'displayName': 'WindowsResourceService.h' },
     'FB$vl::presentation::windows::WindowsCursor::GetCursorHandle@::HCURSOR()[impl0]': { 'htmlFileName': 'WindowsResourceService.cpp', 'displayName': 'WindowsResourceService.cpp' },
+    'FB$vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]': null,
     'FB$vl::presentation::windows::WindowsForm::ConvertChar@::vl::presentation::NativeWindowCharInfo(::WPARAM)[impl0]': null,
     'FB$vl::presentation::windows::WindowsForm::ConvertKey@::vl::presentation::NativeWindowKeyInfo(::WPARAM, ::LPARAM)[impl0]': null,
     'FB$vl::presentation::windows::WindowsForm::ConvertMouse@::vl::presentation::NativeWindowMouseInfo(::WPARAM, ::LPARAM, bool, bool)[impl0]': null,
@@ -9438,6 +9653,7 @@ symbolToFiles = {
     'NI$vl::collections::Dictionary': { 'htmlFileName': 'Dictionary.h', 'displayName': 'Dictionary.h' },
     'NI$vl::collections::ForEachIterator': { 'htmlFileName': 'OperationForEach.h', 'displayName': 'OperationForEach.h' },
     'NI$vl::collections::List': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
+    'NI$vl::collections::SortedList': { 'htmlFileName': 'List.h', 'displayName': 'List.h' },
     'NI$vl::presentation::GuiImageData': { 'htmlFileName': 'GuiResource.h', 'displayName': 'GuiResource.h' },
     'NI$vl::presentation::INativeAsyncService': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'NI$vl::presentation::INativeCallbackService': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
@@ -9533,6 +9749,9 @@ symbolToFiles = {
     'NI$vl::presentation::windows::EnableCrossKernelCrashing@void()[impl0]::pSetPolicy': null,
     'NI$vl::presentation::windows::EnableCrossKernelCrashing@void()[impl0]::tGetPolicy': null,
     'NI$vl::presentation::windows::EnableCrossKernelCrashing@void()[impl0]::tSetPolicy': null,
+    'NI$vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::controller': null,
+    'NI$vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::rootWindowOnly': null,
+    'NI$vl::presentation::windows::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::windows': null,
     'NI$vl::presentation::windows::GetHWNDFromNativeWindowHandle@::HWND(::vl::presentation::INativeWindow *)[impl0]::form': null,
     'NI$vl::presentation::windows::GetHWNDFromNativeWindowHandle@::HWND(::vl::presentation::INativeWindow *)[impl0]::window': null,
     'NI$vl::presentation::windows::GetWindowsForm@::vl::presentation::windows::IWindowsForm *(::vl::presentation::INativeWindow *)[impl0]::window': null,
@@ -9565,6 +9784,11 @@ symbolToFiles = {
     'NI$vl::presentation::windows::WindowsController::CreateNativeWindow@::vl::presentation::INativeWindow *(::vl::presentation::INativeWindow::WindowMode)[impl0]::windowMode': null,
     'NI$vl::presentation::windows::WindowsController::DestroyNativeWindow@void(::vl::presentation::INativeWindow *)[impl0]::window': null,
     'NI$vl::presentation::windows::WindowsController::DestroyNativeWindow@void(::vl::presentation::INativeWindow *)[impl0]::windowsForm': null,
+    'NI$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::__foreach_iterator__': null,
+    'NI$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::__scope_variable_flag__': null,
+    'NI$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::createdWindows': null,
+    'NI$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::rootWindowOnly': null,
+    'NI$vl::presentation::windows::WindowsController::GetAllCreatedWindows@void(::vl::collections::List<::vl::presentation::windows::IWindowsForm *> &, bool)[impl0]::window': null,
     'NI$vl::presentation::windows::WindowsController::GetExecutablePath@::vl::WString()[impl0]::buffer': null,
     'NI$vl::presentation::windows::WindowsController::GetWindow@::vl::presentation::INativeWindow *(::vl::presentation::NativePoint)[impl0]::handle': null,
     'NI$vl::presentation::windows::WindowsController::GetWindow@::vl::presentation::INativeWindow *(::vl::presentation::NativePoint)[impl0]::index': null,
@@ -9617,6 +9841,10 @@ symbolToFiles = {
     'NI$vl::presentation::windows::WindowsForm::$__ctor@(::HWND, ::vl::WString, ::HINSTANCE, ::vl::presentation::INativeWindow::WindowMode)[impl0]::parent': null,
     'NI$vl::presentation::windows::WindowsForm::$__ctor@(::HWND, ::vl::WString, ::HINSTANCE, ::vl::presentation::INativeWindow::WindowMode)[impl0]::style': null,
     'NI$vl::presentation::windows::WindowsForm::$__ctor@(::HWND, ::vl::WString, ::HINSTANCE, ::vl::presentation::INativeWindow::WindowMode)[impl0]::style2': null,
+    'NI$vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::exceptions': null,
+    'NI$vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::i': null,
+    'NI$vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::owner': null,
+    'NI$vl::presentation::windows::WindowsForm::ClosePopupsOf@void(::vl::presentation::windows::WindowsForm *, ::vl::collections::SortedList<::vl::presentation::windows::WindowsForm *> &)[impl0]::popup': null,
     'NI$vl::presentation::windows::WindowsForm::Convert@::vl::presentation::Margin(::vl::presentation::NativeMargin)[impl0]::value': null,
     'NI$vl::presentation::windows::WindowsForm::Convert@::vl::presentation::NativeMargin(::vl::presentation::Margin)[impl0]::value': null,
     'NI$vl::presentation::windows::WindowsForm::Convert@::vl::presentation::NativePoint(::vl::presentation::Point)[impl0]::value': null,
@@ -9658,12 +9886,13 @@ symbolToFiles = {
     'NI$vl::presentation::windows::WindowsForm::HandleMessage@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::skip': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessage@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::uMsg': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessage@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::wParam': null,
+    'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::activatedWindow': null,
+    'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::allRootWindows': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::bounds': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::cancel': null,
-    'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::childPopup': null,
-    'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::childPopups': null,
-    'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::closeChildPopups': null,
+    'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::closePopups': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::cursorHandle': null,
+    'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::exceptions': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::hitTestResult': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::hwnd': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::i': null,
@@ -9717,18 +9946,19 @@ symbolToFiles = {
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::info7': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::info8': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::info9': null,
-    'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::j': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::lParam': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::location': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::location2': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::newRect': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::nonClient': null,
-    'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::popup': null,
+    'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::parentWindow': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::rawBounds': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::result': null,
+    'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::rootWindow': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::uMsg': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::wParam': null,
     'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::windowLocation': null,
+    'NI$vl::presentation::windows::WindowsForm::HandleMessageInternal@bool(::HWND, ::UINT, ::WPARAM, ::LPARAM, ::LRESULT &)[impl0]::windowsForm': null,
     'NI$vl::presentation::windows::WindowsForm::Hide@void(bool)[impl0]::closeWindow': null,
     'NI$vl::presentation::windows::WindowsForm::InstallListener@bool(::vl::presentation::INativeWindowListener *)[impl0]::listener': null,
     'NI$vl::presentation::windows::WindowsForm::InstallMessageHandler@bool(::vl::Ptr<::vl::presentation::windows::INativeMessageHandler>)[impl0]::handler': null,
@@ -9819,6 +10049,7 @@ symbolToFiles = {
     'NI$vl::presentation::windows::WindowsForm::parentWindow': null,
     'NI$vl::presentation::windows::WindowsForm::replacementHIcon': null,
     'NI$vl::presentation::windows::WindowsForm::replacementIcon': null,
+    'NI$vl::presentation::windows::WindowsForm::supressClosePopups': null,
     'NI$vl::presentation::windows::WindowsForm::supressingAlt': null,
     'NI$vl::presentation::windows::WindowsForm::title': null,
     'NI$vl::presentation::windows::WindowsForm::windowMode': null,

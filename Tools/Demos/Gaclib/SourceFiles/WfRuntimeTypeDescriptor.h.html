@@ -319,6 +319,14 @@ Custom Type
 					, <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::typeimpl::WfCustomTypeBase::TBase'], [], [])"><div class="token cpp_type">TBase</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::workflow::typeimpl::WfCustomTypeBase::$__ctor@(::vl::reflection::description::TypeDescriptorFlags, ::vl::WString const &)[impl0]::typeDescriptorFlags'], [], [])"><div class="token cpp_argument">typeDescriptorFlags</div></div>, <div class="token cpp_keyword ">this</div>)
 				{
 				}
+
+				<div class="token cpp_keyword ">const</div> <div class="ref" onclick="jumpToSymbol([], ['vl::WString'], [], [])"><div class="token cpp_type">WString</div></div>&amp; <div class="def" id="FB$vl::workflow::typeimpl::WfCustomTypeBase::GetTypeName@::vl::WString const &()[impl0]"><div><div class="token cpp_function">GetTypeName</div></div></div>() <div class="token cpp_keyword ">override</div>
+				{
+					<div class="token cpp_comment ">// TypeDescriptorImplBase::GetTypeName returns WString(this-&gt;typeName, false)</div>
+					<div class="token cpp_comment ">// which is this-&gt;workflowTypeName.Obj()</div>
+					<div class="token cpp_comment ">// will become a dangling pointer after this type is unloaded</div>
+					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::typeimpl::WfTypeInfoContent::workflowTypeName'], [], [])"><div class="token cpp_field">workflowTypeName</div></div>;
+				}
 			};
 
 			<div class="token cpp_keyword ">class</div> <div class="def" id="NI$vl::workflow::typeimpl::WfCustomType"><div class="ref" onclick="jumpToSymbol([], ['vl::workflow::typeimpl::WfCustomType'], [], [])"><div class="token cpp_type">WfCustomType</div></div></div> : <div class="token cpp_keyword ">public</div> <div class="ref" onclick="jumpToSymbol([], ['vl::workflow::typeimpl::WfCustomTypeBase'], [], [])"><div class="token cpp_type">WfCustomTypeBase</div></div>&lt;<div class="ref" onclick="jumpToSymbol([], ['vl::reflection'], [], [])">reflection</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description'], [], [])">description</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::reflection::description::TypeDescriptorImpl'], [], [])"><div class="token cpp_type">TypeDescriptorImpl</div></div>&gt;
@@ -2950,6 +2958,13 @@ referencedSymbols = {
         'decls': [
             'FB$vl::workflow::typeimpl::WfTypeInfoContent::$__ctor@(::vl::WString const &)[decl0]'
         ]
+    },
+    'vl::workflow::typeimpl::WfTypeInfoContent::workflowTypeName': {
+        'displayNameInHtml': '<span class="cpp_type">WfTypeInfoContent</span>::<span class="cpp_field">workflowTypeName</span>',
+        'impls': [
+            'NI$vl::workflow::typeimpl::WfTypeInfoContent::workflowTypeName'
+        ],
+        'decls': []
     }
 };
 symbolToFiles = {
@@ -3942,6 +3957,7 @@ symbolToFiles = {
     'NI$vl::workflow::typeimpl::WfStructInstance::operator =@::vl::workflow::typeimpl::WfStructInstance &(::vl::workflow::typeimpl::WfStructInstance const &)[impl0]::si': null,
     'NI$vl::workflow::typeimpl::WfTypeImpl': null,
     'NI$vl::workflow::typeimpl::WfTypeInfoContent': null,
+    'NI$vl::workflow::typeimpl::WfTypeInfoContent::workflowTypeName': null,
     'TA$vl::workflow::typeimpl::WfCustomTypeBase::TBase': null
 };
 turnOnSymbol();

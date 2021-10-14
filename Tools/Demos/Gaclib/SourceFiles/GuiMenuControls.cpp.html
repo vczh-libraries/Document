@@ -107,6 +107,23 @@ GuiMenu
 				<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControlHost::Hide@void()'], ['vl::presentation::controls::GuiControlHost::Hide@void()'], [], [])"><div class="token cpp_function">Hide</div></div>();
 			}
 
+			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu'], [], [])"><div class="token cpp_type">GuiMenu</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)'], [], [])"><div class="token cpp_function">Moving</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::NativeRect'], [], [])"><div class="token cpp_type">NativeRect</div></div>&amp; <div class="def" id="NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::bounds"><div><div class="token cpp_argument">bounds</div></div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::fixSizeOnly"><div><div class="token cpp_argument">fixSizeOnly</div></div></div>, <div class="token cpp_keyword ">bool</div> <div class="def" id="NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::draggingBorder"><div><div class="token cpp_argument">draggingBorder</div></div></div>)
+			{
+				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiPopup'], [], [])"><div class="token cpp_type">GuiPopup</div></div>::<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)'], ['vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)'], [], [])"><div class="token cpp_function">Moving</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::bounds'], [], [])"><div class="token cpp_argument">bounds</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::fixSizeOnly'], [], [])"><div class="token cpp_argument">fixSizeOnly</div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::draggingBorder'], [], [])"><div class="token cpp_argument">draggingBorder</div></div>);
+				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::draggingBorder'], [], [])"><div class="token cpp_argument">draggingBorder</div></div>)
+				{
+					<div class="token cpp_keyword ">if</div> (<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::nativeWindow"><div>nativeWindow</div></div> = <div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControlHost::GetNativeWindow@::vl::presentation::INativeWindow *()'], ['vl::presentation::controls::GuiControlHost::GetNativeWindow@::vl::presentation::INativeWindow *()'], [], [])"><div class="token cpp_function">GetNativeWindow</div></div>())
+					{
+						<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::newSize"><div>newSize</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::bounds'], [], [])"><div class="token cpp_argument">bounds</div></div>.<div class="ref" onclick="jumpToSymbol(['vl::presentation::Rect_::GetSize@::vl::presentation::Size_<[T]>()'], ['vl::presentation::Rect_::GetSize@::vl::presentation::Size_<[T]>()'], [], [])"><div class="token cpp_function">GetSize</div></div>();
+						<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::nativeOffset"><div>nativeOffset</div></div> = (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::nativeWindow'], [], [])">nativeWindow</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindow::GetBounds@::vl::presentation::NativeRect()'], ['vl::presentation::INativeWindow::GetBounds@::vl::presentation::NativeRect()'], [], [])"><div class="token cpp_function">GetBounds</div></div>().<div class="ref" onclick="jumpToSymbol(['vl::presentation::Rect_::GetSize@::vl::presentation::Size_<[T]>()'], ['vl::presentation::Rect_::GetSize@::vl::presentation::Size_<[T]>()'], [], [])"><div class="token cpp_function">GetSize</div></div>() <div class="ref" onclick="jumpToSymbol(['vl::presentation::operator -@::vl::presentation::Size_<[T]>(::vl::presentation::Size_<[T]>, ::vl::presentation::Size_<[T]>)'], [], [], [])"><div class="token cpp_function">-</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::nativeWindow'], [], [])">nativeWindow</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindow::GetClientSize@::vl::presentation::NativeSize()'], ['vl::presentation::INativeWindow::GetClientSize@::vl::presentation::NativeSize()'], [], [])"><div class="token cpp_function">GetClientSize</div></div>());
+						<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::preferredNativeSize"><div>preferredNativeSize</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::nativeWindow'], [], [])">nativeWindow</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindow::Convert@::vl::presentation::NativeSize(::vl::presentation::Size)'], ['vl::presentation::INativeWindow::Convert@::vl::presentation::Margin(::vl::presentation::NativeMargin)', 'vl::presentation::INativeWindow::Convert@::vl::presentation::NativeMargin(::vl::presentation::Margin)', 'vl::presentation::INativeWindow::Convert@::vl::presentation::NativePoint(::vl::presentation::Point)', 'vl::presentation::INativeWindow::Convert@::vl::presentation::NativeSize(::vl::presentation::Size)', 'vl::presentation::INativeWindow::Convert@::vl::presentation::Point(::vl::presentation::NativePoint)', 'vl::presentation::INativeWindow::Convert@::vl::presentation::Size(::vl::presentation::NativeSize)'], [], [])"><div class="token cpp_function">Convert</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::preferredMenuClientSizeBeforeUpdating'], [], [])"><div class="token cpp_field">preferredMenuClientSizeBeforeUpdating</div></div>) <div class="ref" onclick="jumpToSymbol(['vl::presentation::operator +@::vl::presentation::Size_<[T]>(::vl::presentation::Size_<[T]>, ::vl::presentation::Size_<[T]>)'], [], [], [])"><div class="token cpp_function">+</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::nativeOffset'], [], [])">nativeOffset</div>;
+						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::newSize'], [], [])">newSize</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::Size_::x'], [], [])"><div class="token cpp_field">x</div></div> <div class="ref" onclick="jumpToSymbol(['vl::presentation::NativeCoordinate::operator <@bool(::vl::presentation::NativeCoordinate)'], [], [], [])"><div class="token cpp_function">&lt;</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::preferredNativeSize'], [], [])">preferredNativeSize</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::Size_::x'], [], [])"><div class="token cpp_field">x</div></div>) <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::newSize'], [], [])">newSize</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::Size_::x'], [], [])"><div class="token cpp_field">x</div></div> <div class="ref" onclick="jumpToSymbol(['vl::presentation::NativeCoordinate::operator =@::vl::presentation::NativeCoordinate &(::vl::presentation::NativeCoordinate const &)'], [], [], [])"><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::preferredNativeSize'], [], [])">preferredNativeSize</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::Size_::x'], [], [])"><div class="token cpp_field">x</div></div>;
+						<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::newSize'], [], [])">newSize</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::Size_::y'], [], [])"><div class="token cpp_field">y</div></div> <div class="ref" onclick="jumpToSymbol(['vl::presentation::NativeCoordinate::operator <@bool(::vl::presentation::NativeCoordinate)'], [], [], [])"><div class="token cpp_function">&lt;</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::preferredNativeSize'], [], [])">preferredNativeSize</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::Size_::y'], [], [])"><div class="token cpp_field">y</div></div>) <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::newSize'], [], [])">newSize</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::Size_::y'], [], [])"><div class="token cpp_field">y</div></div> <div class="ref" onclick="jumpToSymbol(['vl::presentation::NativeCoordinate::operator =@::vl::presentation::NativeCoordinate &(::vl::presentation::NativeCoordinate const &)'], [], [], [])"><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::preferredNativeSize'], [], [])">preferredNativeSize</div>.<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::Size_::y'], [], [])"><div class="token cpp_field">y</div></div>;
+						<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::preferredMenuClientSize'], [], [])"><div class="token cpp_field">preferredMenuClientSize</div></div> <div class="ref" onclick="jumpToSymbol(['vl::presentation::Size_::operator =@::vl::presentation::Size_ &(::vl::presentation::Size_ &&)'], [], [], [])"><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::nativeWindow'], [], [])">nativeWindow</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::INativeWindow::Convert@::vl::presentation::Size(::vl::presentation::NativeSize)'], ['vl::presentation::INativeWindow::Convert@::vl::presentation::Margin(::vl::presentation::NativeMargin)', 'vl::presentation::INativeWindow::Convert@::vl::presentation::NativeMargin(::vl::presentation::Margin)', 'vl::presentation::INativeWindow::Convert@::vl::presentation::NativePoint(::vl::presentation::Point)', 'vl::presentation::INativeWindow::Convert@::vl::presentation::NativeSize(::vl::presentation::Size)', 'vl::presentation::INativeWindow::Convert@::vl::presentation::Point(::vl::presentation::NativePoint)', 'vl::presentation::INativeWindow::Convert@::vl::presentation::Size(::vl::presentation::NativeSize)'], [], [])"><div class="token cpp_function">Convert</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::newSize'], [], [])">newSize</div> <div class="ref" onclick="jumpToSymbol(['vl::presentation::operator -@::vl::presentation::Size_<[T]>(::vl::presentation::Size_<[T]>, ::vl::presentation::Size_<[T]>)'], [], [], [])"><div class="token cpp_function">-</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::nativeOffset'], [], [])">nativeOffset</div>);
+					}
+				}
+			}
+
 			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu'], [], [])"><div class="token cpp_type">GuiMenu</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiMenu::UpdateClientSizeAfterRendering@void(::vl::presentation::Size, ::vl::presentation::Size)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::UpdateClientSizeAfterRendering@void(::vl::presentation::Size, ::vl::presentation::Size)'], [], [])"><div class="token cpp_function">UpdateClientSizeAfterRendering</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::Size'], [], [])"><div class="token cpp_type">Size</div></div> <div class="def" id="NI$vl::presentation::controls::GuiMenu::UpdateClientSizeAfterRendering@void(::vl::presentation::Size, ::vl::presentation::Size)[impl0]::preferredSize"><div><div class="token cpp_argument">preferredSize</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::Size'], [], [])"><div class="token cpp_type">Size</div></div> <div class="def" id="NI$vl::presentation::controls::GuiMenu::UpdateClientSizeAfterRendering@void(::vl::presentation::Size, ::vl::presentation::Size)[impl0]::clientSize"><div><div class="token cpp_argument">clientSize</div></div></div>)
 			{
 				<div class="token cpp_keyword ">auto</div> <div class="def" id="NI$vl::presentation::controls::GuiMenu::UpdateClientSizeAfterRendering@void(::vl::presentation::Size, ::vl::presentation::Size)[impl0]::size"><div>size</div></div> = <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::UpdateClientSizeAfterRendering@void(::vl::presentation::Size, ::vl::presentation::Size)[impl0]::preferredSize'], [], [])"><div class="token cpp_argument">preferredSize</div></div>;
@@ -196,6 +213,7 @@ GuiMenu
 			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu'], [], [])"><div class="token cpp_type">GuiMenu</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiMenu::SetPreferredMenuClientSize@void(::vl::presentation::Size)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::SetPreferredMenuClientSize@void(::vl::presentation::Size)'], [], [])"><div class="token cpp_function">SetPreferredMenuClientSize</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::Size'], [], [])"><div class="token cpp_type">Size</div></div> <div class="def" id="NI$vl::presentation::controls::GuiMenu::SetPreferredMenuClientSize@void(::vl::presentation::Size)[impl0]::value"><div><div class="token cpp_argument">value</div></div></div>)
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::preferredMenuClientSize'], [], [])"><div class="token cpp_field">preferredMenuClientSize</div></div> <div class="ref" onclick="jumpToSymbol(['vl::presentation::Size_::operator =@::vl::presentation::Size_ &(::vl::presentation::Size_ const &)'], [], [], [])"><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::SetPreferredMenuClientSize@void(::vl::presentation::Size)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>;
+				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::preferredMenuClientSizeBeforeUpdating'], [], [])"><div class="token cpp_field">preferredMenuClientSizeBeforeUpdating</div></div> <div class="ref" onclick="jumpToSymbol(['vl::presentation::Size_::operator =@::vl::presentation::Size_ &(::vl::presentation::Size_ const &)'], [], [], [])"><div class="token cpp_function">=</div></div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiMenu::SetPreferredMenuClientSize@void(::vl::presentation::Size)[impl0]::value'], [], [])"><div class="token cpp_argument">value</div></div>;
 			}
 
 <div class="token cpp_comment ">/***********************************************************************
@@ -1378,10 +1396,103 @@ referencedSymbols = {
             'NF[0]$vl::presentation::INativeWindow'
         ]
     },
+    'vl::presentation::INativeWindow::Convert@::vl::presentation::Margin(::vl::presentation::NativeMargin)': {
+        'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_function">Convert</span>(<span class="cpp_type">NativeMargin</span>)',
+        'impls': [],
+        'decls': [
+            'FB$vl::presentation::INativeWindow::Convert@::vl::presentation::Margin(::vl::presentation::NativeMargin)[decl0]'
+        ]
+    },
+    'vl::presentation::INativeWindow::Convert@::vl::presentation::NativeMargin(::vl::presentation::Margin)': {
+        'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_function">Convert</span>(<span class="cpp_type">Margin</span>)',
+        'impls': [],
+        'decls': [
+            'FB$vl::presentation::INativeWindow::Convert@::vl::presentation::NativeMargin(::vl::presentation::Margin)[decl0]'
+        ]
+    },
+    'vl::presentation::INativeWindow::Convert@::vl::presentation::NativePoint(::vl::presentation::Point)': {
+        'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_function">Convert</span>(<span class="cpp_type">Point</span>)',
+        'impls': [],
+        'decls': [
+            'FB$vl::presentation::INativeWindow::Convert@::vl::presentation::NativePoint(::vl::presentation::Point)[decl0]'
+        ]
+    },
+    'vl::presentation::INativeWindow::Convert@::vl::presentation::NativeSize(::vl::presentation::Size)': {
+        'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_function">Convert</span>(<span class="cpp_type">Size</span>)',
+        'impls': [],
+        'decls': [
+            'FB$vl::presentation::INativeWindow::Convert@::vl::presentation::NativeSize(::vl::presentation::Size)[decl0]'
+        ]
+    },
+    'vl::presentation::INativeWindow::Convert@::vl::presentation::Point(::vl::presentation::NativePoint)': {
+        'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_function">Convert</span>(<span class="cpp_type">NativePoint</span>)',
+        'impls': [],
+        'decls': [
+            'FB$vl::presentation::INativeWindow::Convert@::vl::presentation::Point(::vl::presentation::NativePoint)[decl0]'
+        ]
+    },
+    'vl::presentation::INativeWindow::Convert@::vl::presentation::Size(::vl::presentation::NativeSize)': {
+        'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_function">Convert</span>(<span class="cpp_type">NativeSize</span>)',
+        'impls': [],
+        'decls': [
+            'FB$vl::presentation::INativeWindow::Convert@::vl::presentation::Size(::vl::presentation::NativeSize)[decl0]'
+        ]
+    },
+    'vl::presentation::INativeWindow::GetBounds@::vl::presentation::NativeRect()': {
+        'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_function">GetBounds</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::presentation::INativeWindow::GetBounds@::vl::presentation::NativeRect()[decl0]'
+        ]
+    },
+    'vl::presentation::INativeWindow::GetClientSize@::vl::presentation::NativeSize()': {
+        'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_function">GetClientSize</span>()',
+        'impls': [],
+        'decls': [
+            'FB$vl::presentation::INativeWindow::GetClientSize@::vl::presentation::NativeSize()[decl0]'
+        ]
+    },
     'vl::presentation::INativeWindow::WindowMode::Menu': {
         'displayNameInHtml': '<span class="cpp_type">INativeWindow</span>::<span class="cpp_type">WindowMode</span>::<span class="cpp_enum">Menu</span>',
         'impls': [
             'NI$vl::presentation::INativeWindow::WindowMode::Menu'
+        ],
+        'decls': []
+    },
+    'vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)': {
+        'displayNameInHtml': '<span class="cpp_type">INativeWindowListener</span>::<span class="cpp_function">Moving</span>(<span class="cpp_type">NativeRect</span> &, <span class="cpp_keyword">bool</span>, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)[decl0]'
+        ]
+    },
+    'vl::presentation::NativeCoordinate::operator <@bool(::vl::presentation::NativeCoordinate)': {
+        'displayNameInHtml': '<span class="cpp_type">NativeCoordinate</span>::<span class="cpp_function">operator &lt;</span>(<span class="cpp_type">NativeCoordinate</span>)',
+        'impls': [
+            'FB$vl::presentation::NativeCoordinate::operator <@bool(::vl::presentation::NativeCoordinate)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::presentation::NativeCoordinate::operator =@::vl::presentation::NativeCoordinate &(::vl::presentation::NativeCoordinate const &)': {
+        'displayNameInHtml': '<span class="cpp_type">NativeCoordinate</span>::<span class="cpp_function">operator =</span>(<span class="cpp_type">NativeCoordinate</span> <span class="cpp_keyword">const</span> &)',
+        'impls': [],
+        'decls': [
+            'FB$vl::presentation::NativeCoordinate::operator =@::vl::presentation::NativeCoordinate &(::vl::presentation::NativeCoordinate const &)[decl0]'
+        ]
+    },
+    'vl::presentation::NativeRect': {
+        'displayNameInHtml': '<span class="cpp_type">NativeRect</span>',
+        'impls': [
+            'NI$vl::presentation::NativeRect'
+        ],
+        'decls': []
+    },
+    'vl::presentation::Rect_::GetSize@::vl::presentation::Size_<[T]>()': {
+        'displayNameInHtml': '<span class="cpp_type">Rect_</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">GetSize</span>()',
+        'impls': [
+            'FB$vl::presentation::Rect_::GetSize@::vl::presentation::Size_<[T]>()[impl0]'
         ],
         'decls': []
     },
@@ -1391,6 +1502,13 @@ referencedSymbols = {
             'NI$vl::presentation::Size'
         ],
         'decls': []
+    },
+    'vl::presentation::Size_::operator =@::vl::presentation::Size_ &(::vl::presentation::Size_ &&)': {
+        'displayNameInHtml': '<span class="cpp_type">Size_</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator =</span>(<span class="cpp_type">Size_</span>&lt;<span class="cpp_type">T</span>&gt; &&)',
+        'impls': [],
+        'decls': [
+            'FB$vl::presentation::Size_::operator =@::vl::presentation::Size_ &(::vl::presentation::Size_ &&)[decl0]'
+        ]
     },
     'vl::presentation::Size_::operator =@::vl::presentation::Size_ &(::vl::presentation::Size_ const &)': {
         'displayNameInHtml': '<span class="cpp_type">Size_</span>&lt;<span class="cpp_type">T</span>&gt;::<span class="cpp_function">operator =</span>(<span class="cpp_type">Size_</span>&lt;<span class="cpp_type">T</span>&gt; <span class="cpp_keyword">const</span> &)',
@@ -1766,6 +1884,15 @@ referencedSymbols = {
             'FB$vl::presentation::controls::GuiControlHost::Close@void()[decl0]'
         ]
     },
+    'vl::presentation::controls::GuiControlHost::GetNativeWindow@::vl::presentation::INativeWindow *()': {
+        'displayNameInHtml': '<span class="cpp_type">GuiControlHost</span>::<span class="cpp_function">GetNativeWindow</span>()',
+        'impls': [
+            'FB$vl::presentation::controls::GuiControlHost::GetNativeWindow@::vl::presentation::INativeWindow *()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::controls::GuiControlHost::GetNativeWindow@::vl::presentation::INativeWindow *()[decl0]'
+        ]
+    },
     'vl::presentation::controls::GuiControlHost::GetOpening@bool()': {
         'displayNameInHtml': '<span class="cpp_type">GuiControlHost</span>::<span class="cpp_function">GetOpening</span>()',
         'impls': [
@@ -1930,6 +2057,64 @@ referencedSymbols = {
             'FB$vl::presentation::controls::GuiMenu::MenuItemExecuted@void()[decl0]'
         ]
     },
+    'vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)': {
+        'displayNameInHtml': '<span class="cpp_type">GuiMenu</span>::<span class="cpp_function">Moving</span>(<span class="cpp_type">NativeRect</span> &, <span class="cpp_keyword">bool</span>, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[decl0]'
+        ]
+    },
+    'vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::bounds': {
+        'displayNameInHtml': 'bounds',
+        'impls': [
+            'NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::bounds'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::draggingBorder': {
+        'displayNameInHtml': 'draggingBorder',
+        'impls': [
+            'NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::draggingBorder'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::fixSizeOnly': {
+        'displayNameInHtml': 'fixSizeOnly',
+        'impls': [
+            'NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::fixSizeOnly'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::nativeOffset': {
+        'displayNameInHtml': 'nativeOffset',
+        'impls': [
+            'NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::nativeOffset'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::nativeWindow': {
+        'displayNameInHtml': 'nativeWindow',
+        'impls': [
+            'NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::nativeWindow'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::newSize': {
+        'displayNameInHtml': 'newSize',
+        'impls': [
+            'NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::newSize'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::preferredNativeSize': {
+        'displayNameInHtml': 'preferredNativeSize',
+        'impls': [
+            'NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::preferredNativeSize'
+        ],
+        'decls': []
+    },
     'vl::presentation::controls::GuiMenu::OnDeactivatedAltHost@void()': {
         'displayNameInHtml': '<span class="cpp_type">GuiMenu</span>::<span class="cpp_function">OnDeactivatedAltHost</span>()',
         'impls': [
@@ -2069,6 +2254,13 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">GuiMenu</span>::<span class="cpp_field">preferredMenuClientSize</span>',
         'impls': [
             'NI$vl::presentation::controls::GuiMenu::preferredMenuClientSize'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiMenu::preferredMenuClientSizeBeforeUpdating': {
+        'displayNameInHtml': '<span class="cpp_type">GuiMenu</span>::<span class="cpp_field">preferredMenuClientSizeBeforeUpdating</span>',
+        'impls': [
+            'NI$vl::presentation::controls::GuiMenu::preferredMenuClientSizeBeforeUpdating'
         ],
         'decls': []
     },
@@ -2977,6 +3169,20 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::presentation::operator +@::vl::presentation::Size_<[T]>(::vl::presentation::Size_<[T]>, ::vl::presentation::Size_<[T]>)': {
+        'displayNameInHtml': '<span class="cpp_function">operator +</span>&lt;<span class="cpp_type">T</span>&gt;(<span class="cpp_type">Size_</span>&lt;<span class="cpp_type">T</span>&gt;, <span class="cpp_type">Size_</span>&lt;<span class="cpp_type">T</span>&gt;)',
+        'impls': [
+            'FB$vl::presentation::operator +@::vl::presentation::Size_<[T]>(::vl::presentation::Size_<[T]>, ::vl::presentation::Size_<[T]>)[impl0]'
+        ],
+        'decls': []
+    },
+    'vl::presentation::operator -@::vl::presentation::Size_<[T]>(::vl::presentation::Size_<[T]>, ::vl::presentation::Size_<[T]>)': {
+        'displayNameInHtml': '<span class="cpp_function">operator -</span>&lt;<span class="cpp_type">T</span>&gt;(<span class="cpp_type">Size_</span>&lt;<span class="cpp_type">T</span>&gt;, <span class="cpp_type">Size_</span>&lt;<span class="cpp_type">T</span>&gt;)',
+        'impls': [
+            'FB$vl::presentation::operator -@::vl::presentation::Size_<[T]>(::vl::presentation::Size_<[T]>, ::vl::presentation::Size_<[T]>)[impl0]'
+        ],
+        'decls': []
+    },
     'vl::presentation::templates': {
         'displayNameInHtml': 'vl::presentation::templates',
         'impls': [],
@@ -3099,6 +3305,19 @@ symbolToFiles = {
     'FB$vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> &&)[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
     'FB$vl::Ptr::operator =@::vl::Ptr<[T]> &(::vl::Ptr<[T]> const &)[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
     'FB$vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)[impl0]': { 'htmlFileName': 'Pointer.h', 'displayName': 'Pointer.h' },
+    'FB$vl::presentation::INativeWindow::Convert@::vl::presentation::Margin(::vl::presentation::NativeMargin)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
+    'FB$vl::presentation::INativeWindow::Convert@::vl::presentation::NativeMargin(::vl::presentation::Margin)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
+    'FB$vl::presentation::INativeWindow::Convert@::vl::presentation::NativePoint(::vl::presentation::Point)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
+    'FB$vl::presentation::INativeWindow::Convert@::vl::presentation::NativeSize(::vl::presentation::Size)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
+    'FB$vl::presentation::INativeWindow::Convert@::vl::presentation::Point(::vl::presentation::NativePoint)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
+    'FB$vl::presentation::INativeWindow::Convert@::vl::presentation::Size(::vl::presentation::NativeSize)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
+    'FB$vl::presentation::INativeWindow::GetBounds@::vl::presentation::NativeRect()[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
+    'FB$vl::presentation::INativeWindow::GetClientSize@::vl::presentation::NativeSize()[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
+    'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)[decl0]': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
+    'FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]': { 'htmlFileName': 'GuiNativeWindow.cpp', 'displayName': 'GuiNativeWindow.cpp' },
+    'FB$vl::presentation::NativeCoordinate::operator <@bool(::vl::presentation::NativeCoordinate)[impl0]': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
+    'FB$vl::presentation::NativeCoordinate::operator =@::vl::presentation::NativeCoordinate &(::vl::presentation::NativeCoordinate const &)[decl0]': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
+    'FB$vl::presentation::Rect_::GetSize@::vl::presentation::Size_<[T]>()[impl0]': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
     'FB$vl::presentation::compositions::GuiAltActionHostBase::OnDeactivatedAltHost@void()[decl0]': { 'htmlFileName': 'GuiGraphicsHost_Alt.h', 'displayName': 'GuiGraphicsHost_Alt.h' },
     'FB$vl::presentation::compositions::GuiAltActionHostBase::OnDeactivatedAltHost@void()[impl0]': { 'htmlFileName': 'GuiGraphicsHost_Alt.cpp', 'displayName': 'GuiGraphicsHost_Alt.cpp' },
     'FB$vl::presentation::compositions::GuiGraphicsComposition::GetEventReceiver@::vl::presentation::compositions::GuiGraphicsEventReceiver *()[decl0]': { 'htmlFileName': 'GuiGraphicsCompositionBase.h', 'displayName': 'GuiGraphicsCompositionBase.h' },
@@ -3129,6 +3348,8 @@ symbolToFiles = {
     'FB$vl::presentation::controls::GuiControl::SetControlTemplate@void(::vl::presentation::controls::GuiControl::ControlTemplatePropertyType const &)[impl0]': { 'htmlFileName': 'GuiBasicControls.cpp', 'displayName': 'GuiBasicControls.cpp' },
     'FB$vl::presentation::controls::GuiControlHost::Close@void()[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'FB$vl::presentation::controls::GuiControlHost::Close@void()[impl0]': { 'htmlFileName': 'GuiWindowControls.cpp', 'displayName': 'GuiWindowControls.cpp' },
+    'FB$vl::presentation::controls::GuiControlHost::GetNativeWindow@::vl::presentation::INativeWindow *()[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
+    'FB$vl::presentation::controls::GuiControlHost::GetNativeWindow@::vl::presentation::INativeWindow *()[impl0]': { 'htmlFileName': 'GuiWindowControls.cpp', 'displayName': 'GuiWindowControls.cpp' },
     'FB$vl::presentation::controls::GuiControlHost::GetOpening@bool()[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
     'FB$vl::presentation::controls::GuiControlHost::GetOpening@bool()[impl0]': { 'htmlFileName': 'GuiWindowControls.cpp', 'displayName': 'GuiWindowControls.cpp' },
     'FB$vl::presentation::controls::GuiControlHost::Hide@void()[decl0]': { 'htmlFileName': 'GuiWindowControls.h', 'displayName': 'GuiWindowControls.h' },
@@ -3157,6 +3378,8 @@ symbolToFiles = {
     'FB$vl::presentation::controls::GuiMenu::IsSubMenuActivatedByMouseDown@bool()[impl0]': null,
     'FB$vl::presentation::controls::GuiMenu::MenuItemExecuted@void()[decl0]': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
     'FB$vl::presentation::controls::GuiMenu::MenuItemExecuted@void()[impl0]': null,
+    'FB$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[decl0]': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
+    'FB$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]': null,
     'FB$vl::presentation::controls::GuiMenu::OnDeactivatedAltHost@void()[decl0]': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
     'FB$vl::presentation::controls::GuiMenu::OnDeactivatedAltHost@void()[impl0]': null,
     'FB$vl::presentation::controls::GuiMenu::OnWindowClosed@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[decl0]': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
@@ -3286,6 +3509,8 @@ symbolToFiles = {
     'FB$vl::presentation::controls::IGuiMenuService::MenuItemExecuted@void()[impl0]': null,
     'FB$vl::presentation::controls::IGuiMenuService::MenuOpened@void(::vl::presentation::controls::GuiMenu *)[decl0]': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
     'FB$vl::presentation::controls::IGuiMenuService::MenuOpened@void(::vl::presentation::controls::GuiMenu *)[impl0]': null,
+    'FB$vl::presentation::operator +@::vl::presentation::Size_<[T]>(::vl::presentation::Size_<[T]>, ::vl::presentation::Size_<[T]>)[impl0]': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
+    'FB$vl::presentation::operator -@::vl::presentation::Size_<[T]>(::vl::presentation::Size_<[T]>, ::vl::presentation::Size_<[T]>)[impl0]': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
     'FB$vl::presentation::templates::GuiToolstripButtonTemplate::GetSubMenuHost@::vl::presentation::controls::GuiButton *()[decl0]': { 'htmlFileName': 'GuiControlTemplates.h', 'displayName': 'GuiControlTemplates.h' },
     'FB$vl::presentation::templates::GuiToolstripButtonTemplate::GetSubMenuHost@::vl::presentation::controls::GuiButton *()[impl0]': { 'htmlFileName': 'GuiControlTemplates.cpp', 'displayName': 'GuiControlTemplates.cpp' },
     'FB$vl::presentation::templates::GuiToolstripButtonTemplate::GetSubMenuTemplate@::vl::presentation::TemplateProperty<::vl::presentation::templates::GuiMenuTemplate>()[decl0]': { 'htmlFileName': 'GuiControlTemplates.h', 'displayName': 'GuiControlTemplates.h' },
@@ -4160,6 +4385,7 @@ symbolToFiles = {
     'NI$vl::presentation::GuiImageData': { 'htmlFileName': 'GuiResource.h', 'displayName': 'GuiResource.h' },
     'NI$vl::presentation::INativeWindow': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
     'NI$vl::presentation::INativeWindow::WindowMode::Menu': { 'htmlFileName': 'GuiNativeWindow.h', 'displayName': 'GuiNativeWindow.h' },
+    'NI$vl::presentation::NativeRect': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
     'NI$vl::presentation::Size': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
     'NI$vl::presentation::Size_::x': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
     'NI$vl::presentation::Size_::y': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
@@ -4177,6 +4403,13 @@ symbolToFiles = {
     'NI$vl::presentation::controls::GuiMenu': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
     'NI$vl::presentation::controls::GuiMenu::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::controls::GuiControl *)[impl0]::_owner': null,
     'NI$vl::presentation::controls::GuiMenu::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::controls::GuiControl *)[impl0]::themeName': null,
+    'NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::bounds': null,
+    'NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::draggingBorder': null,
+    'NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::fixSizeOnly': null,
+    'NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::nativeOffset': null,
+    'NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::nativeWindow': null,
+    'NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::newSize': null,
+    'NI$vl::presentation::controls::GuiMenu::Moving@void(::vl::presentation::NativeRect &, bool, bool)[impl0]::preferredNativeSize': null,
     'NI$vl::presentation::controls::GuiMenu::OnWindowClosed@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[impl0]::openingSubMenu': null,
     'NI$vl::presentation::controls::GuiMenu::QueryService@::vl::reflection::IDescriptable *(::vl::WString const &)[impl0]::identifier': null,
     'NI$vl::presentation::controls::GuiMenu::SetHideOnDeactivateAltHost@void(bool)[impl0]::value': null,
@@ -4187,6 +4420,7 @@ symbolToFiles = {
     'NI$vl::presentation::controls::GuiMenu::owner': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
     'NI$vl::presentation::controls::GuiMenu::parentMenuService': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
     'NI$vl::presentation::controls::GuiMenu::preferredMenuClientSize': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
+    'NI$vl::presentation::controls::GuiMenu::preferredMenuClientSizeBeforeUpdating': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
     'NI$vl::presentation::controls::GuiMenuBar': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },
     'NI$vl::presentation::controls::GuiMenuBar::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::themeName': null,
     'NI$vl::presentation::controls::GuiMenuBar::QueryService@::vl::reflection::IDescriptable *(::vl::WString const &)[impl0]::identifier': null,

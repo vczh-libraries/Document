@@ -291,6 +291,23 @@ GuiRibbonGroup
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiRibbonGroup::dropdownMenu'], [], [])"><div class="token cpp_field">dropdownMenu</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControl::SetControlTemplate@void(::vl::presentation::controls::GuiControl::ControlTemplatePropertyType const &)'], ['vl::presentation::controls::GuiControl::SetControlTemplate@void(::vl::presentation::controls::GuiControl::ControlTemplatePropertyType const &)'], [], [])"><div class="token cpp_function">SetControlTemplate</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiRibbonGroup::AfterControlTemplateInstalled_@void(bool)[impl0]::ct'], [], [])">ct</div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::templates::GuiRibbonGroupTemplate::GetSubMenuTemplate@::vl::presentation::TemplateProperty<::vl::presentation::templates::GuiMenuTemplate>()'], ['vl::presentation::templates::GuiRibbonGroupTemplate::GetSubMenuTemplate@::vl::presentation::TemplateProperty<::vl::presentation::templates::GuiMenuTemplate>()'], [], [])"><div class="token cpp_function">GetSubMenuTemplate</div></div>());
 			}
 
+			<div class="token cpp_keyword ">bool</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiRibbonGroup'], [], [])"><div class="token cpp_type">GuiRibbonGroup</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiRibbonGroup::IsAltAvailable@bool()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiRibbonGroup::IsAltAvailable@bool()'], [], [])"><div class="token cpp_function">IsAltAvailable</div></div></div>()
+			{
+				<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControl::alt'], [], [])"><div class="token cpp_field">alt</div></div> != <div class="token cpp_string ">L&quot;&quot;</div>;
+			}
+
+			<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions'], [], [])">compositions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions::IGuiAltActionHost'], [], [])"><div class="token cpp_type">IGuiAltActionHost</div></div>* <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiRibbonGroup'], [], [])"><div class="token cpp_type">GuiRibbonGroup</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiRibbonGroup::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiRibbonGroup::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()'], [], [])"><div class="token cpp_function">GetActivatingAltHost</div></div></div>()
+			{
+				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiRibbonGroup::IsAltAvailable@bool()'], ['vl::presentation::controls::GuiRibbonGroup::IsAltAvailable@bool()'], [], [])"><div class="token cpp_function">IsAltAvailable</div></div>())
+				{
+					<div class="token cpp_keyword ">return</div> <div class="token cpp_keyword ">this</div>;
+				}
+				<div class="token cpp_keyword ">else</div>
+				{
+					<div class="token cpp_keyword ">return</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControl'], [], [])"><div class="token cpp_type">GuiControl</div></div>::<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControl::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()'], ['vl::presentation::controls::GuiControl::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()'], [], [])"><div class="token cpp_function">GetActivatingAltHost</div></div>();
+				}
+			}
+
 			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiRibbonGroup'], [], [])"><div class="token cpp_type">GuiRibbonGroup</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiRibbonGroup::OnBoundsChanged@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiRibbonGroup::OnBoundsChanged@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)'], [], [])"><div class="token cpp_function">OnBoundsChanged</div></div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions'], [], [])">compositions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions::GuiGraphicsComposition'], [], [])"><div class="token cpp_type">GuiGraphicsComposition</div></div>* <div class="def" id="NI$vl::presentation::controls::GuiRibbonGroup::OnBoundsChanged@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[impl0]::sender"><div><div class="token cpp_argument">sender</div></div></div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions'], [], [])">compositions</div>::<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions::GuiEventArgs'], [], [])"><div class="token cpp_type">GuiEventArgs</div></div>&amp; <div class="def" id="NI$vl::presentation::controls::GuiRibbonGroup::OnBoundsChanged@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[impl0]::arguments"><div><div class="token cpp_argument">arguments</div></div></div>)
 			{
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiRibbonGroup::dropdownMenu'], [], [])"><div class="token cpp_field">dropdownMenu</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::GuiControl::GetBoundsComposition@::vl::presentation::compositions::GuiBoundsComposition *()'], ['vl::presentation::controls::GuiControl::GetBoundsComposition@::vl::presentation::compositions::GuiBoundsComposition *()'], [], [])"><div class="token cpp_function">GetBoundsComposition</div></div>()-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiGraphicsComposition::SetPreferredMinSize@void(::vl::presentation::Size)'], ['vl::presentation::compositions::GuiGraphicsComposition::SetPreferredMinSize@void(::vl::presentation::Size)'], [], [])"><div class="token cpp_function">SetPreferredMinSize</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::Size'], [], [])"><div class="token cpp_type">Size</div></div>(<div class="token cpp_number ">0</div>, <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControl::containerComposition'], [], [])"><div class="token cpp_field">containerComposition</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiBoundsComposition::GetBounds@::vl::presentation::Rect()'], ['vl::presentation::compositions::GuiBoundsComposition::GetBounds@::vl::presentation::Rect()'], [], [])"><div class="token cpp_function">GetBounds</div></div>().<div class="ref" onclick="jumpToSymbol(['vl::presentation::Rect_::Height@[T]()'], ['vl::presentation::Rect_::Height@[T]()'], [], [])"><div class="token cpp_function">Height</div></div>()));
@@ -346,6 +363,9 @@ GuiRibbonGroup
 				:<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControl'], [], [])"><div class="token cpp_type">GuiControl</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiRibbonGroup::$__ctor@(::vl::presentation::theme::ThemeName)[impl0]::themeName'], [], [])"><div class="token cpp_argument">themeName</div></div>)
 				, items(<div class="token cpp_keyword ">this</div>)
 			{
+				<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiAltActionHostBase::SetAltComposition@void(::vl::presentation::compositions::GuiGraphicsComposition *)'], ['vl::presentation::compositions::GuiAltActionHostBase::SetAltComposition@void(::vl::presentation::compositions::GuiGraphicsComposition *)'], [], [])"><div class="token cpp_function">SetAltComposition</div></div>(<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiControl::boundsComposition'], [], [])"><div class="token cpp_field">boundsComposition</div></div>);
+				<div class="ref" onclick="jumpToSymbol(['vl::presentation::compositions::GuiAltActionHostBase::SetAltControl@void(::vl::presentation::controls::GuiControl *, bool)'], ['vl::presentation::compositions::GuiAltActionHostBase::SetAltControl@void(::vl::presentation::controls::GuiControl *, bool)'], [], [])"><div class="token cpp_function">SetAltControl</div></div>(<div class="token cpp_keyword ">this</div>, <div class="token cpp_keyword ">false</div>);
+
 				<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiRibbonGroup::commandExecutor'], [], [])"><div class="token cpp_field">commandExecutor</div></div> <div class="ref" onclick="jumpToSymbol(['vl::Ptr::operator =@::vl::Ptr<[T]> &([T] *)'], [], [], [])"><div class="token cpp_function">=</div></div> <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiRibbonGroup::CommandExecutor'], [], [])"><div class="token cpp_type">CommandExecutor</div></div>(<div class="token cpp_keyword ">this</div>);
 				{
 					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiRibbonGroup::stack'], [], [])"><div class="token cpp_field">stack</div></div> = <div class="token cpp_keyword ">new</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::compositions::GuiStackComposition'], [], [])"><div class="token cpp_type">GuiStackComposition</div></div>();
@@ -2174,6 +2194,24 @@ referencedSymbols = {
             'NF[35]$vl::presentation::compositions'
         ]
     },
+    'vl::presentation::compositions::GuiAltActionHostBase::SetAltComposition@void(::vl::presentation::compositions::GuiGraphicsComposition *)': {
+        'displayNameInHtml': '<span class="cpp_type">GuiAltActionHostBase</span>::<span class="cpp_function">SetAltComposition</span>(<span class="cpp_type">GuiGraphicsComposition</span> *)',
+        'impls': [
+            'FB$vl::presentation::compositions::GuiAltActionHostBase::SetAltComposition@void(::vl::presentation::compositions::GuiGraphicsComposition *)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::compositions::GuiAltActionHostBase::SetAltComposition@void(::vl::presentation::compositions::GuiGraphicsComposition *)[decl0]'
+        ]
+    },
+    'vl::presentation::compositions::GuiAltActionHostBase::SetAltControl@void(::vl::presentation::controls::GuiControl *, bool)': {
+        'displayNameInHtml': '<span class="cpp_type">GuiAltActionHostBase</span>::<span class="cpp_function">SetAltControl</span>(controls::<span class="cpp_type">GuiControl</span> *, <span class="cpp_keyword">bool</span>)',
+        'impls': [
+            'FB$vl::presentation::compositions::GuiAltActionHostBase::SetAltControl@void(::vl::presentation::controls::GuiControl *, bool)[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::compositions::GuiAltActionHostBase::SetAltControl@void(::vl::presentation::controls::GuiControl *, bool)[decl0]'
+        ]
+    },
     'vl::presentation::compositions::GuiBoundsComposition': {
         'displayNameInHtml': '<span class="cpp_type">GuiBoundsComposition</span>',
         'impls': [
@@ -2611,6 +2649,15 @@ referencedSymbols = {
             'FB$vl::presentation::compositions::GuiTableComposition::SetRowsAndColumns@bool(::vl::vint, ::vl::vint)[decl0]'
         ]
     },
+    'vl::presentation::compositions::IGuiAltActionHost': {
+        'displayNameInHtml': '<span class="cpp_type">IGuiAltActionHost</span>',
+        'impls': [
+            'NI$vl::presentation::compositions::IGuiAltActionHost'
+        ],
+        'decls': [
+            'NF[0]$vl::presentation::compositions::IGuiAltActionHost'
+        ]
+    },
     'vl::presentation::compositions::ResponsiveDirection': {
         'displayNameInHtml': '<span class="cpp_type">ResponsiveDirection</span>',
         'impls': [
@@ -2731,6 +2778,15 @@ referencedSymbols = {
             'NF[1]$vl::presentation::controls::GuiControl'
         ]
     },
+    'vl::presentation::controls::GuiControl::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()': {
+        'displayNameInHtml': '<span class="cpp_type">GuiControl</span>::<span class="cpp_function">GetActivatingAltHost</span>()',
+        'impls': [
+            'FB$vl::presentation::controls::GuiControl::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::controls::GuiControl::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()[decl0]'
+        ]
+    },
     'vl::presentation::controls::GuiControl::GetBoundsComposition@::vl::presentation::compositions::GuiBoundsComposition *()': {
         'displayNameInHtml': '<span class="cpp_type">GuiControl</span>::<span class="cpp_function">GetBoundsComposition</span>()',
         'impls': [
@@ -2814,6 +2870,13 @@ referencedSymbols = {
         'displayNameInHtml': '<span class="cpp_type">GuiControl</span>::<span class="cpp_field">TextChanged</span>',
         'impls': [
             'NI$vl::presentation::controls::GuiControl::TextChanged'
+        ],
+        'decls': []
+    },
+    'vl::presentation::controls::GuiControl::alt': {
+        'displayNameInHtml': '<span class="cpp_type">GuiControl</span>::<span class="cpp_field">alt</span>',
+        'impls': [
+            'NI$vl::presentation::controls::GuiControl::alt'
         ],
         'decls': []
     },
@@ -3650,6 +3713,15 @@ referencedSymbols = {
         ],
         'decls': []
     },
+    'vl::presentation::controls::GuiRibbonGroup::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()': {
+        'displayNameInHtml': '<span class="cpp_type">GuiRibbonGroup</span>::<span class="cpp_function">GetActivatingAltHost</span>()',
+        'impls': [
+            'FB$vl::presentation::controls::GuiRibbonGroup::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::controls::GuiRibbonGroup::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()[decl0]'
+        ]
+    },
     'vl::presentation::controls::GuiRibbonGroup::GetExpandable@bool()': {
         'displayNameInHtml': '<span class="cpp_type">GuiRibbonGroup</span>::<span class="cpp_function">GetExpandable</span>()',
         'impls': [
@@ -3675,6 +3747,15 @@ referencedSymbols = {
         ],
         'decls': [
             'FB$vl::presentation::controls::GuiRibbonGroup::GetLargeImage@::vl::Ptr<::vl::presentation::GuiImageData>()[decl0]'
+        ]
+    },
+    'vl::presentation::controls::GuiRibbonGroup::IsAltAvailable@bool()': {
+        'displayNameInHtml': '<span class="cpp_type">GuiRibbonGroup</span>::<span class="cpp_function">IsAltAvailable</span>()',
+        'impls': [
+            'FB$vl::presentation::controls::GuiRibbonGroup::IsAltAvailable@bool()[impl0]'
+        ],
+        'decls': [
+            'FB$vl::presentation::controls::GuiRibbonGroup::IsAltAvailable@bool()[decl0]'
         ]
     },
     'vl::presentation::controls::GuiRibbonGroup::LargeImageChanged': {
@@ -5844,6 +5925,10 @@ symbolToFiles = {
     'FB$vl::collections::ObservableListBase::Remove@bool([K] const &)[impl0]': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
     'FB$vl::collections::ObservableListBase::operator []@[T] const &(::vl::vint)[impl0]': { 'htmlFileName': 'GuiTypeDescriptorBuilder_Container.h', 'displayName': 'GuiTypeDescriptorBuilder_Container.h' },
     'FB$vl::presentation::Rect_::Height@[T]()[impl0]': { 'htmlFileName': 'GuiTypes.h', 'displayName': 'GuiTypes.h' },
+    'FB$vl::presentation::compositions::GuiAltActionHostBase::SetAltComposition@void(::vl::presentation::compositions::GuiGraphicsComposition *)[decl0]': { 'htmlFileName': 'GuiGraphicsHost_Alt.h', 'displayName': 'GuiGraphicsHost_Alt.h' },
+    'FB$vl::presentation::compositions::GuiAltActionHostBase::SetAltComposition@void(::vl::presentation::compositions::GuiGraphicsComposition *)[impl0]': { 'htmlFileName': 'GuiGraphicsHost_Alt.cpp', 'displayName': 'GuiGraphicsHost_Alt.cpp' },
+    'FB$vl::presentation::compositions::GuiAltActionHostBase::SetAltControl@void(::vl::presentation::controls::GuiControl *, bool)[decl0]': { 'htmlFileName': 'GuiGraphicsHost_Alt.h', 'displayName': 'GuiGraphicsHost_Alt.h' },
+    'FB$vl::presentation::compositions::GuiAltActionHostBase::SetAltControl@void(::vl::presentation::controls::GuiControl *, bool)[impl0]': { 'htmlFileName': 'GuiGraphicsHost_Alt.cpp', 'displayName': 'GuiGraphicsHost_Alt.cpp' },
     'FB$vl::presentation::compositions::GuiBoundsComposition::GetBounds@::vl::presentation::Rect()[decl0]': { 'htmlFileName': 'GuiGraphicsBasicComposition.h', 'displayName': 'GuiGraphicsBasicComposition.h' },
     'FB$vl::presentation::compositions::GuiBoundsComposition::GetBounds@::vl::presentation::Rect()[impl0]': { 'htmlFileName': 'GuiGraphicsBasicComposition.cpp', 'displayName': 'GuiGraphicsBasicComposition.cpp' },
     'FB$vl::presentation::compositions::GuiBoundsComposition::SetAlignmentToParent@void(::vl::presentation::Margin)[decl0]': { 'htmlFileName': 'GuiGraphicsBasicComposition.h', 'displayName': 'GuiGraphicsBasicComposition.h' },
@@ -5900,6 +5985,8 @@ symbolToFiles = {
     'FB$vl::presentation::compositions::GuiTableComposition::SetRowsAndColumns@bool(::vl::vint, ::vl::vint)[impl0]': { 'htmlFileName': 'GuiGraphicsTableComposition.cpp', 'displayName': 'GuiGraphicsTableComposition.cpp' },
     'FB$vl::presentation::compositions::SafeDeleteComposition@void(::vl::presentation::compositions::GuiGraphicsComposition *)[decl0]': { 'htmlFileName': 'GuiGraphicsCompositionBase.h', 'displayName': 'GuiGraphicsCompositionBase.h' },
     'FB$vl::presentation::compositions::SafeDeleteComposition@void(::vl::presentation::compositions::GuiGraphicsComposition *)[impl0]': { 'htmlFileName': 'GuiGraphicsCompositionBase.cpp', 'displayName': 'GuiGraphicsCompositionBase.cpp' },
+    'FB$vl::presentation::controls::GuiControl::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()[decl0]': { 'htmlFileName': 'GuiBasicControls.h', 'displayName': 'GuiBasicControls.h' },
+    'FB$vl::presentation::controls::GuiControl::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()[impl0]': { 'htmlFileName': 'GuiBasicControls.cpp', 'displayName': 'GuiBasicControls.cpp' },
     'FB$vl::presentation::controls::GuiControl::GetBoundsComposition@::vl::presentation::compositions::GuiBoundsComposition *()[decl0]': { 'htmlFileName': 'GuiBasicControls.h', 'displayName': 'GuiBasicControls.h' },
     'FB$vl::presentation::controls::GuiControl::GetBoundsComposition@::vl::presentation::compositions::GuiBoundsComposition *()[impl0]': { 'htmlFileName': 'GuiBasicControls.cpp', 'displayName': 'GuiBasicControls.cpp' },
     'FB$vl::presentation::controls::GuiControl::GetContainerComposition@::vl::presentation::compositions::GuiGraphicsComposition *()[decl0]': { 'htmlFileName': 'GuiBasicControls.h', 'displayName': 'GuiBasicControls.h' },
@@ -5985,12 +6072,16 @@ symbolToFiles = {
     'FB$vl::presentation::controls::GuiRibbonGroup::CommandExecutor::NotifyExpandButtonClicked@void()[impl0]': null,
     'FB$vl::presentation::controls::GuiRibbonGroup::CommandExecutor::~CommandExecutor@()[decl0]': { 'htmlFileName': 'GuiRibbonControls.h', 'displayName': 'GuiRibbonControls.h' },
     'FB$vl::presentation::controls::GuiRibbonGroup::CommandExecutor::~CommandExecutor@()[impl0]': null,
+    'FB$vl::presentation::controls::GuiRibbonGroup::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()[decl0]': { 'htmlFileName': 'GuiRibbonControls.h', 'displayName': 'GuiRibbonControls.h' },
+    'FB$vl::presentation::controls::GuiRibbonGroup::GetActivatingAltHost@::vl::presentation::compositions::IGuiAltActionHost *()[impl0]': null,
     'FB$vl::presentation::controls::GuiRibbonGroup::GetExpandable@bool()[decl0]': { 'htmlFileName': 'GuiRibbonControls.h', 'displayName': 'GuiRibbonControls.h' },
     'FB$vl::presentation::controls::GuiRibbonGroup::GetExpandable@bool()[impl0]': null,
     'FB$vl::presentation::controls::GuiRibbonGroup::GetItems@::vl::collections::ObservableListBase<::vl::presentation::controls::GuiControl *> &()[decl0]': { 'htmlFileName': 'GuiRibbonControls.h', 'displayName': 'GuiRibbonControls.h' },
     'FB$vl::presentation::controls::GuiRibbonGroup::GetItems@::vl::collections::ObservableListBase<::vl::presentation::controls::GuiControl *> &()[impl0]': null,
     'FB$vl::presentation::controls::GuiRibbonGroup::GetLargeImage@::vl::Ptr<::vl::presentation::GuiImageData>()[decl0]': { 'htmlFileName': 'GuiRibbonControls.h', 'displayName': 'GuiRibbonControls.h' },
     'FB$vl::presentation::controls::GuiRibbonGroup::GetLargeImage@::vl::Ptr<::vl::presentation::GuiImageData>()[impl0]': null,
+    'FB$vl::presentation::controls::GuiRibbonGroup::IsAltAvailable@bool()[decl0]': { 'htmlFileName': 'GuiRibbonControls.h', 'displayName': 'GuiRibbonControls.h' },
+    'FB$vl::presentation::controls::GuiRibbonGroup::IsAltAvailable@bool()[impl0]': null,
     'FB$vl::presentation::controls::GuiRibbonGroup::OnBeforeSubMenuOpening@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[decl0]': { 'htmlFileName': 'GuiRibbonControls.h', 'displayName': 'GuiRibbonControls.h' },
     'FB$vl::presentation::controls::GuiRibbonGroup::OnBeforeSubMenuOpening@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiEventArgs &)[impl0]': null,
     'FB$vl::presentation::controls::GuiRibbonGroup::OnBeforeSwitchingView@void(::vl::presentation::compositions::GuiGraphicsComposition *, ::vl::presentation::compositions::GuiItemEventArgs &)[decl0]': { 'htmlFileName': 'GuiRibbonControls.h', 'displayName': 'GuiRibbonControls.h' },
@@ -6170,6 +6261,7 @@ symbolToFiles = {
     'NF[0]$vl::presentation::compositions::GuiStackComposition': { 'htmlFileName': 'IncludeForward.h', 'displayName': 'IncludeForward.h' },
     'NF[0]$vl::presentation::compositions::GuiStackItemComposition': { 'htmlFileName': 'IncludeForward.h', 'displayName': 'IncludeForward.h' },
     'NF[0]$vl::presentation::compositions::GuiTableComposition': { 'htmlFileName': 'IncludeForward.h', 'displayName': 'IncludeForward.h' },
+    'NF[0]$vl::presentation::compositions::IGuiAltActionHost': { 'htmlFileName': 'GuiGraphicsHost_Alt.h', 'displayName': 'GuiGraphicsHost_Alt.h' },
     'NF[0]$vl::presentation::controls': { 'htmlFileName': 'GuiGraphicsEventReceiver.h', 'displayName': 'GuiGraphicsEventReceiver.h' },
     'NF[0]$vl::presentation::controls::GuiControl': { 'htmlFileName': 'GuiGraphicsCompositionBase.h', 'displayName': 'GuiGraphicsCompositionBase.h' },
     'NF[0]$vl::presentation::controls::GuiMenu': { 'htmlFileName': 'IncludeForward.h2', 'displayName': 'IncludeForward.h' },
@@ -7170,10 +7262,12 @@ symbolToFiles = {
     'NI$vl::presentation::compositions::GuiStackComposition::Direction::Vertical': { 'htmlFileName': 'GuiGraphicsStackComposition.h', 'displayName': 'GuiGraphicsStackComposition.h' },
     'NI$vl::presentation::compositions::GuiStackItemComposition': { 'htmlFileName': 'GuiGraphicsStackComposition.h', 'displayName': 'GuiGraphicsStackComposition.h' },
     'NI$vl::presentation::compositions::GuiTableComposition': { 'htmlFileName': 'GuiGraphicsTableComposition.h', 'displayName': 'GuiGraphicsTableComposition.h' },
+    'NI$vl::presentation::compositions::IGuiAltActionHost': { 'htmlFileName': 'GuiGraphicsHost_Alt.h', 'displayName': 'GuiGraphicsHost_Alt.h' },
     'NI$vl::presentation::compositions::ResponsiveDirection': { 'htmlFileName': 'GuiGraphicsResponsiveComposition.h', 'displayName': 'GuiGraphicsResponsiveComposition.h' },
     'NI$vl::presentation::compositions::ResponsiveDirection::Horizontal': { 'htmlFileName': 'GuiGraphicsResponsiveComposition.h', 'displayName': 'GuiGraphicsResponsiveComposition.h' },
     'NI$vl::presentation::controls::GuiControl': { 'htmlFileName': 'GuiBasicControls.h', 'displayName': 'GuiBasicControls.h' },
     'NI$vl::presentation::controls::GuiControl::TextChanged': { 'htmlFileName': 'GuiBasicControls.h', 'displayName': 'GuiBasicControls.h' },
+    'NI$vl::presentation::controls::GuiControl::alt': { 'htmlFileName': 'GuiBasicControls.h', 'displayName': 'GuiBasicControls.h' },
     'NI$vl::presentation::controls::GuiControl::boundsComposition': { 'htmlFileName': 'GuiBasicControls.h', 'displayName': 'GuiBasicControls.h' },
     'NI$vl::presentation::controls::GuiControl::containerComposition': { 'htmlFileName': 'GuiBasicControls.h', 'displayName': 'GuiBasicControls.h' },
     'NI$vl::presentation::controls::GuiMenu': { 'htmlFileName': 'GuiMenuControls.h', 'displayName': 'GuiMenuControls.h' },

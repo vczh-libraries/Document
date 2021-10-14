@@ -463,7 +463,7 @@
       <document name="function MouseLeaved" docId="vl::presentation::INativeWindowListener::MouseLeaved@void()" file="VL__PRESENTATION__INATIVEWINDOWLISTENER__MOUSELEAVED@VOID()"/>
       <document name="function MouseMoving" docId="vl::presentation::INativeWindowListener::MouseMoving@void(::vl::presentation::NativeWindowMouseInfo const &amp;)" file="VL__PRESENTATION__INATIVEWINDOWLISTENER__MOUSEMOVING@VOID(__VL__"/>
       <document name="function Moved" docId="vl::presentation::INativeWindowListener::Moved@void()" file="VL__PRESENTATION__INATIVEWINDOWLISTENER__MOVED@VOID()"/>
-      <document name="function Moving" docId="vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &amp;, bool)" file="VL__PRESENTATION__INATIVEWINDOWLISTENER__MOVING@VOID(__VL__PRESE"/>
+      <document name="function Moving" docId="vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &amp;, bool, bool)" file="VL__PRESENTATION__INATIVEWINDOWLISTENER__MOVING@VOID(__VL__PRESE"/>
       <document name="function Opened" docId="vl::presentation::INativeWindowListener::Opened@void()" file="VL__PRESENTATION__INATIVEWINDOWLISTENER__OPENED@VOID()"/>
       <document name="function Paint" docId="vl::presentation::INativeWindowListener::Paint@void()" file="VL__PRESENTATION__INATIVEWINDOWLISTENER__PAINT@VOID()"/>
       <document name="function RightButtonDoubleClick" docId="vl::presentation::INativeWindowListener::RightButtonDoubleClick@void(::vl::presentation::NativeWindowMouseInfo const &amp;)" file="VL__PRESENTATION__INATIVEWINDOWLISTENER__RIGHTBUTTONDOUBLECLICK@"/>
