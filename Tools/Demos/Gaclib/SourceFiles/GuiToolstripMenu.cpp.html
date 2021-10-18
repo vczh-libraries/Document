@@ -396,7 +396,8 @@ GuiToolstripNestedContainer
 
 			<div class="token cpp_keyword ">void</div> <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiToolstripNestedContainer'], [], [])"><div class="token cpp_type">GuiToolstripNestedContainer</div></div>::<div class="def" id="FB$vl::presentation::controls::GuiToolstripNestedContainer::UpdateLayout@void()[impl0]"><div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiToolstripNestedContainer::UpdateLayout@void()'], [], [])"><div class="token cpp_function">UpdateLayout</div></div></div>()
 			{
-				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiToolstripNestedContainer::callback'], [], [])"><div class="token cpp_field">callback</div></div>)
+				<div class="token cpp_comment ">// It could happen if a GuiToolstripGroupContainer contains something other that GuiToolstripGroup</div>
+				<div class="token cpp_keyword ">if</div> (<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiToolstripNestedContainer::callback'], [], [])"><div class="token cpp_field">callback</div></div> &amp;&amp; <div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiToolstripNestedContainer::callback'], [], [])"><div class="token cpp_field">callback</div></div> != <div class="token cpp_keyword ">this</div>)
 				{
 					<div class="ref" onclick="jumpToSymbol([], ['vl::presentation::controls::GuiToolstripNestedContainer::callback'], [], [])"><div class="token cpp_field">callback</div></div>-&gt;<div class="ref" onclick="jumpToSymbol(['vl::presentation::controls::IToolstripUpdateLayout::UpdateLayout@void()'], ['vl::presentation::controls::IToolstripUpdateLayout::UpdateLayout@void()'], [], [])"><div class="token cpp_function">UpdateLayout</div></div>();
 				}
