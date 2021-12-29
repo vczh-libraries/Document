@@ -524,12 +524,13 @@ Ptr<SymbolGroup> GenerateSymbolIndex(
 	}
 	{
 		Regex extractLastWord(L"^(/.*/W)?(<word>/w+)/W*$");
+		vint indexWord = extractLastWord.CaptureNames().IndexOf(L"word");
 		for (vint i = 0; i < rootGroup->children.Count(); i++)
 		{
 			SortedList<WString> ids;
 			auto fileGroup = rootGroup->children[i];
 			auto match = extractLastWord.MatchHead(fileGroup->name);
-			SetUniqueId(fileGroup, match->Groups()[L"word"][0].Value(), ids);
+			SetUniqueId(fileGroup, match->Groups()[indexWord][0].Value(), ids);
 
 			for (vint j = 0; j < fileGroup->children.Count(); j++)
 			{

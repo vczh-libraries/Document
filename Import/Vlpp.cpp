@@ -12,32 +12,9 @@ Author: Zihan Chen (vczh)
 Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/
 
-#include <time.h>
-#if defined VCZH_MSVC
-#include <Windows.h>
-#elif defined VCZH_GCC
-#include <sys/time.h>
-#endif
 
 namespace vl
 {
-
-/***********************************************************************
-NotCopyable
-***********************************************************************/
-
-	NotCopyable::NotCopyable()
-	{
-	}
-
-	NotCopyable::NotCopyable(const NotCopyable&)
-	{
-	}
-
-	NotCopyable& NotCopyable::operator=(const NotCopyable&)
-	{
-		return *this;
-	}
 
 /***********************************************************************
 Error
@@ -52,224 +29,6 @@ Error
 	{
 		return description;
 	}
-
-/***********************************************************************
-Object
-***********************************************************************/
-
-	Object::~Object()
-	{
-	}
-
-/***********************************************************************
-DateTime
-***********************************************************************/
-
-#if defined VCZH_MSVC
-	DateTime SystemTimeToDateTime(const SYSTEMTIME& systemTime)
-	{
-		DateTime dateTime;
-		dateTime.year=systemTime.wYear;
-		dateTime.month=systemTime.wMonth;
-		dateTime.dayOfWeek=systemTime.wDayOfWeek;
-		dateTime.day=systemTime.wDay;
-		dateTime.hour=systemTime.wHour;
-		dateTime.minute=systemTime.wMinute;
-		dateTime.second=systemTime.wSecond;
-		dateTime.milliseconds=systemTime.wMilliseconds;
-
-		FILETIME fileTime;
-		SystemTimeToFileTime(&systemTime, &fileTime);
-		ULARGE_INTEGER largeInteger;
-		largeInteger.HighPart=fileTime.dwHighDateTime;
-		largeInteger.LowPart=fileTime.dwLowDateTime;
-		dateTime.filetime=largeInteger.QuadPart;
-		dateTime.totalMilliseconds=dateTime.filetime/10000;
-
-		return dateTime;
-	}
-
-	SYSTEMTIME DateTimeToSystemTime(const DateTime& dateTime)
-	{
-		ULARGE_INTEGER largeInteger;
-		largeInteger.QuadPart=dateTime.filetime;
-		FILETIME fileTime;
-		fileTime.dwHighDateTime=largeInteger.HighPart;
-		fileTime.dwLowDateTime=largeInteger.LowPart;
-
-		SYSTEMTIME systemTime;
-		FileTimeToSystemTime(&fileTime, &systemTime);
-		return systemTime;
-	}
-#elif defined VCZH_GCC
-	DateTime ConvertTMToDateTime(tm* timeinfo, vint milliseconds)
-	{
-		time_t timer = mktime(timeinfo);
-		DateTime dt;
-		dt.year = timeinfo->tm_year+1900;
-		dt.month = timeinfo->tm_mon+1;
-		dt.day = timeinfo->tm_mday;
-		dt.dayOfWeek = timeinfo->tm_wday;
-		dt.hour = timeinfo->tm_hour;
-		dt.minute = timeinfo->tm_min;
-		dt.second = timeinfo->tm_sec;
-		dt.milliseconds = milliseconds;
-
-		// in Linux and macOS, filetime will be mktime(t) * 1000 + gettimeofday().tv_usec / 1000
-        dt.filetime = (vuint64_t)timer * 1000 + milliseconds;
-		dt.totalMilliseconds = (vuint64_t)timer * 1000 + milliseconds;
-		return dt;
-	}
-#endif
-
-	DateTime DateTime::LocalTime()
-	{
-#if defined VCZH_MSVC
-		SYSTEMTIME systemTime;
-		GetLocalTime(&systemTime);
-		return SystemTimeToDateTime(systemTime);
-#elif defined VCZH_GCC
-		struct timeval tv;
-		gettimeofday(&tv, nullptr);
-		tm* timeinfo = localtime(&tv.tv_sec);
-		return ConvertTMToDateTime(timeinfo, tv.tv_usec / 1000);
-#endif
-	}
-
-	DateTime DateTime::UtcTime()
-	{
-#if defined VCZH_MSVC
-		SYSTEMTIME utcTime;
-		GetSystemTime(&utcTime);
-		return SystemTimeToDateTime(utcTime);
-#elif defined VCZH_GCC
-		struct timeval tv;
-		gettimeofday(&tv, nullptr);
-		tm* timeinfo = gmtime(&tv.tv_sec);
-		return ConvertTMToDateTime(timeinfo, tv.tv_usec / 1000);
-#endif
-	}
-
-	DateTime DateTime::FromDateTime(vint _year, vint _month, vint _day, vint _hour, vint _minute, vint _second, vint _milliseconds)
-	{
-#if defined VCZH_MSVC
-		SYSTEMTIME systemTime;
-		memset(&systemTime, 0, sizeof(systemTime));
-		systemTime.wYear=(WORD)_year;
-		systemTime.wMonth=(WORD)_month;
-		systemTime.wDay=(WORD)_day;
-		systemTime.wHour=(WORD)_hour;
-		systemTime.wMinute=(WORD)_minute;
-		systemTime.wSecond=(WORD)_second;
-		systemTime.wMilliseconds=(WORD)_milliseconds;
-
-		FILETIME fileTime;
-		SystemTimeToFileTime(&systemTime, &fileTime);
-		FileTimeToSystemTime(&fileTime, &systemTime);
-		return SystemTimeToDateTime(systemTime);
-#elif defined VCZH_GCC
-		tm timeinfo;
-		memset(&timeinfo, 0, sizeof(timeinfo));
-		timeinfo.tm_year = _year-1900;
-		timeinfo.tm_mon = _month-1;
-		timeinfo.tm_mday = _day;
-		timeinfo.tm_hour = _hour;
-		timeinfo.tm_min = _minute;
-		timeinfo.tm_sec = _second;
-		timeinfo.tm_isdst = -1;
-
-		return ConvertTMToDateTime(&timeinfo, _milliseconds);
-#endif
-	}
-
-    DateTime DateTime::FromFileTime(vuint64_t filetime)
-	{
-#if defined VCZH_MSVC
-		ULARGE_INTEGER largeInteger;
-		largeInteger.QuadPart=filetime;
-		FILETIME fileTime;
-		fileTime.dwHighDateTime=largeInteger.HighPart;
-		fileTime.dwLowDateTime=largeInteger.LowPart;
-
-		SYSTEMTIME systemTime;
-		FileTimeToSystemTime(&fileTime, &systemTime);
-		return SystemTimeToDateTime(systemTime);
-#elif defined VCZH_GCC
-		time_t timer = (time_t)(filetime / 1000);
-		tm* timeinfo = localtime(&timer);
-		return ConvertTMToDateTime(timeinfo, filetime % 1000);
-#endif
-	}
-
-	DateTime::DateTime()
-		:year(0)
-		,month(0)
-		,day(0)
-		,hour(0)
-		,minute(0)
-		,second(0)
-		,milliseconds(0)
-		,filetime(0)
-	{
-	}
-
-	DateTime DateTime::ToLocalTime()
-	{
-#if defined VCZH_MSVC
-		SYSTEMTIME utcTime=DateTimeToSystemTime(*this);
-		SYSTEMTIME localTime;
-		SystemTimeToTzSpecificLocalTime(NULL, &utcTime, &localTime);
-		return SystemTimeToDateTime(localTime);
-#elif defined VCZH_GCC
-		time_t localTimer = time(nullptr);
-		time_t utcTimer = mktime(gmtime(&localTimer));
-		time_t timer = (time_t)(filetime / 1000) + localTimer - utcTimer;
-		tm* timeinfo = localtime(&timer);
-
-		return ConvertTMToDateTime(timeinfo, milliseconds);
-#endif
-	}
-
-	DateTime DateTime::ToUtcTime()
-	{
-#if defined VCZH_MSVC
-		SYSTEMTIME localTime=DateTimeToSystemTime(*this);
-		SYSTEMTIME utcTime;
-		TzSpecificLocalTimeToSystemTime(NULL, &localTime, &utcTime);
-		return SystemTimeToDateTime(utcTime);
-#elif defined VCZH_GCC
-		time_t timer = (time_t)(filetime / 1000);
-		tm* timeinfo = gmtime(&timer);
-
-		return ConvertTMToDateTime(timeinfo, milliseconds);
-#endif
-	}
-
-	DateTime DateTime::Forward(vuint64_t milliseconds)
-	{
-#if defined VCZH_MSVC
-		return FromFileTime(filetime+milliseconds*10000);
-#elif defined VCZH_GCC
-		return FromFileTime(filetime+milliseconds);
-#endif
-	}
-
-	DateTime DateTime::Backward(vuint64_t milliseconds)
-	{
-#if defined VCZH_MSVC
-		return FromFileTime(filetime-milliseconds*10000);
-#elif defined VCZH_GCC
-		return FromFileTime(filetime-milliseconds);
-#endif
-	}
-
-/***********************************************************************
-Interface
-***********************************************************************/
-
-	Interface::~Interface()
-	{
-	}
 }
 
 
@@ -281,12 +40,6 @@ Author: Zihan Chen (vczh)
 Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/
 
-#if defined VCZH_MSVC
-#elif defined VCZH_GCC
-#include <iostream>
-#include <string>
-using namespace std;
-#endif
 
 namespace vl
 {
@@ -296,31 +49,6 @@ namespace vl
 /***********************************************************************
 Console
 ***********************************************************************/
-
-		void Console::Write(const wchar_t* string, vint length)
-		{
-#if defined VCZH_MSVC
-			HANDLE outHandle=GetStdHandle(STD_OUTPUT_HANDLE);
-			DWORD fileMode=0;
-			DWORD written=0;
-			if((GetFileType(outHandle) & FILE_TYPE_CHAR) && GetConsoleMode(outHandle, &fileMode))
-			{
-				WriteConsole(outHandle, string, (int)length, &written,0);
-			}
-			else
-			{
-				int codePage = GetConsoleOutputCP();
-				int charCount = WideCharToMultiByte(codePage, 0, string, -1, 0, 0, 0, 0);
-				char* codePageBuffer = new char[charCount];
-				WideCharToMultiByte(codePage, 0, string, -1, codePageBuffer, charCount, 0, 0);
-				WriteFile(outHandle, codePageBuffer, charCount-1, &written, 0);
-				delete[] codePageBuffer;
-			}
-#elif defined VCZH_GCC
-			wstring s(string, string+length);
-			wcout<<s<<ends;
-#endif
-		}
 
 		void Console::Write(const wchar_t* string)
 		{
@@ -336,63 +64,6 @@ Console
 		{
 			Write(string);
 			Write(L"\r\n");
-		}
-
-		WString Console::Read()
-		{
-#if defined VCZH_MSVC
-			WString result;
-			DWORD count;
-			for(;;)
-			{
-				wchar_t buffer;
-				ReadConsole(GetStdHandle(STD_INPUT_HANDLE),&buffer,1,&count,0);
-				if(buffer==L'\r')
-				{
-					ReadConsole(GetStdHandle(STD_INPUT_HANDLE),&buffer,1,&count,0);
-					break;
-				}
-				else if(buffer==L'\n')
-				{
-					break;
-				}
-				else
-				{
-					result=result+buffer;
-				}
-			}
-			return result;
-#elif defined VCZH_GCC
-			wstring s;
-			getline(wcin, s, L'\n');
-			return s.c_str();
-#endif
-		}
-
-		void Console::SetColor(bool red, bool green, bool blue, bool light)
-		{
-#if defined VCZH_MSVC
-			WORD attribute=0;
-			if(red)attribute		|=FOREGROUND_RED;
-			if(green)attribute		|=FOREGROUND_GREEN;
-			if(blue)attribute		|=FOREGROUND_BLUE;
-			if(light)attribute		|=FOREGROUND_INTENSITY;
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),attribute);
-			SetConsoleTextAttribute(GetStdHandle(STD_INPUT_HANDLE),attribute);
-#elif defined VCZH_GCC
-			int color = (blue?1:0)*4 + (green?1:0)*2 + (red?1:0);
-			if(light)
-				wprintf(L"\x1B[00;3%dm", color);
-			else
-				wprintf(L"\x1B[01;3%dm", color);
-#endif
-		}
-
-		void Console::SetTitle(const WString& string)
-		{
-#if defined VCZH_MSVC
-			SetConsoleTitle(string.Buffer());
-#endif
 		}
 	}
 }
@@ -442,27 +113,6 @@ ArgumentException
 	const WString& ArgumentException::GetName()const
 	{
 		return name;
-	}
-
-/***********************************************************************
-ParsingException
-***********************************************************************/
-
-	ParsingException::ParsingException(const WString& _message, const WString& _expression, vint _position)
-		:Exception(_message)
-		,expression(_expression)
-		,position(_position)
-	{
-	}
-
-	const WString& ParsingException::GetExpression()const
-	{
-		return expression;
-	}
-
-	vint ParsingException::GetPosition()const
-	{
-		return position;
 	}
 }
 
@@ -520,7 +170,7 @@ Helper Functions
 
 	GlobalStorage* GetGlobalStorage(const wchar_t* key)
 	{
-		return GetGlobalStorage(WString(key, false));
+		return GetGlobalStorage(WString::Unmanaged(key));
 	}
 
 	GlobalStorage* GetGlobalStorage(const WString& key)
@@ -551,7 +201,646 @@ Helper Functions
 
 
 /***********************************************************************
-.\STRING.CPP
+.\COLLECTIONS\PARTIALORDERING.CPP
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+
+namespace vl
+{
+	namespace collections
+	{
+		using namespace po;
+
+/***********************************************************************
+PartialOrderingProcessor
+***********************************************************************/
+
+		void PartialOrderingProcessor::InitNodes(vint itemCount)
+		{
+			nodes.Resize(itemCount);
+
+			for (vint i = 0; i < itemCount; i++)
+			{
+				auto& node = nodes[i];
+				node.ins = &emptyList;
+				node.outs = &emptyList;
+
+				vint inIndex = ins.Keys().IndexOf(i);
+				vint outIndex = outs.Keys().IndexOf(i);
+
+				if (inIndex != -1)
+				{
+					node.ins = &ins.GetByIndex(inIndex);
+				}
+				if (outIndex != -1)
+				{
+					node.outs = &outs.GetByIndex(outIndex);
+				}
+			}
+		}
+
+		void PartialOrderingProcessor::VisitUnvisitedNode(po::Node& node, Array<vint>& reversedOrder, vint& used)
+		{
+			node.visited = true;
+			for (vint i = node.outs->Count() - 1; i >= 0; i--)
+			{
+				auto& outNode = nodes[node.outs->Get(i)];
+				if (!outNode.visited)
+				{
+					VisitUnvisitedNode(outNode, reversedOrder, used);
+				}
+			}
+			reversedOrder[used++] = (vint)(&node - &nodes[0]);
+		}
+
+		void PartialOrderingProcessor::AssignUnassignedNode(po::Node& node, vint componentIndex, vint& used)
+		{
+			node.component = componentIndex;
+			firstNodesBuffer[used++] = (vint)(&node - &nodes[0]);
+			for (vint i = 0; i < node.ins->Count(); i++)
+			{
+				auto& inNode = nodes[node.ins->Get(i)];
+				if (inNode.component == -1)
+				{
+					AssignUnassignedNode(inNode, componentIndex, used);
+				}
+			}
+		}
+
+		void PartialOrderingProcessor::Sort()
+		{
+			// Kosaraju's Algorithm
+			CHECK_ERROR(components.Count() == 0, L"PartialOrdering::Sort()#Sorting twice is not allowed.");
+
+			Array<vint> reversedOrder(nodes.Count());
+			{
+				vint used = 0;
+				for (vint i = nodes.Count() - 1; i >= 0; i--)
+				{
+					auto& node = nodes[i];
+					if (!node.visited)
+					{
+						VisitUnvisitedNode(node, reversedOrder, used);
+					}
+				}
+			}
+
+			firstNodesBuffer.Resize(nodes.Count());
+			{
+				vint lastUsed = 0;
+				vint used = 0;
+				for (vint i = reversedOrder.Count() - 1; i >= 0; i--)
+				{
+					auto& node = nodes[reversedOrder[i]];
+					if (node.component == -1)
+					{
+						AssignUnassignedNode(node, components.Count(), used);
+
+						Component component;
+						component.firstNode = &firstNodesBuffer[lastUsed];
+						component.nodeCount = used - lastUsed;
+						lastUsed = used;
+						components.Add(component);
+					}
+				}
+			}
+		}
+	}
+}
+
+/***********************************************************************
+.\STRINGS\CONVERSION.CPP
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#if defined VCZH_GCC
+#include <stdio.h>
+#include <ctype.h>
+#include <wctype.h>
+#endif
+
+namespace vl
+{
+	namespace encoding
+	{
+		__forceinline bool IsInvalid(char32_t c)
+		{
+			return 0xD800U <= c && c <= 0xDFFFU;
+		}
+
+/***********************************************************************
+UtfConversion<wchar_t>
+***********************************************************************/
+
+		vint UtfConversion<wchar_t>::From32(char32_t source, wchar_t(&dest)[BufferLength])
+		{
+#if defined VCZH_WCHAR_UTF16
+			return UtfConversion<char16_t>::From32(source, reinterpret_cast<char16_t(&)[BufferLength]>(dest));
+#elif defined VCZH_WCHAR_UTF32
+			dest[0] = static_cast<wchar_t>(source);
+			return 1;
+#endif
+		}
+
+		vint UtfConversion<wchar_t>::To32(const wchar_t* source, vint sourceLength, char32_t& dest)
+		{
+#if defined VCZH_WCHAR_UTF16
+			return UtfConversion<char16_t>::To32(reinterpret_cast<const char16_t*>(source), sourceLength, dest);
+#elif defined VCZH_WCHAR_UTF32
+			if (sourceLength <= 0) return -1;
+			dest = static_cast<char32_t>(source[0]);
+			return 1;
+#endif
+		}
+
+/***********************************************************************
+UtfConversion<char8_t>
+***********************************************************************/
+
+		/*
+		How UCS-4 translates to UTF-8
+			U-00000000 - U-0000007F:  0xxxxxxx
+			U-00000080 - U-000007FF:  110xxxxx 10xxxxxx
+			U-00000800 - U-0000FFFF:  1110xxxx 10xxxxxx 10xxxxxx
+			U-00010000 - U-001FFFFF:  11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+			U-00200000 - U-03FFFFFF:  111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
+			U-04000000 - U-7FFFFFFF:  1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
+		*/
+
+		vint UtfConversion<char8_t>::From32(char32_t source, char8_t(&dest)[BufferLength])
+		{
+			if (IsInvalid(source)) return -1;
+			vuint32_t c = static_cast<vuint32_t>(source);
+			vuint8_t(&ds)[BufferLength] = reinterpret_cast<vuint8_t(&)[BufferLength]>(dest);
+
+			if (c <= 0x0000007FUL)
+			{
+				ds[0] = static_cast<vuint8_t>(c);
+				return 1;
+			}
+			else if (c <= 0x000007FFUL)
+			{
+				ds[0] = static_cast<vuint8_t>((c >> 6) | 0b11000000U);
+				ds[1] = static_cast<vuint8_t>((c & 0b00111111U) | 0b10000000U);
+				return 2;
+			}
+			else if (c <= 0x0000FFFFUL)
+			{
+				ds[0] = static_cast<vuint8_t>((c >> 12) | 0b11100000U);
+				ds[1] = static_cast<vuint8_t>(((c >> 6) & 0b00111111U) | 0b10000000U);
+				ds[2] = static_cast<vuint8_t>((c & 0b00111111U) | 0b10000000U);
+				return 3;
+			}
+			else if (c <= 0x001FFFFFUL)
+			{
+				ds[0] = static_cast<vuint8_t>((c >> 18) | 0b11110000U);
+				ds[1] = static_cast<vuint8_t>(((c >> 12) & 0b00111111U) | 0b10000000U);
+				ds[2] = static_cast<vuint8_t>(((c >> 6) & 0b00111111U) | 0b10000000U);
+				ds[3] = static_cast<vuint8_t>((c & 0b00111111U) | 0b10000000U);
+				return 4;
+			}
+			else if (c <= 0x03FFFFFFUL)
+			{
+				ds[0] = static_cast<vuint8_t>((c >> 24) | 0b11111000U);
+				ds[1] = static_cast<vuint8_t>(((c >> 18) & 0b00111111U) | 0b10000000U);
+				ds[2] = static_cast<vuint8_t>(((c >> 12) & 0b00111111U) | 0b10000000U);
+				ds[3] = static_cast<vuint8_t>(((c >> 6) & 0b00111111U) | 0b10000000U);
+				ds[4] = static_cast<vuint8_t>((c & 0b00111111U) | 0b10000000U);
+				return 5;
+			}
+			else if (c <= 0x7FFFFFFFUL)
+			{
+				ds[0] = static_cast<vuint8_t>((c >> 30) | 0b11111100U);
+				ds[1] = static_cast<vuint8_t>(((c >> 24) & 0b00111111U) | 0b10000000U);
+				ds[2] = static_cast<vuint8_t>(((c >> 18) & 0b00111111U) | 0b10000000U);
+				ds[3] = static_cast<vuint8_t>(((c >> 12) & 0b00111111U) | 0b10000000U);
+				ds[4] = static_cast<vuint8_t>(((c >> 6) & 0b00111111U) | 0b10000000U);
+				ds[5] = static_cast<vuint8_t>((c & 0b00111111U) | 0b10000000U);
+				return 6;
+			}
+			else
+			{
+				return -1;
+			}
+		}
+
+		vint UtfConversion<char8_t>::To32(const char8_t* source, vint sourceLength, char32_t& dest)
+		{
+			const vuint8_t* cs = reinterpret_cast<const vuint8_t*>(source);
+			vuint32_t& d = reinterpret_cast<vuint32_t&>(dest);
+			if (sourceLength <= 0) return -1;
+
+			if (cs[0] < 0b10000000U)
+			{
+				d = cs[0];
+				return 1;
+			}
+			else if (cs[0] < 0b11100000U)
+			{
+				if (sourceLength < 2) return -1;
+				d = ((static_cast<vuint32_t>(cs[0]) & 0b00011111U) << 6) |
+					((static_cast<vuint32_t>(cs[1]) & 0b00111111U));
+				return 2;
+			}
+			else if (cs[0] < 0b11110000U)
+			{
+				if (sourceLength < 3) return -1;
+				d = ((static_cast<vuint32_t>(cs[0]) & 0b00001111U) << 12) |
+					((static_cast<vuint32_t>(cs[1]) & 0b00111111U) << 6) |
+					((static_cast<vuint32_t>(cs[2]) & 0b00111111U));
+				return 3;
+			}
+			else if (cs[0] < 0b11111000U)
+			{
+				if (sourceLength < 4) return -1;
+				d = ((static_cast<vuint32_t>(cs[0]) & 0b00000111U) << 18) |
+					((static_cast<vuint32_t>(cs[1]) & 0b00111111U) << 12) |
+					((static_cast<vuint32_t>(cs[2]) & 0b00111111U) << 6) |
+					((static_cast<vuint32_t>(cs[3]) & 0b00111111U));
+				return 4;
+			}
+			else if (cs[0] < 0b11111100U)
+			{
+				if (sourceLength < 5) return -1;
+				d = ((static_cast<vuint32_t>(cs[0]) & 0b00000011U) << 24) |
+					((static_cast<vuint32_t>(cs[1]) & 0b00111111U) << 18) |
+					((static_cast<vuint32_t>(cs[2]) & 0b00111111U) << 12) |
+					((static_cast<vuint32_t>(cs[3]) & 0b00111111U) << 6) |
+					((static_cast<vuint32_t>(cs[4]) & 0b00111111U));
+				return 5;
+			}
+			else
+			{
+				if (sourceLength < 6) return -1;
+				d = ((static_cast<vuint32_t>(cs[0]) & 0b00000001U) << 30) |
+					((static_cast<vuint32_t>(cs[1]) & 0b00111111U) << 24) |
+					((static_cast<vuint32_t>(cs[2]) & 0b00111111U) << 18) |
+					((static_cast<vuint32_t>(cs[3]) & 0b00111111U) << 12) |
+					((static_cast<vuint32_t>(cs[4]) & 0b00111111U) << 6) |
+					((static_cast<vuint32_t>(cs[5]) & 0b00111111U));
+				return 6;
+			}
+			if (IsInvalid(dest)) return -1;
+			return 1;
+		}
+
+/***********************************************************************
+UtfConversion<char16_t>
+***********************************************************************/
+
+		/*
+		How UCS-4 translates to UTF-16 Surrogate Pair
+			U' = yyyyyyyyyyxxxxxxxxxx  // U - 0x10000
+			W1 = 110110yyyyyyyyyy      // 0xD800 + yyyyyyyyyy
+			W2 = 110111xxxxxxxxxx      // 0xDC00 + xxxxxxxxxx
+		*/
+
+		vint UtfConversion<char16_t>::From32(char32_t source, char16_t(&dest)[BufferLength])
+		{
+			if (IsInvalid(source)) return -1;
+			vuint32_t c = static_cast<vuint32_t>(source);
+			vuint16_t(&ds)[BufferLength] = reinterpret_cast<vuint16_t(&)[BufferLength]>(dest);
+
+			if (0x000000UL <= c && c <= 0x00D7FFUL)
+			{
+				ds[0] = static_cast<vuint16_t>(c);
+				return 1;
+			}
+			else if (0x00E000UL <= c && c <= 0x00FFFFUL)
+			{
+				ds[0] = static_cast<vuint16_t>(c);
+				return 1;
+			}
+			else if (0x010000UL <= c && c <= 0x10FFFFUL)
+			{
+				c -= 0x010000UL;
+				ds[0] = static_cast<vuint16_t>((c >> 10) | 0xD800U);
+				ds[1] = static_cast<vuint16_t>((c & 0x03FFU) | 0xDC00U);
+				return 2;
+			}
+			else
+			{
+				return -1;
+			}
+		}
+
+		vint UtfConversion<char16_t>::To32(const char16_t* source, vint sourceLength, char32_t& dest)
+		{
+			const vuint16_t* cs = reinterpret_cast<const vuint16_t* >(source);
+			vuint32_t& d = reinterpret_cast<vuint32_t&>(dest);
+			if (sourceLength <= 0) return -1;
+
+			if ((cs[0] & 0xFC00U) == 0xD800U)
+			{
+				if (sourceLength < 2) return -1;
+				if ((cs[1] & 0xFC00U) == 0xDC00U)
+				{
+					d = 0x010000UL + (
+						((static_cast<vuint32_t>(cs[0]) & 0x03FF) << 10) |
+						(static_cast<vuint32_t>(cs[1]) & 0x03FF)
+						);
+					if (IsInvalid(dest)) return -1;
+					return 2;
+				}
+				else
+				{
+					return -1;
+				}
+			}
+			else
+			{
+				d = cs[0];
+				if (IsInvalid(dest)) return -1;
+				return 1;
+			}
+		}
+	}
+
+/***********************************************************************
+String Conversions (buffer walkthrough)
+***********************************************************************/
+
+	template<typename TFrom, typename TTo, typename TReader>
+	vint _utftoutf_reader(const TFrom* s, TTo* d, vint chars)
+	{
+		TReader reader(s);
+		vint size = 0;
+		if (d == nullptr)
+		{
+			while (reader.Read()) size++;
+			return reader.HasIllegalChar() ? -1 : size + 1;
+		}
+		else
+		{
+			while (true)
+			{
+				if (chars == 0) break;
+				auto c = reader.Read();
+				*d++ = c;
+				size++;
+				chars--;
+				if (!c) break;
+			}
+			return reader.HasIllegalChar() ? -1 : size;
+		}
+	}
+
+	template<typename T>
+	vint _utftou32(const T* s, char32_t* d, vint chars)
+	{
+		return _utftoutf_reader<T, char32_t, encoding::UtfStringTo32Reader<T>>(s, d, chars);
+	}
+
+	template<typename T>
+	vint _u32toutf(const char32_t* s, T* d, vint chars)
+	{
+		return _utftoutf_reader<char32_t, T, encoding::UtfStringFrom32Reader<T>>(s, d, chars);
+	}
+
+	template vint			_utftou32<wchar_t>(const wchar_t* s, char32_t* d, vint chars);
+	template vint			_utftou32<char8_t>(const char8_t* s, char32_t* d, vint chars);
+	template vint			_utftou32<char16_t>(const char16_t* s, char32_t* d, vint chars);
+	template vint			_u32toutf<wchar_t>(const char32_t* s, wchar_t* d, vint chars);
+	template vint			_u32toutf<char8_t>(const char32_t* s, char8_t* d, vint chars);
+	template vint			_u32toutf<char16_t>(const char32_t* s, char16_t* d, vint chars);
+
+/***********************************************************************
+String Conversions (direct)
+***********************************************************************/
+
+	template<typename TFrom, typename TTo, vint(*Convert)(const TFrom*, TTo*, vint)>
+	ObjectString<TTo> ConvertStringDirect(const ObjectString<TFrom>& source)
+	{
+		vint len = Convert(source.Buffer(), nullptr, 0);
+		if (len < 1) return {};
+		TTo* buffer = new TTo[len];
+		memset(buffer, 0, len * sizeof(TTo));
+		Convert(source.Buffer(), buffer, len);
+		return ObjectString<TTo>::TakeOver(buffer, len - 1);
+	}
+
+	AString					wtoa	(const WString& source)		{ return ConvertStringDirect<wchar_t, char, _wtoa>(source); }
+	WString					atow	(const AString& source)		{ return ConvertStringDirect<char, wchar_t, _atow>(source); }
+#if defined VCZH_WCHAR_UTF16
+	U32String				wtou32	(const WString& source)		{ return ConvertStringDirect<wchar_t, char32_t, _utftou32<wchar_t>>(source); }
+	WString					u32tow	(const U32String& source)	{ return ConvertStringDirect<char32_t, wchar_t, _u32toutf<wchar_t>>(source); }
+#elif defined VCZH_WCHAR_UTF32
+	U32String				wtou32	(const WString& source)		{ return U32String::UnsafeCastFrom(source); }
+	WString					u32tow	(const U32String& source)	{ return WString::UnsafeCastFrom(source); }
+#endif
+	U32String				u8tou32	(const U8String& source)	{ return ConvertStringDirect<char8_t, char32_t, _utftou32<char8_t>>(source); }
+	U8String				u32tou8	(const U32String& source)	{ return ConvertStringDirect<char32_t, char8_t, _u32toutf<char8_t>>(source); }
+	U32String				u16tou32(const U16String& source)	{ return ConvertStringDirect<char16_t, char32_t, _utftou32<char16_t>>(source); }
+	U16String				u32tou16(const U32String& source)	{ return ConvertStringDirect<char32_t, char16_t, _u32toutf<char16_t>>(source); }
+
+/***********************************************************************
+String Conversions (buffer walkthrough indirect)
+***********************************************************************/
+
+	template<typename TFrom, typename TTo>
+	vint _utftoutf(const TFrom* s, TTo* d, vint chars)
+	{
+		return _utftoutf_reader<TFrom, TTo, encoding::UtfStringToStringReader<TFrom, TTo>>(s, d, chars);
+	}
+
+	template vint			_utftoutf<wchar_t, char8_t>(const wchar_t* s, char8_t* d, vint chars);
+	template vint			_utftoutf<wchar_t, char16_t>(const wchar_t* s, char16_t* d, vint chars);
+	template vint			_utftoutf<char8_t, wchar_t>(const char8_t* s, wchar_t* d, vint chars);
+	template vint			_utftoutf<char8_t, char16_t>(const char8_t* s, char16_t* d, vint chars);
+	template vint			_utftoutf<char16_t, wchar_t>(const char16_t* s, wchar_t* d, vint chars);
+	template vint			_utftoutf<char16_t, char8_t>(const char16_t* s, char8_t* d, vint chars);
+
+/***********************************************************************
+String Conversions (unicode indirect)
+***********************************************************************/
+
+	U8String				wtou8	(const WString& source)		{ return ConvertStringDirect<wchar_t, char8_t, _utftoutf<wchar_t, char8_t>>(source); }
+	WString					u8tow	(const U8String& source)	{ return ConvertStringDirect<char8_t, wchar_t, _utftoutf<char8_t, wchar_t>>(source); }
+#if defined VCZH_WCHAR_UTF16
+	U16String				wtou16	(const WString& source)		{ return U16String::UnsafeCastFrom(source); }
+	WString					u16tow	(const U16String& source)	{ return WString::UnsafeCastFrom(source); }
+#elif defined VCZH_WCHAR_UTF32
+	U16String				wtou16	(const WString& source)		{ return ConvertStringDirect<wchar_t, char16_t, _utftoutf<wchar_t, char16_t>>(source); }
+	WString					u16tow	(const U16String& source)	{ return ConvertStringDirect<char16_t, wchar_t, _utftoutf<char16_t, wchar_t>>(source); }
+#endif
+	U16String				u8tou16	(const U8String& source)	{ return ConvertStringDirect<char8_t, char16_t, _utftoutf<char8_t, char16_t>>(source); }
+	U8String				u16tou8	(const U16String& source)	{ return ConvertStringDirect<char16_t, char8_t, _utftoutf<char16_t, char8_t>>(source); }
+}
+
+
+/***********************************************************************
+.\STRINGS\LOREMIPSUM.CPP
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#include <time.h>
+
+namespace vl
+{
+	WString LoremIpsum(vint bestLength, LoremIpsumCasing casing)
+	{
+		static const wchar_t* words[] =
+		{
+			L"lorem", L"ipsum", L"dolor", L"sit", L"amet", L"consectetur", L"adipiscing", L"elit", L"integer",
+			L"nec", L"odio", L"praesent", L"libero", L"sed", L"cursus", L"ante", L"dapibus", L"diam",
+			L"sed", L"nisi", L"nulla", L"quis", L"sem", L"at", L"nibh", L"elementum", L"imperdiet", L"duis",
+			L"sagittis", L"ipsum", L"praesent", L"mauris", L"fusce", L"nec", L"tellus", L"sed", L"augue",
+			L"semper", L"porta", L"mauris", L"massa", L"vestibulum", L"lacinia", L"arcu", L"eget", L"nulla",
+			L"class", L"aptent", L"taciti", L"sociosqu", L"ad", L"litora", L"torquent", L"per", L"conubia",
+			L"nostra", L"per", L"inceptos", L"himenaeos", L"curabitur", L"sodales", L"ligula", L"in",
+			L"libero", L"sed", L"dignissim", L"lacinia", L"nunc", L"curabitur", L"tortor", L"pellentesque",
+			L"nibh", L"aenean", L"quam", L"in", L"scelerisque", L"sem", L"at", L"dolor", L"maecenas",
+			L"mattis", L"sed", L"convallis", L"tristique", L"sem", L"proin", L"ut", L"ligula", L"vel",
+			L"nunc", L"egestas", L"porttitor", L"morbi", L"lectus", L"risus", L"iaculis", L"vel", L"suscipit",
+			L"quis", L"luctus", L"non", L"massa", L"fusce", L"ac", L"turpis", L"quis", L"ligula", L"lacinia",
+			L"aliquet", L"mauris", L"ipsum", L"nulla", L"metus", L"metus", L"ullamcorper", L"vel", L"tincidunt",
+			L"sed", L"euismod", L"in", L"nibh", L"quisque", L"volutpat", L"condimentum", L"velit", L"class",
+			L"aptent", L"taciti", L"sociosqu", L"ad", L"litora", L"torquent", L"per", L"conubia", L"nostra",
+			L"per", L"inceptos", L"himenaeos", L"nam", L"nec", L"ante", L"sed", L"lacinia", L"urna",
+			L"non", L"tincidunt", L"mattis", L"tortor", L"neque", L"adipiscing", L"diam", L"a", L"cursus",
+			L"ipsum", L"ante", L"quis", L"turpis", L"nulla", L"facilisi", L"ut", L"fringilla", L"suspendisse",
+			L"potenti", L"nunc", L"feugiat", L"mi", L"a", L"tellus", L"consequat", L"imperdiet", L"vestibulum",
+			L"sapien", L"proin", L"quam", L"etiam", L"ultrices", L"suspendisse", L"in", L"justo", L"eu",
+			L"magna", L"luctus", L"suscipit", L"sed", L"lectus", L"integer", L"euismod", L"lacus", L"luctus",
+			L"magna", L"quisque", L"cursus", L"metus", L"vitae", L"pharetra", L"auctor", L"sem", L"massa",
+			L"mattis", L"sem", L"at", L"interdum", L"magna", L"augue", L"eget", L"diam", L"vestibulum",
+			L"ante", L"ipsum", L"primis", L"in", L"faucibus", L"orci", L"luctus", L"et", L"ultrices",
+			L"posuere", L"cubilia", L"curae;", L"morbi", L"lacinia", L"molestie", L"dui", L"praesent",
+			L"blandit", L"dolor", L"sed", L"non", L"quam", L"in", L"vel", L"mi", L"sit", L"amet", L"augue",
+			L"congue", L"elementum", L"morbi", L"in", L"ipsum", L"sit", L"amet", L"pede", L"facilisis",
+			L"laoreet", L"donec", L"lacus", L"nunc", L"viverra", L"nec", L"blandit", L"vel", L"egestas",
+			L"et", L"augue", L"vestibulum", L"tincidunt", L"malesuada", L"tellus", L"ut", L"ultrices",
+			L"ultrices", L"enim", L"curabitur", L"sit", L"amet", L"mauris", L"morbi", L"in", L"dui",
+			L"quis", L"est", L"pulvinar", L"ullamcorper", L"nulla", L"facilisi", L"integer", L"lacinia",
+			L"sollicitudin", L"massa", L"cras", L"metus", L"sed", L"aliquet", L"risus", L"a", L"tortor",
+			L"integer", L"id", L"quam", L"morbi", L"mi", L"quisque", L"nisl", L"felis", L"venenatis",
+			L"tristique", L"dignissim", L"in", L"ultrices", L"sit", L"amet", L"augue", L"proin", L"sodales",
+			L"libero", L"eget", L"ante", L"nulla", L"quam", L"aenean", L"laoreet", L"vestibulum", L"nisi",
+			L"lectus", L"commodo", L"ac", L"facilisis", L"ac", L"ultricies", L"eu", L"pede", L"ut", L"orci",
+			L"risus", L"accumsan", L"porttitor", L"cursus", L"quis", L"aliquet", L"eget", L"justo",
+			L"sed", L"pretium", L"blandit", L"orci", L"ut", L"eu", L"diam", L"at", L"pede", L"suscipit",
+			L"sodales", L"aenean", L"lectus", L"elit", L"fermentum", L"non", L"convallis", L"id", L"sagittis",
+			L"at", L"neque", L"nullam", L"mauris", L"orci", L"aliquet", L"et", L"iaculis", L"et", L"viverra",
+			L"vitae", L"ligula", L"nulla", L"ut", L"felis", L"in", L"purus", L"aliquam", L"imperdiet",
+			L"maecenas", L"aliquet", L"mollis", L"lectus", L"vivamus", L"consectetuer", L"risus", L"et",
+			L"tortor"
+		};
+		static vint index = 0;
+		const vint WordCount = sizeof(words) / sizeof(*words);
+
+		if (bestLength < 0) bestLength = 0;
+		vint bufferLength = bestLength + 20;
+		wchar_t* buffer = new wchar_t[bufferLength + 1];
+
+		buffer[0] = 0;
+		vint used = 0;
+		wchar_t* writing = buffer;
+		while (used < bestLength)
+		{
+			if (used != 0)
+			{
+				*writing++ = L' ';
+				used++;
+			}
+
+			vint wordSize = (vint)wcslen(words[index]);
+			wcscpy_s(writing, bufferLength - used, words[index]);
+			if (casing == LoremIpsumCasing::AllWordsUpperCase || (casing == LoremIpsumCasing::FirstWordUpperCase && used == 0))
+			{
+				*writing -= L'a' - L'A';
+			}
+
+			if (used != 0 && used + wordSize > bestLength)
+			{
+				vint deltaShort = bestLength - used + 1;
+				vint deltaLong = used + wordSize - bestLength;
+				if (deltaShort < deltaLong)
+				{
+					*--writing = 0;
+					used--;
+					break;
+				}
+			}
+			writing += wordSize;
+			used += wordSize;
+			index = (index + 1) % WordCount;
+		}
+
+		WString result = buffer;
+		delete[] buffer;
+		return result;
+	}
+
+	WString LoremIpsumTitle(vint bestLength)
+	{
+		return LoremIpsum(bestLength, LoremIpsumCasing::AllWordsUpperCase);
+	}
+
+	WString LoremIpsumSentence(vint bestLength)
+	{
+		return LoremIpsum(bestLength, LoremIpsumCasing::FirstWordUpperCase) + L".";
+	}
+
+	WString LoremIpsumParagraph(vint bestLength)
+	{
+		srand((unsigned)time(0));
+		auto casing = LoremIpsumCasing::FirstWordUpperCase;
+		vint comma = 0;
+		WString result;
+		while (result.Length() < bestLength)
+		{
+			vint offset = bestLength - result.Length();
+			if (comma == 0)
+			{
+				comma = rand() % 4 + 1;
+			}
+			vint length = rand() % 45 + 15;
+			if (offset < 20)
+			{
+				comma = 0;
+				length = offset - 1;
+			}
+			else if (length > offset)
+			{
+				comma = 0;
+				length = offset + rand() % 11 - 5;
+			}
+
+			result += LoremIpsum(length, casing);
+			if (comma == 0)
+			{
+				result += L".";
+				break;
+			}
+			else if (comma == 1)
+			{
+				result += L". ";
+				casing = LoremIpsumCasing::FirstWordUpperCase;
+			}
+			else
+			{
+				result += L", ";
+				casing = LoremIpsumCasing::AllWordsLowerCase;
+			}
+			comma--;
+		}
+		return result;
+	}
+}
+
+
+/***********************************************************************
+.\STRINGS\STRING.CPP
 ***********************************************************************/
 /***********************************************************************
 Author: Zihan Chen (vczh)
@@ -560,9 +849,6 @@ Licensed under https://github.com/vczh-libraries/License
 
 #if defined VCZH_MSVC
 #elif defined VCZH_GCC
-#include <stdio.h>
-#include <ctype.h>
-#include <wctype.h>
 #define _strtoi64 strtoll
 #define _strtoui64 strtoull
 #define _wcstoi64 wcstoll
@@ -880,46 +1166,6 @@ namespace vl
 		return atow(ftoa(number));
 	}
 
-	vint _wtoa(const wchar_t* w, char* a, vint chars)
-	{
-#if defined VCZH_MSVC
-		return WideCharToMultiByte(CP_THREAD_ACP, 0, w, -1, a, (int)(a ? chars : 0), 0, 0);
-#elif defined VCZH_GCC
-		return wcstombs(a, w, chars-1)+1;
-#endif
-	}
-
-	AString wtoa(const WString& string)
-	{
-		vint len = _wtoa(string.Buffer(), 0, 0);
-		char* buffer = new char[len];
-		memset(buffer, 0, len*sizeof(*buffer));
-		_wtoa(string.Buffer(), buffer, (int)len);
-		AString s = buffer;
-		delete[] buffer;
-		return s;
-	}
-
-	vint _atow(const char* a, wchar_t* w, vint chars)
-	{
-#if defined VCZH_MSVC
-		return MultiByteToWideChar(CP_THREAD_ACP, 0, a, -1, w, (int)(w ? chars : 0));
-#elif defined VCZH_GCC
-		return mbstowcs(w, a, chars-1)+1;
-#endif
-	}
-
-	WString atow(const AString& string)
-	{
-		vint len = _atow(string.Buffer(), 0, 0);
-		wchar_t* buffer = new wchar_t[len];
-		memset(buffer, 0, len*sizeof(*buffer));
-		_atow(string.Buffer(), buffer, (int)len);
-		WString s = buffer;
-		delete[] buffer;
-		return s;
-	}
-
 	AString alower(const AString& string)
 	{
 		AString result = string.Buffer();
@@ -947,270 +1193,8 @@ namespace vl
 		_wcsupr_s((wchar_t*)result.Buffer(), result.Length() + 1);
 		return result;
 	}
-
-	WString LoremIpsum(vint bestLength, LoremIpsumCasing casing)
-	{
-		static const wchar_t* words[] =
-		{
-			L"lorem", L"ipsum", L"dolor", L"sit", L"amet", L"consectetur", L"adipiscing", L"elit", L"integer",
-			L"nec", L"odio", L"praesent", L"libero", L"sed", L"cursus", L"ante", L"dapibus", L"diam",
-			L"sed", L"nisi", L"nulla", L"quis", L"sem", L"at", L"nibh", L"elementum", L"imperdiet", L"duis",
-			L"sagittis", L"ipsum", L"praesent", L"mauris", L"fusce", L"nec", L"tellus", L"sed", L"augue",
-			L"semper", L"porta", L"mauris", L"massa", L"vestibulum", L"lacinia", L"arcu", L"eget", L"nulla",
-			L"class", L"aptent", L"taciti", L"sociosqu", L"ad", L"litora", L"torquent", L"per", L"conubia",
-			L"nostra", L"per", L"inceptos", L"himenaeos", L"curabitur", L"sodales", L"ligula", L"in",
-			L"libero", L"sed", L"dignissim", L"lacinia", L"nunc", L"curabitur", L"tortor", L"pellentesque",
-			L"nibh", L"aenean", L"quam", L"in", L"scelerisque", L"sem", L"at", L"dolor", L"maecenas",
-			L"mattis", L"sed", L"convallis", L"tristique", L"sem", L"proin", L"ut", L"ligula", L"vel",
-			L"nunc", L"egestas", L"porttitor", L"morbi", L"lectus", L"risus", L"iaculis", L"vel", L"suscipit",
-			L"quis", L"luctus", L"non", L"massa", L"fusce", L"ac", L"turpis", L"quis", L"ligula", L"lacinia",
-			L"aliquet", L"mauris", L"ipsum", L"nulla", L"metus", L"metus", L"ullamcorper", L"vel", L"tincidunt",
-			L"sed", L"euismod", L"in", L"nibh", L"quisque", L"volutpat", L"condimentum", L"velit", L"class",
-			L"aptent", L"taciti", L"sociosqu", L"ad", L"litora", L"torquent", L"per", L"conubia", L"nostra",
-			L"per", L"inceptos", L"himenaeos", L"nam", L"nec", L"ante", L"sed", L"lacinia", L"urna",
-			L"non", L"tincidunt", L"mattis", L"tortor", L"neque", L"adipiscing", L"diam", L"a", L"cursus",
-			L"ipsum", L"ante", L"quis", L"turpis", L"nulla", L"facilisi", L"ut", L"fringilla", L"suspendisse",
-			L"potenti", L"nunc", L"feugiat", L"mi", L"a", L"tellus", L"consequat", L"imperdiet", L"vestibulum",
-			L"sapien", L"proin", L"quam", L"etiam", L"ultrices", L"suspendisse", L"in", L"justo", L"eu",
-			L"magna", L"luctus", L"suscipit", L"sed", L"lectus", L"integer", L"euismod", L"lacus", L"luctus",
-			L"magna", L"quisque", L"cursus", L"metus", L"vitae", L"pharetra", L"auctor", L"sem", L"massa",
-			L"mattis", L"sem", L"at", L"interdum", L"magna", L"augue", L"eget", L"diam", L"vestibulum",
-			L"ante", L"ipsum", L"primis", L"in", L"faucibus", L"orci", L"luctus", L"et", L"ultrices",
-			L"posuere", L"cubilia", L"curae;", L"morbi", L"lacinia", L"molestie", L"dui", L"praesent",
-			L"blandit", L"dolor", L"sed", L"non", L"quam", L"in", L"vel", L"mi", L"sit", L"amet", L"augue",
-			L"congue", L"elementum", L"morbi", L"in", L"ipsum", L"sit", L"amet", L"pede", L"facilisis",
-			L"laoreet", L"donec", L"lacus", L"nunc", L"viverra", L"nec", L"blandit", L"vel", L"egestas",
-			L"et", L"augue", L"vestibulum", L"tincidunt", L"malesuada", L"tellus", L"ut", L"ultrices",
-			L"ultrices", L"enim", L"curabitur", L"sit", L"amet", L"mauris", L"morbi", L"in", L"dui",
-			L"quis", L"est", L"pulvinar", L"ullamcorper", L"nulla", L"facilisi", L"integer", L"lacinia",
-			L"sollicitudin", L"massa", L"cras", L"metus", L"sed", L"aliquet", L"risus", L"a", L"tortor",
-			L"integer", L"id", L"quam", L"morbi", L"mi", L"quisque", L"nisl", L"felis", L"venenatis",
-			L"tristique", L"dignissim", L"in", L"ultrices", L"sit", L"amet", L"augue", L"proin", L"sodales",
-			L"libero", L"eget", L"ante", L"nulla", L"quam", L"aenean", L"laoreet", L"vestibulum", L"nisi",
-			L"lectus", L"commodo", L"ac", L"facilisis", L"ac", L"ultricies", L"eu", L"pede", L"ut", L"orci",
-			L"risus", L"accumsan", L"porttitor", L"cursus", L"quis", L"aliquet", L"eget", L"justo",
-			L"sed", L"pretium", L"blandit", L"orci", L"ut", L"eu", L"diam", L"at", L"pede", L"suscipit",
-			L"sodales", L"aenean", L"lectus", L"elit", L"fermentum", L"non", L"convallis", L"id", L"sagittis",
-			L"at", L"neque", L"nullam", L"mauris", L"orci", L"aliquet", L"et", L"iaculis", L"et", L"viverra",
-			L"vitae", L"ligula", L"nulla", L"ut", L"felis", L"in", L"purus", L"aliquam", L"imperdiet",
-			L"maecenas", L"aliquet", L"mollis", L"lectus", L"vivamus", L"consectetuer", L"risus", L"et",
-			L"tortor"
-		};
-		static vint index = 0;
-		const vint WordCount = sizeof(words) / sizeof(*words);
-
-		if (bestLength < 0) bestLength = 0;
-		vint bufferLength = bestLength + 20;
-		wchar_t* buffer = new wchar_t[bufferLength + 1];
-
-		buffer[0] = 0;
-		vint used = 0;
-		wchar_t* writing = buffer;
-		while (used < bestLength)
-		{
-			if (used != 0)
-			{
-				*writing++ = L' ';
-				used++;
-			}
-
-			vint wordSize = (vint)wcslen(words[index]);
-			wcscpy_s(writing, bufferLength - used, words[index]);
-			if (casing == LoremIpsumCasing::AllWordsUpperCase || (casing == LoremIpsumCasing::FirstWordUpperCase && used == 0))
-			{
-				*writing -= L'a' - L'A';
-			}
-
-			if (used != 0 && used + wordSize > bestLength)
-			{
-				vint deltaShort = bestLength - used + 1;
-				vint deltaLong = used + wordSize - bestLength;
-				if (deltaShort < deltaLong)
-				{
-					*--writing = 0;
-					used--;
-					break;
-				}
-			}
-			writing += wordSize;
-			used += wordSize;
-			index = (index + 1) % WordCount;
-		}
-
-		WString result = buffer;
-		delete[] buffer;
-		return result;
-	}
-
-	WString LoremIpsumTitle(vint bestLength)
-	{
-		return LoremIpsum(bestLength, LoremIpsumCasing::AllWordsUpperCase);
-	}
-
-	WString LoremIpsumSentence(vint bestLength)
-	{
-		return LoremIpsum(bestLength, LoremIpsumCasing::FirstWordUpperCase) + L".";
-	}
-
-	WString LoremIpsumParagraph(vint bestLength)
-	{
-		srand((unsigned)time(0));
-		auto casing = LoremIpsumCasing::FirstWordUpperCase;
-		vint comma = 0;
-		WString result;
-		while (result.Length() < bestLength)
-		{
-			vint offset = bestLength - result.Length();
-			if (comma == 0)
-			{
-				comma = rand() % 4 + 1;
-			}
-			vint length = rand() % 45 + 15;
-			if (offset < 20)
-			{
-				comma = 0;
-				length = offset - 1;
-			}
-			else if (length > offset)
-			{
-				comma = 0;
-				length = offset + rand() % 11 - 5;
-			}
-
-			result += LoremIpsum(length, casing);
-			if (comma == 0)
-			{
-				result += L".";
-				break;
-			}
-			else if (comma == 1)
-			{
-				result += L". ";
-				casing = LoremIpsumCasing::FirstWordUpperCase;
-			}
-			else
-			{
-				result += L", ";
-				casing = LoremIpsumCasing::AllWordsLowerCase;
-			}
-			comma--;
-		}
-		return result;
-	}
 }
 
-
-/***********************************************************************
-.\COLLECTIONS\PARTIALORDERING.CPP
-***********************************************************************/
-/***********************************************************************
-Author: Zihan Chen (vczh)
-Licensed under https://github.com/vczh-libraries/License
-***********************************************************************/
-
-
-namespace vl
-{
-	namespace collections
-	{
-		using namespace po;
-
-/***********************************************************************
-PartialOrderingProcessor
-***********************************************************************/
-
-		void PartialOrderingProcessor::InitNodes(vint itemCount)
-		{
-			nodes.Resize(itemCount);
-
-			for (vint i = 0; i < itemCount; i++)
-			{
-				auto& node = nodes[i];
-				node.ins = &emptyList;
-				node.outs = &emptyList;
-
-				vint inIndex = ins.Keys().IndexOf(i);
-				vint outIndex = outs.Keys().IndexOf(i);
-
-				if (inIndex != -1)
-				{
-					node.ins = &ins.GetByIndex(inIndex);
-				}
-				if (outIndex != -1)
-				{
-					node.outs = &outs.GetByIndex(outIndex);
-				}
-			}
-		}
-
-		void PartialOrderingProcessor::VisitUnvisitedNode(po::Node& node, Array<vint>& reversedOrder, vint& used)
-		{
-			node.visited = true;
-			for (vint i = node.outs->Count() - 1; i >= 0; i--)
-			{
-				auto& outNode = nodes[node.outs->Get(i)];
-				if (!outNode.visited)
-				{
-					VisitUnvisitedNode(outNode, reversedOrder, used);
-				}
-			}
-			reversedOrder[used++] = (vint)(&node - &nodes[0]);
-		}
-
-		void PartialOrderingProcessor::AssignUnassignedNode(po::Node& node, vint componentIndex, vint& used)
-		{
-			node.component = componentIndex;
-			firstNodesBuffer[used++] = (vint)(&node - &nodes[0]);
-			for (vint i = 0; i < node.ins->Count(); i++)
-			{
-				auto& inNode = nodes[node.ins->Get(i)];
-				if (inNode.component == -1)
-				{
-					AssignUnassignedNode(inNode, componentIndex, used);
-				}
-			}
-		}
-
-		void PartialOrderingProcessor::Sort()
-		{
-			// Kosaraju's Algorithm
-			CHECK_ERROR(components.Count() == 0, L"PartialOrdering::Sort()#Sorting twice is not allowed.");
-
-			Array<vint> reversedOrder(nodes.Count());
-			{
-				vint used = 0;
-				for (vint i = nodes.Count() - 1; i >= 0; i--)
-				{
-					auto& node = nodes[i];
-					if (!node.visited)
-					{
-						VisitUnvisitedNode(node, reversedOrder, used);
-					}
-				}
-			}
-
-			firstNodesBuffer.Resize(nodes.Count());
-			{
-				vint lastUsed = 0;
-				vint used = 0;
-				for (vint i = reversedOrder.Count() - 1; i >= 0; i--)
-				{
-					auto& node = nodes[reversedOrder[i]];
-					if (node.component == -1)
-					{
-						AssignUnassignedNode(node, components.Count(), used);
-
-						Component component;
-						component.firstNode = &firstNodesBuffer[lastUsed];
-						component.nodeCount = used - lastUsed;
-						lastUsed = used;
-						components.Add(component);
-					}
-				}
-			}
-		}
-	}
-}
 
 /***********************************************************************
 .\UNITTEST\UNITTEST.CPP
@@ -1220,8 +1204,6 @@ Author: Zihan Chen (vczh)
 Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/
 
-#ifdef VCZH_MSVC
-#endif
 
 namespace vl
 {
@@ -1313,9 +1295,9 @@ UnitTest
 #ifdef VCZH_MSVC
 				__try
 				{
-					SuppressCppFailure(ForwardValue<TCallback&&>(callback));
+					SuppressCppFailure(std::forward<TCallback&&>(callback));
 				}
-				__except (EXCEPTION_EXECUTE_HANDLER)
+				__except (/*EXCEPTION_EXECUTE_HANDLER*/ 1)
 				{
 					RecordFailure(L"Runtime exception occurred!");
 				}
@@ -1329,7 +1311,7 @@ UnitTest
 			{
 				if (suppressFailure)
 				{
-					SuppressCFailure(ForwardValue<TCallback&&>(callback));
+					SuppressCFailure(std::forward<TCallback&&>(callback));
 				}
 				else
 				{
@@ -1368,50 +1350,39 @@ UnitTest
 			Console::SetColor(true, true, true, false);
 		}
 
-#ifdef VCZH_MSVC
-		int UnitTest::RunAndDisposeTests(int argc, wchar_t* argv[])
-#else
-		int UnitTest::RunAndDisposeTests(int argc, char* argv[])
-#endif
+		int UnitTest::PrintUsages()
 		{
-			if (argc < 3)
+			PrintMessage(L"Usage: [/D | /R]", MessageKind::Error);
+			return 1;
+		}
+
+		int UnitTest::RunAndDisposeTests(Nullable<WString> option)
+		{
+			if (option)
 			{
-				if (argc == 2)
+				if (option.Value() == L"/D")
 				{
-#ifdef VCZH_MSVC
-					WString option = argv[1];
-#else
-					WString option = atow(argv[1]);
-#endif
-					if (option == L"/D")
-					{
-						suppressFailure = false;
-					}
-					else if (option == L"/R")
-					{
-						suppressFailure = true;
-					}
-					else
-					{
-						goto PRINT_USAGE;
-					}
+					suppressFailure = false;
+				}
+				else if (option.Value() == L"/R")
+				{
+					suppressFailure = true;
 				}
 				else
 				{
-#ifdef VCZH_MSVC
-					if (IsDebuggerPresent())
-					{
-						suppressFailure = false;
-					}
-					else
-					{
-						suppressFailure = true;
-					}
-#else
-					suppressFailure = true;
-#endif
+					return PrintUsages();
 				}
+			}
+			else if (IsDebuggerAttached())
+			{
+				suppressFailure = false;
+			}
+			else
+			{
+				suppressFailure = true;
+			}
 
+			{
 				auto current = testHead;
 				testHead = nullptr;
 				testTail = nullptr;
@@ -1453,9 +1424,44 @@ UnitTest
 				testContext = nullptr;
 				return passed ? 0 : 1;
 			}
-		PRINT_USAGE:
-			PrintMessage(L"Usage: [/D | /R]", MessageKind::Error);
-			return 1;
+		}
+
+		int UnitTest::RunAndDisposeTests(int argc, wchar_t* argv[])
+		{
+			if (argc < 3)
+			{
+				if (argc == 2)
+				{
+					return RunAndDisposeTests({ argv[1] });
+				}
+				else
+				{
+					return RunAndDisposeTests({});
+				}
+			}
+			else
+			{
+				return PrintUsages();
+			}
+		}
+
+		int UnitTest::RunAndDisposeTests(int argc, char* argv[])
+		{
+			if (argc < 3)
+			{
+				if (argc == 2)
+				{
+					return RunAndDisposeTests({ atow(argv[1]) });
+				}
+				else
+				{
+					return RunAndDisposeTests({});
+				}
+			}
+			else
+			{
+				return PrintUsages();
+			}
 		}
 
 		void UnitTest::RegisterTestFile(const char* fileName, UnitTestFileProc testProc)

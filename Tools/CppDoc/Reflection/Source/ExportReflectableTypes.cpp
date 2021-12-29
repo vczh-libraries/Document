@@ -120,6 +120,15 @@ void ExportReflectableTypes(Folder outputPath)
 	}
 	{
 		LoadPredefinedTypes();
+		LoadParsing2Types();
+		XmlAstLoadTypes();
+		JsonAstLoadTypes();
+		GetGlobalTypeManager()->Load();
+		LogTypes(xmlRoot, L"VlppParser2", loaded);
+		ResetGlobalTypeManager();
+	}
+	{
+		LoadPredefinedTypes();
 		WfLoadLibraryTypes();
 		GetGlobalTypeManager()->Load();
 		LogTypes(xmlRoot, L"Workflow-Runtime", loaded);
@@ -128,7 +137,7 @@ void ExportReflectableTypes(Folder outputPath)
 	{
 		LoadPredefinedTypes();
 		LoadParsingTypes();
-		WfLoadTypes();
+		WorkflowAstLoadTypes();
 		GetGlobalTypeManager()->Load();
 		LogTypes(xmlRoot, L"Workflow-Compiler", loaded);
 		ResetGlobalTypeManager();
@@ -152,7 +161,7 @@ void ExportReflectableTypes(Folder outputPath)
 	{
 		LoadPredefinedTypes();
 		LoadParsingTypes();
-		GuiIqLoadTypes();
+		GuiInstanceQueryAstLoadTypes();
 		GetGlobalTypeManager()->Load();
 		LogTypes(xmlRoot, L"GacUI-Compiler", loaded);
 		ResetGlobalTypeManager();

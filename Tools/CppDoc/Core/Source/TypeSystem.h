@@ -289,33 +289,6 @@ struct TsysPSRecord
 	TypeTsysList					evaluatedTypes;
 };
 
-namespace vl
-{
-	template<>
-	struct POD<TsysPrimitive>
-	{
-		static const bool			Result = true;
-	};
-
-	template<>
-	struct POD<TsysCV>
-	{
-		static const bool			Result = true;
-	};
-
-	template<>
-	struct POD<TsysFunc>
-	{
-		static const bool			Result = true;
-	};
-
-	template<>
-	struct POD<TsysGenericArg>
-	{
-		static const bool			Result = true;
-	};
-}
-
 #define TSYS_TYPE_LIST(F)																	\
 	F(Any)																					\
 	F(Zero)																					\

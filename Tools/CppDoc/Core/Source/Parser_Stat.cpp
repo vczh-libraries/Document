@@ -84,7 +84,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			TestToken(cursor, CppTokens::HEX, false) ||
 			TestToken(cursor, CppTokens::BIN, false))
 		{
-			stat->name.name = WString(cursor->token.reading, cursor->token.length);
+			stat->name.name = WString::CopyFrom(cursor->token.reading, cursor->token.length);
 			stat->name.tokenCount = 1;
 			stat->name.nameTokens[0] = cursor->token;
 			stat->name.type = CppNameType::Normal;
@@ -368,7 +368,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			if (isLabel)
 			{
 				auto stat = MakePtr<LabelStat>();
-				stat->name.name = WString(cursor->token.reading, cursor->token.length);
+				stat->name.name = WString::CopyFrom(cursor->token.reading, cursor->token.length);
 				stat->name.tokenCount = 1;
 				stat->name.nameTokens[0] = cursor->token;
 				stat->name.type = CppNameType::Normal;

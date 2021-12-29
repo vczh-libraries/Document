@@ -15,8 +15,7 @@ Ptr<RegexLexer> CreateCppLexer()
 #undef DEFINE_KEYWORD_TOKEN
 #undef DEFINE_REGEX_TOKEN
 
-	RegexProc proc;
-	return new RegexLexer(tokens, proc);
+	return new RegexLexer(tokens);
 }
 
 /***********************************************************************

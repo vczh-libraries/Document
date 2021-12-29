@@ -4,7 +4,7 @@ DEVELOPER: Zihan Chen(vczh)
 ***********************************************************************/
 #include "GacUI.h"
 #include "VlppWorkflowCompiler.h"
-#include "VlppParser.h"
+#include "VlppGlrParser.h"
 #include "VlppWorkflowLibrary.h"
 #include "VlppReflection.h"
 #include "VlppOS.h"
@@ -550,7 +550,7 @@ GuiEventInfoImpl
 					return false;
 				}
 
-				void InvokeInternal(DescriptableObject* thisObject, Ptr<IValueList> arguments)override
+				void InvokeInternal(DescriptableObject* thisObject, Ptr<IValueReadonlyList> arguments)override
 				{
 					GuiGraphicsEvent<T>* eventObject=eventRetriver(thisObject, false);
 					if(eventObject)
@@ -607,11 +607,11 @@ GuiEventInfoImpl
 			};
 
 			template<typename T>
-			WString GuiEventInfoImpl<T>::attachTemplate(L"::vl::__vwsn::EventAttach($This->GetEventReceiver()->$Name, $Handler)", false);
+			WString GuiEventInfoImpl<T>::attachTemplate = WString::Unmanaged(L"::vl::__vwsn::EventAttach($This->GetEventReceiver()->$Name, $Handler)");
 			template<typename T>
-			WString GuiEventInfoImpl<T>::detachTemplate(L"::vl::__vwsn::EventDetach($This->GetEventReceiver()->$Name, $Handler)", false);
+			WString GuiEventInfoImpl<T>::detachTemplate = WString::Unmanaged(L"::vl::__vwsn::EventDetach($This->GetEventReceiver()->$Name, $Handler)");
 			template<typename T>
-			WString GuiEventInfoImpl<T>::invokeTemplate(L"::vl::__vwsn::EventInvoke($This->GetEventReceiver()->$Name, $Handler)", false);
+			WString GuiEventInfoImpl<T>::invokeTemplate = WString::Unmanaged(L"::vl::__vwsn::EventInvoke($This->GetEventReceiver()->$Name, $Handler)");
 
 			template<typename T>
 			struct GuiEventArgumentTypeRetriver

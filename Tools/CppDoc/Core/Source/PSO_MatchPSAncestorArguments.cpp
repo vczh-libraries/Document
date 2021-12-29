@@ -339,8 +339,8 @@ namespace partial_specification_ordering
 		TGetter&& getter
 	)
 	{
-		FillVariadicTypeList(ancestor, ancestorTypes, forParameters, ForwardValue<TGetter&&>(getter));
-		FillVariadicTypeList(child, childTypes, forParameters, ForwardValue<TGetter&&>(getter));
+		FillVariadicTypeList(ancestor, ancestorTypes, forParameters, std::forward<TGetter&&>(getter));
+		FillVariadicTypeList(child, childTypes, forParameters, std::forward<TGetter&&>(getter));
 	}
 
 	/***********************************************************************

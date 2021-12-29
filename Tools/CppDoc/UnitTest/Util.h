@@ -96,7 +96,7 @@ void AssertExpr(const wchar_t* input, const wchar_t* log, T... logTsys)
 #define TOKEN_READER(INPUT)\
 	Array<wchar_t> reader_array((vint)wcslen(INPUT) + 1);\
 	memcpy(&reader_array[0], INPUT, (size_t)(reader_array.Count()) * sizeof(wchar_t));\
-	WString reader_string(&reader_array[0], false);\
+	auto reader_string = WString::Unmanaged(&reader_array[0]);\
 	CppTokenReader reader(GlobalCppLexer(), reader_string)\
 
 #define COMPILE_PROGRAM_WITH_RECORDER(PROGRAM, PA, INPUT, RECORDER)\
@@ -122,7 +122,7 @@ protected:
 
 public:
 	TestIndexRecorder(T&& _callback)
-		:callback(ForwardValue<T&&>(_callback))
+		:callback(std::forward<T&&>(_callback))
 	{
 	}
 
@@ -160,7 +160,7 @@ public:
 template<typename T>
 Ptr<IIndexRecorder> CreateTestIndexRecorder(T&& callback)
 {
-	return new TestIndexRecorder<T>(ForwardValue<T&&>(callback));
+	return new TestIndexRecorder<T>(std::forward<T&&>(callback));
 }
 
 #define BEGIN_ASSERT_SYMBOL \

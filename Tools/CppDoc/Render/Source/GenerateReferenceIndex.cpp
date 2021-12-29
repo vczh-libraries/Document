@@ -578,6 +578,8 @@ vint ProcessDocumentRecordHyperLinksInternal(
 )
 {
 	static Regex regexHyperLink(L"/[(<type>/w):((<content>[a-zA-Z0-9_`*]+).)*(<content>[a-zA-Z0-9_`*]+)/]");
+	static vint indexType = regexHyperLink.CaptureNames().IndexOf(L"type");
+	static vint indexContent = regexHyperLink.CaptureNames().IndexOf(L"content");
 
 	RegexMatch::List matches;
 	regexHyperLink.Cut(xmlTextContent, false, matches);
@@ -590,8 +592,8 @@ vint ProcessDocumentRecordHyperLinksInternal(
 		auto match = matches[i];
 		if (match->Success())
 		{
-			auto type = match->Groups()[L"type"][0].Value();
-			auto& contents = match->Groups()[L"content"];
+			auto type = match->Groups()[indexType][0].Value();
+			auto& contents = match->Groups()[indexContent];
 			if (auto node = ResolveHyperLink(global, result, symbol, decl, false, type, contents, match->Result().Value(), xmlText))
 			{
 				subNodes.Add(node);
@@ -636,6 +638,7 @@ void ProcessDocumentRecordHyperLinksInternal(
 )
 {
 	static Regex regexHyperLink(L"^((<content>[a-zA-Z0-9_`*]+)::)*(<content>[a-zA-Z0-9_`*]+)$");
+	static vint indexContent = regexHyperLink.CaptureNames().IndexOf(L"content");
 
 	if (xmlElement->name.value == L"see")
 	{
@@ -648,7 +651,7 @@ void ProcessDocumentRecordHyperLinksInternal(
 
 			if (auto match = regexHyperLink.MatchHead(attr->value.value))
 			{
-				auto& contents = match->Groups()[L"content"];
+				auto& contents = match->Groups()[indexContent];
 				if (auto node = ResolveHyperLink(global, result, symbol, decl, true, L"", contents, hyperlinkText, xmlText))
 				{
 					xmlContainer->subNodes[indexInXmlContainer] = node;

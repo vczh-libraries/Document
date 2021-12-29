@@ -4,7 +4,7 @@ extern Ptr<RegexLexer> GlobalCppLexer();
 
 vint CheckTokens(List<RegexToken>& tokens)
 {
-	FOREACH(RegexToken, token, tokens)
+	for (auto&& token : tokens)
 	{
 		switch ((CppTokens)token.token)
 		{
@@ -470,7 +470,7 @@ int main()
 					if (cursor)
 					{
 						auto token = cursor->token;
-						TEST_ASSERT(WString(token.reading, token.length) == output[count++]);
+						TEST_ASSERT(WString::CopyFrom(token.reading, token.length) == output[count++]);
 						cursor = cursor->Next();
 					}
 					else
@@ -521,8 +521,8 @@ int main()
 
 		for (vint i = 0; i < TokenCount; i++)
 		{
-			TEST_ASSERT(WString(cursor1->token.reading, cursor1->token.length) == output[i]);
-			TEST_ASSERT(WString(cursor2->token.reading, cursor2->token.length) == output[i]);
+			TEST_ASSERT(WString::CopyFrom(cursor1->token.reading, cursor1->token.length) == output[i]);
+			TEST_ASSERT(WString::CopyFrom(cursor2->token.reading, cursor2->token.length) == output[i]);
 
 			cursor1 = cursor1->Next();
 			cursor2 = cursor2->Next();

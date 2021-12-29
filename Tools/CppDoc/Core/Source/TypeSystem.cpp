@@ -520,7 +520,7 @@ public:
 #ifdef VCZH_CHECK_MEMORY_LEAKS_NEW
 #undef new
 #endif
-		return new(itsys)T(ForwardValue<TArgs&&>(args)...);
+		return new(itsys)T(std::forward<TArgs&&>(args)...);
 #ifdef VCZH_CHECK_MEMORY_LEAKS_NEW
 #define new VCZH_CHECK_MEMORY_LEAKS_NEW
 #endif
@@ -703,7 +703,7 @@ public:
 
 					auto taContext = MakePtr<TemplateArgumentContext>(decl, spec->arguments.Count());
 					taContext->parent = parentTaContext.Obj();
-					FOREACH_INDEXER(ITsys*, param, index, *params)
+					for (auto [param, index] : indexed(*params))
 					{
 						taContext->SetValueByKey(
 							symbol_type_resolving::GetTemplateArgumentKey(spec->arguments[index]),

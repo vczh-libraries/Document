@@ -215,7 +215,7 @@ namespace symbol_totsys_impl
 						}
 
 						input.selectedIndex = i;
-						Step<Index + 1>::Do(pa, result, unboundedVtaCount, ForwardValue<TProcess&&>(process), inputs...);
+						Step<Index + 1>::Do(pa, result, unboundedVtaCount, std::forward<TProcess&&>(process), inputs...);
 					}
 				}
 			};
@@ -252,7 +252,7 @@ namespace symbol_totsys_impl
 	bool ExpandPotentialVtaMultiResult(const ParsingArguments& pa, List<TResult>& result, TProcess&& process, VtaInput<TInputs> ...inputs)
 	{
 		using Step = typename impl::ExpandPotentialVtaStep<TResult, TProcess, TInputs...>::template Step<0>;
-		Step::Do(pa, result, -1, ForwardValue<TProcess&&>(process), inputs...);
+		Step::Do(pa, result, -1, std::forward<TProcess&&>(process), inputs...);
 		return (inputs.isVta || ...);
 	}
 

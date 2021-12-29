@@ -77,7 +77,7 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 				TestToken(cursor, CppTokens::HEX, false) ||
 				TestToken(cursor, CppTokens::BIN, false))
 			{
-				enumItem->name.name = WString(cursor->token.reading, cursor->token.length);
+				enumItem->name.name = WString::CopyFrom(cursor->token.reading, cursor->token.length);
 				enumItem->name.tokenCount = 1;
 				enumItem->name.nameTokens[0] = cursor->token;
 				enumItem->name.type = CppNameType::Normal;

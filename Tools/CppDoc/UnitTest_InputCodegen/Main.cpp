@@ -246,7 +246,7 @@ namespace generated_functions
 
 					if (search)
 					{
-						writer.WriteString(WString(input, false).Left((vint)(search - input)));
+						writer.WriteString(WString::Unmanaged(input).Left((vint)(search - input)));
 						writer.WriteString(replace);
 						input = search + skip;
 					}
@@ -343,7 +343,7 @@ namespace generated_functions
 			EncoderStream encoderStream(fileStream, encoder);
 			StreamWriter writer(encoderStream);
 			writer.WriteLine(L"#define GENERATED_FUNCTION_TYPES(F)\\");
-			FOREACH(WString, className, classNames)
+			for (auto className : classNames)
 			{
 				writer.WriteString(L"\tF(");
 				writer.WriteString(className);

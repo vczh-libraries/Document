@@ -330,8 +330,6 @@ namespace symbol_type_resolving
 						case TsysType::Init:
 							{
 								TypeTsysList tsys;
-								tsys.SetLessMemoryMode(false);
-
 								Array<ExprTsysList> initArgs(replacedType->GetParamCount());
 								for (vint j = 0; j < initArgs.Count(); j++)
 								{

@@ -20,11 +20,11 @@ Symbol* GetSpecialMember(const ParsingArguments& pa, Symbol* classSymbol, ITsys*
 	case SpecialMemberKind::DefaultCtor:
 	case SpecialMemberKind::CopyCtor:
 	case SpecialMemberKind::MoveCtor:
-		memberName = WString(L"$__ctor", false);
+		memberName = WString::Unmanaged(L"$__ctor");
 		break;
 	case SpecialMemberKind::CopyAssignOp:
 	case SpecialMemberKind::MoveAssignOp:
-		memberName = WString(L"operator =", false);
+		memberName = WString::Unmanaged(L"operator =");
 		break;
 	case SpecialMemberKind::Dtor:
 		memberName = L"~" + classSymbol->name;

@@ -64,14 +64,14 @@ template<typename TFrom, typename TTo, typename Tester>
 struct RunTypeConvert
 {
 	static TFrom entity;
-	static const decltype(Tester::Test(entity)) test = 0;
+	static inline const decltype(Tester::Test(entity)) test = 0;
 };
 
 template<typename TFrom, typename TTo, typename Tester>
 struct RunTypeConvertFromTemp
 {
-	static typename RemoveReference<TFrom>::Type entity;
-	static const decltype(Tester::Test(static_cast<TFrom>(entity))) test = 0;
+	static typename std::remove_reference_t<TFrom> entity;
+	static inline const decltype(Tester::Test(static_cast<TFrom>(entity))) test = 0;
 };
 
 #define TEST_CONV_TYPE(FROM, TO, CONV1, CONV2)\

@@ -67,14 +67,14 @@ namespace vl
 		Ptr<T> Ensure(Ptr<T>&& pointer)
 		{
 			CHECK_ERROR(pointer != nullptr, L"The pointer cannot be null.");
-			return MoveValue(pointer);
+			return std::move(pointer);
 		}
 
 		template<typename T>
 		Nullable<T> Ensure(Nullable<T>&& nullable)
 		{
 			CHECK_ERROR(nullable, L"The pointer cannot be null.");
-			return MoveValue(nullable);
+			return std::move(nullable);
 		}
 
 		template<typename T>
@@ -87,18 +87,16 @@ namespace vl
 		template<typename T>
 		WString ToString(const T& value)
 		{
-			using Type = typename RemoveCVR<T>::Type;
 			WString str;
-			CHECK_ERROR(reflection::description::TypedValueSerializerProvider<T>::Serialize(value, str), L"Failed to serialize.");
+			CHECK_ERROR(reflection::description::TypedValueSerializerProvider<std::remove_cvref_t<T>>::Serialize(value, str), L"Failed to serialize.");
 			return str;
 		}
 
 		template<typename T>
 		T Parse(const WString& str)
 		{
-			using Type = typename RemoveCVR<T>::Type;
 			T value;
-			CHECK_ERROR(reflection::description::TypedValueSerializerProvider<T>::Deserialize(str, value), L"Failed to serialize.");
+			CHECK_ERROR(reflection::description::TypedValueSerializerProvider<std::remove_cvref_t<T>>::Deserialize(str, value), L"Failed to serialize.");
 			return value;
 		}
 
@@ -151,19 +149,20 @@ namespace vl
 		}
 
 		template<typename T>
-		reflection::description::Value Box(const T& value)
+		reflection::description::Value Box(T&& value)
 		{
-			using Type = typename RemoveCVR<T>::Type;
-			return reflection::description::BoxParameter<Type>(const_cast<T&>(value));
+			return reflection::description::BoxParameter(value);
 		}
 
 		template<typename T>
 		T Unbox(const reflection::description::Value& value)
 		{
-			using Type = typename RemoveCVR<T>::Type;
-			T result;
-			reflection::description::UnboxParameter<Type>(value, result);
-			return result;
+			auto unboxed = reflection::description::UnboxParameter<std::remove_cvref_t<T>>(value);
+			if (std::is_reference_v<T>)
+			{
+				CHECK_ERROR(!unboxed.IsOwned(), L"It is impossible to return a reference from a unboxed value, when the unboxing has to call new T(...).");
+			}
+			return unboxed.Ref();
 		}
 
 		template<typename T>
@@ -206,8 +205,7 @@ namespace vl
 		template<typename T>
 		T UnboxWeak(const reflection::description::Value& value)
 		{
-			using Type = typename RemoveCVR<T>::Type;
-			return UnboxWeakHelper<Type>::Unbox(value);
+			return UnboxWeakHelper<std::remove_cvref_t<T>>::Unbox(value);
 		}
 
 		template<typename T>
@@ -229,22 +227,41 @@ namespace vl
 		}
 
 		template<typename T, typename U>
-		Ptr<T> UnboxCollection(const U& value)
+		Ptr<T> UnboxCollection(U&& value)
 		{
-			auto boxedValue = reflection::description::BoxParameter<U>(const_cast<U&>(value));
-			Ptr<T> result;
-			reflection::description::UnboxParameter<Ptr<T>>(boxedValue, result);
-			return result;
+			auto boxedValue = reflection::description::BoxParameter(value);
+			return reflection::description::UnboxParameter<Ptr<T>>(boxedValue).Ref();
 		}
 
 		template<typename T, typename U>
 		Ptr<T> UnboxCollection(const collections::LazyList<U>& value)
 		{
-			auto boxedValue = reflection::description::BoxParameter<collections::LazyList<U>>(const_cast<collections::LazyList<U>&>(value));
-			Ptr<T> result;
-			reflection::description::UnboxParameter<Ptr<T>>(boxedValue, result);
-			return result;
+			auto boxedValue = reflection::description::BoxParameter(const_cast<collections::LazyList<U>&>(value));
+			return reflection::description::UnboxParameter<Ptr<T>>(boxedValue).Ref();
 		}
+
+		struct CreateArray
+		{
+			using IValueArray = reflection::description::IValueArray;
+
+			Ptr<IValueArray>		list;
+
+			CreateArray();
+			CreateArray(Ptr<IValueArray> _list);
+
+			CreateArray Resize(vint size)
+			{
+				list->Resize(size);
+				return{ list };
+			}
+
+			template<typename T>
+			CreateArray Set(vint index, const T& value)
+			{
+				list->Set(index, Box(value));
+				return{ list };
+			}
+		};
 
 		struct CreateList
 		{

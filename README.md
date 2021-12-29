@@ -11,6 +11,10 @@
 
 This is a command line tool for generating indexed code in HTML and documents from comments with Markdown for C++.
 
+## TODO
+
+Revisit the implementation for `constexpr`.
+
 ## "The compiler"
 
 All **the compiler** here means the compiler created by this project.
@@ -24,8 +28,6 @@ All **the compiler** here means the compiler created by this project.
   - Details will be filled later
 
 ## Supported C++ Core Language Features
-
-[C++20](https://en.wikipedia.org/wiki/C%2B%2B20): Review after publishing
 
 - **Supported**
   - [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
@@ -117,6 +119,29 @@ All **the compiler** here means the compiler created by this project.
     - Class template argument deduction (CTAD), introducing constructor deduction guides, eg. allowing `std::pair(5.0, false)` instead of requiring explicit constructor arguments types `std::pair<double, bool>(5.0, false)` or an additional   helper template function std::make_pair(5.0, false).
     - Structured binding declarations, allowing `auto [a, b] = getTwoReturnValues();`.
     - Fold expressions, for variadic templates
+  - [C++20](https://en.wikipedia.org/wiki/C++20)
+    - concepts, with terse syntax
+    - modules
+    - designated initializers (based on the C99 feature, and common g++ extension)
+    - `[=, this]` as a lambda capture
+    - template parameter lists on lambdas
+    - three-way comparison using the "spaceship operator", operator <=>
+    - initialization of an additional variable within a range-based for statement
+    - lambdas in unevaluated contexts
+    - default constructible and assignable stateless lambdas
+    - allow pack expansions in lambda init-capture
+    - string literals as template parameters
+    - removing the need for typename in certain circumstances
+    - new standard attributes `[[no_unique_address]]`,`[[likely]]` and `[[unlikely]]`
+    - conditional explicit, allowing the explicit modifier to be contingent on a boolean expression
+    - expanded constexpr: virtual functions, union, try and catch, dynamic_cast and typeid, std::pointer_traits
+    - immediate functions using the new consteval keyword
+    - signed integers are now defined to be represented using two's complement (signed integer overflow remains undefined behavior)
+    - a revised memory model
+    - various improvements to structured bindings (interaction with lambda captures, static and thread_local storage duration)
+    - coroutines
+    - using on scoped enums
+    - constinit keyword
 
 ## Limitations
 

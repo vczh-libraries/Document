@@ -23,7 +23,7 @@ void GenerateFileIndexInFolder(WString prefix, WString indentation, WString inde
 		auto flr = flrs[i];
 		auto path = flr->filePath.GetFullPath();
 		auto remaining = path.Sub(prefix.Length(), path.Length() - prefix.Length());
-		auto delimiterIndex = INVLOC.FindFirst(remaining, FilePath::Delimiter, Locale::Normalization::None);
+		auto delimiterIndex = INVLOC.FindFirst(remaining, WString::FromChar(FilePath::Delimiter), Locale::Normalization::None);
 		if (delimiterIndex.key == -1)
 		{
 			groupedFlrs.Add(L"", flr);
@@ -60,7 +60,7 @@ void GenerateFileIndexInFolder(WString prefix, WString indentation, WString inde
 			writer.WriteLine(L"</span><br>");
 
 			auto& flrsInFolder = groupedFlrs.GetByIndex(i);
-			GenerateFileIndexInFolder(prefix + folder + FilePath::Delimiter, indentation + indentationStep, indentationStep, flrsInFolder, writer);
+			GenerateFileIndexInFolder(prefix + folder + WString::FromChar(FilePath::Delimiter), indentation + indentationStep, indentationStep, flrsInFolder, writer);
 		}
 	}
 }

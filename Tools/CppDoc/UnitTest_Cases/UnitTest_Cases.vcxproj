@@ -23,34 +23,38 @@
     <ProjectGuid>{ED256486-7118-4B52-93E5-795611FC092C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>UnitTestCases</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -72,19 +76,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\..\..\..\Vlpp\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppOS\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppRegex\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppReflection\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppParser\Release\IncludeOnly;$(ProjectDir)..\..\..\..\Workflow\Release\IncludeOnly;$(ProjectDir)..\..\..\..\GacUI\Release\IncludeOnly;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\..\..\Vlpp\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppOS\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppRegex\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppReflection\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppParser\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppParser2\Release\IncludeOnly;$(ProjectDir)..\..\..\..\Workflow\Release\IncludeOnly;$(ProjectDir)..\..\..\..\GacUI\Release\IncludeOnly;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\..\..\..\Vlpp\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppOS\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppRegex\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppReflection\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppParser\Release\IncludeOnly;$(ProjectDir)..\..\..\..\Workflow\Release\IncludeOnly;$(ProjectDir)..\..\..\..\GacUI\Release\IncludeOnly;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\..\..\Vlpp\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppOS\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppRegex\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppReflection\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppParser\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppParser2\Release\IncludeOnly;$(ProjectDir)..\..\..\..\Workflow\Release\IncludeOnly;$(ProjectDir)..\..\..\..\GacUI\Release\IncludeOnly;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\..\..\..\Vlpp\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppOS\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppRegex\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppReflection\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppParser\Release\IncludeOnly;$(ProjectDir)..\..\..\..\Workflow\Release\IncludeOnly;$(ProjectDir)..\..\..\..\GacUI\Release\IncludeOnly;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\..\..\Vlpp\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppOS\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppRegex\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppReflection\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppParser\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppParser2\Release\IncludeOnly;$(ProjectDir)..\..\..\..\Workflow\Release\IncludeOnly;$(ProjectDir)..\..\..\..\GacUI\Release\IncludeOnly;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\..\..\..\Vlpp\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppOS\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppRegex\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppReflection\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppParser\Release\IncludeOnly;$(ProjectDir)..\..\..\..\Workflow\Release\IncludeOnly;$(ProjectDir)..\..\..\..\GacUI\Release\IncludeOnly;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\..\..\Vlpp\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppOS\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppRegex\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppReflection\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppParser\Release\IncludeOnly;$(ProjectDir)..\..\..\..\VlppParser2\Release\IncludeOnly;$(ProjectDir)..\..\..\..\Workflow\Release\IncludeOnly;$(ProjectDir)..\..\..\..\GacUI\Release\IncludeOnly;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -97,6 +101,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PreprocessToFile>false</PreprocessToFile>
       <AdditionalOptions>/P /C %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -115,6 +120,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PreprocessToFile>false</PreprocessToFile>
       <AdditionalOptions>/P /C %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -135,6 +141,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PreprocessToFile>false</PreprocessToFile>
       <AdditionalOptions>/P /C %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -157,6 +164,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PreprocessToFile>false</PreprocessToFile>
       <AdditionalOptions>/P /C %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

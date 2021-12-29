@@ -88,7 +88,7 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 
 			name.type = CppNameType::Normal;
 			name.tokenCount = 3;
-			name.name = L"operator \"\" " + WString(idToken->token.reading, idToken->token.length);
+			name.name = L"operator \"\" " + WString::CopyFrom(idToken->token.reading, idToken->token.length);
 			name.nameTokens[0] = oldCursor->token;
 			name.nameTokens[1] = oldCursor->Next()->token;
 			name.nameTokens[2] = oldCursor->Next()->Next()->token;
@@ -116,7 +116,7 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 		{\
 			name.tokenCount += 1;\
 			name.nameTokens[1] = cursor->token;\
-			name.name += WString(name.nameTokens[1].reading, name.nameTokens[1].length);\
+			name.name += WString::CopyFrom(name.nameTokens[1].reading, name.nameTokens[1].length);\
 		}\
 		else\
 
@@ -126,7 +126,7 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 			name.tokenCount += 2;\
 			name.nameTokens[1] = cursor->token;\
 			name.nameTokens[2] = cursor->Next()->token;\
-			name.name += WString(name.nameTokens[1].reading, name.nameTokens[1].length + name.nameTokens[2].length);\
+			name.name += WString::CopyFrom(name.nameTokens[1].reading, name.nameTokens[1].length + name.nameTokens[2].length);\
 		}\
 		else\
 
@@ -137,7 +137,7 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 			name.nameTokens[1] = cursor->token;\
 			name.nameTokens[2] = cursor->Next()->token;\
 			name.nameTokens[3] = cursor->Next()->Next()->token;\
-			name.name += WString(name.nameTokens[1].reading, name.nameTokens[1].length + name.nameTokens[2].length + name.nameTokens[3].length);\
+			name.name += WString::CopyFrom(name.nameTokens[1].reading, name.nameTokens[1].length + name.nameTokens[2].length + name.nameTokens[3].length);\
 		}\
 		else\
 
@@ -212,7 +212,7 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 		name.tokenCount = 2;
 		name.nameTokens[0] = cursor->token;
 		name.nameTokens[1] = cursor->Next()->token;
-		name.name = WString(cursor->token.reading, cursor->token.length + cursor->Next()->token.length);
+		name.name = WString::CopyFrom(cursor->token.reading, cursor->token.length + cursor->Next()->token.length);
 		SkipToken(cursor);
 		SkipToken(cursor);
 		return true;
@@ -223,7 +223,7 @@ bool ParseCppName(CppName& name, Ptr<CppTokenCursor>& cursor, bool forceSpecialM
 		name.type = CppNameType::Normal;
 		name.tokenCount = 1;
 		name.nameTokens[0] = cursor->token;
-		name.name = WString(cursor->token.reading, cursor->token.length);
+		name.name = WString::CopyFrom(cursor->token.reading, cursor->token.length);
 		SkipToken(cursor);
 		return true;
 	}

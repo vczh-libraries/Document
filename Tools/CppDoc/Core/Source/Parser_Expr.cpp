@@ -23,7 +23,7 @@ void FillOperatorAndSkip(CppName& name, Ptr<CppTokenCursor>& cursor, vint count)
 		SkipToken(cursor);
 	}
 
-	name.name = WString(reading, length);
+	name.name = WString::CopyFrom(reading, length);
 }
 
 void FillOperator(CppName& name, CppPostfixUnaryOp& op)
@@ -212,7 +212,7 @@ Ptr<Category_Id_Child_Generic_Expr> TryParseGenericExpr(const ParsingArguments& 
 					TestToken(cursor, CppTokens::HEX, false) ||
 					TestToken(cursor, CppTokens::BIN, false))
 				{
-					cppName.name = WString(cursor->token.reading, cursor->token.length);
+					cppName.name = WString::CopyFrom(cursor->token.reading, cursor->token.length);
 					cppName.tokenCount = 1;
 					cppName.nameTokens[0] = cursor->token;
 					cppName.type = CppNameType::Normal;

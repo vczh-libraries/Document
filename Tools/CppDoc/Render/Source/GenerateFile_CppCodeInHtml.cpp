@@ -45,7 +45,7 @@ void GenerateCppCodeInHtml(Ptr<FileLinesRecord> flr, StreamWriter& writer)
 				bool rawCodeMatched = (nextProcessingLine - originalIndex) >= currentHtmlLines.lineCount;
 				if (rawCodeMatched)
 				{
-					StringReader reader(WString(currentHtmlLines.rawBegin, (vint)(currentHtmlLines.rawEnd - currentHtmlLines.rawBegin)));
+					StringReader reader(WString::CopyFrom(currentHtmlLines.rawBegin, (vint)(currentHtmlLines.rawEnd - currentHtmlLines.rawBegin)));
 					for (vint i = 0; i < currentHtmlLines.lineCount; i++)
 					{
 						if (originalLines[originalIndex + i] != reader.ReadLine())

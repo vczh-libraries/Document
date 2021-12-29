@@ -179,7 +179,7 @@ void IndexCppCode(
 			for (vint j = i - 1; i >= 0; i--)
 			{
 				auto candidate = sdkPaths[j];
-				if (INVLOC.StartsWith(sdkPath.GetFullPath() + FilePath::Delimiter, candidate.GetFullPath() + FilePath::Delimiter, Locale::Normalization::IgnoreCase))
+				if (INVLOC.StartsWith(sdkPath.GetFullPath() + WString::FromChar(FilePath::Delimiter), candidate.GetFullPath() + WString::FromChar(FilePath::Delimiter), Locale::Normalization::IgnoreCase))
 				{
 					sdkPaths.RemoveAt(i);
 					break;
@@ -191,7 +191,7 @@ void IndexCppCode(
 		for (vint i = 0; i < sdkPaths.Count(); i++)
 		{
 			auto sdkPath = sdkPaths[i];
-			fileGroups.Add({ sdkPath.GetFullPath() + FilePath::Delimiter, L"In SDK: " + sdkPath.GetFullPath() });
+			fileGroups.Add({ sdkPath.GetFullPath() + WString::FromChar(FilePath::Delimiter), L"In SDK: " + sdkPath.GetFullPath() });
 		}
 	}
 

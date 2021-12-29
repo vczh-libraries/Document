@@ -76,64 +76,64 @@ namespace Input__TestParsePSValueAlias_MemberInstantiation
 		struct Struct
 		{
 			template<typename A, typename B, typename... Ts>
-			static bool const Value = false;
+			static inline bool const Value = false;
 
 			template<typename A, typename B, typename... Ts>
-			static char const Value<A*, B*, Ts...> = 'c';
+			static inline char const Value<A*, B*, Ts...> = 'c';
 
 			template<typename A, typename B, typename... Ts>
-			static wchar_t const Value<A, B, Ts*...> = L'c';
+			static inline wchar_t const Value<A, B, Ts*...> = L'c';
 
 			template<typename A, typename B, typename... Ts>
-			static float const Value<A*, B*, Ts*...> = 0.f;
+			static inline float const Value<A*, B*, Ts*...> = 0.f;
 
 			template<typename A, typename B, typename C, typename D>
-			static double const Value<A*, B*, C*, D*> = 0.0;
+			static inline double const Value<A*, B*, C*, D*> = 0.0;
 
 			template<typename A, typename B>
-			static char* const Value<char*, wchar_t*, A*, B*> = nullptr;
+			static inline char* const Value<char*, wchar_t*, A*, B*> = nullptr;
 
 			template<typename A, typename B>
-			static wchar_t* const Value<A*, B*, TFloat*, TDouble*> = nullptr;
+			static inline wchar_t* const Value<A*, B*, TFloat*, TDouble*> = nullptr;
 
 			template<>
-			static bool* const Value<char*, wchar_t*, TFloat*, TDouble*> = nullptr;
+			static inline bool* const Value<char*, wchar_t*, TFloat*, TDouble*> = nullptr;
 
 			template<typename A, typename B>
-			static char** const Value<A(*)(TFloat), B(*)(TDouble)> = nullptr;
+			static inline char** const Value<A(*)(TFloat), B(*)(TDouble)> = nullptr;
 
 			template<typename A, typename B>
-			static wchar_t** const Value<char(*)(A), wchar_t(*)(B)> = nullptr;
+			static inline wchar_t** const Value<char(*)(A), wchar_t(*)(B)> = nullptr;
 
 			template<>
-			static bool** const Value<char(*)(TFloat), wchar_t(*)(TDouble)> = nullptr;
+			static inline bool** const Value<char(*)(TFloat), wchar_t(*)(TDouble)> = nullptr;
 
 			template<typename A, typename B>
-			static TFloat** const Value<A(*)(B), A(*)(B), A(*)(B), A(*)(B)> = nullptr;
+			static inline TFloat** const Value<A(*)(B), A(*)(B), A(*)(B), A(*)(B)> = nullptr;
 
 			template<typename A, typename B>
-			static TDouble** const Value<A(*)(B), B(*)(A), A(*)(A), B(*)(B)> = nullptr;
+			static inline TDouble** const Value<A(*)(B), B(*)(A), A(*)(A), B(*)(B)> = nullptr;
 
 			template<typename A, typename B, typename... Ts>
-			static void** const Value<A(*)(Ts...), B(*)(Ts...), A(*)(B(*...bs)(Ts))> = nullptr;
+			static inline void** const Value<A(*)(Ts...), B(*)(Ts...), A(*)(B(*...bs)(Ts))> = nullptr;
 
 			template<typename A, typename B>
-			static char** const Value<FuncType<A, TFloat>, FuncType<B, TDouble>> = nullptr;
+			static inline char** const Value<FuncType<A, TFloat>, FuncType<B, TDouble>> = nullptr;
 
 			template<typename A, typename B>
-			static wchar_t** const Value<FuncType<char, A>, FuncType<wchar_t, B>> = nullptr;
+			static inline wchar_t** const Value<FuncType<char, A>, FuncType<wchar_t, B>> = nullptr;
 
 			template<>
-			static bool** const Value<FuncType<char, TFloat>, FuncType<wchar_t, TDouble>> = nullptr;
+			static inline bool** const Value<FuncType<char, TFloat>, FuncType<wchar_t, TDouble>> = nullptr;
 
 			template<typename A, typename B>
-			static TFloat** const Value<FuncType<A, B>, FuncType<A, B>, FuncType<A, B>, FuncType<A, B>> = nullptr;
+			static inline TFloat** const Value<FuncType<A, B>, FuncType<A, B>, FuncType<A, B>, FuncType<A, B>> = nullptr;
 
 			template<typename A, typename B>
-			static TDouble** const Value<FuncType<A, B>, FuncType<B, A>, FuncType<A, A>, FuncType<B, B>> = nullptr;
+			static inline TDouble** const Value<FuncType<A, B>, FuncType<B, A>, FuncType<A, A>, FuncType<B, B>> = nullptr;
 
 			template<typename A, typename B, typename... Ts>
-			static void** const Value<FuncType<A, Ts...>, FuncType<B, Ts...>, FuncType<A, FuncType<B, Ts>...>> = nullptr;
+			static inline void** const Value<FuncType<A, Ts...>, FuncType<B, Ts...>, FuncType<A, FuncType<B, Ts>...>> = nullptr;
 		};
 	);
 }

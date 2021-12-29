@@ -21,7 +21,7 @@ public:
 	ReplaceOutOfDeclaratorTypeVisitor(Ptr<CppTokenCursor>& _cursor, Ptr<Type> _typeToReplace, TCreator&& _typeCreator)
 		:cursor(_cursor)
 		, typeToReplace(_typeToReplace)
-		, typeCreator(ForwardValue<TCreator>(_typeCreator))
+		, typeCreator(std::forward<TCreator&&>(_typeCreator))
 	{
 	}
 
@@ -96,7 +96,7 @@ public:
 template<typename T>
 ReplaceOutOfDeclaratorTypeVisitor<T> MakeReplacer(Ptr<CppTokenCursor>& _cursor, Ptr<Type> _typeToReplace, T&& _typeCreator)
 {
-	return { _cursor,_typeToReplace,ForwardValue<T>(_typeCreator) };
+	return { _cursor,_typeToReplace,std::forward<T>(_typeCreator) };
 }
 
 /***********************************************************************

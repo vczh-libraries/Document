@@ -329,7 +329,7 @@ void PrintDocumentRecordToConsole(Ptr<DocumentRecord> dr)
 		Console::Write(L",");
 		Console::Write(itow(token.columnStart));
 		Console::Write(L":");
-		Console::WriteLine(WString(token.reading, token.length));
+		Console::WriteLine(WString::CopyFrom(token.reading, token.length));
 	}
 }
 
@@ -770,7 +770,7 @@ Ptr<GlobalLinesRecord> Collect(
 				if (!TestToken(cursor, L"line")) goto GIVE_UP;
 				if (!TestToken(cursor, CppTokens::SPACE)) goto GIVE_UP;
 				if (!TestToken(cursor, CppTokens::INT, false)) goto GIVE_UP;
-				vint lineNumber = wtoi(WString(cursor->token.reading, cursor->token.length));
+				vint lineNumber = wtoi(WString::CopyFrom(cursor->token.reading, cursor->token.length));
 				SkipToken(cursor);
 				if (!TestToken(cursor, CppTokens::SPACE)) goto GIVE_UP;
 				if (!TestToken(cursor, CppTokens::STRING, false)) goto GIVE_UP;
@@ -794,7 +794,7 @@ Ptr<GlobalLinesRecord> Collect(
 					// convert from "FILENAME" to FilePath
 					// read FilePath from a cache if we have already calculated the full name
 					// prevent from accessing the file system to normalize the file path
-					WString filePathText(&buffer[0], (vint)(writing - &buffer[0]));
+					auto filePathText = WString::CopyFrom(&buffer[0], (vint)(writing - &buffer[0]));
 					vint index = filePathCache.Keys().IndexOf(filePathText);
 					if (index == -1)
 					{

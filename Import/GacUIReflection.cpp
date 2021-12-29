@@ -133,15 +133,15 @@ Compiled Workflow Type Resolver (Workflow)
 								WfAssemblyLoadErrors loadErrors;
 								if (!compiled->Initialize(true, loadErrors))
 								{
-									FOREACH(WString, loadError, loadErrors.duplicatedTypes)
+									for (auto loadError : loadErrors.duplicatedTypes)
 									{
 										errors.Add({ {resource},L"Failed to add an existing type: " + loadError });
 									}
-									FOREACH(WString, loadError, loadErrors.unresolvedTypes)
+									for (auto loadError : loadErrors.unresolvedTypes)
 									{
 										errors.Add({ {resource},L"Unable to resolve type: " + loadError });
 									}
-									FOREACH(WString, loadError, loadErrors.unresolvedMembers)
+									for (auto loadError : loadErrors.unresolvedMembers)
 									{
 										errors.Add({ {resource},L"Unable to resolve member: " + loadError });
 									}
@@ -237,7 +237,7 @@ namespace vl
 	{
 		namespace description
 		{
-			using namespace parsing::xml;
+			using namespace glr::xml;
 			using namespace presentation;
 			using namespace helper_types;
 
@@ -361,9 +361,9 @@ Type Declaration
 				STRUCT_MEMBER(verticalAntialias)
 			END_STRUCT_MEMBER(FontProperties)
 
-#define GUI_DEFINE_KEYBOARD_CODE_ENUM_ITEM(NAME, CODE) ENUM_CLASS_ITEM(_##NAME)
+#define GUI_DEFINE_KEYBOARD_CODE_ENUM_ITEM(NAME, CODE) ENUM_CLASS_ITEM(KEY_##NAME)
 			BEGIN_ENUM_ITEM(VKEY)
-				ENUM_CLASS_ITEM(_UNKNOWN)
+				ENUM_CLASS_ITEM(KEY_UNKNOWN)
 				GUI_DEFINE_KEYBOARD_CODE(GUI_DEFINE_KEYBOARD_CODE_ENUM_ITEM)
 			END_ENUM_ITEM(VKEY)
 #undef GUI_DEFINE_KEYBOARD_CODE_ENUM_ITEM
@@ -3457,9 +3457,9 @@ namespace vl
 				void Load()override
 				{
 					LoadPredefinedTypes();
-					LoadParsingTypes();
-					XmlLoadTypes();
-					JsonLoadTypes();
+					LoadParsing2Types();
+					XmlAstLoadTypes();
+					JsonAstLoadTypes();
 					WfLoadLibraryTypes();
 					LoadGuiBasicTypes();
 					LoadGuiElementTypes();

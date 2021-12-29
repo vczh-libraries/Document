@@ -27,6 +27,8 @@ TEST_FILE
 	TEST_CATEGORY(L"Arrays")
 	{
 		{
+#pragma warning(push)
+#pragma warning(disable:4101)
 			TEST_DECL(
 				double F(const volatile int*);
 				float F(const int*);
@@ -38,6 +40,7 @@ TEST_FILE
 				extern volatile int c[1];
 				extern int d[1];
 			);
+#pragma warning(pop)
 			COMPILE_PROGRAM(program, pa, input);
 
 			ASSERT_OVERLOADING_SIMPLE(F(a),						double);
@@ -46,6 +49,8 @@ TEST_FILE
 			ASSERT_OVERLOADING_SIMPLE(F(d),						char);
 		}
 		{
+#pragma warning(push)
+#pragma warning(disable:4101)
 			TEST_DECL(
 				double F(const volatile int[]);
 				float F(const int[]);
@@ -57,6 +62,7 @@ TEST_FILE
 				extern volatile int c[1];
 				extern int d[1];
 			);
+#pragma warning(pop)
 			COMPILE_PROGRAM(program, pa, input);
 
 			ASSERT_OVERLOADING_SIMPLE(F(a),						double);
