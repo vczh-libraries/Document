@@ -5,9 +5,9 @@
 static int a1 = 0;
 static int a2 = 0;
 
-TEST_FILE
+namespace TestParserLambda_Cases
 {
-	TEST_CATEGORY(L"Parsing lambda expressions")
+	void ParsingLambdaExpressions()
 	{
 		auto input = LR"(
 void f()
@@ -33,9 +33,9 @@ f: void ()
 }
 )";
 		AssertProgram(input, output);
-	});
+	}
 
-	TEST_CATEGORY(L"Re-index")
+	void ReIndex()
 	{
 		auto input = LR"(
 int f(int a, int x)
@@ -53,18 +53,18 @@ int f(int a, int x)
 
 		COMPILE_PROGRAM_WITH_RECORDER(program, pa, input, recorder);
 		TEST_CASE_ASSERT(accessed.Count() == 3);
-	});
+	}
 
-	auto getInsideLambda = [](Ptr<BlockStat> stat, const WString& name)
+	Ptr<BlockStat> GetInsideLambda(Ptr<BlockStat> stat, const WString& name)
 	{
 		return stat->symbol
 			->TryGetChildren_NFb(name)->Get(0).childSymbol
 			->GetAnyForwardDecl<VariableDeclaration>()->initializer
 			->arguments[0].item.Cast<LambdaExpr>()->statement
 			.Cast<BlockStat>();
-	};
+	}
 
-	TEST_CATEGORY(L"Capturing int")
+	void CaptureInt()
 	{
 		auto input = LR"(
 int a1 = 0;
@@ -115,7 +115,7 @@ struct S
 		const volatile int&& d3 = (const volatile int&&)a2;
 
 		{
-			auto symbol = getInsideLambda(stat, L"l1")->symbol;
+			auto symbol = GetInsideLambda(stat, L"l1")->symbol;
 			auto pa = ppa.AdjustForDecl(symbol);
 			auto test = [c, c2, c3, &d, &d2, &d3, &pa](int e)
 			{
@@ -136,7 +136,7 @@ struct S
 			});
 		}
 		{
-			auto symbol = getInsideLambda(stat, L"l2")->symbol;
+			auto symbol = GetInsideLambda(stat, L"l2")->symbol;
 			auto pa = ppa.AdjustForDecl(symbol);
 			auto test = [c, c2, c3, &d, &d2, &d3, &pa](int e)mutable
 			{
@@ -157,7 +157,7 @@ struct S
 			});
 		}
 		{
-			auto symbol = getInsideLambda(stat, L"l3")->symbol;
+			auto symbol = GetInsideLambda(stat, L"l3")->symbol;
 			auto pa = ppa.AdjustForDecl(symbol);
 			auto test = [=, &d, &d2, &d3, &pa](int e)
 			{
@@ -181,7 +181,7 @@ struct S
 			});
 		}
 		{
-			auto symbol = getInsideLambda(stat, L"l4")->symbol;
+			auto symbol = GetInsideLambda(stat, L"l4")->symbol;
 			auto pa = ppa.AdjustForDecl(symbol);
 			auto test = [=, &d, &d2, &d3, &pa](int e)mutable
 			{
@@ -205,7 +205,7 @@ struct S
 			});
 		}
 		{
-			auto symbol = getInsideLambda(stat, L"l5")->symbol;
+			auto symbol = GetInsideLambda(stat, L"l5")->symbol;
 			auto pa = ppa.AdjustForDecl(symbol);
 			auto test = [&, c, c2, c3](int e)
 			{
@@ -229,7 +229,7 @@ struct S
 			});
 		}
 		{
-			auto symbol = getInsideLambda(stat, L"l6")->symbol;
+			auto symbol = GetInsideLambda(stat, L"l6")->symbol;
 			auto pa = ppa.AdjustForDecl(symbol);
 			auto test = [&, c, c2, c3](int e)mutable
 			{
@@ -252,9 +252,9 @@ struct S
 				test(0);
 			});
 		}
-	});
+	}
 
-	TEST_CATEGORY(L"Capturing int in nested lambda")
+	void CaptureIntInNestedLambda()
 	{
 		auto input = LR"(
 int a1 = 0;
@@ -303,11 +303,11 @@ struct S
 		const volatile int&& d = (const volatile int&&)b;
 
 		{
-			auto statl = getInsideLambda(stat, L"l1");
+			auto statl = GetInsideLambda(stat, L"l1");
 			auto testl = [=, &ppa](int e)
 			{
 				{
-					auto statm = getInsideLambda(statl, L"m1");
+					auto statm = GetInsideLambda(statl, L"m1");
 					auto pa = ppa.AdjustForDecl(statm->symbol);
 					auto testm = [=, &pa](int f)
 					{
@@ -324,7 +324,7 @@ struct S
 					});
 				}
 				{
-					auto statm = getInsideLambda(statl, L"m2");
+					auto statm = GetInsideLambda(statl, L"m2");
 					auto pa = ppa.AdjustForDecl(statm->symbol);
 					auto testm = [=, &pa](int f)mutable
 					{
@@ -341,7 +341,7 @@ struct S
 					});
 				}
 				{
-					auto statm = getInsideLambda(statl, L"m3");
+					auto statm = GetInsideLambda(statl, L"m3");
 					auto pa = ppa.AdjustForDecl(statm->symbol);
 					auto testm = [&](int f)
 					{
@@ -364,11 +364,11 @@ struct S
 			});
 		}
 		{
-			auto statl = getInsideLambda(stat, L"l2");
+			auto statl = GetInsideLambda(stat, L"l2");
 			auto testl = [=, &ppa](int e)mutable
 			{
 				{
-					auto statm = getInsideLambda(statl, L"m1");
+					auto statm = GetInsideLambda(statl, L"m1");
 					auto pa = ppa.AdjustForDecl(statm->symbol);
 					auto testm = [=, &pa](int f)
 					{
@@ -385,7 +385,7 @@ struct S
 					});
 				}
 				{
-					auto statm = getInsideLambda(statl, L"m2");
+					auto statm = GetInsideLambda(statl, L"m2");
 					auto pa = ppa.AdjustForDecl(statm->symbol);
 					auto testm = [=, &pa](int f)mutable
 					{
@@ -402,7 +402,7 @@ struct S
 					});
 				}
 				{
-					auto statm = getInsideLambda(statl, L"m3");
+					auto statm = GetInsideLambda(statl, L"m3");
 					auto pa = ppa.AdjustForDecl(statm->symbol);
 					auto testm = [&](int f)
 					{
@@ -425,11 +425,11 @@ struct S
 			});
 		}
 		{
-			auto statl = getInsideLambda(stat, L"l3");
+			auto statl = GetInsideLambda(stat, L"l3");
 			auto testl = [&](int e)
 			{
 				{
-					auto statm = getInsideLambda(statl, L"m1");
+					auto statm = GetInsideLambda(statl, L"m1");
 					auto pa = ppa.AdjustForDecl(statm->symbol);
 					auto testm = [=, &pa](int f)
 					{
@@ -446,7 +446,7 @@ struct S
 					});
 				}
 				{
-					auto statm = getInsideLambda(statl, L"m2");
+					auto statm = GetInsideLambda(statl, L"m2");
 					auto pa = ppa.AdjustForDecl(statm->symbol);
 					auto testm = [=, &pa](int f)mutable
 					{
@@ -463,7 +463,7 @@ struct S
 					});
 				}
 				{
-					auto statm = getInsideLambda(statl, L"m3");
+					auto statm = GetInsideLambda(statl, L"m3");
 					auto pa = ppa.AdjustForDecl(statm->symbol);
 					auto testm = [&](int f)
 					{
@@ -485,9 +485,9 @@ struct S
 				testl(0);
 			});
 		}
-	});
+	}
 
-	TEST_CATEGORY(L"Capturing expression")
+	void CapturingExpression()
 	{
 		auto input = LR"(
 struct S
@@ -513,18 +513,47 @@ void F()
 			->TryGetChildren_NFb(L"$")->Get(0).childSymbol
 			->GetStat_N().Cast<BlockStat>();
 		{
-			auto lambdaSymbol = getInsideLambda(statF, L"l1")->symbol;
+			auto lambdaSymbol = GetInsideLambda(statF, L"l1")->symbol;
 			auto pa = ppa.AdjustForDecl(lambdaSymbol);
 
 			AssertExpr(pa,	L"s",		L"s",		L"::S const $L"		);
 			AssertExpr(pa,	L"t",		L"t",		L"::S * const $L"	);
 		}
 		{
-			auto lambdaSymbol = getInsideLambda(statF, L"l2")->symbol;
+			auto lambdaSymbol = GetInsideLambda(statF, L"l2")->symbol;
 			auto pa = ppa.AdjustForDecl(lambdaSymbol);
 
 			AssertExpr(pa,	L"s",		L"s",		L"::S $L"			);
 			AssertExpr(pa,	L"t",		L"t",		L"::S * $L"			);
 		}
+	}
+}
+using namespace TestParserLambda_Cases;
+
+TEST_FILE
+{
+	TEST_CATEGORY(L"Parsing lambda expressions")
+	{
+		ParsingLambdaExpressions();
+	});
+
+	TEST_CATEGORY(L"Re-index")
+	{
+		ReIndex();
+	});
+
+	TEST_CATEGORY(L"Capturing int")
+	{
+		CaptureInt();
+	});
+
+	TEST_CATEGORY(L"Capturing int in nested lambda")
+	{
+		void CaptureIntInNestedLambda();
+	});
+
+	TEST_CATEGORY(L"Capturing expression")
+	{
+		CapturingExpression();
 	});
 }

@@ -75,13 +75,16 @@ struct RunTypeConvertFromTemp
 };
 
 #define TEST_CONV_TYPE(FROM, TO, CONV1, CONV2)\
-	TEST_CASE(L ## #FROM L" -> " L#TO)\
+	do\
 	{\
 		RunTypeConvert<FROM, TO, RunTypeTester<TO, TypeConvCat::CONV1>>::test;\
 		RunTypeConvertFromTemp<FROM, TO, RunTypeTester<TO, TypeConvCat::CONV2>>::test;\
-		AssertTypeConvert(pa, L#FROM, L#TO, TypeConvCat::CONV1, false);\
-		AssertTypeConvert(pa, L#FROM, L#TO, TypeConvCat::CONV2, true);\
-	})\
+		TEST_CASE(L ## #FROM L" -> " L#TO)\
+		{\
+			AssertTypeConvert(pa, L#FROM, L#TO, TypeConvCat::CONV1, false);\
+			AssertTypeConvert(pa, L#FROM, L#TO, TypeConvCat::CONV2, true);\
+		});\
+	} while(false)\
 
 namespace TestTypeConvert_Cases
 {
