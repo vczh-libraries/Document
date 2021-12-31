@@ -3,9 +3,9 @@
 #pragma warning (push)
 #pragma warning (disable: 5046)
 
-TEST_FILE
+namespace TestOverloading_Cases
 {
-	TEST_CATEGORY(L"References")
+	void References()
 	{
 		{
 			TEST_DECL(
@@ -22,9 +22,9 @@ TEST_FILE
 			ASSERT_OVERLOADING(F(static_cast<X&&>(x)),			L"F(static_cast<X &&>(x))",				char);
 			ASSERT_OVERLOADING_SIMPLE(F(x),																bool);
 		}
-	});
+	}
 
-	TEST_CATEGORY(L"Arrays")
+	void Arrays()
 	{
 		{
 #pragma warning(push)
@@ -70,9 +70,9 @@ TEST_FILE
 			ASSERT_OVERLOADING_SIMPLE(F(c),						bool);
 			ASSERT_OVERLOADING_SIMPLE(F(d),						char);
 		}
-	});
+	}
 
-	TEST_CATEGORY(L"Enums")
+	void Enums()
 	{
 		{
 			TEST_DECL(
@@ -107,9 +107,9 @@ TEST_FILE
 			ASSERT_OVERLOADING_SIMPLE(G(b),						bool);
 			ASSERT_OVERLOADING_SIMPLE(G(0.0),					double);
 		}
-	});
+	}
 
-	TEST_CATEGORY(L"Default parameters")
+	void DefaultParameters()
 	{
 		{
 			TEST_DECL(
@@ -125,9 +125,9 @@ TEST_FILE
 			ASSERT_OVERLOADING_SIMPLE(F(0, 0.0),				wchar_t);
 			ASSERT_OVERLOADING_SIMPLE(F(0, 0.0f),				wchar_t);
 		}
-	});
+	}
 
-	TEST_CATEGORY(L"Ellipsis arguments")
+	void EllipsisArguments()
 	{
 		{
 			TEST_DECL(
@@ -151,9 +151,9 @@ TEST_FILE
 			ASSERT_OVERLOADING_SIMPLE(F(0, nullptr),			char);
 			ASSERT_OVERLOADING_SIMPLE(F(0.0, nullptr),			wchar_t);
 		}
-	});
+	}
 
-	TEST_CATEGORY(L"Inheritance")
+	void Inheritance()
 	{
 		{
 			TEST_DECL(
@@ -173,9 +173,9 @@ TEST_FILE
 			ASSERT_OVERLOADING_SIMPLE(F(z),						double);
 			ASSERT_OVERLOADING_SIMPLE(G(z),						char);
 		}
-	});
+	}
 
-	TEST_CATEGORY(L"Type conversions")
+	void TypeConversions()
 	{
 		{
 			TEST_DECL(
@@ -214,9 +214,9 @@ TEST_FILE
 			ASSERT_OVERLOADING_SIMPLE(F(z),						double);
 			ASSERT_OVERLOADING_SIMPLE(G(z),						char);
 		}
-	});
+	}
 
-	TEST_CATEGORY(L"Universal initializations")
+	void UniversalInitializations()
 	{
 		{
 			TEST_DECL(
@@ -312,9 +312,9 @@ TEST_FILE
 			ASSERT_OVERLOADING_SIMPLE(F({{{1}}}, nullptr),								char16_t);
 			ASSERT_OVERLOADING_SIMPLE(F({{{1.0}}}, nullptr),							char16_t);
 		}
-	});
+	}
 
-	TEST_CATEGORY(L"Universal initializations + type conversions: Exact")
+	void UniversalInitializations_TypeConversions_Exact()
 	{
 		TEST_DECL(
 			struct S
@@ -328,9 +328,9 @@ TEST_FILE
 		COMPILE_PROGRAM(program, pa, input);
 		ASSERT_OVERLOADING_SIMPLE(F(0),				bool);
 		ASSERT_OVERLOADING_SIMPLE(F({0}),			bool);
-	});
+	}
 
-	TEST_CATEGORY(L"Universal initializations + type conversions: Trivial")
+	void UniversalInitializations_TypeConversions_Trivial()
 	{
 		TEST_DECL(
 			struct S
@@ -344,9 +344,9 @@ TEST_FILE
 		COMPILE_PROGRAM(program, pa, input);
 		ASSERT_OVERLOADING_SIMPLE(F(0),				bool);
 		ASSERT_OVERLOADING_SIMPLE(F({0}),			bool);
-	});
+	}
 
-	TEST_CATEGORY(L"Universal initializations + type conversions: IntegralPromition")
+	void UniversalInitializations_TypeConversions_IntegerPromotion()
 	{
 		TEST_DECL(
 			struct S
@@ -360,9 +360,9 @@ TEST_FILE
 		COMPILE_PROGRAM(program, pa, input);
 		ASSERT_OVERLOADING_SIMPLE(F(0),				bool);
 		ASSERT_OVERLOADING_SIMPLE(F({0}),			bool);
-	});
+	}
 
-	TEST_CATEGORY(L"Universal initializations + type conversions: Standard")
+	void UniversalInitializations_TypeConversions_Standard()
 	{
 		TEST_DECL(
 			struct S
@@ -376,9 +376,9 @@ TEST_FILE
 		COMPILE_PROGRAM(program, pa, input);
 		ASSERT_OVERLOADING_SIMPLE(F(0),				bool);
 		ASSERT_OVERLOADING_SIMPLE(F({0}),			bool);
-	});
+	}
 
-	TEST_CATEGORY(L"Universal initializations + type conversions: UserDefined")
+	void UniversalInitializations_TypeConversions_UserDefined()
 	{
 		TEST_DECL(
 			struct S
@@ -392,6 +392,75 @@ TEST_FILE
 		COMPILE_PROGRAM(program, pa, input);
 		ASSERT_OVERLOADING_SIMPLE(F(0),				char);
 		ASSERT_OVERLOADING_SIMPLE(F({0}),			char);
+	}
+}
+using namespace TestOverloading_Cases;
+
+TEST_FILE
+{
+	TEST_CATEGORY(L"References")
+	{
+		References();
+	});
+
+	TEST_CATEGORY(L"Arrays")
+	{
+		Arrays();
+	});
+
+	TEST_CATEGORY(L"Enums")
+	{
+		Enums();
+	});
+
+	TEST_CATEGORY(L"Default parameters")
+	{
+		DefaultParameters();
+	});
+
+	TEST_CATEGORY(L"Ellipsis arguments")
+	{
+		EllipsisArguments();
+	});
+
+	TEST_CATEGORY(L"Inheritance")
+	{
+		Inheritance();
+	});
+
+	TEST_CATEGORY(L"Type conversions")
+	{
+		TypeConversions();
+	});
+
+	TEST_CATEGORY(L"Universal initializations")
+	{
+		UniversalInitializations();
+	});
+
+	TEST_CATEGORY(L"Universal initializations + type conversions: Exact")
+	{
+		UniversalInitializations_TypeConversions_Exact();
+	});
+
+	TEST_CATEGORY(L"Universal initializations + type conversions: Trivial")
+	{
+		UniversalInitializations_TypeConversions_Trivial();
+	});
+
+	TEST_CATEGORY(L"Universal initializations + type conversions: IntegralPromition")
+	{
+		UniversalInitializations_TypeConversions_IntegerPromotion();
+	});
+
+	TEST_CATEGORY(L"Universal initializations + type conversions: Standard")
+	{
+		UniversalInitializations_TypeConversions_Standard();
+	});
+
+	TEST_CATEGORY(L"Universal initializations + type conversions: UserDefined")
+	{
+		UniversalInitializations_TypeConversions_UserDefined();
 	});
 
 	TEST_CATEGORY(L"Initialization list")
