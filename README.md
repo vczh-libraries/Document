@@ -14,6 +14,8 @@ This is a command line tool for generating indexed code in HTML and documents fr
 ## TODO
 
 Revisit the implementation for `constexpr`.
+  - `constexpr` on declarator instead of type.
+  - `constexpr` creates a const value or a function returning a const or non-const value.
 
 ## "The compiler"
 
