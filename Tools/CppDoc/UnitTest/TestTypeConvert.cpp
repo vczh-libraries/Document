@@ -83,9 +83,9 @@ struct RunTypeConvertFromTemp
 		AssertTypeConvert(pa, L#FROM, L#TO, TypeConvCat::CONV2, true);\
 	})\
 
-TEST_FILE
+namespace TestTypeConvert_Cases
 {
-	TEST_CATEGORY(L"Test Exact type conversion")
+	void Exact()
 	{
 		ParsingArguments pa(MakePtr<RootSymbol>(), ITsysAlloc::Create(), nullptr);
 	#define S Exact
@@ -111,9 +111,9 @@ TEST_FILE
 		TEST_CONV_TYPE(const int[10],			const int* const,						S,	S);
 		TEST_CONV_TYPE(volatile int[10],		volatile int* volatile,					S,	S);
 	#undef S
-	});
+	}
 
-	TEST_CATEGORY(L"Test Trivial type conversion")
+	void Trivial()
 	{
 		ParsingArguments pa(MakePtr<RootSymbol>(), ITsysAlloc::Create(), nullptr);
 	#define S Trivial
@@ -135,9 +135,9 @@ TEST_FILE
 		TEST_CONV_TYPE(char(&)[10],				const char(&)[10],						S,	S);
 	#undef S
 	#undef F
-	});
+	}
 
-	TEST_CATEGORY(L"Test IntegralPromition type conversion")
+	void IntegralPromition()
 	{
 		TEST_DECL(
 	enum E {};
@@ -216,9 +216,9 @@ TEST_FILE
 	#undef T
 	#undef S
 	#undef F
-	});
+	}
 
-	TEST_CATEGORY(L"Test Standard type conversion")
+	void Standard()
 	{
 		ParsingArguments pa(MakePtr<RootSymbol>(), ITsysAlloc::Create(), nullptr);
 	#define S Standard
@@ -239,9 +239,9 @@ TEST_FILE
 		TEST_CONV_TYPE(double,					char&&,									F,	S);
 	#undef S
 	#undef F
-	});
+	}
 
-	TEST_CATEGORY(L"Test ToVoidPtr type conversion")
+	void ToVoidPtr()
 	{
 		ParsingArguments pa(MakePtr<RootSymbol>(), ITsysAlloc::Create(), nullptr);
 	#define S ToVoidPtr
@@ -252,9 +252,9 @@ TEST_FILE
 		TEST_CONV_TYPE(const int*,				const void*,							S,	S);
 	#undef S
 	#undef F
-	});
+	}
 
-	TEST_CATEGORY(L"Test Illegal type conversion")
+	void Illegal()
 	{
 		ParsingArguments pa(MakePtr<RootSymbol>(), ITsysAlloc::Create(), nullptr);
 	#define F Illegal
@@ -290,9 +290,9 @@ TEST_FILE
 		TEST_CONV_TYPE(int*[10],				const int*[10],							F,	F);
 		TEST_CONV_TYPE(const int*[10],			int*[10],								F,	F);
 	#undef F
-	});
+	}
 
-	TEST_CATEGORY(L"Test Standard(inheritance) type conversion")
+	void Standard_Inheritance()
 	{
 		TEST_DECL(
 			class Base {};
@@ -344,9 +344,9 @@ TEST_FILE
 		TEST_CONV_TYPE(Base&&,				const Derived&&,							F,	F);
 	#undef S
 	#undef F
-	});
+	}
 
-	TEST_CATEGORY(L"Test UserDefined(constructor) type conversion")
+	void UserDefined_Constructor()
 	{
 		TEST_DECL(
 			struct Source
@@ -403,9 +403,9 @@ TEST_FILE
 		TEST_CONV_TYPE(Source*,				Target*,									F,	F);
 	#undef S
 	#undef F
-	});
+	}
 
-	TEST_CATEGORY(L"Test UserDefined(constructor with failed explicit) type conversion")
+	void UserDefined_ConstructorWithFailedExplicit()
 	{
 		TEST_DECL(
 			struct Source
@@ -459,9 +459,9 @@ TEST_FILE
 		TEST_CONV_TYPE(Source&,				const Target,								F,	F);
 		TEST_CONV_TYPE(Source&&,			const Target,								F,	F);
 	#undef F
-	});
+	}
 
-	TEST_CATEGORY(L"Test UserDefined(operator) type conversion")
+	void UserDefined_Operator()
 	{
 		TEST_DECL(
 			struct TargetA
@@ -563,9 +563,9 @@ TEST_FILE
 		TEST_CONV_TYPE(const Source&&,		const TargetB,								F,	F);
 	#undef S
 	#undef F
-	});
+	}
 
-	TEST_CATEGORY(L"Test UserDefined(operator with failed explicit) type conversion")
+	void UserDefined_OperatorWithFailedExplicit()
 	{
 		TEST_DECL(
 			struct TargetA
@@ -633,6 +633,65 @@ TEST_FILE
 		TEST_CONV_TYPE(Source&&,			TargetB&,									F,	F);
 		TEST_CONV_TYPE(Source&&,			TargetB&&,									F,	F);
 	#undef F
+	}
+}
+using namespace TestTypeConvert_Cases;
+
+TEST_FILE
+{
+	TEST_CATEGORY(L"Test Exact type conversion")
+	{
+		Exact();
+	});
+
+	TEST_CATEGORY(L"Test Trivial type conversion")
+	{
+		Trivial();
+	});
+
+	TEST_CATEGORY(L"Test IntegralPromition type conversion")
+	{
+		IntegralPromition();
+	});
+
+	TEST_CATEGORY(L"Test Standard type conversion")
+	{
+		Standard();
+	});
+
+	TEST_CATEGORY(L"Test ToVoidPtr type conversion")
+	{
+		ToVoidPtr();
+	});
+
+	TEST_CATEGORY(L"Test Illegal type conversion")
+	{
+		Illegal();
+	});
+
+	TEST_CATEGORY(L"Test Standard(inheritance) type conversion")
+	{
+		Standard_Inheritance();
+	});
+
+	TEST_CATEGORY(L"Test UserDefined(constructor) type conversion")
+	{
+		UserDefined_Constructor();
+	});
+
+	TEST_CATEGORY(L"Test UserDefined(constructor with failed explicit) type conversion")
+	{
+		UserDefined_ConstructorWithFailedExplicit();
+	});
+
+	TEST_CATEGORY(L"Test UserDefined(operator) type conversion")
+	{
+		UserDefined_Operator();
+	});
+
+	TEST_CATEGORY(L"Test UserDefined(operator with failed explicit) type conversion")
+	{
+		UserDefined_OperatorWithFailedExplicit();
 	});
 }
 
