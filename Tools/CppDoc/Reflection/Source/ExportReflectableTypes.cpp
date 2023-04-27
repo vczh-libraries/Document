@@ -24,11 +24,11 @@ namespace vl
 
 void LogTypes(Ptr<XmlElement> xmlRoot, const WString& projectName, SortedList<WString>& loaded)
 {
-	auto xmlProject = MakePtr<XmlElement>();
+	auto xmlProject = Ptr(new XmlElement);
 	xmlProject->name.value = L"project";
 	xmlRoot->subNodes.Add(xmlProject);
 	{
-		auto attr = MakePtr<XmlAttribute>();
+		auto attr = Ptr(new XmlAttribute);
 		attr->name.value = L"name";
 		attr->value.value = projectName;
 		xmlProject->attributes.Add(attr);
@@ -44,7 +44,7 @@ void LogTypes(Ptr<XmlElement> xmlRoot, const WString& projectName, SortedList<WS
 		if (loaded.Contains(tdName)) continue;
 		loaded.Add(tdName);
 
-		auto xmlType = MakePtr<XmlElement>();
+		auto xmlType = Ptr(new XmlElement);
 		xmlProject->subNodes.Add(xmlType);
 
 		switch (td->GetTypeDescriptorFlags())
@@ -78,13 +78,13 @@ void LogTypes(Ptr<XmlElement> xmlRoot, const WString& projectName, SortedList<WS
 		}
 
 		{
-			auto attr = MakePtr<XmlAttribute>();
+			auto attr = Ptr(new XmlAttribute);
 			attr->name.value = L"name";
 			attr->value.value = tdName;
 			xmlType->attributes.Add(attr);
 		}
 		{
-			auto attr = MakePtr<XmlAttribute>();
+			auto attr = Ptr(new XmlAttribute);
 			attr->name.value = L"cpp";
 			attr->value.value = cppName;
 			xmlType->attributes.Add(attr);
@@ -96,10 +96,10 @@ void ExportReflectableTypes(Folder outputPath)
 {
 	FilePath pathReflection = outputPath.GetFilePath() / L"Reflection.xml";
 
-	auto xmlRoot = MakePtr<XmlElement>();
+	auto xmlRoot = Ptr(new XmlElement);
 	xmlRoot->name.value = L"reflection";
 
-	auto xmlDocument = MakePtr<XmlDocument>();
+	auto xmlDocument = Ptr(new XmlDocument);
 	xmlDocument->rootElement = xmlRoot;
 
 	SortedList<WString> loaded;
