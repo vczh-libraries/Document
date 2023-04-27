@@ -18,6 +18,7 @@ namespace vl
 			extern bool LoadGuiEventTypes();
 			extern bool LoadGuiTemplateTypes();
 			extern bool LoadGuiControlTypes();
+			extern bool LoadGuiFakeDialogServiceUITypes();
 		}
 	}
 }
@@ -154,6 +155,7 @@ void ExportReflectableTypes(Folder outputPath)
 		LoadGuiEventTypes();
 		LoadGuiTemplateTypes();
 		LoadGuiControlTypes();
+		LoadGuiFakeDialogServiceUITypes();
 		GetGlobalTypeManager()->Load();
 		LogTypes(xmlRoot, L"GacUI", loaded);
 		ResetGlobalTypeManager();
