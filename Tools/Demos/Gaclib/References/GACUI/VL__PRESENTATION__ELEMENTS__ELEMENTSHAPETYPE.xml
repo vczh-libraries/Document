@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::ElementShapeType" accessor="" category="Enum" name="ElementShapeType" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::ElementShapeType"><summary>
+<Document accessor="" category="Enum" name="ElementShapeType" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::ElementShapeType"><summary>
  Defines a shape for some <symbol name="IGuiGraphicsElement" docId="vl::presentation::elements::IGuiGraphicsElement" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElement"/>.
  </summary><enumitem name="Ellipse">Ellipse shape.</enumitem><enumitem name="Rectangle">Rectangle shape.</enumitem><enumitem name="RoundRect">Round rectangle shape.</enumitem><signature><![CDATA[enum class ElementShapeType
 {

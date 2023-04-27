@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::Gui3DSplitterElement::GetDirection@::vl::presentation::elements::Gui3DSplitterElement::Direction()" accessor="public" category="Function" name="GetDirection" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::Gui3DSplitterElement::GetDirection@::vl::presentation::elements::Gui3DSplitterElement::Direction()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetDirection" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::Gui3DSplitterElement::GetDirection@::vl::presentation::elements::Gui3DSplitterElement::Direction()[decl0]"><summary>
  Get the direction.
  </summary><returns>The direction.</returns><signature><![CDATA[Direction GetDirection(
 );

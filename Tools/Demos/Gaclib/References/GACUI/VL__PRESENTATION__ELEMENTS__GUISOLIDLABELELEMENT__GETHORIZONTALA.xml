@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiSolidLabelElement::GetHorizontalAlignment@::vl::presentation::Alignment()" accessor="public" category="Function" name="GetHorizontalAlignment" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidLabelElement::GetHorizontalAlignment@::vl::presentation::Alignment()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetHorizontalAlignment" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidLabelElement::GetHorizontalAlignment@::vl::presentation::Alignment()[decl0]"><summary>
  Get the horizontal alignment of the text.
  </summary><returns>The horizontal alignment of the text.</returns><signature><![CDATA[Alignment GetHorizontalAlignment(
 );

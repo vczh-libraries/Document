@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiDisposedFlag" accessor="" category="Class" name="GuiDisposedFlag" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiDisposedFlag"><summary>
+<Document accessor="" category="Class" name="GuiDisposedFlag" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiDisposedFlag"><summary>
  A helper object to test if a control has been deleted or not.
  </summary><signature><![CDATA[class GuiDisposedFlag
     : Object

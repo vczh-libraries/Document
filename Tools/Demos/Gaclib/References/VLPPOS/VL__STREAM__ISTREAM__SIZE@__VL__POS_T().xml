@@ -1,3 +1,3 @@
-<Document symbolId="vl::stream::IStream::Size@::vl::pos_t()" accessor="public" category="Function" name="Size" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::Size@::vl::pos_t()[decl0]"><summary>Get the size of the content in this stream.</summary><returns>The size of the content in this stream. Returns -1 if the size is <b>unsizable</b> or <b>unavailable</b>.</returns><signature><![CDATA[pos_t Size(
+<Document accessor="public" category="Function" name="Size" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::Size@::vl::pos_t()[decl0]"><summary>Get the size of the content in this stream.</summary><returns>The size of the content in this stream. Returns -1 if the size is <b>unsizable</b> or <b>unavailable</b>.</returns><signature><![CDATA[pos_t Size(
 ) const;
 ]]></signature><seealsos><symbol name="pos_t" docId="vl::pos_t" declFile="Basic.h" declId="NI$vl::pos_t"/></seealsos></Document>

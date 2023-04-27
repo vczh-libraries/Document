@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiImageFrameElement::GetImage@::vl::Ptr&lt;::vl::presentation::INativeImage&gt;()" accessor="public" category="Function" name="GetImage" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiImageFrameElement::GetImage@::vl::Ptr&lt;::vl::presentation::INativeImage&gt;()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetImage" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiImageFrameElement::GetImage@::vl::Ptr&lt;::vl::presentation::INativeImage&gt;()[decl0]"><summary>
  Get the containing image.
  </summary><returns>The contining picture.</returns><signature><![CDATA[Ptr<INativeImage> GetImage(
 );

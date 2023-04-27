@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsRenderer::OnElementStateChanged@void()" accessor="public" category="Function" name="OnElementStateChanged" declFile="GuiGraphicsElementInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsRenderer::OnElementStateChanged@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="OnElementStateChanged" declFile="GuiGraphicsElementInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsRenderer::OnElementStateChanged@void()[decl0]"><summary>
  Notify that the state in the binded graphics element is changed. This function is usually called by the element itself.
  </summary><signature><![CDATA[void OnElementStateChanged(
 );

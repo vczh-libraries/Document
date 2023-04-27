@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &amp;, bool, bool)" accessor="public" category="Function" name="Moving" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &amp;, bool, bool)[decl0]"><summary>
+<Document accessor="public" category="Function" name="Moving" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::Moving@void(::vl::presentation::NativeRect &amp;, bool, bool)[decl0]"><summary>
  Called when the window is moving.
  </summary><param name="bounds">The bounds. Message handler can change the bounds.</param><param name="fixSizeOnly">True if the message raise only want the message handler to change the size, and keep the position unchanged.</param><param name="draggingBorder">True if the message raise because the user is dragging the border to change the size.</param><signature><![CDATA[void Moving(
     NativeRect & bounds,

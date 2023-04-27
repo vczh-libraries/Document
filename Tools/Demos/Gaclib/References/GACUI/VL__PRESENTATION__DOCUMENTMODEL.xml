@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::DocumentModel" accessor="" category="Class" name="DocumentModel" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel"><summary>Represents a rich content document model.</summary><signature><![CDATA[class DocumentModel
+<Document accessor="" category="Class" name="DocumentModel" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel"><summary>Represents a rich content document model.</summary><signature><![CDATA[class DocumentModel
     : Object
     , Description<DocumentModel>;
 ]]></signature><seealsos><symbol name="DocumentModel" docId="vl::presentation::DocumentModel" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

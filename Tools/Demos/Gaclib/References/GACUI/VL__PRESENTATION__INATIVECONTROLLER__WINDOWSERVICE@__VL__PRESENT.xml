@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeController::WindowService@::vl::presentation::INativeWindowService *()" accessor="public" category="Function" name="WindowService" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::WindowService@::vl::presentation::INativeWindowService *()[decl0]"><summary>
+<Document accessor="public" category="Function" name="WindowService" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::WindowService@::vl::presentation::INativeWindowService *()[decl0]"><summary>
  Get the window service.
  </summary><returns>The window service</returns><signature><![CDATA[INativeWindowService * WindowService(
 );

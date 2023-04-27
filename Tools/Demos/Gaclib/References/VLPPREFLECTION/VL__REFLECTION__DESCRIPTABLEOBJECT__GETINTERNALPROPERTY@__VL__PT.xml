@@ -1,4 +1,4 @@
-<Document symbolId="vl::reflection::DescriptableObject::GetInternalProperty@::vl::Ptr&lt;::vl::Object&gt;(::vl::WString const &amp;)" accessor="public" category="Function" name="GetInternalProperty" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::DescriptableObject::GetInternalProperty@::vl::Ptr&lt;::vl::Object&gt;(::vl::WString const &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetInternalProperty" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::DescriptableObject::GetInternalProperty@::vl::Ptr&lt;::vl::Object&gt;(::vl::WString const &amp;)[decl0]"><summary>
  Get an internal property of this object.
  Internal properties are totally for customization,
  they do not affect the object in anyway.

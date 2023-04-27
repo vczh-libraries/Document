@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::IGuiResourceResolverManager::GetPerPassResolverNames@void(::vl::vint, ::vl::collections::List&lt;::vl::WString&gt; &amp;)" accessor="public" category="Function" name="GetPerPassResolverNames" declFile="GuiResource.h" declId="FB$vl::presentation::IGuiResourceResolverManager::GetPerPassResolverNames@void(::vl::vint, ::vl::collections::List&lt;::vl::WString&gt; &amp;)[decl0]"><summary>Get names of all per pass resolvers for a pass.</summary><param name="passIndex">The pass index.</param><param name="names">Names of resolvers</param><signature><![CDATA[void GetPerPassResolverNames(
+<Document accessor="public" category="Function" name="GetPerPassResolverNames" declFile="GuiResource.h" declId="FB$vl::presentation::IGuiResourceResolverManager::GetPerPassResolverNames@void(::vl::vint, ::vl::collections::List&lt;::vl::WString&gt; &amp;)[decl0]"><summary>Get names of all per pass resolvers for a pass.</summary><param name="passIndex">The pass index.</param><param name="names">Names of resolvers</param><signature><![CDATA[void GetPerPassResolverNames(
     vint passIndex,
     collections::List<WString> & names
 );

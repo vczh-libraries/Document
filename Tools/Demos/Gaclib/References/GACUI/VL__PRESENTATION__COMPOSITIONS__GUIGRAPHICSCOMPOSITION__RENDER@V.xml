@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsComposition::Render@void(::vl::presentation::Size)" accessor="public" category="Function" name="Render" declFile="GuiGraphicsCompositionBase.h" declId="FB$vl::presentation::compositions::GuiGraphicsComposition::Render@void(::vl::presentation::Size)[decl0]"><summary>Render the composition using an offset.</summary><param name="offset">The offset.</param><signature><![CDATA[void Render(
+<Document accessor="public" category="Function" name="Render" declFile="GuiGraphicsCompositionBase.h" declId="FB$vl::presentation::compositions::GuiGraphicsComposition::Render@void(::vl::presentation::Size)[decl0]"><summary>Render the composition using an offset.</summary><param name="offset">The offset.</param><signature><![CDATA[void Render(
     Size offset
 );
 ]]></signature><seealsos><symbol name="Size" declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>

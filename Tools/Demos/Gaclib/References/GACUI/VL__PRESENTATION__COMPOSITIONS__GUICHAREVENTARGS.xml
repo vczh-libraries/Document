@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiCharEventArgs" accessor="" category="Struct" name="GuiCharEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiCharEventArgs"><summary>Char input event arguments.</summary><signature><![CDATA[struct GuiCharEventArgs
+<Document accessor="" category="Struct" name="GuiCharEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiCharEventArgs"><summary>Char input event arguments.</summary><signature><![CDATA[struct GuiCharEventArgs
     : GuiEventArgs
     , WindowCharInfo
     , Description<GuiCharEventArgs>;

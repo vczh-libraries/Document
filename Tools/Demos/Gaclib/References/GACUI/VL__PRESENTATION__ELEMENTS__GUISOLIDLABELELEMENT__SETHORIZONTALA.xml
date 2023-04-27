@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiSolidLabelElement::SetHorizontalAlignment@void(::vl::presentation::Alignment)" accessor="public" category="Function" name="SetHorizontalAlignment" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidLabelElement::SetHorizontalAlignment@void(::vl::presentation::Alignment)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetHorizontalAlignment" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidLabelElement::SetHorizontalAlignment@void(::vl::presentation::Alignment)[decl0]"><summary>
  Set the horizontal alignment of the text.
  </summary><param name="value">The new horizontal alignment of the text.</param><signature><![CDATA[void SetHorizontalAlignment(
     Alignment value

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeCallbackService::UninstallListener@bool(::vl::presentation::INativeControllerListener *)" accessor="public" category="Function" name="UninstallListener" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeCallbackService::UninstallListener@bool(::vl::presentation::INativeControllerListener *)[decl0]"><summary>
+<Document accessor="public" category="Function" name="UninstallListener" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeCallbackService::UninstallListener@bool(::vl::presentation::INativeControllerListener *)[decl0]"><summary>
  Uninstall a global message listener.
  </summary><returns>Returns true if this operation succeeded.</returns><param name="listener">The global message listener to uninstall.</param><signature><![CDATA[bool UninstallListener(
     INativeControllerListener * listener

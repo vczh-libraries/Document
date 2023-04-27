@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::SetCaretPoint@void(::vl::presentation::NativePoint)" accessor="public" category="Function" name="SetCaretPoint" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetCaretPoint@void(::vl::presentation::NativePoint)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetCaretPoint" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetCaretPoint@void(::vl::presentation::NativePoint)[decl0]"><summary>
  Set the caret point of the window. When an input method editor is opened, the input text box will be located to the caret point.
  </summary><param name="point">The caret point of the window.</param><signature><![CDATA[void SetCaretPoint(
     NativePoint point

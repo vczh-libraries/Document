@@ -1,3 +1,3 @@
-<Document symbolId="vl::reflection::description::Value::IsNull@bool()" accessor="public" category="Function" name="IsNull" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::description::Value::IsNull@bool()[decl0]"><summary>Test if this value isnull.</summary><returns>Returns true if this value is null.</returns><signature><![CDATA[bool IsNull(
+<Document accessor="public" category="Function" name="IsNull" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::description::Value::IsNull@bool()[decl0]"><summary>Test if this value isnull.</summary><returns>Returns true if this value is null.</returns><signature><![CDATA[bool IsNull(
 ) const;
 ]]></signature></Document>

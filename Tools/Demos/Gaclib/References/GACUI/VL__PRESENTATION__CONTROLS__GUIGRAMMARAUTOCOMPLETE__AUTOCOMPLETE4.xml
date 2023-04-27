@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiGrammarAutoComplete::AutoCompleteData" accessor="public" category="Struct" name="AutoCompleteData" declFile="GuiLanguageAutoComplete.h" declId="NI$vl::presentation::controls::GuiGrammarAutoComplete::AutoCompleteData"><summary>The auto complete list data.</summary><signature><![CDATA[struct AutoCompleteData
+<Document accessor="public" category="Struct" name="AutoCompleteData" declFile="GuiLanguageAutoComplete.h" declId="NI$vl::presentation::controls::GuiGrammarAutoComplete::AutoCompleteData"><summary>The auto complete list data.</summary><signature><![CDATA[struct AutoCompleteData
     : ParsingTokenContext;
 ]]></signature><basetypes><symbol name="ParsingTokenContext" docId="vl::presentation::controls::ParsingTokenContext" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::ParsingTokenContext"/></basetypes></Document>

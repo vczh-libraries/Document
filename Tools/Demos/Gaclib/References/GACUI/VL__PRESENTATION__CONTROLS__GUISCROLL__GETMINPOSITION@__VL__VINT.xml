@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::GetMinPosition@::vl::vint()" accessor="public" category="Function" name="GetMinPosition" declFile="GuiScrollControls.h" declId="FB$vl::presentation::controls::GuiScroll::GetMinPosition@::vl::vint()[decl0]"><summary>Get the minimum possible position.</summary><returns>The minimum possible position.</returns><signature><![CDATA[vint GetMinPosition(
+<Document accessor="public" category="Function" name="GetMinPosition" declFile="GuiScrollControls.h" declId="FB$vl::presentation::controls::GuiScroll::GetMinPosition@::vl::vint()[decl0]"><summary>Get the minimum possible position.</summary><returns>The minimum possible position.</returns><signature><![CDATA[vint GetMinPosition(
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

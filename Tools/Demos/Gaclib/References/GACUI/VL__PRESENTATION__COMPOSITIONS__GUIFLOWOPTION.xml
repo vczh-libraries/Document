@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiFlowOption" accessor="" category="Struct" name="GuiFlowOption" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowOption"><summary>
+<Document accessor="" category="Struct" name="GuiFlowOption" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowOption"><summary>
  Represnets a base line configuration for a flow item.
  </summary><signature><![CDATA[struct GuiFlowOption;
 ]]></signature></Document>

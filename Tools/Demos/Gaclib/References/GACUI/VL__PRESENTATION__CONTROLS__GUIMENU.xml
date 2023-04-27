@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiMenu" accessor="" category="Class" name="GuiMenu" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::GuiMenu"><summary>Popup menu.</summary><signature><![CDATA[class GuiMenu
+<Document accessor="" category="Class" name="GuiMenu" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::GuiMenu"><summary>Popup menu.</summary><signature><![CDATA[class GuiMenu
     : GuiPopup
     , IGuiMenuService
     , Description<GuiMenu>;

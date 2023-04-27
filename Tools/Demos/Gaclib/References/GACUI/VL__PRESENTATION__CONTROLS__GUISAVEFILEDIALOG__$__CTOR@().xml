@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiSaveFileDialog::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiSaveFileDialog::$__ctor@()[decl0]"><summary>Create a save file dialog.</summary><signature><![CDATA[ GuiSaveFileDialog(
+<Document accessor="public" category="Function" name="$__ctor" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiSaveFileDialog::$__ctor@()[decl0]"><summary>Create a save file dialog.</summary><signature><![CDATA[ GuiSaveFileDialog(
 );
 ]]></signature></Document>

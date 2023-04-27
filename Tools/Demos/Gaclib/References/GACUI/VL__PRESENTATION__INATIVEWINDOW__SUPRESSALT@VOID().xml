@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::SupressAlt@void()" accessor="public" category="Function" name="SupressAlt" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SupressAlt@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="SupressAlt" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SupressAlt@void()[decl0]"><summary>
  Supress the system&apos;s Alt+X hot key
  </summary><signature><![CDATA[void SupressAlt(
 );

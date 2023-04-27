@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::RangedItemArrangerBase" accessor="" category="Class" name="RangedItemArrangerBase" declFile="GuiListControlItemArrangers.h" declId="NI$vl::presentation::controls::list::RangedItemArrangerBase"><summary>Ranged item arranger. This arranger implements most of the common functionality for those arrangers that display a continuing subset of item at a time.</summary><signature><![CDATA[class RangedItemArrangerBase
+<Document accessor="" category="Class" name="RangedItemArrangerBase" declFile="GuiListControlItemArrangers.h" declId="NI$vl::presentation::controls::list::RangedItemArrangerBase"><summary>Ranged item arranger. This arranger implements most of the common functionality for those arrangers that display a continuing subset of item at a time.</summary><signature><![CDATA[class RangedItemArrangerBase
     : Object
     , GuiListControl::IItemArranger
     , Description<RangedItemArrangerBase>;

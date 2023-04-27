@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost::GetOpening@bool()" accessor="public" category="Function" name="GetOpening" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::GetOpening@bool()[decl0]"><summary>Test is the window opened.</summary><returns>Returns true if the window is opened.</returns><signature><![CDATA[bool GetOpening(
+<Document accessor="public" category="Function" name="GetOpening" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::GetOpening@bool()[decl0]"><summary>Test is the window opened.</summary><returns>Returns true if the window is opened.</returns><signature><![CDATA[bool GetOpening(
 );
 ]]></signature></Document>

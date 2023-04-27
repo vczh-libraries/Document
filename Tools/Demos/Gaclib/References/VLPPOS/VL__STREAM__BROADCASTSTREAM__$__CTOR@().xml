@@ -1,3 +1,3 @@
-<Document symbolId="vl::stream::BroadcastStream::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="BroadcastStream.h" declId="FB$vl::stream::BroadcastStream::$__ctor@()[decl0]"><summary>Create a boradcast stream.</summary><signature><![CDATA[ BroadcastStream(
+<Document accessor="public" category="Function" name="$__ctor" declFile="BroadcastStream.h" declId="FB$vl::stream::BroadcastStream::$__ctor@()[decl0]"><summary>Create a boradcast stream.</summary><signature><![CDATA[ BroadcastStream(
 );
 ]]></signature></Document>

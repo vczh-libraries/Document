@@ -1,4 +1,4 @@
-<Document symbolId="vl::GlobalStorage" accessor="" category="Class" name="GlobalStorage" declFile="GlobalStorage.h" declId="NI$vl::GlobalStorage"><summary>
+<Document accessor="" category="Class" name="GlobalStorage" declFile="GlobalStorage.h" declId="NI$vl::GlobalStorage"><summary>
  Base type of all global storages.
  A global storage stores multiple values using a name.
  The &quot;BEGIN_GLOBAL_STOREGE_CLASS&quot; macro is recommended to create a global storage.

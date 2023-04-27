@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::IDatePickerCommandExecutor::NotifyDateChanged@void()" accessor="public" category="Function" name="NotifyDateChanged" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::IDatePickerCommandExecutor::NotifyDateChanged@void()[decl0]"><summary>Called when the date has been changed.</summary><signature><![CDATA[void NotifyDateChanged(
+<Document accessor="public" category="Function" name="NotifyDateChanged" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::IDatePickerCommandExecutor::NotifyDateChanged@void()[decl0]"><summary>Called when the date has been changed.</summary><signature><![CDATA[void NotifyDateChanged(
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiFlowOption::BaselineType" accessor="public" category="Enum" name="BaselineType" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowOption::BaselineType"><summary>Base line calculation algorithm</summary><enumitem name="FromBottom">By a distance from the bottom.</enumitem><enumitem name="FromTop">By a distance from the top.</enumitem><enumitem name="Percentage">By percentage of the height from the top.</enumitem><signature><![CDATA[enum BaselineType
+<Document accessor="public" category="Enum" name="BaselineType" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowOption::BaselineType"><summary>Base line calculation algorithm</summary><enumitem name="FromBottom">By a distance from the bottom.</enumitem><enumitem name="FromTop">By a distance from the top.</enumitem><enumitem name="Percentage">By percentage of the height from the top.</enumitem><signature><![CDATA[enum BaselineType
 {
     Percentage,
     FromTop,

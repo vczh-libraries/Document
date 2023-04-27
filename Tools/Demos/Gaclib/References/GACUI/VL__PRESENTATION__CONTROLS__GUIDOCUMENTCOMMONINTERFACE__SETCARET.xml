@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::SetCaret@void(::vl::presentation::TextPos, ::vl::presentation::TextPos)" accessor="public" category="Function" name="SetCaret" declFile="GuiDocumentViewer.h" declId="FB$vl::presentation::controls::GuiDocumentCommonInterface::SetCaret@void(::vl::presentation::TextPos, ::vl::presentation::TextPos)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetCaret" declFile="GuiDocumentViewer.h" declId="FB$vl::presentation::controls::GuiDocumentCommonInterface::SetCaret@void(::vl::presentation::TextPos, ::vl::presentation::TextPos)[decl0]"><summary>
  Set the end position of the selection area.
  </summary><param name="begin">The begin position of the selection area.</param><param name="end">The end position of the selection area.</param><signature><![CDATA[void SetCaret(
     TextPos begin,

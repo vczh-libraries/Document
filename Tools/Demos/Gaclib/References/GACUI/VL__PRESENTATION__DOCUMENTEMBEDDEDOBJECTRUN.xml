@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::DocumentEmbeddedObjectRun" accessor="" category="Class" name="DocumentEmbeddedObjectRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentEmbeddedObjectRun"><summary>Pepresents an embedded object run.</summary><signature><![CDATA[class DocumentEmbeddedObjectRun
+<Document accessor="" category="Class" name="DocumentEmbeddedObjectRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentEmbeddedObjectRun"><summary>Pepresents an embedded object run.</summary><signature><![CDATA[class DocumentEmbeddedObjectRun
     : DocumentInlineObjectRun
     , Description<DocumentImageRun>;
 ]]></signature><seealsos><symbol name="DocumentImageRun" docId="vl::presentation::DocumentImageRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentImageRun"/></seealsos><basetypes><symbol name="DocumentInlineObjectRun" docId="vl::presentation::DocumentInlineObjectRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentInlineObjectRun"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::Rect_::y2" accessor="public" category="Variable" name="y2" declFile="GuiTypes.h" declId="NI$vl::presentation::Rect_::y2"><summary>
+<Document accessor="public" category="Variable" name="y2" declFile="GuiTypes.h" declId="NI$vl::presentation::Rect_::y2"><summary>
  Top + Height.
  </summary><signature><![CDATA[T y2;
 ]]></signature></Document>

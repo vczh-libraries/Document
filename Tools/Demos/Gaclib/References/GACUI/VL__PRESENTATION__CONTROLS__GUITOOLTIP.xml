@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiTooltip" accessor="" category="Class" name="GuiTooltip" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiTooltip"><summary>Represents a tooltip window.</summary><signature><![CDATA[class GuiTooltip
+<Document accessor="" category="Class" name="GuiTooltip" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiTooltip"><summary>Represents a tooltip window.</summary><signature><![CDATA[class GuiTooltip
     : GuiPopup
     , INativeControllerListener
     , Description<GuiTooltip>;

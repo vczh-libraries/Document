@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator&lt;[T]&gt; *()" accessor="public" category="Function" name="CreateEnumerator" declFile="Interfaces.h" declId="FB$vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator&lt;[T]&gt; *()[decl0]"><summary>
+<Document accessor="public" category="Function" name="CreateEnumerator" declFile="Interfaces.h" declId="FB$vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator&lt;[T]&gt; *()[decl0]"><summary>
  Create an enumerator. <symbol name="Next" docId="vl::collections::IEnumerator::Next@bool()" declFile="Interfaces.h" declId="FB$vl::collections::IEnumerator::Next@bool()[decl0]"/> should be called before reading the first value.
  </summary><remarks>
  In most of the cases, you do not need to call this function.

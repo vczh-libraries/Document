@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::IGuiPluginManager::Load@void()" accessor="public" category="Function" name="Load" declFile="GuiApplication.h" declId="FB$vl::presentation::controls::IGuiPluginManager::Load@void()[decl0]"><summary>Load all plugins, and check if dependencies of all plugins are ready.</summary><signature><![CDATA[void Load(
+<Document accessor="public" category="Function" name="Load" declFile="GuiApplication.h" declId="FB$vl::presentation::controls::IGuiPluginManager::Load@void()[decl0]"><summary>Load all plugins, and check if dependencies of all plugins are ready.</summary><signature><![CDATA[void Load(
 );
 ]]></signature></Document>

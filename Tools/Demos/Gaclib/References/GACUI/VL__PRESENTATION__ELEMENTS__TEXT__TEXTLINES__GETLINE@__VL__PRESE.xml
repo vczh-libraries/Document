@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::TextLines::GetLine@::vl::presentation::elements::text::TextLine &amp;(::vl::vint)" accessor="public" category="Function" name="GetLine" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLines::GetLine@::vl::presentation::elements::text::TextLine &amp;(::vl::vint)[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetLine" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLines::GetLine@::vl::presentation::elements::text::TextLine &amp;(::vl::vint)[decl0]"><summary>
  Returns the text line of a specified row number.
  </summary><returns>The related text line object.</returns><param name="row">The specified row number.</param><signature><![CDATA[TextLine & GetLine(
     vint row

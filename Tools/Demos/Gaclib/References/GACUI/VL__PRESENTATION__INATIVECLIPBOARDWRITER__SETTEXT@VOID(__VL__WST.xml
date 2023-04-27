@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeClipboardWriter::SetText@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetText" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeClipboardWriter::SetText@void(::vl::WString const &amp;)[decl0]"><summary>Prepare a text for the clipboard.</summary><param name="value">The text.</param><signature><![CDATA[void SetText(
+<Document accessor="public" category="Function" name="SetText" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeClipboardWriter::SetText@void(::vl::WString const &amp;)[decl0]"><summary>Prepare a text for the clipboard.</summary><param name="value">The text.</param><signature><![CDATA[void SetText(
     WString const & value
 );
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

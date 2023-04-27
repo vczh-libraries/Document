@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindowListener::Opened@void()" accessor="public" category="Function" name="Opened" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::Opened@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="Opened" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::Opened@void()[decl0]"><summary>
  Called when the window is opened.
  </summary><signature><![CDATA[void Opened(
 );

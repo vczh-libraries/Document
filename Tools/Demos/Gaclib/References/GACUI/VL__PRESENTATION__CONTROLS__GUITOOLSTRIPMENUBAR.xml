@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripMenuBar" accessor="" category="Class" name="GuiToolstripMenuBar" declFile="GuiToolstripMenu.h" declId="NI$vl::presentation::controls::GuiToolstripMenuBar"><summary>Toolstrip menu bar.</summary><signature><![CDATA[class GuiToolstripMenuBar
+<Document accessor="" category="Class" name="GuiToolstripMenuBar" declFile="GuiToolstripMenu.h" declId="NI$vl::presentation::controls::GuiToolstripMenuBar"><summary>Toolstrip menu bar.</summary><signature><![CDATA[class GuiToolstripMenuBar
     : GuiMenuBar
     , Description<GuiToolstripMenuBar>;
 ]]></signature><seealsos><symbol name="GuiToolstripMenuBar" docId="vl::presentation::controls::GuiToolstripMenuBar" declFile="GuiToolstripMenu.h" declId="NI$vl::presentation::controls::GuiToolstripMenuBar"/></seealsos><basetypes><symbol name="GuiMenuBar" docId="vl::presentation::controls::GuiMenuBar" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::GuiMenuBar"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

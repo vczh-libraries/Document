@@ -1,4 +1,4 @@
-<Document symbolId="vl::Nullable::operator =@::vl::Nullable&lt;[T]&gt; &amp;(::vl::Nullable&lt;[T]&gt; &amp;&amp;)" accessor="public" category="Function" name="operator =" declFile="Basic.h" declId="FB$vl::Nullable::operator =@::vl::Nullable&lt;[T]&gt; &amp;(::vl::Nullable&lt;[T]&gt; &amp;&amp;)[impl0]"><summary>Replace the data inside this nullable value by moving from another nullable value.</summary><returns>The nullable value itself.</returns><param name="nullable">The nullable value to move.</param><signature><![CDATA[Nullable<T> & operator =(
+<Document accessor="public" category="Function" name="operator =" declFile="Basic.h" declId="FB$vl::Nullable::operator =@::vl::Nullable&lt;[T]&gt; &amp;(::vl::Nullable&lt;[T]&gt; &amp;&amp;)[impl0]"><summary>Replace the data inside this nullable value by moving from another nullable value.</summary><returns>The nullable value itself.</returns><param name="nullable">The nullable value to move.</param><signature><![CDATA[Nullable<T> & operator =(
     Nullable<T> && nullable
 );
 ]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/></seealsos></Document>

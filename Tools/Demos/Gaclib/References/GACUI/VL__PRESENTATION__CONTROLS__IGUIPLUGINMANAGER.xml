@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::IGuiPluginManager" accessor="" category="Class" name="IGuiPluginManager" declFile="GuiApplication.h" declId="NI$vl::presentation::controls::IGuiPluginManager"><summary>Represents a plugin manager.</summary><signature><![CDATA[class IGuiPluginManager
+<Document accessor="" category="Class" name="IGuiPluginManager" declFile="GuiApplication.h" declId="NI$vl::presentation::controls::IGuiPluginManager"><summary>Represents a plugin manager.</summary><signature><![CDATA[class IGuiPluginManager
     : IDescriptable
     , Description<IGuiPluginManager>;
 ]]></signature><seealsos><symbol name="IGuiPluginManager" docId="vl::presentation::controls::IGuiPluginManager" declFile="GuiApplication.h" declId="NI$vl::presentation::controls::IGuiPluginManager"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

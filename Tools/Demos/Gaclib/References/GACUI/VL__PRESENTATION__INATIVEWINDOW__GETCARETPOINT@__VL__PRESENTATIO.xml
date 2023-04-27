@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::GetCaretPoint@::vl::presentation::NativePoint()" accessor="public" category="Function" name="GetCaretPoint" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetCaretPoint@::vl::presentation::NativePoint()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetCaretPoint" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetCaretPoint@::vl::presentation::NativePoint()[decl0]"><summary>
  Get the caret point of the window. When an input method editor is opened, the input text box will be located to the caret point.
  </summary><returns>The caret point of the window.</returns><signature><![CDATA[NativePoint GetCaretPoint(
 );

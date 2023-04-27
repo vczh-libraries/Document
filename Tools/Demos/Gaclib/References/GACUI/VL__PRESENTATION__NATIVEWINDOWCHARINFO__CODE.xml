@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::NativeWindowCharInfo::code" accessor="public" category="Variable" name="code" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::NativeWindowCharInfo::code"><summary>Character that sends this message.</summary><signature><![CDATA[wchar_t code;
+<Document accessor="public" category="Variable" name="code" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::NativeWindowCharInfo::code"><summary>Character that sends this message.</summary><signature><![CDATA[wchar_t code;
 ]]></signature></Document>

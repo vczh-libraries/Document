@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow" accessor="" category="Class" name="INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"><summary>
+<Document accessor="" category="Class" name="INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"><summary>
  Represents a window.
  </summary><signature><![CDATA[class INativeWindow
     : Interface

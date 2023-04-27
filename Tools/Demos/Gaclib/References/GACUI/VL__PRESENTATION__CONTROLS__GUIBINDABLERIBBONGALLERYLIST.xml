@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiBindableRibbonGalleryList" accessor="" category="Class" name="GuiBindableRibbonGalleryList" declFile="GuiRibbonGalleryList.h" declId="NI$vl::presentation::controls::GuiBindableRibbonGalleryList"><summary>Auto resizable ribbon gallyer list.</summary><signature><![CDATA[class GuiBindableRibbonGalleryList
+<Document accessor="" category="Class" name="GuiBindableRibbonGalleryList" declFile="GuiRibbonGalleryList.h" declId="NI$vl::presentation::controls::GuiBindableRibbonGalleryList"><summary>Auto resizable ribbon gallyer list.</summary><signature><![CDATA[class GuiBindableRibbonGalleryList
     : GuiRibbonGallery
     , list::GroupedDataSource
     , IGuiMenuDropdownProvider

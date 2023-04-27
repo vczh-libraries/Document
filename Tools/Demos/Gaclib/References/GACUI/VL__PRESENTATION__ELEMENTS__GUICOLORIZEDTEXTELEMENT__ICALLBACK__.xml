@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiColorizedTextElement::ICallback::ColorChanged@void()" accessor="public" category="Function" name="ColorChanged" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::ICallback::ColorChanged@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="ColorChanged" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::ICallback::ColorChanged@void()[decl0]"><summary>
  Called when the color table of a <symbol name="GuiColorizedTextElement" docId="vl::presentation::elements::GuiColorizedTextElement" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::GuiColorizedTextElement"/> changed.
  </summary><signature><![CDATA[void ColorChanged(
 );

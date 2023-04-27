@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiSolidLabelElement::SetWrapLine@void(bool)" accessor="public" category="Function" name="SetWrapLine" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidLabelElement::SetWrapLine@void(bool)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetWrapLine" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidLabelElement::SetWrapLine@void(bool)[decl0]"><summary>
  Set if line auto-wrapping is enabled for this text.
  </summary><param name="value">True if line auto-wrapping is enabled for this text.</param><signature><![CDATA[void SetWrapLine(
     bool value

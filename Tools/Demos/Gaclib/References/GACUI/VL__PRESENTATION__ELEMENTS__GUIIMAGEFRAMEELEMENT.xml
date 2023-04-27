@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiImageFrameElement" accessor="" category="Class" name="GuiImageFrameElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiImageFrameElement"><summary>
+<Document accessor="" category="Class" name="GuiImageFrameElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiImageFrameElement"><summary>
  Defines an element containing an image.
  </summary><signature><![CDATA[class GuiImageFrameElement
     : GuiElementBase<GuiImageFrameElement>;

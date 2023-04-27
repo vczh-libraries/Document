@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiInstanceRootObject::FinalizeInstance@void()" accessor="public" category="Function" name="FinalizeInstance" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::GuiInstanceRootObject::FinalizeInstance@void()[decl0]"><summary>Clear all subscriptions and components.</summary><signature><![CDATA[void FinalizeInstance(
+<Document accessor="public" category="Function" name="FinalizeInstance" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::GuiInstanceRootObject::FinalizeInstance@void()[decl0]"><summary>Clear all subscriptions and components.</summary><signature><![CDATA[void FinalizeInstance(
 );
 ]]></signature></Document>

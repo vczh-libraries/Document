@@ -1,2 +1,2 @@
-<Document symbolId="vl::Error" accessor="" category="Class" name="Error" declFile="Basic.h" declId="NI$vl::Error"><summary>Base type of all errors. An error is an exception that is not recommended to catch. Raising it means there is a mistake in the code.</summary><signature><![CDATA[class Error;
+<Document accessor="" category="Class" name="Error" declFile="Basic.h" declId="NI$vl::Error"><summary>Base type of all errors. An error is an exception that is not recommended to catch. Raising it means there is a mistake in the code.</summary><signature><![CDATA[class Error;
 ]]></signature></Document>

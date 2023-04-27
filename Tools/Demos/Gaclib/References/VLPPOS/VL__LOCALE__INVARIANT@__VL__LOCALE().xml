@@ -1,3 +1,3 @@
-<Document symbolId="vl::Locale::Invariant@::vl::Locale()" accessor="public" category="Function" name="Invariant" declFile="Locale.h" declId="FB$vl::Locale::Invariant@::vl::Locale()[decl0]"><summary>Get the invariant locale. An invariant locale is neutral, it is not awared of any language specified thing.</summary><returns>The invariant locale.</returns><signature><![CDATA[static Locale Invariant(
+<Document accessor="public" category="Function" name="Invariant" declFile="Locale.h" declId="FB$vl::Locale::Invariant@::vl::Locale()[decl0]"><summary>Get the invariant locale. An invariant locale is neutral, it is not awared of any language specified thing.</summary><returns>The invariant locale.</returns><signature><![CDATA[static Locale Invariant(
 );
 ]]></signature><seealsos><symbol name="Locale" docId="vl::Locale" declFile="Locale.h" declId="NI$vl::Locale"/></seealsos></Document>

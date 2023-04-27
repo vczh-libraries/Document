@@ -1,4 +1,4 @@
-<Document symbolId="vl::Mutex::Create@bool(bool, ::vl::WString const &amp;)" accessor="public" category="Function" name="Create" declFile="Threading.h" declId="FB$vl::Mutex::Create@bool(bool, ::vl::WString const &amp;)[decl0]"><summary>Create a mutex.</summary><returns>Returns true if this operation succeeded.</returns><param name="owned">Set to true to own the created mutex.</param><param name="name">Name of the mutex. If it is not empty, than it is a global named mutex. This argument is ignored in Linux.</param><signature><![CDATA[bool Create(
+<Document accessor="public" category="Function" name="Create" declFile="Threading.h" declId="FB$vl::Mutex::Create@bool(bool, ::vl::WString const &amp;)[decl0]"><summary>Create a mutex.</summary><returns>Returns true if this operation succeeded.</returns><param name="owned">Set to true to own the created mutex.</param><param name="name">Name of the mutex. If it is not empty, than it is a global named mutex. This argument is ignored in Linux.</param><signature><![CDATA[bool Create(
     bool owned /* optional */,
     WString const & name /* optional */
 );

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeInputService::StartTimer@void()" accessor="public" category="Function" name="StartTimer" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeInputService::StartTimer@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="StartTimer" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeInputService::StartTimer@void()[decl0]"><summary>
  Start to reveive global timer message.
  </summary><signature><![CDATA[void StartTimer(
 );

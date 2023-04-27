@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::Margin_::top" accessor="public" category="Variable" name="top" declFile="GuiTypes.h" declId="NI$vl::presentation::Margin_::top"><summary>
+<Document accessor="public" category="Variable" name="top" declFile="GuiTypes.h" declId="NI$vl::presentation::Margin_::top"><summary>
  The top margin.
  </summary><signature><![CDATA[T top;
 ]]></signature></Document>

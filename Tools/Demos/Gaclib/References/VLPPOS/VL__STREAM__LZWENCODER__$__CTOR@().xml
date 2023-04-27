@@ -1,3 +1,3 @@
-<Document symbolId="vl::stream::LzwEncoder::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="CompressionStream.h" declId="FB$vl::stream::LzwEncoder::$__ctor@()[decl0]"><summary>Create an encoder.</summary><signature><![CDATA[ LzwEncoder(
+<Document accessor="public" category="Function" name="$__ctor" declFile="CompressionStream.h" declId="FB$vl::stream::LzwEncoder::$__ctor@()[decl0]"><summary>Create an encoder.</summary><signature><![CDATA[ LzwEncoder(
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::po::Node::firstSubClassItem" accessor="public" category="Variable" name="firstSubClassItem" declFile="PartialOrdering.h" declId="NI$vl::collections::po::Node::firstSubClassItem"><summary>
+<Document accessor="public" category="Variable" name="firstSubClassItem" declFile="PartialOrdering.h" declId="NI$vl::collections::po::Node::firstSubClassItem"><summary>
  If <symbol name="InitWithSubClass" docId="vl::collections::PartialOrderingProcessor::InitWithSubClass@void([TList] const &amp;, ::vl::collections::PartialOrderingProcessor::GroupOf&lt;[TList]&gt; const &amp;, ::vl::collections::Dictionary&lt;ElementType, [TSubClass]&gt; const &amp;)" declFile="PartialOrdering.h" declId="FB$vl::collections::PartialOrderingProcessor::InitWithSubClass@void([TList] const &amp;, ::vl::collections::PartialOrderingProcessor::GroupOf&lt;[TList]&gt; const &amp;, ::vl::collections::Dictionary&lt;ElementType, [TSubClass]&gt; const &amp;)[impl0]"/> is used,
  a node becomes a sub class representing objects.
  An object will not be shared by different sub classes.

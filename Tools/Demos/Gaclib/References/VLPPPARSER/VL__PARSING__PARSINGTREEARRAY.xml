@@ -1,4 +1,4 @@
-<Document symbolId="vl::parsing::ParsingTreeArray" accessor="" category="Class" name="ParsingTreeArray" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeArray"><summary>Representing an array node in an abstract syntax tree.</summary><signature><![CDATA[class ParsingTreeArray
+<Document accessor="" category="Class" name="ParsingTreeArray" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeArray"><summary>Representing an array node in an abstract syntax tree.</summary><signature><![CDATA[class ParsingTreeArray
     : ParsingTreeNode
     , reflection::Description<ParsingTreeArray>;
 ]]></signature><seealsos><symbol name="ParsingTreeArray" docId="vl::parsing::ParsingTreeArray" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeArray"/></seealsos><basetypes><symbol name="ParsingTreeNode" docId="vl::parsing::ParsingTreeNode" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeNode"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

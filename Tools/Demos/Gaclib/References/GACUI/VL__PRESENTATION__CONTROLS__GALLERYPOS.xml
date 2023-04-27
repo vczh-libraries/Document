@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GalleryPos" accessor="" category="Struct" name="GalleryPos" declFile="GuiRibbonGalleryList.h" declId="NI$vl::presentation::controls::GalleryPos"><summary>Represents the position of an item in the gallery list.</summary><signature><![CDATA[struct GalleryPos;
+<Document accessor="" category="Struct" name="GalleryPos" declFile="GuiRibbonGalleryList.h" declId="NI$vl::presentation::controls::GalleryPos"><summary>Represents the position of an item in the gallery list.</summary><signature><![CDATA[struct GalleryPos;
 ]]></signature></Document>

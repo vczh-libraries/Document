@@ -1,4 +1,4 @@
-<Document symbolId="vl::reflection::description::IValueReadonlyList" accessor="" category="Class" name="IValueReadonlyList" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueReadonlyList"><summary>
+<Document accessor="" category="Class" name="IValueReadonlyList" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueReadonlyList"><summary>
  The reflectable version of readonly
  <symbol name="Array" docId="vl::collections::Array" declFile="List.h" declId="NI$vl::collections::Array"/>,
  <symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/> or

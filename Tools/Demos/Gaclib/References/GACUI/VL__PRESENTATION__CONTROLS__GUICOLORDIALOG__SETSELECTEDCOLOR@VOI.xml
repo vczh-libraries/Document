@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiColorDialog::SetSelectedColor@void(::vl::presentation::Color)" accessor="public" category="Function" name="SetSelectedColor" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiColorDialog::SetSelectedColor@void(::vl::presentation::Color)[decl0]"><summary>Set the selected color.</summary><param name="value">The selected color.</param><signature><![CDATA[void SetSelectedColor(
+<Document accessor="public" category="Function" name="SetSelectedColor" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiColorDialog::SetSelectedColor@void(::vl::presentation::Color)[decl0]"><summary>Set the selected color.</summary><param name="value">The selected color.</param><signature><![CDATA[void SetSelectedColor(
     Color value
 );
 ]]></signature><seealsos><symbol name="Color" docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>

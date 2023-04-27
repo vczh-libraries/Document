@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiSideAlignedComposition::Direction" accessor="public" category="Enum" name="Direction" declFile="GuiGraphicsSpecializedComposition.h" declId="NI$vl::presentation::compositions::GuiSideAlignedComposition::Direction"><summary>The border to align.</summary><enumitem name="Bottom">The bottom border.</enumitem><enumitem name="Left">The left border.</enumitem><enumitem name="Right">The right border.</enumitem><enumitem name="Top">The top border.</enumitem><signature><![CDATA[enum Direction
+<Document accessor="public" category="Enum" name="Direction" declFile="GuiGraphicsSpecializedComposition.h" declId="NI$vl::presentation::compositions::GuiSideAlignedComposition::Direction"><summary>The border to align.</summary><enumitem name="Bottom">The bottom border.</enumitem><enumitem name="Left">The left border.</enumitem><enumitem name="Right">The right border.</enumitem><enumitem name="Top">The top border.</enumitem><signature><![CDATA[enum Direction
 {
     Left,
     Top,

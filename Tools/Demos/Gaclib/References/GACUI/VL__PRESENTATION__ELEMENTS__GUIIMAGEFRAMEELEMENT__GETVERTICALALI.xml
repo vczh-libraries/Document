@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiImageFrameElement::GetVerticalAlignment@::vl::presentation::Alignment()" accessor="public" category="Function" name="GetVerticalAlignment" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiImageFrameElement::GetVerticalAlignment@::vl::presentation::Alignment()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetVerticalAlignment" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiImageFrameElement::GetVerticalAlignment@::vl::presentation::Alignment()[decl0]"><summary>
  Get the vertical alignment of the image.
  </summary><returns>The vertical alignment of the image.</returns><signature><![CDATA[Alignment GetVerticalAlignment(
 );

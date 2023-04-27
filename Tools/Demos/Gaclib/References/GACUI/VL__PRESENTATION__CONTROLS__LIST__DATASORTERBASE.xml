@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::DataSorterBase" accessor="" category="Class" name="DataSorterBase" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataSorterBase"><summary>Base class for <symbol name="IDataSorter" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::IDataSorter"/>.</summary><signature><![CDATA[class DataSorterBase
+<Document accessor="" category="Class" name="DataSorterBase" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataSorterBase"><summary>Base class for <symbol name="IDataSorter" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::IDataSorter"/>.</summary><signature><![CDATA[class DataSorterBase
     : Object
     , IDataSorter
     , Description<DataSorterBase>;

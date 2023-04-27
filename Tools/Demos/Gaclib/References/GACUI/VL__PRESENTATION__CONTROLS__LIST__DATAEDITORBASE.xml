@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::DataEditorBase" accessor="" category="Class" name="DataEditorBase" declFile="GuiDataGridExtensions.h" declId="NI$vl::presentation::controls::list::DataEditorBase"><summary>Base class for all data editors.</summary><signature><![CDATA[class DataEditorBase
+<Document accessor="" category="Class" name="DataEditorBase" declFile="GuiDataGridExtensions.h" declId="NI$vl::presentation::controls::list::DataEditorBase"><summary>Base class for all data editors.</summary><signature><![CDATA[class DataEditorBase
     : Object
     , IDataEditor;
 ]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IDataEditor" docId="vl::presentation::controls::list::IDataEditor" declFile="GuiDataGridInterfaces.h" declId="NI$vl::presentation::controls::list::IDataEditor"/></basetypes></Document>

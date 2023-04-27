@@ -1,4 +1,4 @@
-<Document symbolId="vl::reflection::description::ITypeDescriptor" accessor="" category="Class" name="ITypeDescriptor" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::ITypeDescriptor"><summary>Metadata class for reflectable types.</summary><signature><![CDATA[class ITypeDescriptor
+<Document accessor="" category="Class" name="ITypeDescriptor" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::ITypeDescriptor"><summary>Metadata class for reflectable types.</summary><signature><![CDATA[class ITypeDescriptor
     : IDescriptable
     , Description<ITypeDescriptor>;
 ]]></signature><seealsos><symbol name="ITypeDescriptor" docId="vl::reflection::description::ITypeDescriptor" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::ITypeDescriptor"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

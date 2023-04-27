@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::TextLines" accessor="" category="Class" name="TextLines" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLines"><summary>
+<Document accessor="" category="Class" name="TextLines" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLines"><summary>
  A class to maintain multiple lines of text buffer.
  </summary><signature><![CDATA[class TextLines
     : Object

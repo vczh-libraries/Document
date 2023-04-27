@@ -1,3 +1,3 @@
-<Document symbolId="vl::parsing::tabling::ParsingAmbiguousParser" accessor="" category="Class" name="ParsingAmbiguousParser" declFile="Parsing.h" declId="NI$vl::parsing::tabling::ParsingAmbiguousParser"><summary>A strict parse. It allows ambiguity but doesn&apos;t allow error recovery.</summary><signature><![CDATA[class ParsingAmbiguousParser
+<Document accessor="" category="Class" name="ParsingAmbiguousParser" declFile="Parsing.h" declId="NI$vl::parsing::tabling::ParsingAmbiguousParser"><summary>A strict parse. It allows ambiguity but doesn&apos;t allow error recovery.</summary><signature><![CDATA[class ParsingAmbiguousParser
     : ParsingGeneralParser;
 ]]></signature><basetypes><symbol name="ParsingGeneralParser" docId="vl::parsing::tabling::ParsingGeneralParser" declFile="Parsing.h" declId="NI$vl::parsing::tabling::ParsingGeneralParser"/></basetypes></Document>

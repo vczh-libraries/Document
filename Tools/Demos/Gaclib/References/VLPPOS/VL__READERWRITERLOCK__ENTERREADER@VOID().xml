@@ -1,3 +1,3 @@
-<Document symbolId="vl::ReaderWriterLock::EnterReader@void()" accessor="public" category="Function" name="EnterReader" declFile="Threading.h" declId="FB$vl::ReaderWriterLock::EnterReader@void()[decl0]"><summary>Acquire a reader lock.</summary><signature><![CDATA[void EnterReader(
+<Document accessor="public" category="Function" name="EnterReader" declFile="Threading.h" declId="FB$vl::ReaderWriterLock::EnterReader@void()[decl0]"><summary>Acquire a reader lock.</summary><signature><![CDATA[void EnterReader(
 );
 ]]></signature></Document>

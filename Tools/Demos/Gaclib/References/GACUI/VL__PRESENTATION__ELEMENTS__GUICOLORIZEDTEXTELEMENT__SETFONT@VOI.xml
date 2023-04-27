@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiColorizedTextElement::SetFont@void(::vl::presentation::FontProperties const &amp;)" accessor="public" category="Function" name="SetFont" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::SetFont@void(::vl::presentation::FontProperties const &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetFont" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::SetFont@void(::vl::presentation::FontProperties const &amp;)[decl0]"><summary>
  Set the font configuration for all characters. <symbol name="FontChanged" docId="vl::presentation::elements::GuiColorizedTextElement::ICallback::FontChanged@void()" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::ICallback::FontChanged@void()[decl0]"/> will be called.
  </summary><param name="value">The font configuration.</param><signature><![CDATA[void SetFont(
     FontProperties const & value

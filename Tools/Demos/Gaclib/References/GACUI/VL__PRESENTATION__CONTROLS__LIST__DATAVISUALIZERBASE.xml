@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::DataVisualizerBase" accessor="" category="Class" name="DataVisualizerBase" declFile="GuiDataGridExtensions.h" declId="NI$vl::presentation::controls::list::DataVisualizerBase"><summary>Base class for all data visualizers.</summary><signature><![CDATA[class DataVisualizerBase
+<Document accessor="" category="Class" name="DataVisualizerBase" declFile="GuiDataGridExtensions.h" declId="NI$vl::presentation::controls::list::DataVisualizerBase"><summary>Base class for all data visualizers.</summary><signature><![CDATA[class DataVisualizerBase
     : Object
     , IDataVisualizer;
 ]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IDataVisualizer" docId="vl::presentation::controls::list::IDataVisualizer" declFile="GuiDataGridInterfaces.h" declId="NI$vl::presentation::controls::list::IDataVisualizer"/></basetypes></Document>

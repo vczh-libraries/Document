@@ -1,4 +1,4 @@
-<Document symbolId="vl::ThreadLocalStorage" accessor="" category="Class" name="ThreadLocalStorage" declFile="Threading.h" declId="NI$vl::ThreadLocalStorage"><summary>Thread local storage operations.</summary><remarks>
+<Document accessor="" category="Class" name="ThreadLocalStorage" declFile="Threading.h" declId="NI$vl::ThreadLocalStorage"><summary>Thread local storage operations.</summary><remarks>
  This class is designed to define global variables.
  Dynamically allocation will result in undefined behavior.
  </remarks><signature><![CDATA[class ThreadLocalStorage

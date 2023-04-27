@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindowListener::Activated@void()" accessor="public" category="Function" name="Activated" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::Activated@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="Activated" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::Activated@void()[decl0]"><summary>
  Called when the window is activated.
  </summary><signature><![CDATA[void Activated(
 );

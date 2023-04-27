@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::TextWriter::WriteChar@void(wchar_t)" accessor="public" category="Function" name="WriteChar" declFile="Accessor.h" declId="FB$vl::stream::TextWriter::WriteChar@void(wchar_t)[decl0]"><summary>Write a single character.</summary><param name="c">The character to write.</param><signature><![CDATA[void WriteChar(
+<Document accessor="public" category="Function" name="WriteChar" declFile="Accessor.h" declId="FB$vl::stream::TextWriter::WriteChar@void(wchar_t)[decl0]"><summary>Write a single character.</summary><param name="c">The character to write.</param><signature><![CDATA[void WriteChar(
     wchar_t c
 );
 ]]></signature></Document>

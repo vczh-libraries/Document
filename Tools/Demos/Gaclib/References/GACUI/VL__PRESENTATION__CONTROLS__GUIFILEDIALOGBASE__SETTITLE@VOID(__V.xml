@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiFileDialogBase::SetTitle@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetTitle" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiFileDialogBase::SetTitle@void(::vl::WString const &amp;)[decl0]"><summary>Set the title.</summary><param name="value">The title.</param><signature><![CDATA[void SetTitle(
+<Document accessor="public" category="Function" name="SetTitle" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiFileDialogBase::SetTitle@void(::vl::WString const &amp;)[decl0]"><summary>Set the title.</summary><param name="value">The title.</param><signature><![CDATA[void SetTitle(
     WString const & value
 );
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

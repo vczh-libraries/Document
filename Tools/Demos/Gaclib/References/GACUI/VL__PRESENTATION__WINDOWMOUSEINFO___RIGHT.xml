@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::WindowMouseInfo_::right" accessor="public" category="Variable" name="right" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::WindowMouseInfo_::right"><summary>True if the right mouse button is pressed.</summary><signature><![CDATA[bool right;
+<Document accessor="public" category="Variable" name="right" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::WindowMouseInfo_::right"><summary>True if the right mouse button is pressed.</summary><signature><![CDATA[bool right;
 ]]></signature></Document>

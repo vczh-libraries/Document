@@ -1,2 +1,2 @@
-<Document symbolId="vl::parsing::xml::XmlElement::name" accessor="public" category="Variable" name="name" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlElement::name"><summary>Element name of the open element node.</summary><signature><![CDATA[vl::parsing::ParsingToken name;
+<Document accessor="public" category="Variable" name="name" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlElement::name"><summary>Element name of the open element node.</summary><signature><![CDATA[vl::parsing::ParsingToken name;
 ]]></signature><seealsos><symbol name="ParsingToken" docId="vl::parsing::ParsingToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingToken"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::IGuiGraphicsTimerCallback" accessor="" category="Class" name="IGuiGraphicsTimerCallback" declFile="GuiGraphicsHost.h" declId="NI$vl::presentation::compositions::IGuiGraphicsTimerCallback"><summary>
+<Document accessor="" category="Class" name="IGuiGraphicsTimerCallback" declFile="GuiGraphicsHost.h" declId="NI$vl::presentation::compositions::IGuiGraphicsTimerCallback"><summary>
  Represents a timer callback object.
  </summary><signature><![CDATA[class IGuiGraphicsTimerCallback
     : IDescriptable

@@ -1,4 +1,4 @@
-<Document symbolId="vl::ObjectString::operator =@::vl::ObjectString&lt;[T]&gt; &amp;(::vl::ObjectString&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="operator =" declFile="String.h" declId="FB$vl::ObjectString::operator =@::vl::ObjectString&lt;[T]&gt; &amp;(::vl::ObjectString&lt;[T]&gt; const &amp;)[impl0]"><summary>Replace the string by copying another string.</summary><returns>The string itself.</returns><param name="string">The string to copy.</param><signature><![CDATA[ObjectString<T> & operator =(
+<Document accessor="public" category="Function" name="operator =" declFile="String.h" declId="FB$vl::ObjectString::operator =@::vl::ObjectString&lt;[T]&gt; &amp;(::vl::ObjectString&lt;[T]&gt; const &amp;)[impl0]"><summary>Replace the string by copying another string.</summary><returns>The string itself.</returns><param name="string">The string to copy.</param><signature><![CDATA[ObjectString<T> & operator =(
     ObjectString<T> const & string
 );
 ]]></signature><seealsos><symbol name="ObjectString" docId="vl::ObjectString" declFile="String.h" declId="NI$vl::ObjectString"/></seealsos></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextEditPreviewStruct" accessor="public" category="Struct" name="TextEditPreviewStruct" declFile="GuiTextGeneralOperations.h" declId="NI$vl::presentation::controls::ICommonTextEditCallback::TextEditPreviewStruct"><summary>Callback data for text editing preview.</summary><signature><![CDATA[struct TextEditPreviewStruct;
+<Document accessor="public" category="Struct" name="TextEditPreviewStruct" declFile="GuiTextGeneralOperations.h" declId="NI$vl::presentation::controls::ICommonTextEditCallback::TextEditPreviewStruct"><summary>Callback data for text editing preview.</summary><signature><![CDATA[struct TextEditPreviewStruct;
 ]]></signature></Document>

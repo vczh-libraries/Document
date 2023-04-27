@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::TextLine::lexerFinalState" accessor="public" category="Variable" name="lexerFinalState" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLine::lexerFinalState"><summary>
+<Document accessor="public" category="Variable" name="lexerFinalState" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLine::lexerFinalState"><summary>
  The internal lexical analyzer state of a colorizer when it parses to the end of this line. -1 means that this state is not available.
  </summary><signature><![CDATA[vint lexerFinalState;
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

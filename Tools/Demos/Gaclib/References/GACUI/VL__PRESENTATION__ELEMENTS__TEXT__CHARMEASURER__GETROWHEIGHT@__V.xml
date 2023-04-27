@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::CharMeasurer::GetRowHeight@::vl::vint()" accessor="public" category="Function" name="GetRowHeight" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::CharMeasurer::GetRowHeight@::vl::vint()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetRowHeight" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::CharMeasurer::GetRowHeight@::vl::vint()[decl0]"><summary>
  Measure the height of a character.
  </summary><returns>The height of a character, in pixel.</returns><signature><![CDATA[vint GetRowHeight(
 );

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetRowText@::vl::WString(::vl::vint)" accessor="public" category="Function" name="GetRowText" declFile="GuiTextCommonInterface.h" declId="FB$vl::presentation::controls::GuiTextBoxCommonInterface::GetRowText@::vl::WString(::vl::vint)[decl0]"><summary>Get the text from a specified row number.</summary><returns>The text from a specified row number.</returns><param name="row">The specified row number.</param><signature><![CDATA[WString GetRowText(
+<Document accessor="public" category="Function" name="GetRowText" declFile="GuiTextCommonInterface.h" declId="FB$vl::presentation::controls::GuiTextBoxCommonInterface::GetRowText@::vl::WString(::vl::vint)[decl0]"><summary>Get the text from a specified row number.</summary><returns>The text from a specified row number.</returns><param name="row">The specified row number.</param><signature><![CDATA[WString GetRowText(
     vint row
 );
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

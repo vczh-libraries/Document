@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::TextPos" accessor="" category="Struct" name="TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"><summary>
+<Document accessor="" category="Struct" name="TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"><summary>
  Represents the position in multiple lines of text.
  </summary><signature><![CDATA[struct TextPos;
 ]]></signature></Document>

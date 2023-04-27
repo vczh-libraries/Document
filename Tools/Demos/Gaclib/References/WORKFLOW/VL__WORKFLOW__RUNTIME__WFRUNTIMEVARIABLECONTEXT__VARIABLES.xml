@@ -1,2 +1,2 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeVariableContext::variables" accessor="public" category="Variable" name="variables" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeVariableContext::variables"><summary>Values of variables in runtime.</summary><signature><![CDATA[VariableArray variables;
+<Document accessor="public" category="Variable" name="variables" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeVariableContext::variables"><summary>Values of variables in runtime.</summary><signature><![CDATA[VariableArray variables;
 ]]></signature><seealsos><symbol name="VariableArray" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeVariableContext::VariableArray"/></seealsos></Document>

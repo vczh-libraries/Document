@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiWindow::GetMinimizedBox@bool()" accessor="public" category="Function" name="GetMinimizedBox" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiWindow::GetMinimizedBox@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetMinimizedBox" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiWindow::GetMinimizedBox@bool()[decl0]"><summary>
  Test is the minimize box visible.
  </summary><returns>Returns true if the minimize box is visible.</returns><signature><![CDATA[bool GetMinimizedBox(
 );

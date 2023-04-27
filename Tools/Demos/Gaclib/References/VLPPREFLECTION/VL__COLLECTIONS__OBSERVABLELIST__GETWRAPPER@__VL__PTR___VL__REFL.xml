@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::ObservableList::GetWrapper@::vl::Ptr&lt;::vl::reflection::description::IValueObservableList&gt;()" accessor="public" category="Function" name="GetWrapper" declFile="GuiTypeDescriptorBuilder_Container.h" declId="FB$vl::collections::ObservableList::GetWrapper@::vl::Ptr&lt;::vl::reflection::description::IValueObservableList&gt;()[impl0]"><summary>
+<Document accessor="public" category="Function" name="GetWrapper" declFile="GuiTypeDescriptorBuilder_Container.h" declId="FB$vl::collections::ObservableList::GetWrapper@::vl::Ptr&lt;::vl::reflection::description::IValueObservableList&gt;()[impl0]"><summary>
  Get the maintained observable list.
  <symbol name="ItemChanged" docId="vl::reflection::description::IValueObservableList::ItemChanged" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueObservableList::ItemChanged"/> of the observable list
  will be automatically triggered when any changing happens.

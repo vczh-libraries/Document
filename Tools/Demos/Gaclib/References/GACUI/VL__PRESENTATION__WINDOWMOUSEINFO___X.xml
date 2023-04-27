@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::WindowMouseInfo_::x" accessor="public" category="Variable" name="x" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::WindowMouseInfo_::x"><summary>The mouse position of x dimension.</summary><signature><![CDATA[T x;
+<Document accessor="public" category="Variable" name="x" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::WindowMouseInfo_::x"><summary>The mouse position of x dimension.</summary><signature><![CDATA[T x;
 ]]></signature></Document>

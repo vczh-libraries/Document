@@ -1,2 +1,2 @@
-<Document symbolId="vl::DateTime::second" accessor="public" category="Variable" name="second" declFile="Basic.h" declId="NI$vl::DateTime::second"><summary>The second, from 0 to 60.</summary><signature><![CDATA[vint second;
+<Document accessor="public" category="Variable" name="second" declFile="Basic.h" declId="NI$vl::DateTime::second"><summary>The second, from 0 to 60.</summary><signature><![CDATA[vint second;
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

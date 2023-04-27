@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::Gui3DBorderElement::SetColors@void(::vl::presentation::Color, ::vl::presentation::Color)" accessor="public" category="Function" name="SetColors" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::Gui3DBorderElement::SetColors@void(::vl::presentation::Color, ::vl::presentation::Color)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetColors" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::Gui3DBorderElement::SetColors@void(::vl::presentation::Color, ::vl::presentation::Color)[decl0]"><summary>
  Set colors of the element.
  </summary><param name="value1">The new left-top color.</param><param name="value2">The new right bottom color.</param><signature><![CDATA[void SetColors(
     Color value1,

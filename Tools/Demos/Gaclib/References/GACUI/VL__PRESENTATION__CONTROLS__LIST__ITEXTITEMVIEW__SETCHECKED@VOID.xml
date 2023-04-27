@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::ITextItemView::SetChecked@void(::vl::vint, bool)" accessor="public" category="Function" name="SetChecked" declFile="GuiTextListControls.h" declId="FB$vl::presentation::controls::list::ITextItemView::SetChecked@void(::vl::vint, bool)[decl0]"><summary>Set the check state of an item without invoving any UI action.</summary><param name="itemIndex">The index of an item.</param><param name="value">The new check state.</param><signature><![CDATA[void SetChecked(
+<Document accessor="public" category="Function" name="SetChecked" declFile="GuiTextListControls.h" declId="FB$vl::presentation::controls::list::ITextItemView::SetChecked@void(::vl::vint, bool)[decl0]"><summary>Set the check state of an item without invoving any UI action.</summary><param name="itemIndex">The index of an item.</param><param name="value">The new check state.</param><signature><![CDATA[void SetChecked(
     vint itemIndex,
     bool value
 );

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeImage::FormatType" accessor="public" category="Enum" name="FormatType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage::FormatType"><summary>
+<Document accessor="public" category="Enum" name="FormatType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage::FormatType"><summary>
  Represents an image format.
  </summary><enumitem name="Bmp">
  Bitmap format.

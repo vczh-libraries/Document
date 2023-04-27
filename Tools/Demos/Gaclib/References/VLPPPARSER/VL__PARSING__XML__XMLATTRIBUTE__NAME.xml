@@ -1,2 +1,2 @@
-<Document symbolId="vl::parsing::xml::XmlAttribute::name" accessor="public" category="Variable" name="name" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlAttribute::name"><summary>Attribute name.</summary><signature><![CDATA[vl::parsing::ParsingToken name;
+<Document accessor="public" category="Variable" name="name" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlAttribute::name"><summary>Attribute name.</summary><signature><![CDATA[vl::parsing::ParsingToken name;
 ]]></signature><seealsos><symbol name="ParsingToken" docId="vl::parsing::ParsingToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingToken"/></seealsos></Document>

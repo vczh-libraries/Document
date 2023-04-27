@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::RecorderStream" accessor="" category="Class" name="RecorderStream" declFile="RecorderStream.h" declId="NI$vl::stream::RecorderStream"><summary>
+<Document accessor="" category="Class" name="RecorderStream" declFile="RecorderStream.h" declId="NI$vl::stream::RecorderStream"><summary>
  A readable stream that, reads from one stream, and copy everything that is read to another stream.
  The stream is <b>unavailable</b> if one of the input stream or the output stream is <b>unavailable</b>.
  The stream is <b>readable</b>, and potentially <b>finite</b>.

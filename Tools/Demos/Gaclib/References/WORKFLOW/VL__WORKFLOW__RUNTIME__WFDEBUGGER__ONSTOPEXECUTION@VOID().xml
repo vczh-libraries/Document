@@ -1,3 +1,3 @@
-<Document symbolId="vl::workflow::runtime::WfDebugger::OnStopExecution@void()" accessor="protected" category="Function" name="OnStopExecution" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::OnStopExecution@void()[decl0]"><summary>Called when a Workflow program is stopped by any reason.</summary><signature><![CDATA[void OnStopExecution(
+<Document accessor="protected" category="Function" name="OnStopExecution" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::OnStopExecution@void()[decl0]"><summary>Called when a Workflow program is stopped by any reason.</summary><signature><![CDATA[void OnStopExecution(
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::SetPosition@void(::vl::vint)" accessor="public" category="Function" name="SetPosition" declFile="GuiScrollControls.h" declId="FB$vl::presentation::controls::GuiScroll::SetPosition@void(::vl::vint)[decl0]"><summary>Set the position.</summary><param name="value">The position.</param><signature><![CDATA[void SetPosition(
+<Document accessor="public" category="Function" name="SetPosition" declFile="GuiScrollControls.h" declId="FB$vl::presentation::controls::GuiScroll::SetPosition@void(::vl::vint)[decl0]"><summary>Set the position.</summary><param name="value">The position.</param><signature><![CDATA[void SetPosition(
     vint value
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

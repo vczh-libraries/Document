@@ -1,4 +1,4 @@
-<Document symbolId="vl::filesystem::File::ReadAllLinesByBom@bool(::vl::collections::List&lt;::vl::WString&gt; &amp;)" accessor="public" category="Function" name="ReadAllLinesByBom" declFile="FileSystem.h" declId="FB$vl::filesystem::File::ReadAllLinesByBom@bool(::vl::collections::List&lt;::vl::WString&gt; &amp;)[decl0]"><summary>Get the content of a text file by lines.</summary><returns>Returns true if this operation succeeded.</returns><param name="lines">The content of the file by lines.</param><remarks>
+<Document accessor="public" category="Function" name="ReadAllLinesByBom" declFile="FileSystem.h" declId="FB$vl::filesystem::File::ReadAllLinesByBom@bool(::vl::collections::List&lt;::vl::WString&gt; &amp;)[decl0]"><summary>Get the content of a text file by lines.</summary><returns>Returns true if this operation succeeded.</returns><param name="lines">The content of the file by lines.</param><remarks>
  Lines could be separated by either CRLF or LF.
  A text file is not required to ends with CRLF.
  If the last character of the file is LF,

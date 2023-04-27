@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiDefaultAxis::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="GuiGraphicsAxis.h" declId="FB$vl::presentation::compositions::GuiDefaultAxis::$__ctor@()[decl0]"><summary>Create the transformer.</summary><signature><![CDATA[ GuiDefaultAxis(
+<Document accessor="public" category="Function" name="$__ctor" declFile="GuiGraphicsAxis.h" declId="FB$vl::presentation::compositions::GuiDefaultAxis::$__ctor@()[decl0]"><summary>Create the transformer.</summary><signature><![CDATA[ GuiDefaultAxis(
 );
 ]]></signature></Document>

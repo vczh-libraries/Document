@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiColorizedTextElement::SetCaretEnd@void(::vl::presentation::TextPos)" accessor="public" category="Function" name="SetCaretEnd" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::SetCaretEnd@void(::vl::presentation::TextPos)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetCaretEnd" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::SetCaretEnd@void(::vl::presentation::TextPos)[decl0]"><summary>
  Set the end position of the selection area.
  </summary><param name="value">The end position of the selection area.</param><signature><![CDATA[void SetCaretEnd(
     TextPos value

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::CharMeasurer::$__ctor@(::vl::vint)" accessor="public" category="Function" name="$__ctor" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::CharMeasurer::$__ctor@(::vl::vint)[decl0]"><summary>
+<Document accessor="public" category="Function" name="$__ctor" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::CharMeasurer::$__ctor@(::vl::vint)[decl0]"><summary>
  Initialize a character measurer.
  </summary><param name="_rowHeight">The default character height in pixel before the character measurer is binded to a render target.</param><signature><![CDATA[ CharMeasurer(
     vint _rowHeight

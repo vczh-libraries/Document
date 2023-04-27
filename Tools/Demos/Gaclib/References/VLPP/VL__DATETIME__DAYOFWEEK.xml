@@ -1,4 +1,4 @@
-<Document symbolId="vl::DateTime::dayOfWeek" accessor="public" category="Variable" name="dayOfWeek" declFile="Basic.h" declId="NI$vl::DateTime::dayOfWeek"><summary>
+<Document accessor="public" category="Variable" name="dayOfWeek" declFile="Basic.h" declId="NI$vl::DateTime::dayOfWeek"><summary>
  The calculated total milliseconds. It is OS dependent because the start time is different.
  It is from 0 to 6, representing Sunday to Saturday.
  </summary><signature><![CDATA[vint dayOfWeek;

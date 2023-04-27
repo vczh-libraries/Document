@@ -1,2 +1,2 @@
-<Document symbolId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__type@bool()" accessor="public" category="Function" name="$__type" declFile="Function.h" declId="FB$vl::Func@&lt;[R]([TArgs]...)&gt;::$__type@bool()[impl0]"><summary>Test is the functor is non-null.</summary><returns>Returns true if the functor is non-null.</returns><signature><![CDATA[operator bool();
+<Document accessor="public" category="Function" name="$__type" declFile="Function.h" declId="FB$vl::Func@&lt;[R]([TArgs]...)&gt;::$__type@bool()[impl0]"><summary>Test is the functor is non-null.</summary><returns>Returns true if the functor is non-null.</returns><signature><![CDATA[operator bool();
 ]]></signature></Document>

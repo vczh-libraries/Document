@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::IGuiPluginManager::Unload@void()" accessor="public" category="Function" name="Unload" declFile="GuiApplication.h" declId="FB$vl::presentation::controls::IGuiPluginManager::Unload@void()[decl0]"><summary>Unload all plugins.</summary><signature><![CDATA[void Unload(
+<Document accessor="public" category="Function" name="Unload" declFile="GuiApplication.h" declId="FB$vl::presentation::controls::IGuiPluginManager::Unload@void()[decl0]"><summary>Unload all plugins.</summary><signature><![CDATA[void Unload(
 );
 ]]></signature></Document>

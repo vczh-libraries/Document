@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeControllerListener::NativeWindowDestroying@void(::vl::presentation::INativeWindow *)" accessor="public" category="Function" name="NativeWindowDestroying" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeControllerListener::NativeWindowDestroying@void(::vl::presentation::INativeWindow *)[decl0]"><summary>
+<Document accessor="public" category="Function" name="NativeWindowDestroying" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeControllerListener::NativeWindowDestroying@void(::vl::presentation::INativeWindow *)[decl0]"><summary>
  Called when a window is destroying.
  </summary><param name="window">The destroying window.</param><signature><![CDATA[void NativeWindowDestroying(
     INativeWindow * window

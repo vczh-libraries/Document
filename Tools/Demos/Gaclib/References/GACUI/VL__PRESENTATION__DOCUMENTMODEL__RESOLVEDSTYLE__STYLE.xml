@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::DocumentModel::ResolvedStyle::style" accessor="public" category="Variable" name="style" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel::ResolvedStyle::style"><summary>The style of the text.</summary><signature><![CDATA[FontProperties style;
+<Document accessor="public" category="Variable" name="style" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel::ResolvedStyle::style"><summary>The style of the text.</summary><signature><![CDATA[FontProperties style;
 ]]></signature><seealsos><symbol name="FontProperties" docId="vl::presentation::FontProperties" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties"/></seealsos></Document>

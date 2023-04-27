@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeDialogService::MessageBoxIcons" accessor="public" category="Enum" name="MessageBoxIcons" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDialogService::MessageBoxIcons"><summary>
+<Document accessor="public" category="Enum" name="MessageBoxIcons" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDialogService::MessageBoxIcons"><summary>
  Message box icons.
  </summary><enumitem name="IconError">Error icon.</enumitem><enumitem name="IconInformation">Information icon.</enumitem><enumitem name="IconNone">No icon.</enumitem><enumitem name="IconQuestion">Question icon.</enumitem><enumitem name="IconWarning">Warning icon.</enumitem><signature><![CDATA[enum MessageBoxIcons
 {

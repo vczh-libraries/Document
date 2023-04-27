@@ -1,3 +1,3 @@
-<Document symbolId="vl::collections::LazyList::IsEmpty@bool()" accessor="public" category="Function" name="IsEmpty" declFile="Operation.h" declId="FB$vl::collections::LazyList::IsEmpty@bool()[impl0]"><summary>Test if the lazy list is empty.</summary><returns>Returns true if the lazy list is empty.</returns><signature><![CDATA[bool IsEmpty(
+<Document accessor="public" category="Function" name="IsEmpty" declFile="Operation.h" declId="FB$vl::collections::LazyList::IsEmpty@bool()[impl0]"><summary>Test if the lazy list is empty.</summary><returns>Returns true if the lazy list is empty.</returns><signature><![CDATA[bool IsEmpty(
 ) const;
 ]]></signature></Document>

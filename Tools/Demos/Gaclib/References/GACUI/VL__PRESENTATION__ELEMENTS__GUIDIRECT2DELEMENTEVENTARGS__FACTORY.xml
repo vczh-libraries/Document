@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::elements::GuiDirect2DElementEventArgs::factoryD2D" accessor="public" category="Variable" name="factoryD2D" declFile="GuiGraphicsWindowsDirect2D.h" declId="NI$vl::presentation::elements::GuiDirect2DElementEventArgs::factoryD2D"><summary>Direct2D factory object.</summary><signature><![CDATA[ID2D1Factory * factoryD2D;
+<Document accessor="public" category="Variable" name="factoryD2D" declFile="GuiGraphicsWindowsDirect2D.h" declId="NI$vl::presentation::elements::GuiDirect2DElementEventArgs::factoryD2D"><summary>Direct2D factory object.</summary><signature><![CDATA[ID2D1Factory * factoryD2D;
 ]]></signature><seealsos><symbol name="ID2D1Factory" docId="ID2D1Factory" declFile="d2d1.h" declId="NI$ID2D1Factory"/></seealsos></Document>

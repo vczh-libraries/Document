@@ -1,4 +1,4 @@
-<Document symbolId="vl::reflection::AggregatableDescription" accessor="" category="Class" name="AggregatableDescription" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::AggregatableDescription"><summary>
+<Document accessor="" category="Class" name="AggregatableDescription" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::AggregatableDescription"><summary>
  Inherit from this class when you want to create a reflectable class that can be inherited by Workflow script classes.
  </summary><typeparam name="T">Type that inherit this class.</typeparam><signature><![CDATA[template <
     typename T

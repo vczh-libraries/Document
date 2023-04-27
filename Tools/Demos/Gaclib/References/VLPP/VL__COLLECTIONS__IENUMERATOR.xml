@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::IEnumerator" accessor="" category="Class" name="IEnumerator" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerator"><summary>An enumerator interface for receiving values without going back.</summary><typeparam name="T">Type of the values returned from the enumerator.</typeparam><signature><![CDATA[template <
+<Document accessor="" category="Class" name="IEnumerator" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerator"><summary>An enumerator interface for receiving values without going back.</summary><typeparam name="T">Type of the values returned from the enumerator.</typeparam><signature><![CDATA[template <
     typename T
 >
 class IEnumerator

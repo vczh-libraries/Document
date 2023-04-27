@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiLabel" accessor="" category="Class" name="GuiLabel" declFile="GuiLabelControls.h" declId="NI$vl::presentation::controls::GuiLabel"><summary>A control to display a text.</summary><signature><![CDATA[class GuiLabel
+<Document accessor="" category="Class" name="GuiLabel" declFile="GuiLabelControls.h" declId="NI$vl::presentation::controls::GuiLabel"><summary>A control to display a text.</summary><signature><![CDATA[class GuiLabel
     : GuiControl
     , Description<GuiLabel>;
 ]]></signature><seealsos><symbol name="GuiLabel" docId="vl::presentation::controls::GuiLabel" declFile="GuiLabelControls.h" declId="NI$vl::presentation::controls::GuiLabel"/></seealsos><basetypes><symbol name="GuiControl" docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

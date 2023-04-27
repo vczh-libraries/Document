@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiKeyEventArgs" accessor="" category="Struct" name="GuiKeyEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiKeyEventArgs"><summary>Keyboard event arguments.</summary><signature><![CDATA[struct GuiKeyEventArgs
+<Document accessor="" category="Struct" name="GuiKeyEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiKeyEventArgs"><summary>Keyboard event arguments.</summary><signature><![CDATA[struct GuiKeyEventArgs
     : GuiEventArgs
     , WindowKeyInfo
     , Description<GuiKeyEventArgs>;

@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiSelectableButton::GetAutoSelection@bool()" accessor="public" category="Function" name="GetAutoSelection" declFile="GuiButtonControls.h" declId="FB$vl::presentation::controls::GuiSelectableButton::GetAutoSelection@bool()[decl0]"><summary>Get the auto selection state. True if the button is automatically selected or unselected when the button is clicked.</summary><returns>The auto selection state.</returns><signature><![CDATA[bool GetAutoSelection(
+<Document accessor="public" category="Function" name="GetAutoSelection" declFile="GuiButtonControls.h" declId="FB$vl::presentation::controls::GuiSelectableButton::GetAutoSelection@bool()[decl0]"><summary>Get the auto selection state. True if the button is automatically selected or unselected when the button is clicked.</summary><returns>The auto selection state.</returns><signature><![CDATA[bool GetAutoSelection(
 );
 ]]></signature></Document>

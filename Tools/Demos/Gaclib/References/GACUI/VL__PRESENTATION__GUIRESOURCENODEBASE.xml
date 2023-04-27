@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::GuiResourceNodeBase" accessor="" category="Class" name="GuiResourceNodeBase" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceNodeBase"><summary>Resource node base.</summary><signature><![CDATA[class GuiResourceNodeBase
+<Document accessor="" category="Class" name="GuiResourceNodeBase" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceNodeBase"><summary>Resource node base.</summary><signature><![CDATA[class GuiResourceNodeBase
     : Object
     , Description<GuiResourceNodeBase>;
 ]]></signature><seealsos><symbol name="GuiResourceNodeBase" docId="vl::presentation::GuiResourceNodeBase" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceNodeBase"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiRibbonToolstrips" accessor="" category="Class" name="GuiRibbonToolstrips" declFile="GuiRibbonControls.h" declId="NI$vl::presentation::controls::GuiRibbonToolstrips"><summary>Auto resizable ribbon toolstrips.</summary><signature><![CDATA[class GuiRibbonToolstrips
+<Document accessor="" category="Class" name="GuiRibbonToolstrips" declFile="GuiRibbonControls.h" declId="NI$vl::presentation::controls::GuiRibbonToolstrips"><summary>Auto resizable ribbon toolstrips.</summary><signature><![CDATA[class GuiRibbonToolstrips
     : GuiControl
     , Description<GuiRibbonToolstrips>;
 ]]></signature><seealsos><symbol name="GuiRibbonToolstrips" docId="vl::presentation::controls::GuiRibbonToolstrips" declFile="GuiRibbonControls.h" declId="NI$vl::presentation::controls::GuiRibbonToolstrips"/></seealsos><basetypes><symbol name="GuiControl" docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

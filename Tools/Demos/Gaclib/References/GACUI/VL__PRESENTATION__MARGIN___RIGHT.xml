@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::Margin_::right" accessor="public" category="Variable" name="right" declFile="GuiTypes.h" declId="NI$vl::presentation::Margin_::right"><summary>
+<Document accessor="public" category="Variable" name="right" declFile="GuiTypes.h" declId="NI$vl::presentation::Margin_::right"><summary>
  The right margin.
  </summary><signature><![CDATA[T right;
 ]]></signature></Document>

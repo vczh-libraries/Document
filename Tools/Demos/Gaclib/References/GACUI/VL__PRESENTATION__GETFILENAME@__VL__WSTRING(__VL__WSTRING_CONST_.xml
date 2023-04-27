@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::GetFileName@::vl::WString(::vl::WString const &amp;)" accessor="" category="Function" name="GetFileName" declFile="GuiResource.h" declId="FB$vl::presentation::GetFileName@::vl::WString(::vl::WString const &amp;)[decl0]"><summary>Get the file name from a file path.</summary><returns>The file name.</returns><param name="filePath">The file path.</param><signature><![CDATA[WString GetFileName(
+<Document accessor="" category="Function" name="GetFileName" declFile="GuiResource.h" declId="FB$vl::presentation::GetFileName@::vl::WString(::vl::WString const &amp;)[decl0]"><summary>Get the file name from a file path.</summary><returns>The file name.</returns><param name="filePath">The file path.</param><signature><![CDATA[WString GetFileName(
     WString const & filePath
 );
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

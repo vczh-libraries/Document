@@ -1,3 +1,3 @@
-<Document symbolId="vl::ThreadLocalStorage::FixStorages@void()" accessor="public" category="Function" name="FixStorages" declFile="Threading.h" declId="FB$vl::ThreadLocalStorage::FixStorages@void()[decl0]"><summary>Fix all storage creation.</summary><signature><![CDATA[static void FixStorages(
+<Document accessor="public" category="Function" name="FixStorages" declFile="Threading.h" declId="FB$vl::ThreadLocalStorage::FixStorages@void()[decl0]"><summary>Fix all storage creation.</summary><signature><![CDATA[static void FixStorages(
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiSolidBorderElement" accessor="" category="Class" name="GuiSolidBorderElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiSolidBorderElement"><summary>
+<Document accessor="" category="Class" name="GuiSolidBorderElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiSolidBorderElement"><summary>
  Defines a border element with a thickness of one pixel.
  </summary><signature><![CDATA[class GuiSolidBorderElement
     : GuiElementBase<GuiSolidBorderElement>;

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::RequireCapture@bool()" accessor="public" category="Function" name="RequireCapture" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::RequireCapture@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="RequireCapture" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::RequireCapture@bool()[decl0]"><summary>
  Require mouse message capturing to this window. If the capture is required, all mouse message will be send to this window.
  When the window becomes invisible after calling this function, the window will still receive mouse messages, if the OS supports this feature.
  Otherwise, the capturing must be released when the window becomes invisible.

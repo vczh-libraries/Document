@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::SetPageSize@void(::vl::vint)" accessor="public" category="Function" name="SetPageSize" declFile="GuiScrollControls.h" declId="FB$vl::presentation::controls::GuiScroll::SetPageSize@void(::vl::vint)[decl0]"><summary>Set the page size.</summary><param name="value">The page size.</param><signature><![CDATA[void SetPageSize(
+<Document accessor="public" category="Function" name="SetPageSize" declFile="GuiScrollControls.h" declId="FB$vl::presentation::controls::GuiScroll::SetPageSize@void(::vl::vint)[decl0]"><summary>Set the page size.</summary><param name="value">The page size.</param><signature><![CDATA[void SetPageSize(
     vint value
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

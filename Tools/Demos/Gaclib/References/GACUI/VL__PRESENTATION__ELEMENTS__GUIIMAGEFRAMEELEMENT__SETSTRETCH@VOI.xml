@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiImageFrameElement::SetStretch@void(bool)" accessor="public" category="Function" name="SetStretch" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiImageFrameElement::SetStretch@void(bool)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetStretch" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiImageFrameElement::SetStretch@void(bool)[decl0]"><summary>
  Set if stretching is enabled for this image.
  </summary><param name="value">True if stretching is enabled for this image.</param><signature><![CDATA[void SetStretch(
     bool value

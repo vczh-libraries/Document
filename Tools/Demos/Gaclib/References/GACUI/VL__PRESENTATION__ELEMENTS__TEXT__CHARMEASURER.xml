@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::CharMeasurer" accessor="" category="Class" name="CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"><summary>
+<Document accessor="" category="Class" name="CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"><summary>
  An abstract class for character size measuring in differect rendering technology.
  </summary><signature><![CDATA[class CharMeasurer
     : IDescriptable;

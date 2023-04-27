@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiSinglelineTextBox" accessor="" category="Class" name="GuiSinglelineTextBox" declFile="GuiTextControls.h" declId="NI$vl::presentation::controls::GuiSinglelineTextBox"><summary>Single text box control.</summary><signature><![CDATA[class GuiSinglelineTextBox
+<Document accessor="" category="Class" name="GuiSinglelineTextBox" declFile="GuiTextControls.h" declId="NI$vl::presentation::controls::GuiSinglelineTextBox"><summary>Single text box control.</summary><signature><![CDATA[class GuiSinglelineTextBox
     : GuiControl
     , GuiTextBoxCommonInterface
     , Description<GuiSinglelineTextBox>;

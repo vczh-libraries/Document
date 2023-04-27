@@ -1,4 +1,4 @@
-<Document symbolId="vl::workflow::traverse_visitor::ModuleVisitor" accessor="" category="Class" name="ModuleVisitor" declFile="WfExpression_Traverse.h" declId="NI$vl::workflow::traverse_visitor::ModuleVisitor"><summary>A copy visitor for the root node, overriding all abstract methods with AST traversing code that looks into child nodes.</summary><signature><![CDATA[class ModuleVisitor
+<Document accessor="" category="Class" name="ModuleVisitor" declFile="WfExpression_Traverse.h" declId="NI$vl::workflow::traverse_visitor::ModuleVisitor"><summary>A copy visitor for the root node, overriding all abstract methods with AST traversing code that looks into child nodes.</summary><signature><![CDATA[class ModuleVisitor
     : TypeVisitor
     , ExpressionVisitor
     , StatementVisitor

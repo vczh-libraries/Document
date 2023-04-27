@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsHost::RequestRender@void()" accessor="public" category="Function" name="RequestRender" declFile="GuiGraphicsHost.h" declId="FB$vl::presentation::compositions::GuiGraphicsHost::RequestRender@void()[decl0]"><summary>Request a rendering</summary><signature><![CDATA[void RequestRender(
+<Document accessor="public" category="Function" name="RequestRender" declFile="GuiGraphicsHost.h" declId="FB$vl::presentation::compositions::GuiGraphicsHost::RequestRender@void()[decl0]"><summary>Request a rendering</summary><signature><![CDATA[void RequestRender(
 );
 ]]></signature></Document>

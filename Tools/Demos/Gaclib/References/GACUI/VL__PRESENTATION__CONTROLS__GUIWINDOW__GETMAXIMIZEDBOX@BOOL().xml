@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiWindow::GetMaximizedBox@bool()" accessor="public" category="Function" name="GetMaximizedBox" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiWindow::GetMaximizedBox@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetMaximizedBox" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiWindow::GetMaximizedBox@bool()[decl0]"><summary>
  Test is the maximize box visible.
  </summary><returns>Returns true if the maximize box is visible.</returns><signature><![CDATA[bool GetMaximizedBox(
 );

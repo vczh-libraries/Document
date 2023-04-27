@@ -1,3 +1,3 @@
-<Document symbolId="vl::filesystem::FilePath::IsFolder@bool()" accessor="public" category="Function" name="IsFolder" declFile="FileSystem.h" declId="FB$vl::filesystem::FilePath::IsFolder@bool()[decl0]"><summary>Test if the file path is a folder.</summary><returns>Returns true if the file path is a folder.</returns><remarks>In Windows, a drive is also considered a folder.</remarks><signature><![CDATA[bool IsFolder(
+<Document accessor="public" category="Function" name="IsFolder" declFile="FileSystem.h" declId="FB$vl::filesystem::FilePath::IsFolder@bool()[decl0]"><summary>Test if the file path is a folder.</summary><returns>Returns true if the file path is a folder.</returns><remarks>In Windows, a drive is also considered a folder.</remarks><signature><![CDATA[bool IsFolder(
 ) const;
 ]]></signature></Document>

@@ -1,3 +1,3 @@
-<Document symbolId="vl::regex::Regex::IsPureMatch@bool()" accessor="public" category="Function" name="IsPureMatch" declFile="Regex.h" declId="FB$vl::regex::Regex::IsPureMatch@bool()[decl0]"><summary>Test is a DFA used to match a string.</summary><returns>Returns true if a DFA is used.</returns><signature><![CDATA[bool IsPureMatch(
+<Document accessor="public" category="Function" name="IsPureMatch" declFile="Regex.h" declId="FB$vl::regex::Regex::IsPureMatch@bool()[decl0]"><summary>Test is a DFA used to match a string.</summary><returns>Returns true if a DFA is used.</returns><signature><![CDATA[bool IsPureMatch(
 ) const;
 ]]></signature></Document>

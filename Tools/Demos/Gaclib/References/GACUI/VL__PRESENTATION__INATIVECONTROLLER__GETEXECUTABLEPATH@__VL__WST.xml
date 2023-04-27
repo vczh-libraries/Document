@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeController::GetExecutablePath@::vl::WString()" accessor="public" category="Function" name="GetExecutablePath" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::GetExecutablePath@::vl::WString()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetExecutablePath" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::GetExecutablePath@::vl::WString()[decl0]"><summary>
  Get the file path of the current executable.
  </summary><returns>The file path of the current executable.</returns><signature><![CDATA[WString GetExecutablePath(
 );

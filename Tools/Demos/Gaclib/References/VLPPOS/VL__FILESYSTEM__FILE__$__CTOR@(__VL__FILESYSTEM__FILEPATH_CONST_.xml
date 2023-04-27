@@ -1,4 +1,4 @@
-<Document symbolId="vl::filesystem::File::$__ctor@(::vl::filesystem::FilePath const &amp;)" accessor="public" category="Function" name="$__ctor" declFile="FileSystem.h" declId="FB$vl::filesystem::File::$__ctor@(::vl::filesystem::FilePath const &amp;)[decl0]"><summary>Create a reference to a specified file. The file is not required to exist.</summary><param name="_filePath">The specified file.</param><signature><![CDATA[ File(
+<Document accessor="public" category="Function" name="$__ctor" declFile="FileSystem.h" declId="FB$vl::filesystem::File::$__ctor@(::vl::filesystem::FilePath const &amp;)[decl0]"><summary>Create a reference to a specified file. The file is not required to exist.</summary><param name="_filePath">The specified file.</param><signature><![CDATA[ File(
     FilePath const & _filePath
 );
 ]]></signature><seealsos><symbol name="FilePath" docId="vl::filesystem::FilePath" declFile="FileSystem.h" declId="NI$vl::filesystem::FilePath"/></seealsos></Document>

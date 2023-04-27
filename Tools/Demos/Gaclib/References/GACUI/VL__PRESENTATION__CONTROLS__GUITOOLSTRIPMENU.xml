@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripMenu" accessor="" category="Class" name="GuiToolstripMenu" declFile="GuiToolstripMenu.h" declId="NI$vl::presentation::controls::GuiToolstripMenu"><summary>Toolstrip menu.</summary><signature><![CDATA[class GuiToolstripMenu
+<Document accessor="" category="Class" name="GuiToolstripMenu" declFile="GuiToolstripMenu.h" declId="NI$vl::presentation::controls::GuiToolstripMenu"><summary>Toolstrip menu.</summary><signature><![CDATA[class GuiToolstripMenu
     : GuiMenu
     , IToolstripUpdateLayout
     , Description<GuiToolstripMenu>;

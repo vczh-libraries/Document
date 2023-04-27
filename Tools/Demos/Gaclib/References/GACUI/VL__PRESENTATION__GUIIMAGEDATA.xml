@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::GuiImageData" accessor="" category="Class" name="GuiImageData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiImageData"><summary>
+<Document accessor="" category="Class" name="GuiImageData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiImageData"><summary>
  Represnets an image to display.
  </summary><signature><![CDATA[class GuiImageData
     : Object

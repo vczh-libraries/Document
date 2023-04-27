@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::ShowRestored@void()" accessor="public" category="Function" name="ShowRestored" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::ShowRestored@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="ShowRestored" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::ShowRestored@void()[decl0]"><summary>
  Restore the window.
  </summary><signature><![CDATA[void ShowRestored(
 );

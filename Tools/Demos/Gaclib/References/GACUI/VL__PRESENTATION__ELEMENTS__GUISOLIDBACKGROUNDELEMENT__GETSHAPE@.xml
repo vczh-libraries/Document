@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiSolidBackgroundElement::GetShape@::vl::presentation::elements::ElementShape()" accessor="public" category="Function" name="GetShape" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidBackgroundElement::GetShape@::vl::presentation::elements::ElementShape()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetShape" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidBackgroundElement::GetShape@::vl::presentation::elements::ElementShape()[decl0]"><summary>
  Get the shape.
  </summary><returns>The shape.</returns><signature><![CDATA[ElementShape GetShape(
 );

@@ -1,4 +1,4 @@
-<Document symbolId="vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)" accessor="public" category="Function" name="RunAndDisposeTests" declFile="UnitTest.h" declId="FB$vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)[decl0]"><summary>Run all test cases.</summary><returns>The return value for the main function. If any assertion fails, it is non-zero.</returns><param name="argc">Accept the first argument of the main function.</param><param name="argv">Accept the second argument of the main function.</param><signature><![CDATA[static int RunAndDisposeTests(
+<Document accessor="public" category="Function" name="RunAndDisposeTests" declFile="UnitTest.h" declId="FB$vl::unittest::UnitTest::RunAndDisposeTests@int(int, wchar_t * *)[decl0]"><summary>Run all test cases.</summary><returns>The return value for the main function. If any assertion fails, it is non-zero.</returns><param name="argc">Accept the first argument of the main function.</param><param name="argv">Accept the second argument of the main function.</param><signature><![CDATA[static int RunAndDisposeTests(
     int argc,
     wchar_t * * argv
 );

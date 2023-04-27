@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeImageFrameCache" accessor="" category="Class" name="INativeImageFrameCache" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImageFrameCache"><summary>
+<Document accessor="" category="Class" name="INativeImageFrameCache" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImageFrameCache"><summary>
  Represents a customized cache object for an image frame.
  </summary><signature><![CDATA[class INativeImageFrameCache
     : Interface;

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::Point_::x" accessor="public" category="Variable" name="x" declFile="GuiTypes.h" declId="NI$vl::presentation::Point_::x"><summary>
+<Document accessor="public" category="Variable" name="x" declFile="GuiTypes.h" declId="NI$vl::presentation::Point_::x"><summary>
  Position in x dimension.
  </summary><signature><![CDATA[T x;
 ]]></signature></Document>

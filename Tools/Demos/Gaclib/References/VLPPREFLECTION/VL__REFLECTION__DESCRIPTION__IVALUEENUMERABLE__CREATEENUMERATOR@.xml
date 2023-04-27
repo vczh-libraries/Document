@@ -1,4 +1,4 @@
-<Document symbolId="vl::reflection::description::IValueEnumerable::CreateEnumerator@::vl::Ptr&lt;::vl::reflection::description::IValueEnumerator&gt;()" accessor="public" category="Function" name="CreateEnumerator" declFile="GuiTypeDescriptorPredefined.h" declId="FB$vl::reflection::description::IValueEnumerable::CreateEnumerator@::vl::Ptr&lt;::vl::reflection::description::IValueEnumerator&gt;()[decl0]"><summary>
+<Document accessor="public" category="Function" name="CreateEnumerator" declFile="GuiTypeDescriptorPredefined.h" declId="FB$vl::reflection::description::IValueEnumerable::CreateEnumerator@::vl::Ptr&lt;::vl::reflection::description::IValueEnumerator&gt;()[decl0]"><summary>
  Create an enumerator. <symbol name="Next" docId="vl::reflection::description::IValueEnumerator::Next@bool()" declFile="GuiTypeDescriptorPredefined.h" declId="FB$vl::reflection::description::IValueEnumerator::Next@bool()[decl0]"/> should be called before reading the first value.
  </summary><returns>The enumerator.</returns><signature><![CDATA[Ptr<IValueEnumerator> CreateEnumerator(
 );

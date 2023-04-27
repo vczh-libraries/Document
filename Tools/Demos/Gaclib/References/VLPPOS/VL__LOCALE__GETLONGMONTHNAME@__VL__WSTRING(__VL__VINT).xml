@@ -1,4 +1,4 @@
-<Document symbolId="vl::Locale::GetLongMonthName@::vl::WString(::vl::vint)" accessor="public" category="Function" name="GetLongMonthName" declFile="Locale.h" declId="FB$vl::Locale::GetLongMonthName@::vl::WString(::vl::vint)[decl0]"><summary>Get the long display string of a month according to the locale.</summary><returns>The display string.</returns><param name="month">Month, begins from 1 as January.</param><signature><![CDATA[WString GetLongMonthName(
+<Document accessor="public" category="Function" name="GetLongMonthName" declFile="Locale.h" declId="FB$vl::Locale::GetLongMonthName@::vl::WString(::vl::vint)[decl0]"><summary>Get the long display string of a month according to the locale.</summary><returns>The display string.</returns><param name="month">Month, begins from 1 as January.</param><signature><![CDATA[WString GetLongMonthName(
     vint month
 ) const;
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

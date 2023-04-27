@@ -1,4 +1,4 @@
-<Document symbolId="vl::HttpQuery@bool(::vl::HttpRequest const &amp;, ::vl::HttpResponse &amp;)" accessor="" category="Function" name="HttpQuery" declFile="HttpUtility.h" declId="FB$vl::HttpQuery@bool(::vl::HttpRequest const &amp;, ::vl::HttpResponse &amp;)[decl0]"><summary>Send an http request and receive a response.</summary><returns>Returns true if this operation succeeded, even when the server returns 404.</returns><param name="request">The request to send.</param><param name="response">Returns the response.</param><remarks><p>
+<Document accessor="" category="Function" name="HttpQuery" declFile="HttpUtility.h" declId="FB$vl::HttpQuery@bool(::vl::HttpRequest const &amp;, ::vl::HttpResponse &amp;)[decl0]"><summary>Send an http request and receive a response.</summary><returns>Returns true if this operation succeeded, even when the server returns 404.</returns><param name="request">The request to send.</param><param name="response">Returns the response.</param><remarks><p>
  This function will block the calling thread until the respons is returned.
  </p><p>
  This function is only available in Windows.

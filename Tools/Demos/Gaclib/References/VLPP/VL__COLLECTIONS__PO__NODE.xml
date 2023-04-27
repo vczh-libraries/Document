@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::po::Node" accessor="" category="Struct" name="Node" declFile="PartialOrdering.h" declId="NI$vl::collections::po::Node"><summary>
+<Document accessor="" category="Struct" name="Node" declFile="PartialOrdering.h" declId="NI$vl::collections::po::Node"><summary>
  Node contains extra information for sorted objects.
  </summary><signature><![CDATA[struct Node;
 ]]></signature></Document>

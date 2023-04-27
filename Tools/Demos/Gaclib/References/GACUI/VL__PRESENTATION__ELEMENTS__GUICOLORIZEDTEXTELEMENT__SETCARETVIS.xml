@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiColorizedTextElement::SetCaretVisible@void(bool)" accessor="public" category="Function" name="SetCaretVisible" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::SetCaretVisible@void(bool)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetCaretVisible" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::SetCaretVisible@void(bool)[decl0]"><summary>
  Set the caret visibility.
  </summary><param name="value">True if the caret will be rendered.</param><signature><![CDATA[void SetCaretVisible(
     bool value

@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::CacheStream" accessor="" category="Class" name="CacheStream" declFile="CacheStream.h" declId="NI$vl::stream::CacheStream"><summary><p>
+<Document accessor="" category="Class" name="CacheStream" declFile="CacheStream.h" declId="NI$vl::stream::CacheStream"><summary><p>
  A potentially <b>readable</b>, <b>peekable</b>, <b>writable</b>, <b>seekable</b> and <b>finite</b> stream that creates on another stream.
  Each feature is available if the target stream has the same feature.
  </p><p>

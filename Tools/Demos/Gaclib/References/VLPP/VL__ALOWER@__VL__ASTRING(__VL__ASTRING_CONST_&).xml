@@ -1,4 +1,4 @@
-<Document symbolId="vl::alower@::vl::AString(::vl::AString const &amp;)" accessor="" category="Function" name="alower" declFile="String.h" declId="FB$vl::alower@::vl::AString(::vl::AString const &amp;)[decl0]"><summary>Convert all letters to lower case letters.</summary><returns>The converted string.</returns><param name="string">The string to convert.</param><signature><![CDATA[AString alower(
+<Document accessor="" category="Function" name="alower" declFile="String.h" declId="FB$vl::alower@::vl::AString(::vl::AString const &amp;)[decl0]"><summary>Convert all letters to lower case letters.</summary><returns>The converted string.</returns><param name="string">The string to convert.</param><signature><![CDATA[AString alower(
     AString const & string
 );
 ]]></signature><seealsos><symbol name="AString" docId="vl::AString" declFile="String.h" declId="NI$vl::AString"/></seealsos></Document>

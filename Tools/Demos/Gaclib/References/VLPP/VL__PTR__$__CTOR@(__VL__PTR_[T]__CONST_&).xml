@@ -1,4 +1,4 @@
-<Document symbolId="vl::Ptr::$__ctor@(::vl::Ptr&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor" declFile="Pointer.h" declId="FB$vl::Ptr::$__ctor@(::vl::Ptr&lt;[T]&gt; const &amp;)[impl0]"><summary>Copy a shared pointer.</summary><param name="pointer">The shared pointer to copy.</param><signature><![CDATA[ Ptr(
+<Document accessor="public" category="Function" name="$__ctor" declFile="Pointer.h" declId="FB$vl::Ptr::$__ctor@(::vl::Ptr&lt;[T]&gt; const &amp;)[impl0]"><summary>Copy a shared pointer.</summary><param name="pointer">The shared pointer to copy.</param><signature><![CDATA[ Ptr(
     Ptr<T> const & pointer
 );
 ]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeImageFrame" accessor="" category="Class" name="INativeImageFrame" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImageFrame"><summary>
+<Document accessor="" category="Class" name="INativeImageFrame" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImageFrame"><summary>
  Represents an image frame.
  </summary><signature><![CDATA[class INativeImageFrame
     : IDescriptable

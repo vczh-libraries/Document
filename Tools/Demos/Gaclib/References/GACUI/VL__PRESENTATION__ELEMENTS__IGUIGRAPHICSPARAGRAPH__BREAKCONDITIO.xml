@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::IGuiGraphicsParagraph::BreakCondition" accessor="public" category="Enum" name="BreakCondition" declFile="GuiGraphicsDocumentInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsParagraph::BreakCondition"><summary>Inline object break condition.</summary><enumitem name="Alone">Treat as a single run.</enumitem><enumitem name="StickToNextRun">Stay together with the next run if possible.</enumitem><enumitem name="StickToPreviousRun">Stay together with the previous run if possible.</enumitem><signature><![CDATA[enum BreakCondition
+<Document accessor="public" category="Enum" name="BreakCondition" declFile="GuiGraphicsDocumentInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsParagraph::BreakCondition"><summary>Inline object break condition.</summary><enumitem name="Alone">Treat as a single run.</enumitem><enumitem name="StickToNextRun">Stay together with the next run if possible.</enumitem><enumitem name="StickToPreviousRun">Stay together with the previous run if possible.</enumitem><signature><![CDATA[enum BreakCondition
 {
     StickToPreviousRun,
     StickToNextRun,

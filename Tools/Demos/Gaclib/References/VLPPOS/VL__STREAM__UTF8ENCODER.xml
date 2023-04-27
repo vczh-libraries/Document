@@ -1,3 +1,3 @@
-<Document symbolId="vl::stream::Utf8Encoder" accessor="" category="Class" name="Utf8Encoder" declFile="CharFormat.h" declId="NI$vl::stream::Utf8Encoder"><summary>Encoder to write UTF-8 text.</summary><signature><![CDATA[class Utf8Encoder
+<Document accessor="" category="Class" name="Utf8Encoder" declFile="CharFormat.h" declId="NI$vl::stream::Utf8Encoder"><summary>Encoder to write UTF-8 text.</summary><signature><![CDATA[class Utf8Encoder
     : CharEncoder;
 ]]></signature><basetypes><symbol name="CharEncoder" docId="vl::stream::CharEncoder" declFile="CharFormat.h" declId="NI$vl::stream::CharEncoder"/></basetypes></Document>

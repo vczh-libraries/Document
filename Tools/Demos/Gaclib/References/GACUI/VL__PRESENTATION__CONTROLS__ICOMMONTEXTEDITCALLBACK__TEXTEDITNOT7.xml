@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextEditNotifyStruct::keyInput" accessor="public" category="Variable" name="keyInput" declFile="GuiTextGeneralOperations.h" declId="NI$vl::presentation::controls::ICommonTextEditCallback::TextEditNotifyStruct::keyInput"><summary>True if this modification is raised by the keyboard.</summary><signature><![CDATA[bool keyInput;
+<Document accessor="public" category="Variable" name="keyInput" declFile="GuiTextGeneralOperations.h" declId="NI$vl::presentation::controls::ICommonTextEditCallback::TextEditNotifyStruct::keyInput"><summary>True if this modification is raised by the keyboard.</summary><signature><![CDATA[bool keyInput;
 ]]></signature></Document>

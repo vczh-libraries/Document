@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::IGuiAxis::VirtualSizeToRealSize@::vl::presentation::Size(::vl::presentation::Size)" accessor="public" category="Function" name="VirtualSizeToRealSize" declFile="GuiGraphicsAxis.h" declId="FB$vl::presentation::compositions::IGuiAxis::VirtualSizeToRealSize@::vl::presentation::Size(::vl::presentation::Size)[decl0]"><summary>Translate virtual size to real size.</summary><returns>The real size.</returns><param name="size">The virtual size.</param><signature><![CDATA[Size VirtualSizeToRealSize(
+<Document accessor="public" category="Function" name="VirtualSizeToRealSize" declFile="GuiGraphicsAxis.h" declId="FB$vl::presentation::compositions::IGuiAxis::VirtualSizeToRealSize@::vl::presentation::Size(::vl::presentation::Size)[decl0]"><summary>Translate virtual size to real size.</summary><returns>The real size.</returns><param name="size">The virtual size.</param><signature><![CDATA[Size VirtualSizeToRealSize(
     Size size
 );
 ]]></signature><seealsos><symbol name="Size" declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>

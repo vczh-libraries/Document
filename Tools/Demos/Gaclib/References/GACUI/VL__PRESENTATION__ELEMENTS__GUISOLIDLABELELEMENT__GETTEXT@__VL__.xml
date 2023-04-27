@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiSolidLabelElement::GetText@::vl::WString const &amp;()" accessor="public" category="Function" name="GetText" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidLabelElement::GetText@::vl::WString const &amp;()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetText" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidLabelElement::GetText@::vl::WString const &amp;()[decl0]"><summary>
  Get the text.
  </summary><returns>The text.</returns><signature><![CDATA[WString const & GetText(
 );

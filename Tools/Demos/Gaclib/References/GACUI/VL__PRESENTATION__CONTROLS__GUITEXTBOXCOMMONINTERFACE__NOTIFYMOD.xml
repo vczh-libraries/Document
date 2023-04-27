@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::NotifyModificationSaved@void()" accessor="public" category="Function" name="NotifyModificationSaved" declFile="GuiTextCommonInterface.h" declId="FB$vl::presentation::controls::GuiTextBoxCommonInterface::NotifyModificationSaved@void()[decl0]"><summary>Notify the text box that the current status is considered saved.</summary><signature><![CDATA[void NotifyModificationSaved(
+<Document accessor="public" category="Function" name="NotifyModificationSaved" declFile="GuiTextCommonInterface.h" declId="FB$vl::presentation::controls::GuiTextBoxCommonInterface::NotifyModificationSaved@void()[decl0]"><summary>Notify the text box that the current status is considered saved.</summary><signature><![CDATA[void NotifyModificationSaved(
 );
 ]]></signature></Document>

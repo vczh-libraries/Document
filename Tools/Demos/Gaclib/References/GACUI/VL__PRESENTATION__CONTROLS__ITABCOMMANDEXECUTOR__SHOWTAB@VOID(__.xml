@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::ITabCommandExecutor::ShowTab@void(::vl::vint, bool)" accessor="public" category="Function" name="ShowTab" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::ITabCommandExecutor::ShowTab@void(::vl::vint, bool)[decl0]"><summary>Select a tab page.</summary><param name="index">The specified position for the tab page.</param><param name="setFocus">Set to true to set focus to the tab control.</param><signature><![CDATA[void ShowTab(
+<Document accessor="public" category="Function" name="ShowTab" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::ITabCommandExecutor::ShowTab@void(::vl::vint, bool)[decl0]"><summary>Select a tab page.</summary><param name="index">The specified position for the tab page.</param><param name="setFocus">Set to true to set focus to the tab control.</param><signature><![CDATA[void ShowTab(
     vint index,
     bool setFocus
 );

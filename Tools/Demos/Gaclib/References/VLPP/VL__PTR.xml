@@ -1,4 +1,4 @@
-<Document symbolId="vl::Ptr" accessor="" category="Class" name="Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"><summary>
+<Document accessor="" category="Class" name="Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"><summary>
  A shared pointer.
  It maintains a reference counter to the object.
  When no <symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/> is referencing the object, the object will be deleted automatically.

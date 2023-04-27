@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiDatePicker::SetDateLocale@void(::vl::Locale const &amp;)" accessor="public" category="Function" name="SetDateLocale" declFile="GuiDateTimeControls.h" declId="FB$vl::presentation::controls::GuiDatePicker::SetDateLocale@void(::vl::Locale const &amp;)[decl0]"><summary>Set the locale to display texts.</summary><param name="value">The locale.</param><signature><![CDATA[void SetDateLocale(
+<Document accessor="public" category="Function" name="SetDateLocale" declFile="GuiDateTimeControls.h" declId="FB$vl::presentation::controls::GuiDatePicker::SetDateLocale@void(::vl::Locale const &amp;)[decl0]"><summary>Set the locale to display texts.</summary><param name="value">The locale.</param><signature><![CDATA[void SetDateLocale(
     Locale const & value
 );
 ]]></signature><seealsos><symbol name="Locale" docId="vl::Locale" declFile="Locale.h" declId="NI$vl::Locale"/></seealsos></Document>

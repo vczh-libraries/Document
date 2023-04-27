@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiControlHost" accessor="" category="Class" name="GuiControlHost" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiControlHost"><summary>
+<Document accessor="" category="Class" name="GuiControlHost" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiControlHost"><summary>
  Represents a control that host by a <symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/>.
  </summary><signature><![CDATA[class GuiControlHost
     : GuiControl

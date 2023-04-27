@@ -1,4 +1,4 @@
-<Document symbolId="vl::parsing::tabling::ParsingTable" accessor="" category="Class" name="ParsingTable" declFile="ParsingTable.h" declId="NI$vl::parsing::tabling::ParsingTable"><summary><p>
+<Document accessor="" category="Class" name="ParsingTable" declFile="ParsingTable.h" declId="NI$vl::parsing::tabling::ParsingTable"><summary><p>
  The parsing table. When you complete a grammar file, use ParserGen.exe to generate the C++ code for you to create a parsing table.
  </p><p>
  Here is a brief description of the grammar file format:
@@ -91,19 +91,22 @@
              class Statement ambiguous(AmbiguousStatement)
              {
              }
-
+
+
              // so that "AmbiguousStatement" should inherit from "Statement"
              class AmbiguousStatement : Statement
              {
                  // it should called "items", and the type should be an array of the base type
                  Statement[] items;
              }
-
+
+
              class ExpressionStatement : Statement
              {
                  Expression expression;
              }
-
+
+
              class VariableDefinitionStatement : Statement
              {
                  Type type;
@@ -152,28 +155,33 @@
      ambiguity:disabled
      serialization:enabled
      grammar:
-
+
+
      class Expression
      {
      }
-
+
+
      enum BinaryOperator
      {
          Add, Sub, Mul, Div,
      }
-
+
+
      class NumberExpression : Expression
      {
          token number;
      }
-
+
+
      class BinaryExpression : Expression
      {
          BinaryOperator op;
          Expression left;
          Expression right;
      }
-
+
+
      token ADD "\+"
      token SUB "-"
      token MUL "\*"
@@ -232,24 +240,28 @@
      {
      private:
          double result;
-
+
+
          double Call(CalcExpression* node)
          {
              node->Accept(this);
              return result;
          }
-
+
+
      public:
          static double Evaluate(CalcExpression* node)
          {
              return Evaluator().Call(node);
          }
-
+
+
          void Visit(CalcNumberExpression* node)override
          {
              return wtof(node->number.value);
          }
-
+
+
          void Visit(CalcBinaryExpression* node)override
          {
              auto left = Calc(node->left.Obj());
@@ -271,7 +283,8 @@
              }
          }
      };
-
+
+
      Nullable<double> EvaluateExpression(const WString& input)
      {
          static auto table = CalcLoadTable();

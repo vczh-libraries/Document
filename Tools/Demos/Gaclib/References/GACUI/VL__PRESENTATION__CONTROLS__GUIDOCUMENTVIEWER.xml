@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentViewer" accessor="" category="Class" name="GuiDocumentViewer" declFile="GuiDocumentViewer.h" declId="NI$vl::presentation::controls::GuiDocumentViewer"><summary>Scrollable document viewer for displaying <symbol name="DocumentModel" docId="vl::presentation::DocumentModel" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel"/>.</summary><signature><![CDATA[class GuiDocumentViewer
+<Document accessor="" category="Class" name="GuiDocumentViewer" declFile="GuiDocumentViewer.h" declId="NI$vl::presentation::controls::GuiDocumentViewer"><summary>Scrollable document viewer for displaying <symbol name="DocumentModel" docId="vl::presentation::DocumentModel" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel"/>.</summary><signature><![CDATA[class GuiDocumentViewer
     : GuiScrollContainer
     , GuiDocumentCommonInterface
     , Description<GuiDocumentViewer>;

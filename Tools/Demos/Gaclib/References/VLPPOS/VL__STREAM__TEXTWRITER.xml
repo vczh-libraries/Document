@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::TextWriter" accessor="" category="Class" name="TextWriter" declFile="Accessor.h" declId="NI$vl::stream::TextWriter"><summary>Text writer.</summary><signature><![CDATA[class TextWriter
+<Document accessor="" category="Class" name="TextWriter" declFile="Accessor.h" declId="NI$vl::stream::TextWriter"><summary>Text writer.</summary><signature><![CDATA[class TextWriter
     : Object
     , NotCopyable;
 ]]></signature><basetypes><symbol name="NotCopyable" docId="vl::NotCopyable" declFile="Basic.h" declId="NI$vl::NotCopyable"/><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

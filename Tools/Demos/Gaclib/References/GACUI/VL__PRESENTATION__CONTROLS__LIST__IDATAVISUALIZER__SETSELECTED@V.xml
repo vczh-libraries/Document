@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::IDataVisualizer::SetSelected@void(bool)" accessor="public" category="Function" name="SetSelected" declFile="GuiDataGridInterfaces.h" declId="FB$vl::presentation::controls::list::IDataVisualizer::SetSelected@void(bool)[decl0]"><summary>Set the selected state.</summary><param name="value">Set to true to make this data visualizer looks selected.</param><signature><![CDATA[void SetSelected(
+<Document accessor="public" category="Function" name="SetSelected" declFile="GuiDataGridInterfaces.h" declId="FB$vl::presentation::controls::list::IDataVisualizer::SetSelected@void(bool)[decl0]"><summary>Set the selected state.</summary><param name="value">Set to true to make this data visualizer looks selected.</param><signature><![CDATA[void SetSelected(
     bool value
 );
 ]]></signature></Document>

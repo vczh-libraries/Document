@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiRibbonGroup" accessor="" category="Class" name="GuiRibbonGroup" declFile="GuiRibbonControls.h" declId="NI$vl::presentation::controls::GuiRibbonGroup"><summary>Ribbon group control, adding to the Groups property of a <symbol name="GuiRibbonTabPage" docId="vl::presentation::controls::GuiRibbonTabPage" declFile="GuiRibbonControls.h" declId="NI$vl::presentation::controls::GuiRibbonTabPage"/>.</summary><signature><![CDATA[class GuiRibbonGroup
+<Document accessor="" category="Class" name="GuiRibbonGroup" declFile="GuiRibbonControls.h" declId="NI$vl::presentation::controls::GuiRibbonGroup"><summary>Ribbon group control, adding to the Groups property of a <symbol name="GuiRibbonTabPage" docId="vl::presentation::controls::GuiRibbonTabPage" declFile="GuiRibbonControls.h" declId="NI$vl::presentation::controls::GuiRibbonTabPage"/>.</summary><signature><![CDATA[class GuiRibbonGroup
     : GuiControl
     , compositions::GuiAltActionHostBase
     , Description<GuiRibbonGroup>;

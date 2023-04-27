@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeResourceService::SetDefaultFont@void(::vl::presentation::FontProperties const &amp;)" accessor="public" category="Function" name="SetDefaultFont" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeResourceService::SetDefaultFont@void(::vl::presentation::FontProperties const &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetDefaultFont" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeResourceService::SetDefaultFont@void(::vl::presentation::FontProperties const &amp;)[decl0]"><summary>
  Override the default font configuration for the current process, only available GacUI library.
  </summary><param name="value">The font configuration to override.</param><signature><![CDATA[void SetDefaultFont(
     FontProperties const & value

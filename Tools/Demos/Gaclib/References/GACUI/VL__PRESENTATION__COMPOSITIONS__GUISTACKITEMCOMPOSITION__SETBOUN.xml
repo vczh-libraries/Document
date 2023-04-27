@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiStackItemComposition::SetBounds@void(::vl::presentation::Rect)" accessor="public" category="Function" name="SetBounds" declFile="GuiGraphicsStackComposition.h" declId="FB$vl::presentation::compositions::GuiStackItemComposition::SetBounds@void(::vl::presentation::Rect)[decl0]"><summary>Set the expected bounds of a stack item. In most of the cases only the size of the bounds is used.</summary><param name="value">The expected bounds of a stack item.</param><signature><![CDATA[void SetBounds(
+<Document accessor="public" category="Function" name="SetBounds" declFile="GuiGraphicsStackComposition.h" declId="FB$vl::presentation::compositions::GuiStackItemComposition::SetBounds@void(::vl::presentation::Rect)[decl0]"><summary>Set the expected bounds of a stack item. In most of the cases only the size of the bounds is used.</summary><param name="value">The expected bounds of a stack item.</param><signature><![CDATA[void SetBounds(
     Rect value
 );
 ]]></signature><seealsos><symbol name="Rect" declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::RenameStyle@void(::vl::WString const &amp;, ::vl::WString const &amp;)" accessor="public" category="Function" name="RenameStyle" declFile="GuiDocumentViewer.h" declId="FB$vl::presentation::controls::GuiDocumentCommonInterface::RenameStyle@void(::vl::WString const &amp;, ::vl::WString const &amp;)[decl0]"><summary>Rename a style.</summary><param name="oldStyleName">The name of the style.</param><param name="newStyleName">The new name.</param><signature><![CDATA[void RenameStyle(
+<Document accessor="public" category="Function" name="RenameStyle" declFile="GuiDocumentViewer.h" declId="FB$vl::presentation::controls::GuiDocumentCommonInterface::RenameStyle@void(::vl::WString const &amp;, ::vl::WString const &amp;)[decl0]"><summary>Rename a style.</summary><param name="oldStyleName">The name of the style.</param><param name="newStyleName">The new name.</param><signature><![CDATA[void RenameStyle(
     WString const & oldStyleName,
     WString const & newStyleName
 );

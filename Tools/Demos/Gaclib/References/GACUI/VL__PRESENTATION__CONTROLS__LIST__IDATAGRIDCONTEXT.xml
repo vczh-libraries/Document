@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::IDataGridContext" accessor="" category="Class" name="IDataGridContext" declFile="GuiDataGridInterfaces.h" declId="NI$vl::presentation::controls::list::IDataGridContext"><summary>The data grid context.</summary><signature><![CDATA[class IDataGridContext
+<Document accessor="" category="Class" name="IDataGridContext" declFile="GuiDataGridInterfaces.h" declId="NI$vl::presentation::controls::list::IDataGridContext"><summary>The data grid context.</summary><signature><![CDATA[class IDataGridContext
     : IDescriptable
     , Description<IDataGridContext>;
 ]]></signature><seealsos><symbol name="IDataGridContext" docId="vl::presentation::controls::list::IDataGridContext" declFile="GuiDataGridInterfaces.h" declId="NI$vl::presentation::controls::list::IDataGridContext"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

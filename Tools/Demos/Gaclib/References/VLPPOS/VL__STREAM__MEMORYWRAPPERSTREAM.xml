@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::MemoryWrapperStream" accessor="" category="Class" name="MemoryWrapperStream" declFile="MemoryWrapperStream.h" declId="NI$vl::stream::MemoryWrapperStream"><summary>A <b>readable</b>, <b>peekable</b>, <b>writable</b>, <b>seekable</b> and <b>finite</b> stream that creates on a buffer.</summary><signature><![CDATA[class MemoryWrapperStream
+<Document accessor="" category="Class" name="MemoryWrapperStream" declFile="MemoryWrapperStream.h" declId="NI$vl::stream::MemoryWrapperStream"><summary>A <b>readable</b>, <b>peekable</b>, <b>writable</b>, <b>seekable</b> and <b>finite</b> stream that creates on a buffer.</summary><signature><![CDATA[class MemoryWrapperStream
     : Object
     , IStream;
 ]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></basetypes></Document>

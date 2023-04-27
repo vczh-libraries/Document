@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::IsFocused@bool()" accessor="public" category="Function" name="IsFocused" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::IsFocused@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="IsFocused" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::IsFocused@bool()[decl0]"><summary>
  Test is the window focused.
  </summary><returns>Returns true if the window is focused.</returns><signature><![CDATA[bool IsFocused(
 );

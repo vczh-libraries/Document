@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiListControl::EnsureItemVisibleResult" accessor="public" category="Enum" name="EnsureItemVisibleResult" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::EnsureItemVisibleResult"><summary>EnsureItemVisible result for item arranger.</summary><enumitem name="ItemNotExists">The requested item does not exist.</enumitem><enumitem name="Moved">The view location is moved.</enumitem><enumitem name="NotMoved">The view location is not moved.</enumitem><signature><![CDATA[enum class EnsureItemVisibleResult
+<Document accessor="public" category="Enum" name="EnsureItemVisibleResult" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::EnsureItemVisibleResult"><summary>EnsureItemVisible result for item arranger.</summary><enumitem name="ItemNotExists">The requested item does not exist.</enumitem><enumitem name="Moved">The view location is moved.</enumitem><enumitem name="NotMoved">The view location is not moved.</enumitem><signature><![CDATA[enum class EnsureItemVisibleResult
 {
     ItemNotExists,
     Moved,

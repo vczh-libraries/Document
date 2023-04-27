@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::GuiCoordinate" accessor="" category="TypeAlias" name="GuiCoordinate" declFile="GuiTypes.h" declId="NI$vl::presentation::GuiCoordinate"><summary>
+<Document accessor="" category="TypeAlias" name="GuiCoordinate" declFile="GuiTypes.h" declId="NI$vl::presentation::GuiCoordinate"><summary>
  Represents a position in the local window coordinate space, which is DPI awared.
  </summary><signature><![CDATA[using GuiCoordinate = vint;
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

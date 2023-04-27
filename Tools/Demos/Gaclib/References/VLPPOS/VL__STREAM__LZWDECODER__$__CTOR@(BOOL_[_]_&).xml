@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::LzwDecoder::$__ctor@(bool [*] &amp;)" accessor="public" category="Function" name="$__ctor" declFile="CompressionStream.h" declId="FB$vl::stream::LzwDecoder::$__ctor@(bool [*] &amp;)[decl0]"><summary>Create an encoder, specifying what bytes will never appear in the decompressed data.</summary><param name="existingBytes">
+<Document accessor="public" category="Function" name="$__ctor" declFile="CompressionStream.h" declId="FB$vl::stream::LzwDecoder::$__ctor@(bool [*] &amp;)[decl0]"><summary>Create an encoder, specifying what bytes will never appear in the decompressed data.</summary><param name="existingBytes">
  A filter array
  If existingBytes[x] == true, it means x will possibly appear.
  If existingBytes[x] == false, it means x will never appear.

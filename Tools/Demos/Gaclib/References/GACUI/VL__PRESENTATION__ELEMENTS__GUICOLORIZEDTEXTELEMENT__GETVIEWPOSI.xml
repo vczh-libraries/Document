@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiColorizedTextElement::GetViewPosition@::vl::presentation::Point()" accessor="public" category="Function" name="GetViewPosition" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::GetViewPosition@::vl::presentation::Point()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetViewPosition" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::GetViewPosition@::vl::presentation::Point()[decl0]"><summary>
  Get the left-top position of the visible bounds of characters.
  </summary><returns>The left-top position of the visible bounds of characters.</returns><signature><![CDATA[Point GetViewPosition(
 );

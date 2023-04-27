@@ -1,4 +1,4 @@
-<Document symbolId="vl::console::Console::Write@void(wchar_t const *, ::vl::vint)" accessor="public" category="Function" name="Write" declFile="Console.h" declId="FB$vl::console::Console::Write@void(wchar_t const *, ::vl::vint)[decl0]"><summary>Write a string to the command-line window.</summary><param name="string">Content to write.</param><param name="length">Size of the content in wchar_t, not including the zero terminator.</param><signature><![CDATA[static void Write(
+<Document accessor="public" category="Function" name="Write" declFile="Console.h" declId="FB$vl::console::Console::Write@void(wchar_t const *, ::vl::vint)[decl0]"><summary>Write a string to the command-line window.</summary><param name="string">Content to write.</param><param name="length">Size of the content in wchar_t, not including the zero terminator.</param><signature><![CDATA[static void Write(
     wchar_t const * string,
     vint length
 );

@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::PartialOrderingProcessor" accessor="" category="Class" name="PartialOrderingProcessor" declFile="PartialOrdering.h" declId="NI$vl::collections::PartialOrderingProcessor"><summary>
+<Document accessor="" category="Class" name="PartialOrderingProcessor" declFile="PartialOrdering.h" declId="NI$vl::collections::PartialOrderingProcessor"><summary>
  PartialOrderingProcessor is used to sort objects by given relationships among them.
  The relationship is defined by dependance.
  If A depends on B, then B will be place before A after sorting.

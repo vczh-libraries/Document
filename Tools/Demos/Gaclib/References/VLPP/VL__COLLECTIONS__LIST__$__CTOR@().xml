@@ -1,3 +1,3 @@
-<Document symbolId="vl::collections::List::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="List.h" declId="FB$vl::collections::List::$__ctor@()[decl0]"><summary>Create an empty list.</summary><signature><![CDATA[ List(
+<Document accessor="public" category="Function" name="$__ctor" declFile="List.h" declId="FB$vl::collections::List::$__ctor@()[decl0]"><summary>Create an empty list.</summary><signature><![CDATA[ List(
 );
 ]]></signature></Document>

@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::IGuiAnimation::GetStopped@bool()" accessor="public" category="Function" name="GetStopped" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::IGuiAnimation::GetStopped@bool()[decl0]"><summary>Test if the animation has ended.</summary><returns>Returns true if the animation has ended.</returns><signature><![CDATA[bool GetStopped(
+<Document accessor="public" category="Function" name="GetStopped" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::IGuiAnimation::GetStopped@bool()[decl0]"><summary>Test if the animation has ended.</summary><returns>Returns true if the animation has ended.</returns><signature><![CDATA[bool GetStopped(
 );
 ]]></signature></Document>

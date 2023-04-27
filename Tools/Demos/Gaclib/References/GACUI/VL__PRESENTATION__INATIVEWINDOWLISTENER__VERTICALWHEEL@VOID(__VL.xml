@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindowListener::VerticalWheel@void(::vl::presentation::NativeWindowMouseInfo const &amp;)" accessor="public" category="Function" name="VerticalWheel" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::VerticalWheel@void(::vl::presentation::NativeWindowMouseInfo const &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="VerticalWheel" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::VerticalWheel@void(::vl::presentation::NativeWindowMouseInfo const &amp;)[decl0]"><summary>
  Called when the horizontal vertical wheel scrolls.
  </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void VerticalWheel(
     NativeWindowMouseInfo const & info

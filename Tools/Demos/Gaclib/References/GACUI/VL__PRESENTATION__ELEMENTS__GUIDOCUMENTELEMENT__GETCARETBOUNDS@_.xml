@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiDocumentElement::GetCaretBounds@::vl::presentation::Rect(::vl::presentation::TextPos, bool)" accessor="public" category="Function" name="GetCaretBounds" declFile="GuiGraphicsDocumentElement.h" declId="FB$vl::presentation::elements::GuiDocumentElement::GetCaretBounds@::vl::presentation::Rect(::vl::presentation::TextPos, bool)[decl0]"><summary>Get the bounds of a caret.</summary><returns>The bounds.</returns><param name="caret">The caret.</param><param name="frontSide">Set to true to get the bounds for the character before it.</param><signature><![CDATA[Rect GetCaretBounds(
+<Document accessor="public" category="Function" name="GetCaretBounds" declFile="GuiGraphicsDocumentElement.h" declId="FB$vl::presentation::elements::GuiDocumentElement::GetCaretBounds@::vl::presentation::Rect(::vl::presentation::TextPos, bool)[decl0]"><summary>Get the bounds of a caret.</summary><returns>The bounds.</returns><param name="caret">The caret.</param><param name="frontSide">Set to true to get the bounds for the character before it.</param><signature><![CDATA[Rect GetCaretBounds(
     TextPos caret,
     bool frontSide
 );

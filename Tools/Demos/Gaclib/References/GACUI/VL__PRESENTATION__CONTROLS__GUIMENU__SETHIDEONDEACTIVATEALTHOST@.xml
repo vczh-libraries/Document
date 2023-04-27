@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiMenu::SetHideOnDeactivateAltHost@void(bool)" accessor="public" category="Function" name="SetHideOnDeactivateAltHost" declFile="GuiMenuControls.h" declId="FB$vl::presentation::controls::GuiMenu::SetHideOnDeactivateAltHost@void(bool)[decl0]"><summary>Set if this menu hide after pressing ESC key to exit to the upper level of ALT shortcuts.</summary><param name="value">Set to true to make this menu hide after pressing ESC key to exit to the upper level of ALT shortcuts.</param><signature><![CDATA[void SetHideOnDeactivateAltHost(
+<Document accessor="public" category="Function" name="SetHideOnDeactivateAltHost" declFile="GuiMenuControls.h" declId="FB$vl::presentation::controls::GuiMenu::SetHideOnDeactivateAltHost@void(bool)[decl0]"><summary>Set if this menu hide after pressing ESC key to exit to the upper level of ALT shortcuts.</summary><param name="value">Set to true to make this menu hide after pressing ESC key to exit to the upper level of ALT shortcuts.</param><signature><![CDATA[void SetHideOnDeactivateAltHost(
     bool value
 );
 ]]></signature></Document>

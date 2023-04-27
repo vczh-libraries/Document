@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::DataColumn::GetCellText@::vl::WString(::vl::vint)" accessor="public" category="Function" name="GetCellText" declFile="GuiBindableDataGrid.h" declId="FB$vl::presentation::controls::list::DataColumn::GetCellText@::vl::WString(::vl::vint)[decl0]"><summary>Get the text value from an item.</summary><returns>The text value.</returns><param name="row">The row index of the item.</param><signature><![CDATA[WString GetCellText(
+<Document accessor="public" category="Function" name="GetCellText" declFile="GuiBindableDataGrid.h" declId="FB$vl::presentation::controls::list::DataColumn::GetCellText@::vl::WString(::vl::vint)[decl0]"><summary>Get the text value from an item.</summary><returns>The text value.</returns><param name="row">The row index of the item.</param><signature><![CDATA[WString GetCellText(
     vint row
 );
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

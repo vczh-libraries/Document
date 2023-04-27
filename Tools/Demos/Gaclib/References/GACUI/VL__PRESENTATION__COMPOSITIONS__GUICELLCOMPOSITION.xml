@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiCellComposition" accessor="" category="Class" name="GuiCellComposition" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiCellComposition"><summary>
+<Document accessor="" category="Class" name="GuiCellComposition" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiCellComposition"><summary>
  Represents a cell composition of a <symbol name="GuiTableComposition" docId="vl::presentation::compositions::GuiTableComposition" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiTableComposition"/>.
  </summary><signature><![CDATA[class GuiCellComposition
     : GuiGraphicsSite

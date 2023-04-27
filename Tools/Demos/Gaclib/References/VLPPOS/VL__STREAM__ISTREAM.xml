@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::IStream" accessor="" category="Class" name="IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"><summary><p>
+<Document accessor="" category="Class" name="IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"><summary><p>
  Interface for streams.
  </p><p>
  Please notice that, even if you get a stream object, if <symbol name="IsAvailable" docId="vl::stream::IStream::IsAvailable@bool()" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::IsAvailable@bool()[decl0]"/> returns false, all other methods cannot be used.

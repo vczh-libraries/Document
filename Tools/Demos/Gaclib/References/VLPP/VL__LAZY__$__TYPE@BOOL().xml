@@ -1,2 +1,2 @@
-<Document symbolId="vl::Lazy::$__type@bool()" accessor="public" category="Function" name="$__type" declFile="Lazy.h" declId="FB$vl::Lazy::$__type@bool()[impl0]"><summary>Test if it is an empty evaluation or not.</summary><returns>Returns true if it is not empty.</returns><signature><![CDATA[operator bool();
+<Document accessor="public" category="Function" name="$__type" declFile="Lazy.h" declId="FB$vl::Lazy::$__type@bool()[impl0]"><summary>Test if it is an empty evaluation or not.</summary><returns>Returns true if it is not empty.</returns><signature><![CDATA[operator bool();
 ]]></signature></Document>

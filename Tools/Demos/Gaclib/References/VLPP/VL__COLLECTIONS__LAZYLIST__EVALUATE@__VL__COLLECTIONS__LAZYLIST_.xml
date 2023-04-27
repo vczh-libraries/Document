@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::LazyList::Evaluate@::vl::collections::LazyList&lt;[T]&gt;(bool)" accessor="public" category="Function" name="Evaluate" declFile="Operation.h" declId="FB$vl::collections::LazyList::Evaluate@::vl::collections::LazyList&lt;[T]&gt;(bool)[impl0]"><summary>Get an evaluated copy of this lazy list.</summary><returns>
+<Document accessor="public" category="Function" name="Evaluate" declFile="Operation.h" declId="FB$vl::collections::LazyList::Evaluate@::vl::collections::LazyList&lt;[T]&gt;(bool)[impl0]"><summary>Get an evaluated copy of this lazy list.</summary><returns>
  The created lazy list.
  If this lazy list has been evaluated before, it returns a reference to this lazy list.
  If this lazy list has not been evaluated before, it go through this lazy list and copy all values.

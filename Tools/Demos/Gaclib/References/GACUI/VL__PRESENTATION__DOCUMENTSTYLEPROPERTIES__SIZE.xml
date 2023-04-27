@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::DocumentStyleProperties::size" accessor="public" category="Variable" name="size" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentStyleProperties::size"><summary>Font size.</summary><signature><![CDATA[Nullable<DocumentFontSize> size;
+<Document accessor="public" category="Variable" name="size" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentStyleProperties::size"><summary>Font size.</summary><signature><![CDATA[Nullable<DocumentFontSize> size;
 ]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol name="DocumentFontSize" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentFontSize"/></seealsos></Document>

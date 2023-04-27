@@ -1,4 +1,4 @@
-<Document symbolId="vl::regex::RegexMatch::Success@bool()" accessor="public" category="Function" name="Success" declFile="Regex.h" declId="FB$vl::regex::RegexMatch::Success@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="Success" declFile="Regex.h" declId="FB$vl::regex::RegexMatch::Success@bool()[decl0]"><summary>
  Test if this match is a succeeded match or a failed match.
  A failed match will only appear when calling <symbol name="Split" docId="vl::regex::Regex::Split@void(::vl::WString const &amp;, bool, ::vl::regex::RegexMatch::List &amp;)" declFile="Regex.h" declId="FB$vl::regex::Regex::Split@void(::vl::WString const &amp;, bool, ::vl::regex::RegexMatch::List &amp;)[decl0]"/> or <symbol name="Cut" docId="vl::regex::Regex::Cut@void(::vl::WString const &amp;, bool, ::vl::regex::RegexMatch::List &amp;)" declFile="Regex.h" declId="FB$vl::regex::Regex::Cut@void(::vl::WString const &amp;, bool, ::vl::regex::RegexMatch::List &amp;)[decl0]"/>.
  In other cases, failed matches are either not included in the result.

@@ -1,4 +1,4 @@
-<Document symbolId="vl::regex::RegexProc::deleter" accessor="public" category="Variable" name="deleter" declFile="Regex.h" declId="NI$vl::regex::RegexProc::deleter"><summary>
+<Document accessor="public" category="Variable" name="deleter" declFile="Regex.h" declId="NI$vl::regex::RegexProc::deleter"><summary>
  The deleter which deletes <symbol name="interTokenState" docId="vl::regex::RegexProcessingToken::interTokenState" declFile="Regex.h" declId="NI$vl::regex::RegexProcessingToken::interTokenState"/> created by <symbol name="extendProc" docId="vl::regex::RegexProc::extendProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc::extendProc"/>.
  This callback is not called automatically.
  It is here to make the maintainance convenient for the caller.

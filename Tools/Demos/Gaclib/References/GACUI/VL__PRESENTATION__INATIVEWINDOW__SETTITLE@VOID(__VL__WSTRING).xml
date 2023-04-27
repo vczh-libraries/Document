@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::SetTitle@void(::vl::WString)" accessor="public" category="Function" name="SetTitle" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetTitle@void(::vl::WString)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetTitle" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetTitle@void(::vl::WString)[decl0]"><summary>
  Set the title of the window. A title will be displayed as a name of this window.
  </summary><param name="title">The title of the window.</param><signature><![CDATA[void SetTitle(
     WString title

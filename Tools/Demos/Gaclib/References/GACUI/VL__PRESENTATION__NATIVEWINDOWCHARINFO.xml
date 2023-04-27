@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::NativeWindowCharInfo" accessor="" category="Struct" name="NativeWindowCharInfo" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::NativeWindowCharInfo"><summary>
+<Document accessor="" category="Struct" name="NativeWindowCharInfo" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::NativeWindowCharInfo"><summary>
  Character message information.
  </summary><signature><![CDATA[struct NativeWindowCharInfo;
 ]]></signature></Document>

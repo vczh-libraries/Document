@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiDocumentElement::RemoveStyleName@void(::vl::presentation::TextPos, ::vl::presentation::TextPos)" accessor="public" category="Function" name="RemoveStyleName" declFile="GuiGraphicsDocumentElement.h" declId="FB$vl::presentation::elements::GuiDocumentElement::RemoveStyleName@void(::vl::presentation::TextPos, ::vl::presentation::TextPos)[decl0]"><summary>Remove style name in a specified range.</summary><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><signature><![CDATA[void RemoveStyleName(
+<Document accessor="public" category="Function" name="RemoveStyleName" declFile="GuiGraphicsDocumentElement.h" declId="FB$vl::presentation::elements::GuiDocumentElement::RemoveStyleName@void(::vl::presentation::TextPos, ::vl::presentation::TextPos)[decl0]"><summary>Remove style name in a specified range.</summary><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><signature><![CDATA[void RemoveStyleName(
     TextPos begin,
     TextPos end
 );

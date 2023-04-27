@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::GetIconVisible@bool()" accessor="public" category="Function" name="GetIconVisible" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetIconVisible@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetIconVisible" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetIconVisible@bool()[decl0]"><summary>
  Test is the icon visible.
  </summary><returns>Returns true if the icon is visible.</returns><signature><![CDATA[bool GetIconVisible(
 );

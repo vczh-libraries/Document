@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiColorDialog::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiColorDialog::$__ctor@()[decl0]"><summary>Create a color dialog.</summary><signature><![CDATA[ GuiColorDialog(
+<Document accessor="public" category="Function" name="$__ctor" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiColorDialog::$__ctor@()[decl0]"><summary>Create a color dialog.</summary><signature><![CDATA[ GuiColorDialog(
 );
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document symbolId="vl::vint16_t" accessor="" category="TypeAlias" name="vint16_t" declFile="Basic.h" declId="NI$vl::vint16_t"><summary>2-bytes signed integer.</summary><signature><![CDATA[using vint16_t = signed __int16;
+<Document accessor="" category="TypeAlias" name="vint16_t" declFile="Basic.h" declId="NI$vl::vint16_t"><summary>2-bytes signed integer.</summary><signature><![CDATA[using vint16_t = signed __int16;
 ]]></signature></Document>

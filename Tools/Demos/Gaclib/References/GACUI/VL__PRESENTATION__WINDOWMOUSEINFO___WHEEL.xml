@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::WindowMouseInfo_::wheel" accessor="public" category="Variable" name="wheel" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::WindowMouseInfo_::wheel"><summary>The delta of the wheel.</summary><signature><![CDATA[vint wheel;
+<Document accessor="public" category="Variable" name="wheel" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::WindowMouseInfo_::wheel"><summary>The delta of the wheel.</summary><signature><![CDATA[vint wheel;
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

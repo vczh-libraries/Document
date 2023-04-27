@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::Color" accessor="" category="Struct" name="Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"><summary>Represents a 32bit RGBA color. Values of separate components can be accessed using fields &quot;r&quot;, &quot;g&quot;, &quot;b&quot; and &quot;a&quot;.</summary><signature><![CDATA[struct Color;
+<Document accessor="" category="Struct" name="Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"><summary>Represents a 32bit RGBA color. Values of separate components can be accessed using fields &quot;r&quot;, &quot;g&quot;, &quot;b&quot; and &quot;a&quot;.</summary><signature><![CDATA[struct Color;
 ]]></signature></Document>

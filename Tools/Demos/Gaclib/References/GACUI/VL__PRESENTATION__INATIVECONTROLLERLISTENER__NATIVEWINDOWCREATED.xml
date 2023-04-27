@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeControllerListener::NativeWindowCreated@void(::vl::presentation::INativeWindow *)" accessor="public" category="Function" name="NativeWindowCreated" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeControllerListener::NativeWindowCreated@void(::vl::presentation::INativeWindow *)[decl0]"><summary>
+<Document accessor="public" category="Function" name="NativeWindowCreated" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeControllerListener::NativeWindowCreated@void(::vl::presentation::INativeWindow *)[decl0]"><summary>
  Called when a window is created.
  </summary><param name="window">The created window.</param><signature><![CDATA[void NativeWindowCreated(
     INativeWindow * window

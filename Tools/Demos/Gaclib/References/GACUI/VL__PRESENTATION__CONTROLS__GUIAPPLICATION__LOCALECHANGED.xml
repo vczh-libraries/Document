@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiApplication::LocaleChanged" accessor="public" category="Variable" name="LocaleChanged" declFile="GuiApplication.h" declId="NI$vl::presentation::controls::GuiApplication::LocaleChanged"><summary>Locale changed event.</summary><signature><![CDATA[Event<void(
+<Document accessor="public" category="Variable" name="LocaleChanged" declFile="GuiApplication.h" declId="NI$vl::presentation::controls::GuiApplication::LocaleChanged"><summary>Locale changed event.</summary><signature><![CDATA[Event<void(
 )> LocaleChanged;
 ]]></signature><seealsos><symbol name="Event" declFile="Event.h" declId="NF[0]$vl::Event"/></seealsos></Document>

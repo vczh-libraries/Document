@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::elements::GuiGDIElementEventArgs" accessor="" category="Struct" name="GuiGDIElementEventArgs" declFile="GuiGraphicsWindowsGDI.h" declId="NI$vl::presentation::elements::GuiGDIElementEventArgs"><summary>GDI Rendering event arguments.</summary><signature><![CDATA[struct GuiGDIElementEventArgs
+<Document accessor="" category="Struct" name="GuiGDIElementEventArgs" declFile="GuiGraphicsWindowsGDI.h" declId="NI$vl::presentation::elements::GuiGDIElementEventArgs"><summary>GDI Rendering event arguments.</summary><signature><![CDATA[struct GuiGDIElementEventArgs
     : compositions::GuiEventArgs;
 ]]></signature><basetypes><symbol name="GuiEventArgs" docId="vl::presentation::compositions::GuiEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiEventArgs"/></basetypes></Document>

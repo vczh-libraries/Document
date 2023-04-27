@@ -1,4 +1,4 @@
-<Document symbolId="vl::Locale::FormatNumber@::vl::WString(::vl::WString const &amp;)" accessor="public" category="Function" name="FormatNumber" declFile="Locale.h" declId="FB$vl::Locale::FormatNumber@::vl::WString(::vl::WString const &amp;)[decl0]"><summary>Convert a number to a formatted string according to the locale.</summary><returns>The formatted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[WString FormatNumber(
+<Document accessor="public" category="Function" name="FormatNumber" declFile="Locale.h" declId="FB$vl::Locale::FormatNumber@::vl::WString(::vl::WString const &amp;)[decl0]"><summary>Convert a number to a formatted string according to the locale.</summary><returns>The formatted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[WString FormatNumber(
     WString const & number
 ) const;
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::FileStream::$__ctor@(::vl::WString const &amp;, ::vl::stream::FileStream::AccessRight)" accessor="public" category="Function" name="$__ctor" declFile="FileStream.h" declId="FB$vl::stream::FileStream::$__ctor@(::vl::WString const &amp;, ::vl::stream::FileStream::AccessRight)[decl0]"><summary>Create a file stream from a given file name.</summary><param name="fileName">The file to operate.</param><param name="_accessRight">Expected operations on the file.</param><signature><![CDATA[ FileStream(
+<Document accessor="public" category="Function" name="$__ctor" declFile="FileStream.h" declId="FB$vl::stream::FileStream::$__ctor@(::vl::WString const &amp;, ::vl::stream::FileStream::AccessRight)[decl0]"><summary>Create a file stream from a given file name.</summary><param name="fileName">The file to operate.</param><param name="_accessRight">Expected operations on the file.</param><signature><![CDATA[ FileStream(
     WString const & fileName,
     AccessRight _accessRight
 );

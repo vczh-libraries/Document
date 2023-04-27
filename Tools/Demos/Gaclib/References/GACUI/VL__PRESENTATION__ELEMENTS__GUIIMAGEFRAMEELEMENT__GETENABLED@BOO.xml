@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiImageFrameElement::GetEnabled@bool()" accessor="public" category="Function" name="GetEnabled" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiImageFrameElement::GetEnabled@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetEnabled" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiImageFrameElement::GetEnabled@bool()[decl0]"><summary>
  Get if the image is rendered as enabled.
  </summary><returns>Return true if the image is rendered as enabled.</returns><signature><![CDATA[bool GetEnabled(
 );

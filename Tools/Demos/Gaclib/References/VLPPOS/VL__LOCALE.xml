@@ -1,4 +1,4 @@
-<Document symbolId="vl::Locale" accessor="" category="Class" name="Locale" declFile="Locale.h" declId="NI$vl::Locale"><summary>Locale awared operations. Macro &quot;INVLOC&quot; is a shortcut to get a invariant locale.</summary><remarks><p>
+<Document accessor="" category="Class" name="Locale" declFile="Locale.h" declId="NI$vl::Locale"><summary>Locale awared operations. Macro &quot;INVLOC&quot; is a shortcut to get a invariant locale.</summary><remarks><p>
  For all string operations that the normalization does not set to <b>None</b>,
  and all non-string operations,
  the result is platform-dependent.

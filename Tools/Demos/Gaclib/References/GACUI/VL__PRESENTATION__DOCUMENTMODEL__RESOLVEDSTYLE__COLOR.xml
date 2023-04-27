@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::DocumentModel::ResolvedStyle::color" accessor="public" category="Variable" name="color" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel::ResolvedStyle::color"><summary>The color of the text.</summary><signature><![CDATA[Color color;
+<Document accessor="public" category="Variable" name="color" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel::ResolvedStyle::color"><summary>The color of the text.</summary><signature><![CDATA[Color color;
 ]]></signature><seealsos><symbol name="Color" docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>

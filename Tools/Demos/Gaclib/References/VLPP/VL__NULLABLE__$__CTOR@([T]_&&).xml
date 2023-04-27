@@ -1,4 +1,4 @@
-<Document symbolId="vl::Nullable::$__ctor@([T] &amp;&amp;)" accessor="public" category="Function" name="$__ctor" declFile="Basic.h" declId="FB$vl::Nullable::$__ctor@([T] &amp;&amp;)[impl0]"><summary>Create a non-null value by moving data.</summary><param name="value">The data to move.</param><signature><![CDATA[ Nullable(
+<Document accessor="public" category="Function" name="$__ctor" declFile="Basic.h" declId="FB$vl::Nullable::$__ctor@([T] &amp;&amp;)[impl0]"><summary>Create a non-null value by moving data.</summary><param name="value">The data to move.</param><signature><![CDATA[ Nullable(
     T && value
 );
 ]]></signature></Document>

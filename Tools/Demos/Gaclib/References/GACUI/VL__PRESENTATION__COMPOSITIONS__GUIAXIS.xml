@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiAxis" accessor="" category="Class" name="GuiAxis" declFile="GuiGraphicsAxis.h" declId="NI$vl::presentation::compositions::GuiAxis"><summary>Axis aligned item coordinate transformer. This transformer transforms coordinates by changing the axis direction.</summary><signature><![CDATA[class GuiAxis
+<Document accessor="" category="Class" name="GuiAxis" declFile="GuiGraphicsAxis.h" declId="NI$vl::presentation::compositions::GuiAxis"><summary>Axis aligned item coordinate transformer. This transformer transforms coordinates by changing the axis direction.</summary><signature><![CDATA[class GuiAxis
     : Object
     , IGuiAxis
     , Description<GuiAxis>;

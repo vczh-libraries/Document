@@ -1,3 +1,3 @@
-<Document symbolId="vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &amp;()" accessor="public" category="Function" name="Values" declFile="Dictionary.h" declId="FB$vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &amp;()[impl0]"><summary>Get all values.</summary><returns>All values.</returns><signature><![CDATA[ValueContainer const & Values(
+<Document accessor="public" category="Function" name="Values" declFile="Dictionary.h" declId="FB$vl::collections::Dictionary::Values@::vl::collections::Dictionary::ValueContainer const &amp;()[impl0]"><summary>Get all values.</summary><returns>All values.</returns><signature><![CDATA[ValueContainer const & Values(
 ) const;
 ]]></signature><seealsos><symbol name="ValueContainer" declFile="Dictionary.h" declId="NI$vl::collections::Dictionary::ValueContainer"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::reflection::description::ITypeLoader::Unload@void(::vl::reflection::description::ITypeManager *)" accessor="public" category="Function" name="Unload" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::description::ITypeLoader::Unload@void(::vl::reflection::description::ITypeManager *)[decl0]"><summary>Called when it is time to unregister types.</summary><param name="manager">The type manager.</param><remarks>
+<Document accessor="public" category="Function" name="Unload" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::description::ITypeLoader::Unload@void(::vl::reflection::description::ITypeManager *)[decl0]"><summary>Called when it is time to unregister types.</summary><param name="manager">The type manager.</param><remarks>
  Types cannot be unregistered one by one,
  they are removed at the same time by calling
  <symbol name="DestroyGlobalTypeManager" docId="vl::reflection::description::DestroyGlobalTypeManager@bool()" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::description::DestroyGlobalTypeManager@bool()[decl0]"/> or

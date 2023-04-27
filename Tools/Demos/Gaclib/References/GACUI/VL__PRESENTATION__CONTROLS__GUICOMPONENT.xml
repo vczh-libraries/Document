@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiComponent" accessor="" category="Class" name="GuiComponent" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::GuiComponent"><summary>
+<Document accessor="" category="Class" name="GuiComponent" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::GuiComponent"><summary>
  Represnets a component.
  </summary><signature><![CDATA[class GuiComponent
     : Object

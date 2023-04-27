@@ -1,4 +1,4 @@
-<Document symbolId="vl::KeyType::GetKeyValue@[T] const &amp;([T] const &amp;)" accessor="public" category="Function" name="GetKeyValue" declFile="Basic.h" declId="FB$vl::KeyType::GetKeyValue@[T] const &amp;([T] const &amp;)[impl0]"><summary>Convert a value in a container to its representative value.</summary><returns>The representative value.</returns><param name="value">The value in a container.</param><signature><![CDATA[static T const & GetKeyValue(
+<Document accessor="public" category="Function" name="GetKeyValue" declFile="Basic.h" declId="FB$vl::KeyType::GetKeyValue@[T] const &amp;([T] const &amp;)[impl0]"><summary>Convert a value in a container to its representative value.</summary><returns>The representative value.</returns><param name="value">The value in a container.</param><signature><![CDATA[static T const & GetKeyValue(
     T const & value
 );
 ]]></signature></Document>

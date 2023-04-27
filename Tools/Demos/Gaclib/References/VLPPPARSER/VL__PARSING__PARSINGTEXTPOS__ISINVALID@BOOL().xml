@@ -1,3 +1,3 @@
-<Document symbolId="vl::parsing::ParsingTextPos::IsInvalid@bool()" accessor="public" category="Function" name="IsInvalid" declFile="ParsingTree.h" declId="FB$vl::parsing::ParsingTextPos::IsInvalid@bool()[impl0]"><summary>Test if this position a valid position.</summary><returns>Returns true if this position is a valid position.</returns><signature><![CDATA[bool IsInvalid(
+<Document accessor="public" category="Function" name="IsInvalid" declFile="ParsingTree.h" declId="FB$vl::parsing::ParsingTextPos::IsInvalid@bool()[impl0]"><summary>Test if this position a valid position.</summary><returns>Returns true if this position is a valid position.</returns><signature><![CDATA[bool IsInvalid(
 ) const;
 ]]></signature></Document>

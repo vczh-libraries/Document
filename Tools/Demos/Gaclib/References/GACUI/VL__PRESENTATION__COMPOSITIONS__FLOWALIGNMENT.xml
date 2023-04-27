@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::FlowAlignment" accessor="" category="Enum" name="FlowAlignment" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::FlowAlignment"><summary>
+<Document accessor="" category="Enum" name="FlowAlignment" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::FlowAlignment"><summary>
  Alignment for a row in a flow layout
  </summary><enumitem name="Center">Align to the center.</enumitem><enumitem name="Extend">Extend to the entire row.</enumitem><enumitem name="Left">Align to the left.</enumitem><signature><![CDATA[enum class FlowAlignment
 {

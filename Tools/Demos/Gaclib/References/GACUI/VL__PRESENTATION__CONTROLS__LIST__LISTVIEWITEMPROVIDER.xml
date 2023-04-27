@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::ListViewItemProvider" accessor="" category="Class" name="ListViewItemProvider" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::list::ListViewItemProvider"><summary>Item provider for <symbol name="GuiListViewBase" docId="vl::presentation::controls::GuiListViewBase" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::GuiListViewBase"/>.</summary><signature><![CDATA[class ListViewItemProvider
+<Document accessor="" category="Class" name="ListViewItemProvider" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::list::ListViewItemProvider"><summary>Item provider for <symbol name="GuiListViewBase" docId="vl::presentation::controls::GuiListViewBase" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::GuiListViewBase"/>.</summary><signature><![CDATA[class ListViewItemProvider
     : ListProvider<Ptr<ListViewItem>>
     , IListViewItemProvider
     , IListViewItemView

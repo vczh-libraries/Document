@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::ICommonTextEditCallback::TextEditFinished@void(::vl::vuint)" accessor="public" category="Function" name="TextEditFinished" declFile="GuiTextGeneralOperations.h" declId="FB$vl::presentation::controls::ICommonTextEditCallback::TextEditFinished@void(::vl::vuint)[decl0]"><summary>Called after the text is edited and after the caret is changed.</summary><param name="editVersion">The current edit version.</param><signature><![CDATA[void TextEditFinished(
+<Document accessor="public" category="Function" name="TextEditFinished" declFile="GuiTextGeneralOperations.h" declId="FB$vl::presentation::controls::ICommonTextEditCallback::TextEditFinished@void(::vl::vuint)[decl0]"><summary>Called after the text is edited and after the caret is changed.</summary><param name="editVersion">The current edit version.</param><signature><![CDATA[void TextEditFinished(
     vuint editVersion
 );
 ]]></signature><seealsos><symbol name="vuint" docId="vl::vuint" declFile="Basic.h" declId="NI$vl::vuint"/></seealsos></Document>

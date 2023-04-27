@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::Size_::x" accessor="public" category="Variable" name="x" declFile="GuiTypes.h" declId="NI$vl::presentation::Size_::x"><summary>
+<Document accessor="public" category="Variable" name="x" declFile="GuiTypes.h" declId="NI$vl::presentation::Size_::x"><summary>
  Size in x dimension.
  </summary><signature><![CDATA[T x;
 ]]></signature></Document>

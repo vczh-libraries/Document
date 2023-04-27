@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::Undo@bool()" accessor="public" category="Function" name="Undo" declFile="GuiDocumentViewer.h" declId="FB$vl::presentation::controls::GuiDocumentCommonInterface::Undo@bool()[decl0]"><summary>Perform the undo action.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Undo(
+<Document accessor="public" category="Function" name="Undo" declFile="GuiDocumentViewer.h" declId="FB$vl::presentation::controls::GuiDocumentCommonInterface::Undo@bool()[decl0]"><summary>Perform the undo action.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Undo(
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::FontProperties" accessor="" category="Struct" name="FontProperties" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties"><summary>
+<Document accessor="" category="Struct" name="FontProperties" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties"><summary>
  Represents a font configuration.
  </summary><signature><![CDATA[struct FontProperties;
 ]]></signature></Document>

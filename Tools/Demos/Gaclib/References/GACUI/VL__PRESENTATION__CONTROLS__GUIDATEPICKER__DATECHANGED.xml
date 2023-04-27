@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::GuiDatePicker::DateChanged" accessor="public" category="Variable" name="DateChanged" declFile="GuiDateTimeControls.h" declId="NI$vl::presentation::controls::GuiDatePicker::DateChanged"><summary>Date changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent DateChanged;
+<Document accessor="public" category="Variable" name="DateChanged" declFile="GuiDateTimeControls.h" declId="NI$vl::presentation::controls::GuiDatePicker::DateChanged"><summary>Date changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent DateChanged;
 ]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::ReferenceCounterOperator" accessor="" category="Struct" name="ReferenceCounterOperator" declFile="Pointer.h" declId="NI$vl::ReferenceCounterOperator"><summary>
+<Document accessor="" category="Struct" name="ReferenceCounterOperator" declFile="Pointer.h" declId="NI$vl::ReferenceCounterOperator"><summary>
  The strategy class to create and delete the reference counter of an object.
  For any object inherits from <symbol name="DescriptableObject" docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/>, the reference counter is stored inside the object.
  For any other object, the reference counter is allocated separately.

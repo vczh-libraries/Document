@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiSelectableListControl::SetSelected@void(::vl::vint, bool)" accessor="public" category="Function" name="SetSelected" declFile="GuiListControls.h" declId="FB$vl::presentation::controls::GuiSelectableListControl::SetSelected@void(::vl::vint, bool)[decl0]"><summary>Set the selection status of an item.</summary><param name="itemIndex">The index of the item.</param><param name="value">Set to true to select the item.</param><signature><![CDATA[void SetSelected(
+<Document accessor="public" category="Function" name="SetSelected" declFile="GuiListControls.h" declId="FB$vl::presentation::controls::GuiSelectableListControl::SetSelected@void(::vl::vint, bool)[decl0]"><summary>Set the selection status of an item.</summary><param name="itemIndex">The index of the item.</param><param name="value">Set to true to select the item.</param><signature><![CDATA[void SetSelected(
     vint itemIndex,
     bool value
 );

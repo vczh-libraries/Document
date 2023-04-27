@@ -1,4 +1,4 @@
-<Document symbolId="vl::ObjectString::Buffer@[T] const *()" accessor="public" category="Function" name="Buffer" declFile="String.h" declId="FB$vl::ObjectString::Buffer@[T] const *()[impl0]"><summary>
+<Document accessor="public" category="Function" name="Buffer" declFile="String.h" declId="FB$vl::ObjectString::Buffer@[T] const *()[impl0]"><summary>
  Get the zero terminated buffer in the string.
  Copying parts of a string does not necessarily create a new buffer,
  so in some situation the string will not actually points to a zero terminated buffer.

@@ -1,4 +1,4 @@
-<Document symbolId="vl::CriticalSection" accessor="" category="Class" name="CriticalSection" declFile="Threading.h" declId="NI$vl::CriticalSection"><summary>
+<Document accessor="" category="Class" name="CriticalSection" declFile="Threading.h" declId="NI$vl::CriticalSection"><summary>
  Critical section.
  The macro &quot;CS_LOCK&quot; is recommended instead of calling <symbol name="Enter" docId="vl::CriticalSection::Enter@void()" declFile="Threading.h" declId="FB$vl::CriticalSection::Enter@void()[decl0]"/> and <symbol name="Leave" docId="vl::CriticalSection::Leave@void()" declFile="Threading.h" declId="FB$vl::CriticalSection::Leave@void()[decl0]"/> like this:
  <program><code><![CDATA[

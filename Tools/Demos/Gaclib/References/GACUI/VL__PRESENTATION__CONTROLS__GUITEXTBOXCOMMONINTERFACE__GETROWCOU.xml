@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxCommonInterface::GetRowCount@::vl::vint()" accessor="public" category="Function" name="GetRowCount" declFile="GuiTextCommonInterface.h" declId="FB$vl::presentation::controls::GuiTextBoxCommonInterface::GetRowCount@::vl::vint()[decl0]"><summary>Get the number of rows.</summary><returns>The number of rows.</returns><signature><![CDATA[vint GetRowCount(
+<Document accessor="public" category="Function" name="GetRowCount" declFile="GuiTextCommonInterface.h" declId="FB$vl::presentation::controls::GuiTextBoxCommonInterface::GetRowCount@::vl::vint()[decl0]"><summary>Get the number of rows.</summary><returns>The number of rows.</returns><signature><![CDATA[vint GetRowCount(
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

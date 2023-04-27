@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentItem" accessor="" category="Class" name="GuiDocumentItem" declFile="GuiDocumentViewer.h" declId="NI$vl::presentation::controls::GuiDocumentItem"><summary>Embedded object in a document.</summary><signature><![CDATA[class GuiDocumentItem
+<Document accessor="" category="Class" name="GuiDocumentItem" declFile="GuiDocumentViewer.h" declId="NI$vl::presentation::controls::GuiDocumentItem"><summary>Embedded object in a document.</summary><signature><![CDATA[class GuiDocumentItem
     : Object
     , Description<GuiDocumentItem>;
 ]]></signature><seealsos><symbol name="GuiDocumentItem" docId="vl::presentation::controls::GuiDocumentItem" declFile="GuiDocumentViewer.h" declId="NI$vl::presentation::controls::GuiDocumentItem"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

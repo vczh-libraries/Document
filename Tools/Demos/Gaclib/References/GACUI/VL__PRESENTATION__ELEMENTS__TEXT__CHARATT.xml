@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::CharAtt" accessor="" category="Struct" name="CharAtt" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharAtt"><summary>
+<Document accessor="" category="Struct" name="CharAtt" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharAtt"><summary>
  Represents the extra information of a character to display.
  </summary><signature><![CDATA[struct CharAtt;
 ]]></signature></Document>

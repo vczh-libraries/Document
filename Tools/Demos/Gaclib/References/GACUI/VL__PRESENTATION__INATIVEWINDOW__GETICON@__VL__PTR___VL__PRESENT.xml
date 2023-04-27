@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::GetIcon@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()" accessor="public" category="Function" name="GetIcon" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetIcon@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetIcon" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetIcon@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()[decl0]"><summary>
  Get the icon.
  </summary><returns>Returns the icon.</returns><signature><![CDATA[Ptr<GuiImageData> GetIcon(
 );

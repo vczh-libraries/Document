@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiInnerShadowElement::GetThickness@::vl::vint()" accessor="public" category="Function" name="GetThickness" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiInnerShadowElement::GetThickness@::vl::vint()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetThickness" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiInnerShadowElement::GetThickness@::vl::vint()[decl0]"><summary>
  Get the thickness.
  </summary><returns>The thickness.</returns><signature><![CDATA[vint GetThickness(
 );

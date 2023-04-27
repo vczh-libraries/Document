@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::FontProperties::size" accessor="public" category="Variable" name="size" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties::size"><summary>
+<Document accessor="public" category="Variable" name="size" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties::size"><summary>
  Font size in pixel.
  </summary><signature><![CDATA[vint size;
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

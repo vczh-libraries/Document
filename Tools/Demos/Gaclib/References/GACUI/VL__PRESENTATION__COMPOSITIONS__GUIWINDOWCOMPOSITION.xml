@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiWindowComposition" accessor="" category="Class" name="GuiWindowComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiWindowComposition"><summary>
+<Document accessor="" category="Class" name="GuiWindowComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiWindowComposition"><summary>
  Represents a composition for the client area in an <symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/>.
  </summary><signature><![CDATA[class GuiWindowComposition
     : GuiGraphicsSite

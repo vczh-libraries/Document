@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiSolidBackgroundElement::SetShape@void(::vl::presentation::elements::ElementShape)" accessor="public" category="Function" name="SetShape" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidBackgroundElement::SetShape@void(::vl::presentation::elements::ElementShape)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetShape" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidBackgroundElement::SetShape@void(::vl::presentation::elements::ElementShape)[decl0]"><summary>
  Set the shape.
  </summary><param name="value">The new shape.</param><signature><![CDATA[void SetShape(
     ElementShape value

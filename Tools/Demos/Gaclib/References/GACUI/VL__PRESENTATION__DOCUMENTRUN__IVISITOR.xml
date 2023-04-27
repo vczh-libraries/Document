@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::DocumentRun::IVisitor" accessor="public" category="Class" name="IVisitor" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentRun::IVisitor"><summary>A visitor interface for <symbol name="DocumentRun" docId="vl::presentation::DocumentRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentRun"/>.</summary><signature><![CDATA[class IVisitor
+<Document accessor="public" category="Class" name="IVisitor" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentRun::IVisitor"><summary>A visitor interface for <symbol name="DocumentRun" docId="vl::presentation::DocumentRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentRun"/>.</summary><signature><![CDATA[class IVisitor
     : Interface;
 ]]></signature><basetypes><symbol name="Interface" docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>

@@ -1,3 +1,3 @@
-<Document symbolId="vl::ConditionVariable::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="Threading.h" declId="FB$vl::ConditionVariable::$__ctor@()[decl0]"><summary>Create a conditional variable.</summary><signature><![CDATA[ ConditionVariable(
+<Document accessor="public" category="Function" name="$__ctor" declFile="Threading.h" declId="FB$vl::ConditionVariable::$__ctor@()[decl0]"><summary>Create a conditional variable.</summary><signature><![CDATA[ ConditionVariable(
 );
 ]]></signature></Document>

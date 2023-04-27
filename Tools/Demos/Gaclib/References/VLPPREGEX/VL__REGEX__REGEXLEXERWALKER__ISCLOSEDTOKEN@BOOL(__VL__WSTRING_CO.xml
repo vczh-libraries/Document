@@ -1,4 +1,4 @@
-<Document symbolId="vl::regex::RegexLexerWalker::IsClosedToken@bool(::vl::WString const &amp;)" accessor="public" category="Function" name="IsClosedToken" declFile="Regex.h" declId="FB$vl::regex::RegexLexerWalker::IsClosedToken@bool(::vl::WString const &amp;)[decl0]"><summary>Test if the input is a closed token.</summary><returns>Returns true if the input text is a closed token.</returns><param name="input">The input text.</param><remarks><p>
+<Document accessor="public" category="Function" name="IsClosedToken" declFile="Regex.h" declId="FB$vl::regex::RegexLexerWalker::IsClosedToken@bool(::vl::WString const &amp;)[decl0]"><summary>Test if the input is a closed token.</summary><returns>Returns true if the input text is a closed token.</returns><param name="input">The input text.</param><remarks><p>
  A closed token means that,
  there is a prefix that is a recognized token.
  At the same time, the input string itself could not be a token, or a prefix of any token.

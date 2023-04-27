@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::GetCustomFramePadding@::vl::presentation::NativeMargin()" accessor="public" category="Function" name="GetCustomFramePadding" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetCustomFramePadding@::vl::presentation::NativeMargin()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetCustomFramePadding" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetCustomFramePadding@::vl::presentation::NativeMargin()[decl0]"><summary>
  Get the amount of the border. The window template may need this value to calculate where to put the client area.
  </summary><returns>Returns the amount of the border.</returns><signature><![CDATA[NativeMargin GetCustomFramePadding(
 );

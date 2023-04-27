@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiWindow::GetTitleBar@bool()" accessor="public" category="Function" name="GetTitleBar" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiWindow::GetTitleBar@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetTitleBar" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiWindow::GetTitleBar@bool()[decl0]"><summary>
  Test is the title bar visible.
  </summary><returns>Returns true if the title bar is visible.</returns><signature><![CDATA[bool GetTitleBar(
 );

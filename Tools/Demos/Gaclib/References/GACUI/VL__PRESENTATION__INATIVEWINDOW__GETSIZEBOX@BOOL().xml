@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::GetSizeBox@bool()" accessor="public" category="Function" name="GetSizeBox" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetSizeBox@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetSizeBox" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetSizeBox@bool()[decl0]"><summary>
  Test is the size box visible.
  </summary><returns>Returns true if the size box is visible.</returns><signature><![CDATA[bool GetSizeBox(
 );

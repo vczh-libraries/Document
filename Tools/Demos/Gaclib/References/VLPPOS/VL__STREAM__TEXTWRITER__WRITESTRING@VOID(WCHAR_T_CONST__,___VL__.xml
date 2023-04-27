@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::TextWriter::WriteString@void(wchar_t const *, ::vl::vint)" accessor="public" category="Function" name="WriteString" declFile="Accessor.h" declId="FB$vl::stream::TextWriter::WriteString@void(wchar_t const *, ::vl::vint)[decl0]"><summary>Write a string.</summary><param name="string">Buffer of the string to write.</param><param name="charCount">Size of the string in characters, not including the zero terminator.</param><signature><![CDATA[void WriteString(
+<Document accessor="public" category="Function" name="WriteString" declFile="Accessor.h" declId="FB$vl::stream::TextWriter::WriteString@void(wchar_t const *, ::vl::vint)[decl0]"><summary>Write a string.</summary><param name="string">Buffer of the string to write.</param><param name="charCount">Size of the string in characters, not including the zero terminator.</param><signature><![CDATA[void WriteString(
     wchar_t const * string,
     vint charCount
 );

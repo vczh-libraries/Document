@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::IDecoder::Read@::vl::vint(void *, ::vl::vint)" accessor="public" category="Function" name="Read" declFile="Interfaces.h2" declId="FB$vl::stream::IDecoder::Read@::vl::vint(void *, ::vl::vint)[decl0]"><summary>Read from the target stream and transform the content.</summary><returns>Returns the actual size of the content has read after transforming.</returns><param name="_buffer">A buffer to store the content.</param><param name="_size">The expected size of the content in bytes in &quot;_buffer&quot; to receive.</param><signature><![CDATA[vint Read(
+<Document accessor="public" category="Function" name="Read" declFile="Interfaces.h2" declId="FB$vl::stream::IDecoder::Read@::vl::vint(void *, ::vl::vint)[decl0]"><summary>Read from the target stream and transform the content.</summary><returns>Returns the actual size of the content has read after transforming.</returns><param name="_buffer">A buffer to store the content.</param><param name="_size">The expected size of the content in bytes in &quot;_buffer&quot; to receive.</param><signature><![CDATA[vint Read(
     void * _buffer,
     vint _size
 );

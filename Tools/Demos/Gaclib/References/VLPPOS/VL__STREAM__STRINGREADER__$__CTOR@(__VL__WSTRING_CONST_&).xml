@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::StringReader::$__ctor@(::vl::WString const &amp;)" accessor="public" category="Function" name="$__ctor" declFile="Accessor.h" declId="FB$vl::stream::StringReader::$__ctor@(::vl::WString const &amp;)[decl0]"><summary>Create a text reader.</summary><param name="_string">The string to read.</param><signature><![CDATA[ StringReader(
+<Document accessor="public" category="Function" name="$__ctor" declFile="Accessor.h" declId="FB$vl::stream::StringReader::$__ctor@(::vl::WString const &amp;)[decl0]"><summary>Create a text reader.</summary><param name="_string">The string to read.</param><signature><![CDATA[ StringReader(
     WString const & _string
 );
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

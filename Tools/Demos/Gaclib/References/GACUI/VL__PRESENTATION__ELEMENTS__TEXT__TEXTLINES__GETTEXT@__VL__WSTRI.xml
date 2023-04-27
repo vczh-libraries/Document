@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::TextLines::GetText@::vl::WString(::vl::presentation::TextPos, ::vl::presentation::TextPos)" accessor="public" category="Function" name="GetText" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLines::GetText@::vl::WString(::vl::presentation::TextPos, ::vl::presentation::TextPos)[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetText" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLines::GetText@::vl::WString(::vl::presentation::TextPos, ::vl::presentation::TextPos)[decl0]"><summary>
  Returns a string from a specified range of the text lines.
  </summary><returns>The string.</returns><param name="start">The start position.</param><param name="end">The end position.</param><signature><![CDATA[WString GetText(
     TextPos start,

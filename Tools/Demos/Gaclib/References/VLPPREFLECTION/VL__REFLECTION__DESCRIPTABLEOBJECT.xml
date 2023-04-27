@@ -1,4 +1,4 @@
-<Document symbolId="vl::reflection::DescriptableObject" accessor="" category="Class" name="DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"><summary><p>
+<Document accessor="" category="Class" name="DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"><summary><p>
  Base class of all reflectable value types (class).
  If you want to create a reflectable class, you should inherit from <symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/>.
  </p><p>

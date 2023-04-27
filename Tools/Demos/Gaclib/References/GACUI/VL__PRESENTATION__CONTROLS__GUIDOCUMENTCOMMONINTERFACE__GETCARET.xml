@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiDocumentCommonInterface::GetCaretBegin@::vl::presentation::TextPos()" accessor="public" category="Function" name="GetCaretBegin" declFile="GuiDocumentViewer.h" declId="FB$vl::presentation::controls::GuiDocumentCommonInterface::GetCaretBegin@::vl::presentation::TextPos()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetCaretBegin" declFile="GuiDocumentViewer.h" declId="FB$vl::presentation::controls::GuiDocumentCommonInterface::GetCaretBegin@::vl::presentation::TextPos()[decl0]"><summary>
  Get the begin position of the selection area.
  </summary><returns>The begin position of the selection area.</returns><signature><![CDATA[TextPos GetCaretBegin(
 );

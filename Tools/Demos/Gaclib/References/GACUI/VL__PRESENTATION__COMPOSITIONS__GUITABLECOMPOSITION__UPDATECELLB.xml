@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::compositions::GuiTableComposition::UpdateCellBounds@void()" accessor="public" category="Function" name="UpdateCellBounds" declFile="GuiGraphicsTableComposition.h" declId="FB$vl::presentation::compositions::GuiTableComposition::UpdateCellBounds@void()[decl0]"><summary>Update the sizing of the table and cells after all rows&apos; and columns&apos; sizing options are prepared.</summary><signature><![CDATA[void UpdateCellBounds(
+<Document accessor="public" category="Function" name="UpdateCellBounds" declFile="GuiGraphicsTableComposition.h" declId="FB$vl::presentation::compositions::GuiTableComposition::UpdateCellBounds@void()[decl0]"><summary>Update the sizing of the table and cells after all rows&apos; and columns&apos; sizing options are prepared.</summary><signature><![CDATA[void UpdateCellBounds(
 );
 ]]></signature></Document>

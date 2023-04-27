@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeCallbackService::InstallListener@bool(::vl::presentation::INativeControllerListener *)" accessor="public" category="Function" name="InstallListener" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeCallbackService::InstallListener@bool(::vl::presentation::INativeControllerListener *)[decl0]"><summary>
+<Document accessor="public" category="Function" name="InstallListener" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeCallbackService::InstallListener@bool(::vl::presentation::INativeControllerListener *)[decl0]"><summary>
  Install a global message listener.
  </summary><returns>Returns true if this operation succeeded.</returns><param name="listener">The global message listener to install.</param><signature><![CDATA[bool InstallListener(
     INativeControllerListener * listener

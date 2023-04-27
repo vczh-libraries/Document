@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::po::Component" accessor="" category="Struct" name="Component" declFile="PartialOrdering.h" declId="NI$vl::collections::po::Component"><summary>
+<Document accessor="" category="Struct" name="Component" declFile="PartialOrdering.h" declId="NI$vl::collections::po::Component"><summary>
  Component is a unit in sorting result.
  If a component contains more than one node,
  it means that nodes in this component depend on each other by the given relationship.

@@ -1,4 +1,4 @@
-<Document symbolId="vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &amp;)" accessor="public" category="Function" name="SetBodyUtf8" declFile="HttpUtility.h" declId="FB$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &amp;)[decl0]"><summary>Fill the text body in UTF-8.</summary><param name="bodyString">The text to fill.</param><signature><![CDATA[void SetBodyUtf8(
+<Document accessor="public" category="Function" name="SetBodyUtf8" declFile="HttpUtility.h" declId="FB$vl::HttpRequest::SetBodyUtf8@void(::vl::WString const &amp;)[decl0]"><summary>Fill the text body in UTF-8.</summary><param name="bodyString">The text to fill.</param><signature><![CDATA[void SetBodyUtf8(
     WString const & bodyString
 );
 ]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

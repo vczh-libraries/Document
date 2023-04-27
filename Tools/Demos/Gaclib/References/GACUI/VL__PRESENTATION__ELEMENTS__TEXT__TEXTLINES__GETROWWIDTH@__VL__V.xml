@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::TextLines::GetRowWidth@::vl::vint(::vl::vint)" accessor="public" category="Function" name="GetRowWidth" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLines::GetRowWidth@::vl::vint(::vl::vint)[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetRowWidth" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLines::GetRowWidth@::vl::vint(::vl::vint)[decl0]"><summary>
  Returns the width of a specified row.
  </summary><returns>The width of a specified row, in pixel.</returns><param name="row">The specified row number.</param><signature><![CDATA[vint GetRowWidth(
     vint row

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::DocumentRun" accessor="" category="Class" name="DocumentRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentRun"><summary>Pepresents a logical run of a rich content document.</summary><signature><![CDATA[class DocumentRun
+<Document accessor="" category="Class" name="DocumentRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentRun"><summary>Pepresents a logical run of a rich content document.</summary><signature><![CDATA[class DocumentRun
     : Object
     , Description<DocumentRun>;
 ]]></signature><seealsos><symbol name="DocumentRun" docId="vl::presentation::DocumentRun" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentRun"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiButton::GetIgnoreChildControlMouseEvents@bool()" accessor="public" category="Function" name="GetIgnoreChildControlMouseEvents" declFile="GuiButtonControls.h" declId="FB$vl::presentation::controls::GuiButton::GetIgnoreChildControlMouseEvents@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetIgnoreChildControlMouseEvents" declFile="GuiButtonControls.h" declId="FB$vl::presentation::controls::GuiButton::GetIgnoreChildControlMouseEvents@bool()[decl0]"><summary>
  Test if the button ignores mouse events raised in child controls.
  When this property is false,
  the button reacts to mouse operations even when it happens on contained child controls.

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::SetBounds@void(::vl::presentation::NativeRect const &amp;)" accessor="public" category="Function" name="SetBounds" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetBounds@void(::vl::presentation::NativeRect const &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetBounds" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetBounds@void(::vl::presentation::NativeRect const &amp;)[decl0]"><summary>
  Set the bounds of the window.
  </summary><param name="bounds">The bounds of the window.</param><signature><![CDATA[void SetBounds(
     NativeRect const & bounds

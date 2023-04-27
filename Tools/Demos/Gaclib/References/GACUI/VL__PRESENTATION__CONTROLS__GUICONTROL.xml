@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiControl" accessor="" category="Class" name="GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"><summary>
+<Document accessor="" category="Class" name="GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"><summary>
  The base class of all controls.
  When the control is destroyed, it automatically destroys sub controls, and the bounds composition from the style controller.
  If you want to manually destroy a control, you should first remove it from its parent.

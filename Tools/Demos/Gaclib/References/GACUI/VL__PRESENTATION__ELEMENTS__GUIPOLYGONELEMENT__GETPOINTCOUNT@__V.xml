@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiPolygonElement::GetPointCount@::vl::vint()" accessor="public" category="Function" name="GetPointCount" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiPolygonElement::GetPointCount@::vl::vint()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetPointCount" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiPolygonElement::GetPointCount@::vl::vint()[decl0]"><summary>
  Get the number of points
  </summary><returns>The number of points.</returns><signature><![CDATA[vint GetPointCount(
 );

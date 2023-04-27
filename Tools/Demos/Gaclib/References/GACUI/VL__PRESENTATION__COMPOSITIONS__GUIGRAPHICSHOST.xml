@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiGraphicsHost" accessor="" category="Class" name="GuiGraphicsHost" declFile="GuiGraphicsHost.h" declId="NI$vl::presentation::compositions::GuiGraphicsHost"><summary>
+<Document accessor="" category="Class" name="GuiGraphicsHost" declFile="GuiGraphicsHost.h" declId="NI$vl::presentation::compositions::GuiGraphicsHost"><summary>
  GuiGraphicsHost hosts an <symbol name="GuiWindowComposition" docId="vl::presentation::compositions::GuiWindowComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiWindowComposition"/> in an <symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/>. The composition will fill the whole window.
  </summary><signature><![CDATA[class GuiGraphicsHost
     : Object

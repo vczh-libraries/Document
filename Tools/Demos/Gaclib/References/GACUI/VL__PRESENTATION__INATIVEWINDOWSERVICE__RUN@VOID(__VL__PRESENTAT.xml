@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindowService::Run@void(::vl::presentation::INativeWindow *)" accessor="public" category="Function" name="Run" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowService::Run@void(::vl::presentation::INativeWindow *)[decl0]"><summary>
+<Document accessor="public" category="Function" name="Run" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowService::Run@void(::vl::presentation::INativeWindow *)[decl0]"><summary>
  Make the specified window a main window, show that window, and wait until the windows is closed.
  </summary><param name="window">The specified window.</param><signature><![CDATA[void Run(
     INativeWindow * window

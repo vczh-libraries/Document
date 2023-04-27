@@ -1,2 +1,2 @@
-<Document symbolId="vl::regex::RegexToken::completeToken" accessor="public" category="Variable" name="completeToken" declFile="Regex.h" declId="NI$vl::regex::RegexToken::completeToken"><summary>True if this token is complete. False if this token does not end here. This could happend when colorizing a text line by line.</summary><signature><![CDATA[bool completeToken;
+<Document accessor="public" category="Variable" name="completeToken" declFile="Regex.h" declId="NI$vl::regex::RegexToken::completeToken"><summary>True if this token is complete. False if this token does not end here. This could happend when colorizing a text line by line.</summary><signature><![CDATA[bool completeToken;
 ]]></signature></Document>

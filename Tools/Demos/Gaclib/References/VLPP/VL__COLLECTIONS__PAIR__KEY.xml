@@ -1,2 +1,2 @@
-<Document symbolId="vl::collections::Pair::key" accessor="public" category="Variable" name="key" declFile="Pair.h" declId="NI$vl::collections::Pair::key"><summary>The key.</summary><signature><![CDATA[K key;
+<Document accessor="public" category="Variable" name="key" declFile="Pair.h" declId="NI$vl::collections::Pair::key"><summary>The key.</summary><signature><![CDATA[K key;
 ]]></signature></Document>

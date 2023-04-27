@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::RepeatingParsingOutput" accessor="" category="Struct" name="RepeatingParsingOutput" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingParsingOutput"><summary>A data structure storing the parsing result for text box control.</summary><signature><![CDATA[struct RepeatingParsingOutput;
+<Document accessor="" category="Struct" name="RepeatingParsingOutput" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingParsingOutput"><summary>A data structure storing the parsing result for text box control.</summary><signature><![CDATA[struct RepeatingParsingOutput;
 ]]></signature></Document>

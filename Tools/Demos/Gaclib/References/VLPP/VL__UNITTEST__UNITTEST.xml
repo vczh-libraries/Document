@@ -1,4 +1,4 @@
-<Document symbolId="vl::unittest::UnitTest" accessor="" category="Class" name="UnitTest" declFile="UnitTest.h" declId="NI$vl::unittest::UnitTest"><summary><p>Unit test framework.</p><p>
+<Document accessor="" category="Class" name="UnitTest" declFile="UnitTest.h" declId="NI$vl::unittest::UnitTest"><summary><p>Unit test framework.</p><p>
  Test cases could be defined in multiple cpp files. In each cpp file, there can be one <b>TEST_FILE</b> call.
  <program><code><![CDATA[
  TEST_FILE

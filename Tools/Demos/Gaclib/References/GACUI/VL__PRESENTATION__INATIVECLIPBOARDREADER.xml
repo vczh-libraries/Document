@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeClipboardReader" accessor="" category="Class" name="INativeClipboardReader" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeClipboardReader"><summary>
+<Document accessor="" category="Class" name="INativeClipboardReader" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeClipboardReader"><summary>
  Clipboard reader.
  </summary><signature><![CDATA[class INativeClipboardReader
     : IDescriptable

@@ -1,4 +1,4 @@
-<Document symbolId="vl::workflow::copy_visitor::ModuleVisitor" accessor="" category="Class" name="ModuleVisitor" declFile="WfExpression_Copy.h" declId="NI$vl::workflow::copy_visitor::ModuleVisitor"><summary>A copy visitor for the root node, overriding all abstract methods with AST copying code.</summary><signature><![CDATA[class ModuleVisitor
+<Document accessor="" category="Class" name="ModuleVisitor" declFile="WfExpression_Copy.h" declId="NI$vl::workflow::copy_visitor::ModuleVisitor"><summary>A copy visitor for the root node, overriding all abstract methods with AST copying code.</summary><signature><![CDATA[class ModuleVisitor
     : TypeVisitor
     , ExpressionVisitor
     , StatementVisitor

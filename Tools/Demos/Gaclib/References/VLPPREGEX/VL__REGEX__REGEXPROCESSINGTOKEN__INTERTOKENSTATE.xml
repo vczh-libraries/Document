@@ -1,4 +1,4 @@
-<Document symbolId="vl::regex::RegexProcessingToken::interTokenState" accessor="public" category="Variable" name="interTokenState" declFile="Regex.h" declId="NI$vl::regex::RegexProcessingToken::interTokenState"><summary>
+<Document accessor="public" category="Variable" name="interTokenState" declFile="Regex.h" declId="NI$vl::regex::RegexProcessingToken::interTokenState"><summary>
  The inter token state object, allowing to be updated by the callback.
  When the callback returns:
  <ul><li>if the completeText parameter is true in <symbol name="extendProc" docId="vl::regex::RegexProc::extendProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc::extendProc"/>, it should be nullptr.</li><li>if the token does not end at the end of the input, it should not be nullptr.</li><li>if a token is completed in one attemp of extending, it should be nullptr.</li></ul></summary><signature><![CDATA[void * interTokenState;

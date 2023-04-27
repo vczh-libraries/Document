@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::IGuiResourceTypeResolver::XmlSerializable@bool()" accessor="public" category="Function" name="XmlSerializable" declFile="GuiResource.h" declId="FB$vl::presentation::IGuiResourceTypeResolver::XmlSerializable@bool()[decl0]"><summary>Test is this resource able to serialize in an XML resource or not.</summary><returns>Returns true if this resource is able to serialize in an XML resource.</returns><signature><![CDATA[bool XmlSerializable(
+<Document accessor="public" category="Function" name="XmlSerializable" declFile="GuiResource.h" declId="FB$vl::presentation::IGuiResourceTypeResolver::XmlSerializable@bool()[decl0]"><summary>Test is this resource able to serialize in an XML resource or not.</summary><returns>Returns true if this resource is able to serialize in an XML resource.</returns><signature><![CDATA[bool XmlSerializable(
 );
 ]]></signature></Document>

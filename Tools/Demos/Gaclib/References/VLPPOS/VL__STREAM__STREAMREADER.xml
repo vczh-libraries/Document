@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::StreamReader" accessor="" category="Class" name="StreamReader" declFile="Accessor.h" declId="NI$vl::stream::StreamReader"><summary>
+<Document accessor="" category="Class" name="StreamReader" declFile="Accessor.h" declId="NI$vl::stream::StreamReader"><summary>
  Text reader from a stream storing characters in wchar_t.
  </summary><remarks>
  To specify the encoding in the input stream,

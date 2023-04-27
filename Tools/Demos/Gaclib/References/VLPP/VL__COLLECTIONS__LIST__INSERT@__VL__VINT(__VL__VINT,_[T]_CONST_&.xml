@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::List::Insert@::vl::vint(::vl::vint, [T] const &amp;)" accessor="public" category="Function" name="Insert" declFile="List.h" declId="FB$vl::collections::List::Insert@::vl::vint(::vl::vint, [T] const &amp;)[impl0]"><summary>Insert a value at the specified position.</summary><returns>The index of the added item. It will crash if the index is out of range</returns><param name="index">The position to insert the value.</param><param name="item">The value to add.</param><signature><![CDATA[vint Insert(
+<Document accessor="public" category="Function" name="Insert" declFile="List.h" declId="FB$vl::collections::List::Insert@::vl::vint(::vl::vint, [T] const &amp;)[impl0]"><summary>Insert a value at the specified position.</summary><returns>The index of the added item. It will crash if the index is out of range</returns><param name="index">The position to insert the value.</param><param name="item">The value to add.</param><signature><![CDATA[vint Insert(
     vint index,
     T const & item
 );

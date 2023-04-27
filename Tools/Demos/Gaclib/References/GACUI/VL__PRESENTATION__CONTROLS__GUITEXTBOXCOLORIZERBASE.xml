@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiTextBoxColorizerBase" accessor="" category="Class" name="GuiTextBoxColorizerBase" declFile="GuiTextColorizer.h" declId="NI$vl::presentation::controls::GuiTextBoxColorizerBase"><summary>The base class of text box colorizer.</summary><signature><![CDATA[class GuiTextBoxColorizerBase
+<Document accessor="" category="Class" name="GuiTextBoxColorizerBase" declFile="GuiTextColorizer.h" declId="NI$vl::presentation::controls::GuiTextBoxColorizerBase"><summary>The base class of text box colorizer.</summary><signature><![CDATA[class GuiTextBoxColorizerBase
     : Object
     , ICommonTextEditCallback;
 ]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="ICommonTextEditCallback" docId="vl::presentation::controls::ICommonTextEditCallback" declFile="GuiTextGeneralOperations.h" declId="NI$vl::presentation::controls::ICommonTextEditCallback"/></basetypes></Document>

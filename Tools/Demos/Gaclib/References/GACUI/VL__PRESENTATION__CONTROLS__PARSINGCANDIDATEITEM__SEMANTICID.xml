@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::controls::ParsingCandidateItem::semanticId" accessor="public" category="Variable" name="semanticId" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::ParsingCandidateItem::semanticId"><summary>Semantic id.</summary><signature><![CDATA[vint semanticId;
+<Document accessor="public" category="Variable" name="semanticId" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::ParsingCandidateItem::semanticId"><summary>Semantic id.</summary><signature><![CDATA[vint semanticId;
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

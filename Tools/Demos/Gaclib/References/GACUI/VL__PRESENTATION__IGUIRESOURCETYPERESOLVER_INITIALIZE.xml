@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::IGuiResourceTypeResolver_Initialize" accessor="" category="Class" name="IGuiResourceTypeResolver_Initialize" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourceTypeResolver_Initialize"><summary>
+<Document accessor="" category="Class" name="IGuiResourceTypeResolver_Initialize" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourceTypeResolver_Initialize"><summary>
 		Represents a precompiler for resources of a specified type.
 		Current resources that needs precompiling:
 			Pass 0: Script		(initialize view model scripts)

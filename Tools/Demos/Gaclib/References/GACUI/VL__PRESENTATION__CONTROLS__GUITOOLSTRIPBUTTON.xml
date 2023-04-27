@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiToolstripButton" accessor="" category="Class" name="GuiToolstripButton" declFile="GuiToolstripMenu.h" declId="NI$vl::presentation::controls::GuiToolstripButton"><summary>Toolstrip button that can connect with a <symbol name="GuiToolstripCommand" docId="vl::presentation::controls::GuiToolstripCommand" declFile="GuiToolstripCommand.h" declId="NI$vl::presentation::controls::GuiToolstripCommand"/>.</summary><signature><![CDATA[class GuiToolstripButton
+<Document accessor="" category="Class" name="GuiToolstripButton" declFile="GuiToolstripMenu.h" declId="NI$vl::presentation::controls::GuiToolstripButton"><summary>Toolstrip button that can connect with a <symbol name="GuiToolstripCommand" docId="vl::presentation::controls::GuiToolstripCommand" declFile="GuiToolstripCommand.h" declId="NI$vl::presentation::controls::GuiToolstripCommand"/>.</summary><signature><![CDATA[class GuiToolstripButton
     : GuiMenuButton
     , IToolstripUpdateLayoutInvoker
     , Description<GuiToolstripButton>;

@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::LazyList::OrderBy@::vl::collections::LazyList&lt;[T]&gt;([F])" accessor="public" category="Function" name="OrderBy" declFile="Operation.h" declId="FB$vl::collections::LazyList::OrderBy@::vl::collections::LazyList&lt;[T]&gt;([F])[impl0]"><summary>Create a new lazy list with all elements sorted.</summary><typeparam name="F">Type of the comparer.</typeparam><returns>The created lazy list.</returns><param name="f">
+<Document accessor="public" category="Function" name="OrderBy" declFile="Operation.h" declId="FB$vl::collections::LazyList::OrderBy@::vl::collections::LazyList&lt;[T]&gt;([F])[impl0]"><summary>Create a new lazy list with all elements sorted.</summary><typeparam name="F">Type of the comparer.</typeparam><returns>The created lazy list.</returns><param name="f">
  The comparar for two elements.
  Both arguments are elements to compare.
  Returns a positive number when the first argument is greater.

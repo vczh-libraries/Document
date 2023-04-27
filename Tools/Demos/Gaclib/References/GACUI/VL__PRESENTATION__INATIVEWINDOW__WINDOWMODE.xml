@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::WindowMode" accessor="public" category="Enum" name="WindowMode" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow::WindowMode"><summary>
+<Document accessor="public" category="Enum" name="WindowMode" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow::WindowMode"><summary>
  Window mode
  </summary><enumitem name="Menu">
  A menu window.

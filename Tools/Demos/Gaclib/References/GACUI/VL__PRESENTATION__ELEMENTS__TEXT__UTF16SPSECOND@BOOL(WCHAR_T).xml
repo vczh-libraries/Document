@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::UTF16SPSecond@bool(wchar_t)" accessor="" category="Function" name="UTF16SPSecond" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::UTF16SPSecond@bool(wchar_t)[impl0]"><summary>Test if a wchar_t is the second character of a surrogate pair.</summary><param name="c">The character to test.</param><returns>Returns true if it is the second character of a surrogate pair.</returns><signature><![CDATA[bool UTF16SPSecond(
+<Document accessor="" category="Function" name="UTF16SPSecond" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::UTF16SPSecond@bool(wchar_t)[impl0]"><summary>Test if a wchar_t is the second character of a surrogate pair.</summary><param name="c">The character to test.</param><returns>Returns true if it is the second character of a surrogate pair.</returns><signature><![CDATA[bool UTF16SPSecond(
     wchar_t c
 );
 ]]></signature></Document>

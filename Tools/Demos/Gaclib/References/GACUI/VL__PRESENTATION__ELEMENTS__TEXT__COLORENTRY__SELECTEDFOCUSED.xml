@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::ColorEntry::selectedFocused" accessor="public" category="Variable" name="selectedFocused" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::ColorEntry::selectedFocused"><summary>
+<Document accessor="public" category="Variable" name="selectedFocused" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::ColorEntry::selectedFocused"><summary>
  Colors in focused and selected state.
  </summary><signature><![CDATA[ColorItem selectedFocused;
 ]]></signature><seealsos><symbol name="ColorItem" docId="vl::presentation::elements::text::ColorItem" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::ColorItem"/></seealsos></Document>

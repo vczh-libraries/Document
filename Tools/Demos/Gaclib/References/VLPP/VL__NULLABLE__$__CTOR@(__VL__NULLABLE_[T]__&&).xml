@@ -1,4 +1,4 @@
-<Document symbolId="vl::Nullable::$__ctor@(::vl::Nullable&lt;[T]&gt; &amp;&amp;)" accessor="public" category="Function" name="$__ctor" declFile="Basic.h" declId="FB$vl::Nullable::$__ctor@(::vl::Nullable&lt;[T]&gt; &amp;&amp;)[impl0]"><summary>Create a nullable value by moving from another nullable value.</summary><param name="nullable">The nullable value to move.</param><signature><![CDATA[ Nullable(
+<Document accessor="public" category="Function" name="$__ctor" declFile="Basic.h" declId="FB$vl::Nullable::$__ctor@(::vl::Nullable&lt;[T]&gt; &amp;&amp;)[impl0]"><summary>Create a nullable value by moving from another nullable value.</summary><param name="nullable">The nullable value to move.</param><signature><![CDATA[ Nullable(
     Nullable<T> && nullable
 );
 ]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/></seealsos></Document>

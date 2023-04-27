@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &amp;)" accessor="public" category="Function" name="RegisterElementType" declFile="GuiGraphicsResourceManager.h" declId="FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="RegisterElementType" declFile="GuiGraphicsResourceManager.h" declId="FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterElementType@::vl::vint(::vl::WString const &amp;)[decl0]"><summary>
  Register a element type name.
  This function crashes when an element type has already been registered.
  </summary><param name="elementTypeName">The element type.</param><returns>A number identifies this element type.</returns><signature><![CDATA[vint RegisterElementType(

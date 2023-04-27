@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::SetIcon@void(::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;)" accessor="public" category="Function" name="SetIcon" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetIcon@void(::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetIcon" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetIcon@void(::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;)[decl0]"><summary>
  Set the icon.
  </summary><param name="icon">The icon. Set to null to use the default icon.</param><signature><![CDATA[void SetIcon(
     Ptr<GuiImageData> icon

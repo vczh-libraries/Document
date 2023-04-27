@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiTab" accessor="" category="Class" name="GuiTab" declFile="GuiContainerControls.h" declId="NI$vl::presentation::controls::GuiTab"><summary>Represents a container with multiple named tabs.</summary><signature><![CDATA[class GuiTab
+<Document accessor="" category="Class" name="GuiTab" declFile="GuiContainerControls.h" declId="NI$vl::presentation::controls::GuiTab"><summary>Represents a container with multiple named tabs.</summary><signature><![CDATA[class GuiTab
     : GuiControl
     , Description<GuiTab>;
 ]]></signature><seealsos><symbol name="GuiTab" docId="vl::presentation::controls::GuiTab" declFile="GuiContainerControls.h" declId="NI$vl::presentation::controls::GuiTab"/></seealsos><basetypes><symbol name="GuiControl" docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

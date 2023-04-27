@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::DocumentStyleProperties::antialias" accessor="public" category="Variable" name="antialias" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentStyleProperties::antialias"><summary>Antialias.</summary><signature><![CDATA[Nullable<bool> antialias;
+<Document accessor="public" category="Variable" name="antialias" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentStyleProperties::antialias"><summary>Antialias.</summary><signature><![CDATA[Nullable<bool> antialias;
 ]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/></seealsos></Document>

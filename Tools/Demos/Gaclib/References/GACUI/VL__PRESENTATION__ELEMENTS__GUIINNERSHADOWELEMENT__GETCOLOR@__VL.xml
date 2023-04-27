@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiInnerShadowElement::GetColor@::vl::presentation::Color()" accessor="public" category="Function" name="GetColor" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiInnerShadowElement::GetColor@::vl::presentation::Color()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetColor" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiInnerShadowElement::GetColor@::vl::presentation::Color()[decl0]"><summary>
  Get the shadow color.
  </summary><returns>The shadow color.</returns><signature><![CDATA[Color GetColor(
 );

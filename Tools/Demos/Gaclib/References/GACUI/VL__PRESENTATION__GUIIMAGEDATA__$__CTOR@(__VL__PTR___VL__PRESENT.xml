@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::GuiImageData::$__ctor@(::vl::Ptr&lt;::vl::presentation::INativeImage&gt;, ::vl::vint)" accessor="public" category="Function" name="$__ctor" declFile="GuiResource.h" declId="FB$vl::presentation::GuiImageData::$__ctor@(::vl::Ptr&lt;::vl::presentation::INativeImage&gt;, ::vl::vint)[decl0]"><summary>Create an image data with a specified image and a frame index.</summary><param name="_image">The specified image.</param><param name="_frameIndex">The specified frame index.</param><signature><![CDATA[ GuiImageData(
+<Document accessor="public" category="Function" name="$__ctor" declFile="GuiResource.h" declId="FB$vl::presentation::GuiImageData::$__ctor@(::vl::Ptr&lt;::vl::presentation::INativeImage&gt;, ::vl::vint)[decl0]"><summary>Create an image data with a specified image and a frame index.</summary><param name="_image">The specified image.</param><param name="_frameIndex">The specified frame index.</param><signature><![CDATA[ GuiImageData(
     Ptr<INativeImage> _image,
     vint _frameIndex
 );

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiColumnSplitterComposition" accessor="" category="Class" name="GuiColumnSplitterComposition" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiColumnSplitterComposition"><summary>
+<Document accessor="" category="Class" name="GuiColumnSplitterComposition" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiColumnSplitterComposition"><summary>
  Represents a column splitter composition of a <symbol name="GuiTableComposition" docId="vl::presentation::compositions::GuiTableComposition" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiTableComposition"/>.
  </summary><signature><![CDATA[class GuiColumnSplitterComposition
     : GuiTableSplitterCompositionBase

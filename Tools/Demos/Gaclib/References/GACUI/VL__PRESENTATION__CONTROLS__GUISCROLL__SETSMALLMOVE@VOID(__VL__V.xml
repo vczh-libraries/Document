@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiScroll::SetSmallMove@void(::vl::vint)" accessor="public" category="Function" name="SetSmallMove" declFile="GuiScrollControls.h" declId="FB$vl::presentation::controls::GuiScroll::SetSmallMove@void(::vl::vint)[decl0]"><summary>Set the small move.</summary><param name="value">The small move.</param><signature><![CDATA[void SetSmallMove(
+<Document accessor="public" category="Function" name="SetSmallMove" declFile="GuiScrollControls.h" declId="FB$vl::presentation::controls::GuiScroll::SetSmallMove@void(::vl::vint)[decl0]"><summary>Set the small move.</summary><param name="value">The small move.</param><signature><![CDATA[void SetSmallMove(
     vint value
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

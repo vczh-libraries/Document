@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeInputService::StopTimer@void()" accessor="public" category="Function" name="StopTimer" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeInputService::StopTimer@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="StopTimer" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeInputService::StopTimer@void()[decl0]"><summary>
  Stop to receive global timer message.
  </summary><signature><![CDATA[void StopTimer(
 );

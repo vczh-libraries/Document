@@ -1,4 +1,4 @@
-<Document symbolId="vl::ConditionVariable" accessor="" category="Class" name="ConditionVariable" declFile="Threading.h" declId="NI$vl::ConditionVariable"><summary>Conditional variable.</summary><signature><![CDATA[class ConditionVariable
+<Document accessor="" category="Class" name="ConditionVariable" declFile="Threading.h" declId="NI$vl::ConditionVariable"><summary>Conditional variable.</summary><signature><![CDATA[class ConditionVariable
     : Object
     , NotCopyable;
 ]]></signature><basetypes><symbol name="NotCopyable" docId="vl::NotCopyable" declFile="Basic.h" declId="NI$vl::NotCopyable"/><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

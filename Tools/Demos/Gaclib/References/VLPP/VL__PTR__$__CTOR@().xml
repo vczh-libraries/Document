@@ -1,3 +1,3 @@
-<Document symbolId="vl::Ptr::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="Pointer.h" declId="FB$vl::Ptr::$__ctor@()[decl0]"><summary>Create a null pointer.</summary><signature><![CDATA[ Ptr(
+<Document accessor="public" category="Function" name="$__ctor" declFile="Pointer.h" declId="FB$vl::Ptr::$__ctor@()[decl0]"><summary>Create a null pointer.</summary><signature><![CDATA[ Ptr(
 );
 ]]></signature></Document>

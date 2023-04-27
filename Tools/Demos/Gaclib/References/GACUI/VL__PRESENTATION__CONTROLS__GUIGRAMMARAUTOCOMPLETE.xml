@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiGrammarAutoComplete" accessor="" category="Class" name="GuiGrammarAutoComplete" declFile="GuiLanguageAutoComplete.h" declId="NI$vl::presentation::controls::GuiGrammarAutoComplete"><summary>Grammar based auto complete controller.</summary><signature><![CDATA[class GuiGrammarAutoComplete
+<Document accessor="" category="Class" name="GuiGrammarAutoComplete" declFile="GuiLanguageAutoComplete.h" declId="NI$vl::presentation::controls::GuiGrammarAutoComplete"><summary>Grammar based auto complete controller.</summary><signature><![CDATA[class GuiGrammarAutoComplete
     : GuiTextBoxAutoCompleteBase
     , RepeatingParsingExecutor::CallbackBase
     , RepeatingTaskExecutor<RepeatingParsingOutput>;

@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::list::DataFilterBase" accessor="" category="Class" name="DataFilterBase" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataFilterBase"><summary>Base class for <symbol name="IDataFilter" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::IDataFilter"/>.</summary><signature><![CDATA[class DataFilterBase
+<Document accessor="" category="Class" name="DataFilterBase" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataFilterBase"><summary>Base class for <symbol name="IDataFilter" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::IDataFilter"/>.</summary><signature><![CDATA[class DataFilterBase
     : Object
     , IDataFilter
     , Description<DataFilterBase>;

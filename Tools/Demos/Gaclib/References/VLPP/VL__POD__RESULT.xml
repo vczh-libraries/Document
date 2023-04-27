@@ -1,2 +1,2 @@
-<Document symbolId="vl::POD::Result" accessor="public" category="Variable" name="Result" declFile="Basic.h" declId="NI$vl::POD::Result"><summary>Returns true if the type is a Plain-Old-Data type.</summary><signature><![CDATA[static bool const Result;
+<Document accessor="public" category="Variable" name="Result" declFile="Basic.h" declId="NI$vl::POD::Result"><summary>Returns true if the type is a Plain-Old-Data type.</summary><signature><![CDATA[static bool const Result;
 ]]></signature></Document>

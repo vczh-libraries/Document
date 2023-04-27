@@ -1,4 +1,4 @@
-<Document symbolId="vl::ObjectBox::$__ctor@(::vl::ObjectBox&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor" declFile="Basic.h" declId="FB$vl::ObjectBox::$__ctor@(::vl::ObjectBox&lt;[T]&gt; const &amp;)[decl0]"><summary>Copy a boxed reference object.</summary><param name="value">The reference object to copy.</param><signature><![CDATA[ ObjectBox(
+<Document accessor="public" category="Function" name="$__ctor" declFile="Basic.h" declId="FB$vl::ObjectBox::$__ctor@(::vl::ObjectBox&lt;[T]&gt; const &amp;)[decl0]"><summary>Copy a boxed reference object.</summary><param name="value">The reference object to copy.</param><signature><![CDATA[ ObjectBox(
     ObjectBox<T> const & value
 );
 ]]></signature><seealsos><symbol name="ObjectBox" docId="vl::ObjectBox" declFile="Basic.h" declId="NI$vl::ObjectBox"/></seealsos></Document>

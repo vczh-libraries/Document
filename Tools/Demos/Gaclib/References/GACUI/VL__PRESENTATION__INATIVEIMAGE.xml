@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeImage" accessor="" category="Class" name="INativeImage" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage"><summary>
+<Document accessor="" category="Class" name="INativeImage" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage"><summary>
  Represents an image.
  </summary><signature><![CDATA[class INativeImage
     : IDescriptable

@@ -1,4 +1,4 @@
-<Document symbolId="vl::parsing::xml::XmlComment" accessor="" category="Class" name="XmlComment" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlComment"><summary>Comment node.</summary><signature><![CDATA[class XmlComment
+<Document accessor="" category="Class" name="XmlComment" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlComment"><summary>Comment node.</summary><signature><![CDATA[class XmlComment
     : XmlNode
     , vl::reflection::Description<XmlComment>;
 ]]></signature><seealsos><symbol name="XmlComment" docId="vl::parsing::xml::XmlComment" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlComment"/></seealsos><basetypes><symbol name="XmlNode" docId="vl::parsing::xml::XmlNode" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlNode"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

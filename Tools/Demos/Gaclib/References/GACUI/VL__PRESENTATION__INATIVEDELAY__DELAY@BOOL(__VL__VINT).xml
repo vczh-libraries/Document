@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeDelay::Delay@bool(::vl::vint)" accessor="public" category="Function" name="Delay" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeDelay::Delay@bool(::vl::vint)[decl0]"><summary>If the current task is pending, execute the task after a specified period.</summary><returns>Returns true if this operation succeeded.</returns><param name="milliseconds">A specified period.</param><signature><![CDATA[bool Delay(
+<Document accessor="public" category="Function" name="Delay" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeDelay::Delay@bool(::vl::vint)[decl0]"><summary>If the current task is pending, execute the task after a specified period.</summary><returns>Returns true if this operation succeeded.</returns><param name="milliseconds">A specified period.</param><signature><![CDATA[bool Delay(
     vint milliseconds
 );
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

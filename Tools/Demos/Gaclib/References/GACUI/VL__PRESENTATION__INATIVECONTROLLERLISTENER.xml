@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeControllerListener" accessor="" category="Class" name="INativeControllerListener" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeControllerListener"><summary>
+<Document accessor="" category="Class" name="INativeControllerListener" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeControllerListener"><summary>
  Represents a global message listener to an <symbol name="INativeController" docId="vl::presentation::INativeController" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeController"/>.
  </summary><signature><![CDATA[class INativeControllerListener
     : Interface;

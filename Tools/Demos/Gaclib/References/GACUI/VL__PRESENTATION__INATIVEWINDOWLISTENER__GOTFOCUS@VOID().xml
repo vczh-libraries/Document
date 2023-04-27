@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindowListener::GotFocus@void()" accessor="public" category="Function" name="GotFocus" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::GotFocus@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GotFocus" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::GotFocus@void()[decl0]"><summary>
  Called when the window got the focus.
  </summary><signature><![CDATA[void GotFocus(
 );

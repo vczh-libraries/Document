@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::compositions::GuiFlowOption::percentage" accessor="public" category="Variable" name="percentage" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowOption::percentage"><summary>The percentage value.</summary><signature><![CDATA[double percentage;
+<Document accessor="public" category="Variable" name="percentage" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowOption::percentage"><summary>The percentage value.</summary><signature><![CDATA[double percentage;
 ]]></signature></Document>

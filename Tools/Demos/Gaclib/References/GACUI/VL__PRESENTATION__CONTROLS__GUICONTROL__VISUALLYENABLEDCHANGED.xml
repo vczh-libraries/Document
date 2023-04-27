@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiControl::VisuallyEnabledChanged" accessor="public" category="Variable" name="VisuallyEnabledChanged" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl::VisuallyEnabledChanged"><summary>
+<Document accessor="public" category="Variable" name="VisuallyEnabledChanged" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl::VisuallyEnabledChanged"><summary>
  Enabled event. This event raises when the visually enabling state of the control is changed. A visually enabling is combined by the enabling state and the parent&apos;s visually enabling state.
  A control is rendered as disabled, not only when the control itself is disabled, but also when the parent control is rendered as disabled.
  </summary><signature><![CDATA[compositions::GuiNotifyEvent VisuallyEnabledChanged;

@@ -1,3 +1,3 @@
-<Document symbolId="vl::stream::MbcsDecoder" accessor="" category="Class" name="MbcsDecoder" declFile="CharFormat.h" declId="NI$vl::stream::MbcsDecoder"><summary>Decoder to read text in the local code page.</summary><signature><![CDATA[class MbcsDecoder
+<Document accessor="" category="Class" name="MbcsDecoder" declFile="CharFormat.h" declId="NI$vl::stream::MbcsDecoder"><summary>Decoder to read text in the local code page.</summary><signature><![CDATA[class MbcsDecoder
     : CharDecoder;
 ]]></signature><basetypes><symbol name="CharDecoder" docId="vl::stream::CharDecoder" declFile="CharFormat.h" declId="NI$vl::stream::CharDecoder"/></basetypes></Document>

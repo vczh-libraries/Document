@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::IGuiShortcutKeyItem" accessor="" category="Class" name="IGuiShortcutKeyItem" declFile="GuiGraphicsHost_ShortcutKey.h" declId="NI$vl::presentation::compositions::IGuiShortcutKeyItem"><summary>Shortcut key item.</summary><signature><![CDATA[class IGuiShortcutKeyItem
+<Document accessor="" category="Class" name="IGuiShortcutKeyItem" declFile="GuiGraphicsHost_ShortcutKey.h" declId="NI$vl::presentation::compositions::IGuiShortcutKeyItem"><summary>Shortcut key item.</summary><signature><![CDATA[class IGuiShortcutKeyItem
     : IDescriptable
     , Description<IGuiShortcutKeyItem>;
 ]]></signature><seealsos><symbol name="IGuiShortcutKeyItem" docId="vl::presentation::compositions::IGuiShortcutKeyItem" declFile="GuiGraphicsHost_ShortcutKey.h" declId="NI$vl::presentation::compositions::IGuiShortcutKeyItem"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

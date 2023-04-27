@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::GetTitle@::vl::WString()" accessor="public" category="Function" name="GetTitle" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetTitle@::vl::WString()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetTitle" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetTitle@::vl::WString()[decl0]"><summary>
  Get the title of the window. A title will be displayed as a name of this window.
  </summary><returns>The title of the window.</returns><signature><![CDATA[WString GetTitle(
 );

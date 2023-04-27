@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::GenerateToStream@::vl::WString([TCallback] const &amp;, ::vl::vint)" accessor="" category="Function" name="GenerateToStream" declFile="Accessor.h" declId="FB$vl::stream::GenerateToStream@::vl::WString([TCallback] const &amp;, ::vl::vint)[impl0]"><summary>
+<Document accessor="" category="Function" name="GenerateToStream" declFile="Accessor.h" declId="FB$vl::stream::GenerateToStream@::vl::WString([TCallback] const &amp;, ::vl::vint)[impl0]"><summary>
  Build a big string using <symbol name="StreamWriter" docId="vl::stream::StreamWriter" declFile="Accessor.h" declId="NI$vl::stream::StreamWriter"/>.
  </summary><typeparam name="TCallback">The type of the callback.</typeparam><returns>The built big string.</returns><param name="callback">
  The callback to receive a big string.

@@ -1,3 +1,3 @@
-<Document symbolId="vl::collections::ListBase::Clear@bool()" accessor="public" category="Function" name="Clear" declFile="List.h" declId="FB$vl::collections::ListBase::Clear@bool()[impl0]"><summary>Remove all elements.</summary><returns>Returns true if all elements are removed.</returns><signature><![CDATA[bool Clear(
+<Document accessor="public" category="Function" name="Clear" declFile="List.h" declId="FB$vl::collections::ListBase::Clear@bool()[impl0]"><summary>Remove all elements.</summary><returns>Returns true if all elements are removed.</returns><signature><![CDATA[bool Clear(
 );
 ]]></signature></Document>

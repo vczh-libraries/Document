@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeCallbackService" accessor="" category="Class" name="INativeCallbackService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCallbackService"><summary>
+<Document accessor="" category="Class" name="INativeCallbackService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCallbackService"><summary>
  Callback service. To access this service, use <symbol name="CallbackService" docId="vl::presentation::INativeController::CallbackService@::vl::presentation::INativeCallbackService *()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::CallbackService@::vl::presentation::INativeCallbackService *()[decl0]"/>.
  </summary><signature><![CDATA[class INativeCallbackService
     : Interface;

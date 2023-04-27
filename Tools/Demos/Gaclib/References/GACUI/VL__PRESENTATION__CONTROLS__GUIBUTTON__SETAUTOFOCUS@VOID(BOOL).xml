@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::GuiButton::SetAutoFocus@void(bool)" accessor="public" category="Function" name="SetAutoFocus" declFile="GuiButtonControls.h" declId="FB$vl::presentation::controls::GuiButton::SetAutoFocus@void(bool)[decl0]"><summary>Set if the button gets focus when it is clicked.</summary><param name="value">Set to true to make this button get focus when it is clicked.</param><signature><![CDATA[void SetAutoFocus(
+<Document accessor="public" category="Function" name="SetAutoFocus" declFile="GuiButtonControls.h" declId="FB$vl::presentation::controls::GuiButton::SetAutoFocus@void(bool)[decl0]"><summary>Set if the button gets focus when it is clicked.</summary><param name="value">Set to true to make this button get focus when it is clicked.</param><signature><![CDATA[void SetAutoFocus(
     bool value
 );
 ]]></signature></Document>

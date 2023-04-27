@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::WindowMouseInfo_" accessor="" category="Struct" name="WindowMouseInfo_" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::WindowMouseInfo_"><summary>
+<Document accessor="" category="Struct" name="WindowMouseInfo_" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::WindowMouseInfo_"><summary>
  Mouse message information.
  </summary><typeparam name="T">Type of the coordinate.</typeparam><signature><![CDATA[template <
     typename T

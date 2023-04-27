@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiScrollView::GetViewSize@::vl::presentation::Size()" accessor="public" category="Function" name="GetViewSize" declFile="GuiContainerControls.h" declId="FB$vl::presentation::controls::GuiScrollView::GetViewSize@::vl::presentation::Size()[decl0]"><summary>Get the view size.</summary><returns>The view size.</returns><signature><![CDATA[Size GetViewSize(
+<Document accessor="public" category="Function" name="GetViewSize" declFile="GuiContainerControls.h" declId="FB$vl::presentation::controls::GuiScrollView::GetViewSize@::vl::presentation::Size()[decl0]"><summary>Get the view size.</summary><returns>The view size.</returns><signature><![CDATA[Size GetViewSize(
 );
 ]]></signature><seealsos><symbol name="Size" declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>

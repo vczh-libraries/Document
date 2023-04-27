@@ -1,2 +1,2 @@
-<Document symbolId="vl::presentation::DocumentStyleProperties::face" accessor="public" category="Variable" name="face" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentStyleProperties::face"><summary>Font face.</summary><signature><![CDATA[Nullable<WString> face;
+<Document accessor="public" category="Variable" name="face" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentStyleProperties::face"><summary>Font face.</summary><signature><![CDATA[Nullable<WString> face;
 ]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

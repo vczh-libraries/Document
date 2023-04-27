@@ -1,4 +1,4 @@
-<Document symbolId="vl::reflection::description::IValueReadonlyDictionary" accessor="" category="Class" name="IValueReadonlyDictionary" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueReadonlyDictionary"><summary>
+<Document accessor="" category="Class" name="IValueReadonlyDictionary" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueReadonlyDictionary"><summary>
  The reflectable version of readonly <symbol name="Dictionary" docId="vl::collections::Dictionary" declFile="Dictionary.h" declId="NI$vl::collections::Dictionary"/>.
  </summary><signature><![CDATA[class IValueReadonlyDictionary
     : IDescriptable

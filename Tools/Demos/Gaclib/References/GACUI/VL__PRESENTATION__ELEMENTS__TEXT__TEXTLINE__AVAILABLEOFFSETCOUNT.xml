@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::text::TextLine::availableOffsetCount" accessor="public" category="Variable" name="availableOffsetCount" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLine::availableOffsetCount"><summary>
+<Document accessor="public" category="Variable" name="availableOffsetCount" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLine::availableOffsetCount"><summary>
  The number of available <symbol name="rightOffset" docId="vl::presentation::elements::text::CharAtt::rightOffset" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharAtt::rightOffset"/> in the buffer.
  </summary><signature><![CDATA[vint availableOffsetCount;
 ]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

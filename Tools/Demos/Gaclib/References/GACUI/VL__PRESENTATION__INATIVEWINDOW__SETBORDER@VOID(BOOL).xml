@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::SetBorder@void(bool)" accessor="public" category="Function" name="SetBorder" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetBorder@void(bool)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetBorder" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetBorder@void(bool)[decl0]"><summary>
  Make the border visible or invisible.
  </summary><param name="visible">True to make the border visible.</param><signature><![CDATA[void SetBorder(
     bool visible

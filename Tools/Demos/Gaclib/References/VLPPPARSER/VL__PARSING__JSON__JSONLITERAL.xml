@@ -1,4 +1,4 @@
-<Document symbolId="vl::parsing::json::JsonLiteral" accessor="" category="Class" name="JsonLiteral" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonLiteral"><summary>Literal value node that is not number or string.</summary><signature><![CDATA[class JsonLiteral
+<Document accessor="" category="Class" name="JsonLiteral" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonLiteral"><summary>Literal value node that is not number or string.</summary><signature><![CDATA[class JsonLiteral
     : JsonNode
     , vl::reflection::Description<JsonLiteral>;
 ]]></signature><seealsos><symbol name="JsonLiteral" docId="vl::parsing::json::JsonLiteral" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonLiteral"/></seealsos><basetypes><symbol name="JsonNode" docId="vl::parsing::json::JsonNode" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonNode"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

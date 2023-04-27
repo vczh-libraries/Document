@@ -1,4 +1,4 @@
-<Document symbolId="vl::workflow::runtime::WfAssembly" accessor="" category="Class" name="WfAssembly" declFile="WfRuntimeAssembly.h" declId="NI$vl::workflow::runtime::WfAssembly"><summary>Representing a Workflow assembly.</summary><signature><![CDATA[class WfAssembly
+<Document accessor="" category="Class" name="WfAssembly" declFile="WfRuntimeAssembly.h" declId="NI$vl::workflow::runtime::WfAssembly"><summary>Representing a Workflow assembly.</summary><signature><![CDATA[class WfAssembly
     : Object
     , reflection::Description<WfAssembly>;
 ]]></signature><seealsos><symbol name="WfAssembly" docId="vl::workflow::runtime::WfAssembly" declFile="WfRuntimeAssembly.h" declId="NI$vl::workflow::runtime::WfAssembly"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

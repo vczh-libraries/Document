@@ -1,4 +1,4 @@
-<Document symbolId="vl::collections::LazyList::Aggregate@[I]([I], [F])" accessor="public" category="Function" name="Aggregate" declFile="Operation.h" declId="FB$vl::collections::LazyList::Aggregate@[I]([I], [F])[impl0]"><summary>Aggregate a lazy list.</summary><typeparam name="I">Type of the initial value.</typeparam><typeparam name="F">Type of the aggregator.</typeparam><returns>The aggregated value.</returns><param name="init">The aggregated value defined for the empty prefix.</param><param name="f">
+<Document accessor="public" category="Function" name="Aggregate" declFile="Operation.h" declId="FB$vl::collections::LazyList::Aggregate@[I]([I], [F])[impl0]"><summary>Aggregate a lazy list.</summary><typeparam name="I">Type of the initial value.</typeparam><typeparam name="F">Type of the aggregator.</typeparam><returns>The aggregated value.</returns><param name="init">The aggregated value defined for the empty prefix.</param><param name="f">
  The aggregator.
  The first argument is the aggregated value of any prefix.
  The second argument is the element right after a prefix.

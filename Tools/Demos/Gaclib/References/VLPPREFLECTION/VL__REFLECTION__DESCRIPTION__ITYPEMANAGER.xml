@@ -1,3 +1,3 @@
-<Document symbolId="vl::reflection::description::ITypeManager" accessor="" category="Class" name="ITypeManager" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::ITypeManager"><summary>A type manager to access all reflectable types.</summary><signature><![CDATA[class ITypeManager
+<Document accessor="" category="Class" name="ITypeManager" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::ITypeManager"><summary>A type manager to access all reflectable types.</summary><signature><![CDATA[class ITypeManager
     : Interface;
 ]]></signature><basetypes><symbol name="Interface" docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>

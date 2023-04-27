@@ -1,4 +1,4 @@
-<Document symbolId="vl::stream::BroadcastStream" accessor="" category="Class" name="BroadcastStream" declFile="BroadcastStream.h" declId="NI$vl::stream::BroadcastStream"><summary>A <b>writable</b> stream that copy the written content to multiple output streams.</summary><remarks>
+<Document accessor="" category="Class" name="BroadcastStream" declFile="BroadcastStream.h" declId="NI$vl::stream::BroadcastStream"><summary>A <b>writable</b> stream that copy the written content to multiple output streams.</summary><remarks>
  When writing happens, the boreadcast stream will only performance one write attempt to each output stream.
  </remarks><signature><![CDATA[class BroadcastStream
     : Object

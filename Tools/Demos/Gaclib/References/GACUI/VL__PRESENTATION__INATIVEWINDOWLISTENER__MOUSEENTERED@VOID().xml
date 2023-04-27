@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindowListener::MouseEntered@void()" accessor="public" category="Function" name="MouseEntered" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::MouseEntered@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="MouseEntered" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::MouseEntered@void()[decl0]"><summary>
  Called when the mouse entered the window.
  </summary><signature><![CDATA[void MouseEntered(
 );

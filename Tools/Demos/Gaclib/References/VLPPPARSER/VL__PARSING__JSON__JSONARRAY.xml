@@ -1,4 +1,4 @@
-<Document symbolId="vl::parsing::json::JsonArray" accessor="" category="Class" name="JsonArray" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonArray"><summary>Array node.</summary><signature><![CDATA[class JsonArray
+<Document accessor="" category="Class" name="JsonArray" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonArray"><summary>Array node.</summary><signature><![CDATA[class JsonArray
     : JsonNode
     , vl::reflection::Description<JsonArray>;
 ]]></signature><seealsos><symbol name="JsonArray" docId="vl::parsing::json::JsonArray" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonArray"/></seealsos><basetypes><symbol name="JsonNode" docId="vl::parsing::json::JsonNode" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonNode"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

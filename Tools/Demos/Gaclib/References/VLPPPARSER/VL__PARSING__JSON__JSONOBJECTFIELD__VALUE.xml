@@ -1,2 +1,2 @@
-<Document symbolId="vl::parsing::json::JsonObjectField::value" accessor="public" category="Variable" name="value" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonObjectField::value"><summary>Property value.</summary><signature><![CDATA[vl::Ptr<JsonNode> value;
+<Document accessor="public" category="Variable" name="value" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonObjectField::value"><summary>Property value.</summary><signature><![CDATA[vl::Ptr<JsonNode> value;
 ]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="JsonNode" docId="vl::parsing::json::JsonNode" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonNode"/></seealsos></Document>

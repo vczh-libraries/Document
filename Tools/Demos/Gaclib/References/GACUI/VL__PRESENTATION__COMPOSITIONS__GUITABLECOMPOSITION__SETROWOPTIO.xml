@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::compositions::GuiTableComposition::SetRowOption@void(::vl::vint, ::vl::presentation::compositions::GuiCellOption)" accessor="public" category="Function" name="SetRowOption" declFile="GuiGraphicsTableComposition.h" declId="FB$vl::presentation::compositions::GuiTableComposition::SetRowOption@void(::vl::vint, ::vl::presentation::compositions::GuiCellOption)[decl0]"><summary>Set the sizing option of the specified row.</summary><param name="_row">The specified row number.</param><param name="option">The sizing option of the specified row.</param><signature><![CDATA[void SetRowOption(
+<Document accessor="public" category="Function" name="SetRowOption" declFile="GuiGraphicsTableComposition.h" declId="FB$vl::presentation::compositions::GuiTableComposition::SetRowOption@void(::vl::vint, ::vl::presentation::compositions::GuiCellOption)[decl0]"><summary>Set the sizing option of the specified row.</summary><param name="_row">The specified row number.</param><param name="option">The sizing option of the specified row.</param><signature><![CDATA[void SetRowOption(
     vint _row,
     GuiCellOption option
 );

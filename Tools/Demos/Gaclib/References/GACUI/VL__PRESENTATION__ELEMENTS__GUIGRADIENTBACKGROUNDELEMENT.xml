@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::elements::GuiGradientBackgroundElement" accessor="" category="Class" name="GuiGradientBackgroundElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiGradientBackgroundElement"><summary>
+<Document accessor="" category="Class" name="GuiGradientBackgroundElement" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiGradientBackgroundElement"><summary>
  Defines a color-filled gradient element without border.
  </summary><signature><![CDATA[class GuiGradientBackgroundElement
     : GuiElementBase<GuiGradientBackgroundElement>;

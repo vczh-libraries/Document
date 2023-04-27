@@ -1,3 +1,3 @@
-<Document symbolId="vl::presentation::controls::GuiFontDialog::GetShowEffect@bool()" accessor="public" category="Function" name="GetShowEffect" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiFontDialog::GetShowEffect@bool()[decl0]"><summary>Get if the font preview is enabled.</summary><returns>Returns true if the font preview is enabled.</returns><signature><![CDATA[bool GetShowEffect(
+<Document accessor="public" category="Function" name="GetShowEffect" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiFontDialog::GetShowEffect@bool()[decl0]"><summary>Get if the font preview is enabled.</summary><returns>Returns true if the font preview is enabled.</returns><signature><![CDATA[bool GetShowEffect(
 );
 ]]></signature></Document>

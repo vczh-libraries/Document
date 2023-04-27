@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::controls::tree::MemoryNodeProvider" accessor="" category="Class" name="MemoryNodeProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::MemoryNodeProvider"><summary>An in-memory <symbol name="INodeProvider" docId="vl::presentation::controls::tree::INodeProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeProvider"/> implementation.</summary><signature><![CDATA[class MemoryNodeProvider
+<Document accessor="" category="Class" name="MemoryNodeProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::MemoryNodeProvider"><summary>An in-memory <symbol name="INodeProvider" docId="vl::presentation::controls::tree::INodeProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeProvider"/> implementation.</summary><signature><![CDATA[class MemoryNodeProvider
     : Object
     , INodeProvider
     , Description<MemoryNodeProvider>;

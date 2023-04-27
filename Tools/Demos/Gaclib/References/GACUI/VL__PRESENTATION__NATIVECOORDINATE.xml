@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::NativeCoordinate" accessor="" category="Struct" name="NativeCoordinate" declFile="GuiTypes.h" declId="NI$vl::presentation::NativeCoordinate"><summary>
+<Document accessor="" category="Struct" name="NativeCoordinate" declFile="GuiTypes.h" declId="NI$vl::presentation::NativeCoordinate"><summary>
  Represents a position in the global screen coordinate space.
  </summary><signature><![CDATA[struct NativeCoordinate;
 ]]></signature></Document>

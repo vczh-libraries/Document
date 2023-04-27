@@ -1,4 +1,4 @@
-<Document symbolId="vl::presentation::INativeWindow::GetClientSize@::vl::presentation::NativeSize()" accessor="public" category="Function" name="GetClientSize" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetClientSize@::vl::presentation::NativeSize()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetClientSize" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetClientSize@::vl::presentation::NativeSize()[decl0]"><summary>
  Get the client size of the window.
  </summary><returns>The client size of the window.</returns><signature><![CDATA[NativeSize GetClientSize(
 );

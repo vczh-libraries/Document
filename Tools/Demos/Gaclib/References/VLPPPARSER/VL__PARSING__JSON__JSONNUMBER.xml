@@ -1,4 +1,4 @@
-<Document symbolId="vl::parsing::json::JsonNumber" accessor="" category="Class" name="JsonNumber" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonNumber"><summary>Number literal value node.</summary><signature><![CDATA[class JsonNumber
+<Document accessor="" category="Class" name="JsonNumber" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonNumber"><summary>Number literal value node.</summary><signature><![CDATA[class JsonNumber
     : JsonNode
     , vl::reflection::Description<JsonNumber>;
 ]]></signature><seealsos><symbol name="JsonNumber" docId="vl::parsing::json::JsonNumber" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonNumber"/></seealsos><basetypes><symbol name="JsonNode" docId="vl::parsing::json::JsonNode" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonNode"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

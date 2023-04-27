@@ -1,4 +1,4 @@
-<Document symbolId="vl::filesystem::FilePath::$__ctor@(wchar_t const *)" accessor="public" category="Function" name="$__ctor" declFile="FileSystem.h" declId="FB$vl::filesystem::FilePath::$__ctor@(wchar_t const *)[decl0]"><summary>Create a file path.</summary><param name="_filePath">Content of the file path. If it is a relative path, it will be converted to an absolute path.</param><signature><![CDATA[ FilePath(
+<Document accessor="public" category="Function" name="$__ctor" declFile="FileSystem.h" declId="FB$vl::filesystem::FilePath::$__ctor@(wchar_t const *)[decl0]"><summary>Create a file path.</summary><param name="_filePath">Content of the file path. If it is a relative path, it will be converted to an absolute path.</param><signature><![CDATA[ FilePath(
     wchar_t const * _filePath
 );
 ]]></signature></Document>

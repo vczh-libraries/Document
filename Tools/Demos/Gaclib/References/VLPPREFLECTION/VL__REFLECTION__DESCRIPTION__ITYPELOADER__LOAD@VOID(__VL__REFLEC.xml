@@ -1,4 +1,4 @@
-<Document symbolId="vl::reflection::description::ITypeLoader::Load@void(::vl::reflection::description::ITypeManager *)" accessor="public" category="Function" name="Load" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::description::ITypeLoader::Load@void(::vl::reflection::description::ITypeManager *)[decl0]"><summary>Called when it is time to register types.</summary><param name="manager">The type manager.</param><signature><![CDATA[void Load(
+<Document accessor="public" category="Function" name="Load" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::description::ITypeLoader::Load@void(::vl::reflection::description::ITypeManager *)[decl0]"><summary>Called when it is time to register types.</summary><param name="manager">The type manager.</param><signature><![CDATA[void Load(
     ITypeManager * manager
 );
 ]]></signature><seealsos><symbol name="ITypeManager" docId="vl::reflection::description::ITypeManager" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::ITypeManager"/></seealsos></Document>
