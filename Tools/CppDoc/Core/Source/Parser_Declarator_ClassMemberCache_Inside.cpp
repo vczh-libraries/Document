@@ -56,7 +56,7 @@ void FixClassMemberCacheTypes(Ptr<symbol_component::ClassMemberCache> classMembe
 
 Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const ParsingArguments& pa, Symbol* classSymbol, Ptr<CppTokenCursor>& cursor)
 {
-	auto cache = MakePtr<symbol_component::ClassMemberCache>();
+	auto cache = Ptr(new symbol_component::ClassMemberCache());
 	cache->symbolDefinedInsideClass = true;
 
 	FillSymbolToClassMemberCache(pa, classSymbol, cache.Obj());

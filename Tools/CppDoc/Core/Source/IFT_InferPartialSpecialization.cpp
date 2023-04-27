@@ -176,7 +176,7 @@ namespace infer_function_type
 			auto inferPa = pa.AdjustForDecl(declSymbol);
 			inferPa.parentDeclType = ParsingArguments::AdjustDeclInstantForScope(declSymbol, parentDeclType, true);
 
-			auto taContext = MakePtr<TemplateArgumentContext>(declSymbol, templateSpec->arguments.Count());
+			auto taContext = Ptr(new TemplateArgumentContext(declSymbol, templateSpec->arguments.Count()));
 			taContext->parent = inferPa.taContext;
 
 			// assign parameters

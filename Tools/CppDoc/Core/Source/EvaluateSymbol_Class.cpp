@@ -122,7 +122,7 @@ namespace symbol_type_resolving
 				auto tsysList = Ptr(new TypeTsysList);
 				baseTsys[i] = tsysList;
 				bool isVta = false;
-				TypeToTsysInternal(eval.declPa, classDecl->baseTypes[i].item.f1, *tsysList.Obj(), isVta);
+				TypeToTsysInternal(eval.declPa, classDecl->baseTypes[i].item.get<1>(), *tsysList.Obj(), isVta);
 				if (isVta != classDecl->baseTypes[i].isVariadic)
 				{
 					throw TypeCheckerException();

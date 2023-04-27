@@ -184,7 +184,7 @@ Symbol* Symbol::CreateSymbolInternal(Ptr<Declaration> _decl, const WString& decl
 	}
 	else
 	{
-		symbol = new Symbol(_category);
+		symbol = Ptr(new Symbol(_category));
 	}
 	symbol->name = declName;
 	symbol->kind = _kind;
@@ -704,7 +704,7 @@ Symbol* Symbol::CreateFunctionSymbol_NFb(Ptr<ForwardFunctionDeclaration> _decl)
 {
 	// add a new Function category symbol
 	// Function can be overloaded, so don't need to check if there is any existing symbols of the same name
-	Ptr<Symbol> symbol = new Symbol(symbol_component::SymbolCategory::Function);
+	auto symbol = Ptr(new Symbol(symbol_component::SymbolCategory::Function));
 	symbol->kind = symbol_component::SymbolKind::FunctionSymbol;
 	symbol->name = _decl->name.name;
 	if (_decl->specializationSpec)
@@ -769,7 +769,7 @@ Symbol* Symbol::AddImplDeclToSymbol_NFb(Ptr<Declaration> _decl, symbol_component
 Symbol* Symbol::CreateStatSymbol_NFb(Ptr<Stat> _stat)
 {
 	// There is no limitation on statement scopes
-	Ptr<Symbol> symbol = new Symbol();
+	auto symbol = Ptr(new Symbol());
 	symbol->name = L"$";
 	symbol->kind = symbol_component::SymbolKind::Statement;
 	symbol->categoryData.normal.statement = _stat;
@@ -782,7 +782,7 @@ Symbol* Symbol::CreateStatSymbol_NFb(Ptr<Stat> _stat)
 Symbol* Symbol::CreateExprSymbol_NFb(Ptr<Expr> _expr)
 {
 	// There is no limitation on statement scopes
-	Ptr<Symbol> symbol = new Symbol();
+	auto symbol = Ptr(new Symbol());
 	symbol->name = L"$";
 	symbol->kind = symbol_component::SymbolKind::Expression;
 	symbol->categoryData.normal.expr = _expr;
@@ -807,7 +807,7 @@ RootSymbol::~RootSymbol()
 
 Ptr<Symbol> RootSymbol::CreateSymbol(Symbol* _parent, Ptr<symbol_component::ClassMemberCache> classMemberCache)
 {
-	Ptr<Symbol> symbol = new Symbol(_parent, classMemberCache);
+	auto symbol = Ptr(new Symbol(_parent, classMemberCache));
 	createdSymbols.Add(symbol);
 	return symbol;
 }

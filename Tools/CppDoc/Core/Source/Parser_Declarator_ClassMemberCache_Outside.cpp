@@ -388,7 +388,7 @@ ITsys* StepIntoNonTemplateClass(
 
 Ptr<symbol_component::ClassMemberCache> CreatePartialClassMemberCache(const ParsingArguments& pa, Ptr<Type> classType, List<Ptr<TemplateSpec>>* specs, Ptr<CppTokenCursor>& cursor)
 {
-	auto cache = MakePtr<symbol_component::ClassMemberCache>();
+	auto cache = Ptr(new symbol_component::ClassMemberCache);
 	cache->symbolDefinedInsideClass = false;
 
 	if (IsInTemplateHeader(pa))

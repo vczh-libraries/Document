@@ -569,7 +569,7 @@ public:
 		auto dpa = pa.WithScope(self->symbol);
 		for (vint i = 0; i < self->decls.Count(); i++)
 		{
-			EvaluateDeclaration(dpa, self->decls[i].f1);
+			EvaluateDeclaration(dpa, self->decls[i].get<1>());
 		}
 	}
 

@@ -15,7 +15,7 @@ Ptr<RegexLexer> CreateCppLexer()
 #undef DEFINE_KEYWORD_TOKEN
 #undef DEFINE_REGEX_TOKEN
 
-	return new RegexLexer(tokens);
+	return Ptr(new RegexLexer(tokens));
 }
 
 /***********************************************************************
@@ -39,17 +39,17 @@ Ptr<CppTokenCursor> CppTokenCursor::Next()
 
 void CppTokenCursor::Clone(Ptr<CppTokenReader>& _reader, Ptr<CppTokenCursor>& _cursor)
 {
-	_reader = new CppTokenReader(*reader, reader->skipSpaceAndComment);
-	_cursor = new CppTokenCursor(_reader.Obj(), token);
+	_reader = Ptr(new CppTokenReader(*reader, reader->skipSpaceAndComment));
+	_cursor = Ptr(new CppTokenCursor(_reader.Obj(), token));
 
 	auto reading = this;
 	auto writing = _cursor.Obj();
 	while (reading->next)
 	{
 		reading = reading->next.Obj();
-		auto next = new CppTokenCursor(writing->reader, reading->token);
+		auto next = Ptr(new CppTokenCursor(writing->reader, reading->token));
 		writing->next = next;
-		writing = next;
+		writing = next.Obj();
 	}
 }
 
@@ -72,7 +72,7 @@ Ptr<CppTokenCursor> CppTokenReader::CreateNextToken()
 				continue;
 			}
 		}
-		return new CppTokenCursor(this, token);
+		return Ptr(new CppTokenCursor(this, token));
 	}
 	return nullptr;
 }
@@ -90,7 +90,7 @@ CppTokenReader::CppTokenReader(Ptr<RegexLexer> _lexer, const WString& input, boo
 	:skipSpaceAndComment(_skipSpaceAndComment)
 	, lexer(_lexer)
 {
-	tokens = new RegexTokens(lexer->Parse(input));
+	tokens = Ptr(new RegexTokens(lexer->Parse(input)));
 	tokenEnumerator = tokens->CreateEnumerator();
 }
 

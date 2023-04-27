@@ -181,7 +181,7 @@ namespace infer_function_type
 					Dictionary<ITsys*, Ptr<Array<ExprTsysItem>>> variadicResults;
 					for (vint j = 0; j < vas.Count(); j++)
 					{
-						variadicResults.Add(vas[j], MakePtr<Array<ExprTsysItem>>(count));
+						variadicResults.Add(vas[j], Ptr(new Array<ExprTsysItem>(count)));
 					}
 
 					// run each item in the list

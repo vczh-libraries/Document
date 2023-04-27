@@ -51,7 +51,7 @@ public:
 	{
 		for (vint i = 0; i < self->decls.Count(); i++)
 		{
-			self->decls[i].f1->Accept(this);
+			self->decls[i].get<1>()->Accept(this);
 		}
 	}
 
@@ -108,7 +108,7 @@ void EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl)
 		{
 			while (true)
 			{
-				auto item = MakePtr<FunctionDeclaration::InitItem>();
+				auto item = Ptr(new FunctionDeclaration::InitItem);
 				{
 					auto oldCursor = delayParse->begin;
 					try

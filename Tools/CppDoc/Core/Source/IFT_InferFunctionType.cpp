@@ -279,7 +279,7 @@ namespace infer_function_type
 			symbol_totsys_impl::ExpandPotentialVtaList(pa, unused, inputs, isVtas, false, -1,
 				[&](ExprTsysList&, Array<ExprTsysItem>& params, vint, Array<vint>&, SortedList<vint>&)
 				{
-					auto tac = MakePtr<TemplateArgumentContext, const TemplateArgumentContext&>(taContext, true);
+					auto tac = Ptr(new TemplateArgumentContext(taContext, true));
 
 					List<ITsys*> assignment;
 					vint index = 0;
@@ -321,7 +321,7 @@ namespace infer_function_type
 		}
 		else
 		{
-			auto tac = MakePtr<TemplateArgumentContext, const TemplateArgumentContext&>(taContext, true);
+			auto tac = Ptr(new TemplateArgumentContext(taContext, true));
 
 			TemplateArgumentContext unusedVariadicContext(nullptr, 0);
 			InferTemplateArgumentsForFunctionType(pa, functionType, parameterAssignment, *tac.Obj(), unusedVariadicContext, freeTypeSymbols, false, lastAssignedVta, hardcodedPatterns);

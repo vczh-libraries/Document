@@ -230,12 +230,12 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 			for (vint i = 0; i < decl->decls.Count(); i++)
 			{
 				auto pair = decl->decls[i];
-				if (pair.f0 != CppClassAccessor::Public)
+				if (pair.get<0>() != CppClassAccessor::Public)
 				{
 					throw StopParsingException(cursor);
 				}
 
-				if (auto classDecl = pair.f1.Cast<ClassDeclaration>())
+				if (auto classDecl = pair.get<1>().Cast<ClassDeclaration>())
 				{
 					// anonymous class is fine
 					if (classDecl->name.name.Length() <= 11 || classDecl->name.name.Left(11) != L"<anonymous>")
@@ -243,7 +243,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 						throw StopParsingException(cursor);
 					}
 				}
-				else if (auto enumDecl = pair.f1.Cast<EnumDeclaration>())
+				else if (auto enumDecl = pair.get<1>().Cast<EnumDeclaration>())
 				{
 					// anonymous enum is fine
 					if (classDecl->name.name.Length() <= 11 || classDecl->name.name.Left(11) != L"<anonymous>")
@@ -251,11 +251,11 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 						throw StopParsingException(cursor);
 					}
 				}
-				else if (pair.f1.Cast<VariableDeclaration>())
+				else if (pair.get<1>().Cast<VariableDeclaration>())
 				{
 					// variable is fine
 				}
-				else if (pair.f1.Cast<NestedAnonymousClassDeclaration>())
+				else if (pair.get<1>().Cast<NestedAnonymousClassDeclaration>())
 				{
 					// nested anonymous class is fine
 				}
@@ -264,7 +264,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 					throw StopParsingException(cursor);
 				}
 
-				nestedDecl->decls.Add(pair.f1);
+				nestedDecl->decls.Add(pair.get<1>());
 			}
 
 			const auto& contextChildren = classContextSymbol->GetChildren_NFb();

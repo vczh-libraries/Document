@@ -248,7 +248,7 @@ bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclara
 
 	for (vint i = 0; i < classDecl->decls.Count(); i++)
 	{
-		if (auto varDecl = classDecl->decls[i].f1.Cast<VariableDeclaration>())
+		if (auto varDecl = classDecl->decls[i].get<1>().Cast<VariableDeclaration>())
 		{
 			if (passIfFieldHasInitializer && varDecl->initializer)
 			{

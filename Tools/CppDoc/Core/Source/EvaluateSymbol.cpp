@@ -26,7 +26,7 @@ namespace symbol_type_resolving
 				}
 
 				symbol_component::SG_Cache cacheKey;
-				cacheKey.parentDeclTypeAndParams = MakePtr<Array<ITsys*>>(spec->arguments.Count() + 1);
+				cacheKey.parentDeclTypeAndParams = Ptr(new Array<ITsys*>(spec->arguments.Count() + 1));
 				cacheKey.parentDeclTypeAndParams->Set(0, pa.parentDeclType);
 				for (vint i = 0; i < spec->arguments.Count(); i++)
 				{
@@ -40,7 +40,7 @@ namespace symbol_type_resolving
 					return *decl->symbol->genericCaches[index].cachedEvaluation.Obj();
 				}
 
-				cacheKey.cachedEvaluation = MakePtr<symbol_component::Evaluation>();
+				cacheKey.cachedEvaluation = Ptr(new symbol_component::Evaluation);
 				decl->symbol->genericCaches.Add(cacheKey);
 				return *cacheKey.cachedEvaluation.Obj();
 			}
@@ -64,7 +64,7 @@ namespace symbol_type_resolving
 				}
 
 				taContext = pa.taContext;
-				auto ev = MakePtr<symbol_component::Evaluation>();
+				auto ev = Ptr(new symbol_component::Evaluation);
 				taContext->symbolEvaluations.Add(decl->symbol, ev);
 				return *ev.Obj();
 			}
