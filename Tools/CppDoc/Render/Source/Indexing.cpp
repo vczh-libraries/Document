@@ -4,16 +4,6 @@
 IndexToken
 ***********************************************************************/
 
-vint IndexToken::Compare(const IndexToken& a, const IndexToken& b)
-{
-	vint result;
-	if ((result = a.rowStart - b.rowStart) != 0) return result;
-	if ((result = a.columnStart - b.columnStart) != 0) return result;
-	if ((result = a.rowEnd - b.rowEnd) != 0) return result;
-	if ((result = a.columnEnd - b.columnEnd) != 0) return result;
-	return 0;
-}
-
 IndexToken IndexToken::GetToken(CppName& name)
 {
 	return {

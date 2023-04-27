@@ -37,10 +37,9 @@ struct IndexToken
 	vint											rowEnd;
 	vint											columnEnd;
 
-	static vint										Compare(const IndexToken& a, const IndexToken& b);
 	static IndexToken								GetToken(CppName& name);
 
-	DEFINE_COMPLETE_COMPARISON_OPERATOR(IndexToken)
+	std::strong_ordering operator<=>(const IndexToken&) const = default;
 };
 
 enum class IndexReason

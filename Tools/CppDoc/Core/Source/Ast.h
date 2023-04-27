@@ -69,16 +69,7 @@ struct ResolvedItem
 		}
 	}
 
-	static vint Compare(const ResolvedItem& a, const ResolvedItem& b)
-	{
-		if (a.tsys < b.tsys) return -1;
-		if (a.tsys > b.tsys) return 1;
-		if (a.symbol < b.symbol) return -1;
-		if (a.symbol > b.symbol) return 1;
-		return 0;
-	}
-
-	DEFINE_COMPLETE_COMPARISON_OPERATOR(ResolvedItem)
+	std::strong_ordering operator<=>(const ResolvedItem&) const = default;
 };
 
 class Resolving : public Object

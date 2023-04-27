@@ -13,20 +13,6 @@ class FunctionType;
 class TemplateSpec;
 class ITsys;
 
-#define DEFINE_COMPARISON_OPERATOR(TYPE, OP)			\
-		bool operator OP(const TYPE& value)const		\
-		{												\
-			return TYPE::Compare(*this, value) OP 0;	\
-		}												\
-
-#define DEFINE_COMPLETE_COMPARISON_OPERATOR(TYPE)		\
-		DEFINE_COMPARISON_OPERATOR(TYPE, > )			\
-		DEFINE_COMPARISON_OPERATOR(TYPE, >= )			\
-		DEFINE_COMPARISON_OPERATOR(TYPE, < )			\
-		DEFINE_COMPARISON_OPERATOR(TYPE, <= )			\
-		DEFINE_COMPARISON_OPERATOR(TYPE, == )			\
-		DEFINE_COMPARISON_OPERATOR(TYPE, != )			\
-
 /***********************************************************************
 ExprTsysType
 ***********************************************************************/
@@ -55,16 +41,7 @@ struct ExprHeader
 	ExprHeader& operator=(const ExprHeader&) = default;
 	ExprHeader& operator=(ExprHeader&&) = default;
 
-	static vint Compare(const ExprHeader& a, const ExprHeader& b)
-	{
-		if (a.symbol < b.symbol) return -1;
-		if (a.symbol > b.symbol) return 1;
-		if (a.type < b.type) return -1;
-		if (a.type > b.type) return 1;
-		return 0;
-	}
-
-	DEFINE_COMPLETE_COMPARISON_OPERATOR(ExprHeader)
+	std::strong_ordering operator<=>(const ExprHeader&) const = default;
 };
 
 struct ExprTsysItem : ExprHeader
@@ -88,18 +65,7 @@ struct ExprTsysItem : ExprHeader
 	ExprTsysItem& operator=(const ExprTsysItem&) = default;
 	ExprTsysItem& operator=(ExprTsysItem&&) = default;
 
-	static vint Compare(const ExprTsysItem& a, const ExprTsysItem& b)
-	{
-		if (a.symbol < b.symbol) return -1;
-		if (a.symbol > b.symbol) return 1;
-		if (a.type < b.type) return -1;
-		if (a.type > b.type) return 1;
-		if (a.tsys < b.tsys) return -1;
-		if (a.tsys > b.tsys) return 1;
-		return 0;
-	}
-
-	DEFINE_COMPLETE_COMPARISON_OPERATOR(ExprTsysItem)
+	std::strong_ordering operator<=>(const ExprTsysItem&) const = default;
 };
 
 using TypeTsysList = List<ITsys*>;
@@ -192,7 +158,7 @@ struct TsysInit
 	TsysInit(const TsysInit& init) { CopyFrom(headers, init.headers); }
 	TsysInit& operator=(const TsysInit& init) { CopyFrom(headers, init.headers); return *this; }
 
-	static vint Compare(const TsysInit& a, const TsysInit& b)
+	friend std::strong_ordering operator<=>(const TsysInit& a, const TsysInit& b)
 	{
 		return CompareEnumerable(a.headers, b.headers);
 	}
@@ -244,18 +210,7 @@ struct TsysGenericArg
 	vint							argIndex = -1;
 	TemplateSpec*					spec;
 
-	static vint Compare(const TsysGenericArg& a, const TsysGenericArg& b)
-	{
-		if (a.argSymbol < b.argSymbol) return -1;
-		if (a.argSymbol > b.argSymbol) return 1;
-		if (a.argIndex < b.argIndex) return -1;
-		if (a.argIndex > b.argIndex) return 1;
-		if (a.spec < b.spec) return -1;
-		if (a.spec > b.spec) return 1;
-		return 0;
-	}
-
-	DEFINE_COMPLETE_COMPARISON_OPERATOR(TsysGenericArg)
+	std::strong_ordering operator<=>(const TsysGenericArg&) const = default;
 };
 
 struct TsysDeclInstant
@@ -264,16 +219,10 @@ struct TsysDeclInstant
 	ITsys*							parentDeclType;
 	Ptr<TemplateArgumentContext>	taContext;
 
-	static vint Compare(const TsysDeclInstant& a, const TsysDeclInstant& b)
+	friend std::strong_ordering operator<=>(const TsysDeclInstant& a, const TsysDeclInstant& b)
 	{
-		if (a.declSymbol < b.declSymbol) return -1;
-		if (a.declSymbol > b.declSymbol) return 1;
-		if (a.parentDeclType < b.parentDeclType) return -1;
-		if (a.parentDeclType > b.parentDeclType) return 1;
-		return 0;
+		return Pair(a.declSymbol, a.parentDeclType) <=> Pair(b.declSymbol, b.parentDeclType);
 	}
-
-	DEFINE_COMPLETE_COMPARISON_OPERATOR(TsysDeclInstant)
 };
 
 struct TsysPSRecord

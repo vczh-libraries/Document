@@ -172,18 +172,7 @@ namespace symbol_component
 		{
 		}
 
-		static vint Compare(const ChildSymbol& a, const ChildSymbol& b)
-		{
-			if (a.childType < b.childType) return -1;
-			if (a.childType > b.childType) return 1;
-			if (a.childExpr < b.childExpr) return -1;
-			if (a.childExpr > b.childExpr) return 1;
-			if (a.childSymbol < b.childSymbol) return -1;
-			if (a.childSymbol > b.childSymbol) return 1;
-			return 0;
-		}
-
-		DEFINE_COMPLETE_COMPARISON_OPERATOR(ChildSymbol)
+		std::strong_ordering operator<=>(const ChildSymbol&) const = default;
 	};
 
 	using SymbolGroup = Group<WString, ChildSymbol>;
@@ -246,12 +235,10 @@ namespace symbol_component
 		Ptr<Array<ITsys*>>							parentDeclTypeAndParams;
 		Ptr<Evaluation>								cachedEvaluation;
 
-		static vint Compare(const SG_Cache& a, const SG_Cache& b)
+		friend std::strong_ordering operator<=>(const SG_Cache& a, const SG_Cache& b)
 		{
 			return CompareEnumerable(*a.parentDeclTypeAndParams.Obj(), *b.parentDeclTypeAndParams.Obj());
 		}
-
-		DEFINE_COMPLETE_COMPARISON_OPERATOR(SG_Cache)
 	};
 }
 
