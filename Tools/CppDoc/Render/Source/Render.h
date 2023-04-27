@@ -147,19 +147,9 @@ extern void											GenerateUniqueId(IndexResult& result, IProgressReporter* p
 Line Indexing
 ***********************************************************************/
 
-struct HtmlLineRecord
-{
-	vint											lineCount;		// total lines of this record
-	const wchar_t*									rawBegin;		// the first character
-	const wchar_t*									rawEnd;			// the one after the last character
-	WString											htmlCode;		// generated HTML code
-};
-
 struct FileLinesRecord
 {
 	FilePath										filePath;		// file path of the source file
-	WString											htmlFileName;	// file name of the generated HTML file (without ".html")
-	Dictionary<vint, HtmlLineRecord>				lines;			// all generated HTML code
 	SortedList<Symbol*>								refSymbols;		// symbols of all hyperlink targets in the source file
 };
 
@@ -175,7 +165,6 @@ struct GlobalLinesRecord
 	Dictionary<FilePath, Ptr<FileLinesRecord>>		fileLines;		// generated HTML code of all touched source files
 	Dictionary<DeclOrArg, FilePath>					declToFiles;	// declaration to source file mapping
 	Dictionary<Symbol*, Ptr<DocumentRecord>>		declComments;	// declaration to document comments
-	SortedList<WString>								htmlFileNames;	// all fileLines[x]->htmlFileName
 };
 
 /***********************************************************************
@@ -249,7 +238,6 @@ struct SymbolGroup
 // {PathPrefix, Label}
 using FileGroupConfig = List<Tuple<WString, WString>>;
 
-extern void											GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGroupConfig& fileGroups);
 extern Ptr<SymbolGroup>								GenerateSymbolGroup(Ptr<GlobalLinesRecord> global, IndexResult& result, FileGroupConfig& fileGroups, IProgressReporter* progressReporter);
 extern void											GenerateReferenceIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Ptr<SymbolGroup> rootGroup, FilePath pathXml, FilePath pathReference, FileGroupConfig& fileGroups, SortedList<WString>& predefinedGroups, IProgressReporter* progressReporter);
 

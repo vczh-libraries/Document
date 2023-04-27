@@ -303,12 +303,6 @@ Ptr<XmlElement> BuildHyperlink(
 
 	{
 		auto attr = Ptr(new XmlAttribute);
-		attr->name.value = L"declFile";
-		attr->value.value = global->fileLines[global->declToFiles[{decl, nullptr}]]->htmlFileName;
-		xmlSymbol->attributes.Add(attr);
-	}
-	{
-		auto attr = Ptr(new XmlAttribute);
 		attr->name.value = L"declId";
 		attr->value.value = GetDeclId({ decl,nullptr });
 		xmlSymbol->attributes.Add(attr);
@@ -824,12 +818,6 @@ Ptr<XmlDocument> ValidateAndFixDocumentRecord(
 		}
 		{
 			auto decl = symbol->GetAnyForwardDecl<Declaration>();
-			{
-				auto attr = Ptr(new XmlAttribute);
-				attr->name.value = L"declFile";
-				attr->value.value = global->fileLines[global->declToFiles[{decl, nullptr}]]->htmlFileName;
-				xmlDocument->rootElement->attributes.Add(attr);
-			}
 			{
 				auto attr = Ptr(new XmlAttribute);
 				attr->name.value = L"declId";

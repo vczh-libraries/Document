@@ -289,6 +289,17 @@ Ptr<GlobalLinesRecord> Collect(
 				}
 
 				rightAfterSharpLine = true;
+
+				// ensure that a FileLinesRecord object for this source file is created
+				{
+					vint fileIndex = global->fileLines.Keys().IndexOf(currentFilePath);
+					if (fileIndex == -1)
+					{
+						auto flr = Ptr(new FileLinesRecord);
+						flr->filePath = currentFilePath;
+						global->fileLines.Add(currentFilePath, flr);
+					}
+				}
 				SkipToken(cursor);
 				continue;
 			}
