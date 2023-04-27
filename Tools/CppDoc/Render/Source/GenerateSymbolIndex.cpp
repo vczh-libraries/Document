@@ -497,11 +497,9 @@ void RenderSymbolGroup(
 GenerateSymbolIndex
 ***********************************************************************/
 
-Ptr<SymbolGroup> GenerateSymbolIndex(
+Ptr<SymbolGroup> GenerateSymbolGroup(
 	Ptr<GlobalLinesRecord> global,
 	IndexResult& result,
-	FilePath pathHtml,
-	FilePath pathFragment,
 	FileGroupConfig& fileGroups,
 	IProgressReporter* progressReporter
 )
@@ -537,40 +535,6 @@ Ptr<SymbolGroup> GenerateSymbolIndex(
 				GenerateSymbolGroupUniqueId(fileGroup->children[j], fileGroup.Obj(), fragmentCount, ids);
 			}
 		}
-	}
-
-	{
-		FileStream fileStream(pathHtml.GetFullPath(), FileStream::WriteOnly);
-		Utf8Encoder encoder;
-		EncoderStream encoderStream(fileStream, encoder);
-		StreamWriter writer(encoderStream);
-
-		writer.WriteLine(L"<!DOCTYPE html>");
-		writer.WriteLine(L"<html>");
-		writer.WriteLine(L"<head>");
-		writer.WriteLine(L"    <title>Symbol Index</title>");
-		writer.WriteLine(L"    <link rel=\"stylesheet\" href=\"../Cpp.css\" />");
-		writer.WriteLine(L"    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />");
-		writer.WriteLine(L"    <script type=\"text/javascript\" src=\"../Cpp.js\" ></script>");
-		writer.WriteLine(L"</head>");
-		writer.WriteLine(L"<body>");
-		writer.WriteLine(L"<a class=\"button\" href=\"./FileIndex.html\">File Index</a>");
-		writer.WriteLine(L"<a class=\"button\" href=\"./SymbolIndex.html\">Symbol Index</a>");
-		writer.WriteLine(L"<br>");
-		writer.WriteLine(L"<br>");
-		writer.WriteString(L"<div class=\"cpp_default\"><div class=\"symbol_root\">");
-
-		for (vint i = 0; i < rootGroup->children.Count(); i++)
-		{
-			Folder(pathFragment / rootGroup->children[i]->uniqueId).Create(true);
-		}
-
-		vint writtenFragmentCount = 0;
-		RenderSymbolGroup(global, writer, rootGroup, L"", pathFragment, progressReporter, fragmentCount, writtenFragmentCount);
-
-		writer.WriteLine(L"</div></div>");
-		writer.WriteLine(L"</body>");
-		writer.WriteLine(L"</html>");
 	}
 
 	return rootGroup;

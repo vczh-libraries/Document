@@ -256,7 +256,7 @@ struct SymbolGroup
 using FileGroupConfig = List<Tuple<WString, WString>>;
 
 extern void											GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGroupConfig& fileGroups);
-extern Ptr<SymbolGroup>								GenerateSymbolIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, FilePath pathHtml, FilePath pathFragment, FileGroupConfig& fileGroups, IProgressReporter* progressReporter);
+extern Ptr<SymbolGroup>								GenerateSymbolGroup(Ptr<GlobalLinesRecord> global, IndexResult& result, FileGroupConfig& fileGroups, IProgressReporter* progressReporter);
 extern void											GenerateReferenceIndex(Ptr<GlobalLinesRecord> global, IndexResult& result, Ptr<SymbolGroup> rootGroup, FilePath pathXml, FilePath pathReference, FileGroupConfig& fileGroups, SortedList<WString>& predefinedGroups, IProgressReporter* progressReporter);
 
 
@@ -274,8 +274,6 @@ void IndexCppCode(
 	FilePath				pathMapping,
 
 	Folder					folderOutput,
-	Folder					folderSource,
-	Folder					folderFragment,
 	Folder					folderReference
 );
 

@@ -75,8 +75,6 @@ void IndexCppCode(
 	FilePath				pathMapping,				// cache: line mapping between pathPreprocessed and pathInput
 
 	Folder					folderOutput,				// root output folder
-	Folder					folderSource,				// folder containing generated HTML files
-	Folder					folderFragment,				// folder containing symbol index fragments
 	Folder					folderReference				// folder containing reference files
 )
 {
@@ -195,25 +193,13 @@ void IndexCppCode(
 		}
 	}
 
-	Console::WriteLine(L"        FileIndex.html");
-	GenerateFileIndex(
-		global,
-		folderOutput.GetFilePath() / L"FileIndex.html",
-		fileGroups
-	);
-
-	Console::WriteLine(L"        SymbolIndex.html");
-	auto rootGroup = GenerateSymbolIndex(
+	Console::WriteLine(L"        ReferenceIndex.xml");
+	auto rootGroup = GenerateSymbolGroup(
 		global,
 		indexResult,
-		folderOutput.GetFilePath() / L"SymbolIndex.html",
-		folderFragment.GetFilePath(),
 		fileGroups,
 		&progressReporter
 	);
-	progressReporter.FinishPhase();
-
-	Console::WriteLine(L"        ReferenceIndex.xml");
 	GenerateReferenceIndex(
 		global,
 		indexResult,

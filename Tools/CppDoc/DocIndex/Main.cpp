@@ -35,8 +35,6 @@ int main()
 		projectName = projectName.Left(projectName.Length() - 1);
 		Folder folderInput(file.GetFilePath().GetFullPath() + L".Input");
 		Folder folderOutput(file.GetFilePath().GetFolder() / (L"../../Demos/" + projectName));
-		Folder folderSource(folderOutput.GetFilePath() / L"SourceFiles");
-		Folder folderFragment(folderOutput.GetFilePath() / L"SymbolIndexFragments");
 		Folder folderReference(folderOutput.GetFilePath() / L"References");
 
 		auto pathPreprocessed = folderInput.GetFilePath() / L"Preprocessed.cpp";
@@ -45,8 +43,6 @@ int main()
 
 		folderInput.Create(true);
 		folderOutput.Create(true);
-		folderSource.Create(true);
-		folderFragment.Create(true);
 		folderReference.Create(true);
 
 		FileGroupConfig fileGroups;
@@ -67,8 +63,6 @@ int main()
 			pathInput,
 			pathMapping,
 			folderOutput,
-			folderSource,
-			folderFragment,
 			folderReference
 		);
 
