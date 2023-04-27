@@ -222,12 +222,6 @@ Index Collecting
 extern Ptr<GlobalLinesRecord>						Collect(Ptr<RegexLexer> lexer, FilePath pathPreprocessed, FilePath pathInput, FilePath pathMapping, IndexResult& result, IProgressReporter* progressReporter);
 
 /***********************************************************************
-Source Code Page Generating
-***********************************************************************/
-
-extern void											GenerateFile(Ptr<GlobalLinesRecord> global, Ptr<FileLinesRecord> flr, IndexResult& result, FilePath pathHtml);
-
-/***********************************************************************
 Index Page Generating
 ***********************************************************************/
 

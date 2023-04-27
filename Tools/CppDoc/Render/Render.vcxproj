@@ -23,11 +23,7 @@
     <ClCompile Include="Source\Compiling.cpp" />
     <ClCompile Include="Source\DisplayNameInHtml.cpp" />
     <ClCompile Include="Source\Entry.cpp" />
-    <ClCompile Include="Source\GenerateFile.cpp" />
     <ClCompile Include="Source\GenerateFileIndex.cpp" />
-    <ClCompile Include="Source\GenerateFile_CppCodeInHtml.cpp" />
-    <ClCompile Include="Source\GenerateFile_ReferencedSymbols.cpp" />
-    <ClCompile Include="Source\GenerateFile_SymbolToFiles.cpp" />
     <ClCompile Include="Source\GenerateReferenceIndex.cpp" />
     <ClCompile Include="Source\GenerateReferenceIndex_Signature.cpp" />
     <ClCompile Include="Source\GenerateSymbolIndex.cpp" />

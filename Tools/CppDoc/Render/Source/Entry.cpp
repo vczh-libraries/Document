@@ -120,14 +120,6 @@ void IndexCppCode(
 	);
 	progressReporter.FinishPhase();
 
-	Console::WriteLine(L"    Writing Files");
-	for (vint i = 0; i < global->fileLines.Keys().Count(); i++)
-	{
-		auto flr = global->fileLines.Values()[i];
-		Console::WriteLine(L"        " + flr->htmlFileName + L".html");
-		GenerateFile(global, flr, indexResult, folderOutput.GetFilePath() / L"SourceFiles" / (flr->htmlFileName + L".html"));
-	}
-
 	SortedList<WString> predefinedFileGroups;
 	{
 		// collect all folders of predefined file groups
