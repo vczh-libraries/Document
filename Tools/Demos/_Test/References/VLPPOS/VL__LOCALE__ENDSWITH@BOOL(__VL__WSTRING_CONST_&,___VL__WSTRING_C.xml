@@ -1,6 +1,0 @@
-<Document symbolId="vl::Locale::EndsWith@bool(::vl::WString const &amp;, ::vl::WString const &amp;, ::vl::Locale::Normalization)" accessor="public" category="Function" name="EndsWith" declFile="Locale.h" declId="FB$vl::Locale::EndsWith@bool(::vl::WString const &amp;, ::vl::WString const &amp;, ::vl::Locale::Normalization)[decl0]"><summary>Test is the postfix of the text equivalence to the provided sub string.</summary><returns>Returns true if the postfix of the text equivalence to the provided sub string.</returns><param name="text">The text to test the postfix.</param><param name="find">The sub string to match.</param><param name="normalization">Flags controlling how to normalize a string.</param><remarks>For any normalization that is not <b>None</b>, the postfix could be different to the string you want to find.</remarks><signature><![CDATA[bool EndsWith(
-    WString const & text,
-    WString const & find,
-    Normalization normalization
-) const;
-]]></signature><seealsos><symbol name="Normalization" docId="vl::Locale::Normalization" declFile="Locale.h" declId="NI$vl::Locale::Normalization"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

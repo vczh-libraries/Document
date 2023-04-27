@@ -1,7 +1,0 @@
-<Document symbolId="vl::stream::IDecoder::Setup@void(::vl::stream::IStream *)" accessor="public" category="Function" name="Setup" declFile="Interfaces.h2" declId="FB$vl::stream::IDecoder::Setup@void(::vl::stream::IStream *)[decl0]"><summary>
- Set a target <b>readable</b> stream.
- <symbol name="Read" docId="vl::stream::IDecoder::Read@::vl::vint(void *, ::vl::vint)" declFile="Interfaces.h2" declId="FB$vl::stream::IDecoder::Read@::vl::vint(void *, ::vl::vint)[decl0]"/> reads from this tream and transform the content.
- </summary><param name="_stream">The target <b>readable</b> stream.</param><signature><![CDATA[void Setup(
-    IStream * _stream
-);
-]]></signature><seealsos><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></seealsos></Document>

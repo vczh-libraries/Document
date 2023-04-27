@@ -1,4 +1,0 @@
-<Document symbolId="vl::collections::SortedList::Remove@bool([K] const &amp;)" accessor="public" category="Function" name="Remove" declFile="List.h" declId="FB$vl::collections::SortedList::Remove@bool([K] const &amp;)[impl0]"><summary>Remove an element from the list. If multiple elements equal to the specified value, only the first one will be removed</summary><returns>Returns true if the element is removed.</returns><param name="item">The item to remove.</param><signature><![CDATA[bool Remove(
-    K const & item
-);
-]]></signature></Document>

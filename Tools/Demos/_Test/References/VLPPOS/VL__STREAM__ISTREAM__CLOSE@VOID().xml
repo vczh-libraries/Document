@@ -1,3 +1,0 @@
-<Document symbolId="vl::stream::IStream::Close@void()" accessor="public" category="Function" name="Close" declFile="Interfaces.h2" declId="FB$vl::stream::IStream::Close@void()[decl0]"><summary>Close the stream, making the stream <b>unavailable</b>.</summary><signature><![CDATA[void Close(
-);
-]]></signature></Document>

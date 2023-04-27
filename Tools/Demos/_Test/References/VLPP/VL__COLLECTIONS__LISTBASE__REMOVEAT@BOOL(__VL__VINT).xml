@@ -1,4 +1,0 @@
-<Document symbolId="vl::collections::ListBase::RemoveAt@bool(::vl::vint)" accessor="public" category="Function" name="RemoveAt" declFile="List.h" declId="FB$vl::collections::ListBase::RemoveAt@bool(::vl::vint)[impl0]"><summary>Remove an element at a specified position.</summary><returns>Returns true if the element is removed. It will crash when the index is out of range.</returns><param name="index">The index of the element to remove.</param><signature><![CDATA[bool RemoveAt(
-    vint index
-);
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

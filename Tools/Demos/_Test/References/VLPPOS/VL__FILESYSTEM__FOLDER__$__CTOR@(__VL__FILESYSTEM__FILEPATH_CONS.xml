@@ -1,4 +1,0 @@
-<Document symbolId="vl::filesystem::Folder::$__ctor@(::vl::filesystem::FilePath const &amp;)" accessor="public" category="Function" name="$__ctor" declFile="FileSystem.h" declId="FB$vl::filesystem::Folder::$__ctor@(::vl::filesystem::FilePath const &amp;)[decl0]"><summary>Create a reference to a specified folder. The folder is not required to exist.</summary><param name="_filePath">The specified folder.</param><signature><![CDATA[ Folder(
-    FilePath const & _filePath
-);
-]]></signature><seealsos><symbol name="FilePath" docId="vl::filesystem::FilePath" declFile="FileSystem.h" declId="NI$vl::filesystem::FilePath"/></seealsos></Document>

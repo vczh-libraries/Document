@@ -1,7 +1,0 @@
-<Document symbolId="vl::LoremIpsumCasing" accessor="" category="Enum" name="LoremIpsumCasing" declFile="String.h" declId="NI$vl::LoremIpsumCasing"><summary>Style of the random text.</summary><enumitem name="AllWordsLowerCase">First letters of all words are lower cased.</enumitem><enumitem name="AllWordsUpperCase">First letters of all words are upper cased.</enumitem><enumitem name="FirstWordUpperCase">first letters of first words of all sentences are upper cased.</enumitem><signature><![CDATA[enum class LoremIpsumCasing
-{
-    AllWordsLowerCase,
-    FirstWordUpperCase,
-    AllWordsUpperCase,
-};
-]]></signature></Document>

@@ -1,3 +1,0 @@
-<Document symbolId="vl::reflection::description::ITypeManager::GetTypeDescriptorCount@::vl::vint()" accessor="public" category="Function" name="GetTypeDescriptorCount" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::description::ITypeManager::GetTypeDescriptorCount@::vl::vint()[decl0]"><summary>Get the number of all registered types.</summary><returns>The number of all registered types.</returns><signature><![CDATA[vint GetTypeDescriptorCount(
-);
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

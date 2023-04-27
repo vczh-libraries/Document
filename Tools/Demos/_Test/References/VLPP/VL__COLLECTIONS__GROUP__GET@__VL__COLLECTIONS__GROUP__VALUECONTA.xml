@@ -1,4 +1,0 @@
-<Document symbolId="vl::collections::Group::Get@::vl::collections::Group::ValueContainer const &amp;([KK] const &amp;)" accessor="public" category="Function" name="Get" declFile="Dictionary.h" declId="FB$vl::collections::Group::Get@::vl::collections::Group::ValueContainer const &amp;([KK] const &amp;)[impl0]"><summary>Get all values associated to a specified key.</summary><returns>All associated values. It will crash if the key does not exist.</returns><param name="key">The key to find.</param><signature><![CDATA[ValueContainer const & Get(
-    KK const & key
-) const;
-]]></signature><seealsos><symbol name="ValueContainer" declFile="Dictionary.h" declId="NI$vl::collections::Group::ValueContainer"/></seealsos></Document>

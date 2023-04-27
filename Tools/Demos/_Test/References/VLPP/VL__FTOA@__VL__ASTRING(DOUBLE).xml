@@ -1,4 +1,0 @@
-<Document symbolId="vl::ftoa@::vl::AString(double)" accessor="" category="Function" name="ftoa" declFile="String.h" declId="FB$vl::ftoa@::vl::AString(double)[decl0]"><summary>Convert a 64-bits floating pointer number to a string.</summary><returns>The converted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[AString ftoa(
-    double number
-);
-]]></signature><seealsos><symbol name="AString" docId="vl::AString" declFile="String.h" declId="NI$vl::AString"/></seealsos></Document>

@@ -1,5 +1,0 @@
-<Document symbolId="vl::regex::Regex::$__ctor@(::vl::WString const &amp;, bool)" accessor="public" category="Function" name="$__ctor" declFile="Regex.h" declId="FB$vl::regex::Regex::$__ctor@(::vl::WString const &amp;, bool)[decl0]"><summary>Create a regular expression. It will crash if the regular expression produces syntax error.</summary><param name="code">The regular expression in a string.</param><param name="preferPure">Set to true to use DFA if possible.</param><signature><![CDATA[ Regex(
-    WString const & code,
-    bool preferPure /* optional */
-);
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

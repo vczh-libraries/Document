@@ -1,4 +1,0 @@
-<Document symbolId="vl::parsing::ParsingError" accessor="" category="Class" name="ParsingError" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingError"><summary>Error.</summary><signature><![CDATA[class ParsingError
-    : Object
-    , reflection::Description<ParsingError>;
-]]></signature><seealsos><symbol name="ParsingError" docId="vl::parsing::ParsingError" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingError"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

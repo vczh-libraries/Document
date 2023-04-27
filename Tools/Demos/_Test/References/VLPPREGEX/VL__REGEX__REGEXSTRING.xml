@@ -1,3 +1,0 @@
-<Document symbolId="vl::regex::RegexString" accessor="" category="Class" name="RegexString" declFile="Regex.h" declId="NI$vl::regex::RegexString"><summary>A sub string of the string that a <symbol name="Regex" docId="vl::regex::Regex" declFile="Regex.h" declId="NI$vl::regex::Regex"/> is matched against.</summary><signature><![CDATA[class RegexString
-    : Object;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

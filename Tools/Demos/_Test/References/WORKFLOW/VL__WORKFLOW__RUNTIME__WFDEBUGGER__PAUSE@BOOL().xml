@@ -1,3 +1,0 @@
-<Document symbolId="vl::workflow::runtime::WfDebugger::Pause@bool()" accessor="public" category="Function" name="Pause" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::Pause@bool()[decl0]"><summary>Pause the Workflow program.</summary><returns>Returns true if this operation is succeeded.</returns><signature><![CDATA[bool Pause(
-);
-]]></signature></Document>

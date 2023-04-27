@@ -1,4 +1,0 @@
-<Document symbolId="vl::ObjectBox::operator =@::vl::ObjectBox&lt;[T]&gt; &amp;([T] const &amp;)" accessor="public" category="Function" name="operator =" declFile="Basic.h" declId="FB$vl::ObjectBox::operator =@::vl::ObjectBox&lt;[T]&gt; &amp;([T] const &amp;)[impl0]"><summary>Replace the boxed data of a value type.</summary><returns>The reference object itself.</returns><param name="_object">The data to replace the original data.</param><signature><![CDATA[ObjectBox<T> & operator =(
-    T const & _object
-);
-]]></signature><seealsos><symbol name="ObjectBox" docId="vl::ObjectBox" declFile="Basic.h" declId="NI$vl::ObjectBox"/></seealsos></Document>

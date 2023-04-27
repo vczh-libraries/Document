@@ -13,54 +13,10 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Calculator">
-      <UniqueIdentifier>{b83eef7b-173d-4d07-afaa-586586c7fa86}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\TypePrinter">
-      <UniqueIdentifier>{122e1fb2-146b-41cf-8936-692e101437aa}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Calculator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Calculator\Calculator.cpp">
-      <Filter>Source Files\Calculator</Filter>
-    </ClCompile>
-    <ClCompile Include="Calculator\Expr.cpp">
-      <Filter>Source Files\Calculator</Filter>
-    </ClCompile>
-    <ClCompile Include="Calculator\Main.cpp">
-      <Filter>Source Files\Calculator</Filter>
-    </ClCompile>
-    <ClCompile Include="STL.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TypePrinter\Main.cpp">
-      <Filter>Source Files\TypePrinter</Filter>
-    </ClCompile>
-    <ClCompile Include="TypePrinter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Gaclib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="_Test.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Calculator\Calculator.h">
-      <Filter>Source Files\Calculator</Filter>
-    </ClInclude>
-    <ClInclude Include="Calculator\Expr.h">
-      <Filter>Source Files\Calculator</Filter>
-    </ClInclude>
-    <ClInclude Include="TypePrinter\TypePrinter.h">
-      <Filter>Source Files\TypePrinter</Filter>
-    </ClInclude>
-    <ClInclude Include="TypePrinter\LastArg.h">
-      <Filter>Source Files\TypePrinter</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

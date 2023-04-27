@@ -1,3 +1,0 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::GetSourceCodeBeforeCodegen@::vl::WString()" accessor="public" category="Function" name="GetSourceCodeBeforeCodegen" declFile="WfRuntime.h" declId="FB$vl::workflow::runtime::WfRuntimeCallStackInfo::GetSourceCodeBeforeCodegen@::vl::WString()[decl0]"><summary>Get the source code of the executing module.</summary><returns>The source code.</returns><signature><![CDATA[WString GetSourceCodeBeforeCodegen(
-);
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

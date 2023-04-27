@@ -1,3 +1,0 @@
-<Document symbolId="vl::reflection::description::ITypeManager::Load@bool()" accessor="public" category="Function" name="Load" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::description::ITypeManager::Load@bool()[decl0]"><summary>Load all added type loaders.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Load(
-);
-]]></signature></Document>

@@ -1,2 +1,0 @@
-<Document symbolId="vl::collections::po::Component::nodeCount" accessor="public" category="Variable" name="nodeCount" declFile="PartialOrdering.h" declId="NI$vl::collections::po::Component::nodeCount"><summary>The number of nodes in this component.</summary><signature><![CDATA[vint nodeCount;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

@@ -1,8 +1,0 @@
-<Document symbolId="vl::stream::MemoryStream::$__ctor@(::vl::vint)" accessor="public" category="Function" name="$__ctor" declFile="MemoryStream.h" declId="FB$vl::stream::MemoryStream::$__ctor@(::vl::vint)[decl0]"><summary>Create a memory stream.</summary><param name="_block">
- Size for each allocation.
- When the allocated buffer is not big enough for writing,
- the buffer will be rebuilt with an extension of &quot;_block&quot; in bytes.
- </param><signature><![CDATA[ MemoryStream(
-    vint _block /* optional */
-);
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

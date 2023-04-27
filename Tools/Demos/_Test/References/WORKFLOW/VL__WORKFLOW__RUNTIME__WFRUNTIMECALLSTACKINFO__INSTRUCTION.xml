@@ -1,2 +1,0 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::instruction" accessor="public" category="Variable" name="instruction" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::instruction"><summary>The executing instruction.</summary><signature><![CDATA[vint instruction;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

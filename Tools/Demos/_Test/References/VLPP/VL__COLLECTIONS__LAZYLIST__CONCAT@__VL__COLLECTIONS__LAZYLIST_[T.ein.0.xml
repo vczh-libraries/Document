@@ -1,9 +1,0 @@
-<example><![CDATA[
- int main()
- {
-     vint xs[] = {1, 2, 3, 4, 5};
-     vint ys[] = {6, 7, 8, 9, 10};
-     auto zs = From(xs).Concat(From(ys));
-     FOREACH(vint, z, zs) Console::Write(itow(z) + L" ");
- }
- ]]></example>

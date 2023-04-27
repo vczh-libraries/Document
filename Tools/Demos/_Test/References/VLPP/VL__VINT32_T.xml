@@ -1,2 +1,0 @@
-<Document symbolId="vl::vint32_t" accessor="" category="TypeAlias" name="vint32_t" declFile="Basic.h" declId="NI$vl::vint32_t"><summary>4-bytes signed integer.</summary><signature><![CDATA[using vint32_t = signed __int32;
-]]></signature></Document>

@@ -1,3 +1,0 @@
-<Document symbolId="vl::regex::RegexMatch::Captures@::vl::regex::RegexMatch::CaptureList const &amp;()" accessor="public" category="Function" name="Captures" declFile="Regex.h" declId="FB$vl::regex::RegexMatch::Captures@::vl::regex::RegexMatch::CaptureList const &amp;()[decl0]"><summary>Get all sub strings that are captured anonymously.</summary><returns>All sub strings that are captured anonymously.</returns><example index="0"/><signature><![CDATA[CaptureList const & Captures(
-) const;
-]]></signature><seealsos><symbol name="CaptureList" declFile="Regex.h" declId="NI$vl::regex::RegexMatch::CaptureList"/></seealsos></Document>

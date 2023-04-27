@@ -1,5 +1,0 @@
-<Document symbolId="vl::KeyType" accessor="" category="Struct" name="KeyType" declFile="Basic.h" declId="NI$vl::KeyType"><summary>Type for specify and create a representative value for comparing another value of a specific type for containers.</summary><typeparam name="T">The element type for containers.</typeparam><signature><![CDATA[template <
-    typename T
->
-struct KeyType;
-]]></signature></Document>

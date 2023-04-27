@@ -1,2 +1,0 @@
-<Document symbolId="vl::vuint16_t" accessor="" category="TypeAlias" name="vuint16_t" declFile="Basic.h" declId="NI$vl::vuint16_t"><summary>2-bytes unsigned integer.</summary><signature><![CDATA[using vuint16_t = unsigned __int16;
-]]></signature></Document>

@@ -1,5 +1,0 @@
-<Document symbolId="vl::collections::Array::Set@bool(::vl::vint, [T] const &amp;)" accessor="public" category="Function" name="Set" declFile="List.h" declId="FB$vl::collections::Array::Set@bool(::vl::vint, [T] const &amp;)[impl0]"><summary>Replace an element in the specified position.</summary><returns>Returns true if this operation succeeded. It will crash when the index is out of range</returns><param name="index">The position of the element to replace.</param><param name="item">The new value to replace.</param><signature><![CDATA[bool Set(
-    vint index,
-    T const & item
-);
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

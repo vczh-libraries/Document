@@ -1,9 +1,0 @@
-<Document symbolId="vl::collections::Group::Remove@bool([KK] const &amp;, [VK] const &amp;)" accessor="public" category="Function" name="Remove" declFile="Dictionary.h" declId="FB$vl::collections::Group::Remove@bool([KK] const &amp;, [VK] const &amp;)[impl0]"><summary>Remove a value associated to a specified key.</summary><returns>
- Returns true if the value is removed.
- If this value is associated to the key for jultiple times, only the first one will be removed.
- If this value is associated to the key for jultiple times, only the first one will be removed.
- </returns><param name="key">The key to find.</param><param name="value">The value to remove.</param><signature><![CDATA[bool Remove(
-    KK const & key,
-    VK const & value
-);
-]]></signature></Document>

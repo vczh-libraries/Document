@@ -1,4 +1,0 @@
-<Document symbolId="vl::reflection::description::CoroutineResult::SetResult@void(::vl::reflection::description::Value const &amp;)" accessor="public" category="Function" name="SetResult" declFile="WfLibraryPredefined.h" declId="FB$vl::reflection::description::CoroutineResult::SetResult@void(::vl::reflection::description::Value const &amp;)[decl0]"><summary>Set the object provided to the coroutine.</summary><param name="value">The object provided to the coroutine.</param><signature><![CDATA[void SetResult(
-    Value const & value
-);
-]]></signature><seealsos><symbol name="Value" docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/></seealsos></Document>

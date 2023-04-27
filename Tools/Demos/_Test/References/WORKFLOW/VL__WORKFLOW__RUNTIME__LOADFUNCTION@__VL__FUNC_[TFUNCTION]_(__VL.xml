@@ -1,8 +1,0 @@
-<Document symbolId="vl::workflow::runtime::LoadFunction@::vl::Func&lt;[TFunction]&gt;(::vl::Ptr&lt;::vl::workflow::runtime::WfRuntimeGlobalContext&gt;, ::vl::WString const &amp;)" accessor="" category="Function" name="LoadFunction" declFile="WfRuntime.h" declId="FB$vl::workflow::runtime::LoadFunction@::vl::Func&lt;[TFunction]&gt;(::vl::Ptr&lt;::vl::workflow::runtime::WfRuntimeGlobalContext&gt;, ::vl::WString const &amp;)[impl0]"><summary>Load a C++ friendly function from a global context, raise an exception if multiple functions are found under the same name. Function &quot;&gt;initialize&lt;&quot; should be the first to execute.</summary><typeparam name="TFunction">Type of the function.</typeparam><returns>The loaded C++ friendly function.</returns><param name="context">The context to the evaluation environment.</param><param name="name">The function name.</param><remarks>&quot;<b>&lt;initialize&gt;</b>&quot; must be the first function that is executed after an assembly is loaded. Its type is <b>void()</b>.</remarks><signature><![CDATA[template <
-    typename TFunction
->
-Func<TFunction> LoadFunction(
-    Ptr<WfRuntimeGlobalContext> context,
-    WString const & name
-);
-]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="WfRuntimeGlobalContext" docId="vl::workflow::runtime::WfRuntimeGlobalContext" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeGlobalContext"/></seealsos></Document>

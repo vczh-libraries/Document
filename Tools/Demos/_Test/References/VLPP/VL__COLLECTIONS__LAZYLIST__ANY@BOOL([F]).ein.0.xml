@@ -1,8 +1,0 @@
-<example><![CDATA[
- int main()
- {
-     vint xs[] = {1, 2, 3, 4, 5};
-     auto ys = From(xs).Any([](vint x){ return x % 2 == 0; });
-     Console::WriteLine(ys ? L"There are even numbers" : L"There is no even number");
- }
- ]]></example>

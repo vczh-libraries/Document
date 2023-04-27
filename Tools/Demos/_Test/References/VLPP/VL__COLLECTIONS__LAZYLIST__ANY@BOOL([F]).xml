@@ -1,7 +1,0 @@
-<Document symbolId="vl::collections::LazyList::Any@bool([F])" accessor="public" category="Function" name="Any" declFile="Operation.h" declId="FB$vl::collections::LazyList::Any@bool([F])[impl0]"><summary>Test if any elements in the lazy list satisfy a filter.</summary><typeparam name="F">Type of the filter.</typeparam><returns>Returns true if there is at least one element satisfies the filter.</returns><param name="f">The filter.</param><example index="0"/><signature><![CDATA[template <
-    typename F
->
-bool Any(
-    F f
-) const;
-]]></signature></Document>

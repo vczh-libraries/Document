@@ -1,3 +1,0 @@
-<Document symbolId="vl::ThreadPoolLite" accessor="" category="Class" name="ThreadPoolLite" declFile="Threading.h" declId="NI$vl::ThreadPoolLite"><summary>A light-weight thread pool.</summary><signature><![CDATA[class ThreadPoolLite
-    : Object;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

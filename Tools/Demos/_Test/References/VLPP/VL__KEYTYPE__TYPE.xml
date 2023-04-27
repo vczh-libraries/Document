@@ -1,2 +1,0 @@
-<Document symbolId="vl::KeyType::Type" accessor="public" category="TypeAlias" name="Type" declFile="Basic.h" declId="NI$vl::KeyType::Type"><summary>The type of the representative value.</summary><signature><![CDATA[using Type = T;
-]]></signature></Document>

@@ -1,6 +1,0 @@
-<Document symbolId="vl::reflection::description::AsyncContext::IsCancelled@bool()" accessor="public" category="Function" name="IsCancelled" declFile="WfLibraryPredefined.h" declId="FB$vl::reflection::description::AsyncContext::IsCancelled@bool()[decl0]"><summary>Test if the current async operation is expected to cancel.</summary><returns>Returns true if the current async operation is expected to cancel.</returns><remarks>
- This function is accessible by &quot;$.IsCancelled&quot; in an $Async coroutine.
- A cancelable async operation should check this value when it is able to stop properly, and stop when it is true.
- </remarks><signature><![CDATA[bool IsCancelled(
-);
-]]></signature></Document>

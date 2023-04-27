@@ -1,6 +1,0 @@
-<Document symbolId="vl::stream::BroadcastStream::Targets@::vl::stream::BroadcastStream::StreamList &amp;()" accessor="public" category="Function" name="Targets" declFile="BroadcastStream.h" declId="FB$vl::stream::BroadcastStream::Targets@::vl::stream::BroadcastStream::StreamList &amp;()[decl0]"><summary>
- Get the list of output streams.
- You can change this list to subscribe or unsubscribe.
- </summary><returns>The list of output streams.</returns><signature><![CDATA[StreamList & Targets(
-);
-]]></signature><seealsos><symbol name="StreamList" declFile="BroadcastStream.h" declId="NI$vl::stream::BroadcastStream::StreamList"/></seealsos></Document>

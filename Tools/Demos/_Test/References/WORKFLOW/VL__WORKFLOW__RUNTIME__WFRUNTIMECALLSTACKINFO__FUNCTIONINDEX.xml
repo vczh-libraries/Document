@@ -1,2 +1,0 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo::functionIndex" accessor="public" category="Variable" name="functionIndex" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::functionIndex"><summary>The executing function.</summary><signature><![CDATA[vint functionIndex;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

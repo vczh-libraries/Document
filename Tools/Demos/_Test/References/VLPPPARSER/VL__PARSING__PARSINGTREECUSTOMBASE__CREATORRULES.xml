@@ -1,2 +1,0 @@
-<Document symbolId="vl::parsing::ParsingTreeCustomBase::creatorRules" accessor="public" category="Variable" name="creatorRules" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeCustomBase::creatorRules"><summary>Names of all rules that return this object.</summary><signature><![CDATA[collections::List<WString> creatorRules;
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/></seealsos></Document>

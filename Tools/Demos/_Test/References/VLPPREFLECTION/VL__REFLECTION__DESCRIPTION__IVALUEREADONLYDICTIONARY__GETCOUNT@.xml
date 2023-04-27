@@ -1,3 +1,0 @@
-<Document symbolId="vl::reflection::description::IValueReadonlyDictionary::GetCount@::vl::vint()" accessor="public" category="Function" name="GetCount" declFile="GuiTypeDescriptorPredefined.h" declId="FB$vl::reflection::description::IValueReadonlyDictionary::GetCount@::vl::vint()[decl0]"><summary>Get the number of keys.</summary><returns>The number of keys. It is also the number of values.</returns><signature><![CDATA[vint GetCount(
-);
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

@@ -1,2 +1,0 @@
-<Document symbolId="vl::parsing::ParsingToken::value" accessor="public" category="Variable" name="value" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingToken::value"><summary>Content of the token.</summary><signature><![CDATA[WString value;
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

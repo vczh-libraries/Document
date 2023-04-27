@@ -1,3 +1,0 @@
-<Document symbolId="vl::FinalizeGlobalStorage@void()" accessor="" category="Function" name="FinalizeGlobalStorage" declFile="GlobalStorage.h" declId="FB$vl::FinalizeGlobalStorage@void()[decl0]"><summary>Free all memories used by global storages.</summary><signature><![CDATA[void FinalizeGlobalStorage(
-);
-]]></signature></Document>

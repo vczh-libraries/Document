@@ -1,2 +1,0 @@
-<Document symbolId="vl::vuint8_t" accessor="" category="TypeAlias" name="vuint8_t" declFile="Basic.h" declId="NI$vl::vuint8_t"><summary>1-byte unsigned integer.</summary><signature><![CDATA[using vuint8_t = unsigned __int8;
-]]></signature></Document>

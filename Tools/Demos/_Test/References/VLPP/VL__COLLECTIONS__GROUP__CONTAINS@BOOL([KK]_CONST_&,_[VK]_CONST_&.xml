@@ -1,5 +1,0 @@
-<Document symbolId="vl::collections::Group::Contains@bool([KK] const &amp;, [VK] const &amp;)" accessor="public" category="Function" name="Contains" declFile="Dictionary.h" declId="FB$vl::collections::Group::Contains@bool([KK] const &amp;, [VK] const &amp;)[impl0]"><summary>Test if a value is associated to a specified key or not.</summary><returns>Returns true if the specified value is associated to the specified key.</returns><param name="key">The key to find.</param><param name="value">The value to find.</param><signature><![CDATA[bool Contains(
-    KK const & key,
-    VK const & value
-) const;
-]]></signature></Document>

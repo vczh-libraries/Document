@@ -1,7 +1,0 @@
-<Document symbolId="vl::collections::Dictionary::SetLessMemoryMode@void(bool)" accessor="public" category="Function" name="SetLessMemoryMode" declFile="Dictionary.h" declId="FB$vl::collections::Dictionary::SetLessMemoryMode@void(bool)[impl0]"><summary>Set a preference of using memory.</summary><param name="mode">
- Set to true (by default) to let the container actively reduce memories when there is too much room for unused elements.
- This could happen after removing a lot of elements.
- </param><signature><![CDATA[void SetLessMemoryMode(
-    bool mode
-);
-]]></signature></Document>

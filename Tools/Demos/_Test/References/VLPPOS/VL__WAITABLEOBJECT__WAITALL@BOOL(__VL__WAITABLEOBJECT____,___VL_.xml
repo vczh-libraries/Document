@@ -1,5 +1,0 @@
-<Document symbolId="vl::WaitableObject::WaitAll@bool(::vl::WaitableObject * *, ::vl::vint)" accessor="public" category="Function" name="WaitAll" declFile="Threading.h" declId="FB$vl::WaitableObject::WaitAll@bool(::vl::WaitableObject * *, ::vl::vint)[decl0]"><summary>Wait for multiple objects.</summary><returns>Returns true if all objects are signaled. Returns false if this operation failed.</returns><param name="objects">A pointer to an array to <symbol name="WaitableObject" docId="vl::WaitableObject" declFile="Threading.h" declId="NI$vl::WaitableObject"/> pointers.</param><param name="count">The number of <symbol name="WaitableObject" docId="vl::WaitableObject" declFile="Threading.h" declId="NI$vl::WaitableObject"/> objects in the array.</param><remarks>This function is only available in Windows.</remarks><signature><![CDATA[static bool WaitAll(
-    WaitableObject * * objects,
-    vint count
-);
-]]></signature><seealsos><symbol name="WaitableObject" docId="vl::WaitableObject" declFile="Threading.h" declId="NI$vl::WaitableObject"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

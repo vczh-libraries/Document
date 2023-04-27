@@ -1,9 +1,0 @@
-<Document symbolId="vl::reflection::DescriptableObject::SetInternalProperty@void(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::Object&gt;)" accessor="public" category="Function" name="SetInternalProperty" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::DescriptableObject::SetInternalProperty@void(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::Object&gt;)[decl0]"><summary>
- Set an internal property of this object.
- Internal properties are totally for customization,
- they do not affect the object in anyway.
- </summary><param name="name">Name of the property.</param><param name="value">Value of the internal property of this object.</param><signature><![CDATA[void SetInternalProperty(
-    WString const & name,
-    Ptr<Object> value
-);
-]]></signature><seealsos><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

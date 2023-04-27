@@ -1,6 +1,0 @@
-<Document symbolId="vl::reflection::description::DestroyGlobalTypeManager@bool()" accessor="" category="Function" name="DestroyGlobalTypeManager" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::description::DestroyGlobalTypeManager@bool()[decl0]"><summary>Unload all types and free the type manager.</summary><returns>Returns true if this operation succeeded.</returns><remarks>
- After calling this function, you can no longer register new types,
- and calling <symbol name="GetGlobalTypeManager" docId="vl::reflection::description::GetGlobalTypeManager@::vl::reflection::description::ITypeManager *()" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::description::GetGlobalTypeManager@::vl::reflection::description::ITypeManager *()[decl0]"/> will always get null.
- </remarks><signature><![CDATA[bool DestroyGlobalTypeManager(
-);
-]]></signature></Document>

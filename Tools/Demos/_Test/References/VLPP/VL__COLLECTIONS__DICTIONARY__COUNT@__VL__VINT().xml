@@ -1,3 +1,0 @@
-<Document symbolId="vl::collections::Dictionary::Count@::vl::vint()" accessor="public" category="Function" name="Count" declFile="Dictionary.h" declId="FB$vl::collections::Dictionary::Count@::vl::vint()[impl0]"><summary>Get the number of keys.</summary><returns>The number of keys. It is also the number of values.</returns><signature><![CDATA[vint Count(
-) const;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

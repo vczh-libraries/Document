@@ -1,3 +1,0 @@
-<Document symbolId="vl::reflection::description::IAsync::GetStatus@::vl::reflection::description::AsyncStatus()" accessor="public" category="Function" name="GetStatus" declFile="WfLibraryPredefined.h" declId="FB$vl::reflection::description::IAsync::GetStatus@::vl::reflection::description::AsyncStatus()[decl0]"><summary>Get the status of this async operation.</summary><returns>The status of this async operation.</returns><signature><![CDATA[AsyncStatus GetStatus(
-);
-]]></signature><seealsos><symbol name="AsyncStatus" docId="vl::reflection::description::AsyncStatus" declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::AsyncStatus"/></seealsos></Document>

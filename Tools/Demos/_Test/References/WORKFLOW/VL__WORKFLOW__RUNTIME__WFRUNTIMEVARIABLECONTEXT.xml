@@ -1,4 +1,0 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeVariableContext" accessor="" category="Class" name="WfRuntimeVariableContext" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeVariableContext"><summary>Variable storage.</summary><signature><![CDATA[class WfRuntimeVariableContext
-    : Object
-    , reflection::Description<WfRuntimeVariableContext>;
-]]></signature><seealsos><symbol name="WfRuntimeVariableContext" docId="vl::workflow::runtime::WfRuntimeVariableContext" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeVariableContext"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>

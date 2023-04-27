@@ -1,2 +1,0 @@
-<Document symbolId="vl::regex::RegexToken::columnStart" accessor="public" category="Variable" name="columnStart" declFile="Regex.h" declId="NI$vl::regex::RegexToken::columnStart"><summary>Column number of the first character, begins at 0.</summary><signature><![CDATA[vint columnStart;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

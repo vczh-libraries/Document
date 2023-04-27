@@ -1,4 +1,0 @@
-<Document symbolId="vl::parsing::xml::XmlNode::IVisitor" accessor="public" category="Class" name="IVisitor" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlNode::IVisitor"><summary>Visitor interface for <symbol name="XmlNode" docId="vl::parsing::xml::XmlNode" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlNode"/>.</summary><signature><![CDATA[class IVisitor
-    : vl::reflection::IDescriptable
-    , vl::reflection::Description<IVisitor>;
-]]></signature><seealsos><symbol name="IVisitor" docId="vl::parsing::xml::XmlNode::IVisitor" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlNode::IVisitor"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>

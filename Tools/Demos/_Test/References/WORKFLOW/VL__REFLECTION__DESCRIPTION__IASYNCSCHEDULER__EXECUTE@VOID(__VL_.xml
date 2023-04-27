@@ -1,8 +1,0 @@
-<Document symbolId="vl::reflection::description::IAsyncScheduler::Execute@void(::vl::Func&lt;void()&gt; const &amp;)" accessor="public" category="Function" name="Execute" declFile="WfLibraryPredefined.h" declId="FB$vl::reflection::description::IAsyncScheduler::Execute@void(::vl::Func&lt;void()&gt; const &amp;)[decl0]"><summary>Called when a callback needs to be executed in any thread.</summary><param name="callback">The callback to execute.</param><remarks>
- You can decide which thread to execute.
- For GacUI, the scheduler that attached to the UI thread will execute this callback in the UI thread.
- </remarks><signature><![CDATA[void Execute(
-    Func<void(
-)> const & callback
-);
-]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/></seealsos></Document>

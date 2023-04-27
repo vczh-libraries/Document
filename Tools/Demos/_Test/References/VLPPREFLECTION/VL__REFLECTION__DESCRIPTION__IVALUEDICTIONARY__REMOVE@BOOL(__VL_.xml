@@ -1,4 +1,0 @@
-<Document symbolId="vl::reflection::description::IValueDictionary::Remove@bool(::vl::reflection::description::Value const &amp;)" accessor="public" category="Function" name="Remove" declFile="GuiTypeDescriptorPredefined.h" declId="FB$vl::reflection::description::IValueDictionary::Remove@bool(::vl::reflection::description::Value const &amp;)[decl0]"><summary>Remove a key with the associated value.</summary><returns>Returns true if the key and the value is removed.</returns><param name="key">The key to find.</param><signature><![CDATA[bool Remove(
-    Value const & key
-);
-]]></signature><seealsos><symbol name="Value" docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/></seealsos></Document>

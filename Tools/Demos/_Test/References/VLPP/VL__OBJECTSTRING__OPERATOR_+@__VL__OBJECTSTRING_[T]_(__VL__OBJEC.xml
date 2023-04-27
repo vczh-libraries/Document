@@ -1,4 +1,0 @@
-<Document symbolId="vl::ObjectString::operator +@::vl::ObjectString&lt;[T]&gt;(::vl::ObjectString&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="operator +" declFile="String.h" declId="FB$vl::ObjectString::operator +@::vl::ObjectString&lt;[T]&gt;(::vl::ObjectString&lt;[T]&gt; const &amp;)[impl0]"><summary>Create a new string by concatenating two strings.</summary><returns>The new string.</returns><param name="string">The string to append.</param><signature><![CDATA[ObjectString<T> operator +(
-    ObjectString<T> const & string
-) const;
-]]></signature><seealsos><symbol name="ObjectString" docId="vl::ObjectString" declFile="String.h" declId="NI$vl::ObjectString"/></seealsos></Document>

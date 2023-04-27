@@ -1,4 +1,0 @@
-<Document symbolId="vl::collections::LazyList::Repeat@::vl::collections::LazyList&lt;[T]&gt;(::vl::vint)" accessor="public" category="Function" name="Repeat" declFile="Operation.h" declId="FB$vl::collections::LazyList::Repeat@::vl::collections::LazyList&lt;[T]&gt;(::vl::vint)[impl0]"><summary>Create a new lazy list with several copies of the lazy list in order.</summary><returns>The created lazy list.</returns><param name="count">The numbers of copies.</param><example index="0"/><signature><![CDATA[LazyList<T> Repeat(
-    vint count
-) const;
-]]></signature><seealsos><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

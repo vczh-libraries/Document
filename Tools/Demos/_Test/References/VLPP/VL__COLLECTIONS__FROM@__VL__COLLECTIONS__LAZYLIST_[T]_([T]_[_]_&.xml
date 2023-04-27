@@ -1,8 +1,0 @@
-<Document symbolId="vl::collections::From@::vl::collections::LazyList&lt;[T]&gt;([T] [*] &amp;)" accessor="" category="Function" name="From" declFile="Operation.h" declId="FB$vl::collections::From@::vl::collections::LazyList&lt;[T]&gt;([T] [*] &amp;)[impl0]"><summary>Create a lazy list from an array.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="size">Size of the array.</typeparam><returns>The created lazy list.</returns><param name="items">The array.</param><signature><![CDATA[template <
-    typename T, 
-    int size
->
-LazyList<T> From(
-    T( & items)[expr]
-);
-]]></signature><seealsos><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/></seealsos></Document>

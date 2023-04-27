@@ -1,4 +1,0 @@
-<Document symbolId="vl::filesystem::FilePath::operator /@::vl::filesystem::FilePath(::vl::WString const &amp;)" accessor="public" category="Function" name="operator /" declFile="FileSystem.h" declId="FB$vl::filesystem::FilePath::operator /@::vl::filesystem::FilePath(::vl::WString const &amp;)[decl0]"><summary>Concat an absolute path and a relative path.</summary><returns>The result absolute path.</returns><param name="relativePath">The relative path to concat.</param><signature><![CDATA[FilePath operator /(
-    WString const & relativePath
-) const;
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="FilePath" docId="vl::filesystem::FilePath" declFile="FileSystem.h" declId="NI$vl::filesystem::FilePath"/></seealsos></Document>

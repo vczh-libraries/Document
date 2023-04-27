@@ -1,4 +1,0 @@
-<Document symbolId="vl::collections::List::Add@::vl::vint([T] const &amp;)" accessor="public" category="Function" name="Add" declFile="List.h" declId="FB$vl::collections::List::Add@::vl::vint([T] const &amp;)[impl0]"><summary>Append a value at the end of the list.</summary><returns>The index of the added item.</returns><param name="item">The value to add.</param><signature><![CDATA[vint Add(
-    T const & item
-);
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

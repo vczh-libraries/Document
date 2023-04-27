@@ -1,3 +1,0 @@
-<Document symbolId="vl::regex::RegexLexer::Colorize@::vl::regex::RegexLexerColorizer()" accessor="public" category="Function" name="Colorize" declFile="Regex.h" declId="FB$vl::regex::RegexLexer::Colorize@::vl::regex::RegexLexerColorizer()[decl0]"><summary>Create a equivalence colorizer from this lexical analyzer.</summary><returns>The colorizer.</returns><signature><![CDATA[RegexLexerColorizer Colorize(
-) const;
-]]></signature><seealsos><symbol name="RegexLexerColorizer" docId="vl::regex::RegexLexerColorizer" declFile="Regex.h" declId="NI$vl::regex::RegexLexerColorizer"/></seealsos></Document>

@@ -1,7 +1,0 @@
-<Document symbolId="vl::collections::From@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" accessor="" category="Function" name="From" declFile="Operation.h" declId="FB$vl::collections::From@::vl::collections::LazyList&lt;[T]&gt;(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)[impl0]"><summary>Create a lazy list from an enumerable.</summary><typeparam name="T">Type of elements.</typeparam><returns>The created lazy list.</returns><param name="enumerable">The enumerable.</param><signature><![CDATA[template <
-    typename T
->
-LazyList<T> From(
-    IEnumerable<T> const & enumerable
-);
-]]></signature><seealsos><symbol name="IEnumerable" docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/></seealsos></Document>

@@ -1,7 +1,0 @@
-<Document symbolId="vl::stream::LzwDecoder" accessor="" category="Class" name="LzwDecoder" declFile="CompressionStream.h" declId="NI$vl::stream::LzwDecoder"><summary>An decoder to decompress data using the Lzw algorithm.</summary><remarks>
- You are not recommended to compress data more than 1 mega bytes at once using the encoder directly.
- <symbol name="CompressStream" docId="vl::stream::CompressStream@void(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)" declFile="CompressionStream.h" declId="FB$vl::stream::CompressStream@void(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)[decl0]"/> and <symbol name="DecompressStream" docId="vl::stream::DecompressStream@void(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)" declFile="CompressionStream.h" declId="FB$vl::stream::DecompressStream@void(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)[decl0]"/> is recommended.
- </remarks><signature><![CDATA[class LzwDecoder
-    : LzwBase
-    , IDecoder;
-]]></signature><basetypes><symbol name="IDecoder" docId="vl::stream::IDecoder" declFile="Interfaces.h2" declId="NI$vl::stream::IDecoder"/><symbol name="LzwBase" declFile="CompressionStream.h" declId="NI$vl::stream::LzwBase"/></basetypes></Document>

@@ -1,7 +1,0 @@
-<example><![CDATA[
- int main()
- {
-     WString s = L"Hello, world!";
-     Console::WriteLine(s.Remove(5, 7));
- }
- ]]></example>

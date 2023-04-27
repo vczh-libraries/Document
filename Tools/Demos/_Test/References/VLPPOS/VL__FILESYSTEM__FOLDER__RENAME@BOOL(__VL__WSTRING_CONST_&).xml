@@ -1,4 +1,0 @@
-<Document symbolId="vl::filesystem::Folder::Rename@bool(::vl::WString const &amp;)" accessor="public" category="Function" name="Rename" declFile="FileSystem.h" declId="FB$vl::filesystem::Folder::Rename@bool(::vl::WString const &amp;)[decl0]"><summary>Rename the folder.</summary><returns>Returns true if this operation succeeded.</returns><param name="newName">The new folder name.</param><signature><![CDATA[bool Rename(
-    WString const & newName
-) const;
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

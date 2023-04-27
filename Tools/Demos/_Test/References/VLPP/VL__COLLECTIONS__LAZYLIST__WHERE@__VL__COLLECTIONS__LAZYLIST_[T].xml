@@ -1,7 +1,0 @@
-<Document symbolId="vl::collections::LazyList::Where@::vl::collections::LazyList&lt;[T]&gt;([F])" accessor="public" category="Function" name="Where" declFile="Operation.h" declId="FB$vl::collections::LazyList::Where@::vl::collections::LazyList&lt;[T]&gt;([F])[impl0]"><summary>Create a new lazy list with all elements filtered.</summary><typeparam name="F">Type of the filter.</typeparam><returns>The created lazy list.</returns><param name="f">The filter.</param><example index="0"/><signature><![CDATA[template <
-    typename F
->
-LazyList<T> Where(
-    F f
-) const;
-]]></signature><seealsos><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/></seealsos></Document>

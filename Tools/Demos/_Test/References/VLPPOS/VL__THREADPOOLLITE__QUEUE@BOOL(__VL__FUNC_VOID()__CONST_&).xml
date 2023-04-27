@@ -1,5 +1,0 @@
-<Document symbolId="vl::ThreadPoolLite::Queue@bool(::vl::Func&lt;void()&gt; const &amp;)" accessor="public" category="Function" name="Queue" declFile="Threading.h" declId="FB$vl::ThreadPoolLite::Queue@bool(::vl::Func&lt;void()&gt; const &amp;)[decl0]"><summary>Queue a function object.</summary><returns>Returns true if this operation succeeded.</returns><param name="proc">The function object.</param><signature><![CDATA[static bool Queue(
-    Func<void(
-)> const & proc
-);
-]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/></seealsos></Document>

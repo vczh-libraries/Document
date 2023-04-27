@@ -1,2 +1,0 @@
-<Document symbolId="vl::DateTime::hour" accessor="public" category="Variable" name="hour" declFile="Basic.h" declId="NI$vl::DateTime::hour"><summary>The hour, from 0 to 23.</summary><signature><![CDATA[vint hour;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

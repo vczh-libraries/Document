@@ -1,3 +1,0 @@
-<Document symbolId="vl::collections::LazyList::Distinct@::vl::collections::LazyList&lt;[T]&gt;()" accessor="public" category="Function" name="Distinct" declFile="Operation.h" declId="FB$vl::collections::LazyList::Distinct@::vl::collections::LazyList&lt;[T]&gt;()[impl0]"><summary>Create a new lazy list with duplicated elements removed in this lazy list.</summary><returns>The created lazy list.</returns><example index="0"/><signature><![CDATA[LazyList<T> Distinct(
-) const;
-]]></signature><seealsos><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/></seealsos></Document>

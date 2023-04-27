@@ -1,3 +1,0 @@
-<Document symbolId="vl::workflow::runtime::WfDebugger::Stop@bool()" accessor="public" category="Function" name="Stop" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::Stop@bool()[decl0]"><summary>Stop the Workflow program.</summary><returns>Returns true if this operation is succeeded.</returns><signature><![CDATA[bool Stop(
-);
-]]></signature></Document>

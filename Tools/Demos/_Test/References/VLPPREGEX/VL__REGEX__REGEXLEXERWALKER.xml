@@ -1,3 +1,0 @@
-<Document symbolId="vl::regex::RegexLexerWalker" accessor="" category="Class" name="RegexLexerWalker" declFile="Regex.h" declId="NI$vl::regex::RegexLexerWalker"><summary>A type for walking through a text against a <symbol name="RegexLexer" docId="vl::regex::RegexLexer" declFile="Regex.h" declId="NI$vl::regex::RegexLexer"/>. Call <symbol name="Walk" docId="vl::regex::RegexLexer::Walk@::vl::regex::RegexLexerWalker()" declFile="Regex.h" declId="FB$vl::regex::RegexLexer::Walk@::vl::regex::RegexLexerWalker()[decl0]"/> to create this object.</summary><example index="0"/><signature><![CDATA[class RegexLexerWalker
-    : Object;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

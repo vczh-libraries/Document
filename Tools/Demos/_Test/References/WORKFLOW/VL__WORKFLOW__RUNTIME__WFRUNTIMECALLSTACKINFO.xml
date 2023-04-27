@@ -1,4 +1,0 @@
-<Document symbolId="vl::workflow::runtime::WfRuntimeCallStackInfo" accessor="" category="Class" name="WfRuntimeCallStackInfo" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeCallStackInfo"><summary>Representing a call stack item.</summary><signature><![CDATA[class WfRuntimeCallStackInfo
-    : Object
-    , reflection::description::IValueCallStack;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IValueCallStack" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueCallStack"/></basetypes></Document>

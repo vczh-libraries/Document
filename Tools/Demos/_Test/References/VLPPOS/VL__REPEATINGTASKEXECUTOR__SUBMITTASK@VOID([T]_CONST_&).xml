@@ -1,7 +1,0 @@
-<Document symbolId="vl::RepeatingTaskExecutor::SubmitTask@void([T] const &amp;)" accessor="public" category="Function" name="SubmitTask" declFile="Threading.h" declId="FB$vl::RepeatingTaskExecutor::SubmitTask@void([T] const &amp;)[impl0]"><summary>Queue a task.</summary><param name="input">The argument to run a task.</param><remarks><p>
- When there is a running task, queuing a new task will cancel all unexecuted queued tasks.
- When there is no running task, queuing a task will execute this task immediately.
- </p></remarks><signature><![CDATA[void SubmitTask(
-    T const & input
-);
-]]></signature></Document>

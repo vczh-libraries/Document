@@ -1,7 +1,0 @@
-<Document symbolId="vl::Locale::$__ctor@(::vl::WString const &amp;)" accessor="public" category="Function" name="$__ctor" declFile="Locale.h" declId="FB$vl::Locale::$__ctor@(::vl::WString const &amp;)[decl0]"><summary>Create a locale with a specified local name.</summary><param name="_localeName">The name of the locale. If it is not provided, it becomes the invariant locale.</param><remarks>
- In Windows, the specified locale need to be installed in order to take effect.
- In Linux and macOS, only en-US is supported.
- </remarks><signature><![CDATA[ Locale(
-    WString const & _localeName /* optional */
-);
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>

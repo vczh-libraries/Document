@@ -1,4 +1,0 @@
-<Document symbolId="vl::ObjectString::Right@::vl::ObjectString&lt;[T]&gt;(::vl::vint)" accessor="public" category="Function" name="Right" declFile="String.h" declId="FB$vl::ObjectString::Right@::vl::ObjectString&lt;[T]&gt;(::vl::vint)[impl0]"><summary>Get the postfix of the string.</summary><returns>The postfix. It will crash when the specified size is out of range.</returns><param name="count">Size of the prefix.</param><example index="0"/><signature><![CDATA[ObjectString<T> Right(
-    vint count
-) const;
-]]></signature><seealsos><symbol name="ObjectString" docId="vl::ObjectString" declFile="String.h" declId="NI$vl::ObjectString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

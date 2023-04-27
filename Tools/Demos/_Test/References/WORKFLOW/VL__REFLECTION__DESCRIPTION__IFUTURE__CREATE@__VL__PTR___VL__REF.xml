@@ -1,3 +1,0 @@
-<Document symbolId="vl::reflection::description::IFuture::Create@::vl::Ptr&lt;::vl::reflection::description::IFuture&gt;()" accessor="public" category="Function" name="Create" declFile="WfLibraryPredefined.h" declId="FB$vl::reflection::description::IFuture::Create@::vl::Ptr&lt;::vl::reflection::description::IFuture&gt;()[decl0]"><summary>Create a future object.</summary><returns>The created future object.</returns><signature><![CDATA[static Ptr<IFuture> Create(
-);
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="IFuture" docId="vl::reflection::description::IFuture" declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::IFuture"/></seealsos></Document>

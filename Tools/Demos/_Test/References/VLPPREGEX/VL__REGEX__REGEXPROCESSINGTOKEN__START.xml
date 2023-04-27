@@ -1,5 +1,0 @@
-<Document symbolId="vl::regex::RegexProcessingToken::start" accessor="public" category="Variable" name="start" declFile="Regex.h" declId="NI$vl::regex::RegexProcessingToken::start"><summary>
- The read only start position of the token.
- This value will be -1 if <symbol name="interTokenState" docId="vl::regex::RegexProcessingToken::interTokenState" declFile="Regex.h" declId="NI$vl::regex::RegexProcessingToken::interTokenState"/> is not null.
- </summary><signature><![CDATA[vint const start;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

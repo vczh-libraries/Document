@@ -1,3 +1,0 @@
-<Document symbolId="vl::reflection::description::LoadPredefinedTypes@bool()" accessor="" category="Function" name="LoadPredefinedTypes" declFile="GuiTypeDescriptorReflection.h" declId="FB$vl::reflection::description::LoadPredefinedTypes@bool()[decl0]"><summary>Register all reflectable types in <b>VlppReflection</b>.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool LoadPredefinedTypes(
-);
-]]></signature></Document>

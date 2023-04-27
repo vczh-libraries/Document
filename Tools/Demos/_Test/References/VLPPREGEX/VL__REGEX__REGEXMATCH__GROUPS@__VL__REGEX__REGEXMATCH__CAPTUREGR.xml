@@ -1,3 +1,0 @@
-<Document symbolId="vl::regex::RegexMatch::Groups@::vl::regex::RegexMatch::CaptureGroup const &amp;()" accessor="public" category="Function" name="Groups" declFile="Regex.h" declId="FB$vl::regex::RegexMatch::Groups@::vl::regex::RegexMatch::CaptureGroup const &amp;()[decl0]"><summary>Get all sub strings that are captured by named groups.</summary><returns>All sub strings that are captured by named groups.</returns><example index="0"/><signature><![CDATA[CaptureGroup const & Groups(
-) const;
-]]></signature><seealsos><symbol name="CaptureGroup" declFile="Regex.h" declId="NI$vl::regex::RegexMatch::CaptureGroup"/></seealsos></Document>

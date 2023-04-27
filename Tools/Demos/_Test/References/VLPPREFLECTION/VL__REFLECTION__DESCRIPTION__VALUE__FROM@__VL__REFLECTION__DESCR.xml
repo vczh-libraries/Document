@@ -1,4 +1,0 @@
-<Document symbolId="vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::reflection::DescriptableObject *)" accessor="public" category="Function" name="From" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::description::Value::From@::vl::reflection::description::Value(::vl::reflection::DescriptableObject *)[decl0]"><summary>Create a value from a raw pointer.</summary><returns>The created value.</returns><param name="value">The raw pointer to store.</param><signature><![CDATA[static Value From(
-    DescriptableObject * value
-);
-]]></signature><seealsos><symbol name="DescriptableObject" docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/><symbol name="Value" docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/></seealsos></Document>

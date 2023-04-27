@@ -1,8 +1,0 @@
-<Document symbolId="vl::reflection::description::GetLazyList@::vl::collections::LazyList&lt;::vl::collections::Pair&lt;[K], [V]&gt;&gt;(::vl::Ptr&lt;::vl::reflection::description::IValueDictionary&gt;)" accessor="" category="Function" name="GetLazyList" declFile="GuiTypeDescriptorBuilder_Container.h" declId="FB$vl::reflection::description::GetLazyList@::vl::collections::LazyList&lt;::vl::collections::Pair&lt;[K], [V]&gt;&gt;(::vl::Ptr&lt;::vl::reflection::description::IValueDictionary&gt;)[impl0]"><summary>Convert a reflectable dictionary to a lazy list to the known element type.</summary><returns>The created lazy list.</returns><typeparam name="K">The expected key type.</typeparam><typeparam name="V">The expected value type.</typeparam><param name="value">The reflectable dictionary.</param><signature><![CDATA[template <
-    typename K, 
-    typename V
->
-collections::LazyList<collections::Pair<K, V>> GetLazyList(
-    Ptr<IValueDictionary> value
-);
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/><symbol name="Pair" docId="vl::collections::Pair" declFile="Pair.h" declId="NI$vl::collections::Pair"/><symbol name="IValueDictionary" docId="vl::reflection::description::IValueDictionary" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueDictionary"/></seealsos></Document>

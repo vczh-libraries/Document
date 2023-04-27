@@ -1,4 +1,0 @@
-<Document symbolId="vl::collections::LazyList::$__ctor@(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)" accessor="public" category="Function" name="$__ctor" declFile="Operation.h" declId="FB$vl::collections::LazyList::$__ctor@(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;)[impl0]"><summary>Create a lazy list from an enumerable.</summary><param name="enumerable">The enumerable.</param><signature><![CDATA[ LazyList(
-    IEnumerable<T> const & enumerable
-);
-]]></signature><seealsos><symbol name="IEnumerable" docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/></seealsos></Document>

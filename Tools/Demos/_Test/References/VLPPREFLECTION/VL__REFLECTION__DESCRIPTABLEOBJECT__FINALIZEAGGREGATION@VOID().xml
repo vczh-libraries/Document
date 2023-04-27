@@ -1,3 +1,0 @@
-<Document symbolId="vl::reflection::DescriptableObject::FinalizeAggregation@void()" accessor="protected" category="Function" name="FinalizeAggregation" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::DescriptableObject::FinalizeAggregation@void()[decl0]"><summary>A function that must be called in destructors of all classes inheriting from <symbol name="AggregatableDescription" docId="vl::reflection::AggregatableDescription" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::AggregatableDescription"/>.</summary><signature><![CDATA[void FinalizeAggregation(
-);
-]]></signature></Document>

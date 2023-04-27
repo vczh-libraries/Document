@@ -1,2 +1,0 @@
-<Document symbolId="vl::collections::po::Node::ins" accessor="public" category="Variable" name="ins" declFile="PartialOrdering.h" declId="NI$vl::collections::po::Node::ins"><summary>All nodes that this node depends on.</summary><signature><![CDATA[List<vint> const * ins;
-]]></signature><seealsos><symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

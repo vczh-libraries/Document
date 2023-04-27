@@ -1,8 +1,0 @@
-<Document symbolId="vl::filesystem::Folder::Create@bool(bool)" accessor="public" category="Function" name="Create" declFile="FileSystem.h" declId="FB$vl::filesystem::Folder::Create@bool(bool)[decl0]"><summary>Create the folder.</summary><returns>Returns true if this operation succeeded.</returns><param name="recursively">Set to true to create all levels of containing folders if they do not exist.</param><remarks>
- This function could return before the folder is actually created.
- If &quot;recursively&quot; is false, this function will only attempt to create the specified folder directly,
- it fails if the containing folder does not exist.
- </remarks><signature><![CDATA[bool Create(
-    bool recursively
-) const;
-]]></signature></Document>

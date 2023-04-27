@@ -1,3 +1,0 @@
-<Document symbolId="vl::reflection::description::Value::$__ctor@()" accessor="public" category="Function" name="$__ctor" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::description::Value::$__ctor@()[decl0]"><summary>Create a null value.</summary><signature><![CDATA[ Value(
-);
-]]></signature></Document>

@@ -1,4 +1,0 @@
-<Document symbolId="vl::Semaphore::Release@::vl::vint(::vl::vint)" accessor="public" category="Function" name="Release" declFile="Threading.h" declId="FB$vl::Semaphore::Release@::vl::vint(::vl::vint)[decl0]"><summary> Release the semaphore multiple times. </summary><returns>Returns true if this operation succeeded.</returns><param name="count">The amout to release.</param><signature><![CDATA[vint Release(
-    vint count
-);
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>

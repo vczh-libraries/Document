@@ -1,4 +1,0 @@
-<Document symbolId="vl::Ptr::$__ctor@(::vl::Ptr&lt;[T]&gt; &amp;&amp;)" accessor="public" category="Function" name="$__ctor" declFile="Pointer.h" declId="FB$vl::Ptr::$__ctor@(::vl::Ptr&lt;[T]&gt; &amp;&amp;)[impl0]"><summary>Move a shared pointer.</summary><param name="pointer">The shared pointer to Move.</param><signature><![CDATA[ Ptr(
-    Ptr<T> && pointer
-);
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/></seealsos></Document>

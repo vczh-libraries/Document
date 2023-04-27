@@ -1,6 +1,0 @@
-<Document symbolId="vl::Ptr::Cast@::vl::Ptr&lt;[C]&gt;()" accessor="public" category="Function" name="Cast" declFile="Pointer.h" declId="FB$vl::Ptr::Cast@::vl::Ptr&lt;[C]&gt;()[impl0]"><summary>Cast a shared pointer explicitly.</summary><typeparam name="C">The type of the object after casting.</typeparam><returns>The casted shared pointer. Returns null for empty shared pointer or a failed cast.</returns><signature><![CDATA[template <
-    typename C
->
-Ptr<C> Cast(
-) const;
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/></seealsos></Document>

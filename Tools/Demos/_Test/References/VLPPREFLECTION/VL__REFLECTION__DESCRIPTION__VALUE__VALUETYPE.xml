@@ -1,8 +1,0 @@
-<Document symbolId="vl::reflection::description::Value::ValueType" accessor="public" category="Enum" name="ValueType" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value::ValueType"><summary>How the value is stored.</summary><enumitem name="BoxedValue">The value is stored by boxing.</enumitem><enumitem name="Null">The value is null.</enumitem><enumitem name="RawPtr">The reference value is stored using a raw pointer.</enumitem><enumitem name="SharedPtr">The reference value is stored using a shared pointer.</enumitem><signature><![CDATA[enum ValueType
-{
-    Null,
-    RawPtr,
-    SharedPtr,
-    BoxedValue,
-};
-]]></signature></Document>

@@ -1,3 +1,0 @@
-<Document symbolId="vl::CriticalSection::Leave@void()" accessor="public" category="Function" name="Leave" declFile="Threading.h" declId="FB$vl::CriticalSection::Leave@void()[decl0]"><summary>Leave a critical section.</summary><signature><![CDATA[void Leave(
-);
-]]></signature></Document>

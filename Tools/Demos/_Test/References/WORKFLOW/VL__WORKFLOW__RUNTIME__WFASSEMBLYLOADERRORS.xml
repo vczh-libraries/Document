@@ -1,2 +1,0 @@
-<Document symbolId="vl::workflow::runtime::WfAssemblyLoadErrors" accessor="" category="Class" name="WfAssemblyLoadErrors" declFile="WfRuntimeAssembly.h" declId="NI$vl::workflow::runtime::WfAssemblyLoadErrors"><summary>Representing metadata errors during loading an assembly.</summary><signature><![CDATA[class WfAssemblyLoadErrors;
-]]></signature></Document>

@@ -1,3 +1,0 @@
-<Document symbolId="vl::collections::Dictionary::Clear@bool()" accessor="public" category="Function" name="Clear" declFile="Dictionary.h" declId="FB$vl::collections::Dictionary::Clear@bool()[impl0]"><summary>Remove all elements.</summary><returns>Returns true if all elements are removed.</returns><signature><![CDATA[bool Clear(
-);
-]]></signature></Document>

@@ -1,6 +1,0 @@
-<Document symbolId="vl::ObjectBox" accessor="" category="Class" name="ObjectBox" declFile="Basic.h" declId="NI$vl::ObjectBox"><summary>Store data of a value type in a reference type object. It is useful when the data is required to be stored in a pointer to <symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/>.</summary><example index="0"/><typeparam name="T">Value type to use.</typeparam><signature><![CDATA[template <
-    typename T
->
-class ObjectBox
-    : Object;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>

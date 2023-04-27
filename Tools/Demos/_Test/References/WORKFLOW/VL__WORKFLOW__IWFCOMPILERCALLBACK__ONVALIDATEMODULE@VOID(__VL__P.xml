@@ -1,4 +1,0 @@
-<Document symbolId="vl::workflow::IWfCompilerCallback::OnValidateModule@void(::vl::Ptr&lt;::vl::workflow::WfModule&gt;)" accessor="public" category="Function" name="OnValidateModule" declFile="WfAnalyzer.h" declId="FB$vl::workflow::IWfCompilerCallback::OnValidateModule@void(::vl::Ptr&lt;::vl::workflow::WfModule&gt;)[decl0]"><summary>3rd step: Called before validating a Workflow module. This could be called multiple times for each module.</summary><param name="module">The module for validating.</param><signature><![CDATA[void OnValidateModule(
-    Ptr<WfModule> module
-);
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WfModule" declFile="WfExpression_Ast.h" declId="NI$vl::workflow::WfModule"/></seealsos></Document>

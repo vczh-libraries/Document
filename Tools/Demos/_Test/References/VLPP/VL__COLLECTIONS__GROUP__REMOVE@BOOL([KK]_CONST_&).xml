@@ -1,4 +1,0 @@
-<Document symbolId="vl::collections::Group::Remove@bool([KK] const &amp;)" accessor="public" category="Function" name="Remove" declFile="Dictionary.h" declId="FB$vl::collections::Group::Remove@bool([KK] const &amp;)[impl0]"><summary>Remove a key with all associated values.</summary><returns>Returns true if the key and all associated values are removed.</returns><param name="key">The key to find.</param><signature><![CDATA[bool Remove(
-    KK const & key
-);
-]]></signature></Document>

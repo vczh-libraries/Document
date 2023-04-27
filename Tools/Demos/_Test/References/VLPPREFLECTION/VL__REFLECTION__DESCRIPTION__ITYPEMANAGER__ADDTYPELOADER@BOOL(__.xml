@@ -1,7 +1,0 @@
-<Document symbolId="vl::reflection::description::ITypeManager::AddTypeLoader@bool(::vl::Ptr&lt;::vl::reflection::description::ITypeLoader&gt;)" accessor="public" category="Function" name="AddTypeLoader" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::description::ITypeManager::AddTypeLoader@bool(::vl::Ptr&lt;::vl::reflection::description::ITypeLoader&gt;)[decl0]"><summary>Delay register some types.</summary><returns>Returns true if this operation succeeded.</returns><param name="typeLoader">A type loader for delay registering.</param><remarks>
- You can still call this function after <symbol name="Load" docId="vl::reflection::description::ITypeManager::Load@bool()" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::description::ITypeManager::Load@bool()[decl0]"/> is called.
- In this case, there is no delay registering, all types in this loader will be registered immediately.
- </remarks><signature><![CDATA[bool AddTypeLoader(
-    Ptr<ITypeLoader> typeLoader
-);
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="ITypeLoader" docId="vl::reflection::description::ITypeLoader" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::ITypeLoader"/></seealsos></Document>

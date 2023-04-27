@@ -1,3 +1,0 @@
-<Document symbolId="vl::regex::RegexLexer::Walk@::vl::regex::RegexLexerWalker()" accessor="public" category="Function" name="Walk" declFile="Regex.h" declId="FB$vl::regex::RegexLexer::Walk@::vl::regex::RegexLexerWalker()[decl0]"><summary>Create a equivalence walker from this lexical analyzer. A walker enable you to walk throught characters one by one,</summary><returns>The walker.</returns><signature><![CDATA[RegexLexerWalker Walk(
-) const;
-]]></signature><seealsos><symbol name="RegexLexerWalker" docId="vl::regex::RegexLexerWalker" declFile="Regex.h" declId="NI$vl::regex::RegexLexerWalker"/></seealsos></Document>

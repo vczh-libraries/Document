@@ -1,5 +1,0 @@
-<Document symbolId="vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@([R]([TArgs]...) *)" accessor="public" category="Function" name="$__ctor" declFile="Function.h" declId="FB$vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@([R]([TArgs]...) *)[impl0]"><summary>Create a functor from a function pointer.</summary><param name="function">The function pointer.</param><signature><![CDATA[ Func(
-    R( * function)(
-TArgs...)
-);
-]]></signature></Document>

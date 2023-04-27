@@ -1,4 +1,0 @@
-<Document symbolId="vl::Lazy::$__ctor@(::vl::Lazy&lt;[T]&gt; &amp;&amp;)" accessor="public" category="Function" name="$__ctor" declFile="Lazy.h" declId="FB$vl::Lazy::$__ctor@(::vl::Lazy&lt;[T]&gt; &amp;&amp;)[decl0]"><summary>Create an evaluation by moving another one.</summary><param name="lazy">The evaluation to move.</param><signature><![CDATA[ Lazy(
-    Lazy<T> && lazy
-);
-]]></signature><seealsos><symbol name="Lazy" docId="vl::Lazy" declFile="Lazy.h" declId="NI$vl::Lazy"/></seealsos></Document>

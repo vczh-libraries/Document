@@ -1,3 +1,0 @@
-<Document symbolId="vl::stream::EncoderStream" accessor="" category="Class" name="EncoderStream" declFile="Accessor.h" declId="NI$vl::stream::EncoderStream"><summary>Encoder stream, a <b>writable</b> and potentially <b>finite</b> stream using <symbol name="IEncoder" docId="vl::stream::IEncoder" declFile="Interfaces.h2" declId="NI$vl::stream::IEncoder"/> to transform content.</summary><signature><![CDATA[class EncoderStream
-    : IStream;
-]]></signature><basetypes><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></basetypes></Document>
