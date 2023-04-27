@@ -20,7 +20,7 @@ void Compile(
 	result.pa = {
 		Ptr(new RootSymbol),
 		ITsysAlloc::Create(),
-		new IndexRecorder(result, progressReporter, result.input.Length())
+		Ptr(new IndexRecorder(result, progressReporter, result.input.Length()))
 	};
 
 	result.program = ParseProgram(result.pa, cursor);
@@ -105,9 +105,6 @@ void GenerateUniqueId(
 	
 	if (result.decls.Count() > 0)
 	{
-		Sort<IndexedDeclOrArg>(&result.decls[0], result.decls.Count(), [](const IndexedDeclOrArg& da1, const IndexedDeclOrArg& da2)
-		{
-			return IndexToken::Compare(da1.token, da2.token);
-		});
+		Sort<IndexedDeclOrArg>(&result.decls[0], result.decls.Count());
 	}
 }

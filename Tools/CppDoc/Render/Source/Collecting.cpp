@@ -196,7 +196,7 @@ StreamWriter& Use(Ptr<StreamHolder>& holder)
 {
 	if (!holder)
 	{
-		holder = new StreamHolder;
+		holder = Ptr(new StreamHolder);
 	}
 	return holder->streamWriter;
 }

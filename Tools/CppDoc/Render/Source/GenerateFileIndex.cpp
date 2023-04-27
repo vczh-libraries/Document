@@ -89,9 +89,9 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGro
 	CopyFrom(
 		flrs,
 		From(global->fileLines.Values())
-		.OrderBy([](Ptr<FileLinesRecord> flr1, Ptr<FileLinesRecord> flr2)
+		.OrderByKey([](Ptr<FileLinesRecord> flr)
 		{
-			return WString::Compare(flr1->filePath.GetFullPath(), flr2->filePath.GetFullPath());
+			return flr->filePath.GetFullPath();
 		})
 	);
 
@@ -100,7 +100,7 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGro
 	WString indentation = L"&nbsp;&nbsp;&nbsp;&nbsp;";
 	for (vint i = 0; i < fileGroups.Count(); i++)
 	{
-		auto prefix = fileGroups[i].f0;
+		auto prefix = fileGroups[i].get<0>();
 		List<Ptr<FileLinesRecord>> selectedFlrs;
 
 		for (vint j = 0; j < flrs.Count(); j++)
@@ -120,7 +120,7 @@ void GenerateFileIndex(Ptr<GlobalLinesRecord> global, FilePath pathHtml, FileGro
 		else
 		{
 			writer.WriteString(L"<span class=\"fileGroupLabel\">");
-			WriteHtmlTextSingleLine(fileGroups[i].f1, writer);
+			WriteHtmlTextSingleLine(fileGroups[i].get<1>(), writer);
 			writer.WriteLine(L"</span><br>");
 			GenerateFileIndexInFolder(prefix, indentation, indentation, selectedFlrs, writer);
 		}

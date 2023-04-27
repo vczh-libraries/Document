@@ -139,7 +139,7 @@ void IndexCppCode(
 			From(fileGroups)
 				.Select([](Tuple<WString, WString> fileGroup)
 				{
-					return fileGroup.f0;
+					return fileGroup.get<0>();
 				})
 			);
 		CopyFrom(
@@ -147,7 +147,7 @@ void IndexCppCode(
 			From(fileGroups)
 				.Select([](Tuple<WString, WString> fileGroup)
 				{
-					return fileGroup.f1;
+					return fileGroup.get<1>();
 				})
 			);
 

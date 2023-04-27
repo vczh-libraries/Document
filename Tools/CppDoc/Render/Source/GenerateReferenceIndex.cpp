@@ -757,7 +757,7 @@ Ptr<XmlDocument> ValidateAndFixDocumentRecord(
 					for (vint i = 0; i < classDecl->decls.Count(); i++)
 					{
 						auto child = classDecl->decls[i];
-						if (auto childSymbol = child.f1->symbol)
+						if (auto childSymbol = child.get<1>()->symbol)
 						{
 							if (childSymbol->kind == symbol_component::SymbolKind::FunctionBodySymbol)
 							{
@@ -765,7 +765,7 @@ Ptr<XmlDocument> ValidateAndFixDocumentRecord(
 							}
 							if (symbol == childSymbol)
 							{
-								switch (child.f0)
+								switch (child.get<0>())
 								{
 								case CppClassAccessor::Public:
 									att->value.value = L"public";
@@ -856,7 +856,7 @@ Ptr<XmlDocument> ValidateAndFixDocumentRecord(
 			CopyFrom(
 				xmlSeeAlsos->subNodes,
 				From(seeAlsos)
-					.OrderBy([](Symbol* a, Symbol* b) {return WString::Compare(a->uniqueId, b->uniqueId); })
+					.OrderByKey([](Symbol* a) {return a->uniqueId; })
 					.Select([&](Symbol* symbol) {return BuildHyperlink(global, result, symbol); })
 			);
 
@@ -869,7 +869,7 @@ Ptr<XmlDocument> ValidateAndFixDocumentRecord(
 			CopyFrom(
 				xmlBaseTypes->subNodes,
 				From(baseTypes)
-					.OrderBy([](Symbol* a, Symbol* b) {return WString::Compare(a->uniqueId, b->uniqueId); })
+					.OrderByKey([](Symbol* a) {return a->uniqueId; })
 					.Select([&](Symbol* symbol) {return BuildHyperlink(global, result, symbol); })
 			);
 

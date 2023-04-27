@@ -571,7 +571,7 @@ WString GetSymbolDisplayNameInSignature(Symbol* symbol, SortedList<Symbol*>& see
 			{
 				for (vint i = 0; i < decl->baseTypes.Count(); i++)
 				{
-					auto baseType = decl->baseTypes[i].item.f1;
+					auto baseType = decl->baseTypes[i].item.get<1>();
 					Category_Id_Child_Type* catEntity = nullptr;
 
 					if (auto catType = baseType.Cast<Category_Id_Child_Generic_Root_Type>())
@@ -607,7 +607,7 @@ WString GetSymbolDisplayNameInSignature(Symbol* symbol, SortedList<Symbol*>& see
 
 				for (vint i = 0; i < decl->baseTypes.Count(); i++)
 				{
-					auto baseType = decl->baseTypes[i].item.f1;
+					auto baseType = decl->baseTypes[i].item.get<1>();
 					CollectSignatureHyperlinks(baseType, seeAlsos, baseTypes);
 					writer.WriteLine(L"");
 					writer.WriteString(L"    ");

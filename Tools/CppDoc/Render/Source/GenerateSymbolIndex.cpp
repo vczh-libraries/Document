@@ -512,12 +512,12 @@ Ptr<SymbolGroup> GenerateSymbolIndex(
 		rootGroup->kind = SymbolGroupKind::Root;
 		for (vint i = 0; i < fileGroups.Count(); i++)
 		{
-			auto prefix = fileGroups[i].f0;
+			auto prefix = fileGroups[i].get<0>();
 			Dictionary<Symbol*, Ptr<SymbolGroup>> psContainers;
 			if (auto fileGroup = GenerateSymbolIndexForFileGroup(global, prefix, result.pa.root.Obj(), nullptr, psContainers))
 			{
 				fileGroup->kind = SymbolGroupKind::Group;
-				fileGroup->name = fileGroups[i].f1;
+				fileGroup->name = fileGroups[i].get<1>();
 				rootGroup->children.Add(fileGroup);
 			}
 		}

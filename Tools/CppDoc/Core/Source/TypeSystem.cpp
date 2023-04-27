@@ -27,6 +27,11 @@ struct WithParams
 		if (result != 0) return result;
 		return CompareEnumerable(*a.params, *b.params);
 	}
+
+	friend bool operator==(const WithParams<TType, TData>& a, const WithParams<TType, TData>& b)
+	{
+		return (a <=> b) != 0;
+	}
 };
 
 template<typename TType, typename TData>
