@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetCaretEnd" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::SetCaretEnd@void(::vl::presentation::TextPos)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetCaretEnd"><summary>
  Set the end position of the selection area.
  </summary><param name="value">The end position of the selection area.</param><signature><![CDATA[void SetCaretEnd(
     TextPos value
 );
-]]></signature><seealsos><symbol name="TextPos" docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>
+]]></signature><seealsos><symbol name="TextPos" docId="vl::presentation::TextPos"/></seealsos></Document>

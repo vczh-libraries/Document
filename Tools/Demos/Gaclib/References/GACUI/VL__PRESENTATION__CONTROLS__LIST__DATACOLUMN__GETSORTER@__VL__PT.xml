@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetSorter" declFile="GuiBindableDataGrid.h" declId="FB$vl::presentation::controls::list::DataColumn::GetSorter@::vl::Ptr&lt;::vl::presentation::controls::list::IDataSorter&gt;()[decl0]"><summary>Get the sorter for the column.</summary><returns>The sorter for the column.</returns><signature><![CDATA[Ptr<IDataSorter> GetSorter(
+<Document accessor="public" category="Function" name="GetSorter"><summary>Get the sorter for the column.</summary><returns>The sorter for the column.</returns><signature><![CDATA[Ptr<IDataSorter> GetSorter(
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="IDataSorter" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::IDataSorter"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="IDataSorter"/></seealsos></Document>

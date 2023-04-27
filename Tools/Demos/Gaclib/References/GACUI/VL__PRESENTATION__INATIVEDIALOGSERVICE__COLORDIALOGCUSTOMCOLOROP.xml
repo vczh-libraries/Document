@@ -1,4 +1,4 @@
-<Document accessor="public" category="Enum" name="ColorDialogCustomColorOptions" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDialogService::ColorDialogCustomColorOptions"><summary>
+<Document accessor="public" category="Enum" name="ColorDialogCustomColorOptions"><summary>
  Color dialog custom color options
  </summary><enumitem name="CustomColorDisabled">Disable the custom color panel.</enumitem><enumitem name="CustomColorEnabled">Enable the custom color panel.</enumitem><enumitem name="CustomColorOpened">Open the custom color panel at the beginning.</enumitem><signature><![CDATA[enum ColorDialogCustomColorOptions
 {

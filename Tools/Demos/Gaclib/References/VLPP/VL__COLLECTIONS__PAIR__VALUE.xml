@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="value" declFile="Pair.h" declId="NI$vl::collections::Pair::value"><summary>The value.</summary><signature><![CDATA[V value;
+<Document accessor="public" category="Variable" name="value"><summary>The value.</summary><signature><![CDATA[V value;
 ]]></signature></Document>

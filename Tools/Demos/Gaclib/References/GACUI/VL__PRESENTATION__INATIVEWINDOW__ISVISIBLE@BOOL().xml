@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="IsVisible" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::IsVisible@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="IsVisible"><summary>
  Test is the window visible.
  </summary><returns>Returns true if the window is visible.</returns><signature><![CDATA[bool IsVisible(
 );

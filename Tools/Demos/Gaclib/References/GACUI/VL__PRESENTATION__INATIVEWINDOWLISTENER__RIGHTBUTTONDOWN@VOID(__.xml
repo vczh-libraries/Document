@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="RightButtonDown" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::RightButtonDown@void(::vl::presentation::NativeWindowMouseInfo const &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="RightButtonDown"><summary>
  Called when the right mouse button is pressed.
  </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void RightButtonDown(
     NativeWindowMouseInfo const & info
 );
-]]></signature><seealsos><symbol name="NativeWindowMouseInfo" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::NativeWindowMouseInfo"/></seealsos></Document>
+]]></signature><seealsos><symbol name="NativeWindowMouseInfo"/></seealsos></Document>

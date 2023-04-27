@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetCPUCount" declFile="Threading.h" declId="FB$vl::Thread::GetCPUCount@::vl::vint()[decl0]"><summary>Get the number of logical processors.</summary><returns>The number of logical processor.</returns><signature><![CDATA[static vint GetCPUCount(
+<Document accessor="public" category="Function" name="GetCPUCount"><summary>Get the number of logical processors.</summary><returns>The number of logical processor.</returns><signature><![CDATA[static vint GetCPUCount(
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

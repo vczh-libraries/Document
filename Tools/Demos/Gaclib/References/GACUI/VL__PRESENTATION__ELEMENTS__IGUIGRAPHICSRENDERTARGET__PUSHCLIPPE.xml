@@ -1,7 +1,7 @@
-<Document accessor="public" category="Function" name="PushClipper" declFile="GuiGraphicsElementInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsRenderTarget::PushClipper@void(::vl::presentation::Rect)[decl0]"><summary>
+<Document accessor="public" category="Function" name="PushClipper"><summary>
  Apply a clipper to the render target.
  The result clipper is combined by all clippers in the clipper stack maintained by the render target.
  </summary><param name="clipper">The clipper to push.</param><signature><![CDATA[void PushClipper(
     Rect clipper
 );
-]]></signature><seealsos><symbol name="Rect" declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Rect"/></seealsos></Document>

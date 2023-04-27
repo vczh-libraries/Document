@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="WindowClosing" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiControlHost::WindowClosing"><summary>Window closing event.</summary><signature><![CDATA[compositions::GuiRequestEvent WindowClosing;
-]]></signature><seealsos><symbol name="GuiRequestEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiRequestEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="WindowClosing"><summary>Window closing event.</summary><signature><![CDATA[compositions::GuiRequestEvent WindowClosing;
+]]></signature><seealsos><symbol name="GuiRequestEvent"/></seealsos></Document>

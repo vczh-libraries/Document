@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="ReleaseCapture" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::ReleaseCapture@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="ReleaseCapture"><summary>
  Release mouse message capturing to this window. If the capture is required, all mouse message will be send to this window.
  </summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool ReleaseCapture(
 );

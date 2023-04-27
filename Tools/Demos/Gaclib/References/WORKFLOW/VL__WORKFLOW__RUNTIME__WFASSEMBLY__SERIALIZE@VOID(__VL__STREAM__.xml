@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Serialize" declFile="WfRuntimeAssembly.h" declId="FB$vl::workflow::runtime::WfAssembly::Serialize@void(::vl::stream::IStream &amp;)[decl0]"><summary>Serialize an assembly.</summary><param name="output">Serialized binary data.</param><signature><![CDATA[void Serialize(
+<Document accessor="public" category="Function" name="Serialize"><summary>Serialize an assembly.</summary><param name="output">Serialized binary data.</param><signature><![CDATA[void Serialize(
     stream::IStream & output
 );
-]]></signature><seealsos><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IStream" docId="vl::stream::IStream"/></seealsos></Document>

@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetBindingCellValue" declFile="GuiDataGridInterfaces.h" declId="FB$vl::presentation::controls::list::IDataGridView::SetBindingCellValue@void(::vl::vint, ::vl::vint, ::vl::reflection::description::Value const &amp;)[decl0]"><summary>Set the binding value of a cell.</summary><param name="row">The row index of the cell.</param><param name="column">The column index of the cell.</param><param name="value">The value to set.</param><signature><![CDATA[void SetBindingCellValue(
+<Document accessor="public" category="Function" name="SetBindingCellValue"><summary>Set the binding value of a cell.</summary><param name="row">The row index of the cell.</param><param name="column">The column index of the cell.</param><param name="value">The value to set.</param><signature><![CDATA[void SetBindingCellValue(
     vint row,
     vint column,
     description::Value const & value
 );
-]]></signature><seealsos><symbol name="Value" docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Value" docId="vl::reflection::description::Value"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

@@ -1,6 +1,6 @@
-<Document accessor="" category="Function" name="SetCurrentController" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::SetCurrentController@void(::vl::presentation::INativeController *)[decl0]"><summary>
+<Document accessor="" category="Function" name="SetCurrentController"><summary>
  Set the global native system service controller.
  </summary><param name="controller">The global native system service controller.</param><signature><![CDATA[void SetCurrentController(
     INativeController * controller
 );
-]]></signature><seealsos><symbol name="INativeController" docId="vl::presentation::INativeController" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeController"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeController" docId="vl::presentation::INativeController"/></seealsos></Document>

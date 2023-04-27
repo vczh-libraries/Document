@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="FindItem" declFile="GuiListControls.h" declId="FB$vl::presentation::controls::GuiListControl::IItemArranger::FindItem@::vl::vint(::vl::vint, ::vl::presentation::compositions::KeyDirection)[decl0]"><summary>Find the item by an base item and a key direction.</summary><returns>The item index that is found. Returns -1 if this operation failed.</returns><param name="itemIndex">The base item index.</param><param name="key">The key direction.</param><signature><![CDATA[vint FindItem(
+<Document accessor="public" category="Function" name="FindItem"><summary>Find the item by an base item and a key direction.</summary><returns>The item index that is found. Returns -1 if this operation failed.</returns><param name="itemIndex">The base item index.</param><param name="key">The key direction.</param><signature><![CDATA[vint FindItem(
     vint itemIndex,
     compositions::KeyDirection key
 );
-]]></signature><seealsos><symbol name="KeyDirection" docId="vl::presentation::compositions::KeyDirection" declFile="GuiGraphicsAxis.h" declId="NI$vl::presentation::compositions::KeyDirection"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="KeyDirection" docId="vl::presentation::compositions::KeyDirection"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

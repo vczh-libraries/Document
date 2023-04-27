@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="GetWindow" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowService::GetWindow@::vl::presentation::INativeWindow *(::vl::presentation::NativePoint)[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetWindow"><summary>
  Get the window that under a specified position in screen space.
  </summary><returns>The window that under a specified position in screen space.</returns><param name="location">The specified position in screen space.</param><signature><![CDATA[INativeWindow * GetWindow(
     NativePoint location
 );
-]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/><symbol name="NativePoint" declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow"/><symbol name="NativePoint"/></seealsos></Document>

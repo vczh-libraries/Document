@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetViewPosition" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::SetViewPosition@void(::vl::presentation::Point)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetViewPosition"><summary>
  Set the left-top position of the visible bounds of characters.
  </summary><param name="value">The left-top position of the visible bounds of characters.</param><signature><![CDATA[void SetViewPosition(
     Point value
 );
-]]></signature><seealsos><symbol name="Point" declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Point"/></seealsos></Document>

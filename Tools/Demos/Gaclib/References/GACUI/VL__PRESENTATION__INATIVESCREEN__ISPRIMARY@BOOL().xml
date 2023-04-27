@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="IsPrimary" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeScreen::IsPrimary@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="IsPrimary"><summary>
  Test is the screen is a primary screen.
  </summary><returns>Returns true if the screen is a primary screen.</returns><signature><![CDATA[bool IsPrimary(
 );

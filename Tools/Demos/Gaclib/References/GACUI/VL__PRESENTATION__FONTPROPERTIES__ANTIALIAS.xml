@@ -1,4 +1,4 @@
-<Document accessor="public" category="Variable" name="antialias" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties::antialias"><summary>
+<Document accessor="public" category="Variable" name="antialias"><summary>
  True if the font has anti alias rendering.
  </summary><signature><![CDATA[bool antialias;
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="DateNavigated" declFile="GuiDateTimeControls.h" declId="NI$vl::presentation::controls::GuiDatePicker::DateNavigated"><summary>Date navigated event. Called when the current month is changed.</summary><signature><![CDATA[compositions::GuiNotifyEvent DateNavigated;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="DateNavigated"><summary>Date navigated event. Called when the current month is changed.</summary><signature><![CDATA[compositions::GuiNotifyEvent DateNavigated;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

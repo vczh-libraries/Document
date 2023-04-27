@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="item" declFile="GuiRibbonGalleryList.h" declId="NI$vl::presentation::controls::GalleryPos::item"><summary>Item index.</summary><signature><![CDATA[vint item;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="item"><summary>Item index.</summary><signature><![CDATA[vint item;
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

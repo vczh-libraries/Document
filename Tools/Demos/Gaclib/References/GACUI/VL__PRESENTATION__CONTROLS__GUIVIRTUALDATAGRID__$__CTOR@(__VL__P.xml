@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="$__ctor" declFile="GuiDataGridControls.h" declId="FB$vl::presentation::controls::GuiVirtualDataGrid::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::controls::GuiListControl::IItemProvider *)[decl0]"><summary>Create a data grid control in virtual mode.</summary><param name="themeName">The theme name for retriving a default control template.</param><param name="_itemProvider">The item provider for this control.</param><signature><![CDATA[ GuiVirtualDataGrid(
+<Document accessor="public" category="Function" name="$__ctor"><summary>Create a data grid control in virtual mode.</summary><param name="themeName">The theme name for retriving a default control template.</param><param name="_itemProvider">The item provider for this control.</param><signature><![CDATA[ GuiVirtualDataGrid(
     theme::ThemeName themeName,
     GuiListControl::IItemProvider * _itemProvider
 );
-]]></signature><seealsos><symbol name="IItemProvider" docId="vl::presentation::controls::GuiListControl::IItemProvider" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::IItemProvider"/><symbol name="ThemeName" declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IItemProvider" docId="vl::presentation::controls::GuiListControl::IItemProvider"/><symbol name="ThemeName"/></seealsos></Document>

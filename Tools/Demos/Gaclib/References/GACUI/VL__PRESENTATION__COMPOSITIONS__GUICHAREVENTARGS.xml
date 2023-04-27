@@ -1,5 +1,5 @@
-<Document accessor="" category="Struct" name="GuiCharEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiCharEventArgs"><summary>Char input event arguments.</summary><signature><![CDATA[struct GuiCharEventArgs
+<Document accessor="" category="Struct" name="GuiCharEventArgs"><summary>Char input event arguments.</summary><signature><![CDATA[struct GuiCharEventArgs
     : GuiEventArgs
     , WindowCharInfo
     , Description<GuiCharEventArgs>;
-]]></signature><seealsos><symbol name="GuiCharEventArgs" docId="vl::presentation::compositions::GuiCharEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiCharEventArgs"/></seealsos><basetypes><symbol name="WindowCharInfo" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::WindowCharInfo"/><symbol name="GuiEventArgs" docId="vl::presentation::compositions::GuiEventArgs" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiEventArgs"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiCharEventArgs" docId="vl::presentation::compositions::GuiCharEventArgs"/></seealsos><basetypes><symbol name="WindowCharInfo"/><symbol name="GuiEventArgs" docId="vl::presentation::compositions::GuiEventArgs"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

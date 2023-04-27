@@ -1,18 +1,18 @@
-<Document accessor="" category="Class" name="WfDebugger" declFile="WfRuntimeDebugger.h" declId="NI$vl::workflow::runtime::WfDebugger"><summary>Workflow debugger.</summary><remarks><p><symbol name="SetDebuggerForCurrentThread" docId="vl::workflow::runtime::SetDebuggerForCurrentThread@void(::vl::Ptr&lt;::vl::workflow::runtime::WfDebugger&gt;)" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::SetDebuggerForCurrentThread@void(::vl::Ptr&lt;::vl::workflow::runtime::WfDebugger&gt;)[decl0]"/> needs to be called to make a debugger works for any Workflow script that is running in the current thread.
- </p><p><symbol name="OnBlockExecution" docId="vl::workflow::runtime::WfDebugger::OnBlockExecution@void()" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::OnBlockExecution@void()[decl0]"/> needs to be overrided to make a debugger work properly.
+<Document accessor="" category="Class" name="WfDebugger"><summary>Workflow debugger.</summary><remarks><p><symbol name="SetDebuggerForCurrentThread" docId="vl::workflow::runtime::SetDebuggerForCurrentThread@void(::vl::Ptr&lt;::vl::workflow::runtime::WfDebugger&gt;)"/> needs to be called to make a debugger works for any Workflow script that is running in the current thread.
+ </p><p><symbol name="OnBlockExecution" docId="vl::workflow::runtime::WfDebugger::OnBlockExecution@void()"/> needs to be overrided to make a debugger work properly.
  When the target Workflow script stops,
  this function will be called.
  In this function,
- one of <symbol name="Run" docId="vl::workflow::runtime::WfDebugger::Run@bool()" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::Run@bool()[decl0]"/>, <symbol name="Pause" docId="vl::workflow::runtime::WfDebugger::Pause@bool()" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::Pause@bool()[decl0]"/>, <symbol name="Stop" docId="vl::workflow::runtime::WfDebugger::Stop@bool()" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::Stop@bool()[decl0]"/>, <symbol name="StepOver" docId="vl::workflow::runtime::WfDebugger::StepOver@bool(bool)" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::StepOver@bool(bool)[decl0]"/> and <symbol name="StepInto" docId="vl::workflow::runtime::WfDebugger::StepInto@bool(bool)" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::StepInto@bool(bool)[decl0]"/>
+ one of <symbol name="Run" docId="vl::workflow::runtime::WfDebugger::Run@bool()"/>, <symbol name="Pause" docId="vl::workflow::runtime::WfDebugger::Pause@bool()"/>, <symbol name="Stop" docId="vl::workflow::runtime::WfDebugger::Stop@bool()"/>, <symbol name="StepOver" docId="vl::workflow::runtime::WfDebugger::StepOver@bool(bool)"/> and <symbol name="StepInto" docId="vl::workflow::runtime::WfDebugger::StepInto@bool(bool)"/>
  must be called to make the target Workflow script continues.
  </p><p>
  You are allowed to run the debugger logic in another thread,
  for example,
  an GUI application is debugging a Workflow script which is running in another thread.
- In this case, <symbol name="OnBlockExecution" docId="vl::workflow::runtime::WfDebugger::OnBlockExecution@void()" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::OnBlockExecution@void()[decl0]"/> needs to be blocked until it is ready to continue.
+ In this case, <symbol name="OnBlockExecution" docId="vl::workflow::runtime::WfDebugger::OnBlockExecution@void()"/> needs to be blocked until it is ready to continue.
  </p><p>
  Locks are a good choice for this.
  </p></remarks><signature><![CDATA[class WfDebugger
     : Object
     , IWfDebuggerCallback;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IWfDebuggerCallback" declFile="WfRuntimeDebugger.h" declId="NI$vl::workflow::runtime::IWfDebuggerCallback"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object"/><symbol name="IWfDebuggerCallback"/></basetypes></Document>

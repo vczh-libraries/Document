@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="$__ctor" declFile="GuiDocumentViewer.h" declId="FB$vl::presentation::controls::GuiDocumentViewer::$__ctor@(::vl::presentation::theme::ThemeName)[decl0]"><summary>Create a control with a specified style provider.</summary><param name="themeName">The theme name for retriving a default control template.</param><signature><![CDATA[ GuiDocumentViewer(
+<Document accessor="public" category="Function" name="$__ctor"><summary>Create a control with a specified style provider.</summary><param name="themeName">The theme name for retriving a default control template.</param><signature><![CDATA[ GuiDocumentViewer(
     theme::ThemeName themeName
 );
-]]></signature><seealsos><symbol name="ThemeName" declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ThemeName"/></seealsos></Document>

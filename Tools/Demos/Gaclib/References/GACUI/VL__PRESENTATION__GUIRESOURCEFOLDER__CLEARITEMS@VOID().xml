@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="ClearItems" declFile="GuiResource.h" declId="FB$vl::presentation::GuiResourceFolder::ClearItems@void()[decl0]"><summary>Remove all resource item.</summary><signature><![CDATA[void ClearItems(
+<Document accessor="public" category="Function" name="ClearItems"><summary>Remove all resource item.</summary><signature><![CDATA[void ClearItems(
 );
 ]]></signature></Document>

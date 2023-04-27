@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="QueueLambda" declFile="Threading.h" declId="FB$vl::ThreadPoolLite::QueueLambda@void([T] const &amp;)[impl0]"><summary>Queue a lambda expression.</summary><typeparam name="T">The type of the lambda expression.</typeparam><param name="proc">The lambda expression.</param><signature><![CDATA[template <
+<Document accessor="public" category="Function" name="QueueLambda"><summary>Queue a lambda expression.</summary><typeparam name="T">The type of the lambda expression.</typeparam><param name="proc">The lambda expression.</param><signature><![CDATA[template <
     typename T
 >
 static void QueueLambda(

@@ -1,6 +1,6 @@
-<Document accessor="" category="Class" name="INativeAsyncService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeAsyncService"><summary>
- Asynchronized operation service. GacUI is not a thread safe library except for this service. To access this service, use <symbol name="AsyncService" docId="vl::presentation::INativeController::AsyncService@::vl::presentation::INativeAsyncService *()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::AsyncService@::vl::presentation::INativeAsyncService *()[decl0]"/>.
+<Document accessor="" category="Class" name="INativeAsyncService"><summary>
+ Asynchronized operation service. GacUI is not a thread safe library except for this service. To access this service, use <symbol name="AsyncService" docId="vl::presentation::INativeController::AsyncService@::vl::presentation::INativeAsyncService *()"/>.
  </summary><signature><![CDATA[class INativeAsyncService
     : IDescriptable
     , Description<INativeAsyncService>;
-]]></signature><seealsos><symbol name="INativeAsyncService" docId="vl::presentation::INativeAsyncService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeAsyncService"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>
+]]></signature><seealsos><symbol name="INativeAsyncService" docId="vl::presentation::INativeAsyncService"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable"/></basetypes></Document>

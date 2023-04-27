@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetSystemCursorType" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeCursor::GetSystemCursorType@::vl::presentation::INativeCursor::SystemCursorType()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetSystemCursorType"><summary>
  Get the cursor type if the cursor a system provided cursor.
  </summary><returns>The cursor type.</returns><signature><![CDATA[SystemCursorType GetSystemCursorType(
 );
-]]></signature><seealsos><symbol name="SystemCursorType" docId="vl::presentation::INativeCursor::SystemCursorType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor::SystemCursorType"/></seealsos></Document>
+]]></signature><seealsos><symbol name="SystemCursorType" docId="vl::presentation::INativeCursor::SystemCursorType"/></seealsos></Document>

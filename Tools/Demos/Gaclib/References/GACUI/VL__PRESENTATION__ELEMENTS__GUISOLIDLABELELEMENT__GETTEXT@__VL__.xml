@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetText" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidLabelElement::GetText@::vl::WString const &amp;()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetText"><summary>
  Get the text.
  </summary><returns>The text.</returns><signature><![CDATA[WString const & GetText(
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

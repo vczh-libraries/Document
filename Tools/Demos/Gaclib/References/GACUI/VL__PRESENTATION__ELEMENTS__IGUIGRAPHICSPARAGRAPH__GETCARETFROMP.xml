@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="GetCaretFromPoint" declFile="GuiGraphicsDocumentInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsParagraph::GetCaretFromPoint@::vl::vint(::vl::presentation::Point)[decl0]"><summary>Get the caret from a specified position.</summary><returns>The caret. Returns -1 if failed.</returns><param name="point">The point.</param><signature><![CDATA[vint GetCaretFromPoint(
+<Document accessor="public" category="Function" name="GetCaretFromPoint"><summary>Get the caret from a specified position.</summary><returns>The caret. Returns -1 if failed.</returns><param name="point">The point.</param><signature><![CDATA[vint GetCaretFromPoint(
     Point point
 );
-]]></signature><seealsos><symbol name="Point" declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Point"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

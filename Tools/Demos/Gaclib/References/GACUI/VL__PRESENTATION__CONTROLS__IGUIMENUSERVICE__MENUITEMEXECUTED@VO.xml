@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="MenuItemExecuted" declFile="GuiMenuControls.h" declId="FB$vl::presentation::controls::IGuiMenuService::MenuItemExecuted@void()[decl0]"><summary>Called when the menu item is executed.</summary><signature><![CDATA[void MenuItemExecuted(
+<Document accessor="public" category="Function" name="MenuItemExecuted"><summary>Called when the menu item is executed.</summary><signature><![CDATA[void MenuItemExecuted(
 );
 ]]></signature></Document>

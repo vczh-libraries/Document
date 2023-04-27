@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="FromFileTime" declFile="Basic.h" declId="FB$vl::DateTime::FromFileTime@::vl::DateTime(::vl::vuint64_t)[decl0]"><summary>Create a date time value from a file time.</summary><returns>The created date time value.</returns><param name="filetime">The file time.</param><signature><![CDATA[static DateTime FromFileTime(
+<Document accessor="public" category="Function" name="FromFileTime"><summary>Create a date time value from a file time.</summary><returns>The created date time value.</returns><param name="filetime">The file time.</param><signature><![CDATA[static DateTime FromFileTime(
     vuint64_t filetime
 );
-]]></signature><seealsos><symbol name="DateTime" docId="vl::DateTime" declFile="Basic.h" declId="NI$vl::DateTime"/><symbol name="vuint64_t" docId="vl::vuint64_t" declFile="Basic.h" declId="NI$vl::vuint64_t"/></seealsos></Document>
+]]></signature><seealsos><symbol name="DateTime" docId="vl::DateTime"/><symbol name="vuint64_t" docId="vl::vuint64_t"/></seealsos></Document>

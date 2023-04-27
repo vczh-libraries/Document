@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetSmallMove" declFile="GuiScrollControls.h" declId="FB$vl::presentation::controls::GuiScroll::GetSmallMove@::vl::vint()[decl0]"><summary>Get the small move.</summary><returns>The small move.</returns><signature><![CDATA[vint GetSmallMove(
+<Document accessor="public" category="Function" name="GetSmallMove"><summary>Get the small move.</summary><returns>The small move.</returns><signature><![CDATA[vint GetSmallMove(
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

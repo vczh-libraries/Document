@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetDirection" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::Gui3DSplitterElement::SetDirection@void(::vl::presentation::elements::Gui3DSplitterElement::Direction)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetDirection"><summary>
  Set the direction.
  </summary><param name="value">The new direction.</param><signature><![CDATA[void SetDirection(
     Direction value
 );
-]]></signature><seealsos><symbol name="Direction" docId="vl::presentation::elements::Gui3DSplitterElement::Direction" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::Gui3DSplitterElement::Direction"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Direction" docId="vl::presentation::elements::Gui3DSplitterElement::Direction"/></seealsos></Document>

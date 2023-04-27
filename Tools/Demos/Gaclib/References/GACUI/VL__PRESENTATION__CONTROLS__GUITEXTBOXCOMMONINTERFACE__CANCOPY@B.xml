@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="CanCopy" declFile="GuiTextCommonInterface.h" declId="FB$vl::presentation::controls::GuiTextBoxCommonInterface::CanCopy@bool()[decl0]"><summary>Test can the selection be copied.</summary><returns>Returns true if the selection can be cut.</returns><signature><![CDATA[bool CanCopy(
+<Document accessor="public" category="Function" name="CanCopy"><summary>Test can the selection be copied.</summary><returns>Returns true if the selection can be cut.</returns><signature><![CDATA[bool CanCopy(
 );
 ]]></signature></Document>

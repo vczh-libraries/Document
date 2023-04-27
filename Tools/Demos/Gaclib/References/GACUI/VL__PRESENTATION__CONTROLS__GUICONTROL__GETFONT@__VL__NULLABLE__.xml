@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetFont" declFile="GuiBasicControls.h" declId="FB$vl::presentation::controls::GuiControl::GetFont@::vl::Nullable&lt;::vl::presentation::FontProperties&gt; const &amp;()[decl0]"><summary>Get the font of this control.</summary><returns>The font of this control.</returns><signature><![CDATA[Nullable<FontProperties> const & GetFont(
+<Document accessor="public" category="Function" name="GetFont"><summary>Get the font of this control.</summary><returns>The font of this control.</returns><signature><![CDATA[Nullable<FontProperties> const & GetFont(
 );
-]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol name="FontProperties" docId="vl::presentation::FontProperties" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable"/><symbol name="FontProperties" docId="vl::presentation::FontProperties"/></seealsos></Document>

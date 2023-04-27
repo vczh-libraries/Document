@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetFlowOption" declFile="GuiGraphicsFlowComposition.h" declId="FB$vl::presentation::compositions::GuiFlowItemComposition::GetFlowOption@::vl::presentation::compositions::GuiFlowOption()[decl0]"><summary>Get the base line option for this flow item.</summary><returns>The base line option.</returns><signature><![CDATA[GuiFlowOption GetFlowOption(
+<Document accessor="public" category="Function" name="GetFlowOption"><summary>Get the base line option for this flow item.</summary><returns>The base line option.</returns><signature><![CDATA[GuiFlowOption GetFlowOption(
 );
-]]></signature><seealsos><symbol name="GuiFlowOption" docId="vl::presentation::compositions::GuiFlowOption" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowOption"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiFlowOption" docId="vl::presentation::compositions::GuiFlowOption"/></seealsos></Document>

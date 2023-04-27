@@ -1,7 +1,7 @@
-<Document accessor="public" category="Function" name="RemoveLines" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLines::RemoveLines@bool(::vl::vint, ::vl::vint)[decl0]"><summary>
+<Document accessor="public" category="Function" name="RemoveLines"><summary>
  Remove text lines in a specified range.
  </summary><returns>Returns true if this operation succeeded.</returns><param name="start">The first row number.</param><param name="count">The number of text lines to be removed.</param><signature><![CDATA[bool RemoveLines(
     vint start,
     vint count
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

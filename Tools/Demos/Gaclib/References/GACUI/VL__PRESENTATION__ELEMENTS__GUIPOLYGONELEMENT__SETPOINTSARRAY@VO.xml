@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetPointsArray" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiPolygonElement::SetPointsArray@void(::vl::presentation::elements::GuiPolygonElement::PointArray const &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetPointsArray"><summary>
  Set all points.
  </summary><param name="value">All points</param><signature><![CDATA[void SetPointsArray(
     PointArray const & value
 );
-]]></signature><seealsos><symbol name="PointArray" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiPolygonElement::PointArray"/></seealsos></Document>
+]]></signature><seealsos><symbol name="PointArray"/></seealsos></Document>

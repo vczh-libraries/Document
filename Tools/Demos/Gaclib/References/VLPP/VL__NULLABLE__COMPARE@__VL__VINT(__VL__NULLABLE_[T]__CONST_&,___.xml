@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Compare" declFile="Basic.h" declId="FB$vl::Nullable::Compare@::vl::vint(::vl::Nullable&lt;[T]&gt; const &amp;, ::vl::Nullable&lt;[T]&gt; const &amp;)[impl0]"><summary>Comparing two nullable values.</summary><returns>
+<Document accessor="public" category="Function" name="Compare"><summary>Comparing two nullable values.</summary><returns>
  Returns a positive value when the first value is greater than the second value.
  Returns a negative value when the first value is lesser than the second value.
  Returns zero when the two values equal.
@@ -7,4 +7,4 @@
     Nullable<T> const & a,
     Nullable<T> const & b
 );
-]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

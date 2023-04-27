@@ -1,4 +1,4 @@
-<Document accessor="public" category="Enum" name="Direction" declFile="GuiGraphicsStackComposition.h" declId="NI$vl::presentation::compositions::GuiStackComposition::Direction"><summary>Stack item layout direction.</summary><enumitem name="Horizontal">Stack items is layouted from left to right.</enumitem><enumitem name="ReversedHorizontal">Stack items is layouted from right to left.</enumitem><enumitem name="ReversedVertical">Stack items is layouted from bottom to top.</enumitem><enumitem name="Vertical">Stack items is layouted from top to bottom.</enumitem><signature><![CDATA[enum Direction
+<Document accessor="public" category="Enum" name="Direction"><summary>Stack item layout direction.</summary><enumitem name="Horizontal">Stack items is layouted from left to right.</enumitem><enumitem name="ReversedHorizontal">Stack items is layouted from right to left.</enumitem><enumitem name="ReversedVertical">Stack items is layouted from bottom to top.</enumitem><enumitem name="Vertical">Stack items is layouted from top to bottom.</enumitem><signature><![CDATA[enum Direction
 {
     Horizontal,
     Vertical,

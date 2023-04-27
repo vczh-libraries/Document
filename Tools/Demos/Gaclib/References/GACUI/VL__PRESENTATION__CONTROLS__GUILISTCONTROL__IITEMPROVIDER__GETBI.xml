@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="GetBindingValue" declFile="GuiListControls.h" declId="FB$vl::presentation::controls::GuiListControl::IItemProvider::GetBindingValue@::vl::reflection::description::Value(::vl::vint)[decl0]"><summary>Get the binding value of an item.</summary><returns>The binding value of an item.</returns><param name="itemIndex">The index of the item.</param><signature><![CDATA[description::Value GetBindingValue(
+<Document accessor="public" category="Function" name="GetBindingValue"><summary>Get the binding value of an item.</summary><returns>The binding value of an item.</returns><param name="itemIndex">The index of the item.</param><signature><![CDATA[description::Value GetBindingValue(
     vint itemIndex
 );
-]]></signature><seealsos><symbol name="Value" docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Value" docId="vl::reflection::description::Value"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

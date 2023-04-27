@@ -1,12 +1,12 @@
-<Document accessor="" category="Struct" name="ReferenceCounterOperator" declFile="Pointer.h" declId="NI$vl::ReferenceCounterOperator"><summary>
+<Document accessor="" category="Struct" name="ReferenceCounterOperator"><summary>
  The strategy class to create and delete the reference counter of an object.
- For any object inherits from <symbol name="DescriptableObject" docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/>, the reference counter is stored inside the object.
+ For any object inherits from <symbol name="DescriptableObject" docId="vl::reflection::DescriptableObject"/>, the reference counter is stored inside the object.
  For any other object, the reference counter is allocated separately.
  You can create your own strategy by adding a new partial specialization to this class.
  </summary><typeparam name="T">
  The type of the object.
  </typeparam><typeparam name="Enabled">
- <symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/> will always use <symbol name="YesType" declFile="Basic.h" declId="NI$vl::YesType"/> as the second type parameter.
+ <symbol name="Ptr" docId="vl::Ptr"/> will always use <symbol name="YesType"/> as the second type parameter.
  This parameter is useful when you want to do partial specialization in the SFINAE way.
  </typeparam><signature><![CDATA[template <
     typename T, 

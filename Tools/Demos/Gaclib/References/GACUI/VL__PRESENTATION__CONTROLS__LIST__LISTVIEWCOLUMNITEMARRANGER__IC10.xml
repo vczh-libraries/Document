@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="OnColumnChanged" declFile="GuiListViewControls.h" declId="FB$vl::presentation::controls::list::ListViewColumnItemArranger::IColumnItemViewCallback::OnColumnChanged@void()[decl0]"><summary>Called when any column is changed (inserted, removed, text changed, etc.).</summary><signature><![CDATA[void OnColumnChanged(
+<Document accessor="public" category="Function" name="OnColumnChanged"><summary>Called when any column is changed (inserted, removed, text changed, etc.).</summary><signature><![CDATA[void OnColumnChanged(
 );
 ]]></signature></Document>

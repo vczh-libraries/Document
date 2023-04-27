@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetBounds" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeScreen::GetBounds@::vl::presentation::NativeRect()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetBounds"><summary>
  Get the bounds of the screen.
  </summary><returns>The bounds of the screen.</returns><signature><![CDATA[NativeRect GetBounds(
 );
-]]></signature><seealsos><symbol name="NativeRect" declFile="GuiTypes.h" declId="NI$vl::presentation::NativeRect"/></seealsos></Document>
+]]></signature><seealsos><symbol name="NativeRect"/></seealsos></Document>

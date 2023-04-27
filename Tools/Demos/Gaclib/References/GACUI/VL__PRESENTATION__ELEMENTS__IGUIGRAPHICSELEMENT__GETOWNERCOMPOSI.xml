@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetOwnerComposition" declFile="GuiGraphicsElementInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsElement::GetOwnerComposition@::vl::presentation::compositions::GuiGraphicsComposition *()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetOwnerComposition"><summary>
  Get the owner composition.
  </summary><returns>The owner composition.</returns><signature><![CDATA[compositions::GuiGraphicsComposition * GetOwnerComposition(
 );
-]]></signature><seealsos><symbol name="GuiGraphicsComposition" docId="vl::presentation::compositions::GuiGraphicsComposition" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsComposition"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiGraphicsComposition" docId="vl::presentation::compositions::GuiGraphicsComposition"/></seealsos></Document>

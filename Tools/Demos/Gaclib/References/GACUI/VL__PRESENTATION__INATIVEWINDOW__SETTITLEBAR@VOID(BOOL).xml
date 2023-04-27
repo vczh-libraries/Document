@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetTitleBar" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetTitleBar@void(bool)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetTitleBar"><summary>
  Make the title bar visible or invisible.
  </summary><param name="visible">True to make the title bar visible.</param><signature><![CDATA[void SetTitleBar(
     bool visible

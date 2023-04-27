@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="DataNotFilter" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataNotFilter"><summary>A filter that keep a row if the sub filter not agrees.</summary><signature><![CDATA[class DataNotFilter
+<Document accessor="" category="Class" name="DataNotFilter"><summary>A filter that keep a row if the sub filter not agrees.</summary><signature><![CDATA[class DataNotFilter
     : DataFilterBase
     , Description<DataNotFilter>;
-]]></signature><seealsos><symbol name="DataNotFilter" docId="vl::presentation::controls::list::DataNotFilter" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataNotFilter"/></seealsos><basetypes><symbol name="DataFilterBase" docId="vl::presentation::controls::list::DataFilterBase" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataFilterBase"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="DataNotFilter" docId="vl::presentation::controls::list::DataNotFilter"/></seealsos><basetypes><symbol name="DataFilterBase" docId="vl::presentation::controls::list::DataFilterBase"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

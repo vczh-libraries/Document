@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="IFuture" declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::IFuture"><summary>An async operation in the future-promise pattern.</summary><signature><![CDATA[class IFuture
+<Document accessor="" category="Class" name="IFuture"><summary>An async operation in the future-promise pattern.</summary><signature><![CDATA[class IFuture
     : IAsync
     , Description<IFuture>;
-]]></signature><seealsos><symbol name="IFuture" docId="vl::reflection::description::IFuture" declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::IFuture"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IAsync" docId="vl::reflection::description::IAsync" declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::IAsync"/></basetypes></Document>
+]]></signature><seealsos><symbol name="IFuture" docId="vl::reflection::description::IFuture"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description"/><symbol name="IAsync" docId="vl::reflection::description::IAsync"/></basetypes></Document>

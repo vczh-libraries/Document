@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="Convert" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::Convert@::vl::presentation::NativeMargin(::vl::presentation::Margin)[decl0]"><summary>
+<Document accessor="public" category="Function" name="Convert"><summary>
  Convert margin from GUI coordinate to native coordinate.
  </summary><returns>The converted result.</returns><param name="value">The coordinate to convert.</param><signature><![CDATA[NativeMargin Convert(
     Margin value
 );
-]]></signature><seealsos><symbol name="Margin" declFile="GuiTypes.h" declId="NI$vl::presentation::Margin"/><symbol name="NativeMargin" declFile="GuiTypes.h" declId="NI$vl::presentation::NativeMargin"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Margin"/><symbol name="NativeMargin"/></seealsos></Document>

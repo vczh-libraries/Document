@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="ShowRestored" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::ShowRestored@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="ShowRestored"><summary>
  Restore the window.
  </summary><signature><![CDATA[void ShowRestored(
 );

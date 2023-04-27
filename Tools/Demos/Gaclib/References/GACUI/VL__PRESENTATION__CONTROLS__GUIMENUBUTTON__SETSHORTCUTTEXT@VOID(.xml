@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetShortcutText" declFile="GuiMenuControls.h" declId="FB$vl::presentation::controls::GuiMenuButton::SetShortcutText@void(::vl::WString const &amp;)[decl0]"><summary>Set the shortcut key text for the menu button.</summary><param name="value">The shortcut key text for the menu button.</param><signature><![CDATA[void SetShortcutText(
+<Document accessor="public" category="Function" name="SetShortcutText"><summary>Set the shortcut key text for the menu button.</summary><param name="value">The shortcut key text for the menu button.</param><signature><![CDATA[void SetShortcutText(
     WString const & value
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

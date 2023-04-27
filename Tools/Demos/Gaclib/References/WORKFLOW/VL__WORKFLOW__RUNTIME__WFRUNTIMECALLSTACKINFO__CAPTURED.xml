@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="captured" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeCallStackInfo::captured"><summary>Captured variable values.</summary><signature><![CDATA[Ptr<WfRuntimeVariableContext> captured;
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WfRuntimeVariableContext" docId="vl::workflow::runtime::WfRuntimeVariableContext" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeVariableContext"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="captured"><summary>Captured variable values.</summary><signature><![CDATA[Ptr<WfRuntimeVariableContext> captured;
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="WfRuntimeVariableContext" docId="vl::workflow::runtime::WfRuntimeVariableContext"/></seealsos></Document>

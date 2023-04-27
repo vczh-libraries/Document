@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="ItemMouseLeave" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::ItemMouseLeave"><summary>Item mouse leave event.</summary><signature><![CDATA[compositions::GuiItemNotifyEvent ItemMouseLeave;
-]]></signature><seealsos><symbol name="GuiItemNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiItemNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="ItemMouseLeave"><summary>Item mouse leave event.</summary><signature><![CDATA[compositions::GuiItemNotifyEvent ItemMouseLeave;
+]]></signature><seealsos><symbol name="GuiItemNotifyEvent"/></seealsos></Document>

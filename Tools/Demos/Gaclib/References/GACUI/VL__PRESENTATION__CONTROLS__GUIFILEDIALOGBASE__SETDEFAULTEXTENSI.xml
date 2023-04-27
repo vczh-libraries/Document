@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetDefaultExtension" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiFileDialogBase::SetDefaultExtension@void(::vl::WString const &amp;)[decl0]"><summary>Set the default file extension like &quot;txt&quot;. If the user does not specify a file extension, the default file extension will be appended using &quot;.&quot; after the file name.</summary><param name="value">The default file extension.</param><signature><![CDATA[void SetDefaultExtension(
+<Document accessor="public" category="Function" name="SetDefaultExtension"><summary>Set the default file extension like &quot;txt&quot;. If the user does not specify a file extension, the default file extension will be appended using &quot;.&quot; after the file name.</summary><param name="value">The default file extension.</param><signature><![CDATA[void SetDefaultExtension(
     WString const & value
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

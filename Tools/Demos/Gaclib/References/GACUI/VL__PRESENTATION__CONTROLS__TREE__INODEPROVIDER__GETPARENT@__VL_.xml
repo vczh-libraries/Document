@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetParent" declFile="GuiTreeViewControls.h" declId="FB$vl::presentation::controls::tree::INodeProvider::GetParent@::vl::Ptr&lt;::vl::presentation::controls::tree::INodeProvider&gt;()[decl0]"><summary>Get the parent node.</summary><returns>The parent node.</returns><signature><![CDATA[Ptr<INodeProvider> GetParent(
+<Document accessor="public" category="Function" name="GetParent"><summary>Get the parent node.</summary><returns>The parent node.</returns><signature><![CDATA[Ptr<INodeProvider> GetParent(
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="INodeProvider" docId="vl::presentation::controls::tree::INodeProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeProvider"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="INodeProvider" docId="vl::presentation::controls::tree::INodeProvider"/></seealsos></Document>

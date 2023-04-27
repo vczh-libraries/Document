@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="length" declFile="Regex.h" declId="NI$vl::regex::RegexToken::length"><summary>Size of this token in characters.</summary><signature><![CDATA[vint length;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="length"><summary>Size of this token in characters.</summary><signature><![CDATA[vint length;
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

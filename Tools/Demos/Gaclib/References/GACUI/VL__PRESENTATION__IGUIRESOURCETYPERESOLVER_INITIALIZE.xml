@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="IGuiResourceTypeResolver_Initialize" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourceTypeResolver_Initialize"><summary>
+<Document accessor="" category="Class" name="IGuiResourceTypeResolver_Initialize"><summary>
 		Represents a precompiler for resources of a specified type.
 		Current resources that needs precompiling:
 			Pass 0: Script		(initialize view model scripts)
@@ -7,4 +7,4 @@
  </summary><signature><![CDATA[class IGuiResourceTypeResolver_Initialize
     : IDescriptable
     , Description<IGuiResourceTypeResolver_Initialize>;
-]]></signature><seealsos><symbol name="IGuiResourceTypeResolver_Initialize" docId="vl::presentation::IGuiResourceTypeResolver_Initialize" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourceTypeResolver_Initialize"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>
+]]></signature><seealsos><symbol name="IGuiResourceTypeResolver_Initialize" docId="vl::presentation::IGuiResourceTypeResolver_Initialize"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable"/></basetypes></Document>

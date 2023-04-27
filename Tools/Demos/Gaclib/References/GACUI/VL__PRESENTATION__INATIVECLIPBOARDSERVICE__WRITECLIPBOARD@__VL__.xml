@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="WriteClipboard" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeClipboardService::WriteClipboard@::vl::Ptr&lt;::vl::presentation::INativeClipboardWriter&gt;()[decl0]"><summary>Write clipboard.</summary><returns>The clipboard writer.</returns><signature><![CDATA[Ptr<INativeClipboardWriter> WriteClipboard(
+<Document accessor="public" category="Function" name="WriteClipboard"><summary>Write clipboard.</summary><returns>The clipboard writer.</returns><signature><![CDATA[Ptr<INativeClipboardWriter> WriteClipboard(
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="INativeClipboardWriter" docId="vl::presentation::INativeClipboardWriter" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeClipboardWriter"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="INativeClipboardWriter" docId="vl::presentation::INativeClipboardWriter"/></seealsos></Document>

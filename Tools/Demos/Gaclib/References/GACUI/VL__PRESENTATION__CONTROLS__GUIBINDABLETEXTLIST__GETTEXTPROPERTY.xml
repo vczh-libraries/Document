@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetTextProperty" declFile="GuiBindableListControls.h" declId="FB$vl::presentation::controls::GuiBindableTextList::GetTextProperty@::vl::presentation::ItemProperty&lt;::vl::WString&gt;()[decl0]"><summary>Get the text property name to get the item text from an item.</summary><returns>The text property name.</returns><signature><![CDATA[ItemProperty<WString> GetTextProperty(
+<Document accessor="public" category="Function" name="GetTextProperty"><summary>Get the text property name to get the item text from an item.</summary><returns>The text property name.</returns><signature><![CDATA[ItemProperty<WString> GetTextProperty(
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="ItemProperty" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::ItemProperty"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/><symbol name="ItemProperty"/></seealsos></Document>

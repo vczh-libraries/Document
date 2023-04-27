@@ -1,4 +1,4 @@
-<Document accessor="" category="Struct" name="NativeWindowKeyInfo" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::NativeWindowKeyInfo"><summary>
+<Document accessor="" category="Struct" name="NativeWindowKeyInfo"><summary>
  Key message information.
  </summary><signature><![CDATA[struct NativeWindowKeyInfo;
 ]]></signature></Document>

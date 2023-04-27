@@ -1,2 +1,2 @@
-<Document accessor="" category="TypeAlias" name="vuint64_t" declFile="Basic.h" declId="NI$vl::vuint64_t"><summary>8-bytes unsigned integer.</summary><signature><![CDATA[using vuint64_t = unsigned __int64;
+<Document accessor="" category="TypeAlias" name="vuint64_t"><summary>8-bytes unsigned integer.</summary><signature><![CDATA[using vuint64_t = unsigned __int64;
 ]]></signature></Document>

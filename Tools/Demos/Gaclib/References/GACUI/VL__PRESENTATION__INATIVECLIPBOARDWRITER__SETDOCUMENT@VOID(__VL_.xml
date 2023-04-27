@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetDocument" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeClipboardWriter::SetDocument@void(::vl::Ptr&lt;::vl::presentation::DocumentModel&gt;)[decl0]"><summary>Prepare a document for the clipboard.</summary><param name="value">The document.</param><signature><![CDATA[void SetDocument(
+<Document accessor="public" category="Function" name="SetDocument"><summary>Prepare a document for the clipboard.</summary><param name="value">The document.</param><signature><![CDATA[void SetDocument(
     Ptr<DocumentModel> value
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="DocumentModel" docId="vl::presentation::DocumentModel" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="DocumentModel" docId="vl::presentation::DocumentModel"/></seealsos></Document>

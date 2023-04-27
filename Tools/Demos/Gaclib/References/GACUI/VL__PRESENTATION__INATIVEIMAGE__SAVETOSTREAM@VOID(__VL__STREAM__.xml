@@ -1,7 +1,7 @@
-<Document accessor="public" category="Function" name="SaveToStream" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeImage::SaveToStream@void(::vl::stream::IStream &amp;, ::vl::presentation::INativeImage::FormatType)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SaveToStream"><summary>
  Save the image to a stream.
  </summary><param name="imageStream">The stream.</param><param name="formatType">The format of the image.</param><signature><![CDATA[void SaveToStream(
     stream::IStream & imageStream,
     FormatType formatType /* optional */
 );
-]]></signature><seealsos><symbol name="FormatType" docId="vl::presentation::INativeImage::FormatType" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage::FormatType"/><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></seealsos></Document>
+]]></signature><seealsos><symbol name="FormatType" docId="vl::presentation::INativeImage::FormatType"/><symbol name="IStream" docId="vl::stream::IStream"/></seealsos></Document>

@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="InvalidateTabOrderCache" declFile="GuiGraphicsHost.h" declId="FB$vl::presentation::compositions::GuiGraphicsHost::InvalidateTabOrderCache@void()[decl0]"><summary>Invalidte the internal tab order control list. Next time when TAB is pressed it will be rebuilt.</summary><signature><![CDATA[void InvalidateTabOrderCache(
+<Document accessor="public" category="Function" name="InvalidateTabOrderCache"><summary>Invalidte the internal tab order control list. Next time when TAB is pressed it will be rebuilt.</summary><signature><![CDATA[void InvalidateTabOrderCache(
 );
 ]]></signature></Document>

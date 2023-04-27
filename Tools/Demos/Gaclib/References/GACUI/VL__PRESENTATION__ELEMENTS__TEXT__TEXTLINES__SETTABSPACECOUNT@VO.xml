@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetTabSpaceCount" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLines::SetTabSpaceCount@void(::vl::vint)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetTabSpaceCount"><summary>
  Set the number of spaces to replace a tab character for rendering.
  </summary><param name="value">The number of spaces to replace a tab character for rendering.</param><signature><![CDATA[void SetTabSpaceCount(
     vint value
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

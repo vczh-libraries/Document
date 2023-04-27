@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="IsReady" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLine::IsReady@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="IsReady"><summary>
  Test is the line initialized.
  </summary><returns>Returns true if the line is initialized.</returns><signature><![CDATA[bool IsReady(
 );

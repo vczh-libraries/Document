@@ -1,4 +1,4 @@
-<Document accessor="public" category="Variable" name="left" declFile="GuiTypes.h" declId="NI$vl::presentation::Margin_::left"><summary>
+<Document accessor="public" category="Variable" name="left"><summary>
  The left margin.
  </summary><signature><![CDATA[T left;
 ]]></signature></Document>

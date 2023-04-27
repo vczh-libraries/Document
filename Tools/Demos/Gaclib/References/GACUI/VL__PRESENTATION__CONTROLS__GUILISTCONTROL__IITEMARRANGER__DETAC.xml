@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="DetachListControl" declFile="GuiListControls.h" declId="FB$vl::presentation::controls::GuiListControl::IItemArranger::DetachListControl@void()[decl0]"><summary>Called when an item arranger in uninstalled from a <symbol name="GuiListControl" docId="vl::presentation::controls::GuiListControl" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl"/>.</summary><signature><![CDATA[void DetachListControl(
+<Document accessor="public" category="Function" name="DetachListControl"><summary>Called when an item arranger in uninstalled from a <symbol name="GuiListControl" docId="vl::presentation::controls::GuiListControl"/>.</summary><signature><![CDATA[void DetachListControl(
 );
 ]]></signature></Document>

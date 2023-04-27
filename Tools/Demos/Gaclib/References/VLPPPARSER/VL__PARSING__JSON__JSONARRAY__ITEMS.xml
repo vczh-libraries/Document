@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="items" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonArray::items"><summary>Array elements.</summary><signature><![CDATA[vl::collections::List<vl::Ptr<JsonNode>> items;
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/><symbol name="JsonNode" docId="vl::parsing::json::JsonNode" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonNode"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="items"><summary>Array elements.</summary><signature><![CDATA[vl::collections::List<vl::Ptr<JsonNode>> items;
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="List" docId="vl::collections::List"/><symbol name="JsonNode" docId="vl::parsing::json::JsonNode"/></seealsos></Document>

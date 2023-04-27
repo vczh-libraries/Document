@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetWidthPageSize" declFile="GuiGraphicsSpecializedComposition.h" declId="FB$vl::presentation::compositions::GuiPartialViewComposition::SetWidthPageSize@void(double)[decl0]"><summary>Set the page size to decide the horizontal size. Value in [0, 1].</summary><param name="value">The page size to decide the horizontal size.</param><signature><![CDATA[void SetWidthPageSize(
+<Document accessor="public" category="Function" name="SetWidthPageSize"><summary>Set the page size to decide the horizontal size. Value in [0, 1].</summary><param name="value">The page size to decide the horizontal size.</param><signature><![CDATA[void SetWidthPageSize(
     double value
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetGroup" declFile="GuiGraphicsSharedSizeComposition.h" declId="FB$vl::presentation::compositions::GuiSharedSizeItemComposition::SetGroup@void(::vl::WString const &amp;)[decl0]"><summary>Set the group name of this item.</summary><param name="value">The group name.</param><signature><![CDATA[void SetGroup(
+<Document accessor="public" category="Function" name="SetGroup"><summary>Set the group name of this item.</summary><param name="value">The group name.</param><signature><![CDATA[void SetGroup(
     WString const & value
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

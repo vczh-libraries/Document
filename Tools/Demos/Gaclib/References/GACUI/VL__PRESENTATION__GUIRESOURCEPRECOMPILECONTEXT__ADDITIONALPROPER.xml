@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="additionalProperties" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourcePrecompileContext::additionalProperties"><summary>Additional properties for resource item contents</summary><signature><![CDATA[PropertyMap additionalProperties;
-]]></signature><seealsos><symbol name="PropertyMap" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourcePrecompileContext::PropertyMap"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="additionalProperties"><summary>Additional properties for resource item contents</summary><signature><![CDATA[PropertyMap additionalProperties;
+]]></signature><seealsos><symbol name="PropertyMap"/></seealsos></Document>

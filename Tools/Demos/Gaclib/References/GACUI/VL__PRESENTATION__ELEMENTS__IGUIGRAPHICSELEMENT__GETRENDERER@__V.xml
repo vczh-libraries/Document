@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetRenderer" declFile="GuiGraphicsElementInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsElement::GetRenderer@::vl::presentation::elements::IGuiGraphicsRenderer *()[decl0]"><summary>
- Access the associated <symbol name="IGuiGraphicsRenderer" docId="vl::presentation::elements::IGuiGraphicsRenderer" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderer"/> for this graphics element.
+<Document accessor="public" category="Function" name="GetRenderer"><summary>
+ Access the associated <symbol name="IGuiGraphicsRenderer" docId="vl::presentation::elements::IGuiGraphicsRenderer"/> for this graphics element.
  </summary><returns>Returns the related renderer.</returns><signature><![CDATA[IGuiGraphicsRenderer * GetRenderer(
 );
-]]></signature><seealsos><symbol name="IGuiGraphicsRenderer" docId="vl::presentation::elements::IGuiGraphicsRenderer" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderer"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IGuiGraphicsRenderer" docId="vl::presentation::elements::IGuiGraphicsRenderer"/></seealsos></Document>

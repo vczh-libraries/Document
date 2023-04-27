@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="SetBounds" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::SetBounds@void(::vl::presentation::NativePoint, ::vl::presentation::Size)[decl0]"><summary>Set the location in screen space and the client size of the window.</summary><param name="location">The location of the window.</param><param name="size">The client size of the window.</param><signature><![CDATA[void SetBounds(
+<Document accessor="public" category="Function" name="SetBounds"><summary>Set the location in screen space and the client size of the window.</summary><param name="location">The location of the window.</param><param name="size">The client size of the window.</param><signature><![CDATA[void SetBounds(
     NativePoint location,
     Size size
 );
-]]></signature><seealsos><symbol name="NativePoint" declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/><symbol name="Size" declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>
+]]></signature><seealsos><symbol name="NativePoint"/><symbol name="Size"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="DisableCustomFrameMode" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::DisableCustomFrameMode@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="DisableCustomFrameMode"><summary>
  Disable the window customized frame mode.
  </summary><signature><![CDATA[void DisableCustomFrameMode(
 );

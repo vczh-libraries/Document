@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="CloseList" declFile="GuiTextAutoComplete.h" declId="FB$vl::presentation::controls::GuiTextBoxAutoCompleteBase::CloseList@void()[decl0]"><summary>Notify the list to be invisible.</summary><signature><![CDATA[void CloseList(
+<Document accessor="public" category="Function" name="CloseList"><summary>Notify the list to be invisible.</summary><signature><![CDATA[void CloseList(
 );
 ]]></signature></Document>

@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetRelatedScreen" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::GetRelatedScreen@::vl::presentation::INativeScreen *()[decl0]"><summary>Get the screen that contains the window.</summary><returns>The screen that contains the window.</returns><signature><![CDATA[INativeScreen * GetRelatedScreen(
+<Document accessor="public" category="Function" name="GetRelatedScreen"><summary>Get the screen that contains the window.</summary><returns>The screen that contains the window.</returns><signature><![CDATA[INativeScreen * GetRelatedScreen(
 );
-]]></signature><seealsos><symbol name="INativeScreen" docId="vl::presentation::INativeScreen" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeScreen"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeScreen" docId="vl::presentation::INativeScreen"/></seealsos></Document>

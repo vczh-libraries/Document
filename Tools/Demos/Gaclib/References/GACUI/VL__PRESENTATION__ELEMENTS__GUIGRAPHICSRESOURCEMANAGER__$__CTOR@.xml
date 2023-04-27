@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="$__ctor" declFile="GuiGraphicsResourceManager.h" declId="FB$vl::presentation::elements::GuiGraphicsResourceManager::$__ctor@()[decl0]"><summary>
+<Document accessor="public" category="Function" name="$__ctor"><summary>
  Create a graphics resource manager without any predefined factories
  </summary><signature><![CDATA[ GuiGraphicsResourceManager(
 );

@@ -1,6 +1,6 @@
-<Document accessor="public" category="Variable" name="totalMilliseconds" declFile="Basic.h" declId="NI$vl::DateTime::totalMilliseconds"><summary>
+<Document accessor="public" category="Variable" name="totalMilliseconds"><summary>
  The calculated total milliseconds. It is OS dependent because the start time is different.
  You should not rely on the fact about how this value is created.
  The only invariant thing is that, when an date time is earlier than another, the totalMilliseconds is lesser.
  </summary><signature><![CDATA[vuint64_t totalMilliseconds;
-]]></signature><seealsos><symbol name="vuint64_t" docId="vl::vuint64_t" declFile="Basic.h" declId="NI$vl::vuint64_t"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vuint64_t" docId="vl::vuint64_t"/></seealsos></Document>

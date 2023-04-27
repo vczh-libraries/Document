@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="$__ctor" declFile="Lazy.h" declId="FB$vl::Lazy::$__ctor@(::vl::Func&lt;[T]()&gt; const &amp;)[impl0]"><summary>Create an evaluation using a function, which produces the evaluation result.</summary><param name="evaluator">The function.</param><signature><![CDATA[ Lazy(
+<Document accessor="public" category="Function" name="$__ctor"><summary>Create an evaluation using a function, which produces the evaluation result.</summary><param name="evaluator">The function.</param><signature><![CDATA[ Lazy(
     Func<T(
 )> const & evaluator
 );
-]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func"/></seealsos></Document>

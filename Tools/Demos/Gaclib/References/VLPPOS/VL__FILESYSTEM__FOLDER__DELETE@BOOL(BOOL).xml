@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Delete" declFile="FileSystem.h" declId="FB$vl::filesystem::Folder::Delete@bool(bool)[decl0]"><summary>Delete the folder.</summary><returns>Returns true if this operation succeeded.</returns><param name="recursively">Set to true to delete everything in the folder.</param><remarks>This function could return before the folder is actually deleted.</remarks><signature><![CDATA[bool Delete(
+<Document accessor="public" category="Function" name="Delete"><summary>Delete the folder.</summary><returns>Returns true if this operation succeeded.</returns><param name="recursively">Set to true to delete everything in the folder.</param><remarks>This function could return before the folder is actually deleted.</remarks><signature><![CDATA[bool Delete(
     bool recursively
 ) const;
 ]]></signature></Document>

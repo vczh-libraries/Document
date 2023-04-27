@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="GuiColorDialog" declFile="GuiDialogs.h" declId="NI$vl::presentation::controls::GuiColorDialog"><summary>Color dialog.</summary><signature><![CDATA[class GuiColorDialog
+<Document accessor="" category="Class" name="GuiColorDialog"><summary>Color dialog.</summary><signature><![CDATA[class GuiColorDialog
     : GuiDialogBase
     , Description<GuiColorDialog>;
-]]></signature><seealsos><symbol name="GuiColorDialog" docId="vl::presentation::controls::GuiColorDialog" declFile="GuiDialogs.h" declId="NI$vl::presentation::controls::GuiColorDialog"/></seealsos><basetypes><symbol name="GuiDialogBase" docId="vl::presentation::controls::GuiDialogBase" declFile="GuiDialogs.h" declId="NI$vl::presentation::controls::GuiDialogBase"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiColorDialog" docId="vl::presentation::controls::GuiColorDialog"/></seealsos><basetypes><symbol name="GuiDialogBase" docId="vl::presentation::controls::GuiDialogBase"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

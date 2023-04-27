@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="GetTopMost" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::GetTopMost@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetTopMost"><summary>
  Test is the window always on top of the desktop.
  </summary><returns>Returns true if the window is always on top of the desktop.</returns><signature><![CDATA[bool GetTopMost(
 );

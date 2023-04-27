@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetAssociatedHitTestResult" declFile="GuiGraphicsCompositionBase.h" declId="FB$vl::presentation::compositions::GuiGraphicsComposition::SetAssociatedHitTestResult@void(::vl::presentation::INativeWindowListener::HitTestResult)[decl0]"><summary>Set the associated hit test result.</summary><param name="value">The associated hit test result.</param><signature><![CDATA[void SetAssociatedHitTestResult(
+<Document accessor="public" category="Function" name="SetAssociatedHitTestResult"><summary>Set the associated hit test result.</summary><param name="value">The associated hit test result.</param><signature><![CDATA[void SetAssociatedHitTestResult(
     INativeWindowListener::HitTestResult value
 );
-]]></signature><seealsos><symbol name="HitTestResult" docId="vl::presentation::INativeWindowListener::HitTestResult" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindowListener::HitTestResult"/></seealsos></Document>
+]]></signature><seealsos><symbol name="HitTestResult" docId="vl::presentation::INativeWindowListener::HitTestResult"/></seealsos></Document>

@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="parentStyleName" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentStyle::parentStyleName"><summary>Parent style name, could be #Default, #Context, #NormalLink, #ActiveLink or style name of others</summary><signature><![CDATA[WString parentStyleName;
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="parentStyleName"><summary>Parent style name, could be #Default, #Context, #NormalLink, #ActiveLink or style name of others</summary><signature><![CDATA[WString parentStyleName;
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

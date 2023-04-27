@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="GetVisuallyEnabled" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::GetVisuallyEnabled@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetVisuallyEnabled"><summary>
  Get the enabling state.
  </summary><returns>Returns true if the element will be rendered as an enabled element.</returns><signature><![CDATA[bool GetVisuallyEnabled(
 );

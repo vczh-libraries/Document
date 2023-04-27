@@ -1,7 +1,7 @@
-<Document accessor="public" category="Function" name="DestroyShortcut" declFile="GuiGraphicsHost_ShortcutKey.h" declId="FB$vl::presentation::compositions::GuiShortcutKeyManager::DestroyShortcut@bool(bool, bool, bool, ::vl::presentation::VKEY)[decl0]"><summary>Destroy a shortcut key item using a key combination</summary><returns>Returns true if the manager destroyed a existing shortcut key item.</returns><param name="ctrl">Set to true if the CTRL key is required.</param><param name="shift">Set to true if the SHIFT key is required.</param><param name="alt">Set to true if the ALT key is required.</param><param name="key">The non-control key.</param><signature><![CDATA[bool DestroyShortcut(
+<Document accessor="public" category="Function" name="DestroyShortcut"><summary>Destroy a shortcut key item using a key combination</summary><returns>Returns true if the manager destroyed a existing shortcut key item.</returns><param name="ctrl">Set to true if the CTRL key is required.</param><param name="shift">Set to true if the SHIFT key is required.</param><param name="alt">Set to true if the ALT key is required.</param><param name="key">The non-control key.</param><signature><![CDATA[bool DestroyShortcut(
     bool ctrl,
     bool shift,
     bool alt,
     VKEY key
 );
-]]></signature><seealsos><symbol name="VKEY" declFile="GuiTypes.h" declId="NI$vl::presentation::VKEY"/></seealsos></Document>
+]]></signature><seealsos><symbol name="VKEY"/></seealsos></Document>

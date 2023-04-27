@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetImage" declFile="GuiMenuControls.h" declId="FB$vl::presentation::controls::GuiMenuButton::GetImage@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()[decl0]"><summary>Get the image for the menu button.</summary><returns>The image for the menu button.</returns><signature><![CDATA[Ptr<GuiImageData> GetImage(
+<Document accessor="public" category="Function" name="GetImage"><summary>Get the image for the menu button.</summary><returns>The image for the menu button.</returns><signature><![CDATA[Ptr<GuiImageData> GetImage(
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="GuiImageData" docId="vl::presentation::GuiImageData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiImageData"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="GuiImageData" docId="vl::presentation::GuiImageData"/></seealsos></Document>

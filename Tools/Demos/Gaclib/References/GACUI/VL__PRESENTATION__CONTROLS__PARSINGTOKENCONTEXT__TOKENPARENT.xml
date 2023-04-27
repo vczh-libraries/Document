@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="tokenParent" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::ParsingTokenContext::tokenParent"><summary>The object syntax tree parent of the token.</summary><signature><![CDATA[parsing::ParsingTreeObject * tokenParent;
-]]></signature><seealsos><symbol name="ParsingTreeObject" docId="vl::parsing::ParsingTreeObject" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeObject"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="tokenParent"><summary>The object syntax tree parent of the token.</summary><signature><![CDATA[parsing::ParsingTreeObject * tokenParent;
+]]></signature><seealsos><symbol name="ParsingTreeObject" docId="vl::parsing::ParsingTreeObject"/></seealsos></Document>

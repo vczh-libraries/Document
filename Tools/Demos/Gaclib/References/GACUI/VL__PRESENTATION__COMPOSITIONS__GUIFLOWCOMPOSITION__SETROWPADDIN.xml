@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetRowPadding" declFile="GuiGraphicsFlowComposition.h" declId="FB$vl::presentation::compositions::GuiFlowComposition::SetRowPadding@void(::vl::vint)[decl0]"><summary>Set the distance between rows.</summary><param name="value">The distance between rows.</param><signature><![CDATA[void SetRowPadding(
+<Document accessor="public" category="Function" name="SetRowPadding"><summary>Set the distance between rows.</summary><param name="value">The distance between rows.</param><signature><![CDATA[void SetRowPadding(
     vint value
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

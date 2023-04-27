@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetEditorFactory" declFile="GuiBindableDataGrid.h" declId="FB$vl::presentation::controls::list::DataColumn::SetEditorFactory@void(::vl::Ptr&lt;::vl::presentation::controls::list::IDataEditorFactory&gt;)[decl0]"><summary>Set the editor factory for the column.</summary><param name="value">The editor factory.</param><signature><![CDATA[void SetEditorFactory(
+<Document accessor="public" category="Function" name="SetEditorFactory"><summary>Set the editor factory for the column.</summary><param name="value">The editor factory.</param><signature><![CDATA[void SetEditorFactory(
     Ptr<IDataEditorFactory> value
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="IDataEditorFactory" docId="vl::presentation::controls::list::IDataEditorFactory" declFile="GuiDataGridInterfaces.h" declId="NI$vl::presentation::controls::list::IDataEditorFactory"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="IDataEditorFactory" docId="vl::presentation::controls::list::IDataEditorFactory"/></seealsos></Document>

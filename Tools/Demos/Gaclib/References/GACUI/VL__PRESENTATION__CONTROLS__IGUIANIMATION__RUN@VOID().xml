@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="Run" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::IGuiAnimation::Run@void()[decl0]"><summary>Play the animation. The animation should calculate the time itself to determine the content of the current state of animating objects.</summary><signature><![CDATA[void Run(
+<Document accessor="public" category="Function" name="Run"><summary>Play the animation. The animation should calculate the time itself to determine the content of the current state of animating objects.</summary><signature><![CDATA[void Run(
 );
 ]]></signature></Document>

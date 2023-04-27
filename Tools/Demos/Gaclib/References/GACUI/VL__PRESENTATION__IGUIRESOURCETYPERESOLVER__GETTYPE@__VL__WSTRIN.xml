@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetType" declFile="GuiResource.h" declId="FB$vl::presentation::IGuiResourceTypeResolver::GetType@::vl::WString()[decl0]"><summary>Get the type of the resource that load by this resolver.</summary><returns>The type.</returns><signature><![CDATA[WString GetType(
+<Document accessor="public" category="Function" name="GetType"><summary>Get the type of the resource that load by this resolver.</summary><returns>The type.</returns><signature><![CDATA[WString GetType(
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

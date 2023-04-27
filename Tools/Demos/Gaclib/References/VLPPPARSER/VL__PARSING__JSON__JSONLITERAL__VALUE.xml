@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="value" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonLiteral::value"><summary>The literal value.</summary><signature><![CDATA[JsonValue value;
-]]></signature><seealsos><symbol name="JsonValue" docId="vl::parsing::json::JsonLiteral::JsonValue" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonLiteral::JsonValue"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="value"><summary>The literal value.</summary><signature><![CDATA[JsonValue value;
+]]></signature><seealsos><symbol name="JsonValue" docId="vl::parsing::json::JsonLiteral::JsonValue"/></seealsos></Document>

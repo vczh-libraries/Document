@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetSizeState" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetSizeState@::vl::presentation::INativeWindow::WindowSizeState()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetSizeState"><summary>
  Get the window size state.
  </summary><returns>Returns the window size state.</returns><signature><![CDATA[WindowSizeState GetSizeState(
 );
-]]></signature><seealsos><symbol name="WindowSizeState" docId="vl::presentation::INativeWindow::WindowSizeState" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow::WindowSizeState"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WindowSizeState" docId="vl::presentation::INativeWindow::WindowSizeState"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="" category="Function" name="CopyFrom" declFile="OperationString.h" declId="FB$vl::collections::CopyFrom@void([Ds] &amp;, ::vl::ObjectString&lt;[S]&gt; const &amp;, bool)[impl0]"><summary>Copy containers.</summary><typeparam name="Ds">Type of the target container.</typeparam><typeparam name="S">Type of code points in the source string.</typeparam><param name="ds">The target container.</param><param name="ss">The source string.</param><param name="append">Set to true to perform appending instead of replacing.</param><signature><![CDATA[template <
+<Document accessor="" category="Function" name="CopyFrom"><summary>Copy containers.</summary><typeparam name="Ds">Type of the target container.</typeparam><typeparam name="S">Type of code points in the source string.</typeparam><param name="ds">The target container.</param><param name="ss">The source string.</param><param name="append">Set to true to perform appending instead of replacing.</param><signature><![CDATA[template <
     typename Ds, 
     typename S
 >
@@ -7,4 +7,4 @@ void CopyFrom(
     ObjectString<S> const & ss,
     bool append /* optional */
 );
-]]></signature><seealsos><symbol name="ObjectString" docId="vl::ObjectString" declFile="String.h" declId="NI$vl::ObjectString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ObjectString" docId="vl::ObjectString"/></seealsos></Document>

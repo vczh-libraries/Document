@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Contains" declFile="List.h" declId="FB$vl::collections::Array::Contains@bool([K] const &amp;)[impl0]"><summary>Test does the array contain a value or not.</summary><returns>Returns true if the array contains the specified value.</returns><param name="item">The value to test.</param><signature><![CDATA[bool Contains(
+<Document accessor="public" category="Function" name="Contains"><summary>Test does the array contain a value or not.</summary><returns>Returns true if the array contains the specified value.</returns><param name="item">The value to test.</param><signature><![CDATA[bool Contains(
     K const & item
 ) const;
 ]]></signature></Document>

@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="Normalize" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLines::Normalize@::vl::presentation::TextPos(::vl::presentation::TextPos)[decl0]"><summary>
+<Document accessor="public" category="Function" name="Normalize"><summary>
  Normalize a text position to be available.
  </summary><returns>The normalized text position.</returns><param name="pos">The text position to normalize.</param><signature><![CDATA[TextPos Normalize(
     TextPos pos
 );
-]]></signature><seealsos><symbol name="TextPos" docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>
+]]></signature><seealsos><symbol name="TextPos" docId="vl::presentation::TextPos"/></seealsos></Document>

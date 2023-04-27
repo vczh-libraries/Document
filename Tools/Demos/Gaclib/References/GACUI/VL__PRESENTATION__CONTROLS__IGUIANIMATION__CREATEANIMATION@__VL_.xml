@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="CreateAnimation" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::IGuiAnimation::CreateAnimation@::vl::Ptr&lt;::vl::presentation::controls::IGuiAnimation&gt;(::vl::Func&lt;void(::vl::vuint64_t)&gt; const &amp;, ::vl::vuint64_t)[decl0]"><summary>Create a finite animation.</summary><returns>Returns the created animation.</returns><param name="run">The animation callback for each frame.</param><param name="milliseconds">The length of the animation.</param><signature><![CDATA[static Ptr<IGuiAnimation> CreateAnimation(
+<Document accessor="public" category="Function" name="CreateAnimation"><summary>Create a finite animation.</summary><returns>Returns the created animation.</returns><param name="run">The animation callback for each frame.</param><param name="milliseconds">The length of the animation.</param><signature><![CDATA[static Ptr<IGuiAnimation> CreateAnimation(
     Func<void(
 vuint64_t)> const & run,
     vuint64_t milliseconds
 );
-]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="IGuiAnimation" docId="vl::presentation::controls::IGuiAnimation" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::IGuiAnimation"/><symbol name="vuint64_t" docId="vl::vuint64_t" declFile="Basic.h" declId="NI$vl::vuint64_t"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func"/><symbol name="Ptr" docId="vl::Ptr"/><symbol name="IGuiAnimation" docId="vl::presentation::controls::IGuiAnimation"/><symbol name="vuint64_t" docId="vl::vuint64_t"/></seealsos></Document>

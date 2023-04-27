@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="GetCaretVisible" declFile="GuiGraphicsDocumentElement.h" declId="FB$vl::presentation::elements::GuiDocumentElement::GetCaretVisible@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetCaretVisible"><summary>
  Get the caret visibility.
  </summary><returns>Returns true if the caret will be rendered.</returns><signature><![CDATA[bool GetCaretVisible(
 );

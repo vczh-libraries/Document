@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="EndSetColors" declFile="GuiLanguageColorizer.h" declId="FB$vl::presentation::controls::GuiGrammarColorizer::EndSetColors@void()[decl0]"><summary>Submit all color settings.</summary><signature><![CDATA[void EndSetColors(
+<Document accessor="public" category="Function" name="EndSetColors"><summary>Submit all color settings.</summary><signature><![CDATA[void EndSetColors(
 );
 ]]></signature></Document>

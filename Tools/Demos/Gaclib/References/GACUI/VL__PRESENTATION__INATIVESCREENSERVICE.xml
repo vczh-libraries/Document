@@ -1,6 +1,6 @@
-<Document accessor="" category="Class" name="INativeScreenService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeScreenService"><summary>
- Screen information service. To access this service, use <symbol name="ScreenService" docId="vl::presentation::INativeController::ScreenService@::vl::presentation::INativeScreenService *()" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::ScreenService@::vl::presentation::INativeScreenService *()[decl0]"/>.
+<Document accessor="" category="Class" name="INativeScreenService"><summary>
+ Screen information service. To access this service, use <symbol name="ScreenService" docId="vl::presentation::INativeController::ScreenService@::vl::presentation::INativeScreenService *()"/>.
  </summary><signature><![CDATA[class INativeScreenService
     : IDescriptable
     , Description<INativeScreenService>;
-]]></signature><seealsos><symbol name="INativeScreenService" docId="vl::presentation::INativeScreenService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeScreenService"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>
+]]></signature><seealsos><symbol name="INativeScreenService" docId="vl::presentation::INativeScreenService"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable"/></basetypes></Document>

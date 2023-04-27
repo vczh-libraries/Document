@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="color" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentStyleProperties::color"><summary>Font color.</summary><signature><![CDATA[Nullable<Color> color;
-]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol name="Color" docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="color"><summary>Font color.</summary><signature><![CDATA[Nullable<Color> color;
+]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable"/><symbol name="Color" docId="vl::presentation::Color"/></seealsos></Document>

@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="$__ctor" declFile="Function.h" declId="FB$vl::Func@&lt;[R]([TArgs]...)&gt;::$__ctor@(::vl::Func@&lt;[R]([TArgs]...)&gt;&lt;[R]([TArgs]...)&gt; const &amp;)[decl0]"><summary>Copy a functor.</summary><param name="function">The functor to copy.</param><signature><![CDATA[ Func(
+<Document accessor="public" category="Function" name="$__ctor"><summary>Copy a functor.</summary><param name="function">The functor to copy.</param><signature><![CDATA[ Func(
     Func<R(
 TArgs...)> const & function
 );
 ]]></signature><seealsos><symbol name="Func&lt;R(
-TArgs...)&gt;" docId="vl::Func@&lt;[R]([TArgs]...)&gt;" declFile="Function.h" declId="NI$vl::Func@&lt;[R]([TArgs]...)&gt;"/></seealsos></Document>
+TArgs...)&gt;" docId="vl::Func@&lt;[R]([TArgs]...)&gt;"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetOwnedElement" declFile="GuiGraphicsCompositionBase.h" declId="FB$vl::presentation::compositions::GuiGraphicsComposition::SetOwnedElement@void(::vl::Ptr&lt;::vl::presentation::elements::IGuiGraphicsElement&gt;)[decl0]"><summary>Set the contained graphics element.</summary><param name="element">The new graphics element to set.</param><signature><![CDATA[void SetOwnedElement(
+<Document accessor="public" category="Function" name="SetOwnedElement"><summary>Set the contained graphics element.</summary><param name="element">The new graphics element to set.</param><signature><![CDATA[void SetOwnedElement(
     Ptr<elements::IGuiGraphicsElement> element
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="IGuiGraphicsElement" docId="vl::presentation::elements::IGuiGraphicsElement" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsElement"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="IGuiGraphicsElement" docId="vl::presentation::elements::IGuiGraphicsElement"/></seealsos></Document>

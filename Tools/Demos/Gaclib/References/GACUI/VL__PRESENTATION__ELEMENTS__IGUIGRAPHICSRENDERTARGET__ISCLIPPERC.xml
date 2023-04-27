@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="IsClipperCoverWholeTarget" declFile="GuiGraphicsElementInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsRenderTarget::IsClipperCoverWholeTarget@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="IsClipperCoverWholeTarget"><summary>
  Test is the combined clipper is as large as the render target.
  </summary><returns>Return true if the combined clipper is as large as the render target.</returns><signature><![CDATA[bool IsClipperCoverWholeTarget(
 );

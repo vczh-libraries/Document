@@ -1,2 +1,2 @@
-<Document accessor="" category="Struct" name="RegexToken" declFile="Regex.h" declId="NI$vl::regex::RegexToken"><summary>A token.</summary><signature><![CDATA[struct RegexToken;
+<Document accessor="" category="Struct" name="RegexToken"><summary>A token.</summary><signature><![CDATA[struct RegexToken;
 ]]></signature></Document>

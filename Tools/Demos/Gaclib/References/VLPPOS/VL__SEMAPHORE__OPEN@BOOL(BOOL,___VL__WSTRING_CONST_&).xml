@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="Open" declFile="Threading.h" declId="FB$vl::Semaphore::Open@bool(bool, ::vl::WString const &amp;)[decl0]"><summary>Open an existing global named semaphore.</summary><returns>Returns true if this operation succeeded.</returns><param name="inheritable">Set to true make the semaphore visible to all all child processes. This argument is only used in Windows.</param><param name="name">Name of the semaphore.</param><signature><![CDATA[bool Open(
+<Document accessor="public" category="Function" name="Open"><summary>Open an existing global named semaphore.</summary><returns>Returns true if this operation succeeded.</returns><param name="inheritable">Set to true make the semaphore visible to all all child processes. This argument is only used in Windows.</param><param name="name">Name of the semaphore.</param><signature><![CDATA[bool Open(
     bool inheritable,
     WString const & name
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

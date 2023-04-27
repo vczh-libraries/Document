@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="ResourceService" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::ResourceService@::vl::presentation::INativeResourceService *()[decl0]"><summary>
+<Document accessor="public" category="Function" name="ResourceService"><summary>
  Get the system resource service.
  </summary><returns>The system resource service</returns><signature><![CDATA[INativeResourceService * ResourceService(
 );
-]]></signature><seealsos><symbol name="INativeResourceService" docId="vl::presentation::INativeResourceService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeResourceService"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeResourceService" docId="vl::presentation::INativeResourceService"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="public" category="Enum" name="ThreadState" declFile="Threading.h" declId="NI$vl::Thread::ThreadState"><summary>Thread state.</summary><enumitem name="NotStarted">The thread has not started.</enumitem><enumitem name="Running">The thread is running.</enumitem><enumitem name="Stopped">The thread has been stopped.</enumitem><signature><![CDATA[enum ThreadState
+<Document accessor="public" category="Enum" name="ThreadState"><summary>Thread state.</summary><enumitem name="NotStarted">The thread has not started.</enumitem><enumitem name="Running">The thread is running.</enumitem><enumitem name="Stopped">The thread has been stopped.</enumitem><signature><![CDATA[enum ThreadState
 {
     NotStarted,
     Running,

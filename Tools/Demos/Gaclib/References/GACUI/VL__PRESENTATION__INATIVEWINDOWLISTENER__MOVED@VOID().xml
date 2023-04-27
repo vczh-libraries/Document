@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Moved" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::Moved@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="Moved"><summary>
  Called when the window is moved.
  </summary><signature><![CDATA[void Moved(
 );

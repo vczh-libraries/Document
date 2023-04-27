@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetColor1" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::Gui3DSplitterElement::SetColor1@void(::vl::presentation::Color)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetColor1"><summary>
  Set the border color.
  </summary><param name="value">The new left-top color.</param><signature><![CDATA[void SetColor1(
     Color value
 );
-]]></signature><seealsos><symbol name="Color" docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Color" docId="vl::presentation::Color"/></seealsos></Document>

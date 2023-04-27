@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetSelectedCell" declFile="GuiDataGridControls.h" declId="FB$vl::presentation::controls::GuiVirtualDataGrid::GetSelectedCell@::vl::presentation::GridPos()[decl0]"><summary>Get the row index and column index of the selected cell.</summary><returns>The row index and column index of the selected cell.</returns><signature><![CDATA[GridPos GetSelectedCell(
+<Document accessor="public" category="Function" name="GetSelectedCell"><summary>Get the row index and column index of the selected cell.</summary><returns>The row index and column index of the selected cell.</returns><signature><![CDATA[GridPos GetSelectedCell(
 );
-]]></signature><seealsos><symbol name="GridPos" docId="vl::presentation::GridPos" declFile="GuiTypes.h" declId="NI$vl::presentation::GridPos"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GridPos" docId="vl::presentation::GridPos"/></seealsos></Document>

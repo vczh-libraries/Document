@@ -1,4 +1,4 @@
-<Document accessor="" category="Function" name="GetFolderPath" declFile="GuiResource.h" declId="FB$vl::presentation::GetFolderPath@::vl::WString(::vl::WString const &amp;)[decl0]"><summary>Get the folder path from a file path. The result folder path is ended with a separator.</summary><returns>The folder path.</returns><param name="filePath">The file path.</param><signature><![CDATA[WString GetFolderPath(
+<Document accessor="" category="Function" name="GetFolderPath"><summary>Get the folder path from a file path. The result folder path is ended with a separator.</summary><returns>The folder path.</returns><param name="filePath">The file path.</param><signature><![CDATA[WString GetFolderPath(
     WString const & filePath
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

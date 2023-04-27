@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="NotifyScrollDown" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::IRibbonGalleryCommandExecutor::NotifyScrollDown@void()[decl0]"><summary>Called when the scroll down button is clicked.</summary><signature><![CDATA[void NotifyScrollDown(
+<Document accessor="public" category="Function" name="NotifyScrollDown"><summary>Called when the scroll down button is clicked.</summary><signature><![CDATA[void NotifyScrollDown(
 );
 ]]></signature></Document>

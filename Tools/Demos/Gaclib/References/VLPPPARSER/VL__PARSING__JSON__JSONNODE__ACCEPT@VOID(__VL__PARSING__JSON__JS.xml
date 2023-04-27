@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Accept" declFile="ParsingJson_Ast.h" declId="FB$vl::parsing::json::JsonNode::Accept@void(::vl::parsing::json::JsonNode::IVisitor *)[decl0]"><summary>Accept a visitor to reveal its real type of this strong-typed AST node.</summary><param name="visitor">The visitor, one of its <b>Visit</b> method will be called according to the real type of this strong-typed AST node.</param><signature><![CDATA[void Accept(
+<Document accessor="public" category="Function" name="Accept"><summary>Accept a visitor to reveal its real type of this strong-typed AST node.</summary><param name="visitor">The visitor, one of its <b>Visit</b> method will be called according to the real type of this strong-typed AST node.</param><signature><![CDATA[void Accept(
     JsonNode::IVisitor * visitor
 );
-]]></signature><seealsos><symbol name="IVisitor" docId="vl::parsing::json::JsonNode::IVisitor" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonNode::IVisitor"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IVisitor" docId="vl::parsing::json::JsonNode::IVisitor"/></seealsos></Document>

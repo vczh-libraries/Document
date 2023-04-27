@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="GetMinimizedBox" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetMinimizedBox@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetMinimizedBox"><summary>
  Test is the minimize box visible.
  </summary><returns>Returns true if the minimize box is visible.</returns><signature><![CDATA[bool GetMinimizedBox(
 );

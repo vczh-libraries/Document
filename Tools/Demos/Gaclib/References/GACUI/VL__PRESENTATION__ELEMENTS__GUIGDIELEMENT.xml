@@ -1,5 +1,5 @@
-<Document accessor="" category="Class" name="GuiGDIElement" declFile="GuiGraphicsWindowsGDI.h" declId="NI$vl::presentation::elements::GuiGDIElement"><summary>
+<Document accessor="" category="Class" name="GuiGDIElement"><summary>
  Defines an element for customized rendering using GDI.
  </summary><signature><![CDATA[class GuiGDIElement
     : GuiElementBase<GuiGDIElement>;
-]]></signature><seealsos><symbol name="GuiGDIElement" docId="vl::presentation::elements::GuiGDIElement" declFile="GuiGraphicsWindowsGDI.h" declId="NI$vl::presentation::elements::GuiGDIElement"/></seealsos><basetypes><symbol name="GuiElementBase" declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiGDIElement" docId="vl::presentation::elements::GuiGDIElement"/></seealsos><basetypes><symbol name="GuiElementBase"/></basetypes></Document>

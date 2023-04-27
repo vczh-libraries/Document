@@ -1,8 +1,8 @@
-<Document accessor="" category="Class" name="Func@&lt;[R]([TArgs]...)&gt;" declFile="Function.h" declId="NI$vl::Func@&lt;[R]([TArgs]...)&gt;"><summary>A type for functors.</summary><typeparam name="R">The return type.</typeparam><typeparam name="TArgs">Types of parameters.</typeparam><signature><![CDATA[template <
+<Document accessor="" category="Class" name="Func@&lt;[R]([TArgs]...)&gt;"><summary>A type for functors.</summary><typeparam name="R">The return type.</typeparam><typeparam name="TArgs">Types of parameters.</typeparam><signature><![CDATA[template <
     typename R, 
     typename... TArgs
 >
 class Func<R(
 TArgs...)>
     : Object;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object"/></basetypes></Document>

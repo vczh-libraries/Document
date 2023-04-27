@@ -1,4 +1,4 @@
-<Document accessor="" category="Function" name="Sort" declFile="Operation.h" declId="FB$vl::collections::Sort@void([T] *, ::vl::vint, ::vl::Func&lt;::vl::vint([T], [T])&gt; const &amp;)[impl0]"><summary>Quick sort.</summary><typeparam name="T">Type of elements.</typeparam><param name="items">Pointer to element array to sort.</param><param name="length">The number of elements to sort.</param><param name="orderer">
+<Document accessor="" category="Function" name="Sort"><summary>Quick sort.</summary><typeparam name="T">Type of elements.</typeparam><param name="items">Pointer to element array to sort.</param><param name="length">The number of elements to sort.</param><param name="orderer">
  The comparar for two elements.
  Both arguments are elements to compare.
  Returns a positive number when the first argument is greater.
@@ -13,4 +13,4 @@ void Sort(
     Func<vint(
 T, T)> const & orderer
 );
-]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="BeginSetColors" declFile="GuiLanguageColorizer.h" declId="FB$vl::presentation::controls::GuiGrammarColorizer::BeginSetColors@void()[decl0]"><summary>Reset all color settings.</summary><signature><![CDATA[void BeginSetColors(
+<Document accessor="public" category="Function" name="BeginSetColors"><summary>Reset all color settings.</summary><signature><![CDATA[void BeginSetColors(
 );
 ]]></signature></Document>

@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="ShowMinimized" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::ShowMinimized@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="ShowMinimized"><summary>
  Minimize the window.
  </summary><signature><![CDATA[void ShowMinimized(
 );

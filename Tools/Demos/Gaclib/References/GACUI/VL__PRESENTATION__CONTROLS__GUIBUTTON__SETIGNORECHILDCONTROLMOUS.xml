@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetIgnoreChildControlMouseEvents" declFile="GuiButtonControls.h" declId="FB$vl::presentation::controls::GuiButton::SetIgnoreChildControlMouseEvents@void(bool)[decl0]"><summary>Set if the button ignores mouse events raised in child controls.</summary><param name="value">Set to true to make this button ignore mouse events raised in child controls.</param><signature><![CDATA[void SetIgnoreChildControlMouseEvents(
+<Document accessor="public" category="Function" name="SetIgnoreChildControlMouseEvents"><summary>Set if the button ignores mouse events raised in child controls.</summary><param name="value">Set to true to make this button ignore mouse events raised in child controls.</param><signature><![CDATA[void SetIgnoreChildControlMouseEvents(
     bool value
 );
 ]]></signature></Document>

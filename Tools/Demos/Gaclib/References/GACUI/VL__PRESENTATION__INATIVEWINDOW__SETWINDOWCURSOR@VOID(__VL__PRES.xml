@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetWindowCursor" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetWindowCursor@void(::vl::presentation::INativeCursor *)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetWindowCursor"><summary>
  Set the mouse cursor of the window. When the mouse is on the window, the mouse cursor will be rendered.
  </summary><param name="cursor">The mouse cursor of the window.</param><signature><![CDATA[void SetWindowCursor(
     INativeCursor * cursor
 );
-]]></signature><seealsos><symbol name="INativeCursor" docId="vl::presentation::INativeCursor" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCursor"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeCursor" docId="vl::presentation::INativeCursor"/></seealsos></Document>

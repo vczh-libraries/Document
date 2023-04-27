@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetTooltipOwner" declFile="GuiApplication.h" declId="FB$vl::presentation::controls::GuiApplication::GetTooltipOwner@::vl::presentation::controls::GuiControl *()[decl0]"><summary>Get the tooltip owner. When the tooltip closed, it returns null.</summary><returns>The tooltip owner.</returns><signature><![CDATA[GuiControl * GetTooltipOwner(
+<Document accessor="public" category="Function" name="GetTooltipOwner"><summary>Get the tooltip owner. When the tooltip closed, it returns null.</summary><returns>The tooltip owner.</returns><signature><![CDATA[GuiControl * GetTooltipOwner(
 );
-]]></signature><seealsos><symbol name="GuiControl" docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiControl" docId="vl::presentation::controls::GuiControl"/></seealsos></Document>

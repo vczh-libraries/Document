@@ -1,2 +1,2 @@
-<Document accessor="" category="Class" name="Console" declFile="Console.h" declId="NI$vl::console::Console"><summary>Basic I/O for command-line applications.</summary><signature><![CDATA[class Console;
+<Document accessor="" category="Class" name="Console"><summary>Basic I/O for command-line applications.</summary><signature><![CDATA[class Console;
 ]]></signature></Document>

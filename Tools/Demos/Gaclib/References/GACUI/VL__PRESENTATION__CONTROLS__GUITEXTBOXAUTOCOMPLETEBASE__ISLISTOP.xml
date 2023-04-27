@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="IsListOpening" declFile="GuiTextAutoComplete.h" declId="FB$vl::presentation::controls::GuiTextBoxAutoCompleteBase::IsListOpening@bool()[decl0]"><summary>Get the list state.</summary><returns>Returns true if the list is visible.</returns><signature><![CDATA[bool IsListOpening(
+<Document accessor="public" category="Function" name="IsListOpening"><summary>Get the list state.</summary><returns>Returns true if the list is visible.</returns><signature><![CDATA[bool IsListOpening(
 );
 ]]></signature></Document>

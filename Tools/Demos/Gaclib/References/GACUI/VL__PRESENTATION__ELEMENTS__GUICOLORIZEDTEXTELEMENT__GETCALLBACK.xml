@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetCallback" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::GetCallback@::vl::presentation::elements::GuiColorizedTextElement::ICallback *()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetCallback"><summary>
  Get the binded callback object.
  </summary><returns>The binded callback object.</returns><signature><![CDATA[ICallback * GetCallback(
 );
-]]></signature><seealsos><symbol name="ICallback" docId="vl::presentation::elements::GuiColorizedTextElement::ICallback" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::GuiColorizedTextElement::ICallback"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ICallback" docId="vl::presentation::elements::GuiColorizedTextElement::ICallback"/></seealsos></Document>

@@ -1,6 +1,6 @@
-<Document accessor="public" category="Variable" name="filetime" declFile="Basic.h" declId="NI$vl::DateTime::filetime"><summary>
+<Document accessor="public" category="Variable" name="filetime"><summary>
  The calculated file time for the date and time. It is OS dependent.
  You should not rely on the fact about how this value is created.
  The only invariant thing is that, when an date time is earlier than another, the filetime is lesser.
  </summary><signature><![CDATA[vuint64_t filetime;
-]]></signature><seealsos><symbol name="vuint64_t" docId="vl::vuint64_t" declFile="Basic.h" declId="NI$vl::vuint64_t"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vuint64_t" docId="vl::vuint64_t"/></seealsos></Document>

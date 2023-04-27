@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="ParsingTable" declFile="ParsingTable.h" declId="NI$vl::parsing::tabling::ParsingTable"><summary><p>
+<Document accessor="" category="Class" name="ParsingTable"><summary><p>
  The parsing table. When you complete a grammar file, use ParserGen.exe to generate the C++ code for you to create a parsing table.
  </p><p>
  Here is a brief description of the grammar file format:
@@ -118,7 +118,7 @@
          You could write C++ code to resolve the ambiguity in later passes.
          </p></li><li><p><b>Type references</b>:</p><p>
          Types can be defined globally or inside classes. Generic type is not supported. You can use the following types for a class field:
-         <ul><li><b>token</b>: Store a token, which will becomes <symbol name="ParsingToken" docId="vl::parsing::ParsingToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingToken"/>.</li><li><b>ClassName</b>: Instance of a specified type, which will becomes Ptr&lt;ClassName&gt;.</li><li><p><b>ClassName[]</b>: Array, which will becomes List&lt;Ptr&lt;ClassName&gt;&gt;. Array of tokens are not supported.</p><p>A class name could also be<b>OuterClass.InnerClass</b>, referring to the &quot;InnerClass&quot; defined inside the &quot;OuterClass&quot;.</p></li></ul></p></li></ul></p><p><b>Token definitions</b><program><code><![CDATA[
+         <ul><li><b>token</b>: Store a token, which will becomes <symbol name="ParsingToken" docId="vl::parsing::ParsingToken"/>.</li><li><b>ClassName</b>: Instance of a specified type, which will becomes Ptr&lt;ClassName&gt;.</li><li><p><b>ClassName[]</b>: Array, which will becomes List&lt;Ptr&lt;ClassName&gt;&gt;. Array of tokens are not supported.</p><p>A class name could also be<b>OuterClass.InnerClass</b>, referring to the &quot;InnerClass&quot; defined inside the &quot;OuterClass&quot;.</p></li></ul></p></li></ul></p><p><b>Token definitions</b><program><code><![CDATA[
      token TokenName = "regular expression" <attributes>;
      discardtoken TokenName = "regular expression";
  ]]></code></program>
@@ -298,4 +298,4 @@
      }
  ]]></code></program></p></summary><signature><![CDATA[class ParsingTable
     : Object;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object"/></basetypes></Document>

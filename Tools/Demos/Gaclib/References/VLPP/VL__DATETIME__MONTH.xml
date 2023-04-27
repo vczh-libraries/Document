@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="month" declFile="Basic.h" declId="NI$vl::DateTime::month"><summary>The month, from 1 to 12.</summary><signature><![CDATA[vint month;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="month"><summary>The month, from 1 to 12.</summary><signature><![CDATA[vint month;
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

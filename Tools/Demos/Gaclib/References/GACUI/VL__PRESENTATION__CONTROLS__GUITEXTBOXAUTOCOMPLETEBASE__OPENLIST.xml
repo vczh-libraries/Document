@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="OpenList" declFile="GuiTextAutoComplete.h" declId="FB$vl::presentation::controls::GuiTextBoxAutoCompleteBase::OpenList@void(::vl::presentation::TextPos)[decl0]"><summary>Notify the list to be visible.</summary><param name="startPosition">The text position to show the list.</param><signature><![CDATA[void OpenList(
+<Document accessor="public" category="Function" name="OpenList"><summary>Notify the list to be visible.</summary><param name="startPosition">The text position to show the list.</param><signature><![CDATA[void OpenList(
     TextPos startPosition
 );
-]]></signature><seealsos><symbol name="TextPos" docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>
+]]></signature><seealsos><symbol name="TextPos" docId="vl::presentation::TextPos"/></seealsos></Document>

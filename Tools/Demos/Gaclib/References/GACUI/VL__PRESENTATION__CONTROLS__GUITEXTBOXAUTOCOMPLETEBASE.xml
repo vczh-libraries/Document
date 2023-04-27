@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="GuiTextBoxAutoCompleteBase" declFile="GuiTextAutoComplete.h" declId="NI$vl::presentation::controls::GuiTextBoxAutoCompleteBase"><summary>The base class of text box auto complete controller.</summary><signature><![CDATA[class GuiTextBoxAutoCompleteBase
+<Document accessor="" category="Class" name="GuiTextBoxAutoCompleteBase"><summary>The base class of text box auto complete controller.</summary><signature><![CDATA[class GuiTextBoxAutoCompleteBase
     : Object
     , ICommonTextEditCallback;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="ICommonTextEditCallback" docId="vl::presentation::controls::ICommonTextEditCallback" declFile="GuiTextGeneralOperations.h" declId="NI$vl::presentation::controls::ICommonTextEditCallback"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object"/><symbol name="ICommonTextEditCallback" docId="vl::presentation::controls::ICommonTextEditCallback"/></basetypes></Document>

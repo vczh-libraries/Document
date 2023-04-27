@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="rt" declFile="GuiGraphicsWindowsDirect2D.h" declId="NI$vl::presentation::elements::GuiDirect2DElementEventArgs::rt"><summary>Direct2D render target object.</summary><signature><![CDATA[ID2D1RenderTarget * rt;
-]]></signature><seealsos><symbol name="ID2D1RenderTarget" docId="ID2D1RenderTarget" declFile="d2d1.h" declId="NI$ID2D1RenderTarget"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="rt"><summary>Direct2D render target object.</summary><signature><![CDATA[ID2D1RenderTarget * rt;
+]]></signature><seealsos><symbol name="ID2D1RenderTarget" docId="ID2D1RenderTarget"/></seealsos></Document>

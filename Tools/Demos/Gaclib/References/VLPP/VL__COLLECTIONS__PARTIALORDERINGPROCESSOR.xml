@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="PartialOrderingProcessor" declFile="PartialOrdering.h" declId="NI$vl::collections::PartialOrderingProcessor"><summary>
+<Document accessor="" category="Class" name="PartialOrderingProcessor"><summary>
  PartialOrderingProcessor is used to sort objects by given relationships among them.
  The relationship is defined by dependance.
  If A depends on B, then B will be place before A after sorting.
@@ -6,4 +6,4 @@
  they will be grouped together in the sorting result.
  </summary><signature><![CDATA[class PartialOrderingProcessor
     : Object;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object"/></basetypes></Document>

@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetTopMost" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::SetTopMost@void(bool)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetTopMost"><summary>
  Make the window always or never on top of the desktop.
  </summary><param name="topmost">True to make the window always  on top of the desktop.</param><signature><![CDATA[void SetTopMost(
     bool topmost

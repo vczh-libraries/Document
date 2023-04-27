@@ -1,6 +1,6 @@
-<Document accessor="public" category="Variable" name="length" declFile="Regex.h" declId="NI$vl::regex::RegexProcessingToken::length"><summary>
+<Document accessor="public" category="Variable" name="length"><summary>
  The length of the token, allowing to be updated by the callback.
  When the callback returns, the length is not allowed to be decreased.
- This value will be -1 if <symbol name="interTokenState" docId="vl::regex::RegexProcessingToken::interTokenState" declFile="Regex.h" declId="NI$vl::regex::RegexProcessingToken::interTokenState"/> is not null.
+ This value will be -1 if <symbol name="interTokenState" docId="vl::regex::RegexProcessingToken::interTokenState"/> is not null.
  </summary><signature><![CDATA[vint length;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

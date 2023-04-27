@@ -1,2 +1,2 @@
-<Document accessor="" category="Struct" name="RegexProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc"><summary>Callback procedures</summary><signature><![CDATA[struct RegexProc;
+<Document accessor="" category="Struct" name="RegexProc"><summary>Callback procedures</summary><signature><![CDATA[struct RegexProc;
 ]]></signature></Document>

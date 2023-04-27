@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="ShortcutTextChanged" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::GuiMenuButton::ShortcutTextChanged"><summary>Shortcut text changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ShortcutTextChanged;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="ShortcutTextChanged"><summary>Shortcut text changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ShortcutTextChanged;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

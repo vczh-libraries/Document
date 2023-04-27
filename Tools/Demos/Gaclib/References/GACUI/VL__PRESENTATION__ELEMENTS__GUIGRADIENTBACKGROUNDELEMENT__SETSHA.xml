@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetShape" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiGradientBackgroundElement::SetShape@void(::vl::presentation::elements::ElementShape)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetShape"><summary>
  Set the shape.
  </summary><param name="value">The new shape.</param><signature><![CDATA[void SetShape(
     ElementShape value
 );
-]]></signature><seealsos><symbol name="ElementShape" docId="vl::presentation::elements::ElementShape" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::ElementShape"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ElementShape" docId="vl::presentation::elements::ElementShape"/></seealsos></Document>

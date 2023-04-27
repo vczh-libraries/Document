@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetControlTemplateObject" declFile="GuiBasicControls.h" declId="FB$vl::presentation::controls::GuiControl::GetControlTemplateObject@::vl::presentation::templates::GuiControlTemplate *()[decl0]"><summary>Get the associated style controller.</summary><returns>The associated style controller.</returns><signature><![CDATA[templates::GuiControlTemplate * GetControlTemplateObject(
+<Document accessor="public" category="Function" name="GetControlTemplateObject"><summary>Get the associated style controller.</summary><returns>The associated style controller.</returns><signature><![CDATA[templates::GuiControlTemplate * GetControlTemplateObject(
 );
-]]></signature><seealsos><symbol name="GuiControlTemplate" declFile="GuiControlTemplates.h" declId="NI$vl::presentation::templates::GuiControlTemplate"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiControlTemplate"/></seealsos></Document>

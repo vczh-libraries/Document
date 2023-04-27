@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="JsonNode" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonNode"><summary>Base class of JSON nodes.</summary><signature><![CDATA[class JsonNode
+<Document accessor="" category="Class" name="JsonNode"><summary>Base class of JSON nodes.</summary><signature><![CDATA[class JsonNode
     : vl::parsing::ParsingTreeCustomBase
     , vl::reflection::Description<JsonNode>;
-]]></signature><seealsos><symbol name="JsonNode" docId="vl::parsing::json::JsonNode" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonNode"/></seealsos><basetypes><symbol name="ParsingTreeCustomBase" docId="vl::parsing::ParsingTreeCustomBase" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeCustomBase"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="JsonNode" docId="vl::parsing::json::JsonNode"/></seealsos><basetypes><symbol name="ParsingTreeCustomBase" docId="vl::parsing::ParsingTreeCustomBase"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

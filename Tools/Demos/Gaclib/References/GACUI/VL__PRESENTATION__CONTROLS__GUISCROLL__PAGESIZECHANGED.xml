@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="PageSizeChanged" declFile="GuiScrollControls.h" declId="NI$vl::presentation::controls::GuiScroll::PageSizeChanged"><summary>Page size changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent PageSizeChanged;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="PageSizeChanged"><summary>Page size changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent PageSizeChanged;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

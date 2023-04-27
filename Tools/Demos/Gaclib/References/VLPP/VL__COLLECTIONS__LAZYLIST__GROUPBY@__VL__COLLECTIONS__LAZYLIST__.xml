@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="GroupBy" declFile="Operation.h" declId="FB$vl::collections::LazyList::GroupBy@::vl::collections::LazyList&lt;::vl::collections::Pair&lt;::vl::function_lambda::FunctionObjectRetriveType::ResultType, ::vl::collections::LazyList&lt;[T]&gt;&gt;&gt;([F])[impl0]"><summary>Create a new lazy list, with elements from this lazy list grouped by a key function.</summary><typeparam name="F">Type of the key function.</typeparam><returns>The created lazy list.</returns><param name="f">
+<Document accessor="public" category="Function" name="GroupBy"><summary>Create a new lazy list, with elements from this lazy list grouped by a key function.</summary><typeparam name="F">Type of the key function.</typeparam><returns>The created lazy list.</returns><param name="f">
  The key function.
  The first argument is any element in this lazy list.
  Returns a key calculated from this argument.
@@ -9,4 +9,4 @@
 LazyList<Pair<vl::function_lambda::FunctionObjectRetriveType<F>::ResultType, LazyList<T>>> GroupBy(
     F f
 ) const;
-]]></signature><seealsos><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/><symbol name="Pair" docId="vl::collections::Pair" declFile="Pair.h" declId="NI$vl::collections::Pair"/><symbol name="ResultType" declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType::ResultType"/><symbol name="ResultType" declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType@&lt;[R]([TArgs]...) *&gt;::ResultType"/></seealsos></Document>
+]]></signature><seealsos><symbol name="LazyList" docId="vl::collections::LazyList"/><symbol name="Pair" docId="vl::collections::Pair"/><symbol name="ResultType"/><symbol name="ResultType"/></seealsos></Document>

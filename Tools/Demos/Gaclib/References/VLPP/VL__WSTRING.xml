@@ -1,4 +1,4 @@
-<Document accessor="" category="TypeAlias" name="WString" declFile="String.h" declId="NI$vl::WString"><summary>
+<Document accessor="" category="TypeAlias" name="WString"><summary>
  Unicode string, UTF-16 on Windows, UTF-32 on Linux and macOS.
  </summary><signature><![CDATA[using WString = ObjectString<wchar_t>;
-]]></signature><seealsos><symbol name="ObjectString" docId="vl::ObjectString" declFile="String.h" declId="NI$vl::ObjectString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ObjectString" docId="vl::ObjectString"/></seealsos></Document>

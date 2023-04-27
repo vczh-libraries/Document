@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="operator =" declFile="Pointer.h" declId="FB$vl::Ptr::operator =@::vl::Ptr&lt;[T]&gt; &amp;(::vl::Ptr&lt;[T]&gt; const &amp;)[impl0]"><summary>Replace by copying another shared pointer.</summary><returns>The shared pointer itself.</returns><param name="pointer">The shared pointer to copy.</param><signature><![CDATA[Ptr<T> & operator =(
+<Document accessor="public" category="Function" name="operator ="><summary>Replace by copying another shared pointer.</summary><returns>The shared pointer itself.</returns><param name="pointer">The shared pointer to copy.</param><signature><![CDATA[Ptr<T> & operator =(
     Ptr<T> const & pointer
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/></seealsos></Document>

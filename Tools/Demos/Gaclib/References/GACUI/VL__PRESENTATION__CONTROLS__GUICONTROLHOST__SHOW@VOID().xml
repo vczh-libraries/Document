@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Show" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::Show@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="Show"><summary>
  Show the window.
  If the window disabled activation, this function enables it again.
  </summary><signature><![CDATA[void Show(

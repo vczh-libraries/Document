@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="LargeImagePropertyChanged" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::GuiBindableDataGrid::LargeImagePropertyChanged"><summary>Large image property name changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent LargeImagePropertyChanged;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="LargeImagePropertyChanged"><summary>Large image property name changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent LargeImagePropertyChanged;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

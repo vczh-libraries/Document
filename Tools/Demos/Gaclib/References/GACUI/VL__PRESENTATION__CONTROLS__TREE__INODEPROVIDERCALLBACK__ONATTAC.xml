@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="OnAttached" declFile="GuiTreeViewControls.h" declId="FB$vl::presentation::controls::tree::INodeProviderCallback::OnAttached@void(::vl::presentation::controls::tree::INodeRootProvider *)[decl0]"><summary>Called when this callback is attached to a node root.</summary><param name="provider">The root node.</param><signature><![CDATA[void OnAttached(
+<Document accessor="public" category="Function" name="OnAttached"><summary>Called when this callback is attached to a node root.</summary><param name="provider">The root node.</param><signature><![CDATA[void OnAttached(
     INodeRootProvider * provider
 );
-]]></signature><seealsos><symbol name="INodeRootProvider" docId="vl::presentation::controls::tree::INodeRootProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeRootProvider"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INodeRootProvider" docId="vl::presentation::controls::tree::INodeRootProvider"/></seealsos></Document>

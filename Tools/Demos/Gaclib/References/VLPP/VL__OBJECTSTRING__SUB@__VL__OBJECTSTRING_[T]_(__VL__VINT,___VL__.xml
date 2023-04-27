@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="Sub" declFile="String.h" declId="FB$vl::ObjectString::Sub@::vl::ObjectString&lt;[T]&gt;(::vl::vint, ::vl::vint)[impl0]"><summary>Get a sub string.</summary><returns>The sub string. It will crash when the specified position or size is out of range.</returns><param name="index">The position of the first code point of the sub string.</param><param name="count">The size of the sub string.</param><example index="0"/><signature><![CDATA[ObjectString<T> Sub(
+<Document accessor="public" category="Function" name="Sub"><summary>Get a sub string.</summary><returns>The sub string. It will crash when the specified position or size is out of range.</returns><param name="index">The position of the first code point of the sub string.</param><param name="count">The size of the sub string.</param><example index="0"/><signature><![CDATA[ObjectString<T> Sub(
     vint index,
     vint count
 ) const;
-]]></signature><seealsos><symbol name="ObjectString" docId="vl::ObjectString" declFile="String.h" declId="NI$vl::ObjectString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ObjectString" docId="vl::ObjectString"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

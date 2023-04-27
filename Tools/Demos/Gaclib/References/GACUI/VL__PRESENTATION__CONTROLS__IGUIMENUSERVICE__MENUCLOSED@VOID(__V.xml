@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="MenuClosed" declFile="GuiMenuControls.h" declId="FB$vl::presentation::controls::IGuiMenuService::MenuClosed@void(::vl::presentation::controls::GuiMenu *)[decl0]"><summary>Called when the sub menu is closed.</summary><param name="menu">The sub menu.</param><signature><![CDATA[void MenuClosed(
+<Document accessor="public" category="Function" name="MenuClosed"><summary>Called when the sub menu is closed.</summary><param name="menu">The sub menu.</param><signature><![CDATA[void MenuClosed(
     GuiMenu * menu
 );
-]]></signature><seealsos><symbol name="GuiMenu" docId="vl::presentation::controls::GuiMenu" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::GuiMenu"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiMenu" docId="vl::presentation::controls::GuiMenu"/></seealsos></Document>

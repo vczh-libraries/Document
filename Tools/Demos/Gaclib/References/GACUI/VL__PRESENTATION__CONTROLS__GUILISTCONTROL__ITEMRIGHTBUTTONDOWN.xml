@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="ItemRightButtonDown" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::ItemRightButtonDown"><summary>Item right mouse button down event.</summary><signature><![CDATA[compositions::GuiItemMouseEvent ItemRightButtonDown;
-]]></signature><seealsos><symbol name="GuiItemMouseEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiItemMouseEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="ItemRightButtonDown"><summary>Item right mouse button down event.</summary><signature><![CDATA[compositions::GuiItemMouseEvent ItemRightButtonDown;
+]]></signature><seealsos><symbol name="GuiItemMouseEvent"/></seealsos></Document>

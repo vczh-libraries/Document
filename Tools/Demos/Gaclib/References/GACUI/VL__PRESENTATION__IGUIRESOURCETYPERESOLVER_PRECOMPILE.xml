@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="IGuiResourceTypeResolver_Precompile" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourceTypeResolver_Precompile"><summary>
+<Document accessor="" category="Class" name="IGuiResourceTypeResolver_Precompile"><summary>
 		Represents a precompiler for resources of a specified type.
 		Current resources that needs precompiling:
 		Workflow:
@@ -14,4 +14,4 @@
  </summary><signature><![CDATA[class IGuiResourceTypeResolver_Precompile
     : IDescriptable
     , Description<IGuiResourceTypeResolver_Precompile>;
-]]></signature><seealsos><symbol name="IGuiResourceTypeResolver_Precompile" docId="vl::presentation::IGuiResourceTypeResolver_Precompile" declFile="GuiResource.h" declId="NI$vl::presentation::IGuiResourceTypeResolver_Precompile"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>
+]]></signature><seealsos><symbol name="IGuiResourceTypeResolver_Precompile" docId="vl::presentation::IGuiResourceTypeResolver_Precompile"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable"/></basetypes></Document>

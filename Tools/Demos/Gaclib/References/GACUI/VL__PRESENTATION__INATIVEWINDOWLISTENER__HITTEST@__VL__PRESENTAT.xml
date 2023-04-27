@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="HitTest" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::HitTest@::vl::presentation::INativeWindowListener::HitTestResult(::vl::presentation::NativePoint)[decl0]"><summary>
+<Document accessor="public" category="Function" name="HitTest"><summary>
  Perform a hit test.
  </summary><returns>Returns the hit test result. If &quot;NoDecision&quot; is returned, the native window provider should call the OS window layer to do the hit test.</returns><param name="location">The location to do the hit test. This location is in the window space (not the client space).</param><signature><![CDATA[HitTestResult HitTest(
     NativePoint location
 );
-]]></signature><seealsos><symbol name="HitTestResult" docId="vl::presentation::INativeWindowListener::HitTestResult" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindowListener::HitTestResult"/><symbol name="NativePoint" declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="HitTestResult" docId="vl::presentation::INativeWindowListener::HitTestResult"/><symbol name="NativePoint"/></seealsos></Document>

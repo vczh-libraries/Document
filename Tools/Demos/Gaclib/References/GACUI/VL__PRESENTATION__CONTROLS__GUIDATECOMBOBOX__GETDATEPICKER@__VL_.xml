@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetDatePicker" declFile="GuiDateTimeControls.h" declId="FB$vl::presentation::controls::GuiDateComboBox::GetDatePicker@::vl::presentation::controls::GuiDatePicker *()[decl0]"><summary>Get the date picker control.</summary><returns>The date picker control.</returns><signature><![CDATA[GuiDatePicker * GetDatePicker(
+<Document accessor="public" category="Function" name="GetDatePicker"><summary>Get the date picker control.</summary><returns>The date picker control.</returns><signature><![CDATA[GuiDatePicker * GetDatePicker(
 );
-]]></signature><seealsos><symbol name="GuiDatePicker" docId="vl::presentation::controls::GuiDatePicker" declFile="GuiDateTimeControls.h" declId="NI$vl::presentation::controls::GuiDatePicker"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiDatePicker" docId="vl::presentation::controls::GuiDatePicker"/></seealsos></Document>

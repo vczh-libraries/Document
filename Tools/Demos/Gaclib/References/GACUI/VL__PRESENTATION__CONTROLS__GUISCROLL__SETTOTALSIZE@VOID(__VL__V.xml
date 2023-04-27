@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetTotalSize" declFile="GuiScrollControls.h" declId="FB$vl::presentation::controls::GuiScroll::SetTotalSize@void(::vl::vint)[decl0]"><summary>Set the total size.</summary><param name="value">The total size.</param><signature><![CDATA[void SetTotalSize(
+<Document accessor="public" category="Function" name="SetTotalSize"><summary>Set the total size.</summary><param name="value">The total size.</param><signature><![CDATA[void SetTotalSize(
     vint value
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

@@ -1,6 +1,6 @@
-<Document accessor="" category="Class" name="GuiFlowItemComposition" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowItemComposition"><summary>
- Represents a flow item composition of a <symbol name="GuiFlowComposition" docId="vl::presentation::compositions::GuiFlowComposition" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowComposition"/>.
+<Document accessor="" category="Class" name="GuiFlowItemComposition"><summary>
+ Represents a flow item composition of a <symbol name="GuiFlowComposition" docId="vl::presentation::compositions::GuiFlowComposition"/>.
  </summary><signature><![CDATA[class GuiFlowItemComposition
     : GuiGraphicsSite
     , Description<GuiFlowItemComposition>;
-]]></signature><seealsos><symbol name="GuiFlowItemComposition" docId="vl::presentation::compositions::GuiFlowItemComposition" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowItemComposition"/></seealsos><basetypes><symbol name="GuiGraphicsSite" docId="vl::presentation::compositions::GuiGraphicsSite" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsSite"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiFlowItemComposition" docId="vl::presentation::compositions::GuiFlowItemComposition"/></seealsos><basetypes><symbol name="GuiGraphicsSite" docId="vl::presentation::compositions::GuiGraphicsSite"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

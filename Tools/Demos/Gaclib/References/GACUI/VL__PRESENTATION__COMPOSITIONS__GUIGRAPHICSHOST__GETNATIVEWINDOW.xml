@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetNativeWindow" declFile="GuiGraphicsHost.h" declId="FB$vl::presentation::compositions::GuiGraphicsHost::GetNativeWindow@::vl::presentation::INativeWindow *()[decl0]"><summary>Get the associated window.</summary><returns>The associated window.</returns><signature><![CDATA[INativeWindow * GetNativeWindow(
+<Document accessor="public" category="Function" name="GetNativeWindow"><summary>Get the associated window.</summary><returns>The associated window.</returns><signature><![CDATA[INativeWindow * GetNativeWindow(
 );
-]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow"/></seealsos></Document>

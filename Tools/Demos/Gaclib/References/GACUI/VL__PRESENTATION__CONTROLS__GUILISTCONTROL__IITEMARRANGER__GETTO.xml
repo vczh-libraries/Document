@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetTotalSize" declFile="GuiListControls.h" declId="FB$vl::presentation::controls::GuiListControl::IItemArranger::GetTotalSize@::vl::presentation::Size()[decl0]"><summary>Get the total size of all data controls.</summary><returns>The total size.</returns><signature><![CDATA[Size GetTotalSize(
+<Document accessor="public" category="Function" name="GetTotalSize"><summary>Get the total size of all data controls.</summary><returns>The total size.</returns><signature><![CDATA[Size GetTotalSize(
 );
-]]></signature><seealsos><symbol name="Size" declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Size"/></seealsos></Document>

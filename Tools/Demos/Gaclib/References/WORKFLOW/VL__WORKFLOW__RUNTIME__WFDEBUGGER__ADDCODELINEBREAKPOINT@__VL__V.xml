@@ -1,7 +1,7 @@
-<Document accessor="public" category="Function" name="AddCodeLineBreakPoint" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::AddCodeLineBreakPoint@::vl::vint(::vl::workflow::runtime::WfAssembly *, ::vl::vint, ::vl::vint, bool)[decl0]"><summary>Add a new source code break point.</summary><returns>Returns the index of this break point. Returns -1 if failed.</returns><param name="assembly">The assembly.</param><param name="codeIndex">The code index of a module.</param><param name="row">The row number, starts from 0.</param><param name="beforeCodegen">Set to true to apply source code information to original source code.</param><signature><![CDATA[vint AddCodeLineBreakPoint(
+<Document accessor="public" category="Function" name="AddCodeLineBreakPoint"><summary>Add a new source code break point.</summary><returns>Returns the index of this break point. Returns -1 if failed.</returns><param name="assembly">The assembly.</param><param name="codeIndex">The code index of a module.</param><param name="row">The row number, starts from 0.</param><param name="beforeCodegen">Set to true to apply source code information to original source code.</param><signature><![CDATA[vint AddCodeLineBreakPoint(
     WfAssembly * assembly,
     vint codeIndex,
     vint row,
     bool beforeCodegen /* optional */
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/><symbol name="WfAssembly" docId="vl::workflow::runtime::WfAssembly" declFile="WfRuntimeAssembly.h" declId="NI$vl::workflow::runtime::WfAssembly"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/><symbol name="WfAssembly" docId="vl::workflow::runtime::WfAssembly"/></seealsos></Document>

@@ -1,5 +1,5 @@
-<Document accessor="" category="Class" name="GuiDirect2DElement" declFile="GuiGraphicsWindowsDirect2D.h" declId="NI$vl::presentation::elements::GuiDirect2DElement"><summary>
+<Document accessor="" category="Class" name="GuiDirect2DElement"><summary>
  Defines an element for customized rendering using Direct2D.
  </summary><signature><![CDATA[class GuiDirect2DElement
     : GuiElementBase<GuiDirect2DElement>;
-]]></signature><seealsos><symbol name="GuiDirect2DElement" docId="vl::presentation::elements::GuiDirect2DElement" declFile="GuiGraphicsWindowsDirect2D.h" declId="NI$vl::presentation::elements::GuiDirect2DElement"/></seealsos><basetypes><symbol name="GuiElementBase" declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiElementBase"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiDirect2DElement" docId="vl::presentation::elements::GuiDirect2DElement"/></seealsos><basetypes><symbol name="GuiElementBase"/></basetypes></Document>

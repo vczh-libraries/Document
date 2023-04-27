@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="HideInTaskBar" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::HideInTaskBar@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="HideInTaskBar"><summary>
  Hide the icon in the task bar.
  </summary><signature><![CDATA[void HideInTaskBar(
 );

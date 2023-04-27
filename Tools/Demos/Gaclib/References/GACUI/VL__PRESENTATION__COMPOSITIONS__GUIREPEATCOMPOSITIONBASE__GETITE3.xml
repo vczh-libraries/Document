@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetItemTemplate" declFile="GuiGraphicsRepeatComposition.h" declId="FB$vl::presentation::compositions::GuiRepeatCompositionBase::GetItemTemplate@::vl::presentation::compositions::GuiRepeatCompositionBase::ItemStyleProperty()[decl0]"><summary>Get the item style provider.</summary><returns>The item style provider.</returns><signature><![CDATA[ItemStyleProperty GetItemTemplate(
+<Document accessor="public" category="Function" name="GetItemTemplate"><summary>Get the item style provider.</summary><returns>The item style provider.</returns><signature><![CDATA[ItemStyleProperty GetItemTemplate(
 );
-]]></signature><seealsos><symbol name="ItemStyleProperty" declFile="GuiGraphicsRepeatComposition.h" declId="NI$vl::presentation::compositions::GuiRepeatCompositionBase::ItemStyleProperty"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ItemStyleProperty"/></seealsos></Document>

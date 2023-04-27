@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="AttachCallback" declFile="GuiTreeViewControls.h" declId="FB$vl::presentation::controls::tree::INodeRootProvider::AttachCallback@bool(::vl::presentation::controls::tree::INodeProviderCallback *)[decl0]"><summary>Attach an node provider callback to this node provider.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The node provider callback.</param><signature><![CDATA[bool AttachCallback(
+<Document accessor="public" category="Function" name="AttachCallback"><summary>Attach an node provider callback to this node provider.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The node provider callback.</param><signature><![CDATA[bool AttachCallback(
     INodeProviderCallback * value
 );
-]]></signature><seealsos><symbol name="INodeProviderCallback" docId="vl::presentation::controls::tree::INodeProviderCallback" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeProviderCallback"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INodeProviderCallback" docId="vl::presentation::controls::tree::INodeProviderCallback"/></seealsos></Document>

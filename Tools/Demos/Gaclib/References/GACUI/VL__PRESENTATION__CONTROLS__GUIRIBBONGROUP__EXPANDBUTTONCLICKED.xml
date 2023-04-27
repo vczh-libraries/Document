@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="ExpandButtonClicked" declFile="GuiRibbonControls.h" declId="NI$vl::presentation::controls::GuiRibbonGroup::ExpandButtonClicked"><summary>Expand button clicked event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ExpandButtonClicked;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="ExpandButtonClicked"><summary>Expand button clicked event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ExpandButtonClicked;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

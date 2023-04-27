@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetOwnPopup" declFile="GuiBindableDataGrid.h" declId="FB$vl::presentation::controls::list::DataColumn::SetOwnPopup@void(bool)[decl0]"><summary>Set if the column owns the popup.</summary><param name="value">Set to true to let the column own the popup.</param><signature><![CDATA[void SetOwnPopup(
+<Document accessor="public" category="Function" name="SetOwnPopup"><summary>Set if the column owns the popup.</summary><param name="value">Set to true to let the column own the popup.</param><signature><![CDATA[void SetOwnPopup(
     bool value
 );
 ]]></signature></Document>

@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetHorizontalAlwaysVisible" declFile="GuiContainerControls.h" declId="FB$vl::presentation::controls::GuiScrollView::GetHorizontalAlwaysVisible@bool()[decl0]"><summary>Test is the horizontal scroll bar always visible even the content doesn&apos;t exceed the view bounds.</summary><returns>Returns true if the horizontal scroll bar always visible even the content doesn&apos;t exceed the view bounds</returns><signature><![CDATA[bool GetHorizontalAlwaysVisible(
+<Document accessor="public" category="Function" name="GetHorizontalAlwaysVisible"><summary>Test is the horizontal scroll bar always visible even the content doesn&apos;t exceed the view bounds.</summary><returns>Returns true if the horizontal scroll bar always visible even the content doesn&apos;t exceed the view bounds</returns><signature><![CDATA[bool GetHorizontalAlwaysVisible(
 );
 ]]></signature></Document>

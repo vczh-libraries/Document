@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="EditStyle" declFile="GuiGraphicsDocumentElement.h" declId="FB$vl::presentation::elements::GuiDocumentElement::EditStyle@void(::vl::presentation::TextPos, ::vl::presentation::TextPos, ::vl::Ptr&lt;::vl::presentation::DocumentStyleProperties&gt;)[decl0]"><summary>Edit style in a specified range.</summary><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><param name="style">The new style.</param><signature><![CDATA[void EditStyle(
+<Document accessor="public" category="Function" name="EditStyle"><summary>Edit style in a specified range.</summary><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><param name="style">The new style.</param><signature><![CDATA[void EditStyle(
     TextPos begin,
     TextPos end,
     Ptr<DocumentStyleProperties> style
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="DocumentStyleProperties" docId="vl::presentation::DocumentStyleProperties" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentStyleProperties"/><symbol name="TextPos" docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="DocumentStyleProperties" docId="vl::presentation::DocumentStyleProperties"/><symbol name="TextPos" docId="vl::presentation::TextPos"/></seealsos></Document>

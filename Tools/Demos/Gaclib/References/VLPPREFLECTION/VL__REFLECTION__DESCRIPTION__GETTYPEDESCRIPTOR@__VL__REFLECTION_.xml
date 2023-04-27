@@ -1,4 +1,4 @@
-<Document accessor="" category="Function" name="GetTypeDescriptor" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::description::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *(::vl::WString const &amp;)[decl0]"><summary>Get a registered type given the registered name.</summary><returns>Returns the metadata class for this registered type.</returns><param name="name">
+<Document accessor="" category="Function" name="GetTypeDescriptor"><summary>Get a registered type given the registered name.</summary><returns>Returns the metadata class for this registered type.</returns><param name="name">
  The registered name.
  Note that this is not the full name of the C++ type,
  it is the name what is used to registere this type.</param><remarks>
@@ -6,4 +6,4 @@
  </remarks><signature><![CDATA[ITypeDescriptor * GetTypeDescriptor(
     WString const & name
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="ITypeDescriptor" docId="vl::reflection::description::ITypeDescriptor" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::ITypeDescriptor"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/><symbol name="ITypeDescriptor" docId="vl::reflection::description::ITypeDescriptor"/></seealsos></Document>

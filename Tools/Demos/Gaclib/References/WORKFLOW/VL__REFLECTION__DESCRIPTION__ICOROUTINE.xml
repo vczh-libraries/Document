@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="ICoroutine" declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::ICoroutine"><summary>A coroutine. This is typically created by a Workflow script.</summary><signature><![CDATA[class ICoroutine
+<Document accessor="" category="Class" name="ICoroutine"><summary>A coroutine. This is typically created by a Workflow script.</summary><signature><![CDATA[class ICoroutine
     : IDescriptable
     , Description<ICoroutine>;
-]]></signature><seealsos><symbol name="ICoroutine" docId="vl::reflection::description::ICoroutine" declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::ICoroutine"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>
+]]></signature><seealsos><symbol name="ICoroutine" docId="vl::reflection::description::ICoroutine"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable"/></basetypes></Document>

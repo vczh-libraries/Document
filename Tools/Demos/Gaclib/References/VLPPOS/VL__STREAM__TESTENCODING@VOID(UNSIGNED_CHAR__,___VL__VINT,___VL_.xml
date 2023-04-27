@@ -1,7 +1,7 @@
-<Document accessor="" category="Function" name="TestEncoding" declFile="CharFormat.h" declId="FB$vl::stream::TestEncoding@void(unsigned char *, ::vl::vint, ::vl::stream::BomEncoder::Encoding &amp;, bool &amp;)[decl0]"><summary>Guess the text encoding in a buffer.</summary><param name="buffer">The buffer to guess.</param><param name="size">Size of the buffer in bytes.</param><param name="encoding">Returns the most possible encoding.</param><param name="containsBom">Returns true if the BOM information is at the beginning of the buffer.</param><signature><![CDATA[void TestEncoding(
+<Document accessor="" category="Function" name="TestEncoding"><summary>Guess the text encoding in a buffer.</summary><param name="buffer">The buffer to guess.</param><param name="size">Size of the buffer in bytes.</param><param name="encoding">Returns the most possible encoding.</param><param name="containsBom">Returns true if the BOM information is at the beginning of the buffer.</param><signature><![CDATA[void TestEncoding(
     unsigned char * buffer,
     vint size,
     BomEncoder::Encoding & encoding,
     bool & containsBom
 );
-]]></signature><seealsos><symbol name="Encoding" docId="vl::stream::BomEncoder::Encoding" declFile="CharFormat.h" declId="NI$vl::stream::BomEncoder::Encoding"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Encoding" docId="vl::stream::BomEncoder::Encoding"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetImage" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeClipboardWriter::SetImage@void(::vl::Ptr&lt;::vl::presentation::INativeImage&gt;)[decl0]"><summary>Prepare an image for the clipboard.</summary><param name="value">The image.</param><signature><![CDATA[void SetImage(
+<Document accessor="public" category="Function" name="SetImage"><summary>Prepare an image for the clipboard.</summary><param name="value">The image.</param><signature><![CDATA[void SetImage(
     Ptr<INativeImage> value
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="INativeImage" docId="vl::presentation::INativeImage" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="INativeImage" docId="vl::presentation::INativeImage"/></seealsos></Document>

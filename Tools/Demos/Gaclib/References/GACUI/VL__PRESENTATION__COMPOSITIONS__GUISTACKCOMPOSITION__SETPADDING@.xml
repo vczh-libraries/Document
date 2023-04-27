@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetPadding" declFile="GuiGraphicsStackComposition.h" declId="FB$vl::presentation::compositions::GuiStackComposition::SetPadding@void(::vl::vint)[decl0]"><summary>Set the stack item padding.</summary><param name="value">The stack item padding.</param><signature><![CDATA[void SetPadding(
+<Document accessor="public" category="Function" name="SetPadding"><summary>Set the stack item padding.</summary><param name="value">The stack item padding.</param><signature><![CDATA[void SetPadding(
     vint value
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="IDataEditorFactory" declFile="GuiDataGridInterfaces.h" declId="NI$vl::presentation::controls::list::IDataEditorFactory"><summary>The editor factory.</summary><signature><![CDATA[class IDataEditorFactory
+<Document accessor="" category="Class" name="IDataEditorFactory"><summary>The editor factory.</summary><signature><![CDATA[class IDataEditorFactory
     : IDescriptable
     , Description<IDataEditorFactory>;
-]]></signature><seealsos><symbol name="IDataEditorFactory" docId="vl::presentation::controls::list::IDataEditorFactory" declFile="GuiDataGridInterfaces.h" declId="NI$vl::presentation::controls::list::IDataEditorFactory"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>
+]]></signature><seealsos><symbol name="IDataEditorFactory" docId="vl::presentation::controls::list::IDataEditorFactory"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable"/></basetypes></Document>

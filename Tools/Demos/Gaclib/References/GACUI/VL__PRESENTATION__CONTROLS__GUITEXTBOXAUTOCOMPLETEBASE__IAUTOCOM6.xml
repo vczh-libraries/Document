@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetSortedContent" declFile="GuiTextAutoComplete.h" declId="FB$vl::presentation::controls::GuiTextBoxAutoCompleteBase::IAutoCompleteControlProvider::SetSortedContent@void(::vl::collections::List&lt;::vl::presentation::controls::GuiTextBoxAutoCompleteBase::AutoCompleteItem&gt; const &amp;)[decl0]"><summary>Store candidate items in the list control.</summary><param name="items">Candidate items.</param><signature><![CDATA[void SetSortedContent(
+<Document accessor="public" category="Function" name="SetSortedContent"><summary>Store candidate items in the list control.</summary><param name="items">Candidate items.</param><signature><![CDATA[void SetSortedContent(
     collections::List<AutoCompleteItem> const & items
 );
-]]></signature><seealsos><symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/><symbol name="AutoCompleteItem" docId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::AutoCompleteItem" declFile="GuiTextAutoComplete.h" declId="NI$vl::presentation::controls::GuiTextBoxAutoCompleteBase::AutoCompleteItem"/></seealsos></Document>
+]]></signature><seealsos><symbol name="List" docId="vl::collections::List"/><symbol name="AutoCompleteItem" docId="vl::presentation::controls::GuiTextBoxAutoCompleteBase::AutoCompleteItem"/></seealsos></Document>

@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="CallbackService" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::CallbackService@::vl::presentation::INativeCallbackService *()[decl0]"><summary>
+<Document accessor="public" category="Function" name="CallbackService"><summary>
  Get the callback service.
  </summary><returns>The callback service</returns><signature><![CDATA[INativeCallbackService * CallbackService(
 );
-]]></signature><seealsos><symbol name="INativeCallbackService" docId="vl::presentation::INativeCallbackService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeCallbackService"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeCallbackService" docId="vl::presentation::INativeCallbackService"/></seealsos></Document>

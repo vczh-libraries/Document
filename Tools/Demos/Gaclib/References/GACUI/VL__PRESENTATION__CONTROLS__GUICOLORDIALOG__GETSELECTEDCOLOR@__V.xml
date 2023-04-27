@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetSelectedColor" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiColorDialog::GetSelectedColor@::vl::presentation::Color()[decl0]"><summary>Get the selected color.</summary><returns>The selected color.</returns><signature><![CDATA[Color GetSelectedColor(
+<Document accessor="public" category="Function" name="GetSelectedColor"><summary>Get the selected color.</summary><returns>The selected color.</returns><signature><![CDATA[Color GetSelectedColor(
 );
-]]></signature><seealsos><symbol name="Color" docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Color" docId="vl::presentation::Color"/></seealsos></Document>

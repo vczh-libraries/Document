@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Remove" declFile="Dictionary.h" declId="FB$vl::collections::Group::Remove@bool([KK] const &amp;, [VK] const &amp;)[impl0]"><summary>Remove a value associated to a specified key.</summary><returns>
+<Document accessor="public" category="Function" name="Remove"><summary>Remove a value associated to a specified key.</summary><returns>
  Returns true if the value is removed.
  If this value is associated to the key for jultiple times, only the first one will be removed.
  If this value is associated to the key for jultiple times, only the first one will be removed.

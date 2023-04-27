@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetAlt" declFile="GuiBasicControls.h" declId="FB$vl::presentation::controls::GuiControl::SetAlt@bool(::vl::WString const &amp;)[decl0]"><summary>Associate a Alt-combined shortcut key with this control.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The Alt-combined shortcut key to associate. The key should contain only upper-case letters or digits.</param><signature><![CDATA[bool SetAlt(
+<Document accessor="public" category="Function" name="SetAlt"><summary>Associate a Alt-combined shortcut key with this control.</summary><returns>Returns true if this operation succeeded.</returns><param name="value">The Alt-combined shortcut key to associate. The key should contain only upper-case letters or digits.</param><signature><![CDATA[bool SetAlt(
     WString const & value
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

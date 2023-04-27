@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="group" declFile="GuiRibbonGalleryList.h" declId="NI$vl::presentation::controls::GalleryPos::group"><summary>Group index.</summary><signature><![CDATA[vint group;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="group"><summary>Group index.</summary><signature><![CDATA[vint group;
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

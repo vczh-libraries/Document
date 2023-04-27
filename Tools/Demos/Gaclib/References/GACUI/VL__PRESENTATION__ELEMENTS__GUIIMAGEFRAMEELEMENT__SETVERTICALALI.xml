@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetVerticalAlignment" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiImageFrameElement::SetVerticalAlignment@void(::vl::presentation::Alignment)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetVerticalAlignment"><summary>
  Set the vertical alignment of the text.
  </summary><param name="value">The vertical alignment of the text.</param><signature><![CDATA[void SetVerticalAlignment(
     Alignment value
 );
-]]></signature><seealsos><symbol name="Alignment" docId="vl::presentation::Alignment" declFile="GuiTypes.h" declId="NI$vl::presentation::Alignment"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Alignment" docId="vl::presentation::Alignment"/></seealsos></Document>

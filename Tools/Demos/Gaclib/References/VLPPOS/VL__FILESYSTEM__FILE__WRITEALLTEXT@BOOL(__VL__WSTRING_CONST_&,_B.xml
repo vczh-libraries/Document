@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="WriteAllText" declFile="FileSystem.h" declId="FB$vl::filesystem::File::WriteAllText@bool(::vl::WString const &amp;, bool, ::vl::stream::BomEncoder::Encoding)[decl0]"><summary>Write text to the file.</summary><returns>Returns true if this operation succeeded.</returns><param name="text">The text to write.</param><param name="bom">Set to true to add a corresponding BOM at the beginning of the file according to the encoding, the default value is true.</param><param name="encoding">The text encoding, the default encoding is UTF-16.</param><signature><![CDATA[bool WriteAllText(
+<Document accessor="public" category="Function" name="WriteAllText"><summary>Write text to the file.</summary><returns>Returns true if this operation succeeded.</returns><param name="text">The text to write.</param><param name="bom">Set to true to add a corresponding BOM at the beginning of the file according to the encoding, the default value is true.</param><param name="encoding">The text encoding, the default encoding is UTF-16.</param><signature><![CDATA[bool WriteAllText(
     WString const & text,
     bool bom /* optional */,
     stream::BomEncoder::Encoding encoding /* optional */
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="Encoding" docId="vl::stream::BomEncoder::Encoding" declFile="CharFormat.h" declId="NI$vl::stream::BomEncoder::Encoding"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/><symbol name="Encoding" docId="vl::stream::BomEncoder::Encoding"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="$__ctor" declFile="Basic.h" declId="FB$vl::ObjectBox::$__ctor@([T] const &amp;)[impl0]"><summary>Create a boxed reference object from data of a value type.</summary><param name="_object">The data to box.</param><signature><![CDATA[ ObjectBox(
+<Document accessor="public" category="Function" name="$__ctor"><summary>Create a boxed reference object from data of a value type.</summary><param name="_object">The data to box.</param><signature><![CDATA[ ObjectBox(
     T const & _object
 );
 ]]></signature></Document>

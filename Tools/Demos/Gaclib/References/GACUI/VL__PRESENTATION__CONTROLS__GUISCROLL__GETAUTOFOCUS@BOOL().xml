@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetAutoFocus" declFile="GuiScrollControls.h" declId="FB$vl::presentation::controls::GuiScroll::GetAutoFocus@bool()[decl0]"><summary>Test if the scroll gets focus when it is clicked.</summary><returns>Returns true if the scroll gets focus when it is clicked</returns><signature><![CDATA[bool GetAutoFocus(
+<Document accessor="public" category="Function" name="GetAutoFocus"><summary>Test if the scroll gets focus when it is clicked.</summary><returns>Returns true if the scroll gets focus when it is clicked</returns><signature><![CDATA[bool GetAutoFocus(
 );
 ]]></signature></Document>

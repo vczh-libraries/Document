@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="WindowActivated" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiControlHost::WindowActivated"><summary>Window activated event.</summary><signature><![CDATA[compositions::GuiNotifyEvent WindowActivated;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="WindowActivated"><summary>Window activated event.</summary><signature><![CDATA[compositions::GuiNotifyEvent WindowActivated;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

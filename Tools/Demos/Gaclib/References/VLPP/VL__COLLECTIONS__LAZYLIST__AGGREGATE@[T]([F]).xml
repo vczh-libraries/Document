@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Aggregate" declFile="Operation.h" declId="FB$vl::collections::LazyList::Aggregate@[T]([F])[impl0]"><summary>Aggregate a lazy list. It will crash if the lazy list is empty.</summary><typeparam name="F">Type of the aggregator.</typeparam><returns>The aggregated value.</returns><param name="f">
+<Document accessor="public" category="Function" name="Aggregate"><summary>Aggregate a lazy list. It will crash if the lazy list is empty.</summary><typeparam name="F">Type of the aggregator.</typeparam><returns>The aggregated value.</returns><param name="f">
  The aggregator.
  The first argument is the aggregated value of any prefix.
  The second argument is the element right after a prefix.

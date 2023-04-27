@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="ExpandableChanged" declFile="GuiRibbonControls.h" declId="NI$vl::presentation::controls::GuiRibbonGroup::ExpandableChanged"><summary>Expandable changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ExpandableChanged;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="ExpandableChanged"><summary>Expandable changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ExpandableChanged;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

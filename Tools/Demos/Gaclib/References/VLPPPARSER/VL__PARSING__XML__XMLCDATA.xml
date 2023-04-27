@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="XmlCData" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlCData"><summary>CData node.</summary><signature><![CDATA[class XmlCData
+<Document accessor="" category="Class" name="XmlCData"><summary>CData node.</summary><signature><![CDATA[class XmlCData
     : XmlNode
     , vl::reflection::Description<XmlCData>;
-]]></signature><seealsos><symbol name="XmlCData" docId="vl::parsing::xml::XmlCData" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlCData"/></seealsos><basetypes><symbol name="XmlNode" docId="vl::parsing::xml::XmlNode" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlNode"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="XmlCData" docId="vl::parsing::xml::XmlCData"/></seealsos><basetypes><symbol name="XmlNode" docId="vl::parsing::xml::XmlNode"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

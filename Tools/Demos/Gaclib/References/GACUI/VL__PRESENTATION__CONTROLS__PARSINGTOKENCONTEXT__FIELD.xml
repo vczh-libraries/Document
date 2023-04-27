@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="field" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::ParsingTokenContext::field"><summary>Field of the parent that contains the token.</summary><signature><![CDATA[WString field;
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="field"><summary>Field of the parent that contains the token.</summary><signature><![CDATA[WString field;
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

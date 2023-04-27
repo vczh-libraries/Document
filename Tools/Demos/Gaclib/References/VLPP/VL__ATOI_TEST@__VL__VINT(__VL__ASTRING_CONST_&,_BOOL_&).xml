@@ -1,5 +1,5 @@
-<Document accessor="" category="Function" name="atoi_test" declFile="String.h" declId="FB$vl::atoi_test@::vl::vint(::vl::AString const &amp;, bool &amp;)[decl0]"><summary>Convert a string to a signed integer.</summary><returns>The converted number. If the conversion failed, the result is undefined.</returns><param name="string">The string to convert.</param><param name="success">Returns true if this operation succeeded.</param><signature><![CDATA[vint atoi_test(
+<Document accessor="" category="Function" name="atoi_test"><summary>Convert a string to a signed integer.</summary><returns>The converted number. If the conversion failed, the result is undefined.</returns><param name="string">The string to convert.</param><param name="success">Returns true if this operation succeeded.</param><signature><![CDATA[vint atoi_test(
     AString const & string,
     bool & success
 );
-]]></signature><seealsos><symbol name="AString" docId="vl::AString" declFile="String.h" declId="NI$vl::AString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="AString" docId="vl::AString"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

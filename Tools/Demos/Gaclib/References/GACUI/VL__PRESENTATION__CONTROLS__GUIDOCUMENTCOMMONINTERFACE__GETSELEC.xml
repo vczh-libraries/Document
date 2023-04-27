@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetSelectionModel" declFile="GuiDocumentViewer.h" declId="FB$vl::presentation::controls::GuiDocumentCommonInterface::GetSelectionModel@::vl::Ptr&lt;::vl::presentation::DocumentModel&gt;()[decl0]"><summary>Get the selected model.</summary><returns>The selected model.</returns><signature><![CDATA[Ptr<DocumentModel> GetSelectionModel(
+<Document accessor="public" category="Function" name="GetSelectionModel"><summary>Get the selected model.</summary><returns>The selected model.</returns><signature><![CDATA[Ptr<DocumentModel> GetSelectionModel(
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="DocumentModel" docId="vl::presentation::DocumentModel" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="DocumentModel" docId="vl::presentation::DocumentModel"/></seealsos></Document>

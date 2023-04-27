@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="SelectedColorChanged" declFile="GuiDialogs.h" declId="NI$vl::presentation::controls::GuiColorDialog::SelectedColorChanged"><summary>Selected color changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent SelectedColorChanged;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="SelectedColorChanged"><summary>Selected color changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent SelectedColorChanged;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

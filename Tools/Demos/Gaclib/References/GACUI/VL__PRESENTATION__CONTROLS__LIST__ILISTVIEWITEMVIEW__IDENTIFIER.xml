@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="Identifier" declFile="GuiListViewControls.cpp" declId="NI$vl::presentation::controls::list::IListViewItemView::Identifier"><summary>The identifier for this view.</summary><signature><![CDATA[static wchar_t const * const Identifier;
-]]></signature><seealsos><symbol name="IListViewItemView" docId="vl::presentation::controls::list::IListViewItemView" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::list::IListViewItemView"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="Identifier"><summary>The identifier for this view.</summary><signature><![CDATA[static wchar_t const * const Identifier;
+]]></signature><seealsos><symbol name="IListViewItemView" docId="vl::presentation::controls::list::IListViewItemView"/></seealsos></Document>

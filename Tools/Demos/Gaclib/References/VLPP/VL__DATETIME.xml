@@ -1,2 +1,2 @@
-<Document accessor="" category="Struct" name="DateTime" declFile="Basic.h" declId="NI$vl::DateTime"><summary>A type representing the combination of date and time.</summary><signature><![CDATA[struct DateTime;
+<Document accessor="" category="Struct" name="DateTime"><summary>A type representing the combination of date and time.</summary><signature><![CDATA[struct DateTime;
 ]]></signature></Document>

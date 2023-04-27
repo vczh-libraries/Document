@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="GetTitleBar" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetTitleBar@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetTitleBar"><summary>
  Test is the title bar visible.
  </summary><returns>Returns true if the title bar is visible.</returns><signature><![CDATA[bool GetTitleBar(
 );

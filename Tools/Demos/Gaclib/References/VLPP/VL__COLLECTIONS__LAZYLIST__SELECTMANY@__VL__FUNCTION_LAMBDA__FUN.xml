@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SelectMany" declFile="Operation.h" declId="FB$vl::collections::LazyList::SelectMany@::vl::function_lambda::FunctionObjectRetriveType::ResultType([F])[impl0]"><summary>Create a new lazy list, whose elements are from transformed elements in this lazy list.</summary><typeparam name="F">Type of the transformer.</typeparam><returns>The created lazy list.</returns><param name="f">
+<Document accessor="public" category="Function" name="SelectMany"><summary>Create a new lazy list, whose elements are from transformed elements in this lazy list.</summary><typeparam name="F">Type of the transformer.</typeparam><returns>The created lazy list.</returns><param name="f">
  The transformer.
  The first argument is any element in this lazy list.
  Returns the transformed lazy list from this argument.
@@ -8,4 +8,4 @@
 vl::function_lambda::FunctionObjectRetriveType<F>::ResultType SelectMany(
     F f
 ) const;
-]]></signature><seealsos><symbol name="ResultType" declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType::ResultType"/><symbol name="ResultType" declFile="Function.h" declId="NI$vl::function_lambda::FunctionObjectRetriveType@&lt;[R]([TArgs]...) *&gt;::ResultType"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ResultType"/><symbol name="ResultType"/></seealsos></Document>

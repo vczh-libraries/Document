@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="index" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTextPos::index"><summary>Character index, begins at 0.</summary><signature><![CDATA[vint index;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="index"><summary>Character index, begins at 0.</summary><signature><![CDATA[vint index;
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

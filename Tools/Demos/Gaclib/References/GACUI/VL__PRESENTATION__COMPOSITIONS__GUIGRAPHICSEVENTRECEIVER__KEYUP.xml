@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="keyUp" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiGraphicsEventReceiver::keyUp"><summary>Key up event.</summary><signature><![CDATA[GuiKeyEvent keyUp;
-]]></signature><seealsos><symbol name="GuiKeyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiKeyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="keyUp"><summary>Key up event.</summary><signature><![CDATA[GuiKeyEvent keyUp;
+]]></signature><seealsos><symbol name="GuiKeyEvent"/></seealsos></Document>

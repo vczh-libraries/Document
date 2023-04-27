@@ -1,4 +1,4 @@
-<Document accessor="public" category="Variable" name="Delimiter" declFile="FileSystem.h" declId="NI$vl::filesystem::FilePath::Delimiter"><summary>The delimiter character used in a file path</summary><remarks>
+<Document accessor="public" category="Variable" name="Delimiter"><summary>The delimiter character used in a file path</summary><remarks>
  In Windows, it is &quot;\&quot;.
  In Linux and macOS, it is &quot;/&quot;.
  But you can always use &quot;/&quot;, it is also supported in Windows.

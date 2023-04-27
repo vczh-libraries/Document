@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="RedrawContent" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::RedrawContent@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="RedrawContent"><summary>
  Redraw the content of the window.
  </summary><signature><![CDATA[void RedrawContent(
 );

@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetBounds" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetBounds@void(::vl::presentation::NativeRect const &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetBounds"><summary>
  Set the bounds of the window.
  </summary><param name="bounds">The bounds of the window.</param><signature><![CDATA[void SetBounds(
     NativeRect const & bounds
 );
-]]></signature><seealsos><symbol name="NativeRect" declFile="GuiTypes.h" declId="NI$vl::presentation::NativeRect"/></seealsos></Document>
+]]></signature><seealsos><symbol name="NativeRect"/></seealsos></Document>

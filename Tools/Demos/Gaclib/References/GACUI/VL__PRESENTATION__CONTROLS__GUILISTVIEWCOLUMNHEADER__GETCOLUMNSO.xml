@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetColumnSortingState" declFile="GuiListViewControls.h" declId="FB$vl::presentation::controls::GuiListViewColumnHeader::GetColumnSortingState@::vl::presentation::controls::ColumnSortingState()[decl0]"><summary>Get the column sorting state.</summary><returns>The column sorting state.</returns><signature><![CDATA[ColumnSortingState GetColumnSortingState(
+<Document accessor="public" category="Function" name="GetColumnSortingState"><summary>Get the column sorting state.</summary><returns>The column sorting state.</returns><signature><![CDATA[ColumnSortingState GetColumnSortingState(
 );
-]]></signature><seealsos><symbol name="ColumnSortingState" docId="vl::presentation::controls::ColumnSortingState" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::ColumnSortingState"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ColumnSortingState" docId="vl::presentation::controls::ColumnSortingState"/></seealsos></Document>

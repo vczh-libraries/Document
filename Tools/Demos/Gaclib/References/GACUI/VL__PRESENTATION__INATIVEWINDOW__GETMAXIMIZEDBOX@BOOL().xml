@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="GetMaximizedBox" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetMaximizedBox@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetMaximizedBox"><summary>
  Test is the maximize box visible.
  </summary><returns>Returns true if the maximize box is visible.</returns><signature><![CDATA[bool GetMaximizedBox(
 );

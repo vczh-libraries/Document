@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="rowEnd" declFile="Regex.h" declId="NI$vl::regex::RegexToken::rowEnd"><summary>Row number of the last character, begins at 0.</summary><signature><![CDATA[vint rowEnd;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="rowEnd"><summary>Row number of the last character, begins at 0.</summary><signature><![CDATA[vint rowEnd;
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

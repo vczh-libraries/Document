@@ -1,5 +1,5 @@
-<Document accessor="" category="Class" name="IGuiGraphicsRenderer" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderer"><summary>
+<Document accessor="" category="Class" name="IGuiGraphicsRenderer"><summary>
  This is the interface for graphics renderers.
  </summary><signature><![CDATA[class IGuiGraphicsRenderer
     : Interface;
-]]></signature><basetypes><symbol name="Interface" docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Interface" docId="vl::Interface"/></basetypes></Document>

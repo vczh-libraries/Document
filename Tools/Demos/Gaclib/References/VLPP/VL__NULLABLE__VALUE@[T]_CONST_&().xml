@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="Value" declFile="Basic.h" declId="FB$vl::Nullable::Value@[T] const &amp;()[impl0]"><summary>Return the data inside this nullable value</summary><returns>The data inside this nullable value. It crashes when it is null.</returns><signature><![CDATA[T const & Value(
+<Document accessor="public" category="Function" name="Value"><summary>Return the data inside this nullable value</summary><returns>The data inside this nullable value. It crashes when it is null.</returns><signature><![CDATA[T const & Value(
 ) const;
 ]]></signature></Document>

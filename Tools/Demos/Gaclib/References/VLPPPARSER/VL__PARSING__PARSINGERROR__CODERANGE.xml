@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="codeRange" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingError::codeRange"><summary>Range where the error happens.</summary><signature><![CDATA[ParsingTextRange codeRange;
-]]></signature><seealsos><symbol name="ParsingTextRange" docId="vl::parsing::ParsingTextRange" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTextRange"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="codeRange"><summary>Range where the error happens.</summary><signature><![CDATA[ParsingTextRange codeRange;
+]]></signature><seealsos><symbol name="ParsingTextRange" docId="vl::parsing::ParsingTextRange"/></seealsos></Document>

@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="LeaveWriter" declFile="Threading.h" declId="FB$vl::ReaderWriterLock::LeaveWriter@void()[decl0]"><summary>Release a writer lock.</summary><signature><![CDATA[void LeaveWriter(
+<Document accessor="public" category="Function" name="LeaveWriter"><summary>Release a writer lock.</summary><signature><![CDATA[void LeaveWriter(
 );
 ]]></signature></Document>

@@ -1,6 +1,6 @@
-<Document accessor="" category="Class" name="INativeClipboardReader" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeClipboardReader"><summary>
+<Document accessor="" category="Class" name="INativeClipboardReader"><summary>
  Clipboard reader.
  </summary><signature><![CDATA[class INativeClipboardReader
     : IDescriptable
     , Description<INativeClipboardReader>;
-]]></signature><seealsos><symbol name="INativeClipboardReader" docId="vl::presentation::INativeClipboardReader" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeClipboardReader"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>
+]]></signature><seealsos><symbol name="INativeClipboardReader" docId="vl::presentation::INativeClipboardReader"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable"/></basetypes></Document>

@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="GetPoint" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiPolygonElement::GetPoint@::vl::presentation::Point const &amp;(::vl::vint)[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetPoint"><summary>
  Get a point of the polygon element using an index.
  </summary><param name="index">The index to access a point.</param><returns>The point of the polygon element associated with the index.</returns><signature><![CDATA[Point const & GetPoint(
     vint index
 );
-]]></signature><seealsos><symbol name="Point" declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Point"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

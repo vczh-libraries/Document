@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetSubMenuOpening" declFile="GuiMenuControls.h" declId="FB$vl::presentation::controls::GuiMenuButton::SetSubMenuOpening@void(bool)[decl0]"><summary>Open or close the sub menu.</summary><param name="value">Set to true to open the sub menu.</param><signature><![CDATA[void SetSubMenuOpening(
+<Document accessor="public" category="Function" name="SetSubMenuOpening"><summary>Open or close the sub menu.</summary><param name="value">Set to true to open the sub menu.</param><signature><![CDATA[void SetSubMenuOpening(
     bool value
 );
 ]]></signature></Document>

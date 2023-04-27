@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetSitedCell" declFile="GuiGraphicsTableComposition.h" declId="FB$vl::presentation::compositions::GuiTableComposition::GetSitedCell@::vl::presentation::compositions::GuiCellComposition *(::vl::vint, ::vl::vint)[decl0]"><summary>Get the cell composition that covers the specified cell location.</summary><returns>The cell composition that covers the specified cell location.</returns><param name="_row">The number of rows.</param><param name="_column">The number of columns.</param><signature><![CDATA[GuiCellComposition * GetSitedCell(
+<Document accessor="public" category="Function" name="GetSitedCell"><summary>Get the cell composition that covers the specified cell location.</summary><returns>The cell composition that covers the specified cell location.</returns><param name="_row">The number of rows.</param><param name="_column">The number of columns.</param><signature><![CDATA[GuiCellComposition * GetSitedCell(
     vint _row,
     vint _column
 );
-]]></signature><seealsos><symbol name="GuiCellComposition" docId="vl::presentation::compositions::GuiCellComposition" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiCellComposition"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiCellComposition" docId="vl::presentation::compositions::GuiCellComposition"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

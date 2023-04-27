@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="KillAnimation" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::GuiInstanceRootObject::KillAnimation@bool(::vl::Ptr&lt;::vl::presentation::controls::IGuiAnimation&gt;)[decl0]"><summary>Kill an animation.</summary><returns>Returns true if this operation succeeded.</returns><param name="animation">The animation.</param><signature><![CDATA[bool KillAnimation(
+<Document accessor="public" category="Function" name="KillAnimation"><summary>Kill an animation.</summary><returns>Returns true if this operation succeeded.</returns><param name="animation">The animation.</param><signature><![CDATA[bool KillAnimation(
     Ptr<IGuiAnimation> animation
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="IGuiAnimation" docId="vl::presentation::controls::IGuiAnimation" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::IGuiAnimation"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="IGuiAnimation" docId="vl::presentation::controls::IGuiAnimation"/></seealsos></Document>

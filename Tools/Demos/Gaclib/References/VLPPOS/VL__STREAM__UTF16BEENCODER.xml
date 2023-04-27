@@ -1,3 +1,3 @@
-<Document accessor="" category="Class" name="Utf16BEEncoder" declFile="CharFormat.h" declId="NI$vl::stream::Utf16BEEncoder"><summary>Encoder to write big endian UTF-16 to.</summary><signature><![CDATA[class Utf16BEEncoder
+<Document accessor="" category="Class" name="Utf16BEEncoder"><summary>Encoder to write big endian UTF-16 to.</summary><signature><![CDATA[class Utf16BEEncoder
     : CharEncoder;
-]]></signature><basetypes><symbol name="CharEncoder" docId="vl::stream::CharEncoder" declFile="CharFormat.h" declId="NI$vl::stream::CharEncoder"/></basetypes></Document>
+]]></signature><basetypes><symbol name="CharEncoder" docId="vl::stream::CharEncoder"/></basetypes></Document>

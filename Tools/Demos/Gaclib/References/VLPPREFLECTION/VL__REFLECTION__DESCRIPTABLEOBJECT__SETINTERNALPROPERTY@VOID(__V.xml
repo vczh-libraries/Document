@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetInternalProperty" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::DescriptableObject::SetInternalProperty@void(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::Object&gt;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetInternalProperty"><summary>
  Set an internal property of this object.
  Internal properties are totally for customization,
  they do not affect the object in anyway.
@@ -6,4 +6,4 @@
     WString const & name,
     Ptr<Object> value
 );
-]]></signature><seealsos><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Object" docId="vl::Object"/><symbol name="Ptr" docId="vl::Ptr"/><symbol name="WString" docId="vl::WString"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="GetBorder" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetBorder@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetBorder"><summary>
  Test is the border visible.
  </summary><returns>Returns true if the border is visible.</returns><signature><![CDATA[bool GetBorder(
 );

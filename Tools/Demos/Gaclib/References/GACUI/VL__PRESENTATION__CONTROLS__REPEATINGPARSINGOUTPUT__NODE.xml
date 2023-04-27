@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="node" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingParsingOutput::node"><summary>The parsed syntax tree.</summary><signature><![CDATA[Ptr<parsing::ParsingTreeObject> node;
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="ParsingTreeObject" docId="vl::parsing::ParsingTreeObject" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeObject"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="node"><summary>The parsed syntax tree.</summary><signature><![CDATA[Ptr<parsing::ParsingTreeObject> node;
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="ParsingTreeObject" docId="vl::parsing::ParsingTreeObject"/></seealsos></Document>

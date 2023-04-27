@@ -1,13 +1,13 @@
-<Document accessor="" category="Class" name="DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"><summary><p>
+<Document accessor="" category="Class" name="DescriptableObject"><summary><p>
  Base class of all reflectable value types (class).
- If you want to create a reflectable class, you should inherit from <symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/>.
+ If you want to create a reflectable class, you should inherit from <symbol name="Description" docId="vl::reflection::Description"/>.
  </p><p>
- Inheriting from <symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/> is necessary even if you turned on &quot;VCZH_DEBUG_NO_REFLECTION&quot; preprocessor definition.
+ Inheriting from <symbol name="Description" docId="vl::reflection::Description"/> is necessary even if you turned on &quot;VCZH_DEBUG_NO_REFLECTION&quot; preprocessor definition.
  In this case, some members will be removed from this class to reduce the object size.
  </p><p><b>Ptr&lt;DescriptableObject&gt;</b> is recommended to replace <b>Ptr&lt;Object&gt;</b> for holding a reflectable object.
- When a class <b>T</b> inherits from <symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/>, including <b>DescriptableObject</b> itself,
+ When a class <b>T</b> inherits from <symbol name="Description" docId="vl::reflection::Description"/>, including <b>DescriptableObject</b> itself,
  <b>Ptr&lt;T&gt;</b> is safe to be created directly from a <b>T*</b> hold by another <b>Ptr&lt;T&gt;</b>.
- This is not allowed for all classes that do not inherit from <symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/>.
+ This is not allowed for all classes that do not inherit from <symbol name="Description" docId="vl::reflection::Description"/>.
  </p></summary><remarks><p>
  When a class in Workflow script inherits from a class in C++,
  since it is not possible to actually create a class in runtime,
@@ -15,11 +15,11 @@
  </p><p>
  This is called <b>aggregation</b>.
  </p><p>
- In this case, <symbols><symbol name="SafeAggregationCast" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::DescriptableObject::SafeAggregationCast@void([T] * &amp;)[impl0]"/><symbol name="SafeAggregationCast" docId="vl::reflection::DescriptableObject::SafeAggregationCast@[T] *()" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::DescriptableObject::SafeAggregationCast@[T] *()[impl0]"/></symbols> is required to do pointer casting to a C++ class.
+ In this case, <symbols><symbol name="SafeAggregationCast"/><symbol name="SafeAggregationCast" docId="vl::reflection::DescriptableObject::SafeAggregationCast@[T] *()"/></symbols> is required to do pointer casting to a C++ class.
  </p><p>
  To allow a C++ class to be aggregated,
- use <symbol name="AggregatableDescription" docId="vl::reflection::AggregatableDescription" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::AggregatableDescription"/> instead of <symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/>,
- and call <symbol name="FinalizeAggregation" docId="vl::reflection::DescriptableObject::FinalizeAggregation@void()" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::DescriptableObject::FinalizeAggregation@void()[decl0]"/> in the destructor.
+ use <symbol name="AggregatableDescription" docId="vl::reflection::AggregatableDescription"/> instead of <symbol name="Description" docId="vl::reflection::Description"/>,
+ and call <symbol name="FinalizeAggregation" docId="vl::reflection::DescriptableObject::FinalizeAggregation@void()"/> in the destructor.
  If A inherits B and they are all aggregatable, do it in both destructors.
  </p></remarks><example index="0"/><signature><![CDATA[class DescriptableObject;
 ]]></signature></Document>

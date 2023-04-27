@@ -1,5 +1,5 @@
-<Document accessor="public" category="Variable" name="subClassItemCount" declFile="PartialOrdering.h" declId="NI$vl::collections::po::Node::subClassItemCount"><summary>
- When <symbol name="firstSubClassItem" docId="vl::collections::po::Node::firstSubClassItem" declFile="PartialOrdering.h" declId="NI$vl::collections::po::Node::firstSubClassItem"/> is available,
+<Document accessor="public" category="Variable" name="subClassItemCount"><summary>
+ When <symbol name="firstSubClassItem" docId="vl::collections::po::Node::firstSubClassItem"/> is available,
  this field is the number of indexes in the array.
  </summary><signature><![CDATA[vint subClassItemCount;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

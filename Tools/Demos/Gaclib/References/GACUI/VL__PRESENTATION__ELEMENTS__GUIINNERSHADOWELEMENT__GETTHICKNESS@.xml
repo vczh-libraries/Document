@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetThickness" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiInnerShadowElement::GetThickness@::vl::vint()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetThickness"><summary>
  Get the thickness.
  </summary><returns>The thickness.</returns><signature><![CDATA[vint GetThickness(
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="SetContent" declFile="GuiResource.h" declId="FB$vl::presentation::GuiResourceItem::SetContent@void(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt;)[decl0]"><summary>Set the containd object for this resource item.</summary><param name="_typeName">The type name of this contained object.</param><param name="value">The contained object.</param><signature><![CDATA[void SetContent(
+<Document accessor="public" category="Function" name="SetContent"><summary>Set the containd object for this resource item.</summary><param name="_typeName">The type name of this contained object.</param><param name="value">The contained object.</param><signature><![CDATA[void SetContent(
     WString const & _typeName,
     Ptr<DescriptableObject> value
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="DescriptableObject" docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="WString" docId="vl::WString"/><symbol name="DescriptableObject" docId="vl::reflection::DescriptableObject"/></seealsos></Document>

@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="UndoRedoChanged" declFile="GuiTextCommonInterface.h" declId="NI$vl::presentation::controls::GuiTextBoxCommonInterface::UndoRedoChanged"><summary>Undo redo status changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent UndoRedoChanged;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="UndoRedoChanged"><summary>Undo redo status changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent UndoRedoChanged;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

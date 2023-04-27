@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="GuiTreeView" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::GuiTreeView"><summary>Tree view control.</summary><signature><![CDATA[class GuiTreeView
+<Document accessor="" category="Class" name="GuiTreeView"><summary>Tree view control.</summary><signature><![CDATA[class GuiTreeView
     : GuiVirtualTreeView
     , Description<GuiTreeView>;
-]]></signature><seealsos><symbol name="GuiTreeView" docId="vl::presentation::controls::GuiTreeView" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::GuiTreeView"/></seealsos><basetypes><symbol name="GuiVirtualTreeView" docId="vl::presentation::controls::GuiVirtualTreeView" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::GuiVirtualTreeView"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiTreeView" docId="vl::presentation::controls::GuiTreeView"/></seealsos><basetypes><symbol name="GuiVirtualTreeView" docId="vl::presentation::controls::GuiVirtualTreeView"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

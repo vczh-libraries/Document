@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="runs" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentContainerRun::runs"><summary>Sub runs.</summary><signature><![CDATA[RunList runs;
-]]></signature><seealsos><symbol name="RunList" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentContainerRun::RunList"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="runs"><summary>Sub runs.</summary><signature><![CDATA[RunList runs;
+]]></signature><seealsos><symbol name="RunList"/></seealsos></Document>

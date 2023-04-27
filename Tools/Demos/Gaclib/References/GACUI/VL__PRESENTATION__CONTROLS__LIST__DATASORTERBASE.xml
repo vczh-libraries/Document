@@ -1,5 +1,5 @@
-<Document accessor="" category="Class" name="DataSorterBase" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataSorterBase"><summary>Base class for <symbol name="IDataSorter" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::IDataSorter"/>.</summary><signature><![CDATA[class DataSorterBase
+<Document accessor="" category="Class" name="DataSorterBase"><summary>Base class for <symbol name="IDataSorter"/>.</summary><signature><![CDATA[class DataSorterBase
     : Object
     , IDataSorter
     , Description<DataSorterBase>;
-]]></signature><seealsos><symbol name="DataSorterBase" docId="vl::presentation::controls::list::DataSorterBase" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataSorterBase"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IDataSorter" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::IDataSorter"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="DataSorterBase" docId="vl::presentation::controls::list::DataSorterBase"/></seealsos><basetypes><symbol name="Object" docId="vl::Object"/><symbol name="IDataSorter"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

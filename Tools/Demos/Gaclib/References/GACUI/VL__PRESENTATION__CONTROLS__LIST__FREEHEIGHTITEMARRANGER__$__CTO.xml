@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="$__ctor" declFile="GuiListControlItemArrangers.h" declId="FB$vl::presentation::controls::list::FreeHeightItemArranger::$__ctor@()[decl0]"><summary>Create the arranger.</summary><signature><![CDATA[ FreeHeightItemArranger(
+<Document accessor="public" category="Function" name="$__ctor"><summary>Create the arranger.</summary><signature><![CDATA[ FreeHeightItemArranger(
 );
 ]]></signature></Document>

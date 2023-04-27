@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="newEnd" declFile="GuiTextGeneralOperations.h" declId="NI$vl::presentation::controls::ICommonTextEditCallback::TextCaretChangedStruct::newEnd"><summary>The end position of the selection after caret changing.</summary><signature><![CDATA[TextPos newEnd;
-]]></signature><seealsos><symbol name="TextPos" docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="newEnd"><summary>The end position of the selection after caret changing.</summary><signature><![CDATA[TextPos newEnd;
+]]></signature><seealsos><symbol name="TextPos" docId="vl::presentation::TextPos"/></seealsos></Document>

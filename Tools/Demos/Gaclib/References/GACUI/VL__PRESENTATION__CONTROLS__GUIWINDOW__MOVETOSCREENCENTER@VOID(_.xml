@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="MoveToScreenCenter" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiWindow::MoveToScreenCenter@void(::vl::presentation::INativeScreen *)[decl0]"><summary>Move the window to the center of the specified screen.</summary><param name="screen">The screen.</param><signature><![CDATA[void MoveToScreenCenter(
+<Document accessor="public" category="Function" name="MoveToScreenCenter"><summary>Move the window to the center of the specified screen.</summary><param name="screen">The screen.</param><signature><![CDATA[void MoveToScreenCenter(
     INativeScreen * screen
 );
-]]></signature><seealsos><symbol name="INativeScreen" docId="vl::presentation::INativeScreen" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeScreen"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeScreen" docId="vl::presentation::INativeScreen"/></seealsos></Document>

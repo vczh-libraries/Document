@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="Insert" declFile="GuiTypeDescriptorPredefined.h" declId="FB$vl::reflection::description::IValueList::Insert@::vl::vint(::vl::vint, ::vl::reflection::description::Value const &amp;)[decl0]"><summary>Insert a value at the specified position.</summary><returns>The index of the added item. It will crash if the index is out of range</returns><param name="index">The position to insert the value.</param><param name="value">The value to add.</param><signature><![CDATA[vint Insert(
+<Document accessor="public" category="Function" name="Insert"><summary>Insert a value at the specified position.</summary><returns>The index of the added item. It will crash if the index is out of range</returns><param name="index">The position to insert the value.</param><param name="value">The value to add.</param><signature><![CDATA[vint Insert(
     vint index,
     Value const & value
 );
-]]></signature><seealsos><symbol name="Value" docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Value" docId="vl::reflection::description::Value"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

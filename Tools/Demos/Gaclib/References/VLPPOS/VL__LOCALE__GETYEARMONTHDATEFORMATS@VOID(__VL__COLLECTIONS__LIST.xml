@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="GetYearMonthDateFormats" declFile="Locale.h" declId="FB$vl::Locale::GetYearMonthDateFormats@void(::vl::collections::List&lt;::vl::WString&gt; &amp;)[decl0]"><summary>Get all Year-Month date formats for this locale.</summary><param name="formats">Returns all formats.</param><signature><![CDATA[void GetYearMonthDateFormats(
+<Document accessor="public" category="Function" name="GetYearMonthDateFormats"><summary>Get all Year-Month date formats for this locale.</summary><param name="formats">Returns all formats.</param><signature><![CDATA[void GetYearMonthDateFormats(
     collections::List<WString> & formats
 ) const;
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/><symbol name="List" docId="vl::collections::List"/></seealsos></Document>

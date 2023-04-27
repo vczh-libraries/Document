@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="ctrl" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::WindowMouseInfo_::ctrl"><summary>True if the control button is pressed.</summary><signature><![CDATA[bool ctrl;
+<Document accessor="public" category="Variable" name="ctrl"><summary>True if the control button is pressed.</summary><signature><![CDATA[bool ctrl;
 ]]></signature></Document>

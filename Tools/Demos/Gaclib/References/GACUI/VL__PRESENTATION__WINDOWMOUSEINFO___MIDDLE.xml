@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="middle" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::WindowMouseInfo_::middle"><summary>True if the middle mouse button is pressed.</summary><signature><![CDATA[bool middle;
+<Document accessor="public" category="Variable" name="middle"><summary>True if the middle mouse button is pressed.</summary><signature><![CDATA[bool middle;
 ]]></signature></Document>

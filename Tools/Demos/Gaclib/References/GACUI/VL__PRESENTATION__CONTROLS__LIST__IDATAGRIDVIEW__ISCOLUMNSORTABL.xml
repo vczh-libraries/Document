@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="IsColumnSortable" declFile="GuiDataGridInterfaces.h" declId="FB$vl::presentation::controls::list::IDataGridView::IsColumnSortable@bool(::vl::vint)[decl0]"><summary>Test is a column sortable.</summary><returns>Returns true if this column is sortable.</returns><param name="column">The index of the column.</param><signature><![CDATA[bool IsColumnSortable(
+<Document accessor="public" category="Function" name="IsColumnSortable"><summary>Test is a column sortable.</summary><returns>Returns true if this column is sortable.</returns><param name="column">The index of the column.</param><signature><![CDATA[bool IsColumnSortable(
     vint column
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

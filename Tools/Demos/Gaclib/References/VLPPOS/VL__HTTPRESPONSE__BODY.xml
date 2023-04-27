@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="body" declFile="HttpUtility.h" declId="NI$vl::HttpResponse::body"><summary>Response body. This is a byte array.</summary><signature><![CDATA[BodyBuffer body;
-]]></signature><seealsos><symbol name="BodyBuffer" declFile="HttpUtility.h" declId="NI$vl::HttpResponse::BodyBuffer"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="body"><summary>Response body. This is a byte array.</summary><signature><![CDATA[BodyBuffer body;
+]]></signature><seealsos><symbol name="BodyBuffer"/></seealsos></Document>

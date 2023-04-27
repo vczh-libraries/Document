@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="AppendAndFinalize" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLine::AppendAndFinalize@void(::vl::presentation::elements::text::TextLine &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="AppendAndFinalize"><summary>
  Append a text line after the this text line, and finalize the input text line.
  </summary><param name="line">The text line that contains all characters and color indices to append and be finalized.</param><signature><![CDATA[void AppendAndFinalize(
     TextLine & line
 );
-]]></signature><seealsos><symbol name="TextLine" docId="vl::presentation::elements::text::TextLine" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::TextLine"/></seealsos></Document>
+]]></signature><seealsos><symbol name="TextLine" docId="vl::presentation::elements::text::TextLine"/></seealsos></Document>

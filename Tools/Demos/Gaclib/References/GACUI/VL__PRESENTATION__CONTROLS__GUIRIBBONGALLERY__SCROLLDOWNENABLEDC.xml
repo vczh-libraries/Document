@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="ScrollDownEnabledChanged" declFile="GuiRibbonControls.h" declId="NI$vl::presentation::controls::GuiRibbonGallery::ScrollDownEnabledChanged"><summary>Scroll down enabled changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ScrollDownEnabledChanged;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="ScrollDownEnabledChanged"><summary>Scroll down enabled changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent ScrollDownEnabledChanged;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

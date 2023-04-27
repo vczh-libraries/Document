@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="Select" declFile="GuiTextCommonInterface.h" declId="FB$vl::presentation::controls::GuiTextBoxCommonInterface::Select@void(::vl::presentation::TextPos, ::vl::presentation::TextPos)[decl0]"><summary>Select (highlight) a part of text.</summary><param name="begin">The begin position.</param><param name="end">The end position. This is also the caret position.</param><signature><![CDATA[void Select(
+<Document accessor="public" category="Function" name="Select"><summary>Select (highlight) a part of text.</summary><param name="begin">The begin position.</param><param name="end">The end position. This is also the caret position.</param><signature><![CDATA[void Select(
     TextPos begin,
     TextPos end
 );
-]]></signature><seealsos><symbol name="TextPos" docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>
+]]></signature><seealsos><symbol name="TextPos" docId="vl::presentation::TextPos"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="CacheStream" declFile="CacheStream.h" declId="NI$vl::stream::CacheStream"><summary><p>
+<Document accessor="" category="Class" name="CacheStream"><summary><p>
  A potentially <b>readable</b>, <b>peekable</b>, <b>writable</b>, <b>seekable</b> and <b>finite</b> stream that creates on another stream.
  Each feature is available if the target stream has the same feature.
  </p><p>
@@ -13,4 +13,4 @@
  </p></summary><signature><![CDATA[class CacheStream
     : Object
     , IStream;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object"/><symbol name="IStream" docId="vl::stream::IStream"/></basetypes></Document>

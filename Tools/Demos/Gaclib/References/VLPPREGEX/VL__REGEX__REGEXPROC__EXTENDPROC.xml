@@ -1,4 +1,4 @@
-<Document accessor="public" category="Variable" name="extendProc" declFile="Regex.h" declId="NI$vl::regex::RegexProc::extendProc"><summary><p>The token extend callback. It is called after recognizing any token, and run a customized procedure to modify the token based on the given context.</p><p>If the length parameter is -1, it means the caller does not measure the incoming text buffer, which automatically indicates that the buffer is null-terminated.</p><p>If the length parameter is not -1, it means the number of available characters in the buffer.</p><p>The completeText parameter could be true or false. When it is false, it means that the buffer does not contain all the text.</p></summary><remarks><p>
+<Document accessor="public" category="Variable" name="extendProc"><summary><p>The token extend callback. It is called after recognizing any token, and run a customized procedure to modify the token based on the given context.</p><p>If the length parameter is -1, it means the caller does not measure the incoming text buffer, which automatically indicates that the buffer is null-terminated.</p><p>If the length parameter is not -1, it means the number of available characters in the buffer.</p><p>The completeText parameter could be true or false. When it is false, it means that the buffer does not contain all the text.</p></summary><remarks><p>
  This is very useful to recognize any token that cannot be expressed using a regular expression.
  For example, a C++ literal string R&quot;tag(the conteng)tag&quot;.
  It is recommended to add a token for <b>R&quot;tag(</b>,
@@ -8,15 +8,15 @@
  a cross-line token could be incomplete at the end of the line.
  Because a given buffer ends at the end of that line,
  the extend proc is not able to know right now about what is going on in the future.
- Here is what <symbol name="interTokenState" docId="vl::regex::RegexProcessingToken::interTokenState" declFile="Regex.h" declId="NI$vl::regex::RegexProcessingToken::interTokenState"/> is designed for,
+ Here is what <symbol name="interTokenState" docId="vl::regex::RegexProcessingToken::interTokenState"/> is designed for,
  the extend proc can store anything it wants using that pointer.
  </p><p>
- The caller can get this pointer from the return value of <symbol name="Colorize" docId="vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)" declFile="Regex.h" declId="FB$vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)[decl0]"/>.
+ The caller can get this pointer from the return value of <symbol name="Colorize" docId="vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)"/>.
  This pointer only available for cross-line tokens, it is obvious that one line produces at most one such pointer.
  Then the caller keeps calling that function to walk throught the whole string.
- When the return value is changed, the pointer is no longer used, and it can be deleted by calling <symbol name="deleter" docId="vl::regex::RegexProc::deleter" declFile="Regex.h" declId="NI$vl::regex::RegexProc::deleter"/> manually.
+ When the return value is changed, the pointer is no longer used, and it can be deleted by calling <symbol name="deleter" docId="vl::regex::RegexProc::deleter"/> manually.
  </p><p>
- The first argument is <symbol name="argument" docId="vl::regex::RegexProc::argument" declFile="Regex.h" declId="NI$vl::regex::RegexProc::argument"/>.
+ The first argument is <symbol name="argument" docId="vl::regex::RegexProc::argument"/>.
  </p><p>
  The second argument is a pointer to the buffer of the first character in this token.
  If the previous token is incomplete, then the buffer begins at the first character of the new buffer.
@@ -29,4 +29,4 @@
  </p><p>
  The fifth contains the context for this token. Fields except &quot;start&quot; are allowed to be updated by the extend proc.
  </p></remarks><example index="0"/><signature><![CDATA[RegexTokenExtendProc extendProc;
-]]></signature><seealsos><symbol name="RegexTokenExtendProc" declFile="Regex.h" declId="NI$vl::regex::RegexTokenExtendProc"/></seealsos></Document>
+]]></signature><seealsos><symbol name="RegexTokenExtendProc"/></seealsos></Document>

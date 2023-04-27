@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="TextCaretChanged" declFile="GuiTextGeneralOperations.h" declId="FB$vl::presentation::controls::ICommonTextEditCallback::TextCaretChanged@void(::vl::presentation::controls::ICommonTextEditCallback::TextCaretChangedStruct const &amp;)[decl0]"><summary>Called after the caret is changed.</summary><param name="arguments">The data for this callback.</param><signature><![CDATA[void TextCaretChanged(
+<Document accessor="public" category="Function" name="TextCaretChanged"><summary>Called after the caret is changed.</summary><param name="arguments">The data for this callback.</param><signature><![CDATA[void TextCaretChanged(
     TextCaretChangedStruct const & arguments
 );
-]]></signature><seealsos><symbol name="TextCaretChangedStruct" docId="vl::presentation::controls::ICommonTextEditCallback::TextCaretChangedStruct" declFile="GuiTextGeneralOperations.h" declId="NI$vl::presentation::controls::ICommonTextEditCallback::TextCaretChangedStruct"/></seealsos></Document>
+]]></signature><seealsos><symbol name="TextCaretChangedStruct" docId="vl::presentation::controls::ICommonTextEditCallback::TextCaretChangedStruct"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="IsTimerEnabled" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeInputService::IsTimerEnabled@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="IsTimerEnabled"><summary>
  Test is the global timer message receiving enabled.
  </summary><returns>Returns true if the global timer message receiving is enabled.</returns><signature><![CDATA[bool IsTimerEnabled(
 );

@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="SetStyleBounds" declFile="GuiListControls.h" declId="FB$vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleBounds@void(::vl::presentation::compositions::GuiBoundsComposition *, ::vl::presentation::Rect)[decl0]"><summary>Set the bounds of an item control.</summary><param name="style">The item control.</param><param name="bounds">The new bounds.</param><signature><![CDATA[void SetStyleBounds(
+<Document accessor="public" category="Function" name="SetStyleBounds"><summary>Set the bounds of an item control.</summary><param name="style">The item control.</param><param name="bounds">The new bounds.</param><signature><![CDATA[void SetStyleBounds(
     compositions::GuiBoundsComposition * style,
     Rect bounds
 );
-]]></signature><seealsos><symbol name="Rect" declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/><symbol name="GuiBoundsComposition" docId="vl::presentation::compositions::GuiBoundsComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiBoundsComposition"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Rect"/><symbol name="GuiBoundsComposition" docId="vl::presentation::compositions::GuiBoundsComposition"/></seealsos></Document>

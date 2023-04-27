@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="DescriptionChanged" declFile="GuiToolstripCommand.h" declId="NI$vl::presentation::controls::GuiToolstripCommand::DescriptionChanged"><summary>Description changed event, raised when any description property is modified.</summary><signature><![CDATA[compositions::GuiNotifyEvent DescriptionChanged;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="DescriptionChanged"><summary>Description changed event, raised when any description property is modified.</summary><signature><![CDATA[compositions::GuiNotifyEvent DescriptionChanged;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

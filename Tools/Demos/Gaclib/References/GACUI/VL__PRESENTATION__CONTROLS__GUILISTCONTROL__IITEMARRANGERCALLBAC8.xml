@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="SetStyleAlignmentToParent" declFile="GuiListControls.h" declId="FB$vl::presentation::controls::GuiListControl::IItemArrangerCallback::SetStyleAlignmentToParent@void(::vl::presentation::compositions::GuiBoundsComposition *, ::vl::presentation::Margin)[decl0]"><summary>Set the alignment of an item control.</summary><param name="style">The item control.</param><param name="margin">The new alignment.</param><signature><![CDATA[void SetStyleAlignmentToParent(
+<Document accessor="public" category="Function" name="SetStyleAlignmentToParent"><summary>Set the alignment of an item control.</summary><param name="style">The item control.</param><param name="margin">The new alignment.</param><signature><![CDATA[void SetStyleAlignmentToParent(
     compositions::GuiBoundsComposition * style,
     Margin margin
 );
-]]></signature><seealsos><symbol name="Margin" declFile="GuiTypes.h" declId="NI$vl::presentation::Margin"/><symbol name="GuiBoundsComposition" docId="vl::presentation::compositions::GuiBoundsComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiBoundsComposition"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Margin"/><symbol name="GuiBoundsComposition" docId="vl::presentation::compositions::GuiBoundsComposition"/></seealsos></Document>

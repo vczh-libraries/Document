@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="Run" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::Run@bool()[decl0]"><summary>Continue to run the Workflow program.</summary><returns>Returns true if this operation is succeeded.</returns><signature><![CDATA[bool Run(
+<Document accessor="public" category="Function" name="Run"><summary>Continue to run the Workflow program.</summary><returns>Returns true if this operation is succeeded.</returns><signature><![CDATA[bool Run(
 );
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="editVersion" declFile="GuiTextGeneralOperations.h" declId="NI$vl::presentation::controls::ICommonTextEditCallback::TextCaretChangedStruct::editVersion"><summary>The current edit version.</summary><signature><![CDATA[vuint editVersion;
-]]></signature><seealsos><symbol name="vuint" docId="vl::vuint" declFile="Basic.h" declId="NI$vl::vuint"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="editVersion"><summary>The current edit version.</summary><signature><![CDATA[vuint editVersion;
+]]></signature><seealsos><symbol name="vuint" docId="vl::vuint"/></seealsos></Document>

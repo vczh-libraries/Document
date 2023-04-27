@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="SystemDefault" declFile="Locale.h" declId="FB$vl::Locale::SystemDefault@::vl::Locale()[decl0]"><summary>Get the system default locale. This locale controls the code page that used by the the system to interpret ANSI string buffers.</summary><returns>The system default locale.</returns><signature><![CDATA[static Locale SystemDefault(
+<Document accessor="public" category="Function" name="SystemDefault"><summary>Get the system default locale. This locale controls the code page that used by the the system to interpret ANSI string buffers.</summary><returns>The system default locale.</returns><signature><![CDATA[static Locale SystemDefault(
 );
-]]></signature><seealsos><symbol name="Locale" docId="vl::Locale" declFile="Locale.h" declId="NI$vl::Locale"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Locale" docId="vl::Locale"/></seealsos></Document>

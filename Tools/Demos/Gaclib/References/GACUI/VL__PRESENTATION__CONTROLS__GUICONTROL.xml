@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"><summary>
+<Document accessor="" category="Class" name="GuiControl"><summary>
  The base class of all controls.
  When the control is destroyed, it automatically destroys sub controls, and the bounds composition from the style controller.
  If you want to manually destroy a control, you should first remove it from its parent.
@@ -8,4 +8,4 @@
     , compositions::IGuiAltAction
     , compositions::IGuiTabAction
     , Description<GuiControl>;
-]]></signature><seealsos><symbol name="GuiControl" docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IGuiAltAction" docId="vl::presentation::compositions::IGuiAltAction" declFile="GuiGraphicsHost_Alt.h" declId="NI$vl::presentation::compositions::IGuiAltAction"/><symbol name="IGuiTabAction" docId="vl::presentation::compositions::IGuiTabAction" declFile="GuiGraphicsHost_Tab.h" declId="NI$vl::presentation::compositions::IGuiTabAction"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiControl" docId="vl::presentation::controls::GuiControl"/></seealsos><basetypes><symbol name="Object" docId="vl::Object"/><symbol name="IGuiAltAction" docId="vl::presentation::compositions::IGuiAltAction"/><symbol name="IGuiTabAction" docId="vl::presentation::compositions::IGuiTabAction"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

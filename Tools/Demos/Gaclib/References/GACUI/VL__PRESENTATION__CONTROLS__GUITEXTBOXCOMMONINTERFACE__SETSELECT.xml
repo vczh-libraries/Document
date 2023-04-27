@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetSelectionText" declFile="GuiTextCommonInterface.h" declId="FB$vl::presentation::controls::GuiTextBoxCommonInterface::SetSelectionText@void(::vl::WString const &amp;)[decl0]"><summary>Set the selected text.</summary><param name="value">The selected text.</param><signature><![CDATA[void SetSelectionText(
+<Document accessor="public" category="Function" name="SetSelectionText"><summary>Set the selected text.</summary><param name="value">The selected text.</param><signature><![CDATA[void SetSelectionText(
     WString const & value
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

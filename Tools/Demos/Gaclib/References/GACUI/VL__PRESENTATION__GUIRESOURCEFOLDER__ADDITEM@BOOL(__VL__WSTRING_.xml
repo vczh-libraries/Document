@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="AddItem" declFile="GuiResource.h" declId="FB$vl::presentation::GuiResourceFolder::AddItem@bool(::vl::WString const &amp;, ::vl::Ptr&lt;::vl::presentation::GuiResourceItem&gt;)[decl0]"><summary>Add a resource item.</summary><returns>Returns true if this operation succeeded.</returns><param name="name">The name of this resource item.</param><param name="item">The resource item.</param><signature><![CDATA[bool AddItem(
+<Document accessor="public" category="Function" name="AddItem"><summary>Add a resource item.</summary><returns>Returns true if this operation succeeded.</returns><param name="name">The name of this resource item.</param><param name="item">The resource item.</param><signature><![CDATA[bool AddItem(
     WString const & name,
     Ptr<GuiResourceItem> item
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="GuiResourceItem" docId="vl::presentation::GuiResourceItem" declFile="GuiResource.h" declId="NI$vl::presentation::GuiResourceItem"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="WString" docId="vl::WString"/><symbol name="GuiResourceItem" docId="vl::presentation::GuiResourceItem"/></seealsos></Document>

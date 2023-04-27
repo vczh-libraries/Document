@@ -1,8 +1,8 @@
-<Document accessor="public" category="Function" name="DelayExecuteInMainThread" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeAsyncService::DelayExecuteInMainThread@::vl::Ptr&lt;::vl::presentation::INativeDelay&gt;(::vl::Func&lt;void()&gt; const &amp;, ::vl::vint)[decl0]"><summary>
+<Document accessor="public" category="Function" name="DelayExecuteInMainThread"><summary>
  Delay execute a specified function with an specified argument in the main thread.
  </summary><returns>The Delay execution controller for this task.</returns><param name="proc">The specified function.</param><param name="milliseconds">Time to delay.</param><signature><![CDATA[Ptr<INativeDelay> DelayExecuteInMainThread(
     Func<void(
 )> const & proc,
     vint milliseconds
 );
-]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="INativeDelay" docId="vl::presentation::INativeDelay" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDelay"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func"/><symbol name="Ptr" docId="vl::Ptr"/><symbol name="INativeDelay" docId="vl::presentation::INativeDelay"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="WaitableObject" declFile="Threading.h" declId="NI$vl::WaitableObject"><summary>Base type of all synchronization objects.</summary><signature><![CDATA[class WaitableObject
+<Document accessor="" category="Class" name="WaitableObject"><summary>Base type of all synchronization objects.</summary><signature><![CDATA[class WaitableObject
     : Object
     , NotCopyable;
-]]></signature><basetypes><symbol name="NotCopyable" docId="vl::NotCopyable" declFile="Basic.h" declId="NI$vl::NotCopyable"/><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
+]]></signature><basetypes><symbol name="NotCopyable" docId="vl::NotCopyable"/><symbol name="Object" docId="vl::Object"/></basetypes></Document>

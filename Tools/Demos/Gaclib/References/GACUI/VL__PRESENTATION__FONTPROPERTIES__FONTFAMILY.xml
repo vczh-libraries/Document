@@ -1,4 +1,4 @@
-<Document accessor="public" category="Variable" name="fontFamily" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties::fontFamily"><summary>
+<Document accessor="public" category="Variable" name="fontFamily"><summary>
  Font family (or font name, usually).
  </summary><signature><![CDATA[WString fontFamily;
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

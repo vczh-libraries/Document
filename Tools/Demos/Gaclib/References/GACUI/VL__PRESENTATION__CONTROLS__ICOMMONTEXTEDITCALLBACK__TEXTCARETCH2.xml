@@ -1,2 +1,2 @@
-<Document accessor="public" category="Struct" name="TextCaretChangedStruct" declFile="GuiTextGeneralOperations.h" declId="NI$vl::presentation::controls::ICommonTextEditCallback::TextCaretChangedStruct"><summary>Callback data for text caret changing.</summary><signature><![CDATA[struct TextCaretChangedStruct;
+<Document accessor="public" category="Struct" name="TextCaretChangedStruct"><summary>Callback data for text caret changing.</summary><signature><![CDATA[struct TextCaretChangedStruct;
 ]]></signature></Document>

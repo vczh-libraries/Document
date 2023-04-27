@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="CoroutineStatementVisitor" declFile="WfExpression_Traverse.h" declId="NI$vl::workflow::traverse_visitor::CoroutineStatementVisitor"><summary>A copy visitor, overriding all abstract methods with AST traversing code that looks into child nodes.</summary><signature><![CDATA[class CoroutineStatementVisitor
+<Document accessor="" category="Class" name="CoroutineStatementVisitor"><summary>A copy visitor, overriding all abstract methods with AST traversing code that looks into child nodes.</summary><signature><![CDATA[class CoroutineStatementVisitor
     : Object
     , WfCoroutineStatement::IVisitor;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IVisitor" declFile="WfExpression_Ast.h" declId="NI$vl::workflow::WfCoroutineStatement::IVisitor"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object"/><symbol name="IVisitor"/></basetypes></Document>

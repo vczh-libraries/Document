@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="Locale" declFile="Locale.h" declId="NI$vl::Locale"><summary>Locale awared operations. Macro &quot;INVLOC&quot; is a shortcut to get a invariant locale.</summary><remarks><p>
+<Document accessor="" category="Class" name="Locale"><summary>Locale awared operations. Macro &quot;INVLOC&quot; is a shortcut to get a invariant locale.</summary><remarks><p>
  For all string operations that the normalization does not set to <b>None</b>,
  and all non-string operations,
  the result is platform-dependent.
@@ -9,4 +9,4 @@
  and string operations only support <b>None</b> and <b>IgnoreCase</b> for normalization.
  </p></remarks><signature><![CDATA[class Locale
     : Object;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object"/></basetypes></Document>

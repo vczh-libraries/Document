@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetInfo" declFile="WfRuntime.h" declId="FB$vl::workflow::runtime::WfRuntimeException::GetInfo@::vl::Ptr&lt;::vl::workflow::runtime::WfRuntimeExceptionInfo&gt;()[impl0]"><summary>Get the detailed information.</summary><returns>The detailed information.</returns><signature><![CDATA[Ptr<WfRuntimeExceptionInfo> GetInfo(
+<Document accessor="public" category="Function" name="GetInfo"><summary>Get the detailed information.</summary><returns>The detailed information.</returns><signature><![CDATA[Ptr<WfRuntimeExceptionInfo> GetInfo(
 ) const;
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WfRuntimeExceptionInfo" docId="vl::workflow::runtime::WfRuntimeExceptionInfo" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeExceptionInfo"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="WfRuntimeExceptionInfo" docId="vl::workflow::runtime::WfRuntimeExceptionInfo"/></seealsos></Document>

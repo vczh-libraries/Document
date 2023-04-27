@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetNodeRootProvider" declFile="GuiTreeViewControls.h" declId="FB$vl::presentation::controls::GuiVirtualTreeListControl::GetNodeRootProvider@::vl::presentation::controls::tree::INodeRootProvider *()[decl0]"><summary>Get the binded node root provider.</summary><returns>The binded node root provider.</returns><signature><![CDATA[tree::INodeRootProvider * GetNodeRootProvider(
+<Document accessor="public" category="Function" name="GetNodeRootProvider"><summary>Get the binded node root provider.</summary><returns>The binded node root provider.</returns><signature><![CDATA[tree::INodeRootProvider * GetNodeRootProvider(
 );
-]]></signature><seealsos><symbol name="INodeRootProvider" docId="vl::presentation::controls::tree::INodeRootProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeRootProvider"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INodeRootProvider" docId="vl::presentation::controls::tree::INodeRootProvider"/></seealsos></Document>

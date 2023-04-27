@@ -1,4 +1,4 @@
-<Document accessor="" category="Function" name="u64tow" declFile="String.h" declId="FB$vl::u64tow@::vl::WString(::vl::vuint64_t)[decl0]"><summary>Convert an unsigned 64-bits interger to a string.</summary><returns>The converted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[WString u64tow(
+<Document accessor="" category="Function" name="u64tow"><summary>Convert an unsigned 64-bits interger to a string.</summary><returns>The converted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[WString u64tow(
     vuint64_t number
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="vuint64_t" docId="vl::vuint64_t" declFile="Basic.h" declId="NI$vl::vuint64_t"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/><symbol name="vuint64_t" docId="vl::vuint64_t"/></seealsos></Document>

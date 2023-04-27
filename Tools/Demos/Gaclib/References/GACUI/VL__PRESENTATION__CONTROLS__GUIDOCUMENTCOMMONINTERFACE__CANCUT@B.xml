@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="CanCut" declFile="GuiDocumentViewer.h" declId="FB$vl::presentation::controls::GuiDocumentCommonInterface::CanCut@bool()[decl0]"><summary>Test can the selection be cut.</summary><returns>Returns true if the selection can be cut.</returns><signature><![CDATA[bool CanCut(
+<Document accessor="public" category="Function" name="CanCut"><summary>Test can the selection be cut.</summary><returns>Returns true if the selection can be cut.</returns><signature><![CDATA[bool CanCut(
 );
 ]]></signature></Document>

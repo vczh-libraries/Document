@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="$__ctor" declFile="GuiBindableDataGrid.h" declId="FB$vl::presentation::controls::list::DataProvider::$__ctor@()[decl0]"><summary>Create a data provider.</summary><signature><![CDATA[ DataProvider(
+<Document accessor="public" category="Function" name="$__ctor"><summary>Create a data provider.</summary><signature><![CDATA[ DataProvider(
 );
 ]]></signature></Document>

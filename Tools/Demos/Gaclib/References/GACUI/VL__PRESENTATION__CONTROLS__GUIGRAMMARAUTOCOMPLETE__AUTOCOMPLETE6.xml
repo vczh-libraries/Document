@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="candidates" declFile="GuiLanguageAutoComplete.h" declId="NI$vl::presentation::controls::GuiGrammarAutoComplete::AutoCompleteData::candidates"><summary>Available candidate tokens (in lexer token index).</summary><signature><![CDATA[collections::List<vint> candidates;
-]]></signature><seealsos><symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="candidates"><summary>Available candidate tokens (in lexer token index).</summary><signature><![CDATA[collections::List<vint> candidates;
+]]></signature><seealsos><symbol name="List" docId="vl::collections::List"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

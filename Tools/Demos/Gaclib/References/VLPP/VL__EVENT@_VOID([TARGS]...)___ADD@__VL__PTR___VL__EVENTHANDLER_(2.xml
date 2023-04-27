@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="Add" declFile="Event.h" declId="FB$vl::Event@&lt;void([TArgs]...)&gt;::Add@::vl::Ptr&lt;::vl::EventHandler&gt;(void([TArgs]...) *)[impl0]"><summary>Add a callback to the event.</summary><returns>The event handler representing the callback.</returns><param name="function">The callback.</param><signature><![CDATA[Ptr<EventHandler> Add(
+<Document accessor="public" category="Function" name="Add"><summary>Add a callback to the event.</summary><returns>The event handler representing the callback.</returns><param name="function">The callback.</param><signature><![CDATA[Ptr<EventHandler> Add(
     void( * function)(
 TArgs...)
 );
-]]></signature><seealsos><symbol name="EventHandler" declFile="Event.h" declId="NI$vl::EventHandler"/><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/></seealsos></Document>
+]]></signature><seealsos><symbol name="EventHandler"/><symbol name="Ptr" docId="vl::Ptr"/></seealsos></Document>

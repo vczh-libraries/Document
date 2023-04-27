@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetMainWindow" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowService::GetMainWindow@::vl::presentation::INativeWindow *()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetMainWindow"><summary>
  Get the main window.
  </summary><returns>The main window.</returns><signature><![CDATA[INativeWindow * GetMainWindow(
 );
-]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow"/></seealsos></Document>

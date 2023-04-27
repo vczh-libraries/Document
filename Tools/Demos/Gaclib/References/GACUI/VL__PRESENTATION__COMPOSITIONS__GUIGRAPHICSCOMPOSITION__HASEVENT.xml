@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="HasEventReceiver" declFile="GuiGraphicsCompositionBase.h" declId="FB$vl::presentation::compositions::GuiGraphicsComposition::HasEventReceiver@bool()[decl0]"><summary>Test if any event receiver has already been requested.</summary><returns>Returns true if any event receiver has already been requested.</returns><signature><![CDATA[bool HasEventReceiver(
+<Document accessor="public" category="Function" name="HasEventReceiver"><summary>Test if any event receiver has already been requested.</summary><returns>Returns true if any event receiver has already been requested.</returns><signature><![CDATA[bool HasEventReceiver(
 );
 ]]></signature></Document>

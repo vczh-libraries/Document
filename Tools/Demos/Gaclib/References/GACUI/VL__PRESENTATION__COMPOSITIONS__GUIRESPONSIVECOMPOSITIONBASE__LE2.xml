@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="LevelDown" declFile="GuiGraphicsResponsiveComposition.h" declId="FB$vl::presentation::compositions::GuiResponsiveCompositionBase::LevelDown@bool()[decl0]"><summary>Switch to a smaller view.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool LevelDown(
+<Document accessor="public" category="Function" name="LevelDown"><summary>Switch to a smaller view.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool LevelDown(
 );
 ]]></signature></Document>

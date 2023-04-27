@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetMargin" declFile="GuiGraphicsCompositionBase.h" declId="FB$vl::presentation::compositions::GuiGraphicsComposition::GetMargin@::vl::presentation::Margin()[decl0]"><summary>Get the margin.</summary><returns>The margin.</returns><signature><![CDATA[Margin GetMargin(
+<Document accessor="public" category="Function" name="GetMargin"><summary>Get the margin.</summary><returns>The margin.</returns><signature><![CDATA[Margin GetMargin(
 );
-]]></signature><seealsos><symbol name="Margin" declFile="GuiTypes.h" declId="NI$vl::presentation::Margin"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Margin"/></seealsos></Document>

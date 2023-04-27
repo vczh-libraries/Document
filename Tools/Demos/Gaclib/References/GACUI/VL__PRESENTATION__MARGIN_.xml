@@ -1,4 +1,4 @@
-<Document accessor="" category="Struct" name="Margin_" declFile="GuiTypes.h" declId="NI$vl::presentation::Margin_"><summary>
+<Document accessor="" category="Struct" name="Margin_"><summary>
  Represents a margin in a two dimensions space.
  </summary><typeparam name="T">Type of the coordinate.</typeparam><signature><![CDATA[template <
     typename T

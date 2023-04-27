@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetScrollDownEnabled" declFile="GuiRibbonControls.h" declId="FB$vl::presentation::controls::GuiRibbonGallery::GetScrollDownEnabled@bool()[decl0]"><summary>Test if the scroll down button is enabled.</summary><returns>Returns true if the scroll down button is enabled.</returns><signature><![CDATA[bool GetScrollDownEnabled(
+<Document accessor="public" category="Function" name="GetScrollDownEnabled"><summary>Test if the scroll down button is enabled.</summary><returns>Returns true if the scroll down button is enabled.</returns><signature><![CDATA[bool GetScrollDownEnabled(
 );
 ]]></signature></Document>

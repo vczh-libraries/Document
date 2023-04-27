@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetColor1" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiGradientBackgroundElement::GetColor1@::vl::presentation::Color()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetColor1"><summary>
  Get the left-top color.
  </summary><returns>The left-top color.</returns><signature><![CDATA[Color GetColor1(
 );
-]]></signature><seealsos><symbol name="Color" docId="vl::presentation::Color" declFile="GuiTypes.h" declId="NI$vl::presentation::Color"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Color" docId="vl::presentation::Color"/></seealsos></Document>

@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="InvokeInMainThread" declFile="GuiApplication.h" declId="FB$vl::presentation::controls::GuiApplication::InvokeInMainThread@void(::vl::presentation::controls::GuiControlHost *, ::vl::Func&lt;void()&gt; const &amp;)[decl0]"><summary>Invoke a specified function in the main thread.</summary><param name="controlHost">A control host to access the corressponding main thread.</param><param name="proc">The specified function.</param><signature><![CDATA[void InvokeInMainThread(
+<Document accessor="public" category="Function" name="InvokeInMainThread"><summary>Invoke a specified function in the main thread.</summary><param name="controlHost">A control host to access the corressponding main thread.</param><param name="proc">The specified function.</param><signature><![CDATA[void InvokeInMainThread(
     GuiControlHost * controlHost,
     Func<void(
 )> const & proc
 );
-]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/><symbol name="GuiControlHost" docId="vl::presentation::controls::GuiControlHost" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiControlHost"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func"/><symbol name="GuiControlHost" docId="vl::presentation::controls::GuiControlHost"/></seealsos></Document>

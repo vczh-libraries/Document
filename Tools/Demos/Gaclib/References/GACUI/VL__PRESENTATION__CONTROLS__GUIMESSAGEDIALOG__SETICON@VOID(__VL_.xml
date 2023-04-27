@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetIcon" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiMessageDialog::SetIcon@void(::vl::presentation::INativeDialogService::MessageBoxIcons)[decl0]"><summary>Set the icon that appears on the dialog.</summary><param name="value">The icon.</param><signature><![CDATA[void SetIcon(
+<Document accessor="public" category="Function" name="SetIcon"><summary>Set the icon that appears on the dialog.</summary><param name="value">The icon.</param><signature><![CDATA[void SetIcon(
     INativeDialogService::MessageBoxIcons value
 );
-]]></signature><seealsos><symbol name="MessageBoxIcons" docId="vl::presentation::INativeDialogService::MessageBoxIcons" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDialogService::MessageBoxIcons"/></seealsos></Document>
+]]></signature><seealsos><symbol name="MessageBoxIcons" docId="vl::presentation::INativeDialogService::MessageBoxIcons"/></seealsos></Document>

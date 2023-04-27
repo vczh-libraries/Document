@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="BeforeVisualizeCell" declFile="GuiDataGridInterfaces.h" declId="FB$vl::presentation::controls::list::IDataVisualizer::BeforeVisualizeCell@void(::vl::presentation::controls::GuiListControl::IItemProvider *, ::vl::vint, ::vl::vint)[decl0]"><summary>Called before visualizing a cell.</summary><param name="itemProvider">The item provider.</param><param name="row">The row number of the cell.</param><param name="column">The column number of the cell.</param><signature><![CDATA[void BeforeVisualizeCell(
+<Document accessor="public" category="Function" name="BeforeVisualizeCell"><summary>Called before visualizing a cell.</summary><param name="itemProvider">The item provider.</param><param name="row">The row number of the cell.</param><param name="column">The column number of the cell.</param><signature><![CDATA[void BeforeVisualizeCell(
     GuiListControl::IItemProvider * itemProvider,
     vint row,
     vint column
 );
-]]></signature><seealsos><symbol name="IItemProvider" docId="vl::presentation::controls::GuiListControl::IItemProvider" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::IItemProvider"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IItemProvider" docId="vl::presentation::controls::GuiListControl::IItemProvider"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

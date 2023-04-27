@@ -1,7 +1,7 @@
-<Document accessor="public" category="Function" name="OnBeforeItemModified" declFile="GuiTreeViewControls.h" declId="FB$vl::presentation::controls::tree::INodeProviderCallback::OnBeforeItemModified@void(::vl::presentation::controls::tree::INodeProvider *, ::vl::vint, ::vl::vint, ::vl::vint)[decl0]"><summary>Called before sub items of a node are modified.</summary><param name="parentNode">The node containing modified sub items.</param><param name="start">The index of the first sub item.</param><param name="count">The number of sub items to be modified.</param><param name="newCount">The new number of modified sub items.</param><signature><![CDATA[void OnBeforeItemModified(
+<Document accessor="public" category="Function" name="OnBeforeItemModified"><summary>Called before sub items of a node are modified.</summary><param name="parentNode">The node containing modified sub items.</param><param name="start">The index of the first sub item.</param><param name="count">The number of sub items to be modified.</param><param name="newCount">The new number of modified sub items.</param><signature><![CDATA[void OnBeforeItemModified(
     INodeProvider * parentNode,
     vint start,
     vint count,
     vint newCount
 );
-]]></signature><seealsos><symbol name="INodeProvider" docId="vl::presentation::controls::tree::INodeProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeProvider"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INodeProvider" docId="vl::presentation::controls::tree::INodeProvider"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

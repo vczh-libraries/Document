@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="DialogService" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeController::DialogService@::vl::presentation::INativeDialogService *()[decl0]"><summary>
+<Document accessor="public" category="Function" name="DialogService"><summary>
  Get the dialog service.
  </summary><returns>The user dialog service</returns><signature><![CDATA[INativeDialogService * DialogService(
 );
-]]></signature><seealsos><symbol name="INativeDialogService" docId="vl::presentation::INativeDialogService" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDialogService"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeDialogService" docId="vl::presentation::INativeDialogService"/></seealsos></Document>

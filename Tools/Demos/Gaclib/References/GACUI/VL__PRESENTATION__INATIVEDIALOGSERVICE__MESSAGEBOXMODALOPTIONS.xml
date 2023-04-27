@@ -1,4 +1,4 @@
-<Document accessor="public" category="Enum" name="MessageBoxModalOptions" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeDialogService::MessageBoxModalOptions"><summary>
+<Document accessor="public" category="Enum" name="MessageBoxModalOptions"><summary>
  Message box model options.
  </summary><enumitem name="ModalSystem">Top most message box in the whole system.</enumitem><enumitem name="ModalTask">Disable all windows in the application.</enumitem><enumitem name="ModalWindow">Disable the current window.</enumitem><signature><![CDATA[enum MessageBoxModalOptions
 {

@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="OnGenerateMetadata" declFile="WfAnalyzer.h" declId="FB$vl::workflow::IWfCompilerCallback::OnGenerateMetadata@void()[decl0]"><summary>4th step: Called before generating metadata for functions and types created by given Workflow modules.</summary><signature><![CDATA[void OnGenerateMetadata(
+<Document accessor="public" category="Function" name="OnGenerateMetadata"><summary>4th step: Called before generating metadata for functions and types created by given Workflow modules.</summary><signature><![CDATA[void OnGenerateMetadata(
 );
 ]]></signature></Document>

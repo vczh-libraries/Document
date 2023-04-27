@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetCurrentLevel" declFile="GuiGraphicsResponsiveComposition.h" declId="FB$vl::presentation::compositions::GuiResponsiveCompositionBase::GetCurrentLevel@::vl::vint()[decl0]"><summary>Get the current level. Zero is the view with the smallest size.</summary><returns>The current level.</returns><signature><![CDATA[vint GetCurrentLevel(
+<Document accessor="public" category="Function" name="GetCurrentLevel"><summary>Get the current level. Zero is the view with the smallest size.</summary><returns>The current level.</returns><signature><![CDATA[vint GetCurrentLevel(
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

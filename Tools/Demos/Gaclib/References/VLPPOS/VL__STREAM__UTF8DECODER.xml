@@ -1,3 +1,3 @@
-<Document accessor="" category="Class" name="Utf8Decoder" declFile="CharFormat.h" declId="NI$vl::stream::Utf8Decoder"><summary>Decoder to read UTF-8 text.</summary><signature><![CDATA[class Utf8Decoder
+<Document accessor="" category="Class" name="Utf8Decoder"><summary>Decoder to read UTF-8 text.</summary><signature><![CDATA[class Utf8Decoder
     : CharDecoder;
-]]></signature><basetypes><symbol name="CharDecoder" docId="vl::stream::CharDecoder" declFile="CharFormat.h" declId="NI$vl::stream::CharDecoder"/></basetypes></Document>
+]]></signature><basetypes><symbol name="CharDecoder" docId="vl::stream::CharDecoder"/></basetypes></Document>

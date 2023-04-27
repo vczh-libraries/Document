@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="operator []" declFile="List.h" declId="FB$vl::collections::Array::operator []@[T] &amp;(::vl::vint)[impl0]"><summary>Get the reference to the specified element.</summary><returns>The reference to the specified element. It will crash when the index is out of range.</returns><param name="index">The index of the element.</param><signature><![CDATA[T & operator [](
+<Document accessor="public" category="Function" name="operator []"><summary>Get the reference to the specified element.</summary><returns>The reference to the specified element. It will crash when the index is out of range.</returns><param name="index">The index of the element.</param><signature><![CDATA[T & operator [](
     vint index
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

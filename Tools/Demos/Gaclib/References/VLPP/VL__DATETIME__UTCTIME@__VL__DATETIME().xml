@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="UtcTime" declFile="Basic.h" declId="FB$vl::DateTime::UtcTime@::vl::DateTime()[decl0]"><summary>Get the current UTC time.</summary><returns>The current UTC time.</returns><signature><![CDATA[static DateTime UtcTime(
+<Document accessor="public" category="Function" name="UtcTime"><summary>Get the current UTC time.</summary><returns>The current UTC time.</returns><signature><![CDATA[static DateTime UtcTime(
 );
-]]></signature><seealsos><symbol name="DateTime" docId="vl::DateTime" declFile="Basic.h" declId="NI$vl::DateTime"/></seealsos></Document>
+]]></signature><seealsos><symbol name="DateTime" docId="vl::DateTime"/></seealsos></Document>

@@ -1,5 +1,5 @@
-<Document accessor="" category="Class" name="Localization" declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::Localization"><summary>system::Math includes localization awared formatting operations for a Workflow script.</summary><remarks><p>
+<Document accessor="" category="Class" name="Localization"><summary>system::Math includes localization awared formatting operations for a Workflow script.</summary><remarks><p>
  There are three locales that reflect the configuration of the operating system:
  <ul><li><b>Invariant</b>: An invariant locale for general languages.</li><li><b>System</b>: Locale for the operating system, including the file system.</li><li><b>User</b>: Locale for UI of the operating system.</li></ul></p></remarks><signature><![CDATA[class Localization
     : Description<Localization>;
-]]></signature><seealsos><symbol name="Localization" docId="vl::reflection::description::Localization" declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::Localization"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="Localization" docId="vl::reflection::description::Localization"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

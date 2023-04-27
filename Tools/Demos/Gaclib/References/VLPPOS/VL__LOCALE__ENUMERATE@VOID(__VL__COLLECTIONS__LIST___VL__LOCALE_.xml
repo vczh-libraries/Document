@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Enumerate" declFile="Locale.h" declId="FB$vl::Locale::Enumerate@void(::vl::collections::List&lt;::vl::Locale&gt; &amp;)[decl0]"><summary>Get all supported locales.</summary><param name="locales">All supported locales.</param><signature><![CDATA[static void Enumerate(
+<Document accessor="public" category="Function" name="Enumerate"><summary>Get all supported locales.</summary><param name="locales">All supported locales.</param><signature><![CDATA[static void Enumerate(
     collections::List<Locale> & locales
 );
-]]></signature><seealsos><symbol name="Locale" docId="vl::Locale" declFile="Locale.h" declId="NI$vl::Locale"/><symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Locale" docId="vl::Locale"/><symbol name="List" docId="vl::collections::List"/></seealsos></Document>

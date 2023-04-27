@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetStyle" declFile="GuiGraphicsDocumentInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsParagraph::SetStyle@bool(::vl::vint, ::vl::vint, ::vl::presentation::elements::IGuiGraphicsParagraph::TextStyle)[decl0]"><summary>Replace the text style within the specified range.</summary><param name="start">The position of the first character of the specified range.</param><param name="length">The length of the specified range by character.</param><param name="value">The text style.</param><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool SetStyle(
+<Document accessor="public" category="Function" name="SetStyle"><summary>Replace the text style within the specified range.</summary><param name="start">The position of the first character of the specified range.</param><param name="length">The length of the specified range by character.</param><param name="value">The text style.</param><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool SetStyle(
     vint start,
     vint length,
     TextStyle value
 );
-]]></signature><seealsos><symbol name="TextStyle" docId="vl::presentation::elements::IGuiGraphicsParagraph::TextStyle" declFile="GuiGraphicsDocumentInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsParagraph::TextStyle"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="TextStyle" docId="vl::presentation::elements::IGuiGraphicsParagraph::TextStyle"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

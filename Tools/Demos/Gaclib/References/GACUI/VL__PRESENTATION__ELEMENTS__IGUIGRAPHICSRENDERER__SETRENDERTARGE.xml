@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetRenderTarget" declFile="GuiGraphicsElementInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsRenderer::SetRenderTarget@void(::vl::presentation::elements::IGuiGraphicsRenderTarget *)[decl0]"><summary>
- Set a <symbol name="IGuiGraphicsRenderTarget" docId="vl::presentation::elements::IGuiGraphicsRenderTarget" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderTarget"/> to this element.
+<Document accessor="public" category="Function" name="SetRenderTarget"><summary>
+ Set a <symbol name="IGuiGraphicsRenderTarget" docId="vl::presentation::elements::IGuiGraphicsRenderTarget"/> to this element.
  </summary><param name="renderTarget">The graphics render target. It can be NULL.</param><signature><![CDATA[void SetRenderTarget(
     IGuiGraphicsRenderTarget * renderTarget
 );
-]]></signature><seealsos><symbol name="IGuiGraphicsRenderTarget" docId="vl::presentation::elements::IGuiGraphicsRenderTarget" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderTarget"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IGuiGraphicsRenderTarget" docId="vl::presentation::elements::IGuiGraphicsRenderTarget"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetInternalMargin" declFile="GuiGraphicsCompositionBase.h" declId="FB$vl::presentation::compositions::GuiGraphicsComposition::SetInternalMargin@void(::vl::presentation::Margin)[decl0]"><summary>Set the internal margin.</summary><param name="value">The internal margin.</param><signature><![CDATA[void SetInternalMargin(
+<Document accessor="public" category="Function" name="SetInternalMargin"><summary>Set the internal margin.</summary><param name="value">The internal margin.</param><signature><![CDATA[void SetInternalMargin(
     Margin value
 );
-]]></signature><seealsos><symbol name="Margin" declFile="GuiTypes.h" declId="NI$vl::presentation::Margin"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Margin"/></seealsos></Document>

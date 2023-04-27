@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="IsValidCaret" declFile="GuiGraphicsDocumentInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsParagraph::IsValidCaret@bool(::vl::vint)[decl0]"><summary>Test is the caret valid.</summary><returns>Returns true if the caret is valid.</returns><param name="caret">The caret to test.</param><signature><![CDATA[bool IsValidCaret(
+<Document accessor="public" category="Function" name="IsValidCaret"><summary>Test is the caret valid.</summary><returns>Returns true if the caret is valid.</returns><param name="caret">The caret to test.</param><signature><![CDATA[bool IsValidCaret(
     vint caret
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

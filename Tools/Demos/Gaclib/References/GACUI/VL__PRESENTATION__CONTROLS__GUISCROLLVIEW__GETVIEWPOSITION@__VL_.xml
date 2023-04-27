@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetViewPosition" declFile="GuiContainerControls.h" declId="FB$vl::presentation::controls::GuiScrollView::GetViewPosition@::vl::presentation::Point()[decl0]"><summary>Get the position of the left-top corner of the view bounds.</summary><returns>The view position.</returns><signature><![CDATA[Point GetViewPosition(
+<Document accessor="public" category="Function" name="GetViewPosition"><summary>Get the position of the left-top corner of the view bounds.</summary><returns>The view position.</returns><signature><![CDATA[Point GetViewPosition(
 );
-]]></signature><seealsos><symbol name="Point" declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Point"/></seealsos></Document>

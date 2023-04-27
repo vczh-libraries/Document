@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="RenameStyle" declFile="GuiGraphicsDocumentElement.h" declId="FB$vl::presentation::elements::GuiDocumentElement::RenameStyle@void(::vl::WString const &amp;, ::vl::WString const &amp;)[decl0]"><summary>Rename a style.</summary><param name="oldStyleName">The name of the style.</param><param name="newStyleName">The new name.</param><signature><![CDATA[void RenameStyle(
+<Document accessor="public" category="Function" name="RenameStyle"><summary>Rename a style.</summary><param name="oldStyleName">The name of the style.</param><param name="newStyleName">The new name.</param><signature><![CDATA[void RenameStyle(
     WString const & oldStyleName,
     WString const & newStyleName
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

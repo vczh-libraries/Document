@@ -1,6 +1,6 @@
-<Document accessor="" category="Class" name="IGuiGraphicsRendererFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRendererFactory"><summary>
+<Document accessor="" category="Class" name="IGuiGraphicsRendererFactory"><summary>
  This is the interface for graphics renderer factories.
- Graphics renderers should be registered using <symbol name="RegisterRendererFactory" docId="vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr&lt;::vl::presentation::elements::IGuiGraphicsRendererFactory&gt;)" declFile="GuiGraphicsResourceManager.h" declId="FB$vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr&lt;::vl::presentation::elements::IGuiGraphicsRendererFactory&gt;)[decl0]"/>. 
+ Graphics renderers should be registered using <symbol name="RegisterRendererFactory" docId="vl::presentation::elements::GuiGraphicsResourceManager::RegisterRendererFactory@void(::vl::vint, ::vl::Ptr&lt;::vl::presentation::elements::IGuiGraphicsRendererFactory&gt;)"/>. 
  </summary><signature><![CDATA[class IGuiGraphicsRendererFactory
     : Interface;
-]]></signature><basetypes><symbol name="Interface" docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Interface" docId="vl::Interface"/></basetypes></Document>

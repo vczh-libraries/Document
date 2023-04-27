@@ -1,4 +1,4 @@
-<Document accessor="" category="Function" name="CompareEnumerable" declFile="OperationEnumerable.h" declId="FB$vl::collections::CompareEnumerable@::vl::vint(::vl::collections::IEnumerable&lt;[T]&gt; const &amp;, ::vl::collections::IEnumerable&lt;[U]&gt; const &amp;)[impl0]"><summary>Compare two enumerables.</summary><typeparam name="T">Type of elements in the first enumerable.</typeparam><typeparam name="U">Type of elements in the second enumerable.</typeparam><returns>
+<Document accessor="" category="Function" name="CompareEnumerable"><summary>Compare two enumerables.</summary><typeparam name="T">Type of elements in the first enumerable.</typeparam><typeparam name="U">Type of elements in the second enumerable.</typeparam><returns>
  Returns a positive value when the first enumerable is greater than the second enumerable.
  Returns a negative value when the first enumerable is lesser than the second enumerable.
  Returns zero when the two enumerables equal.
@@ -16,4 +16,4 @@ vint CompareEnumerable(
     IEnumerable<T> const & a,
     IEnumerable<U> const & b
 );
-]]></signature><seealsos><symbol name="IEnumerable" docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IEnumerable" docId="vl::collections::IEnumerable"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

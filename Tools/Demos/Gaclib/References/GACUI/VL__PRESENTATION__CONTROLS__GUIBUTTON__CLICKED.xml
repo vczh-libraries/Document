@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="Clicked" declFile="GuiButtonControls.h" declId="NI$vl::presentation::controls::GuiButton::Clicked"><summary>Mouse click event.</summary><signature><![CDATA[compositions::GuiNotifyEvent Clicked;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="Clicked"><summary>Mouse click event.</summary><signature><![CDATA[compositions::GuiNotifyEvent Clicked;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

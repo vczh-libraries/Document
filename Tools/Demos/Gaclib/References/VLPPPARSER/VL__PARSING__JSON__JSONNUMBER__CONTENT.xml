@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="content" declFile="ParsingJson_Ast.h" declId="NI$vl::parsing::json::JsonNumber::content"><summary>Content of the number literal.</summary><signature><![CDATA[vl::parsing::ParsingToken content;
-]]></signature><seealsos><symbol name="ParsingToken" docId="vl::parsing::ParsingToken" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingToken"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="content"><summary>Content of the number literal.</summary><signature><![CDATA[vl::parsing::ParsingToken content;
+]]></signature><seealsos><symbol name="ParsingToken" docId="vl::parsing::ParsingToken"/></seealsos></Document>

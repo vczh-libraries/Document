@@ -1,3 +1,3 @@
-<Document accessor="" category="Class" name="ITypeLoader" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::ITypeLoader"><summary>Delay loading for registering reflectable types.</summary><signature><![CDATA[class ITypeLoader
+<Document accessor="" category="Class" name="ITypeLoader"><summary>Delay loading for registering reflectable types.</summary><signature><![CDATA[class ITypeLoader
     : Interface;
-]]></signature><basetypes><symbol name="Interface" docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Interface" docId="vl::Interface"/></basetypes></Document>

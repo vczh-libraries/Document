@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="AbsoluteOption" declFile="GuiGraphicsTableComposition.h" declId="FB$vl::presentation::compositions::GuiCellOption::AbsoluteOption@::vl::presentation::compositions::GuiCellOption(::vl::vint)[impl0]"><summary>Creates an absolute sizing option</summary><returns>The created option.</returns><param name="value">The absolute size.</param><signature><![CDATA[static GuiCellOption AbsoluteOption(
+<Document accessor="public" category="Function" name="AbsoluteOption"><summary>Creates an absolute sizing option</summary><returns>The created option.</returns><param name="value">The absolute size.</param><signature><![CDATA[static GuiCellOption AbsoluteOption(
     vint value
 );
-]]></signature><seealsos><symbol name="GuiCellOption" docId="vl::presentation::compositions::GuiCellOption" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiCellOption"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiCellOption" docId="vl::presentation::compositions::GuiCellOption"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

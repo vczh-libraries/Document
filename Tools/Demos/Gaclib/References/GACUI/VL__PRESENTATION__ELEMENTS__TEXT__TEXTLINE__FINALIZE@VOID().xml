@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Finalize" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLine::Finalize@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="Finalize"><summary>
  Release all resources used in this line.
  </summary><signature><![CDATA[void Finalize(
 );

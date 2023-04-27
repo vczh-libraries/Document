@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="rightButtonDown" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiGraphicsEventReceiver::rightButtonDown"><summary>Right mouse button down event.</summary><signature><![CDATA[GuiMouseEvent rightButtonDown;
-]]></signature><seealsos><symbol name="GuiMouseEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiMouseEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="rightButtonDown"><summary>Right mouse button down event.</summary><signature><![CDATA[GuiMouseEvent rightButtonDown;
+]]></signature><seealsos><symbol name="GuiMouseEvent"/></seealsos></Document>

@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="Setup" declFile="GuiTextColorizer.h" declId="FB$vl::presentation::controls::GuiTextBoxRegexColorizer::Setup@void()[decl0]"><summary>Setup the colorizer. After that, the colorizer cannot be changed.</summary><signature><![CDATA[void Setup(
+<Document accessor="public" category="Function" name="Setup"><summary>Setup the colorizer. After that, the colorizer cannot be changed.</summary><signature><![CDATA[void Setup(
 );
 ]]></signature></Document>

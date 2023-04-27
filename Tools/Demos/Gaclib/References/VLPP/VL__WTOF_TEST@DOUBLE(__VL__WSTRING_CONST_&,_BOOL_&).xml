@@ -1,5 +1,5 @@
-<Document accessor="" category="Function" name="wtof_test" declFile="String.h" declId="FB$vl::wtof_test@double(::vl::WString const &amp;, bool &amp;)[decl0]"><summary>Convert a string to a 64-bits floating point number.</summary><returns>The converted number. If the conversion failed, the result is undefined.</returns><param name="string">The string to convert.</param><param name="success">Returns true if this operation succeeded.</param><signature><![CDATA[double wtof_test(
+<Document accessor="" category="Function" name="wtof_test"><summary>Convert a string to a 64-bits floating point number.</summary><returns>The converted number. If the conversion failed, the result is undefined.</returns><param name="string">The string to convert.</param><param name="success">Returns true if this operation succeeded.</param><signature><![CDATA[double wtof_test(
     WString const & string,
     bool & success
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

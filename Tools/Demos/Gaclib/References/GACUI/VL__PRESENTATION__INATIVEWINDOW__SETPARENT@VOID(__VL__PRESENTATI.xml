@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetParent" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetParent@void(::vl::presentation::INativeWindow *)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetParent"><summary>
  Set the parent window. A parent window doesn&apos;t contain a child window. It always displayed below the child windows. When a parent window is minimized or restored, so as its child windows.
  </summary><param name="parent">The parent window.</param><signature><![CDATA[void SetParent(
     INativeWindow * parent
 );
-]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow"/></seealsos></Document>

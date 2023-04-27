@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="Reset" declFile="Interfaces.h" declId="FB$vl::collections::IEnumerator::Reset@void()[decl0]"><summary>Reset the enumerator.</summary><signature><![CDATA[void Reset(
+<Document accessor="public" category="Function" name="Reset"><summary>Reset the enumerator.</summary><signature><![CDATA[void Reset(
 );
 ]]></signature></Document>

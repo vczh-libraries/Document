@@ -1,7 +1,7 @@
-<Document accessor="public" category="Function" name="GetTypeDescriptor" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::description::ITypeManager::GetTypeDescriptor@::vl::reflection::description::ITypeDescriptor *(::vl::vint)[decl0]"><summary>Get one registered type.</summary><returns>A registered type specified by the index.</returns><param name="index">The index for retriving the registered type.</param><remarks>
+<Document accessor="public" category="Function" name="GetTypeDescriptor"><summary>Get one registered type.</summary><returns>A registered type specified by the index.</returns><param name="index">The index for retriving the registered type.</param><remarks>
  The index itself does not has any specific meaning.
  And it is no guarantee that an index will always return the same type for each execution of the same process.
  </remarks><signature><![CDATA[ITypeDescriptor * GetTypeDescriptor(
     vint index
 );
-]]></signature><seealsos><symbol name="ITypeDescriptor" docId="vl::reflection::description::ITypeDescriptor" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::ITypeDescriptor"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ITypeDescriptor" docId="vl::reflection::description::ITypeDescriptor"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

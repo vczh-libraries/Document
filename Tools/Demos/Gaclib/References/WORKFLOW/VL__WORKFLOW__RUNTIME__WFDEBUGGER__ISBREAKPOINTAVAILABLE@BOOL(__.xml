@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="IsBreakPointAvailable" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::IsBreakPointAvailable@bool(::vl::vint)[decl0]"><summary>Test if an index is an available break point.</summary><returns>Returns true if an index is an available break point. This function returns true for all disabled break points.</returns><param name="index">The index of the break point.</param><signature><![CDATA[bool IsBreakPointAvailable(
+<Document accessor="public" category="Function" name="IsBreakPointAvailable"><summary>Test if an index is an available break point.</summary><returns>Returns true if an index is an available break point. This function returns true for all disabled break points.</returns><param name="index">The index of the break point.</param><signature><![CDATA[bool IsBreakPointAvailable(
     vint index
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

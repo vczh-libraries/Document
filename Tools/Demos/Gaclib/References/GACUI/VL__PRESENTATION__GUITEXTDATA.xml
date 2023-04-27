@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="GuiTextData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiTextData"><summary>Represents a text resource.</summary><signature><![CDATA[class GuiTextData
+<Document accessor="" category="Class" name="GuiTextData"><summary>Represents a text resource.</summary><signature><![CDATA[class GuiTextData
     : Object
     , Description<GuiTextData>;
-]]></signature><seealsos><symbol name="GuiTextData" docId="vl::presentation::GuiTextData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiTextData"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiTextData" docId="vl::presentation::GuiTextData"/></seealsos><basetypes><symbol name="Object" docId="vl::Object"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

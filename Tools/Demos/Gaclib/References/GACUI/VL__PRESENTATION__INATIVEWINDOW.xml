@@ -1,6 +1,6 @@
-<Document accessor="" category="Class" name="INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"><summary>
+<Document accessor="" category="Class" name="INativeWindow"><summary>
  Represents a window.
  </summary><signature><![CDATA[class INativeWindow
     : Interface
     , Description<INativeWindow>;
-]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos><basetypes><symbol name="Interface" docId="vl::Interface" declFile="Basic.h" declId="NI$vl::Interface"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow"/></seealsos><basetypes><symbol name="Interface" docId="vl::Interface"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

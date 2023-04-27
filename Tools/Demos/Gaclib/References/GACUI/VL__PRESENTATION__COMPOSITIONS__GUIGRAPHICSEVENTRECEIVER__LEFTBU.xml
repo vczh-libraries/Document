@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="leftButtonDoubleClick" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiGraphicsEventReceiver::leftButtonDoubleClick"><summary>Left mouse button double click event.</summary><signature><![CDATA[GuiMouseEvent leftButtonDoubleClick;
-]]></signature><seealsos><symbol name="GuiMouseEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiMouseEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="leftButtonDoubleClick"><summary>Left mouse button double click event.</summary><signature><![CDATA[GuiMouseEvent leftButtonDoubleClick;
+]]></signature><seealsos><symbol name="GuiMouseEvent"/></seealsos></Document>

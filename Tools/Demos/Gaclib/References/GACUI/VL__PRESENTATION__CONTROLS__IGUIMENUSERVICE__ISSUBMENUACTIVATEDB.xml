@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="IsSubMenuActivatedByMouseDown" declFile="GuiMenuControls.h" declId="FB$vl::presentation::controls::IGuiMenuService::IsSubMenuActivatedByMouseDown@bool()[decl0]"><summary>Test all sub menu items are actived by mouse down.</summary><returns>Returns true if all sub menu items are actived by mouse down.</returns><signature><![CDATA[bool IsSubMenuActivatedByMouseDown(
+<Document accessor="public" category="Function" name="IsSubMenuActivatedByMouseDown"><summary>Test all sub menu items are actived by mouse down.</summary><returns>Returns true if all sub menu items are actived by mouse down.</returns><signature><![CDATA[bool IsSubMenuActivatedByMouseDown(
 );
 ]]></signature></Document>

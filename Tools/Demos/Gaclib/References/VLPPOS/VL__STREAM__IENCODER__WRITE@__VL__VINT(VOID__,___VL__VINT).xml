@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Write" declFile="Interfaces.h2" declId="FB$vl::stream::IEncoder::Write@::vl::vint(void *, ::vl::vint)[decl0]"><summary>
+<Document accessor="public" category="Function" name="Write"><summary>
  Transform content and write to the target stream.
  This function could use caching to improve performance.
  Please do not expect that all transformed content will be written to the target stream immediately.
@@ -9,4 +9,4 @@
     void * _buffer,
     vint _size
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

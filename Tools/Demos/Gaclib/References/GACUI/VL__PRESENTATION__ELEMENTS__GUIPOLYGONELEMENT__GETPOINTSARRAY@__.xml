@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetPointsArray" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiPolygonElement::GetPointsArray@::vl::presentation::elements::GuiPolygonElement::PointArray const &amp;()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetPointsArray"><summary>
  Get all points.
  </summary><returns>All points</returns><signature><![CDATA[PointArray const & GetPointsArray(
 );
-]]></signature><seealsos><symbol name="PointArray" declFile="GuiGraphicsElement.h" declId="NI$vl::presentation::elements::GuiPolygonElement::PointArray"/></seealsos></Document>
+]]></signature><seealsos><symbol name="PointArray"/></seealsos></Document>

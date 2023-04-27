@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="Exists" declFile="FileSystem.h" declId="FB$vl::filesystem::File::Exists@bool()[decl0]"><summary>Test does the file exist or not.</summary><returns>Returns true if the file exists.</returns><signature><![CDATA[bool Exists(
+<Document accessor="public" category="Function" name="Exists"><summary>Test does the file exist or not.</summary><returns>Returns true if the file exists.</returns><signature><![CDATA[bool Exists(
 ) const;
 ]]></signature></Document>

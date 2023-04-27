@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetDirection" declFile="GuiGraphicsResponsiveComposition.h" declId="FB$vl::presentation::compositions::GuiResponsiveCompositionBase::SetDirection@void(::vl::presentation::compositions::ResponsiveDirection)[decl0]"><summary>Set all supported directions.</summary><param name="value">All supported directions.</param><signature><![CDATA[void SetDirection(
+<Document accessor="public" category="Function" name="SetDirection"><summary>Set all supported directions.</summary><param name="value">All supported directions.</param><signature><![CDATA[void SetDirection(
     ResponsiveDirection value
 );
-]]></signature><seealsos><symbol name="ResponsiveDirection" declFile="GuiGraphicsResponsiveComposition.h" declId="NI$vl::presentation::compositions::ResponsiveDirection"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ResponsiveDirection"/></seealsos></Document>

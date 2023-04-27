@@ -1,5 +1,5 @@
-<Document accessor="" category="Class" name="CharMeasurer" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharMeasurer"><summary>
+<Document accessor="" category="Class" name="CharMeasurer"><summary>
  An abstract class for character size measuring in differect rendering technology.
  </summary><signature><![CDATA[class CharMeasurer
     : IDescriptable;
-]]></signature><basetypes><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>
+]]></signature><basetypes><symbol name="IDescriptable" docId="vl::reflection::IDescriptable"/></basetypes></Document>

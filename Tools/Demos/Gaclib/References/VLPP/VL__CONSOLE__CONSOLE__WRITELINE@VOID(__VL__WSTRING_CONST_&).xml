@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="WriteLine" declFile="Console.h" declId="FB$vl::console::Console::WriteLine@void(::vl::WString const &amp;)[decl0]"><summary>Write to the command-line window, following CR/LF characters.</summary><param name="string">Content to write.</param><signature><![CDATA[static void WriteLine(
+<Document accessor="public" category="Function" name="WriteLine"><summary>Write to the command-line window, following CR/LF characters.</summary><param name="string">Content to write.</param><signature><![CDATA[static void WriteLine(
     WString const & string
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

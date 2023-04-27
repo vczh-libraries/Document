@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetShowInTaskBar" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiControlHost::SetShowInTaskBar@void(bool)[decl0]"><summary>Show or hide the window icon in the task bar.</summary><param name="value">Set to true to show the window icon in the task bar.</param><signature><![CDATA[void SetShowInTaskBar(
+<Document accessor="public" category="Function" name="SetShowInTaskBar"><summary>Show or hide the window icon in the task bar.</summary><param name="value">Set to true to show the window icon in the task bar.</param><signature><![CDATA[void SetShowInTaskBar(
     bool value
 );
 ]]></signature></Document>

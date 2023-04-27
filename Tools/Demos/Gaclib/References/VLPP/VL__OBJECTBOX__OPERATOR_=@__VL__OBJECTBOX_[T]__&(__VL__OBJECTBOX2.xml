@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="operator =" declFile="Basic.h" declId="FB$vl::ObjectBox::operator =@::vl::ObjectBox&lt;[T]&gt; &amp;(::vl::ObjectBox&lt;[T]&gt; &amp;&amp;)[decl0]"><summary>Replace the boxed data by moving from another reference object.</summary><returns>The reference object itself.</returns><param name="value">The reference object to move.</param><signature><![CDATA[ObjectBox<T> & operator =(
+<Document accessor="public" category="Function" name="operator ="><summary>Replace the boxed data by moving from another reference object.</summary><returns>The reference object itself.</returns><param name="value">The reference object to move.</param><signature><![CDATA[ObjectBox<T> & operator =(
     ObjectBox<T> && value
 );
-]]></signature><seealsos><symbol name="ObjectBox" docId="vl::ObjectBox" declFile="Basic.h" declId="NI$vl::ObjectBox"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ObjectBox" docId="vl::ObjectBox"/></seealsos></Document>

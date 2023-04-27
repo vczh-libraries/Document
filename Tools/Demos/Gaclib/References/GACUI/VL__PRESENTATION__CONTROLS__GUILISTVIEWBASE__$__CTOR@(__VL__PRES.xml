@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="$__ctor" declFile="GuiListViewControls.h" declId="FB$vl::presentation::controls::GuiListViewBase::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::controls::GuiListControl::IItemProvider *)[decl0]"><summary>Create a list view base control.</summary><param name="themeName">The theme name for retriving a default control template.</param><param name="_itemProvider">The item provider for this control.</param><signature><![CDATA[ GuiListViewBase(
+<Document accessor="public" category="Function" name="$__ctor"><summary>Create a list view base control.</summary><param name="themeName">The theme name for retriving a default control template.</param><param name="_itemProvider">The item provider for this control.</param><signature><![CDATA[ GuiListViewBase(
     theme::ThemeName themeName,
     GuiListControl::IItemProvider * _itemProvider
 );
-]]></signature><seealsos><symbol name="IItemProvider" docId="vl::presentation::controls::GuiListControl::IItemProvider" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::IItemProvider"/><symbol name="ThemeName" declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IItemProvider" docId="vl::presentation::controls::GuiListControl::IItemProvider"/><symbol name="ThemeName"/></seealsos></Document>

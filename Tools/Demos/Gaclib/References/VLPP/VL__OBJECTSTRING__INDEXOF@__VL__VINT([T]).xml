@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="IndexOf" declFile="String.h" declId="FB$vl::ObjectString::IndexOf@::vl::vint([T])[impl0]"><summary>Find a code point.</summary><returns>The position of the code point. Returns -1 if it does not exist.</returns><param name="c">The code point to find.</param><signature><![CDATA[vint IndexOf(
+<Document accessor="public" category="Function" name="IndexOf"><summary>Find a code point.</summary><returns>The position of the code point. Returns -1 if it does not exist.</returns><param name="c">The code point to find.</param><signature><![CDATA[vint IndexOf(
     T c
 ) const;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

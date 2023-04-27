@@ -1,4 +1,4 @@
-<Document accessor="public" category="Class" name="CallbackBase" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingParsingExecutor::CallbackBase"><summary>A base class for implementing a callback.</summary><signature><![CDATA[class CallbackBase
+<Document accessor="public" category="Class" name="CallbackBase"><summary>A base class for implementing a callback.</summary><signature><![CDATA[class CallbackBase
     : ICallback
     , ICommonTextEditCallback;
-]]></signature><basetypes><symbol name="ICommonTextEditCallback" docId="vl::presentation::controls::ICommonTextEditCallback" declFile="GuiTextGeneralOperations.h" declId="NI$vl::presentation::controls::ICommonTextEditCallback"/><symbol name="ICallback" docId="vl::presentation::controls::RepeatingParsingExecutor::ICallback" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingParsingExecutor::ICallback"/></basetypes></Document>
+]]></signature><basetypes><symbol name="ICommonTextEditCallback" docId="vl::presentation::controls::ICommonTextEditCallback"/><symbol name="ICallback" docId="vl::presentation::controls::RepeatingParsingExecutor::ICallback"/></basetypes></Document>

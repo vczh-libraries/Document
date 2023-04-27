@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetFocus" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::SetFocus@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetFocus"><summary>
  Set focus to the window.
  A window with activation disabled cannot receive focus.
  </summary><signature><![CDATA[void SetFocus(

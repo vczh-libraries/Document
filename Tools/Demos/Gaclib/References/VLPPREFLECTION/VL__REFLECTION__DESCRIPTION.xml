@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"><summary><p>
+<Document accessor="" category="Class" name="Description"><summary><p>
  Inherit from this class when you want to create a reflectable class.
  It should be used like this:
  <program><code><![CDATA[
@@ -9,7 +9,7 @@
  ]]></code></program></p><p>
  If you want YourClass to be inheritable in scripts,
  instead of using Description,
- you should use <symbol name="AggregatableDescription" docId="vl::reflection::AggregatableDescription" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::AggregatableDescription"/>, like this:
+ you should use <symbol name="AggregatableDescription" docId="vl::reflection::AggregatableDescription"/>, like this:
  <program><code><![CDATA[
  class YourClass : public AggregatableDescription<YourClass>
  {
@@ -24,7 +24,7 @@
  </p><p>
  Some of the predefined type has already been registered.
  If your types depend on these types, you should load those types by calling some or all of them:
- <ul><li><symbol name="LoadPredefinedTypes" docId="vl::reflection::description::LoadPredefinedTypes@bool()" declFile="GuiTypeDescriptorReflection.h" declId="FB$vl::reflection::description::LoadPredefinedTypes@bool()[decl0]"/></li><li><symbol name="LoadParsingTypes" declFile="Parsing.cpp" declId="FB$vl::reflection::description::LoadParsingTypes@bool()[impl0]"/></li><li><symbol name="JsonLoadTypes" docId="vl::reflection::description::JsonLoadTypes@bool()" declFile="ParsingJson_Ast.h" declId="FB$vl::reflection::description::JsonLoadTypes@bool()[decl0]"/></li><li><symbol name="XmlLoadTypes" docId="vl::reflection::description::XmlLoadTypes@bool()" declFile="ParsingXml_Ast.h" declId="FB$vl::reflection::description::XmlLoadTypes@bool()[decl0]"/></li></ul>
+ <ul><li><symbol name="LoadPredefinedTypes" docId="vl::reflection::description::LoadPredefinedTypes@bool()"/></li><li><symbol name="LoadParsingTypes"/></li><li><symbol name="JsonLoadTypes" docId="vl::reflection::description::JsonLoadTypes@bool()"/></li><li><symbol name="XmlLoadTypes" docId="vl::reflection::description::XmlLoadTypes@bool()"/></li></ul>
  But if you link <b>GacUIReflection.cpp</b> in your project and set <b>VCZH_DEBUG_NO_REFLECTION</b> to off,
  all types will be automatically loaded before <b>GuiMain</b> is called.
  </p><p>
@@ -231,7 +231,7 @@
                      int GlobalFunction(MyClass* self, int parameter);
                  ]]></code></program></p></li><li><p><b>interface</b>:
                  A C++ class can be registered as a reflectable interface if:
-                 <ul><li>Directly or indirectly inherits <symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></li><li>The only registered constructor (if exists) should use Ptr&lt;<symbol name="IValueInterfaceProxy" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueInterfaceProxy"/>&gt; as a parameter, so that a Workflow script class could implement this interface.</li></ul></p><p>
+                 <ul><li>Directly or indirectly inherits <symbol name="IDescriptable" docId="vl::reflection::IDescriptable"/></li><li>The only registered constructor (if exists) should use Ptr&lt;<symbol name="IValueInterfaceProxy"/>&gt; as a parameter, so that a Workflow script class could implement this interface.</li></ul></p><p>
                  Suppose you have an interface like this:
                  <program><code><![CDATA[
                      class IMyInterface : public virtual IDescriptable, public Description<IMyInterface>
@@ -299,4 +299,4 @@
 >
 class Description
     : DescriptableObject;
-]]></signature><basetypes><symbol name="DescriptableObject" docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/></basetypes></Document>
+]]></signature><basetypes><symbol name="DescriptableObject" docId="vl::reflection::DescriptableObject"/></basetypes></Document>

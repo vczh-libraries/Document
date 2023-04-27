@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="VirtualMarginToRealMargin" declFile="GuiGraphicsAxis.h" declId="FB$vl::presentation::compositions::IGuiAxis::VirtualMarginToRealMargin@::vl::presentation::Margin(::vl::presentation::Margin)[decl0]"><summary>Translate virtual margin to margin size.</summary><returns>The real margin.</returns><param name="margin">The virtual margin.</param><signature><![CDATA[Margin VirtualMarginToRealMargin(
+<Document accessor="public" category="Function" name="VirtualMarginToRealMargin"><summary>Translate virtual margin to margin size.</summary><returns>The real margin.</returns><param name="margin">The virtual margin.</param><signature><![CDATA[Margin VirtualMarginToRealMargin(
     Margin margin
 );
-]]></signature><seealsos><symbol name="Margin" declFile="GuiTypes.h" declId="NI$vl::presentation::Margin"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Margin"/></seealsos></Document>

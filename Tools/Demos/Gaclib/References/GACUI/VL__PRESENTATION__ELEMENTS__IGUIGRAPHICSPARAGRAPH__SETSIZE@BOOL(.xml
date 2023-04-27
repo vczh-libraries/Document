@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetSize" declFile="GuiGraphicsDocumentInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsParagraph::SetSize@bool(::vl::vint, ::vl::vint, ::vl::vint)[decl0]"><summary>Replace the size within the specified range.</summary><param name="start">The position of the first character of the specified range.</param><param name="length">The length of the specified range by character.</param><param name="value">The size.</param><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool SetSize(
+<Document accessor="public" category="Function" name="SetSize"><summary>Replace the size within the specified range.</summary><param name="start">The position of the first character of the specified range.</param><param name="length">The length of the specified range by character.</param><param name="value">The size.</param><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool SetSize(
     vint start,
     vint length,
     vint value
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="" category="Function" name="XmlGetValue" declFile="ParsingXml.h" declId="FB$vl::parsing::xml::XmlGetValue@::vl::WString(::vl::Ptr&lt;::vl::parsing::xml::XmlElement&gt;)[decl0]"><summary>Serialize contents in an XML element.</summary><returns>The serialized contents in an XML element.</returns><param name="element">The XML element in which contents are to be serialized.</param><signature><![CDATA[WString XmlGetValue(
+<Document accessor="" category="Function" name="XmlGetValue"><summary>Serialize contents in an XML element.</summary><returns>The serialized contents in an XML element.</returns><param name="element">The XML element in which contents are to be serialized.</param><signature><![CDATA[WString XmlGetValue(
     Ptr<XmlElement> element
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="XmlElement" docId="vl::parsing::xml::XmlElement" declFile="ParsingXml_Ast.h" declId="NI$vl::parsing::xml::XmlElement"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="WString" docId="vl::WString"/><symbol name="XmlElement" docId="vl::parsing::xml::XmlElement"/></seealsos></Document>

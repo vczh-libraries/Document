@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="$__ctor" declFile="FileSystem.h" declId="FB$vl::filesystem::FilePath::$__ctor@()[decl0]"><summary>Create a root path.</summary><remarks><symbol name="GetFullPath" docId="vl::filesystem::FilePath::GetFullPath@::vl::WString()" declFile="FileSystem.h" declId="FB$vl::filesystem::FilePath::GetFullPath@::vl::WString()[decl0]"/> returns different values for root path on different platforms. Do not rely on the value.</remarks><signature><![CDATA[ FilePath(
+<Document accessor="public" category="Function" name="$__ctor"><summary>Create a root path.</summary><remarks><symbol name="GetFullPath" docId="vl::filesystem::FilePath::GetFullPath@::vl::WString()"/> returns different values for root path on different platforms. Do not rely on the value.</remarks><signature><![CDATA[ FilePath(
 );
 ]]></signature></Document>

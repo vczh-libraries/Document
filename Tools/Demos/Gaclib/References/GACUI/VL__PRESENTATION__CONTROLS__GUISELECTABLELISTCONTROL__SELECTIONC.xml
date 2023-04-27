@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="SelectionChanged" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiSelectableListControl::SelectionChanged"><summary>Selection changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent SelectionChanged;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="SelectionChanged"><summary>Selection changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent SelectionChanged;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetContext" declFile="WfLibraryPredefined.h" declId="FB$vl::reflection::description::AsyncContext::SetContext@void(::vl::reflection::description::Value const &amp;)[decl0]"><summary>Set a value that is accessible F</summary><param name="value">A value that is accessible in Workflow script by &quot;$.Context&quot; in an $Async coroutine.</param><signature><![CDATA[void SetContext(
+<Document accessor="public" category="Function" name="SetContext"><summary>Set a value that is accessible F</summary><param name="value">A value that is accessible in Workflow script by &quot;$.Context&quot; in an $Async coroutine.</param><signature><![CDATA[void SetContext(
     description::Value const & value
 );
-]]></signature><seealsos><symbol name="Value" docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Value" docId="vl::reflection::description::Value"/></seealsos></Document>

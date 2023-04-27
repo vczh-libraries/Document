@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="GetTextValue" declFile="GuiTreeViewControls.h" declId="FB$vl::presentation::controls::tree::INodeRootProvider::GetTextValue@::vl::WString(::vl::presentation::controls::tree::INodeProvider *)[decl0]"><summary>Get the primary text of a node.</summary><returns>The primary text of a node.</returns><param name="node">The node.</param><signature><![CDATA[WString GetTextValue(
+<Document accessor="public" category="Function" name="GetTextValue"><summary>Get the primary text of a node.</summary><returns>The primary text of a node.</returns><param name="node">The node.</param><signature><![CDATA[WString GetTextValue(
     INodeProvider * node
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="INodeProvider" docId="vl::presentation::controls::tree::INodeProvider" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::INodeProvider"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/><symbol name="INodeProvider" docId="vl::presentation::controls::tree::INodeProvider"/></seealsos></Document>

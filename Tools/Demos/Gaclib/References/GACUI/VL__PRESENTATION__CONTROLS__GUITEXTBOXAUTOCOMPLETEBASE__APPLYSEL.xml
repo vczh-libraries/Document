@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="ApplySelectedListItem" declFile="GuiTextAutoComplete.h" declId="FB$vl::presentation::controls::GuiTextBoxAutoCompleteBase::ApplySelectedListItem@bool()[decl0]"><summary>Apply the selected item into the text box.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool ApplySelectedListItem(
+<Document accessor="public" category="Function" name="ApplySelectedListItem"><summary>Apply the selected item into the text box.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool ApplySelectedListItem(
 );
 ]]></signature></Document>

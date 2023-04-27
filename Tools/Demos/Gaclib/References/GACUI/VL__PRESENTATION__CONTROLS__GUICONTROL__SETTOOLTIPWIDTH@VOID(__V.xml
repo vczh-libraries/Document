@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetTooltipWidth" declFile="GuiBasicControls.h" declId="FB$vl::presentation::controls::GuiControl::SetTooltipWidth@void(::vl::vint)[decl0]"><summary>Set the tooltip width of the control.</summary><param name="value">The tooltip width of the control.</param><signature><![CDATA[void SetTooltipWidth(
+<Document accessor="public" category="Function" name="SetTooltipWidth"><summary>Set the tooltip width of the control.</summary><param name="value">The tooltip width of the control.</param><signature><![CDATA[void SetTooltipWidth(
     vint value
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

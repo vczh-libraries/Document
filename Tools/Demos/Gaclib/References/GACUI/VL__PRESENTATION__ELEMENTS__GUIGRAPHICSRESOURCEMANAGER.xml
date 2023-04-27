@@ -1,5 +1,5 @@
-<Document accessor="" category="Class" name="GuiGraphicsResourceManager" declFile="GuiGraphicsResourceManager.h" declId="NI$vl::presentation::elements::GuiGraphicsResourceManager"><summary>
+<Document accessor="" category="Class" name="GuiGraphicsResourceManager"><summary>
  This is a class for managing grpahics element factories and graphics renderer factories
  </summary><signature><![CDATA[class GuiGraphicsResourceManager
     : Object;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object"/></basetypes></Document>

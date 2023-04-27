@@ -1,5 +1,5 @@
-<Document accessor="" category="Function" name="wtoi64_test" declFile="String.h" declId="FB$vl::wtoi64_test@::vl::vint64_t(::vl::WString const &amp;, bool &amp;)[decl0]"><summary>Convert a string to a signed 64-bits integer.</summary><returns>The converted number. If the conversion failed, the result is undefined.</returns><param name="string">The string to convert.</param><param name="success">Returns true if this operation succeeded.</param><signature><![CDATA[vint64_t wtoi64_test(
+<Document accessor="" category="Function" name="wtoi64_test"><summary>Convert a string to a signed 64-bits integer.</summary><returns>The converted number. If the conversion failed, the result is undefined.</returns><param name="string">The string to convert.</param><param name="success">Returns true if this operation succeeded.</param><signature><![CDATA[vint64_t wtoi64_test(
     WString const & string,
     bool & success
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="vint64_t" docId="vl::vint64_t" declFile="Basic.h" declId="NI$vl::vint64_t"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/><symbol name="vint64_t" docId="vl::vint64_t"/></seealsos></Document>

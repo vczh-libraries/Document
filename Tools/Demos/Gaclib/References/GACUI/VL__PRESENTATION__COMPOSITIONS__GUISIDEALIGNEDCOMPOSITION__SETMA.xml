@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetMaxLength" declFile="GuiGraphicsSpecializedComposition.h" declId="FB$vl::presentation::compositions::GuiSideAlignedComposition::SetMaxLength@void(::vl::vint)[decl0]"><summary>Set the maximum length of this composition.</summary><param name="value">The maximum length of this composition.</param><signature><![CDATA[void SetMaxLength(
+<Document accessor="public" category="Function" name="SetMaxLength"><summary>Set the maximum length of this composition.</summary><param name="value">The maximum length of this composition.</param><signature><![CDATA[void SetMaxLength(
     vint value
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

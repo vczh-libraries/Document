@@ -1,4 +1,4 @@
-<Document accessor="" category="Struct" name="POD" declFile="Basic.h" declId="NI$vl::POD"><summary>Test is a type a Plain-Old-Data type for containers.</summary><typeparam name="T">The type to test.</typeparam><signature><![CDATA[template <
+<Document accessor="" category="Struct" name="POD"><summary>Test is a type a Plain-Old-Data type for containers.</summary><typeparam name="T">The type to test.</typeparam><signature><![CDATA[template <
     typename T
 >
 struct POD;

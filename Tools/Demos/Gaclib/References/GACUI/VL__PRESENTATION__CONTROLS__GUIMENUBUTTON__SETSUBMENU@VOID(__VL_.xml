@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="SetSubMenu" declFile="GuiMenuControls.h" declId="FB$vl::presentation::controls::GuiMenuButton::SetSubMenu@void(::vl::presentation::controls::GuiMenu *, bool)[decl0]"><summary>Associate a sub menu if there is no sub menu binded in this menu button. The associated sub menu is not owned by this menu button if the &quot;owned&quot; argument is set to false.</summary><param name="value">The sub menu to associate.</param><param name="owned">Set to true if the menu is expected to be owned.</param><signature><![CDATA[void SetSubMenu(
+<Document accessor="public" category="Function" name="SetSubMenu"><summary>Associate a sub menu if there is no sub menu binded in this menu button. The associated sub menu is not owned by this menu button if the &quot;owned&quot; argument is set to false.</summary><param name="value">The sub menu to associate.</param><param name="owned">Set to true if the menu is expected to be owned.</param><signature><![CDATA[void SetSubMenu(
     GuiMenu * value,
     bool owned
 );
-]]></signature><seealsos><symbol name="GuiMenu" docId="vl::presentation::controls::GuiMenu" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::GuiMenu"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiMenu" docId="vl::presentation::controls::GuiMenu"/></seealsos></Document>

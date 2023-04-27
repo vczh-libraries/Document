@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="ReleaseItem" declFile="GuiListControls.h" declId="FB$vl::presentation::controls::GuiListControl::IItemArrangerCallback::ReleaseItem@void(::vl::presentation::controls::GuiListControl::ItemStyle *)[decl0]"><summary>Release an item control. This function is suggested to call when an item control gets out of the visible area.</summary><param name="style">The item control.</param><signature><![CDATA[void ReleaseItem(
+<Document accessor="public" category="Function" name="ReleaseItem"><summary>Release an item control. This function is suggested to call when an item control gets out of the visible area.</summary><param name="style">The item control.</param><signature><![CDATA[void ReleaseItem(
     ItemStyle * style
 );
-]]></signature><seealsos><symbol name="ItemStyle" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::ItemStyle"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ItemStyle"/></seealsos></Document>

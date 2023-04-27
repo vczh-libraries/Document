@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="InsertStackItem" declFile="GuiGraphicsStackComposition.h" declId="FB$vl::presentation::compositions::GuiStackComposition::InsertStackItem@bool(::vl::vint, ::vl::presentation::compositions::GuiStackItemComposition *)[decl0]"><summary>Insert a stack item at a specified position.</summary><returns>Returns true if this operation succeeded.</returns><param name="index">The position.</param><param name="item">The statck item to insert.</param><signature><![CDATA[bool InsertStackItem(
+<Document accessor="public" category="Function" name="InsertStackItem"><summary>Insert a stack item at a specified position.</summary><returns>Returns true if this operation succeeded.</returns><param name="index">The position.</param><param name="item">The statck item to insert.</param><signature><![CDATA[bool InsertStackItem(
     vint index,
     GuiStackItemComposition * item
 );
-]]></signature><seealsos><symbol name="GuiStackItemComposition" docId="vl::presentation::compositions::GuiStackItemComposition" declFile="GuiGraphicsStackComposition.h" declId="NI$vl::presentation::compositions::GuiStackItemComposition"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiStackItemComposition" docId="vl::presentation::compositions::GuiStackItemComposition"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

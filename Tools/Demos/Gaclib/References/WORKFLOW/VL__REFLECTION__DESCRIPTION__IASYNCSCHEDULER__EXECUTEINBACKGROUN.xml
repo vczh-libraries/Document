@@ -1,8 +1,8 @@
-<Document accessor="public" category="Function" name="ExecuteInBackground" declFile="WfLibraryPredefined.h" declId="FB$vl::reflection::description::IAsyncScheduler::ExecuteInBackground@void(::vl::Func&lt;void()&gt; const &amp;)[decl0]"><summary>Called when a callback needs to be executed in another thread.</summary><param name="callback">The callback to execute.</param><remarks>
+<Document accessor="public" category="Function" name="ExecuteInBackground"><summary>Called when a callback needs to be executed in another thread.</summary><param name="callback">The callback to execute.</param><remarks>
  You can decide which thread to execute except the current one.
  For GacUI, the scheduler that attached to any thread will execute this callback in a random background thread.
  </remarks><signature><![CDATA[void ExecuteInBackground(
     Func<void(
 )> const & callback
 );
-]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func"/></seealsos></Document>

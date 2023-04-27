@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="BomEncoder" declFile="CharFormat.h" declId="NI$vl::stream::BomEncoder"><summary>Encoder to write text in a specified encoding. A BOM will be added at the beginning.</summary><signature><![CDATA[class BomEncoder
+<Document accessor="" category="Class" name="BomEncoder"><summary>Encoder to write text in a specified encoding. A BOM will be added at the beginning.</summary><signature><![CDATA[class BomEncoder
     : Object
     , IEncoder;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IEncoder" docId="vl::stream::IEncoder" declFile="Interfaces.h2" declId="NI$vl::stream::IEncoder"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object"/><symbol name="IEncoder" docId="vl::stream::IEncoder"/></basetypes></Document>

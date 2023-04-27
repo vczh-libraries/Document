@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="InsertFlowItem" declFile="GuiGraphicsFlowComposition.h" declId="FB$vl::presentation::compositions::GuiFlowComposition::InsertFlowItem@bool(::vl::vint, ::vl::presentation::compositions::GuiFlowItemComposition *)[decl0]"><summary>Insert a flow item at a specified position.</summary><returns>Returns true if this operation succeeded.</returns><param name="index">The position.</param><param name="item">The flow item to insert.</param><signature><![CDATA[bool InsertFlowItem(
+<Document accessor="public" category="Function" name="InsertFlowItem"><summary>Insert a flow item at a specified position.</summary><returns>Returns true if this operation succeeded.</returns><param name="index">The position.</param><param name="item">The flow item to insert.</param><signature><![CDATA[bool InsertFlowItem(
     vint index,
     GuiFlowItemComposition * item
 );
-]]></signature><seealsos><symbol name="GuiFlowItemComposition" docId="vl::presentation::compositions::GuiFlowItemComposition" declFile="GuiGraphicsFlowComposition.h" declId="NI$vl::presentation::compositions::GuiFlowItemComposition"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiFlowItemComposition" docId="vl::presentation::compositions::GuiFlowItemComposition"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

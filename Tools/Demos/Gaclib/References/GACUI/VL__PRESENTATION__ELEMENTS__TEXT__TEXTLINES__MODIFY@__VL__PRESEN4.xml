@@ -1,8 +1,8 @@
-<Document accessor="public" category="Function" name="Modify" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLines::Modify@::vl::presentation::TextPos(::vl::presentation::TextPos, ::vl::presentation::TextPos, ::vl::WString const &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="Modify"><summary>
  Modify some text lines by replacing characters.
  </summary><returns>The new end position.</returns><param name="start">The start position of the range of characters to be replaced.</param><param name="end">The end position of the range of characters to be replaced.</param><param name="input">The string to replace into the text lines.</param><signature><![CDATA[TextPos Modify(
     TextPos start,
     TextPos end,
     WString const & input
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="TextPos" docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/><symbol name="TextPos" docId="vl::presentation::TextPos"/></seealsos></Document>

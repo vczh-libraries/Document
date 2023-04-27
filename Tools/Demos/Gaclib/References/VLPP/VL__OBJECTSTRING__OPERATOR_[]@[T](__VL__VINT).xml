@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="operator []" declFile="String.h" declId="FB$vl::ObjectString::operator []@[T](::vl::vint)[impl0]"><summary>Get a code point in the specified position.</summary><returns>Returns the code point. It will crash when the specified position is out of range.</returns><param name="index"/><signature><![CDATA[T operator [](
+<Document accessor="public" category="Function" name="operator []"><summary>Get a code point in the specified position.</summary><returns>Returns the code point. It will crash when the specified position is out of range.</returns><param name="index"/><signature><![CDATA[T operator [](
     vint index
 ) const;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

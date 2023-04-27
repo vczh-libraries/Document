@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Hide" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::Hide@void(bool)[decl0]"><summary>
+<Document accessor="public" category="Function" name="Hide"><summary>
  Hide the window.
  </summary><param name="closeWindow">Set to true to really close the window. Or the window will just be hidden. This parameter only affect the main window.</param><signature><![CDATA[void Hide(
     bool closeWindow

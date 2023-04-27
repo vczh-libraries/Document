@@ -1,8 +1,8 @@
-<Document accessor="public" category="Function" name="InvokeInMainThread" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeAsyncService::InvokeInMainThread@void(::vl::presentation::INativeWindow *, ::vl::Func&lt;void()&gt; const &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="InvokeInMainThread"><summary>
  Invoke a specified function with an specified argument in the main thread.
  </summary><param name="window">A window to access the corressponding main thread.</param><param name="proc">The specified function.</param><signature><![CDATA[void InvokeInMainThread(
     INativeWindow * window,
     Func<void(
 )> const & proc
 );
-]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/><symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func"/><symbol name="INativeWindow" docId="vl::presentation::INativeWindow"/></seealsos></Document>

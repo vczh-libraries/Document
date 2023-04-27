@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="GetEllipse" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidLabelElement::GetEllipse@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetEllipse"><summary>
  Get if ellipse is enabled for this text. Ellipse will appear when the text is clipped.
  </summary><returns>Return true if ellipse is enabled for this text.</returns><signature><![CDATA[bool GetEllipse(
 );

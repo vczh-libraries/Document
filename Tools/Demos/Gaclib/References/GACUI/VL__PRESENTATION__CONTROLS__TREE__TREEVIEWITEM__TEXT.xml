@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="text" declFile="GuiTreeViewControls.h" declId="NI$vl::presentation::controls::tree::TreeViewItem::text"><summary>The text of this item.</summary><signature><![CDATA[WString text;
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="text"><summary>The text of this item.</summary><signature><![CDATA[WString text;
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

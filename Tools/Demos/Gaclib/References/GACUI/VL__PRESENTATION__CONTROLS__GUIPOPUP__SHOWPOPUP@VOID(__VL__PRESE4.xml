@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="ShowPopup" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiPopup::ShowPopup@void(::vl::presentation::controls::GuiControl *, bool)[decl0]"><summary>Show the popup window aligned with a specified control. The position of the popup window will be adjusted to make it totally inside the screen if possible.</summary><param name="control">The control that owns this popup temporary.</param><param name="preferredTopBottomSide">Set to true if the popup window is expected to be opened at the top or bottom side of that control.</param><signature><![CDATA[void ShowPopup(
+<Document accessor="public" category="Function" name="ShowPopup"><summary>Show the popup window aligned with a specified control. The position of the popup window will be adjusted to make it totally inside the screen if possible.</summary><param name="control">The control that owns this popup temporary.</param><param name="preferredTopBottomSide">Set to true if the popup window is expected to be opened at the top or bottom side of that control.</param><signature><![CDATA[void ShowPopup(
     GuiControl * control,
     bool preferredTopBottomSide
 );
-]]></signature><seealsos><symbol name="GuiControl" docId="vl::presentation::controls::GuiControl" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiControl" docId="vl::presentation::controls::GuiControl"/></seealsos></Document>

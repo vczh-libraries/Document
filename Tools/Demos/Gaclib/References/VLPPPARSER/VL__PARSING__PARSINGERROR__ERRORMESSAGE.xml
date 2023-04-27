@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="errorMessage" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingError::errorMessage"><summary>The error message.</summary><signature><![CDATA[WString errorMessage;
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="errorMessage"><summary>The error message.</summary><signature><![CDATA[WString errorMessage;
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetEnabledCustomColor" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiColorDialog::GetEnabledCustomColor@bool()[decl0]"><summary>Get if the custom color panel is enabled for the dialog.</summary><returns>Returns true if the color panel is enabled for the dialog.</returns><signature><![CDATA[bool GetEnabledCustomColor(
+<Document accessor="public" category="Function" name="GetEnabledCustomColor"><summary>Get if the custom color panel is enabled for the dialog.</summary><returns>Returns true if the color panel is enabled for the dialog.</returns><signature><![CDATA[bool GetEnabledCustomColor(
 );
 ]]></signature></Document>

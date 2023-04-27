@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="CreateImageFromStream" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeImageService::CreateImageFromStream@::vl::Ptr&lt;::vl::presentation::INativeImage&gt;(::vl::stream::IStream &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="CreateImageFromStream"><summary>
  Create an image from stream.
  </summary><returns>The created image.</returns><param name="imageStream">The stream.</param><signature><![CDATA[Ptr<INativeImage> CreateImageFromStream(
     stream::IStream & imageStream
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="INativeImage" docId="vl::presentation::INativeImage" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImage"/><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="INativeImage" docId="vl::presentation::INativeImage"/><symbol name="IStream" docId="vl::stream::IStream"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="IAsync" declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::IAsync"><summary>An async operation.</summary><signature><![CDATA[class IAsync
+<Document accessor="" category="Class" name="IAsync"><summary>An async operation.</summary><signature><![CDATA[class IAsync
     : IDescriptable
     , Description<IAsync>;
-]]></signature><seealsos><symbol name="IAsync" docId="vl::reflection::description::IAsync" declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::IAsync"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>
+]]></signature><seealsos><symbol name="IAsync" docId="vl::reflection::description::IAsync"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable"/></basetypes></Document>

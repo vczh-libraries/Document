@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="Pause" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::IGuiAnimation::Pause@void()[decl0]"><summary>Called when the animation is about to pause.</summary><signature><![CDATA[void Pause(
+<Document accessor="public" category="Function" name="Pause"><summary>Called when the animation is about to pause.</summary><signature><![CDATA[void Pause(
 );
 ]]></signature></Document>

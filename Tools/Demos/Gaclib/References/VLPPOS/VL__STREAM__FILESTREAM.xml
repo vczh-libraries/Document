@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="FileStream" declFile="FileStream.h" declId="NI$vl::stream::FileStream"><summary>A file stream. If the given file name is not working, the stream could be <b>unavailable</b>.</summary><signature><![CDATA[class FileStream
+<Document accessor="" category="Class" name="FileStream"><summary>A file stream. If the given file name is not working, the stream could be <b>unavailable</b>.</summary><signature><![CDATA[class FileStream
     : Object
     , IStream;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object"/><symbol name="IStream" docId="vl::stream::IStream"/></basetypes></Document>

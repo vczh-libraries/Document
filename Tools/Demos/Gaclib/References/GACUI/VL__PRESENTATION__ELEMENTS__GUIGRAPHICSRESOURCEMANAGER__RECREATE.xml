@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="RecreateRenderTarget" declFile="GuiGraphicsResourceManager.h" declId="FB$vl::presentation::elements::GuiGraphicsResourceManager::RecreateRenderTarget@void(::vl::presentation::INativeWindow *)[decl0]"><summary>
+<Document accessor="public" category="Function" name="RecreateRenderTarget"><summary>
  Recreate the render target for the specified window.
  </summary><param name="window">The specified window.</param><signature><![CDATA[void RecreateRenderTarget(
     INativeWindow * window
 );
-]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow"/></seealsos></Document>

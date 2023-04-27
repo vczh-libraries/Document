@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="CreateCounter" declFile="Pointer.h" declId="FB$vl::ReferenceCounterOperator::CreateCounter@::vl::vint volatile *([T] *)[impl0]"><summary>Create the reference counter of an object.</summary><returns>The pointer to the reference counter.</returns><param name="reference">The object.</param><signature><![CDATA[static vint volatile * CreateCounter(
+<Document accessor="public" category="Function" name="CreateCounter"><summary>Create the reference counter of an object.</summary><returns>The pointer to the reference counter.</returns><param name="reference">The object.</param><signature><![CDATA[static vint volatile * CreateCounter(
     T * reference
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="Create" declFile="Threading.h" declId="FB$vl::Semaphore::Create@bool(::vl::vint, ::vl::vint, ::vl::WString const &amp;)[decl0]"><summary>Create a semaphore.</summary><returns>Returns true if this operation succeeded.</returns><param name="initialCount">Define the counter of the semaphore.</param><param name="maxCount">Define the maximum value of the counter of the semaphore. This argument is only used in Windows.</param><param name="name">Name of the semaphore. If it is not empty, than it is a global named semaphore. This argument is ignored in Linux.</param><signature><![CDATA[bool Create(
+<Document accessor="public" category="Function" name="Create"><summary>Create a semaphore.</summary><returns>Returns true if this operation succeeded.</returns><param name="initialCount">Define the counter of the semaphore.</param><param name="maxCount">Define the maximum value of the counter of the semaphore. This argument is only used in Windows.</param><param name="name">Name of the semaphore. If it is not empty, than it is a global named semaphore. This argument is ignored in Linux.</param><signature><![CDATA[bool Create(
     vint initialCount,
     vint maxCount,
     WString const & name /* optional */
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

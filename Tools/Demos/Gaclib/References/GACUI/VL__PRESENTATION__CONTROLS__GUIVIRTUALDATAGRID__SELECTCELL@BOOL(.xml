@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="SelectCell" declFile="GuiDataGridControls.h" declId="FB$vl::presentation::controls::GuiVirtualDataGrid::SelectCell@bool(::vl::presentation::GridPos const &amp;, bool)[decl0]"><summary>Select a cell.</summary><returns>Returns true if the editor is opened.</returns><param name="value">The row index and column index of the selected cell.</param><param name="openEditor">Set to true to open an editor.</param><signature><![CDATA[bool SelectCell(
+<Document accessor="public" category="Function" name="SelectCell"><summary>Select a cell.</summary><returns>Returns true if the editor is opened.</returns><param name="value">The row index and column index of the selected cell.</param><param name="openEditor">Set to true to open an editor.</param><signature><![CDATA[bool SelectCell(
     GridPos const & value,
     bool openEditor
 );
-]]></signature><seealsos><symbol name="GridPos" docId="vl::presentation::GridPos" declFile="GuiTypes.h" declId="NI$vl::presentation::GridPos"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GridPos" docId="vl::presentation::GridPos"/></seealsos></Document>

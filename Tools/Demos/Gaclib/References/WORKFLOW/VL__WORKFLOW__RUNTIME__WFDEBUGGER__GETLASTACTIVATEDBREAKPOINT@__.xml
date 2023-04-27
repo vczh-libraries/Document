@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetLastActivatedBreakPoint" declFile="WfRuntimeDebugger.h" declId="FB$vl::workflow::runtime::WfDebugger::GetLastActivatedBreakPoint@::vl::vint()[decl0]"><summary>Get the index of the last activated break point.</summary><returns>The index of the last activated break point.</returns><signature><![CDATA[vint GetLastActivatedBreakPoint(
+<Document accessor="public" category="Function" name="GetLastActivatedBreakPoint"><summary>Get the index of the last activated break point.</summary><returns>The index of the last activated break point.</returns><signature><![CDATA[vint GetLastActivatedBreakPoint(
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

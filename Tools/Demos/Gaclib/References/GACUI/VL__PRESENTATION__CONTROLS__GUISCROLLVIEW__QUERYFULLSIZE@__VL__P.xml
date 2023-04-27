@@ -1,3 +1,3 @@
-<Document accessor="protected" category="Function" name="QueryFullSize" declFile="GuiContainerControls.h" declId="FB$vl::presentation::controls::GuiScrollView::QueryFullSize@::vl::presentation::Size()[decl0]"><summary>Calculate the full size of the content.</summary><returns>The full size of the content.</returns><signature><![CDATA[Size QueryFullSize(
+<Document accessor="protected" category="Function" name="QueryFullSize"><summary>Calculate the full size of the content.</summary><returns>The full size of the content.</returns><signature><![CDATA[Size QueryFullSize(
 );
-]]></signature><seealsos><symbol name="Size" declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Size"/></seealsos></Document>

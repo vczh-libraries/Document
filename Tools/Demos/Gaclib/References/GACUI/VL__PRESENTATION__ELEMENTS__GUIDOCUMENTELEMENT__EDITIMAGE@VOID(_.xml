@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="EditImage" declFile="GuiGraphicsDocumentElement.h" declId="FB$vl::presentation::elements::GuiDocumentElement::EditImage@void(::vl::presentation::TextPos, ::vl::presentation::TextPos, ::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;)[decl0]"><summary>Edit image in a specified range.</summary><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><param name="image">The new image.</param><signature><![CDATA[void EditImage(
+<Document accessor="public" category="Function" name="EditImage"><summary>Edit image in a specified range.</summary><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><param name="image">The new image.</param><signature><![CDATA[void EditImage(
     TextPos begin,
     TextPos end,
     Ptr<GuiImageData> image
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="GuiImageData" docId="vl::presentation::GuiImageData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiImageData"/><symbol name="TextPos" docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="GuiImageData" docId="vl::presentation::GuiImageData"/><symbol name="TextPos" docId="vl::presentation::TextPos"/></seealsos></Document>

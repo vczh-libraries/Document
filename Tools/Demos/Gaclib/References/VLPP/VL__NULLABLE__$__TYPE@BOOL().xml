@@ -1,2 +1,2 @@
-<Document accessor="public" category="Function" name="$__type" declFile="Basic.h" declId="FB$vl::Nullable::$__type@bool()[impl0]"><summary>Test if this nullable value is non-null.</summary><returns>Returns true if it is non-null.</returns><signature><![CDATA[operator bool();
+<Document accessor="public" category="Function" name="$__type"><summary>Test if this nullable value is non-null.</summary><returns>Returns true if it is non-null.</returns><signature><![CDATA[operator bool();
 ]]></signature></Document>

@@ -1,4 +1,4 @@
-<Document accessor="public" category="Variable" name="column" declFile="GuiTypes.h" declId="NI$vl::presentation::GridPos::column"><summary>
+<Document accessor="public" category="Variable" name="column"><summary>
  Column number. If a line has 4 characters, there are 5 available column numbers(from 0 to 4) in this line.
  </summary><signature><![CDATA[vint column;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

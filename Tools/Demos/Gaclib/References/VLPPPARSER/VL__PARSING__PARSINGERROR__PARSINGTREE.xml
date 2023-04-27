@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="parsingTree" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingError::parsingTree"><summary>A syntax tree that contains this error.</summary><signature><![CDATA[ParsingTreeCustomBase * parsingTree;
-]]></signature><seealsos><symbol name="ParsingTreeCustomBase" docId="vl::parsing::ParsingTreeCustomBase" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeCustomBase"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="parsingTree"><summary>A syntax tree that contains this error.</summary><signature><![CDATA[ParsingTreeCustomBase * parsingTree;
+]]></signature><seealsos><symbol name="ParsingTreeCustomBase" docId="vl::parsing::ParsingTreeCustomBase"/></seealsos></Document>

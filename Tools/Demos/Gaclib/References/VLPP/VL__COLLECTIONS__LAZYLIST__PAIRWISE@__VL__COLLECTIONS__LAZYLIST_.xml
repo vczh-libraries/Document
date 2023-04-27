@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Pairwise" declFile="Operation.h" declId="FB$vl::collections::LazyList::Pairwise@::vl::collections::LazyList&lt;::vl::collections::Pair&lt;[T], [U]&gt;&gt;(::vl::collections::IEnumerable&lt;[U]&gt; const &amp;)[impl0]"><summary>Create a new lazy list of pairs from elements from two containers.</summary><typeparam name="U">Type of all elements in the second container.</typeparam><returns>
+<Document accessor="public" category="Function" name="Pairwise"><summary>Create a new lazy list of pairs from elements from two containers.</summary><typeparam name="U">Type of all elements in the second container.</typeparam><returns>
  The created lazy list, which contains pairs of elements from two containers at the same position.
  If the two container have different sizes, the created lazy list has the size of the shorter one.
  </returns><param name="remains">The second container.</param><example index="0"/><signature><![CDATA[template <
@@ -7,4 +7,4 @@
 LazyList<Pair<T, U>> Pairwise(
     IEnumerable<U> const & remains
 ) const;
-]]></signature><seealsos><symbol name="IEnumerable" docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/><symbol name="Pair" docId="vl::collections::Pair" declFile="Pair.h" declId="NI$vl::collections::Pair"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IEnumerable" docId="vl::collections::IEnumerable"/><symbol name="LazyList" docId="vl::collections::LazyList"/><symbol name="Pair" docId="vl::collections::Pair"/></seealsos></Document>

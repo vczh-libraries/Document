@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="GetKey" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeInputService::GetKey@::vl::presentation::VKEY(::vl::WString const &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetKey"><summary>
  Get the key from a name.
  </summary><returns>The key, returns -1 if the key name doesn&apos;t exist.</returns><param name="name">Key name</param><signature><![CDATA[VKEY GetKey(
     WString const & name
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="VKEY" declFile="GuiTypes.h" declId="NI$vl::presentation::VKEY"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/><symbol name="VKEY"/></seealsos></Document>

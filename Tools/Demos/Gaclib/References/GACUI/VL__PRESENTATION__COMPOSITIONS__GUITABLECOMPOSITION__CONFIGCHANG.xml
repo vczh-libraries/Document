@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="ConfigChanged" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiTableComposition::ConfigChanged"><summary>Event that will be raised with row numbers, column numbers or options are changed.</summary><signature><![CDATA[compositions::GuiNotifyEvent ConfigChanged;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="ConfigChanged"><summary>Event that will be raised with row numbers, column numbers or options are changed.</summary><signature><![CDATA[compositions::GuiNotifyEvent ConfigChanged;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

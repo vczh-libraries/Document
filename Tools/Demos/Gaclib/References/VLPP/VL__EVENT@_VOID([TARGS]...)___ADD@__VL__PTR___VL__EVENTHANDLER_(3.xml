@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Add" declFile="Event.h" declId="FB$vl::Event@&lt;void([TArgs]...)&gt;::Add@::vl::Ptr&lt;::vl::EventHandler&gt;([C] *, void([TArgs]...) ([C] ::) *)[impl0]"><summary>Add a method callback to the event.</summary><typeparam name="C">Type of the class that the callback belongs to.</typeparam><returns>The event handler representing the callback.</returns><param name="sender">The object that the callback belongs to.</param><param name="function">The method callback.</param><signature><![CDATA[template <
+<Document accessor="public" category="Function" name="Add"><summary>Add a method callback to the event.</summary><typeparam name="C">Type of the class that the callback belongs to.</typeparam><returns>The event handler representing the callback.</returns><param name="sender">The object that the callback belongs to.</param><param name="function">The method callback.</param><signature><![CDATA[template <
     typename C
 >
 Ptr<EventHandler> Add(
@@ -6,4 +6,4 @@ Ptr<EventHandler> Add(
     void( C:: * function)(
 TArgs...)
 );
-]]></signature><seealsos><symbol name="EventHandler" declFile="Event.h" declId="NI$vl::EventHandler"/><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/></seealsos></Document>
+]]></signature><seealsos><symbol name="EventHandler"/><symbol name="Ptr" docId="vl::Ptr"/></seealsos></Document>

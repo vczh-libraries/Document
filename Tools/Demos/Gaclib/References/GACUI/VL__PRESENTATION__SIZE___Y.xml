@@ -1,4 +1,4 @@
-<Document accessor="public" category="Variable" name="y" declFile="GuiTypes.h" declId="NI$vl::presentation::Size_::y"><summary>
+<Document accessor="public" category="Variable" name="y"><summary>
  Size in y dimension.
  </summary><signature><![CDATA[T y;
 ]]></signature></Document>

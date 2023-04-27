@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="activeStyleName" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentHyperlinkRun::activeStyleName"><summary>Style name for active state.</summary><signature><![CDATA[WString activeStyleName;
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="activeStyleName"><summary>Style name for active state.</summary><signature><![CDATA[WString activeStyleName;
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

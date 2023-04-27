@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="GetSortingState" declFile="GuiListViewControls.h" declId="FB$vl::presentation::controls::list::ListViewColumnItemArranger::IColumnItemView::GetSortingState@::vl::presentation::controls::ColumnSortingState(::vl::vint)[decl0]"><summary>Get the sorting state of the column.</summary><returns>The sorting state of the column.</returns><param name="index">The index of the column.</param><signature><![CDATA[ColumnSortingState GetSortingState(
+<Document accessor="public" category="Function" name="GetSortingState"><summary>Get the sorting state of the column.</summary><returns>The sorting state of the column.</returns><param name="index">The index of the column.</param><signature><![CDATA[ColumnSortingState GetSortingState(
     vint index
 );
-]]></signature><seealsos><symbol name="ColumnSortingState" docId="vl::presentation::controls::ColumnSortingState" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::ColumnSortingState"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ColumnSortingState" docId="vl::presentation::controls::ColumnSortingState"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

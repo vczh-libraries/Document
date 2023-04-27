@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SafeAggregationCast" declFile="GuiTypeDescriptor.h" declId="FB$vl::reflection::DescriptableObject::SafeAggregationCast@[T] *()[impl0]"><summary>Cast the object to another type, this is required when the object is involved in aggregation.</summary><returns>The object with the expected type in all involved aggregated objects. It will crash when multiple objects are found to be qualified.</returns><typeparam name="T">The expected type to cast.</typeparam><remarks><p>
+<Document accessor="public" category="Function" name="SafeAggregationCast"><summary>Cast the object to another type, this is required when the object is involved in aggregation.</summary><returns>The object with the expected type in all involved aggregated objects. It will crash when multiple objects are found to be qualified.</returns><typeparam name="T">The expected type to cast.</typeparam><remarks><p>
  A workflow class could inherit from multiple aggregatable C++ classes.
  </p><p>
  In order to do pointer casting correctly,

@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="previewKey" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiGraphicsEventReceiver::previewKey"><summary>Preview key event.</summary><signature><![CDATA[GuiKeyEvent previewKey;
-]]></signature><seealsos><symbol name="GuiKeyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiKeyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="previewKey"><summary>Preview key event.</summary><signature><![CDATA[GuiKeyEvent previewKey;
+]]></signature><seealsos><symbol name="GuiKeyEvent"/></seealsos></Document>

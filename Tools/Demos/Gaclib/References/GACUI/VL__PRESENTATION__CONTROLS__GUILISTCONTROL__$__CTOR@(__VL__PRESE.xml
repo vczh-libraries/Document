@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="$__ctor" declFile="GuiListControls.h" declId="FB$vl::presentation::controls::GuiListControl::$__ctor@(::vl::presentation::theme::ThemeName, ::vl::presentation::controls::GuiListControl::IItemProvider *, bool)[decl0]"><summary>Create a control with a specified style provider.</summary><param name="themeName">The theme name for retriving a default control template.</param><param name="_itemProvider">The item provider as a data source.</param><param name="acceptFocus">Set to true if the list control is allowed to have a keyboard focus.</param><signature><![CDATA[ GuiListControl(
+<Document accessor="public" category="Function" name="$__ctor"><summary>Create a control with a specified style provider.</summary><param name="themeName">The theme name for retriving a default control template.</param><param name="_itemProvider">The item provider as a data source.</param><param name="acceptFocus">Set to true if the list control is allowed to have a keyboard focus.</param><signature><![CDATA[ GuiListControl(
     theme::ThemeName themeName,
     IItemProvider * _itemProvider,
     bool acceptFocus /* optional */
 );
-]]></signature><seealsos><symbol name="IItemProvider" docId="vl::presentation::controls::GuiListControl::IItemProvider" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::IItemProvider"/><symbol name="ThemeName" declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IItemProvider" docId="vl::presentation::controls::GuiListControl::IItemProvider"/><symbol name="ThemeName"/></seealsos></Document>

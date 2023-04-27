@@ -1,6 +1,6 @@
-<Document accessor="" category="Class" name="GuiDisposedFlag" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiDisposedFlag"><summary>
+<Document accessor="" category="Class" name="GuiDisposedFlag"><summary>
  A helper object to test if a control has been deleted or not.
  </summary><signature><![CDATA[class GuiDisposedFlag
     : Object
     , Description<GuiDisposedFlag>;
-]]></signature><seealsos><symbol name="GuiDisposedFlag" docId="vl::presentation::controls::GuiDisposedFlag" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiDisposedFlag"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiDisposedFlag" docId="vl::presentation::controls::GuiDisposedFlag"/></seealsos><basetypes><symbol name="Object" docId="vl::Object"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

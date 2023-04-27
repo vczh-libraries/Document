@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Resize" declFile="List.h" declId="FB$vl::collections::Array::Resize@void(::vl::vint)[impl0]"><summary>Change the size of the array. This function can be called multiple times to change the size.</summary><param name="size">The new size of the array.</param><remarks>It will crash when the size is a negative number.</remarks><signature><![CDATA[void Resize(
+<Document accessor="public" category="Function" name="Resize"><summary>Change the size of the array. This function can be called multiple times to change the size.</summary><param name="size">The new size of the array.</param><remarks>It will crash when the size is a negative number.</remarks><signature><![CDATA[void Resize(
     vint size
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

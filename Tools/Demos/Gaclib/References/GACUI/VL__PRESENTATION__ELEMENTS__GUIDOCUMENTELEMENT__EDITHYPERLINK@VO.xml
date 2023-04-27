@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="EditHyperlink" declFile="GuiGraphicsDocumentElement.h" declId="FB$vl::presentation::elements::GuiDocumentElement::EditHyperlink@void(::vl::vint, ::vl::vint, ::vl::vint, ::vl::WString const &amp;, ::vl::WString const &amp;, ::vl::WString const &amp;)[decl0]"><summary>Set hyperlink in a specified range.</summary><param name="paragraphIndex">The index of the paragraph to edit.</param><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><param name="reference">The reference of the hyperlink.</param><param name="normalStyleName">The normal style name of the hyperlink.</param><param name="activeStyleName">The active style name of the hyperlink.</param><signature><![CDATA[void EditHyperlink(
+<Document accessor="public" category="Function" name="EditHyperlink"><summary>Set hyperlink in a specified range.</summary><param name="paragraphIndex">The index of the paragraph to edit.</param><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><param name="reference">The reference of the hyperlink.</param><param name="normalStyleName">The normal style name of the hyperlink.</param><param name="activeStyleName">The active style name of the hyperlink.</param><signature><![CDATA[void EditHyperlink(
     vint paragraphIndex,
     vint begin,
     vint end,
@@ -6,4 +6,4 @@
     WString const & normalStyleName /* optional */,
     WString const & activeStyleName /* optional */
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

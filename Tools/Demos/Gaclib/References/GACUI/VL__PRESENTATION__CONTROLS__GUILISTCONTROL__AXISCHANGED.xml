@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="AxisChanged" declFile="GuiListControls.h" declId="NI$vl::presentation::controls::GuiListControl::AxisChanged"><summary>Coordinate transformer changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent AxisChanged;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="AxisChanged"><summary>Coordinate transformer changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent AxisChanged;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

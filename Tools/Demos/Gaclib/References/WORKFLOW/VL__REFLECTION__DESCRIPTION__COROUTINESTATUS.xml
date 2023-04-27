@@ -1,4 +1,4 @@
-<Document accessor="" category="Enum" name="CoroutineStatus" declFile="WfLibraryPredefined.h" declId="NI$vl::reflection::description::CoroutineStatus"><summary>Status of a coroutine.</summary><enumitem name="Executing">The coroutine is being executed.</enumitem><enumitem name="Stopped">The coroutine has stopped.</enumitem><enumitem name="Waiting">The coroutine is waiting for resuming.</enumitem><signature><![CDATA[enum class CoroutineStatus
+<Document accessor="" category="Enum" name="CoroutineStatus"><summary>Status of a coroutine.</summary><enumitem name="Executing">The coroutine is being executed.</enumitem><enumitem name="Stopped">The coroutine has stopped.</enumitem><enumitem name="Waiting">The coroutine is waiting for resuming.</enumitem><signature><![CDATA[enum class CoroutineStatus
 {
     Waiting,
     Executing,

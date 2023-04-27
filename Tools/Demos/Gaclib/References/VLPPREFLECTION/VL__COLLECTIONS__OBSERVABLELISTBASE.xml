@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="ObservableListBase" declFile="GuiTypeDescriptorBuilder_Container.h" declId="NI$vl::collections::ObservableListBase"><summary>Base type of observable container which triggers callbacks whenever items are changed.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements. It is recommended to use the default value.</typeparam><remarks><p>Methods are the same to <symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/>, except that operator[] is readonly.</p><p>
+<Document accessor="" category="Class" name="ObservableListBase"><summary>Base type of observable container which triggers callbacks whenever items are changed.</summary><typeparam name="T">Type of elements.</typeparam><typeparam name="K">Type of the key type of elements. It is recommended to use the default value.</typeparam><remarks><p>Methods are the same to <symbol name="List" docId="vl::collections::List"/>, except that operator[] is readonly.</p><p>
  When an item is being inserted to the list,
  <b>QueryInsert</b> will be called to determine if this item can be inserted,
  <b>BeforeInsert</b> will be called before inserting,
@@ -12,7 +12,7 @@
  When an item is being replaced, it is considered as removing the original item and inserting the new item.
  </p><p>
  After any changing happens, <b>NotifyUpdateInternal</b> is called.
- Arguments is exactly the same as <symbol name="ItemChanged" docId="vl::reflection::description::IValueObservableList::ItemChanged" declFile="GuiTypeDescriptorPredefined.h" declId="NI$vl::reflection::description::IValueObservableList::ItemChanged"/>.
+ Arguments is exactly the same as <symbol name="ItemChanged" docId="vl::reflection::description::IValueObservableList::ItemChanged"/>.
  </p></remarks><signature><![CDATA[template <
     typename T, 
     typename K /* optional */
@@ -20,4 +20,4 @@
 class ObservableListBase
     : Object
     , collections::IEnumerable<T>;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IEnumerable" docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object"/><symbol name="IEnumerable" docId="vl::collections::IEnumerable"/></basetypes></Document>

@@ -1,3 +1,3 @@
-<Document accessor="" category="Function" name="XmlLoadTable" declFile="ParsingXml_Parser.h" declId="FB$vl::parsing::xml::XmlLoadTable@::vl::Ptr&lt;::vl::parsing::tabling::ParsingTable&gt;()[decl0]"><summary>Create the parser table. You should cache the value if possible, for improving performance.</summary><returns>The created parser table.</returns><signature><![CDATA[vl::Ptr<vl::parsing::tabling::ParsingTable> XmlLoadTable(
+<Document accessor="" category="Function" name="XmlLoadTable"><summary>Create the parser table. You should cache the value if possible, for improving performance.</summary><returns>The created parser table.</returns><signature><![CDATA[vl::Ptr<vl::parsing::tabling::ParsingTable> XmlLoadTable(
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="ParsingTable" docId="vl::parsing::tabling::ParsingTable" declFile="ParsingTable.h" declId="NI$vl::parsing::tabling::ParsingTable"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="ParsingTable" docId="vl::parsing::tabling::ParsingTable"/></seealsos></Document>

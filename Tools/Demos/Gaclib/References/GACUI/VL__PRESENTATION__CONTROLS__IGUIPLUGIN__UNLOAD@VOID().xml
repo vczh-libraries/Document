@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="Unload" declFile="GuiApplication.h" declId="FB$vl::presentation::controls::IGuiPlugin::Unload@void()[decl0]"><summary>Called when the plugin manager want to unload this plugin.</summary><signature><![CDATA[void Unload(
+<Document accessor="public" category="Function" name="Unload"><summary>Called when the plugin manager want to unload this plugin.</summary><signature><![CDATA[void Unload(
 );
 ]]></signature></Document>

@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="WakeAllPendings" declFile="Threading.h" declId="FB$vl::ConditionVariable::WakeAllPendings@void()[decl0]"><summary>Wake all thread that pending on this condition variable.</summary><signature><![CDATA[void WakeAllPendings(
+<Document accessor="public" category="Function" name="WakeAllPendings"><summary>Wake all thread that pending on this condition variable.</summary><signature><![CDATA[void WakeAllPendings(
 );
 ]]></signature></Document>

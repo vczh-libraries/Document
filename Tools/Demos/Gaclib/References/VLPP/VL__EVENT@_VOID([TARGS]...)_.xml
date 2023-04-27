@@ -1,8 +1,8 @@
-<Document accessor="" category="Class" name="Event@&lt;void([TArgs]...)&gt;" declFile="Event.h" declId="NI$vl::Event@&lt;void([TArgs]...)&gt;"><summary>An event for being subscribed using multiple callbacks. A callback is any functor that returns void.</summary><typeparam name="TArgs">Types of callback parameters.</typeparam><signature><![CDATA[template <
+<Document accessor="" category="Class" name="Event@&lt;void([TArgs]...)&gt;"><summary>An event for being subscribed using multiple callbacks. A callback is any functor that returns void.</summary><typeparam name="TArgs">Types of callback parameters.</typeparam><signature><![CDATA[template <
     typename... TArgs
 >
 class Event<void(
 TArgs...)>
     : Object
     , NotCopyable;
-]]></signature><basetypes><symbol name="NotCopyable" docId="vl::NotCopyable" declFile="Basic.h" declId="NI$vl::NotCopyable"/><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
+]]></signature><basetypes><symbol name="NotCopyable" docId="vl::NotCopyable"/><symbol name="Object" docId="vl::Object"/></basetypes></Document>

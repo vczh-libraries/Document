@@ -1,6 +1,6 @@
-<Document accessor="" category="Class" name="GuiBoundsComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiBoundsComposition"><summary>
+<Document accessor="" category="Class" name="GuiBoundsComposition"><summary>
  Represents a composition that is free to change the expected bounds.
  </summary><signature><![CDATA[class GuiBoundsComposition
     : GuiGraphicsSite
     , Description<GuiBoundsComposition>;
-]]></signature><seealsos><symbol name="GuiBoundsComposition" docId="vl::presentation::compositions::GuiBoundsComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiBoundsComposition"/></seealsos><basetypes><symbol name="GuiGraphicsSite" docId="vl::presentation::compositions::GuiGraphicsSite" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsSite"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiBoundsComposition" docId="vl::presentation::compositions::GuiBoundsComposition"/></seealsos><basetypes><symbol name="GuiGraphicsSite" docId="vl::presentation::compositions::GuiGraphicsSite"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetPointCount" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiPolygonElement::GetPointCount@::vl::vint()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetPointCount"><summary>
  Get the number of points
  </summary><returns>The number of points.</returns><signature><![CDATA[vint GetPointCount(
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

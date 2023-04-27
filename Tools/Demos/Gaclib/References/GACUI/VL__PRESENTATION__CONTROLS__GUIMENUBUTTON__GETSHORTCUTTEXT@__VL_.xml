@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetShortcutText" declFile="GuiMenuControls.h" declId="FB$vl::presentation::controls::GuiMenuButton::GetShortcutText@::vl::WString const &amp;()[decl0]"><summary>Get the shortcut key text for the menu button.</summary><returns>The shortcut key text for the menu button.</returns><signature><![CDATA[WString const & GetShortcutText(
+<Document accessor="public" category="Function" name="GetShortcutText"><summary>Get the shortcut key text for the menu button.</summary><returns>The shortcut key text for the menu button.</returns><signature><![CDATA[WString const & GetShortcutText(
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

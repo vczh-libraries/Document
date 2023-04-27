@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetFont" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiSolidLabelElement::SetFont@void(::vl::presentation::FontProperties const &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetFont"><summary>
  Set the text font.
  </summary><param name="value">The new text font.</param><signature><![CDATA[void SetFont(
     FontProperties const & value
 );
-]]></signature><seealsos><symbol name="FontProperties" docId="vl::presentation::FontProperties" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties"/></seealsos></Document>
+]]></signature><seealsos><symbol name="FontProperties" docId="vl::presentation::FontProperties"/></seealsos></Document>

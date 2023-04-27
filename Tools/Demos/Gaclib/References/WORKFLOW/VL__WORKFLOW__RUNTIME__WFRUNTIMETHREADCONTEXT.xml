@@ -1,7 +1,7 @@
-<Document accessor="" category="Class" name="WfRuntimeThreadContext" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeThreadContext"><summary>A Workflow script call stack.</summary><remarks><p>
- This object could be obtained by <symbol name="GetCurrentThreadContext" declFile="WfRuntimeDebugger.cpp" declId="FB$vl::workflow::runtime::WfDebugger::GetCurrentThreadContext@::vl::workflow::runtime::WfRuntimeThreadContext *()[impl0]"/>.
+<Document accessor="" category="Class" name="WfRuntimeThreadContext"><summary>A Workflow script call stack.</summary><remarks><p>
+ This object could be obtained by <symbol name="GetCurrentThreadContext"/>.
  A thread could have multiple thread contexts,
- a full list could be obtained by <symbol name="GetThreadContexts" declFile="WfRuntimeDebugger.cpp" declId="FB$vl::workflow::runtime::WfDebugger::GetThreadContexts@::vl::workflow::runtime::WfDebugger::ThreadContextList const &amp;()[impl0]"/>.
+ a full list could be obtained by <symbol name="GetThreadContexts"/>.
  </p><p>
  You are not recommended to update the call stack using this object.
  </p><p>

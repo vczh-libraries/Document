@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="StopRendering" declFile="GuiGraphicsElementInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsRenderTarget::StopRendering@::vl::presentation::elements::RenderTargetFailure()[decl0]"><summary>
+<Document accessor="public" category="Function" name="StopRendering"><summary>
  Notify the target to stop rendering.
  </summary><returns>Returns false to recreate render target.</returns><signature><![CDATA[RenderTargetFailure StopRendering(
 );
-]]></signature><seealsos><symbol name="RenderTargetFailure" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::RenderTargetFailure"/></seealsos></Document>
+]]></signature><seealsos><symbol name="RenderTargetFailure"/></seealsos></Document>

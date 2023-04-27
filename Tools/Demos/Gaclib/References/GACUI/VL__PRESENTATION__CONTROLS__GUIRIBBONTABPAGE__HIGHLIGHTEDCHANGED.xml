@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="HighlightedChanged" declFile="GuiRibbonControls.h" declId="NI$vl::presentation::controls::GuiRibbonTabPage::HighlightedChanged"><summary>Highlighted changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent HighlightedChanged;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="HighlightedChanged"><summary>Highlighted changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent HighlightedChanged;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

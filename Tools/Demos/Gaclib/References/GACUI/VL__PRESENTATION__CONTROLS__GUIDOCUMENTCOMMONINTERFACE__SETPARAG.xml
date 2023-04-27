@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetParagraphAlignment" declFile="GuiDocumentViewer.h" declId="FB$vl::presentation::controls::GuiDocumentCommonInterface::SetParagraphAlignment@void(::vl::presentation::TextPos, ::vl::presentation::TextPos, ::vl::Nullable&lt;::vl::presentation::Alignment&gt;)[decl0]"><summary>Set the alignment of paragraphs in a specified range.</summary><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><param name="alignment">The alignment for each paragraph.</param><signature><![CDATA[void SetParagraphAlignment(
+<Document accessor="public" category="Function" name="SetParagraphAlignment"><summary>Set the alignment of paragraphs in a specified range.</summary><param name="begin">The begin position of the range.</param><param name="end">The end position of the range.</param><param name="alignment">The alignment for each paragraph.</param><signature><![CDATA[void SetParagraphAlignment(
     TextPos begin,
     TextPos end,
     Nullable<Alignment> alignment
 );
-]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/><symbol name="Alignment" docId="vl::presentation::Alignment" declFile="GuiTypes.h" declId="NI$vl::presentation::Alignment"/><symbol name="TextPos" docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable"/><symbol name="Alignment" docId="vl::presentation::Alignment"/><symbol name="TextPos" docId="vl::presentation::TextPos"/></seealsos></Document>

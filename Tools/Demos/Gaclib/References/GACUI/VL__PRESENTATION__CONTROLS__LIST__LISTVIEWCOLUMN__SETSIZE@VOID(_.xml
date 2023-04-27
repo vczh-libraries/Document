@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetSize" declFile="GuiListViewControls.h" declId="FB$vl::presentation::controls::list::ListViewColumn::SetSize@void(::vl::vint)[decl0]"><summary>Set the size of this item.</summary><param name="value">The size of this item.</param><signature><![CDATA[void SetSize(
+<Document accessor="public" category="Function" name="SetSize"><summary>Set the size of this item.</summary><param name="value">The size of this item.</param><signature><![CDATA[void SetSize(
     vint value
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

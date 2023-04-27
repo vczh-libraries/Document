@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetBeforeHeaders" declFile="GuiRibbonControls.h" declId="FB$vl::presentation::controls::GuiRibbonTab::GetBeforeHeaders@::vl::presentation::compositions::GuiGraphicsComposition *()[decl0]"><summary>Get the composition representing the space before tabs.</summary><returns>The composition representing the space before tabs.</returns><signature><![CDATA[compositions::GuiGraphicsComposition * GetBeforeHeaders(
+<Document accessor="public" category="Function" name="GetBeforeHeaders"><summary>Get the composition representing the space before tabs.</summary><returns>The composition representing the space before tabs.</returns><signature><![CDATA[compositions::GuiGraphicsComposition * GetBeforeHeaders(
 );
-]]></signature><seealsos><symbol name="GuiGraphicsComposition" docId="vl::presentation::compositions::GuiGraphicsComposition" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsComposition"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiGraphicsComposition" docId="vl::presentation::compositions::GuiGraphicsComposition"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="" category="Function" name="UnboxValue" declFile="GuiTypeDescriptorBuilder.h" declId="FB$vl::reflection::description::UnboxValue@[T](::vl::reflection::description::Value const &amp;, ::vl::reflection::description::ITypeDescriptor *, ::vl::WString const &amp;)[impl0]"><summary>Unbox a reflectable object. Its type cannot be generic.</summary><returns>The unboxed object.</returns><typeparam name="T">Type of the object.</typeparam><param name="value">The value to unbox.</param><param name="typeDescriptor">The type descriptor of the object (optional).</param><param name="valueName">The name of the object to provide a friendly exception message if the conversion is failed (optional).</param><signature><![CDATA[template <
+<Document accessor="" category="Function" name="UnboxValue"><summary>Unbox a reflectable object. Its type cannot be generic.</summary><returns>The unboxed object.</returns><typeparam name="T">Type of the object.</typeparam><param name="value">The value to unbox.</param><param name="typeDescriptor">The type descriptor of the object (optional).</param><param name="valueName">The name of the object to provide a friendly exception message if the conversion is failed (optional).</param><signature><![CDATA[template <
     typename T
 >
 T UnboxValue(
@@ -6,4 +6,4 @@ T UnboxValue(
     ITypeDescriptor * typeDescriptor /* optional */,
     WString const & valueName /* optional */
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="ITypeDescriptor" docId="vl::reflection::description::ITypeDescriptor" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::ITypeDescriptor"/><symbol name="Value" docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/><symbol name="ITypeDescriptor" docId="vl::reflection::description::ITypeDescriptor"/><symbol name="Value" docId="vl::reflection::description::Value"/></seealsos></Document>

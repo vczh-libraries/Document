@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetBounds" declFile="GuiGraphicsBasicComposition.h" declId="FB$vl::presentation::compositions::GuiBoundsComposition::SetBounds@void(::vl::presentation::Rect)[decl0]"><summary>Set the expected bounds.</summary><param name="value">The expected bounds.</param><signature><![CDATA[void SetBounds(
+<Document accessor="public" category="Function" name="SetBounds"><summary>Set the expected bounds.</summary><param name="value">The expected bounds.</param><signature><![CDATA[void SetBounds(
     Rect value
 );
-]]></signature><seealsos><symbol name="Rect" declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Rect"/></seealsos></Document>

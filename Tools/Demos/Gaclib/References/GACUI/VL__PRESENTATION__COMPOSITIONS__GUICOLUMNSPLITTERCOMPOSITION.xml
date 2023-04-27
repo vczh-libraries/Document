@@ -1,6 +1,6 @@
-<Document accessor="" category="Class" name="GuiColumnSplitterComposition" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiColumnSplitterComposition"><summary>
- Represents a column splitter composition of a <symbol name="GuiTableComposition" docId="vl::presentation::compositions::GuiTableComposition" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiTableComposition"/>.
+<Document accessor="" category="Class" name="GuiColumnSplitterComposition"><summary>
+ Represents a column splitter composition of a <symbol name="GuiTableComposition" docId="vl::presentation::compositions::GuiTableComposition"/>.
  </summary><signature><![CDATA[class GuiColumnSplitterComposition
     : GuiTableSplitterCompositionBase
     , Description<GuiColumnSplitterComposition>;
-]]></signature><seealsos><symbol name="GuiColumnSplitterComposition" docId="vl::presentation::compositions::GuiColumnSplitterComposition" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiColumnSplitterComposition"/></seealsos><basetypes><symbol name="GuiTableSplitterCompositionBase" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiTableSplitterCompositionBase"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiColumnSplitterComposition" docId="vl::presentation::compositions::GuiColumnSplitterComposition"/></seealsos><basetypes><symbol name="GuiTableSplitterCompositionBase"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

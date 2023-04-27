@@ -1,11 +1,11 @@
-<Document accessor="public" category="Function" name="GetInternalState" declFile="Regex.h" declId="FB$vl::regex::RegexLexerColorizer::GetInternalState@::vl::regex::RegexLexerColorizer::InternalState()[decl0]"><summary>Get the internal state.</summary><returns>The internal state.</returns><remarks><p>
- If <symbol name="Colorize" docId="vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)" declFile="Regex.h" declId="FB$vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)[decl0]"/> has not been called, the return value of this function is the start state.
+<Document accessor="public" category="Function" name="GetInternalState"><summary>Get the internal state.</summary><returns>The internal state.</returns><remarks><p>
+ If <symbol name="Colorize" docId="vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)"/> has not been called, the return value of this function is the start state.
  </p><p>
- If a text is multi-lined, <symbol name="Colorize" docId="vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)" declFile="Regex.h" declId="FB$vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)[decl0]"/> could be called line by line, and the internal state is changed.
+ If a text is multi-lined, <symbol name="Colorize" docId="vl::regex::RegexLexerColorizer::Colorize@void *(wchar_t const *, ::vl::vint)"/> could be called line by line, and the internal state is changed.
  </p><p>
  In order to colorize another piece of multi-lined text,
- you can either save the start state and call <symbol name="SetInternalState" docId="vl::regex::RegexLexerColorizer::SetInternalState@void(::vl::regex::RegexLexerColorizer::InternalState)" declFile="Regex.h" declId="FB$vl::regex::RegexLexerColorizer::SetInternalState@void(::vl::regex::RegexLexerColorizer::InternalState)[decl0]"/> to reset the state,
- or call <symbol name="Colorize" docId="vl::regex::RegexLexer::Colorize@::vl::regex::RegexLexerColorizer()" declFile="Regex.h" declId="FB$vl::regex::RegexLexer::Colorize@::vl::regex::RegexLexerColorizer()[decl0]"/> for a new colorizer.
+ you can either save the start state and call <symbol name="SetInternalState" docId="vl::regex::RegexLexerColorizer::SetInternalState@void(::vl::regex::RegexLexerColorizer::InternalState)"/> to reset the state,
+ or call <symbol name="Colorize" docId="vl::regex::RegexLexer::Colorize@::vl::regex::RegexLexerColorizer()"/> for a new colorizer.
  </p></remarks><signature><![CDATA[InternalState GetInternalState(
 );
-]]></signature><seealsos><symbol name="InternalState" declFile="Regex.h" declId="NI$vl::regex::RegexLexerColorizer::InternalState"/></seealsos></Document>
+]]></signature><seealsos><symbol name="InternalState"/></seealsos></Document>

@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetFactory" declFile="GuiGraphicsElementInterfaces.h" declId="FB$vl::presentation::elements::IGuiGraphicsRenderer::GetFactory@::vl::presentation::elements::IGuiGraphicsRendererFactory *()[decl0]"><summary>
- Access the graphics <symbol name="IGuiGraphicsRendererFactory" docId="vl::presentation::elements::IGuiGraphicsRendererFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRendererFactory"/> that is used to create this graphics renderer.
+<Document accessor="public" category="Function" name="GetFactory"><summary>
+ Access the graphics <symbol name="IGuiGraphicsRendererFactory" docId="vl::presentation::elements::IGuiGraphicsRendererFactory"/> that is used to create this graphics renderer.
  </summary><returns>Returns the related factory.</returns><signature><![CDATA[IGuiGraphicsRendererFactory * GetFactory(
 );
-]]></signature><seealsos><symbol name="IGuiGraphicsRendererFactory" docId="vl::presentation::elements::IGuiGraphicsRendererFactory" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRendererFactory"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IGuiGraphicsRendererFactory" docId="vl::presentation::elements::IGuiGraphicsRendererFactory"/></seealsos></Document>

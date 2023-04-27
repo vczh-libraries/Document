@@ -1,6 +1,6 @@
-<Document accessor="" category="Class" name="INativeImageFrame" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImageFrame"><summary>
+<Document accessor="" category="Class" name="INativeImageFrame"><summary>
  Represents an image frame.
  </summary><signature><![CDATA[class INativeImageFrame
     : IDescriptable
     , Description<INativeImageFrame>;
-]]></signature><seealsos><symbol name="INativeImageFrame" docId="vl::presentation::INativeImageFrame" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeImageFrame"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>
+]]></signature><seealsos><symbol name="INativeImageFrame" docId="vl::presentation::INativeImageFrame"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable"/></basetypes></Document>

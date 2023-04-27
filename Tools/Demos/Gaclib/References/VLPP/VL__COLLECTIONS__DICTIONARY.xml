@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="Dictionary" declFile="Dictionary.h" declId="NI$vl::collections::Dictionary"><summary>Dictionary: one to one map container.</summary><typeparam name="KT">Type of keys.</typeparam><typeparam name="VT">Type of values.</typeparam><typeparam name="KK">Type of the key type of keys. It is recommended to use the default value.</typeparam><typeparam name="VK">Type of the key type of values. It is recommended to use the default value.</typeparam><signature><![CDATA[template <
+<Document accessor="" category="Class" name="Dictionary"><summary>Dictionary: one to one map container.</summary><typeparam name="KT">Type of keys.</typeparam><typeparam name="VT">Type of values.</typeparam><typeparam name="KK">Type of the key type of keys. It is recommended to use the default value.</typeparam><typeparam name="VK">Type of the key type of values. It is recommended to use the default value.</typeparam><signature><![CDATA[template <
     typename KT, 
     typename VT, 
     typename KK /* optional */, 
@@ -7,4 +7,4 @@
 class Dictionary
     : Object
     , IEnumerable<Pair<KT, VT>>;
-]]></signature><seealsos><symbol name="Pair" docId="vl::collections::Pair" declFile="Pair.h" declId="NI$vl::collections::Pair"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IEnumerable" docId="vl::collections::IEnumerable" declFile="Interfaces.h" declId="NI$vl::collections::IEnumerable"/></basetypes></Document>
+]]></signature><seealsos><symbol name="Pair" docId="vl::collections::Pair"/></seealsos><basetypes><symbol name="Object" docId="vl::Object"/><symbol name="IEnumerable" docId="vl::collections::IEnumerable"/></basetypes></Document>

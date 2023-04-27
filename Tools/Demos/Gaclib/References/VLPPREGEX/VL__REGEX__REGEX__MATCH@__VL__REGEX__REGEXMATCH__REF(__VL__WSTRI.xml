@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Match" declFile="Regex.h" declId="FB$vl::regex::Regex::Match@::vl::regex::RegexMatch::Ref(::vl::WString const &amp;)[decl0]"><summary>Match a sub string of the text.</summary><returns>Returns the first match. Returns null if failed.</returns><param name="text">The text to match.</param><example index="0"/><signature><![CDATA[RegexMatch::Ref Match(
+<Document accessor="public" category="Function" name="Match"><summary>Match a sub string of the text.</summary><returns>Returns the first match. Returns null if failed.</returns><param name="text">The text to match.</param><example index="0"/><signature><![CDATA[RegexMatch::Ref Match(
     WString const & text
 ) const;
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="Ref" declFile="Regex.h" declId="NI$vl::regex::RegexMatch::Ref"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/><symbol name="Ref"/></seealsos></Document>

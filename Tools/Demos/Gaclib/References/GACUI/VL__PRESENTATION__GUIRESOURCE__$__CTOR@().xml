@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="$__ctor" declFile="GuiResource.h" declId="FB$vl::presentation::GuiResource::$__ctor@()[decl0]"><summary>Create a resource.</summary><signature><![CDATA[ GuiResource(
+<Document accessor="public" category="Function" name="$__ctor"><summary>Create a resource.</summary><signature><![CDATA[ GuiResource(
 );
 ]]></signature></Document>

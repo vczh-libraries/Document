@@ -1,7 +1,7 @@
-<Document accessor="" category="Class" name="GuiWindow" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiWindow"><summary>
+<Document accessor="" category="Class" name="GuiWindow"><summary>
  Represents a normal window.
  </summary><signature><![CDATA[class GuiWindow
     : GuiControlHost
     , compositions::GuiAltActionHostBase
     , AggregatableDescription<GuiWindow>;
-]]></signature><seealsos><symbol name="GuiWindow" docId="vl::presentation::controls::GuiWindow" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiWindow"/></seealsos><basetypes><symbol name="GuiAltActionHostBase" docId="vl::presentation::compositions::GuiAltActionHostBase" declFile="GuiGraphicsHost_Alt.h" declId="NI$vl::presentation::compositions::GuiAltActionHostBase"/><symbol name="GuiControlHost" docId="vl::presentation::controls::GuiControlHost" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiControlHost"/><symbol name="AggregatableDescription" docId="vl::reflection::AggregatableDescription" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::AggregatableDescription"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiWindow" docId="vl::presentation::controls::GuiWindow"/></seealsos><basetypes><symbol name="GuiAltActionHostBase" docId="vl::presentation::compositions::GuiAltActionHostBase"/><symbol name="GuiControlHost" docId="vl::presentation::controls::GuiControlHost"/><symbol name="AggregatableDescription" docId="vl::reflection::AggregatableDescription"/></basetypes></Document>

@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetForceFontExist" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiFontDialog::GetForceFontExist@bool()[decl0]"><summary>Get if the dialog only accepts an existing font.</summary><returns>Returns true if the dialog only accepts an existing font.</returns><signature><![CDATA[bool GetForceFontExist(
+<Document accessor="public" category="Function" name="GetForceFontExist"><summary>Get if the dialog only accepts an existing font.</summary><returns>Returns true if the dialog only accepts an existing font.</returns><signature><![CDATA[bool GetForceFontExist(
 );
 ]]></signature></Document>

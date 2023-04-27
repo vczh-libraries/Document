@@ -1,7 +1,7 @@
-<Document accessor="protected" category="Function" name="MeasureWidthInternal" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::CharMeasurer::MeasureWidthInternal@::vl::vint(::vl::presentation::elements::text::UnicodeCodePoint, ::vl::presentation::elements::IGuiGraphicsRenderTarget *)[decl0]"><summary>
+<Document accessor="protected" category="Function" name="MeasureWidthInternal"><summary>
  Measure the width of a character.
  </summary><returns>The width in pixel.</returns><param name="codePoint">The unicode code point to measure.</param><param name="renderTarget">The render target which the character is going to be rendered. This is a pure virtual member function to be overrided.</param><signature><![CDATA[vint MeasureWidthInternal(
     UnicodeCodePoint codePoint,
     IGuiGraphicsRenderTarget * renderTarget
 );
-]]></signature><seealsos><symbol name="IGuiGraphicsRenderTarget" docId="vl::presentation::elements::IGuiGraphicsRenderTarget" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderTarget"/><symbol name="UnicodeCodePoint" docId="vl::presentation::elements::text::UnicodeCodePoint" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::UnicodeCodePoint"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IGuiGraphicsRenderTarget" docId="vl::presentation::elements::IGuiGraphicsRenderTarget"/><symbol name="UnicodeCodePoint" docId="vl::presentation::elements::text::UnicodeCodePoint"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

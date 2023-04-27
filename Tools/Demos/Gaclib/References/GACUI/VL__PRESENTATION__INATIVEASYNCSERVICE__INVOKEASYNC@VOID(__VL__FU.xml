@@ -1,7 +1,7 @@
-<Document accessor="public" category="Function" name="InvokeAsync" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeAsyncService::InvokeAsync@void(::vl::Func&lt;void()&gt; const &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="InvokeAsync"><summary>
  Invoke a specified function with an specified argument asynchronisly.
  </summary><param name="proc">The specified function.</param><signature><![CDATA[void InvokeAsync(
     Func<void(
 )> const & proc
 );
-]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func"/></seealsos></Document>

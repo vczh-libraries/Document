@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="DpiChanged" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::DpiChanged@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="DpiChanged"><summary>
  Called when the dpi associated with this window is changed.
  </summary><signature><![CDATA[void DpiChanged(
 );

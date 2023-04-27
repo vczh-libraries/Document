@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="GetRenderTarget" declFile="GuiGraphicsResourceManager.h" declId="FB$vl::presentation::elements::GuiGraphicsResourceManager::GetRenderTarget@::vl::presentation::elements::IGuiGraphicsRenderTarget *(::vl::presentation::INativeWindow *)[decl0]"><summary>
- Get the instance of a <symbol name="IGuiGraphicsRenderTarget" docId="vl::presentation::elements::IGuiGraphicsRenderTarget" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderTarget"/> that is binded to an <symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/>.
+<Document accessor="public" category="Function" name="GetRenderTarget"><summary>
+ Get the instance of a <symbol name="IGuiGraphicsRenderTarget" docId="vl::presentation::elements::IGuiGraphicsRenderTarget"/> that is binded to an <symbol name="INativeWindow" docId="vl::presentation::INativeWindow"/>.
  </summary><param name="window">The specified window.</param><returns>Returns the render target.</returns><signature><![CDATA[IGuiGraphicsRenderTarget * GetRenderTarget(
     INativeWindow * window
 );
-]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow"/><symbol name="IGuiGraphicsRenderTarget" docId="vl::presentation::elements::IGuiGraphicsRenderTarget" declFile="GuiGraphicsElementInterfaces.h" declId="NI$vl::presentation::elements::IGuiGraphicsRenderTarget"/></seealsos></Document>
+]]></signature><seealsos><symbol name="INativeWindow" docId="vl::presentation::INativeWindow"/><symbol name="IGuiGraphicsRenderTarget" docId="vl::presentation::elements::IGuiGraphicsRenderTarget"/></seealsos></Document>

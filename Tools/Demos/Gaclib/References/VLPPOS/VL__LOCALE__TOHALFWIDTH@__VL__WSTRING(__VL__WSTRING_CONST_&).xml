@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="ToHalfWidth" declFile="Locale.h" declId="FB$vl::Locale::ToHalfWidth@::vl::WString(::vl::WString const &amp;)[decl0]"><summary>Convert characters to the half width.</summary><returns>The converted string.</returns><param name="str">The string to convert.</param><remarks>This function is only available in Windows.</remarks><signature><![CDATA[WString ToHalfWidth(
+<Document accessor="public" category="Function" name="ToHalfWidth"><summary>Convert characters to the half width.</summary><returns>The converted string.</returns><param name="str">The string to convert.</param><remarks>This function is only available in Windows.</remarks><signature><![CDATA[WString ToHalfWidth(
     WString const & str
 ) const;
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

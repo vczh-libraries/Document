@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetCallback" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::SetCallback@void(::vl::presentation::elements::GuiColorizedTextElement::ICallback *)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetCallback"><summary>
  Bind a callback object.
  </summary><param name="value">The callback object to bind.</param><signature><![CDATA[void SetCallback(
     ICallback * value
 );
-]]></signature><seealsos><symbol name="ICallback" docId="vl::presentation::elements::GuiColorizedTextElement::ICallback" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::GuiColorizedTextElement::ICallback"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ICallback" docId="vl::presentation::elements::GuiColorizedTextElement::ICallback"/></seealsos></Document>

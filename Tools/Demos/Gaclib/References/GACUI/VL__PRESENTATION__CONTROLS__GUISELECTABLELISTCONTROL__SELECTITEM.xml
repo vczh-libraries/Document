@@ -1,7 +1,7 @@
-<Document accessor="public" category="Function" name="SelectItemsByClick" declFile="GuiListControls.h" declId="FB$vl::presentation::controls::GuiSelectableListControl::SelectItemsByClick@bool(::vl::vint, bool, bool, bool)[decl0]"><summary>Set the selection status of an item, and affect other selected item according to key status.</summary><returns>Returns true if this operation succeeded.</returns><param name="itemIndex">The index of the item.</param><param name="ctrl">Set to true if the control key is pressing.</param><param name="shift">Set to true if the shift key is pressing.</param><param name="leftButton">Set to true if clicked by left mouse button, otherwise right mouse button.</param><signature><![CDATA[bool SelectItemsByClick(
+<Document accessor="public" category="Function" name="SelectItemsByClick"><summary>Set the selection status of an item, and affect other selected item according to key status.</summary><returns>Returns true if this operation succeeded.</returns><param name="itemIndex">The index of the item.</param><param name="ctrl">Set to true if the control key is pressing.</param><param name="shift">Set to true if the shift key is pressing.</param><param name="leftButton">Set to true if clicked by left mouse button, otherwise right mouse button.</param><signature><![CDATA[bool SelectItemsByClick(
     vint itemIndex,
     bool ctrl,
     bool shift,
     bool leftButton
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

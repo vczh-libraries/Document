@@ -1,4 +1,4 @@
-<Document accessor="" category="Struct" name="GridPos" declFile="GuiTypes.h" declId="NI$vl::presentation::GridPos"><summary>
+<Document accessor="" category="Struct" name="GridPos"><summary>
  Represents the cell position in a grid.
  </summary><signature><![CDATA[struct GridPos;
 ]]></signature></Document>

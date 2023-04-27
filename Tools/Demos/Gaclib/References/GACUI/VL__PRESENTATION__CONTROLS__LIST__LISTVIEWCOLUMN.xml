@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="ListViewColumn" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::list::ListViewColumn"><summary>List view column.</summary><signature><![CDATA[class ListViewColumn
+<Document accessor="" category="Class" name="ListViewColumn"><summary>List view column.</summary><signature><![CDATA[class ListViewColumn
     : Object
     , Description<ListViewColumn>;
-]]></signature><seealsos><symbol name="ListViewColumn" docId="vl::presentation::controls::list::ListViewColumn" declFile="GuiListViewControls.h" declId="NI$vl::presentation::controls::list::ListViewColumn"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="ListViewColumn" docId="vl::presentation::controls::list::ListViewColumn"/></seealsos><basetypes><symbol name="Object" docId="vl::Object"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

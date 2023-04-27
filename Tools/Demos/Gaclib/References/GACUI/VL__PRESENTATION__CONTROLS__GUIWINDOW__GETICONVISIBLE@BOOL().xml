@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="GetIconVisible" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiWindow::GetIconVisible@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetIconVisible"><summary>
  Test is the icon visible.
  </summary><returns>Returns true if the icon is visible.</returns><signature><![CDATA[bool GetIconVisible(
 );

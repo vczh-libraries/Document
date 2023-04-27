@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="$__ctor" declFile="GuiDialogs.h" declId="FB$vl::presentation::controls::GuiFontDialog::$__ctor@()[decl0]"><summary>Create a font dialog.</summary><signature><![CDATA[ GuiFontDialog(
+<Document accessor="public" category="Function" name="$__ctor"><summary>Create a font dialog.</summary><signature><![CDATA[ GuiFontDialog(
 );
 ]]></signature></Document>

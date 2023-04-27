@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetMinCount" declFile="GuiRibbonGalleryList.h" declId="FB$vl::presentation::controls::GuiBindableRibbonGalleryList::SetMinCount@void(::vl::vint)[decl0]"><summary>Set the minimum number of items should be displayed.</summary><param name="value">The minimum number of items should be displayed.</param><signature><![CDATA[void SetMinCount(
+<Document accessor="public" category="Function" name="SetMinCount"><summary>Set the minimum number of items should be displayed.</summary><param name="value">The minimum number of items should be displayed.</param><signature><![CDATA[void SetMinCount(
     vint value
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

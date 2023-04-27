@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetScreenCount" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeScreenService::GetScreenCount@::vl::vint()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetScreenCount"><summary>
  Get the number of all available screens.
  </summary><returns>The number of all available screens.</returns><signature><![CDATA[vint GetScreenCount(
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

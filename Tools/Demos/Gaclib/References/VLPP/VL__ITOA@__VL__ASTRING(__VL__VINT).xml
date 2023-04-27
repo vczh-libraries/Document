@@ -1,4 +1,4 @@
-<Document accessor="" category="Function" name="itoa" declFile="String.h" declId="FB$vl::itoa@::vl::AString(::vl::vint)[decl0]"><summary>Convert a signed interger to a string.</summary><returns>The converted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[AString itoa(
+<Document accessor="" category="Function" name="itoa"><summary>Convert a signed interger to a string.</summary><returns>The converted string.</returns><param name="number">The number to convert.</param><signature><![CDATA[AString itoa(
     vint number
 );
-]]></signature><seealsos><symbol name="AString" docId="vl::AString" declFile="String.h" declId="NI$vl::AString"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="AString" docId="vl::AString"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

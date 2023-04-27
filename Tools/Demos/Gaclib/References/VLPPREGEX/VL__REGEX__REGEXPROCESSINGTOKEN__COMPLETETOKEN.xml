@@ -1,4 +1,4 @@
-<Document accessor="public" category="Variable" name="completeToken" declFile="Regex.h" declId="NI$vl::regex::RegexProcessingToken::completeToken"><summary>
+<Document accessor="public" category="Variable" name="completeToken"><summary>
  The flag indicating if this token is completed, allowing to be updated by the callback.
  </summary><signature><![CDATA[bool completeToken;
 ]]></signature></Document>

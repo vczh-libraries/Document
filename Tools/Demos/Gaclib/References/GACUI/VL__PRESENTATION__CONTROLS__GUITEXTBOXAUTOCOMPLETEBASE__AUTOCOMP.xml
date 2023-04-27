@@ -1,2 +1,2 @@
-<Document accessor="public" category="Struct" name="AutoCompleteItem" declFile="GuiTextAutoComplete.h" declId="NI$vl::presentation::controls::GuiTextBoxAutoCompleteBase::AutoCompleteItem"><summary>Represents an auto complete candidate item.</summary><signature><![CDATA[struct AutoCompleteItem;
+<Document accessor="public" category="Struct" name="AutoCompleteItem"><summary>Represents an auto complete candidate item.</summary><signature><![CDATA[struct AutoCompleteItem;
 ]]></signature></Document>

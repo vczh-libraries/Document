@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Paint" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::Paint@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="Paint"><summary>
  Called when the window is painting.
  </summary><signature><![CDATA[void Paint(
 );

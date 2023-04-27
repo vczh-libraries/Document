@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="IsCustomFrameModeEnabled" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::IsCustomFrameModeEnabled@bool()[decl0]"><summary>
+<Document accessor="public" category="Function" name="IsCustomFrameModeEnabled"><summary>
  Test is the window customized frame mode enabled.
  </summary><returns>Returns true if the window customized frame mode is enabled.</returns><signature><![CDATA[bool IsCustomFrameModeEnabled(
 );

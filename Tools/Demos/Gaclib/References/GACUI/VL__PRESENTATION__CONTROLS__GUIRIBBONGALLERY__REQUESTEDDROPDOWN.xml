@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="RequestedDropdown" declFile="GuiRibbonControls.h" declId="NI$vl::presentation::controls::GuiRibbonGallery::RequestedDropdown"><summary>Dropdown button clicked event.</summary><signature><![CDATA[compositions::GuiNotifyEvent RequestedDropdown;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="RequestedDropdown"><summary>Dropdown button clicked event.</summary><signature><![CDATA[compositions::GuiNotifyEvent RequestedDropdown;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

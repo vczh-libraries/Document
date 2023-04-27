@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetHorizontalScroll" declFile="GuiContainerControls.h" declId="FB$vl::presentation::controls::GuiScrollView::GetHorizontalScroll@::vl::presentation::controls::GuiScroll *()[decl0]"><summary>Get the horizontal scroll control.</summary><returns>The horizontal scroll control.</returns><signature><![CDATA[GuiScroll * GetHorizontalScroll(
+<Document accessor="public" category="Function" name="GetHorizontalScroll"><summary>Get the horizontal scroll control.</summary><returns>The horizontal scroll control.</returns><signature><![CDATA[GuiScroll * GetHorizontalScroll(
 );
-]]></signature><seealsos><symbol name="GuiScroll" docId="vl::presentation::controls::GuiScroll" declFile="GuiScrollControls.h" declId="NI$vl::presentation::controls::GuiScroll"/></seealsos></Document>
+]]></signature><seealsos><symbol name="GuiScroll" docId="vl::presentation::controls::GuiScroll"/></seealsos></Document>

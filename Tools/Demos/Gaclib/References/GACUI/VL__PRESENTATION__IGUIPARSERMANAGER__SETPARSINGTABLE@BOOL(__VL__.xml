@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetParsingTable" declFile="GuiParserManager.h" declId="FB$vl::presentation::IGuiParserManager::SetParsingTable@bool(::vl::WString const &amp;, ::vl::Func&lt;::vl::Ptr&lt;::vl::presentation::IGuiParserManager::Table&gt;()&gt;)[decl0]"><summary>Set a parsing table loader by name.</summary><returns>Returns true if this operation succeeded.</returns><param name="name">The name.</param><param name="loader">The parsing table loader.</param><signature><![CDATA[bool SetParsingTable(
+<Document accessor="public" category="Function" name="SetParsingTable"><summary>Set a parsing table loader by name.</summary><returns>Returns true if this operation succeeded.</returns><param name="name">The name.</param><param name="loader">The parsing table loader.</param><signature><![CDATA[bool SetParsingTable(
     WString const & name,
     Func<Ptr<Table>(
 )> loader
 );
-]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="Table" declFile="GuiParserManager.h" declId="NI$vl::presentation::IGuiParserManager::Table"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func"/><symbol name="Ptr" docId="vl::Ptr"/><symbol name="WString" docId="vl::WString"/><symbol name="Table"/></seealsos></Document>

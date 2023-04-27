@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="CreateManualUnsignal" declFile="Threading.h" declId="FB$vl::EventObject::CreateManualUnsignal@bool(bool, ::vl::WString const &amp;)[decl0]"><summary>Create a manual unsignal event.</summary><returns>Returns true if this operation succeeded.</returns><param name="signaled">Set to true make the event signaled at the beginning.</param><param name="name">Name of the event. If it is not empty, than it is a global named mutex. This argument is only used in Windows.</param><signature><![CDATA[bool CreateManualUnsignal(
+<Document accessor="public" category="Function" name="CreateManualUnsignal"><summary>Create a manual unsignal event.</summary><returns>Returns true if this operation succeeded.</returns><param name="signaled">Set to true make the event signaled at the beginning.</param><param name="name">Name of the event. If it is not empty, than it is a global named mutex. This argument is only used in Windows.</param><signature><![CDATA[bool CreateManualUnsignal(
     bool signaled,
     WString const & name /* optional */
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

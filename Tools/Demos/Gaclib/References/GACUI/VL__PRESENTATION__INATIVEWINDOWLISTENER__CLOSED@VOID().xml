@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Closed" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::Closed@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="Closed"><summary>
  Called when the window is closed.
  </summary><signature><![CDATA[void Closed(
 );

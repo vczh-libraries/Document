@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetGroupChildrenProperty" declFile="GuiRibbonGalleryList.h" declId="FB$vl::presentation::controls::list::GroupedDataSource::SetGroupChildrenProperty@void(::vl::presentation::ItemProperty&lt;::vl::Ptr&lt;::vl::presentation::controls::list::GroupedDataSource::IValueEnumerable&gt;&gt; const &amp;)[decl0]"><summary>Get the group children property.</summary><param name="value">The children title property.</param><signature><![CDATA[void SetGroupChildrenProperty(
+<Document accessor="public" category="Function" name="SetGroupChildrenProperty"><summary>Get the group children property.</summary><param name="value">The children title property.</param><signature><![CDATA[void SetGroupChildrenProperty(
     ItemProperty<Ptr<IValueEnumerable>> const & value
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="ItemProperty" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::ItemProperty"/><symbol name="IValueEnumerable" declFile="GuiRibbonGalleryList.h" declId="NI$vl::presentation::controls::list::GroupedDataSource::IValueEnumerable"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="ItemProperty"/><symbol name="IValueEnumerable"/></seealsos></Document>

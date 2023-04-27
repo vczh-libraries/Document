@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetClientBounds" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeScreen::GetClientBounds@::vl::presentation::NativeRect()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetClientBounds"><summary>
  Get the bounds of the screen client area.
  </summary><returns>The bounds of the screen client area.</returns><signature><![CDATA[NativeRect GetClientBounds(
 );
-]]></signature><seealsos><symbol name="NativeRect" declFile="GuiTypes.h" declId="NI$vl::presentation::NativeRect"/></seealsos></Document>
+]]></signature><seealsos><symbol name="NativeRect"/></seealsos></Document>

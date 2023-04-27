@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="PreviewStarted" declFile="GuiRibbonGalleryList.h" declId="NI$vl::presentation::controls::GuiBindableRibbonGalleryList::PreviewStarted"><summary>Preview started event.</summary><signature><![CDATA[compositions::GuiItemNotifyEvent PreviewStarted;
-]]></signature><seealsos><symbol name="GuiItemNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiItemNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="PreviewStarted"><summary>Preview started event.</summary><signature><![CDATA[compositions::GuiItemNotifyEvent PreviewStarted;
+]]></signature><seealsos><symbol name="GuiItemNotifyEvent"/></seealsos></Document>

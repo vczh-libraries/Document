@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetRowsToTheTop" declFile="GuiGraphicsTableComposition.h" declId="FB$vl::presentation::compositions::GuiRowSplitterComposition::SetRowsToTheTop@void(::vl::vint)[decl0]"><summary>Set the number of rows that above the splitter.</summary><param name="value">The number of rows that above the splitter</param><signature><![CDATA[void SetRowsToTheTop(
+<Document accessor="public" category="Function" name="SetRowsToTheTop"><summary>Set the number of rows that above the splitter.</summary><param name="value">The number of rows that above the splitter</param><signature><![CDATA[void SetRowsToTheTop(
     vint value
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

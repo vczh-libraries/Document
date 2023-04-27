@@ -1,4 +1,4 @@
-<Document accessor="public" category="Variable" name="bottom" declFile="GuiTypes.h" declId="NI$vl::presentation::Margin_::bottom"><summary>
+<Document accessor="public" category="Variable" name="bottom"><summary>
  The bottom margin.
  </summary><signature><![CDATA[T bottom;
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document accessor="" category="Class" name="NotCopyable" declFile="Basic.h" declId="NI$vl::NotCopyable"><summary>Base type for all classes to stop generating default copy constructors.</summary><signature><![CDATA[class NotCopyable;
+<Document accessor="" category="Class" name="NotCopyable"><summary>Base type for all classes to stop generating default copy constructors.</summary><signature><![CDATA[class NotCopyable;
 ]]></signature></Document>

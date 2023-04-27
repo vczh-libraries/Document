@@ -1,4 +1,4 @@
-<Document accessor="" category="Class" name="IGuiAnimation" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::IGuiAnimation"><summary>Animation.</summary><signature><![CDATA[class IGuiAnimation
+<Document accessor="" category="Class" name="IGuiAnimation"><summary>Animation.</summary><signature><![CDATA[class IGuiAnimation
     : IDescriptable
     , Description<IGuiAnimation>;
-]]></signature><seealsos><symbol name="IGuiAnimation" docId="vl::presentation::controls::IGuiAnimation" declFile="GuiControlShared.h" declId="NI$vl::presentation::controls::IGuiAnimation"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::IDescriptable"/></basetypes></Document>
+]]></signature><seealsos><symbol name="IGuiAnimation" docId="vl::presentation::controls::IGuiAnimation"/></seealsos><basetypes><symbol name="Description" docId="vl::reflection::Description"/><symbol name="IDescriptable" docId="vl::reflection::IDescriptable"/></basetypes></Document>

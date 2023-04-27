@@ -1,4 +1,4 @@
-<Document accessor="" category="Function" name="DecompressStream" declFile="CompressionStream.h" declId="FB$vl::stream::DecompressStream@void(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)[decl0]"><summary>Decompress data from a <b>readable</b> input stream (with compressed data) to a <b>writable</b> output stream (with uncompressed data).</summary><returns>Data copied in bytes.</returns><param name="inputStream">The <b>readable</b> input stream.</param><param name="outputStream">The <b>writable</b> output stream.</param><remarks>
+<Document accessor="" category="Function" name="DecompressStream"><summary>Decompress data from a <b>readable</b> input stream (with compressed data) to a <b>writable</b> output stream (with uncompressed data).</summary><returns>Data copied in bytes.</returns><param name="inputStream">The <b>readable</b> input stream.</param><param name="outputStream">The <b>writable</b> output stream.</param><remarks>
  Data is compressed in multiple batches,
  the is expected input stream to have data in multiple parts.
  In each part, the first 4 bytes is the data before compression in bytes.
@@ -7,4 +7,4 @@
     stream::IStream & inputStream,
     stream::IStream & outputStream
 );
-]]></signature><seealsos><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IStream" docId="vl::stream::IStream"/></seealsos></Document>

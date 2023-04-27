@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetExpanding" declFile="GuiTreeViewControls.h" declId="FB$vl::presentation::controls::tree::INodeProvider::SetExpanding@void(bool)[decl0]"><summary>Set the expanding state of this node.</summary><param name="value">Set to true to expand this node.</param><signature><![CDATA[void SetExpanding(
+<Document accessor="public" category="Function" name="SetExpanding"><summary>Set the expanding state of this node.</summary><param name="value">Set to true to expand this node.</param><signature><![CDATA[void SetExpanding(
     bool value
 );
 ]]></signature></Document>

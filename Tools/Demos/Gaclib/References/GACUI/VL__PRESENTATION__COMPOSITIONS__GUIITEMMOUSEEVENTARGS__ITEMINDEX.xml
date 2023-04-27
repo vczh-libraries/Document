@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="itemIndex" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiItemMouseEventArgs::itemIndex"><summary>Item index.</summary><signature><![CDATA[vint itemIndex;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="itemIndex"><summary>Item index.</summary><signature><![CDATA[vint itemIndex;
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

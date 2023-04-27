@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="TextEditPreview" declFile="GuiTextGeneralOperations.h" declId="FB$vl::presentation::controls::ICommonTextEditCallback::TextEditPreview@void(::vl::presentation::controls::ICommonTextEditCallback::TextEditPreviewStruct &amp;)[decl0]"><summary>Called before the text is edited.</summary><param name="arguments">The data for this callback.</param><signature><![CDATA[void TextEditPreview(
+<Document accessor="public" category="Function" name="TextEditPreview"><summary>Called before the text is edited.</summary><param name="arguments">The data for this callback.</param><signature><![CDATA[void TextEditPreview(
     TextEditPreviewStruct & arguments
 );
-]]></signature><seealsos><symbol name="TextEditPreviewStruct" docId="vl::presentation::controls::ICommonTextEditCallback::TextEditPreviewStruct" declFile="GuiTextGeneralOperations.h" declId="NI$vl::presentation::controls::ICommonTextEditCallback::TextEditPreviewStruct"/></seealsos></Document>
+]]></signature><seealsos><symbol name="TextEditPreviewStruct" docId="vl::presentation::controls::ICommonTextEditCallback::TextEditPreviewStruct"/></seealsos></Document>

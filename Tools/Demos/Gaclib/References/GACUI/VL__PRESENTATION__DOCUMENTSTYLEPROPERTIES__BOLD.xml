@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="bold" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentStyleProperties::bold"><summary>Bold.</summary><signature><![CDATA[Nullable<bool> bold;
-]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable" declFile="Basic.h" declId="NI$vl::Nullable"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="bold"><summary>Bold.</summary><signature><![CDATA[Nullable<bool> bold;
+]]></signature><seealsos><symbol name="Nullable" docId="vl::Nullable"/></seealsos></Document>

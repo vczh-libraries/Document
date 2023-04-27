@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetSelectionModel" declFile="GuiDocumentViewer.h" declId="FB$vl::presentation::controls::GuiDocumentCommonInterface::SetSelectionModel@void(::vl::Ptr&lt;::vl::presentation::DocumentModel&gt;)[decl0]"><summary>Set the selected model.</summary><param name="value">The selected model.</param><signature><![CDATA[void SetSelectionModel(
+<Document accessor="public" category="Function" name="SetSelectionModel"><summary>Set the selected model.</summary><param name="value">The selected model.</param><signature><![CDATA[void SetSelectionModel(
     Ptr<DocumentModel> value
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="DocumentModel" docId="vl::presentation::DocumentModel" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="DocumentModel" docId="vl::presentation::DocumentModel"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetVerticalAlwaysVisible" declFile="GuiContainerControls.h" declId="FB$vl::presentation::controls::GuiScrollView::SetVerticalAlwaysVisible@void(bool)[decl0]"><summary>Set is the vertical scroll bar always visible even the content doesn&apos;t exceed the view bounds.</summary><param name="value">Set to true if the vertical scroll bar always visible even the content doesn&apos;t exceed the view bounds</param><signature><![CDATA[void SetVerticalAlwaysVisible(
+<Document accessor="public" category="Function" name="SetVerticalAlwaysVisible"><summary>Set is the vertical scroll bar always visible even the content doesn&apos;t exceed the view bounds.</summary><param name="value">Set to true if the vertical scroll bar always visible even the content doesn&apos;t exceed the view bounds</param><signature><![CDATA[void SetVerticalAlwaysVisible(
     bool value
 );
 ]]></signature></Document>

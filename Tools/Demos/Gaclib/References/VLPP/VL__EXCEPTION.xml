@@ -1,3 +1,3 @@
-<Document accessor="" category="Class" name="Exception" declFile="Exception.h" declId="NI$vl::Exception"><summary>Base type of all exceptions.</summary><signature><![CDATA[class Exception
+<Document accessor="" category="Class" name="Exception"><summary>Base type of all exceptions.</summary><signature><![CDATA[class Exception
     : Object;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object"/></basetypes></Document>

@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetThickness" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiInnerShadowElement::SetThickness@void(::vl::vint)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetThickness"><summary>
  Set the thickness.
  </summary><param name="value">The new thickness.</param><signature><![CDATA[void SetThickness(
     vint value
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

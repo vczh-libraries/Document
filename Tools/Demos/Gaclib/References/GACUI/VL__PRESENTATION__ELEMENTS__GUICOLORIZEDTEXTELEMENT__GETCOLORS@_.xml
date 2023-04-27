@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetColors" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::GuiColorizedTextElement::GetColors@::vl::presentation::elements::GuiColorizedTextElement::ColorArray const &amp;()[decl0]"><summary>
- Get the binded color table. Use <symbol name="colorIndex" docId="vl::presentation::elements::text::CharAtt::colorIndex" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::text::CharAtt::colorIndex"/> to use colors in this color table.
+<Document accessor="public" category="Function" name="GetColors"><summary>
+ Get the binded color table. Use <symbol name="colorIndex" docId="vl::presentation::elements::text::CharAtt::colorIndex"/> to use colors in this color table.
  </summary><returns>The binded color table.</returns><signature><![CDATA[ColorArray const & GetColors(
 );
-]]></signature><seealsos><symbol name="ColorArray" declFile="GuiGraphicsTextElement.h" declId="NI$vl::presentation::elements::GuiColorizedTextElement::ColorArray"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ColorArray"/></seealsos></Document>

@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="unresolvedMembers" declFile="WfRuntimeAssembly.h" declId="NI$vl::workflow::runtime::WfAssemblyLoadErrors::unresolvedMembers"><summary>All unresolvable members in resolved types.</summary><signature><![CDATA[collections::List<WString> unresolvedMembers;
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="List" docId="vl::collections::List" declFile="List.h" declId="NI$vl::collections::List"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="unresolvedMembers"><summary>All unresolvable members in resolved types.</summary><signature><![CDATA[collections::List<WString> unresolvedMembers;
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/><symbol name="List" docId="vl::collections::List"/></seealsos></Document>

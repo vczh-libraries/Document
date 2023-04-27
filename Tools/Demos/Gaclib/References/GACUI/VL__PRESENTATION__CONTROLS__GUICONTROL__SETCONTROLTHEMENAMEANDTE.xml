@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="SetControlThemeNameAndTemplate" declFile="GuiBasicControls.h" declId="FB$vl::presentation::controls::GuiControl::SetControlThemeNameAndTemplate@void(::vl::presentation::theme::ThemeName, ::vl::presentation::controls::GuiControl::ControlTemplatePropertyType const &amp;)[decl0]"><summary>Set the associated control theme name and template and the same time.</summary><param name="themeNameValue">The theme name.</param><param name="controlTemplateValue">The control template.</param><signature><![CDATA[void SetControlThemeNameAndTemplate(
+<Document accessor="public" category="Function" name="SetControlThemeNameAndTemplate"><summary>Set the associated control theme name and template and the same time.</summary><param name="themeNameValue">The theme name.</param><param name="controlTemplateValue">The control template.</param><signature><![CDATA[void SetControlThemeNameAndTemplate(
     theme::ThemeName themeNameValue,
     ControlTemplatePropertyType const & controlTemplateValue
 );
-]]></signature><seealsos><symbol name="ControlTemplatePropertyType" declFile="GuiBasicControls.h" declId="NI$vl::presentation::controls::GuiControl::ControlTemplatePropertyType"/><symbol name="ThemeName" declFile="GuiThemeStyleFactory.h" declId="NI$vl::presentation::theme::ThemeName"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ControlTemplatePropertyType"/><symbol name="ThemeName"/></seealsos></Document>

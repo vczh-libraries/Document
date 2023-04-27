@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="$__ctor" declFile="GuiTreeViewControls.h" declId="FB$vl::presentation::controls::tree::MemoryNodeProvider::$__ctor@(::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt;)[decl0]"><summary>Create a node provider with a data object.</summary><param name="_data">The data object.</param><signature><![CDATA[ MemoryNodeProvider(
+<Document accessor="public" category="Function" name="$__ctor"><summary>Create a node provider with a data object.</summary><param name="_data">The data object.</param><signature><![CDATA[ MemoryNodeProvider(
     Ptr<DescriptableObject> _data /* optional */
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="DescriptableObject" docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="DescriptableObject" docId="vl::reflection::DescriptableObject"/></seealsos></Document>

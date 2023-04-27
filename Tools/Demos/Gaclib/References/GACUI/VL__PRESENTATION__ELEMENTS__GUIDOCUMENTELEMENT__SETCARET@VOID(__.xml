@@ -1,8 +1,8 @@
-<Document accessor="public" category="Function" name="SetCaret" declFile="GuiGraphicsDocumentElement.h" declId="FB$vl::presentation::elements::GuiDocumentElement::SetCaret@void(::vl::presentation::TextPos, ::vl::presentation::TextPos, bool)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetCaret"><summary>
  Set the end position of the selection area.
  </summary><param name="begin">The begin position of the selection area.</param><param name="end">The end position of the selection area.</param><param name="frontSide">Set to true to show the caret for the character before it. This argument is ignored if begin and end are the same.</param><signature><![CDATA[void SetCaret(
     TextPos begin,
     TextPos end,
     bool frontSide
 );
-]]></signature><seealsos><symbol name="TextPos" docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>
+]]></signature><seealsos><symbol name="TextPos" docId="vl::presentation::TextPos"/></seealsos></Document>

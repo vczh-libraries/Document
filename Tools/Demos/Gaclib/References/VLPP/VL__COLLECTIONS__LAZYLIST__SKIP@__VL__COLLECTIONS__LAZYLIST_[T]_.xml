@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Skip" declFile="Operation.h" declId="FB$vl::collections::LazyList::Skip@::vl::collections::LazyList&lt;[T]&gt;(::vl::vint)[impl0]"><summary>Create a new lazy list with a postfix of the lazy list.</summary><returns>The created lazy list.</returns><param name="count">The number of elements to skip.</param><example index="0"/><signature><![CDATA[LazyList<T> Skip(
+<Document accessor="public" category="Function" name="Skip"><summary>Create a new lazy list with a postfix of the lazy list.</summary><returns>The created lazy list.</returns><param name="count">The number of elements to skip.</param><example index="0"/><signature><![CDATA[LazyList<T> Skip(
     vint count
 ) const;
-]]></signature><seealsos><symbol name="LazyList" docId="vl::collections::LazyList" declFile="Operation.h" declId="NI$vl::collections::LazyList"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="LazyList" docId="vl::collections::LazyList"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

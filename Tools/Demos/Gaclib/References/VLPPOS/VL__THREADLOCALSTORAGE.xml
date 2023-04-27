@@ -1,7 +1,7 @@
-<Document accessor="" category="Class" name="ThreadLocalStorage" declFile="Threading.h" declId="NI$vl::ThreadLocalStorage"><summary>Thread local storage operations.</summary><remarks>
+<Document accessor="" category="Class" name="ThreadLocalStorage"><summary>Thread local storage operations.</summary><remarks>
  This class is designed to define global variables.
  Dynamically allocation will result in undefined behavior.
  </remarks><signature><![CDATA[class ThreadLocalStorage
     : Object
     , NotCopyable;
-]]></signature><basetypes><symbol name="NotCopyable" docId="vl::NotCopyable" declFile="Basic.h" declId="NI$vl::NotCopyable"/><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
+]]></signature><basetypes><symbol name="NotCopyable" docId="vl::NotCopyable"/><symbol name="Object" docId="vl::Object"/></basetypes></Document>

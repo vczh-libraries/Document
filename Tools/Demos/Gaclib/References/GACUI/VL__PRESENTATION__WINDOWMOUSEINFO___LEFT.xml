@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="left" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::WindowMouseInfo_::left"><summary>True if the left mouse button is pressed.</summary><signature><![CDATA[bool left;
+<Document accessor="public" category="Variable" name="left"><summary>True if the left mouse button is pressed.</summary><signature><![CDATA[bool left;
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="handled" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiEventArgs::handled"><summary>Set this field to true will stop the event routing. This is a signal that the event is properly handeled, and the event handler want to override the default behavior.</summary><signature><![CDATA[bool handled;
+<Document accessor="public" category="Variable" name="handled"><summary>Set this field to true will stop the event routing. This is a signal that the event is properly handeled, and the event handler want to override the default behavior.</summary><signature><![CDATA[bool handled;
 ]]></signature></Document>

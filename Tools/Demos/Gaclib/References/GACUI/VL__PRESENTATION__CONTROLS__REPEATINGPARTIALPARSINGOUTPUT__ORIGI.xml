@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="originalNode" declFile="GuiLanguageOperations.h" declId="NI$vl::presentation::controls::RepeatingPartialParsingOutput::originalNode"><summary>The original context in the syntax tree.</summary><signature><![CDATA[Ptr<parsing::ParsingTreeObject> originalNode;
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="ParsingTreeObject" docId="vl::parsing::ParsingTreeObject" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTreeObject"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="originalNode"><summary>The original context in the syntax tree.</summary><signature><![CDATA[Ptr<parsing::ParsingTreeObject> originalNode;
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="ParsingTreeObject" docId="vl::parsing::ParsingTreeObject"/></seealsos></Document>

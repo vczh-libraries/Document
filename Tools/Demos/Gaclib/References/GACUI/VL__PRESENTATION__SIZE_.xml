@@ -1,4 +1,4 @@
-<Document accessor="" category="Struct" name="Size_" declFile="GuiTypes.h" declId="NI$vl::presentation::Size_"><summary>
+<Document accessor="" category="Struct" name="Size_"><summary>
  Represents a size in a two dimensions space.
  </summary><typeparam name="T">Type of the coordinate.</typeparam><signature><![CDATA[template <
     typename T

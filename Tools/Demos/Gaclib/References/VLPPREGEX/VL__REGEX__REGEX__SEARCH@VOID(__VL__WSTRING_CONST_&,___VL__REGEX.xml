@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="Search" declFile="Regex.h" declId="FB$vl::regex::Regex::Search@void(::vl::WString const &amp;, ::vl::regex::RegexMatch::List &amp;)[decl0]"><summary>Find all matched fragments in the given text, returning all matched sub strings.</summary><param name="text">The text to match.</param><param name="matches">Returns all succeeded matches.</param><example index="0"/><signature><![CDATA[void Search(
+<Document accessor="public" category="Function" name="Search"><summary>Find all matched fragments in the given text, returning all matched sub strings.</summary><param name="text">The text to match.</param><param name="matches">Returns all succeeded matches.</param><example index="0"/><signature><![CDATA[void Search(
     WString const & text,
     RegexMatch::List & matches
 ) const;
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="List" declFile="Regex.h" declId="NI$vl::regex::RegexMatch::List"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/><symbol name="List"/></seealsos></Document>

@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetPreferredContentWidth" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiTooltip::SetPreferredContentWidth@void(::vl::vint)[decl0]"><summary>Set the preferred content width.</summary><param name="value">The preferred content width.</param><signature><![CDATA[void SetPreferredContentWidth(
+<Document accessor="public" category="Function" name="SetPreferredContentWidth"><summary>Set the preferred content width.</summary><param name="value">The preferred content width.</param><signature><![CDATA[void SetPreferredContentWidth(
     vint value
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

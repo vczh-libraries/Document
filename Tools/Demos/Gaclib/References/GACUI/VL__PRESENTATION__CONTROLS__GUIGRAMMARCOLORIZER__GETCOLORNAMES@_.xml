@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetColorNames" declFile="GuiLanguageColorizer.h" declId="FB$vl::presentation::controls::GuiGrammarColorizer::GetColorNames@::vl::collections::SortedList&lt;::vl::WString&gt; const &amp;()[decl0]"><summary>Get all color names.</summary><returns>All color names.</returns><signature><![CDATA[collections::SortedList<WString> const & GetColorNames(
+<Document accessor="public" category="Function" name="GetColorNames"><summary>Get all color names.</summary><returns>All color names.</returns><signature><![CDATA[collections::SortedList<WString> const & GetColorNames(
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="SortedList" docId="vl::collections::SortedList" declFile="List.h" declId="NI$vl::collections::SortedList"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/><symbol name="SortedList" docId="vl::collections::SortedList"/></seealsos></Document>

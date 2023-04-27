@@ -1,6 +1,6 @@
-<Document accessor="" category="Class" name="GuiPartialViewComposition" declFile="GuiGraphicsSpecializedComposition.h" declId="NI$vl::presentation::compositions::GuiPartialViewComposition"><summary>
+<Document accessor="" category="Class" name="GuiPartialViewComposition"><summary>
  Represents a composition that its location and size are decided by the client area of the parent composition by setting ratios.
  </summary><signature><![CDATA[class GuiPartialViewComposition
     : GuiGraphicsSite
     , Description<GuiPartialViewComposition>;
-]]></signature><seealsos><symbol name="GuiPartialViewComposition" docId="vl::presentation::compositions::GuiPartialViewComposition" declFile="GuiGraphicsSpecializedComposition.h" declId="NI$vl::presentation::compositions::GuiPartialViewComposition"/></seealsos><basetypes><symbol name="GuiGraphicsSite" docId="vl::presentation::compositions::GuiGraphicsSite" declFile="GuiGraphicsCompositionBase.h" declId="NI$vl::presentation::compositions::GuiGraphicsSite"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiPartialViewComposition" docId="vl::presentation::compositions::GuiPartialViewComposition"/></seealsos><basetypes><symbol name="GuiGraphicsSite" docId="vl::presentation::compositions::GuiGraphicsSite"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

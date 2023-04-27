@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="Get" declFile="Threading.h" declId="FB$vl::ThreadVariable::Get@[T] &amp;()[impl0]"><summary>Get the stored data.</summary><returns>The stored ata.</returns><signature><![CDATA[T & Get(
+<Document accessor="public" category="Function" name="Get"><summary>Get the stored data.</summary><returns>The stored ata.</returns><signature><![CDATA[T & Get(
 );
 ]]></signature></Document>

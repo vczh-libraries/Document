@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="ShowDeactivated" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::ShowDeactivated@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="ShowDeactivated"><summary>
  Show the window without activation.
  </summary><signature><![CDATA[void ShowDeactivated(
 );

@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetWindowMode" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetWindowMode@::vl::presentation::INativeWindow::WindowMode()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetWindowMode"><summary>
  Get the window mode. 
  </summary><returns>The window mode.</returns><signature><![CDATA[WindowMode GetWindowMode(
 );
-]]></signature><seealsos><symbol name="WindowMode" docId="vl::presentation::INativeWindow::WindowMode" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::INativeWindow::WindowMode"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WindowMode" docId="vl::presentation::INativeWindow::WindowMode"/></seealsos></Document>

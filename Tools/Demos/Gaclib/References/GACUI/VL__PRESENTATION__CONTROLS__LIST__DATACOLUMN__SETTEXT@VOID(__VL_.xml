@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetText" declFile="GuiBindableDataGrid.h" declId="FB$vl::presentation::controls::list::DataColumn::SetText@void(::vl::WString const &amp;)[decl0]"><summary>Set the text for the column.</summary><param name="value">The text for the column.</param><signature><![CDATA[void SetText(
+<Document accessor="public" category="Function" name="SetText"><summary>Set the text for the column.</summary><param name="value">The text for the column.</param><signature><![CDATA[void SetText(
     WString const & value
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

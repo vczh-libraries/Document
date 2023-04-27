@@ -1,4 +1,4 @@
-<Document accessor="public" category="Variable" name="underline" declFile="GuiTypes.h" declId="NI$vl::presentation::FontProperties::underline"><summary>
+<Document accessor="public" category="Variable" name="underline"><summary>
  True if the font has a underline.
  </summary><signature><![CDATA[bool underline;
 ]]></signature></Document>

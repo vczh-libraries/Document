@@ -1,5 +1,5 @@
-<Document accessor="" category="Class" name="DataFilterBase" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataFilterBase"><summary>Base class for <symbol name="IDataFilter" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::IDataFilter"/>.</summary><signature><![CDATA[class DataFilterBase
+<Document accessor="" category="Class" name="DataFilterBase"><summary>Base class for <symbol name="IDataFilter"/>.</summary><signature><![CDATA[class DataFilterBase
     : Object
     , IDataFilter
     , Description<DataFilterBase>;
-]]></signature><seealsos><symbol name="DataFilterBase" docId="vl::presentation::controls::list::DataFilterBase" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::DataFilterBase"/></seealsos><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/><symbol name="IDataFilter" declFile="GuiBindableDataGrid.h" declId="NI$vl::presentation::controls::list::IDataFilter"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="DataFilterBase" docId="vl::presentation::controls::list::DataFilterBase"/></seealsos><basetypes><symbol name="Object" docId="vl::Object"/><symbol name="IDataFilter"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

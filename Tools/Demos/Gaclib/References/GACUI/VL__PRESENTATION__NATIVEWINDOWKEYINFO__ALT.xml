@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="alt" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::NativeWindowKeyInfo::alt"><summary>True if the alt button is pressed.</summary><signature><![CDATA[bool alt;
+<Document accessor="public" category="Variable" name="alt"><summary>True if the alt button is pressed.</summary><signature><![CDATA[bool alt;
 ]]></signature></Document>

@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="styles" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel::styles"><summary>All available styles. These will not be persistant.</summary><signature><![CDATA[StyleMap styles;
-]]></signature><seealsos><symbol name="StyleMap" declFile="GuiDocument.h" declId="NI$vl::presentation::DocumentModel::StyleMap"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="styles"><summary>All available styles. These will not be persistant.</summary><signature><![CDATA[StyleMap styles;
+]]></signature><seealsos><symbol name="StyleMap"/></seealsos></Document>

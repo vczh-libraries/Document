@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="bounds" declFile="GuiGraphicsWindowsGDI.h" declId="NI$vl::presentation::elements::GuiGDIElementEventArgs::bounds"><summary>The range for rendering.</summary><signature><![CDATA[Rect bounds;
-]]></signature><seealsos><symbol name="Rect" declFile="GuiTypes.h" declId="NI$vl::presentation::Rect"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="bounds"><summary>The range for rendering.</summary><signature><![CDATA[Rect bounds;
+]]></signature><seealsos><symbol name="Rect"/></seealsos></Document>

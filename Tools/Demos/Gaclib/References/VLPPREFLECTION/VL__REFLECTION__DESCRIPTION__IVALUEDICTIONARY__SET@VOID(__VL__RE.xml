@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="Set" declFile="GuiTypeDescriptorPredefined.h" declId="FB$vl::reflection::description::IValueDictionary::Set@void(::vl::reflection::description::Value const &amp;, ::vl::reflection::description::Value const &amp;)[decl0]"><summary>Replace the value associated to a specified key.</summary><returns>Returns true if the value is replaced.</returns><param name="key">The key to find. If the key does not exist, it will be added to the dictionary.</param><param name="value">The associated value to replace.</param><signature><![CDATA[void Set(
+<Document accessor="public" category="Function" name="Set"><summary>Replace the value associated to a specified key.</summary><returns>Returns true if the value is replaced.</returns><param name="key">The key to find. If the key does not exist, it will be added to the dictionary.</param><param name="value">The associated value to replace.</param><signature><![CDATA[void Set(
     Value const & key,
     Value const & value
 );
-]]></signature><seealsos><symbol name="Value" docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Value" docId="vl::reflection::description::Value"/></seealsos></Document>

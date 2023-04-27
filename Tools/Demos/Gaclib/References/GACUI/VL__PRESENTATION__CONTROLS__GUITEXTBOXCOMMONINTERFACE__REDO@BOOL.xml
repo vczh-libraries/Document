@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="Redo" declFile="GuiTextCommonInterface.h" declId="FB$vl::presentation::controls::GuiTextBoxCommonInterface::Redo@bool()[decl0]"><summary>Perform the redo action.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Redo(
+<Document accessor="public" category="Function" name="Redo"><summary>Perform the redo action.</summary><returns>Returns true if this operation succeeded.</returns><signature><![CDATA[bool Redo(
 );
 ]]></signature></Document>

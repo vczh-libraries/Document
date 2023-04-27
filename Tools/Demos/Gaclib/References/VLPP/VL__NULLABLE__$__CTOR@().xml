@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="$__ctor" declFile="Basic.h" declId="FB$vl::Nullable::$__ctor@()[decl0]"><summary>Create a null value.</summary><signature><![CDATA[ Nullable(
+<Document accessor="public" category="Function" name="$__ctor"><summary>Create a null value.</summary><signature><![CDATA[ Nullable(
 );
 ]]></signature></Document>

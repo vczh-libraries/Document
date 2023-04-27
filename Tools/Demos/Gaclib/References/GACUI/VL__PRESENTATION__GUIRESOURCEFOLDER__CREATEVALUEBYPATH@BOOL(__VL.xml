@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="CreateValueByPath" declFile="GuiResource.h" declId="FB$vl::presentation::GuiResourceFolder::CreateValueByPath@bool(::vl::WString const &amp;, ::vl::WString const &amp;, ::vl::Ptr&lt;::vl::reflection::DescriptableObject&gt;)[decl0]"><summary>Create a contained resource object using a path like &quot;Packages\Application\Name&quot;.</summary><returns>Returns true if this operation succeeded.</returns><param name="path">The path.</param><param name="typeName">The type name of this contained object.</param><param name="value">The contained object.</param><signature><![CDATA[bool CreateValueByPath(
+<Document accessor="public" category="Function" name="CreateValueByPath"><summary>Create a contained resource object using a path like &quot;Packages\Application\Name&quot;.</summary><returns>Returns true if this operation succeeded.</returns><param name="path">The path.</param><param name="typeName">The type name of this contained object.</param><param name="value">The contained object.</param><signature><![CDATA[bool CreateValueByPath(
     WString const & path,
     WString const & typeName,
     Ptr<DescriptableObject> value
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="DescriptableObject" docId="vl::reflection::DescriptableObject" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::DescriptableObject"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="WString" docId="vl::WString"/><symbol name="DescriptableObject" docId="vl::reflection::DescriptableObject"/></seealsos></Document>

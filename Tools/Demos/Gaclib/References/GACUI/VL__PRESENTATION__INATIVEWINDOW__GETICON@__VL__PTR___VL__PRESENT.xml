@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetIcon" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::GetIcon@::vl::Ptr&lt;::vl::presentation::GuiImageData&gt;()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetIcon"><summary>
  Get the icon.
  </summary><returns>Returns the icon.</returns><signature><![CDATA[Ptr<GuiImageData> GetIcon(
 );
-]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr" declFile="Pointer.h" declId="NI$vl::Ptr"/><symbol name="GuiImageData" docId="vl::presentation::GuiImageData" declFile="GuiResource.h" declId="NI$vl::presentation::GuiImageData"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Ptr" docId="vl::Ptr"/><symbol name="GuiImageData" docId="vl::presentation::GuiImageData"/></seealsos></Document>

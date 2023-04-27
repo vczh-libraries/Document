@@ -1,4 +1,4 @@
-<Document accessor="" category="Function" name="CopyFrom" declFile="OperationCopyFrom.h" declId="FB$vl::collections::CopyFrom@void([Ds] &amp;, [S] const *, ::vl::vint, bool)[impl0]"><summary>Copy containers.</summary><typeparam name="Ds">Type of the target container.</typeparam><typeparam name="S">Type of values in the source container.</typeparam><param name="ds">The target container.</param><param name="buffer">Pointer to source values.</param><param name="count">The number of values to copy.</param><param name="append">Set to true to perform appending instead of replacing.</param><signature><![CDATA[template <
+<Document accessor="" category="Function" name="CopyFrom"><summary>Copy containers.</summary><typeparam name="Ds">Type of the target container.</typeparam><typeparam name="S">Type of values in the source container.</typeparam><param name="ds">The target container.</param><param name="buffer">Pointer to source values.</param><param name="count">The number of values to copy.</param><param name="append">Set to true to perform appending instead of replacing.</param><signature><![CDATA[template <
     typename Ds, 
     typename S
 >
@@ -8,4 +8,4 @@ void CopyFrom(
     vint count,
     bool append /* optional */
 );
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

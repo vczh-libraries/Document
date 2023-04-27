@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="NotifyScrollUp" declFile="GuiControlShared.h" declId="FB$vl::presentation::controls::IRibbonGalleryCommandExecutor::NotifyScrollUp@void()[decl0]"><summary>Called when the scroll up button is clicked.</summary><signature><![CDATA[void NotifyScrollUp(
+<Document accessor="public" category="Function" name="NotifyScrollUp"><summary>Called when the scroll up button is clicked.</summary><signature><![CDATA[void NotifyScrollUp(
 );
 ]]></signature></Document>

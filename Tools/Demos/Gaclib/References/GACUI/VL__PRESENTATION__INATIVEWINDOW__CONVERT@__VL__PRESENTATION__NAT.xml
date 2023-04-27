@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="Convert" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindow::Convert@::vl::presentation::NativePoint(::vl::presentation::Point)[decl0]"><summary>
+<Document accessor="public" category="Function" name="Convert"><summary>
  Convert point from GUI coordinate to native coordinate.
  </summary><returns>The converted result.</returns><param name="value">The coordinate to convert.</param><signature><![CDATA[NativePoint Convert(
     Point value
 );
-]]></signature><seealsos><symbol name="NativePoint" declFile="GuiTypes.h" declId="NI$vl::presentation::NativePoint"/><symbol name="Point" declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/></seealsos></Document>
+]]></signature><seealsos><symbol name="NativePoint"/><symbol name="Point"/></seealsos></Document>

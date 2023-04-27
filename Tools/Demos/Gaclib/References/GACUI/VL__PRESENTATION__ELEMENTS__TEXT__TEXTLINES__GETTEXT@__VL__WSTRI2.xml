@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="GetText" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLines::GetText@::vl::WString()[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetText"><summary>
  Returns the whole string in the text lines.
  </summary><returns>The string.</returns><signature><![CDATA[WString GetText(
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

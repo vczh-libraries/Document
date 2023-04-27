@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="HorizontalWheel" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::HorizontalWheel@void(::vl::presentation::NativeWindowMouseInfo const &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="HorizontalWheel"><summary>
  Called when the horizontal mouse wheel scrolls.
  </summary><param name="info">Detailed information to this message.</param><signature><![CDATA[void HorizontalWheel(
     NativeWindowMouseInfo const & info
 );
-]]></signature><seealsos><symbol name="NativeWindowMouseInfo" declFile="GuiNativeWindow.h" declId="NI$vl::presentation::NativeWindowMouseInfo"/></seealsos></Document>
+]]></signature><seealsos><symbol name="NativeWindowMouseInfo"/></seealsos></Document>

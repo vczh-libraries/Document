@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="LargeImageChanged" declFile="GuiMenuControls.h" declId="NI$vl::presentation::controls::GuiMenuButton::LargeImageChanged"><summary>Large image changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent LargeImageChanged;
-]]></signature><seealsos><symbol name="GuiNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="LargeImageChanged"><summary>Large image changed event.</summary><signature><![CDATA[compositions::GuiNotifyEvent LargeImageChanged;
+]]></signature><seealsos><symbol name="GuiNotifyEvent"/></seealsos></Document>

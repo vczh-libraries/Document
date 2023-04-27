@@ -1,8 +1,8 @@
-<Document accessor="" category="Class" name="RepeatingTaskExecutor" declFile="Threading.h" declId="NI$vl::RepeatingTaskExecutor"><summary>
+<Document accessor="" category="Class" name="RepeatingTaskExecutor"><summary>
  Queued task executor. It is different from a thread because:
  <ul><li>Task execution is single threaded.</li><li>If you queue a task, it will override all unexecuted queued tasks.</li></ul></summary><typeparam name="T">The type of the argument to run a task.</typeparam><signature><![CDATA[template <
     typename T
 >
 class RepeatingTaskExecutor
     : Object;
-]]></signature><basetypes><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
+]]></signature><basetypes><symbol name="Object" docId="vl::Object"/></basetypes></Document>

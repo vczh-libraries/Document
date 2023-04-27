@@ -1,8 +1,8 @@
-<Document accessor="public" category="Function" name="ShowModalAndDelete" declFile="GuiWindowControls.h" declId="FB$vl::presentation::controls::GuiWindow::ShowModalAndDelete@void(::vl::presentation::controls::GuiWindow *, ::vl::Func&lt;void()&gt; const &amp;)[decl0]"><summary>
+<Document accessor="public" category="Function" name="ShowModalAndDelete"><summary>
  Show a model window, get a callback when the window is closed, and then delete itself.
  </summary><param name="owner">The window to disable as a parent window.</param><param name="callback">The callback to call after the window is closed.</param><signature><![CDATA[void ShowModalAndDelete(
     GuiWindow * owner,
     Func<void(
 )> const & callback
 );
-]]></signature><seealsos><symbol name="Func" declFile="Function.h" declId="NF[0]$vl::Func"/><symbol name="GuiWindow" docId="vl::presentation::controls::GuiWindow" declFile="GuiWindowControls.h" declId="NI$vl::presentation::controls::GuiWindow"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Func"/><symbol name="GuiWindow" docId="vl::presentation::controls::GuiWindow"/></seealsos></Document>

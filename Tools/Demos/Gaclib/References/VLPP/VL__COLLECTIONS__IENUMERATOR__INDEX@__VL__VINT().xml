@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="Index" declFile="Interfaces.h" declId="FB$vl::collections::IEnumerator::Index@::vl::vint()[decl0]"><summary>Get the position of the current value in the enumerator.</summary><returns>The position of the current value.</returns><remarks>
- After calling <symbol name="CreateEnumerator" docId="vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator&lt;[T]&gt; *()" declFile="Interfaces.h" declId="FB$vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator&lt;[T]&gt; *()[decl0]"/>, <symbol name="Next" docId="vl::collections::IEnumerator::Next@bool()" declFile="Interfaces.h" declId="FB$vl::collections::IEnumerator::Next@bool()[decl0]"/> need to be called to make the first value available.
- Index will be increased after each time <symbol name="Next" docId="vl::collections::IEnumerator::Next@bool()" declFile="Interfaces.h" declId="FB$vl::collections::IEnumerator::Next@bool()[decl0]"/> is called with true returned.
+<Document accessor="public" category="Function" name="Index"><summary>Get the position of the current value in the enumerator.</summary><returns>The position of the current value.</returns><remarks>
+ After calling <symbol name="CreateEnumerator" docId="vl::collections::IEnumerable::CreateEnumerator@::vl::collections::IEnumerator&lt;[T]&gt; *()"/>, <symbol name="Next" docId="vl::collections::IEnumerator::Next@bool()"/> need to be called to make the first value available.
+ Index will be increased after each time <symbol name="Next" docId="vl::collections::IEnumerator::Next@bool()"/> is called with true returned.
  </remarks><signature><![CDATA[vint Index(
 ) const;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

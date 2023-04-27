@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="ItemInserted" declFile="GuiGraphicsRepeatComposition.h" declId="NI$vl::presentation::compositions::GuiRepeatCompositionBase::ItemInserted"><summary>An event called after a new item is inserted.</summary><signature><![CDATA[GuiItemNotifyEvent ItemInserted;
-]]></signature><seealsos><symbol name="GuiItemNotifyEvent" declFile="GuiGraphicsEventReceiver.h" declId="NI$vl::presentation::compositions::GuiItemNotifyEvent"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="ItemInserted"><summary>An event called after a new item is inserted.</summary><signature><![CDATA[GuiItemNotifyEvent ItemInserted;
+]]></signature><seealsos><symbol name="GuiItemNotifyEvent"/></seealsos></Document>

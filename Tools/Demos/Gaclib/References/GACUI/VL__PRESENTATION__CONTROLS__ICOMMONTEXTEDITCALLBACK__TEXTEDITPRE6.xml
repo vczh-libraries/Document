@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="originalEnd" declFile="GuiTextGeneralOperations.h" declId="NI$vl::presentation::controls::ICommonTextEditCallback::TextEditPreviewStruct::originalEnd"><summary>The end position of the selection before replacing. This field can be modified.</summary><signature><![CDATA[TextPos originalEnd;
-]]></signature><seealsos><symbol name="TextPos" docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="originalEnd"><summary>The end position of the selection before replacing. This field can be modified.</summary><signature><![CDATA[TextPos originalEnd;
+]]></signature><seealsos><symbol name="TextPos" docId="vl::presentation::TextPos"/></seealsos></Document>

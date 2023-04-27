@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="Disabled" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::Disabled@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="Disabled"><summary>
  Called when the window is disabled.
  </summary><signature><![CDATA[void Disabled(
 );

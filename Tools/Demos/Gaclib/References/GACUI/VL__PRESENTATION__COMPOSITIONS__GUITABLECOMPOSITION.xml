@@ -1,6 +1,6 @@
-<Document accessor="" category="Class" name="GuiTableComposition" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiTableComposition"><summary>
+<Document accessor="" category="Class" name="GuiTableComposition"><summary>
  Represents a table composition.
  </summary><signature><![CDATA[class GuiTableComposition
     : GuiBoundsComposition
     , Description<GuiTableComposition>;
-]]></signature><seealsos><symbol name="GuiTableComposition" docId="vl::presentation::compositions::GuiTableComposition" declFile="GuiGraphicsTableComposition.h" declId="NI$vl::presentation::compositions::GuiTableComposition"/></seealsos><basetypes><symbol name="GuiBoundsComposition" docId="vl::presentation::compositions::GuiBoundsComposition" declFile="GuiGraphicsBasicComposition.h" declId="NI$vl::presentation::compositions::GuiBoundsComposition"/><symbol name="Description" docId="vl::reflection::Description" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::Description"/></basetypes></Document>
+]]></signature><seealsos><symbol name="GuiTableComposition" docId="vl::presentation::compositions::GuiTableComposition"/></seealsos><basetypes><symbol name="GuiBoundsComposition" docId="vl::presentation::compositions::GuiBoundsComposition"/><symbol name="Description" docId="vl::reflection::Description"/></basetypes></Document>

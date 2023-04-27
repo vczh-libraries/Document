@@ -1,6 +1,6 @@
-<Document accessor="" category="Class" name="CriticalSection" declFile="Threading.h" declId="NI$vl::CriticalSection"><summary>
+<Document accessor="" category="Class" name="CriticalSection"><summary>
  Critical section.
- The macro &quot;CS_LOCK&quot; is recommended instead of calling <symbol name="Enter" docId="vl::CriticalSection::Enter@void()" declFile="Threading.h" declId="FB$vl::CriticalSection::Enter@void()[decl0]"/> and <symbol name="Leave" docId="vl::CriticalSection::Leave@void()" declFile="Threading.h" declId="FB$vl::CriticalSection::Leave@void()[decl0]"/> like this:
+ The macro &quot;CS_LOCK&quot; is recommended instead of calling <symbol name="Enter" docId="vl::CriticalSection::Enter@void()"/> and <symbol name="Leave" docId="vl::CriticalSection::Leave@void()"/> like this:
  <program><code><![CDATA[
  CS_LOCK(yourCriticalSection)
  {
@@ -12,4 +12,4 @@
  </remarks><signature><![CDATA[class CriticalSection
     : Object
     , NotCopyable;
-]]></signature><basetypes><symbol name="NotCopyable" docId="vl::NotCopyable" declFile="Basic.h" declId="NI$vl::NotCopyable"/><symbol name="Object" docId="vl::Object" declFile="Basic.h" declId="NI$vl::Object"/></basetypes></Document>
+]]></signature><basetypes><symbol name="NotCopyable" docId="vl::NotCopyable"/><symbol name="Object" docId="vl::Object"/></basetypes></Document>

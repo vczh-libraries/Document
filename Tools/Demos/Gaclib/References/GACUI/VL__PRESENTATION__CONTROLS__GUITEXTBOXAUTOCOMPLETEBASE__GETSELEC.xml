@@ -1,3 +1,3 @@
-<Document accessor="public" category="Function" name="GetSelectedListItem" declFile="GuiTextAutoComplete.h" declId="FB$vl::presentation::controls::GuiTextBoxAutoCompleteBase::GetSelectedListItem@::vl::WString()[decl0]"><summary>Get the selected item.</summary><returns>The text of the selected item. Returns empty if there is no selected item.</returns><signature><![CDATA[WString GetSelectedListItem(
+<Document accessor="public" category="Function" name="GetSelectedListItem"><summary>Get the selected item.</summary><returns>The text of the selected item. Returns empty if there is no selected item.</returns><signature><![CDATA[WString GetSelectedListItem(
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

@@ -1,8 +1,8 @@
-<Document accessor="" category="Function" name="BoxValue" declFile="GuiTypeDescriptorBuilder.h" declId="FB$vl::reflection::description::BoxValue@::vl::reflection::description::Value([T] const &amp;, ::vl::reflection::description::ITypeDescriptor *)[impl0]"><summary>Box an reflectable object. Its type cannot be generic.</summary><returns>The boxed value.</returns><typeparam name="T">Type of the object.</typeparam><param name="object">The object to box.</param><param name="typeDescriptor">The type descriptor of the object (optional).</param><signature><![CDATA[template <
+<Document accessor="" category="Function" name="BoxValue"><summary>Box an reflectable object. Its type cannot be generic.</summary><returns>The boxed value.</returns><typeparam name="T">Type of the object.</typeparam><param name="object">The object to box.</param><param name="typeDescriptor">The type descriptor of the object (optional).</param><signature><![CDATA[template <
     typename T
 >
 Value BoxValue(
     T const & object,
     ITypeDescriptor * typeDescriptor /* optional */
 );
-]]></signature><seealsos><symbol name="ITypeDescriptor" docId="vl::reflection::description::ITypeDescriptor" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::ITypeDescriptor"/><symbol name="Value" docId="vl::reflection::description::Value" declFile="GuiTypeDescriptor.h" declId="NI$vl::reflection::description::Value"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ITypeDescriptor" docId="vl::reflection::description::ITypeDescriptor"/><symbol name="Value" docId="vl::reflection::description::Value"/></seealsos></Document>

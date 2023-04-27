@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="$__ctor" declFile="RecorderStream.h" declId="FB$vl::stream::RecorderStream::$__ctor@(::vl::stream::IStream &amp;, ::vl::stream::IStream &amp;)[decl0]"><summary>Create a recorder stream.</summary><param name="_in">
+<Document accessor="public" category="Function" name="$__ctor"><summary>Create a recorder stream.</summary><param name="_in">
  The input stream.
  This recorder stream is <b>readable</b> only when the input stream is <b>readable</b>
  This recorder stream is <b>finite</b> only when the input stream is <b>finite</b></param><param name="_out">
@@ -7,4 +7,4 @@
     IStream & _in,
     IStream & _out
 );
-]]></signature><seealsos><symbol name="IStream" docId="vl::stream::IStream" declFile="Interfaces.h2" declId="NI$vl::stream::IStream"/></seealsos></Document>
+]]></signature><seealsos><symbol name="IStream" docId="vl::stream::IStream"/></seealsos></Document>

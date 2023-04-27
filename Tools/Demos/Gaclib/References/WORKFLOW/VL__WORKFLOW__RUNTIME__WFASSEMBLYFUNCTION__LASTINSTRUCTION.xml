@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="lastInstruction" declFile="WfRuntimeAssembly.h" declId="NI$vl::workflow::runtime::WfAssemblyFunction::lastInstruction"><summary>Last instruction index of the function. This index is for accessing <symbol name="instructions" docId="vl::workflow::runtime::WfAssembly::instructions" declFile="WfRuntimeAssembly.h" declId="NI$vl::workflow::runtime::WfAssembly::instructions"/>.</summary><signature><![CDATA[vint lastInstruction;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="lastInstruction"><summary>Last instruction index of the function. This index is for accessing <symbol name="instructions" docId="vl::workflow::runtime::WfAssembly::instructions"/>.</summary><signature><![CDATA[vint lastInstruction;
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

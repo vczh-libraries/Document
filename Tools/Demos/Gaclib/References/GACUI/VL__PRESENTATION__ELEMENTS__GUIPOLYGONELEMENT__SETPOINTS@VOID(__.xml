@@ -1,7 +1,7 @@
-<Document accessor="public" category="Function" name="SetPoints" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiPolygonElement::SetPoints@void(::vl::presentation::Point const *, ::vl::vint)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetPoints"><summary>
  Set all points to the polygon element.
  </summary><param name="p">A pointer to a buffer that stores all points.</param><param name="count">The number of points.</param><signature><![CDATA[void SetPoints(
     Point const * p,
     vint count
 );
-]]></signature><seealsos><symbol name="Point" declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Point"/><symbol name="vint" docId="vl::vint"/></seealsos></Document>

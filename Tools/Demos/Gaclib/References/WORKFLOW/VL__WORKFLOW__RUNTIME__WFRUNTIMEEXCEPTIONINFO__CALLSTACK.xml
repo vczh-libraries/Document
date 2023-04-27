@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="callStack" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeExceptionInfo::callStack"><summary>All call stack items.</summary><signature><![CDATA[CallStackList callStack;
-]]></signature><seealsos><symbol name="CallStackList" declFile="WfRuntime.h" declId="NI$vl::workflow::runtime::WfRuntimeExceptionInfo::CallStackList"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="callStack"><summary>All call stack items.</summary><signature><![CDATA[CallStackList callStack;
+]]></signature><seealsos><symbol name="CallStackList"/></seealsos></Document>

@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="Identifier" declFile="GuiGraphicsHost_Alt.cpp" declId="NI$vl::presentation::compositions::IGuiAltAction::Identifier"><summary>The identifier for this service.</summary><signature><![CDATA[static wchar_t const * const Identifier;
-]]></signature><seealsos><symbol name="IGuiAltAction" docId="vl::presentation::compositions::IGuiAltAction" declFile="GuiGraphicsHost_Alt.h" declId="NI$vl::presentation::compositions::IGuiAltAction"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="Identifier"><summary>The identifier for this service.</summary><signature><![CDATA[static wchar_t const * const Identifier;
+]]></signature><seealsos><symbol name="IGuiAltAction" docId="vl::presentation::compositions::IGuiAltAction"/></seealsos></Document>

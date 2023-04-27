@@ -1,5 +1,5 @@
-<Document accessor="public" category="Function" name="SetColor" declFile="GuiLanguageColorizer.h" declId="FB$vl::presentation::controls::GuiGrammarColorizer::SetColor@void(::vl::WString const &amp;, ::vl::presentation::controls::GuiGrammarColorizer::ColorEntry const &amp;)[decl0]"><summary>Set a color for a token theme name (@Color or @ContextColor(&quot;theme-name&quot;) in the grammar).</summary><param name="name">The token theme name.</param><param name="entry">The color.</param><signature><![CDATA[void SetColor(
+<Document accessor="public" category="Function" name="SetColor"><summary>Set a color for a token theme name (@Color or @ContextColor(&quot;theme-name&quot;) in the grammar).</summary><param name="name">The token theme name.</param><param name="entry">The color.</param><signature><![CDATA[void SetColor(
     WString const & name,
     ColorEntry const & entry
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/><symbol name="ColorEntry" declFile="GuiLanguageColorizer.h" declId="NI$vl::presentation::controls::GuiGrammarColorizer::ColorEntry"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/><symbol name="ColorEntry"/></seealsos></Document>

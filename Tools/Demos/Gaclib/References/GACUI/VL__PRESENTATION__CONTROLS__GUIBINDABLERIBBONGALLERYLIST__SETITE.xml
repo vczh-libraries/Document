@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetItemTemplate" declFile="GuiRibbonGalleryList.h" declId="FB$vl::presentation::controls::GuiBindableRibbonGalleryList::SetItemTemplate@void(::vl::presentation::controls::GuiBindableRibbonGalleryList::ItemStyleProperty)[decl0]"><summary>Set the item style provider</summary><param name="value">The new item style provider</param><signature><![CDATA[void SetItemTemplate(
+<Document accessor="public" category="Function" name="SetItemTemplate"><summary>Set the item style provider</summary><param name="value">The new item style provider</param><signature><![CDATA[void SetItemTemplate(
     ItemStyleProperty value
 );
-]]></signature><seealsos><symbol name="ItemStyleProperty" declFile="GuiRibbonGalleryList.h" declId="NI$vl::presentation::controls::GuiBindableRibbonGalleryList::ItemStyleProperty"/></seealsos></Document>
+]]></signature><seealsos><symbol name="ItemStyleProperty"/></seealsos></Document>

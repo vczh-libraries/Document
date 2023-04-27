@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="GetPointFromTextPos" declFile="GuiGraphicsTextElement.h" declId="FB$vl::presentation::elements::text::TextLines::GetPointFromTextPos@::vl::presentation::Point(::vl::presentation::TextPos)[decl0]"><summary>
+<Document accessor="public" category="Function" name="GetPointFromTextPos"><summary>
  Get the point of a specified text position.
  </summary><returns>The point, in pixel. Returns (-1, -1) if the text position is not available.</returns><param name="pos">The specified text position.</param><signature><![CDATA[Point GetPointFromTextPos(
     TextPos pos
 );
-]]></signature><seealsos><symbol name="Point" declFile="GuiTypes.h" declId="NI$vl::presentation::Point"/><symbol name="TextPos" docId="vl::presentation::TextPos" declFile="GuiTypes.h" declId="NI$vl::presentation::TextPos"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Point"/><symbol name="TextPos" docId="vl::presentation::TextPos"/></seealsos></Document>

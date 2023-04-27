@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="MouseLeaved" declFile="GuiNativeWindow.h" declId="FB$vl::presentation::INativeWindowListener::MouseLeaved@void()[decl0]"><summary>
+<Document accessor="public" category="Function" name="MouseLeaved"><summary>
  Called when the mouse leaved the window.
  </summary><signature><![CDATA[void MouseLeaved(
 );

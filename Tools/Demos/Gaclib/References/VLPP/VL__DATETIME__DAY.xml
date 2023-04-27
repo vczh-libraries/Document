@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="day" declFile="Basic.h" declId="NI$vl::DateTime::day"><summary>The day, from 1 to 31.</summary><signature><![CDATA[vint day;
-]]></signature><seealsos><symbol name="vint" docId="vl::vint" declFile="Basic.h" declId="NI$vl::vint"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="day"><summary>The day, from 1 to 31.</summary><signature><![CDATA[vint day;
+]]></signature><seealsos><symbol name="vint" docId="vl::vint"/></seealsos></Document>

@@ -1,2 +1,2 @@
-<Document accessor="public" category="Variable" name="start" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTextRange::start"><summary>Text position for the first character.</summary><signature><![CDATA[ParsingTextPos start;
-]]></signature><seealsos><symbol name="ParsingTextPos" docId="vl::parsing::ParsingTextPos" declFile="ParsingTree.h" declId="NI$vl::parsing::ParsingTextPos"/></seealsos></Document>
+<Document accessor="public" category="Variable" name="start"><summary>Text position for the first character.</summary><signature><![CDATA[ParsingTextPos start;
+]]></signature><seealsos><symbol name="ParsingTextPos" docId="vl::parsing::ParsingTextPos"/></seealsos></Document>

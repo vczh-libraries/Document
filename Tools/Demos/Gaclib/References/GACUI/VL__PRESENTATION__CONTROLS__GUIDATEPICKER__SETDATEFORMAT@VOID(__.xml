@@ -1,4 +1,4 @@
-<Document accessor="public" category="Function" name="SetDateFormat" declFile="GuiDateTimeControls.h" declId="FB$vl::presentation::controls::GuiDatePicker::SetDateFormat@void(::vl::WString const &amp;)[decl0]"><summary>Set the format for the text of this control.</summary><param name="value">The format.</param><signature><![CDATA[void SetDateFormat(
+<Document accessor="public" category="Function" name="SetDateFormat"><summary>Set the format for the text of this control.</summary><param name="value">The format.</param><signature><![CDATA[void SetDateFormat(
     WString const & value
 );
-]]></signature><seealsos><symbol name="WString" docId="vl::WString" declFile="String.h" declId="NI$vl::WString"/></seealsos></Document>
+]]></signature><seealsos><symbol name="WString" docId="vl::WString"/></seealsos></Document>

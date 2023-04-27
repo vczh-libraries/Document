@@ -1,6 +1,6 @@
-<Document accessor="public" category="Function" name="SetSize" declFile="GuiGraphicsElement.h" declId="FB$vl::presentation::elements::GuiPolygonElement::SetSize@void(::vl::presentation::Size)[decl0]"><summary>
+<Document accessor="public" category="Function" name="SetSize"><summary>
  Set a suggested size. The polygon element will be layouted to the center of the required bounds using this size.
  </summary><param name="value">The new size.</param><signature><![CDATA[void SetSize(
     Size value
 );
-]]></signature><seealsos><symbol name="Size" declFile="GuiTypes.h" declId="NI$vl::presentation::Size"/></seealsos></Document>
+]]></signature><seealsos><symbol name="Size"/></seealsos></Document>
