@@ -192,7 +192,7 @@ public:
 	// for template forward declaration to access symbols
 	// do not access it after parsing
 	// templateSpec->arguments[i].argumentSymbol will be children of it
-	Symbol*											templateScope;
+	Symbol*											templateScope = nullptr;
 };
 
 class FriendClassDeclaration : public Declaration
