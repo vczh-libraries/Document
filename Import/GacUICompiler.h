@@ -39,6 +39,7 @@ namespace vl
 
 		extern Ptr<GuiResourceFolder>					PrecompileResource(
 															Ptr<GuiResource> resource,
+															GuiResourceCpuArchitecture targetCpuArchitecture,
 															IGuiResourcePrecompileCallback* callback,
 															collections::List<GuiResourceError>& errors);
 
@@ -158,33 +159,32 @@ namespace vl
 {
 	namespace presentation
 	{
-		class GuiInstanceLocalizedStrings : public Object, public Description<GuiInstanceLocalizedStrings>
+		class GuiInstanceLocalizedStringsBase : public Description<GuiInstanceLocalizedStringsBase>
 		{
 		public:
 			struct StringItem
 			{
 			public:
-				WString									name;
-				WString									text;
-				GuiResourceTextPos						textPosition;
+				WString												name;
+				WString												text;
+				GuiResourceTextPos									textPosition;
 			};
 
 			struct Strings
 			{
 				using StringItemMap = collections::Dictionary<WString, Ptr<StringItem>>;
 
-				collections::List<WString>				locales;
-				StringItemMap							items;
-				GuiResourceTextPos						tagPosition;
+				collections::List<WString>							locales;
+				StringItemMap										items;
+				GuiResourceTextPos									tagPosition;
 
-				WString									GetLocalesName();
+				WString												GetLocalesName();
 			};
 
-			WString										className;
-			WString										defaultLocale;
-			collections::List<Ptr<Strings>>				strings;
-			GuiResourceTextPos							tagPosition;
+			collections::List<Ptr<Strings>>							strings;
+			GuiResourceTextPos										tagPosition;
 
+		public:
 			using ParameterPair = collections::Pair<Ptr<reflection::description::ITypeInfo>, WString>;
 			using ParameterList = collections::List<ParameterPair>;
 			using PositionList = collections::List<vint>;
@@ -192,24 +192,63 @@ namespace vl
 
 			struct TextDesc
 			{
-				ParameterList							parameters;
-				PositionList							positions;
-				TextList								texts;
+				ParameterList										parameters;
+				PositionList										positions;
+				TextList											texts;
 			};
 
 			using TextDescMap = collections::Dictionary<collections::Pair<Ptr<Strings>, WString>, Ptr<TextDesc>>;
 
-			static Ptr<GuiInstanceLocalizedStrings>		LoadFromXml(Ptr<GuiResourceItem> resource, Ptr<glr::xml::XmlDocument> xml, GuiResourceError::List& errors);
-			Ptr<glr::xml::XmlElement>					SaveToXml();
+		protected:
+			static Ptr<Strings>										LoadStringsFromXml(Ptr<GuiResourceItem> resource, Ptr<glr::xml::XmlElement> xmlStrings, collections::SortedList<WString>& existingLocales, GuiResourceError::List& errors);
+			static Ptr<glr::xml::XmlElement>						SaveStringsToXml(Ptr<Strings> lss);
+			static Ptr<TextDesc>									ParseLocalizedText(const WString& text, GuiResourceTextPos pos, GuiResourceError::List& errors);
 
-			Ptr<Strings>								GetDefaultStrings();
-			WString										GetInterfaceTypeName(bool hasNamespace);
+			static void												FillStringsToTextDescMap(Ptr<Strings> lss, TextDescMap& textDescs, GuiResourceError::List& errors);
+			static void												ValidateNamesAgainstDefaultStrings(Ptr<Strings> defaultStrings, Ptr<Strings> lss, GuiResourceError::List& errors);
+			static void												ValidateSignatureAgainstDefaultStrings(Ptr<Strings> defaultStrings, Ptr<Strings> lss, TextDescMap& textDescs, GuiResourceError::List& errors);
+			static void												ValidateAgainstDefaultStrings(Ptr<Strings> defaultStrings, collections::List<Ptr<Strings>>& nonDefaultStrings, TextDescMap& textDescs, GuiResourceError::List& errors);
 
-			Ptr<TextDesc>								ParseLocalizedText(const WString& text, GuiResourceTextPos pos, GuiResourceError::List& errors);
-			void										Validate(TextDescMap& textDescs, GuiResourcePrecompileContext& precompileContext, GuiResourceError::List& errors);
-			Ptr<workflow::WfFunctionDeclaration>		GenerateFunction(Ptr<TextDesc> textDesc, const WString& functionName, workflow::WfFunctionKind functionKind);
-			Ptr<workflow::WfExpression>					GenerateStrings(TextDescMap& textDescs, Ptr<Strings> ls);
-			Ptr<workflow::WfModule>						Compile(GuiResourcePrecompileContext& precompileContext, const WString& moduleName, GuiResourceError::List& errors);
+			static WString											GetInterfaceTypeName(const WString& className, bool hasNamespace);
+			static WString											GenerateStringsCppName(Ptr<Strings> lss);
+			static Ptr<workflow::WfFunctionDeclaration>				GenerateTextDescFunctionHeader(Ptr<TextDesc> textDesc, const WString& functionName, workflow::WfFunctionKind functionKind);
+			static Ptr<workflow::WfExpression>						GenerateTextDescArgumentFormatting(Ptr<description::ITypeInfo> type, const WString& function, vint argumentIndex);
+			static Ptr<workflow::WfBlockStatement>					GenerateTextDescFunctionBody(Ptr<TextDesc> textDesc);
+			static Ptr<workflow::WfExpression>						GenerateStringsConstructor(const WString& interfaceFullName, TextDescMap& textDescs, Ptr<Strings> lss);
+			static Ptr<workflow::WfFunctionDeclaration>				GenerateBuildStringsFunction(const WString& interfaceFullName, TextDescMap& textDescs, Ptr<Strings> lss);
+			static Ptr<workflow::WfBlockStatement>					GenerateStaticInit(const WString& stringsClassWithoutNs, const WString& installClassFullName, collections::List<Ptr<Strings>>& strings);
+		};
+
+		class GuiInstanceLocalizedStrings : public GuiInstanceLocalizedStringsBase, public Description<GuiInstanceLocalizedStrings>
+		{
+		public:
+			WString													className;
+			WString													defaultLocale;
+			Ptr<Strings>											defaultStrings;
+
+		public:
+
+			static Ptr<GuiInstanceLocalizedStrings>					LoadFromXml(Ptr<GuiResourceItem> resource, Ptr<glr::xml::XmlDocument> xml, GuiResourceError::List& errors);
+			Ptr<glr::xml::XmlElement>								SaveToXml();
+
+			Ptr<workflow::WfFunctionDeclaration>					GenerateInstallFunction(const WString& cacheName);
+			Ptr<workflow::WfFunctionDeclaration>					GenerateGetFunction(const WString& cacheName);
+			Ptr<workflow::WfModule>									Compile(GuiResourcePrecompileContext& precompileContext, const WString& moduleName, GuiResourceError::List& errors);
+		};
+
+		class GuiInstanceLocalizedStringsInjection : public GuiInstanceLocalizedStringsBase, public Description<GuiInstanceLocalizedStringsInjection>
+		{
+		public:
+			WString													className;
+			WString													injectIntoClassName;
+
+		public:
+
+			static Ptr<GuiInstanceLocalizedStringsInjection>		LoadFromXml(Ptr<GuiResourceItem> resource, Ptr<glr::xml::XmlDocument> xml, GuiResourceError::List& errors);
+			Ptr<glr::xml::XmlElement>								SaveToXml();
+
+			void													DecompileDefaultStrings(description::ITypeDescriptor* td, Ptr<Strings> defaultStrings, TextDescMap& textDescs, GuiResourceError::List& errors);
+			Ptr<workflow::WfModule>									Compile(GuiResourcePrecompileContext& precompileContext, const WString& moduleName, GuiResourceError::List& errors);
 		};
 	}
 }
@@ -263,132 +302,120 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PRESENTATION_INSTANCEQUERY_AST_AST
 
 
-namespace vl
+namespace vl::presentation::instancequery
 {
-	namespace presentation
+	class GuiIqCascadeQuery;
+	class GuiIqPrimaryQuery;
+	class GuiIqQuery;
+	class GuiIqSetQuery;
+
+	enum class GuiIqNameOption
 	{
-		namespace instancequery
+		UNDEFINED_ENUM_ITEM_VALUE = -1,
+		Specified = 0,
+		Any = 1,
+	};
+
+	enum class GuiIqChildOption
+	{
+		UNDEFINED_ENUM_ITEM_VALUE = -1,
+		Direct = 0,
+		Indirect = 1,
+	};
+
+	enum class GuiIqBinaryOperator
+	{
+		UNDEFINED_ENUM_ITEM_VALUE = -1,
+		ExclusiveOr = 0,
+		Intersect = 1,
+		Union = 2,
+		Substract = 3,
+	};
+
+	class GuiIqQuery abstract : public vl::glr::ParsingAstBase, vl::reflection::Description<GuiIqQuery>
+	{
+	public:
+		class IVisitor : public virtual vl::reflection::IDescriptable, vl::reflection::Description<IVisitor>
 		{
-			class GuiIqCascadeQuery;
-			class GuiIqPrimaryQuery;
-			class GuiIqQuery;
-			class GuiIqSetQuery;
+		public:
+			virtual void Visit(GuiIqPrimaryQuery* node) = 0;
+			virtual void Visit(GuiIqCascadeQuery* node) = 0;
+			virtual void Visit(GuiIqSetQuery* node) = 0;
+		};
 
-			enum class GuiIqNameOption
-			{
-				UNDEFINED_ENUM_ITEM_VALUE = -1,
-				Specified = 0,
-				Any = 1,
-			};
+		virtual void Accept(GuiIqQuery::IVisitor* visitor) = 0;
 
-			enum class GuiIqChildOption
-			{
-				UNDEFINED_ENUM_ITEM_VALUE = -1,
-				Direct = 0,
-				Indirect = 1,
-			};
+	};
 
-			enum class GuiIqBinaryOperator
-			{
-				UNDEFINED_ENUM_ITEM_VALUE = -1,
-				ExclusiveOr = 0,
-				Intersect = 1,
-				Union = 2,
-				Substract = 3,
-			};
+	class GuiIqPrimaryQuery : public GuiIqQuery, vl::reflection::Description<GuiIqPrimaryQuery>
+	{
+	public:
+		GuiIqChildOption childOption = GuiIqChildOption::UNDEFINED_ENUM_ITEM_VALUE;
+		GuiIqNameOption attributeNameOption = GuiIqNameOption::UNDEFINED_ENUM_ITEM_VALUE;
+		vl::glr::ParsingToken attributeName;
+		GuiIqNameOption typeNameOption = GuiIqNameOption::UNDEFINED_ENUM_ITEM_VALUE;
+		vl::glr::ParsingToken typeName;
+		vl::glr::ParsingToken referenceName;
 
-			class GuiIqQuery abstract : public vl::glr::ParsingAstBase, vl::reflection::Description<GuiIqQuery>
-			{
-			public:
-				class IVisitor : public virtual vl::reflection::IDescriptable, vl::reflection::Description<IVisitor>
-				{
-				public:
-					virtual void Visit(GuiIqPrimaryQuery* node) = 0;
-					virtual void Visit(GuiIqCascadeQuery* node) = 0;
-					virtual void Visit(GuiIqSetQuery* node) = 0;
-				};
+		void Accept(GuiIqQuery::IVisitor* visitor) override;
+	};
 
-				virtual void Accept(GuiIqQuery::IVisitor* visitor) = 0;
+	class GuiIqCascadeQuery : public GuiIqQuery, vl::reflection::Description<GuiIqCascadeQuery>
+	{
+	public:
+		vl::Ptr<GuiIqQuery> parent;
+		vl::Ptr<GuiIqQuery> child;
 
-			};
+		void Accept(GuiIqQuery::IVisitor* visitor) override;
+	};
 
-			class GuiIqPrimaryQuery : public GuiIqQuery, vl::reflection::Description<GuiIqPrimaryQuery>
-			{
-			public:
-				GuiIqChildOption childOption = GuiIqChildOption::UNDEFINED_ENUM_ITEM_VALUE;
-				GuiIqNameOption attributeNameOption = GuiIqNameOption::UNDEFINED_ENUM_ITEM_VALUE;
-				vl::glr::ParsingToken attributeName;
-				GuiIqNameOption typeNameOption = GuiIqNameOption::UNDEFINED_ENUM_ITEM_VALUE;
-				vl::glr::ParsingToken typeName;
-				vl::glr::ParsingToken referenceName;
+	class GuiIqSetQuery : public GuiIqQuery, vl::reflection::Description<GuiIqSetQuery>
+	{
+	public:
+		vl::Ptr<GuiIqQuery> first;
+		vl::Ptr<GuiIqQuery> second;
+		GuiIqBinaryOperator op = GuiIqBinaryOperator::UNDEFINED_ENUM_ITEM_VALUE;
 
-				void Accept(GuiIqQuery::IVisitor* visitor) override;
-			};
-
-			class GuiIqCascadeQuery : public GuiIqQuery, vl::reflection::Description<GuiIqCascadeQuery>
-			{
-			public:
-				vl::Ptr<GuiIqQuery> parent;
-				vl::Ptr<GuiIqQuery> child;
-
-				void Accept(GuiIqQuery::IVisitor* visitor) override;
-			};
-
-			class GuiIqSetQuery : public GuiIqQuery, vl::reflection::Description<GuiIqSetQuery>
-			{
-			public:
-				vl::Ptr<GuiIqQuery> first;
-				vl::Ptr<GuiIqQuery> second;
-				GuiIqBinaryOperator op = GuiIqBinaryOperator::UNDEFINED_ENUM_ITEM_VALUE;
-
-				void Accept(GuiIqQuery::IVisitor* visitor) override;
-			};
-		}
-	}
+		void Accept(GuiIqQuery::IVisitor* visitor) override;
+	};
 }
-namespace vl
+namespace vl::reflection::description
 {
-	namespace reflection
-	{
-		namespace description
-		{
 #ifndef VCZH_DEBUG_NO_REFLECTION
-			DECL_TYPE_INFO(vl::presentation::instancequery::GuiIqQuery)
-			DECL_TYPE_INFO(vl::presentation::instancequery::GuiIqQuery::IVisitor)
-			DECL_TYPE_INFO(vl::presentation::instancequery::GuiIqNameOption)
-			DECL_TYPE_INFO(vl::presentation::instancequery::GuiIqChildOption)
-			DECL_TYPE_INFO(vl::presentation::instancequery::GuiIqPrimaryQuery)
-			DECL_TYPE_INFO(vl::presentation::instancequery::GuiIqCascadeQuery)
-			DECL_TYPE_INFO(vl::presentation::instancequery::GuiIqBinaryOperator)
-			DECL_TYPE_INFO(vl::presentation::instancequery::GuiIqSetQuery)
+	DECL_TYPE_INFO(vl::presentation::instancequery::GuiIqQuery)
+	DECL_TYPE_INFO(vl::presentation::instancequery::GuiIqQuery::IVisitor)
+	DECL_TYPE_INFO(vl::presentation::instancequery::GuiIqNameOption)
+	DECL_TYPE_INFO(vl::presentation::instancequery::GuiIqChildOption)
+	DECL_TYPE_INFO(vl::presentation::instancequery::GuiIqPrimaryQuery)
+	DECL_TYPE_INFO(vl::presentation::instancequery::GuiIqCascadeQuery)
+	DECL_TYPE_INFO(vl::presentation::instancequery::GuiIqBinaryOperator)
+	DECL_TYPE_INFO(vl::presentation::instancequery::GuiIqSetQuery)
 
 #ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
 
-			BEGIN_INTERFACE_PROXY_NOPARENT_SHAREDPTR(vl::presentation::instancequery::GuiIqQuery::IVisitor)
-				void Visit(vl::presentation::instancequery::GuiIqPrimaryQuery* node) override
-				{
-					INVOKE_INTERFACE_PROXY(Visit, node);
-				}
-
-				void Visit(vl::presentation::instancequery::GuiIqCascadeQuery* node) override
-				{
-					INVOKE_INTERFACE_PROXY(Visit, node);
-				}
-
-				void Visit(vl::presentation::instancequery::GuiIqSetQuery* node) override
-				{
-					INVOKE_INTERFACE_PROXY(Visit, node);
-				}
-
-			END_INTERFACE_PROXY(vl::presentation::instancequery::GuiIqQuery::IVisitor)
-
-#endif
-#endif
-			/// <summary>Load all reflectable AST types, only available when <b>VCZH_DEBUG_NO_REFLECTION</b> is off.</summary>
-			/// <returns>Returns true if this operation succeeded.</returns>
-			extern bool GuiInstanceQueryAstLoadTypes();
+	BEGIN_INTERFACE_PROXY_NOPARENT_SHAREDPTR(vl::presentation::instancequery::GuiIqQuery::IVisitor)
+		void Visit(vl::presentation::instancequery::GuiIqPrimaryQuery* node) override
+		{
+			INVOKE_INTERFACE_PROXY(Visit, node);
 		}
-	}
+
+		void Visit(vl::presentation::instancequery::GuiIqCascadeQuery* node) override
+		{
+			INVOKE_INTERFACE_PROXY(Visit, node);
+		}
+
+		void Visit(vl::presentation::instancequery::GuiIqSetQuery* node) override
+		{
+			INVOKE_INTERFACE_PROXY(Visit, node);
+		}
+
+	END_INTERFACE_PROXY(vl::presentation::instancequery::GuiIqQuery::IVisitor)
+
+#endif
+#endif
+	/// <summary>Load all reflectable AST types, only available when <b>VCZH_DEBUG_NO_REFLECTION</b> is off.</summary>
+	/// <returns>Returns true if this operation succeeded.</returns>
+	extern bool GuiInstanceQueryAstLoadTypes();
 }
 #endif
 
@@ -781,10 +808,10 @@ Instance Loader
 			virtual GlobalStringKey							GetTypeName() = 0;
 			virtual void									ClearReflectionCache();
 
-			virtual void									GetRequiredPropertyNames(const TypeInfo& typeInfo, collections::List<GlobalStringKey>& propertyNames);
-			virtual void									GetPropertyNames(const TypeInfo& typeInfo, collections::List<GlobalStringKey>& propertyNames);
-			virtual void									GetPairedProperties(const PropertyInfo& propertyInfo, collections::List<GlobalStringKey>& propertyNames);
-			virtual Ptr<GuiInstancePropertyInfo>			GetPropertyType(const PropertyInfo& propertyInfo);
+			virtual void									GetRequiredPropertyNames(GuiResourcePrecompileContext& precompileContext, const TypeInfo& typeInfo, collections::List<GlobalStringKey>& propertyNames);
+			virtual void									GetPropertyNames(GuiResourcePrecompileContext& precompileContext, const TypeInfo& typeInfo, collections::List<GlobalStringKey>& propertyNames);
+			virtual void									GetPairedProperties(GuiResourcePrecompileContext& precompileContext, const PropertyInfo& propertyInfo, collections::List<GlobalStringKey>& propertyNames);
+			virtual Ptr<GuiInstancePropertyInfo>			GetPropertyType(GuiResourcePrecompileContext& precompileContext, const PropertyInfo& propertyInfo);
 
 			virtual bool									CanCreate(const TypeInfo& typeInfo);
 			virtual Ptr<workflow::WfBaseConstructorCall>	CreateRootInstance(GuiResourcePrecompileContext& precompileContext, types::ResolvingResult& resolvingResult, const TypeInfo& typeInfo, ArgumentMap& arguments, GuiResourceError::List& errors);
@@ -873,51 +900,45 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PRESENTATION_INSTANCEQUERY_AST_ASSEMBLER
 
 
-namespace vl
+namespace vl::presentation::instancequery
 {
-	namespace presentation
+	enum class GuiInstanceQueryClasses : vl::vint32_t
 	{
-		namespace instancequery
-		{
-			enum class GuiInstanceQueryClasses : vl::vint32_t
-			{
-				CascadeQuery = 0,
-				PrimaryQuery = 1,
-				Query = 2,
-				SetQuery = 3,
-			};
+		CascadeQuery = 0,
+		PrimaryQuery = 1,
+		Query = 2,
+		SetQuery = 3,
+	};
 
-			enum class GuiInstanceQueryFields : vl::vint32_t
-			{
-				CascadeQuery_child = 0,
-				CascadeQuery_parent = 1,
-				PrimaryQuery_attributeName = 2,
-				PrimaryQuery_attributeNameOption = 3,
-				PrimaryQuery_childOption = 4,
-				PrimaryQuery_referenceName = 5,
-				PrimaryQuery_typeName = 6,
-				PrimaryQuery_typeNameOption = 7,
-				SetQuery_first = 8,
-				SetQuery_op = 9,
-				SetQuery_second = 10,
-			};
+	enum class GuiInstanceQueryFields : vl::vint32_t
+	{
+		CascadeQuery_child = 0,
+		CascadeQuery_parent = 1,
+		PrimaryQuery_attributeName = 2,
+		PrimaryQuery_attributeNameOption = 3,
+		PrimaryQuery_childOption = 4,
+		PrimaryQuery_referenceName = 5,
+		PrimaryQuery_typeName = 6,
+		PrimaryQuery_typeNameOption = 7,
+		SetQuery_first = 8,
+		SetQuery_op = 9,
+		SetQuery_second = 10,
+	};
 
-			extern const wchar_t* GuiInstanceQueryTypeName(GuiInstanceQueryClasses type);
-			extern const wchar_t* GuiInstanceQueryCppTypeName(GuiInstanceQueryClasses type);
-			extern const wchar_t* GuiInstanceQueryFieldName(GuiInstanceQueryFields field);
-			extern const wchar_t* GuiInstanceQueryCppFieldName(GuiInstanceQueryFields field);
+	extern const wchar_t* GuiInstanceQueryTypeName(GuiInstanceQueryClasses type);
+	extern const wchar_t* GuiInstanceQueryCppTypeName(GuiInstanceQueryClasses type);
+	extern const wchar_t* GuiInstanceQueryFieldName(GuiInstanceQueryFields field);
+	extern const wchar_t* GuiInstanceQueryCppFieldName(GuiInstanceQueryFields field);
 
-			class GuiInstanceQueryAstInsReceiver : public vl::glr::AstInsReceiverBase
-			{
-			protected:
-				vl::Ptr<vl::glr::ParsingAstBase> CreateAstNode(vl::vint32_t type) override;
-				void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, vl::Ptr<vl::glr::ParsingAstBase> value) override;
-				void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, const vl::regex::RegexToken& token, vl::vint32_t tokenIndex) override;
-				void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, vl::vint32_t enumItem) override;
-				vl::Ptr<vl::glr::ParsingAstBase> ResolveAmbiguity(vl::vint32_t type, vl::collections::Array<vl::Ptr<vl::glr::ParsingAstBase>>& candidates) override;
-			};
-		}
-	}
+	class GuiInstanceQueryAstInsReceiver : public vl::glr::AstInsReceiverBase
+	{
+	protected:
+		vl::Ptr<vl::glr::ParsingAstBase> CreateAstNode(vl::vint32_t type) override;
+		void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, vl::Ptr<vl::glr::ParsingAstBase> value) override;
+		void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, const vl::regex::RegexToken& token, vl::vint32_t tokenIndex) override;
+		void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, vl::vint32_t enumItem, bool weakAssignment) override;
+		vl::Ptr<vl::glr::ParsingAstBase> ResolveAmbiguity(vl::vint32_t type, vl::collections::Array<vl::Ptr<vl::glr::ParsingAstBase>>& candidates) override;
+	};
 }
 #endif
 
@@ -934,37 +955,31 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PRESENTATION_INSTANCEQUERY_LEXER
 
 
-namespace vl
+namespace vl::presentation::instancequery
 {
-	namespace presentation
+	enum class GuiInstanceQueryTokens : vl::vint32_t
 	{
-		namespace instancequery
-		{
-			enum class GuiInstanceQueryTokens : vl::vint32_t
-			{
-				INDIRECT = 0,
-				DIRECT = 1,
-				NAME = 2,
-				WILDCARD_INTERSECT = 3,
-				OPEN = 4,
-				CLOSE = 5,
-				XOR = 6,
-				UNION = 7,
-				SUBSTRACT = 8,
-				ATTRIBUTE = 9,
-				COLON = 10,
-				DOT = 11,
-				SPACE = 12,
-			};
+		INDIRECT = 0,
+		DIRECT = 1,
+		NAME = 2,
+		WILDCARD_INTERSECT = 3,
+		OPEN = 4,
+		CLOSE = 5,
+		XOR = 6,
+		UNION = 7,
+		SUBSTRACT = 8,
+		ATTRIBUTE = 9,
+		COLON = 10,
+		DOT = 11,
+		SPACE = 12,
+	};
 
-			constexpr vl::vint GuiInstanceQueryTokenCount = 13;
-			extern bool GuiInstanceQueryTokenDeleter(vl::vint token);
-			extern const wchar_t* GuiInstanceQueryTokenId(GuiInstanceQueryTokens token);
-			extern const wchar_t* GuiInstanceQueryTokenDisplayText(GuiInstanceQueryTokens token);
-			extern const wchar_t* GuiInstanceQueryTokenRegex(GuiInstanceQueryTokens token);
-			extern void GuiInstanceQueryLexerData(vl::stream::IStream& outputStream);
-		}
-	}
+	constexpr vl::vint GuiInstanceQueryTokenCount = 13;
+	extern bool GuiInstanceQueryTokenDeleter(vl::vint token);
+	extern const wchar_t* GuiInstanceQueryTokenId(GuiInstanceQueryTokens token);
+	extern const wchar_t* GuiInstanceQueryTokenDisplayText(GuiInstanceQueryTokens token);
+	extern const wchar_t* GuiInstanceQueryTokenRegex(GuiInstanceQueryTokens token);
+	extern void GuiInstanceQueryLexerData(vl::stream::IStream& outputStream);
 }
 #endif
 
@@ -981,40 +996,36 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PRESENTATION_INSTANCEQUERY_PARSER_SYNTAX
 
 
-namespace vl
+namespace vl::presentation::instancequery
 {
-	namespace presentation
+	enum class ParserStates
 	{
-		namespace instancequery
-		{
-			enum class ParserStates
-			{
-				QPrimaryFragment = 0,
-				QPrimaryAttributed = 8,
-				QPrimary = 15,
-				Query0 = 24,
-				Query1 = 29,
-				Query2 = 38,
-				QueryRoot = 47,
-			};
+		QPrimaryFragment = 0,
+		QPrimaryAttributed = 8,
+		QPrimary = 15,
+		Query0 = 24,
+		Query1 = 29,
+		Query2 = 38,
+		QueryRoot = 47,
+	};
 
-			const wchar_t* ParserRuleName(vl::vint index);
-			const wchar_t* ParserStateLabel(vl::vint index);
-			extern void GuiInstanceQueryParserData(vl::stream::IStream& outputStream);
+	const wchar_t* ParserRuleName(vl::vint index);
+	const wchar_t* ParserStateLabel(vl::vint index);
+	extern void GuiInstanceQueryParserData(vl::stream::IStream& outputStream);
 
-			class Parser
-				: public vl::glr::ParserBase<GuiInstanceQueryTokens, ParserStates, GuiInstanceQueryAstInsReceiver>				, protected vl::glr::automaton::TraceManager::ITypeCallback
-			{
-			protected:
-				vl::vint32_t FindCommonBaseClass(vl::vint32_t class1, vl::vint32_t class2) const override;
-			public:
-				Parser();
+	class Parser
+		: public vl::glr::ParserBase<GuiInstanceQueryTokens, ParserStates, GuiInstanceQueryAstInsReceiver>
+		, protected vl::glr::automaton::IExecutor::ITypeCallback
+	{
+	protected:
+		vl::WString GetClassName(vl::vint32_t classIndex) const override;
+		vl::vint32_t FindCommonBaseClass(vl::vint32_t class1, vl::vint32_t class2) const override;
+	public:
+		Parser();
 
-				vl::Ptr<vl::presentation::instancequery::GuiIqQuery> ParseQueryRoot(const vl::WString& input, vl::vint codeIndex = -1) const;
-				vl::Ptr<vl::presentation::instancequery::GuiIqQuery> ParseQueryRoot(vl::collections::List<vl::regex::RegexToken>& tokens, vl::vint codeIndex = -1) const;
-			};
-		}
-	}
+		vl::Ptr<vl::presentation::instancequery::GuiIqQuery> ParseQueryRoot(const vl::WString& input, vl::vint codeIndex = -1) const;
+		vl::Ptr<vl::presentation::instancequery::GuiIqQuery> ParseQueryRoot(vl::collections::List<vl::regex::RegexToken>& tokens, vl::vint codeIndex = -1) const;
+	};
 }
 #endif
 
@@ -1094,7 +1105,7 @@ namespace vl
 				PropertyResolvingMap							propertyResolvings;				// information of property values which are calling constructors
 			};
 		}
-		extern workflow::analyzer::WfLexicalScopeManager*		Workflow_GetSharedManager();
+		extern workflow::analyzer::WfLexicalScopeManager*		Workflow_GetSharedManager(GuiResourceCpuArchitecture targetCpuArchitecture);
 		extern Ptr<workflow::analyzer::WfLexicalScopeManager>	Workflow_TransferSharedManager();
 		
 
@@ -1128,6 +1139,7 @@ WorkflowCompiler (Compile)
 ***********************************************************************/
 
 		extern Ptr<workflow::WfModule>							Workflow_CreateModuleWithUsings(Ptr<GuiInstanceContext> context, const WString& moduleName);
+		extern WString											Workflow_InstallWithClass(const WString& className, Ptr<workflow::WfModule> module, Ptr<workflow::WfDeclaration> decl);
 		extern Ptr<workflow::WfClassDeclaration>				Workflow_InstallClass(const WString& className, Ptr<workflow::WfModule> module);
 		extern Ptr<workflow::WfBlockStatement>					Workflow_InstallCtorClass(types::ResolvingResult& resolvingResult, Ptr<workflow::WfModule> module);
 
@@ -1165,9 +1177,9 @@ WorkflowCompiler (Compile)
 			}
 		};
 
-		extern IGuiInstanceLoader::TypeInfo						Workflow_AdjustPropertySearchType(types::ResolvingResult& resolvingResult, IGuiInstanceLoader::TypeInfo resolvedTypeInfo, GlobalStringKey prop);
-		extern bool												Workflow_GetPropertyTypes(WString& errorPrefix, types::ResolvingResult& resolvingResult, IGuiInstanceLoader* loader, IGuiInstanceLoader::TypeInfo resolvedTypeInfo, GlobalStringKey prop, Ptr<GuiAttSetterRepr::SetterValue> setter, collections::List<types::PropertyResolving>& possibleInfos, GuiResourceError::List& errors);
-		extern Ptr<reflection::description::ITypeInfo>			Workflow_GetSuggestedParameterType(reflection::description::ITypeDescriptor* typeDescriptor);
+		extern IGuiInstanceLoader::TypeInfo						Workflow_AdjustPropertySearchType(GuiResourcePrecompileContext& precompileContext, types::ResolvingResult& resolvingResult, IGuiInstanceLoader::TypeInfo resolvedTypeInfo, GlobalStringKey prop);
+		extern bool												Workflow_GetPropertyTypes(GuiResourcePrecompileContext& precompileContext, WString& errorPrefix, types::ResolvingResult& resolvingResult, IGuiInstanceLoader* loader, IGuiInstanceLoader::TypeInfo resolvedTypeInfo, GlobalStringKey prop, Ptr<GuiAttSetterRepr::SetterValue> setter, collections::List<types::PropertyResolving>& possibleInfos, GuiResourceError::List& errors);
+		extern Ptr<reflection::description::ITypeInfo>			Workflow_GetSuggestedParameterType(GuiResourcePrecompileContext& precompileContext, reflection::description::ITypeDescriptor* typeDescriptor);
 		extern IGuiInstanceLoader::TypeInfo						Workflow_CollectReferences(GuiResourcePrecompileContext& precompileContext, types::ResolvingResult& resolvingResult, GuiResourceError::List& errors);
 		extern void												Workflow_GenerateCreating(GuiResourcePrecompileContext& precompileContext, types::ResolvingResult& resolvingResult, Ptr<workflow::WfBlockStatement> statements, GuiResourceError::List& errors);
 		extern void												Workflow_GenerateBindings(GuiResourcePrecompileContext& precompileContext, types::ResolvingResult& resolvingResult, Ptr<workflow::WfBlockStatement> statements, GuiResourceError::List& errors);
@@ -1280,12 +1292,13 @@ GuiVrtualTypeInstanceLoader
 			public:
 				static Ptr<WfExpression> CreateThemeName(theme::ThemeName themeName)
 				{
-					auto refExpr = MakePtr<WfChildExpression>();
+					auto refExpr = Ptr(new WfChildExpression);
 					refExpr->parent = GetExpressionFromTypeDescriptor(description::GetTypeDescriptor<ThemeName>());
 					switch (themeName)
 					{
 #define THEME_NAME_CASE(TEMPLATE, CONTROL) case theme::ThemeName::CONTROL: refExpr->name.value = L ## #CONTROL; break;
 						GUI_CONTROL_TEMPLATE_TYPES(THEME_NAME_CASE)
+						THEME_NAME_CASE(WindowTemplate, Window)
 #undef THEME_NAME_CASE
 					default:
 						CHECK_FAIL(L"GuiTemplateControlInstanceLoader::CreateThemeName()#Unknown theme name.");
@@ -1314,7 +1327,7 @@ GuiVrtualTypeInstanceLoader
 
 				Ptr<workflow::WfBaseConstructorCall> CreateRootInstance(GuiResourcePrecompileContext& precompileContext, types::ResolvingResult& resolvingResult, const TypeInfo& typeInfo, ArgumentMap& arguments, GuiResourceError::List& errors)override
 				{
-					auto createControl = MakePtr<WfBaseConstructorCall>();
+					auto createControl = Ptr(new WfBaseConstructorCall);
 					createControl->type = GetTypeFromTypeInfo(TypeInfoRetriver<TControl>::CreateTypeInfo().Obj());
 					createControl->arguments.Add(CreateThemeName(themeName));
 					return createControl;
@@ -1324,11 +1337,11 @@ GuiVrtualTypeInstanceLoader
 				{
 					CHECK_ERROR(CanCreate(typeInfo), L"GuiTemplateControlInstanceLoader::CreateInstance()#Wrong type info is provided.");
 
-					auto block = MakePtr<WfBlockStatement>();
+					auto block = Ptr(new WfBlockStatement);
 					{
 						auto controlType = TypeInfoRetriver<TControl*>::CreateTypeInfo();
 
-						auto createControl = MakePtr<WfNewClassExpression>();
+						auto createControl = Ptr(new WfNewClassExpression);
 						createControl->type = GetTypeFromTypeInfo(controlType.Obj());
 						createControl->arguments.Add(CreateThemeName(themeName));
 
@@ -1338,15 +1351,15 @@ GuiVrtualTypeInstanceLoader
 						}
 						AddAdditionalArguments(resolvingResult, typeInfo, variableName, arguments, errors, createControl);
 
-						auto refVariable = MakePtr<WfReferenceExpression>();
+						auto refVariable = Ptr(new WfReferenceExpression);
 						refVariable->name.value = variableName.ToString();
 
-						auto assignExpr = MakePtr<WfBinaryExpression>();
+						auto assignExpr = Ptr(new WfBinaryExpression);
 						assignExpr->op = WfBinaryOperator::Assign;
 						assignExpr->first = refVariable;
 						assignExpr->second = createControl;
 
-						auto assignStat = MakePtr<WfExpressionStatement>();
+						auto assignStat = Ptr(new WfExpressionStatement);
 						assignStat->expression = assignExpr;
 						block->statements.Add(assignStat);
 					}

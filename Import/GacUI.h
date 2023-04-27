@@ -74,12 +74,8 @@ Enumerations
 		};
 
 #define GUI_DEFINE_COMPARE_OPERATORS(TYPE)\
-		inline bool operator==(const TYPE& right)const { return Compare(right) == 0; } \
-		inline bool operator!=(const TYPE& right)const { return Compare(right) != 0; } \
-		inline bool operator< (const TYPE& right)const { return Compare(right) < 0; }  \
-		inline bool operator<=(const TYPE& right)const { return Compare(right) <= 0; } \
-		inline bool operator> (const TYPE& right)const { return Compare(right) > 0; }  \
-		inline bool operator>=(const TYPE& right)const { return Compare(right) >= 0; } \
+		std::strong_ordering operator<=>(const TYPE&) const = default;\
+		bool operator==(const TYPE&) const = default;\
 
 /***********************************************************************
 TextPos
@@ -109,13 +105,6 @@ TextPos
 			{
 			}
 
-			inline vint Compare(const TextPos& value)const
-			{
-				vint result;
-				if ((result = row - value.row) != 0) return result;
-				if ((result = column - value.column) != 0) return result;
-				return 0;
-			}
 			GUI_DEFINE_COMPARE_OPERATORS(TextPos)
 		};
 
@@ -147,13 +136,6 @@ GridPos
 			{
 			}
 
-			inline vint Compare(const GridPos& value)const
-			{
-				vint result;
-				if ((result = row - value.row) != 0) return result;
-				if ((result = column - value.column) != 0) return result;
-				return 0;
-			}
 			GUI_DEFINE_COMPARE_OPERATORS(GridPos)
 		};
 
@@ -180,7 +162,6 @@ Coordinate
 			NativeCoordinate& operator=(const NativeCoordinate& _value) = default;
 			NativeCoordinate& operator=(NativeCoordinate&& _value) = default;
 
-			inline vint Compare(NativeCoordinate c) const { return value - c.value; }
 			GUI_DEFINE_COMPARE_OPERATORS(NativeCoordinate)
 
 			inline NativeCoordinate operator+(NativeCoordinate c)const { return value + c.value; };
@@ -227,13 +208,6 @@ Point
 			{
 			}
 
-			inline vint Compare(const Point_<T>& value)const
-			{
-				vint result;
-				if ((result = CompareCoordinate(x, value.x)) != 0) return result;
-				if ((result = CompareCoordinate(y, value.y)) != 0) return result;
-				return 0;
-			}
 			GUI_DEFINE_COMPARE_OPERATORS(Point_<T>)
 		};
 
@@ -270,13 +244,6 @@ Size
 			{
 			}
 
-			inline vint Compare(const Size_<T>& value)const
-			{
-				vint result;
-				if ((result = CompareCoordinate(x, value.x)) != 0) return result;
-				if ((result = CompareCoordinate(y, value.y)) != 0) return result;
-				return 0;
-			}
 			GUI_DEFINE_COMPARE_OPERATORS(Size_<T>)
 		};
 
@@ -326,15 +293,6 @@ Rectangle
 			{
 			}
 
-			inline vint Compare(const Rect_<T>& value)const
-			{
-				vint result;
-				if ((result = CompareCoordinate(x1, value.x1)) != 0) return result;
-				if ((result = CompareCoordinate(y1, value.y1)) != 0) return result;
-				if ((result = CompareCoordinate(x2, value.x2)) != 0) return result;
-				if ((result = CompareCoordinate(y2, value.y2)) != 0) return result;
-				return 0;
-			}
 			GUI_DEFINE_COMPARE_OPERATORS(Rect_<T>)
 
 			Point_<T> LeftTop()const
@@ -536,11 +494,8 @@ Color
 			{
 			}
 
-			vint Compare(Color color)const
-			{
-				return value - color.value;
-			}
-			GUI_DEFINE_COMPARE_OPERATORS(Color)
+			std::strong_ordering operator<=>(const Color& c) const { return value <=> c.value; }
+			bool operator==(const Color& c) const { return value == c.value; }
 
 			static Color Parse(const WString& value)
 			{
@@ -628,15 +583,6 @@ Margin
 			{
 			}
 
-			inline vint Compare(const Margin_<T>& value)const
-			{
-				vint result;
-				if ((result = CompareCoordinate(left, value.left)) != 0) return result;
-				if ((result = CompareCoordinate(top, value.top)) != 0) return result;
-				if ((result = CompareCoordinate(right, value.right)) != 0) return result;
-				if ((result = CompareCoordinate(bottom, value.bottom)) != 0) return result;
-				return 0;
-			}
 			GUI_DEFINE_COMPARE_OPERATORS(Margin_<T>)
 		};
 
@@ -696,33 +642,6 @@ Resources
 			{
 			}
 			
-			vint64_t Compare(const FontProperties& value)const
-			{
-				vint64_t result = 0;
-
-				result = WString::Compare(fontFamily, value.fontFamily);
-				if (result != 0) return result;
-
-				result = (vint64_t)size - (vint64_t)value.size;
-				if (result != 0) return result;
-
-				result = (vint64_t)bold - (vint64_t)value.bold;
-				if (result != 0) return result;
-
-				result = (vint64_t)italic - (vint64_t)value.italic;
-				if (result != 0) return result;
-
-				result = (vint64_t)underline - (vint64_t)value.underline;
-				if (result != 0) return result;
-
-				result = (vint64_t)strikeline - (vint64_t)value.strikeline;
-				if (result != 0) return result;
-
-				result = (vint64_t)antialias - (vint64_t)value.antialias;
-				if (result != 0) return result;
-
-				return 0;
-			}
 			GUI_DEFINE_COMPARE_OPERATORS(FontProperties)
 		};
 
@@ -1263,34 +1182,83 @@ Basic Construction
 			{
 			public:
 				/// <summary>
+				/// Test if the target is doing hosted rendering.
+				/// </summary>
+				/// <returns>Returns true if the target is doing hosted rendering.</returns>
+				virtual bool							IsInHostedRendering() = 0;
+				/// <summary>
+				/// Notify the target to start hosted rendering, <see cref="StartRendering()"/> and <see cref="StopRendering"/> will be called multiple times.
+				/// </summary>
+				virtual void							StartHostedRendering() = 0;
+				/// <summary>
+				/// Notify the target to stop hosted rendering
+				/// </summary>
+				/// <returns>Returns values other "None" to indicate device failure.</returns>
+				virtual RenderTargetFailure				StopHostedRendering() = 0;
+
+				/// <summary>
 				/// Notify the target to prepare for rendering.
 				/// </summary>
-				virtual void							StartRendering()=0;
+				virtual void							StartRendering() = 0;
 				/// <summary>
 				/// Notify the target to stop rendering.
 				/// </summary>
-				/// <returns>Returns false to recreate render target.</returns>
-				virtual RenderTargetFailure				StopRendering()=0;
+				/// <returns>Returns values other "None" to indicate device failure.</returns>
+				virtual RenderTargetFailure				StopRendering() = 0;
+
 				/// <summary>
 				/// Apply a clipper to the render target.
 				/// The result clipper is combined by all clippers in the clipper stack maintained by the render target.
 				/// </summary>
 				/// <param name="clipper">The clipper to push.</param>
-				virtual void							PushClipper(Rect clipper)=0;
+				virtual void							PushClipper(Rect clipper) = 0;
 				/// <summary>
 				/// Remove the last pushed clipper from the clipper stack.
 				/// </summary>
-				virtual void							PopClipper()=0;
+				virtual void							PopClipper() = 0;
 				/// <summary>
 				/// Get the combined clipper
 				/// </summary>
 				/// <returns>The combined clipper</returns>
-				virtual Rect							GetClipper()=0;
+				virtual Rect							GetClipper() = 0;
 				/// <summary>
 				/// Test is the combined clipper is as large as the render target.
 				/// </summary>
 				/// <returns>Return true if the combined clipper is as large as the render target.</returns>
-				virtual bool							IsClipperCoverWholeTarget()=0;
+				virtual bool							IsClipperCoverWholeTarget() = 0;
+			};
+
+			/// <summary>
+			/// This is a default implementation for <see cref="IGuiGraphicsRenderTarget"/>
+			/// </summary>
+			class GuiGraphicsRenderTarget : public Object, public IGuiGraphicsRenderTarget
+			{
+			protected:
+				collections::List<Rect>					clippers;
+				vint									clipperCoverWholeTargetCounter = 0;
+				bool									hostedRendering = false;
+				bool									rendering = false;
+
+				virtual void							StartRenderingOnNativeWindow() = 0;
+				virtual RenderTargetFailure				StopRenderingOnNativeWindow() = 0;
+
+				virtual Size							GetCanvasSize() = 0;
+				virtual void							AfterPushedClipper(Rect clipper, Rect validArea) = 0;
+				virtual void							AfterPushedClipperAndBecameInvalid(Rect clipper) = 0;
+				virtual void							AfterPoppedClipperAndBecameValid(Rect validArea, bool clipperExists) = 0;
+				virtual void							AfterPoppedClipper(Rect validArea, bool clipperExists) = 0;
+			public:
+
+				bool									IsInHostedRendering() override;
+				void									StartHostedRendering() override;
+				RenderTargetFailure						StopHostedRendering() override;
+				void									StartRendering() override;
+				RenderTargetFailure						StopRendering() override;
+
+				void									PushClipper(Rect clipper) override;
+				void									PopClipper() override;
+				Rect									GetClipper() override;
+				bool									IsClipperCoverWholeTarget() override;
 			};
 		}
 	}
@@ -1555,10 +1523,27 @@ GacUI::Native Window
 
 Interfaces:
   INativeController						: Interface for Operating System abstraction
+    INativeControllerListener
+  INativeScreenService					: Screen Service
+    INativeScreen
+  INativeResourceService				: Resource Service
+    INativeCursor
+  INativeImageService					: Image Service
+    INativeImageFrameCache
+    INativeImageFrame
+    INativeImage
+  INativeWindowService					: Window Service
+    INativeWindow
+    INativeWindowListener
+  INativeAsyncService					: Async Service
+    INativeDelay
+  INativeClipboardService				: Clipboard Service
+    INativeClipboardReader
+    INativeClipboardWriter
+  INativeInputService					: Input Service
+  INativeCallbackService				: Callback Service
+  INativeDialogService					: Dialog Service
 
-Renderers:
-  GUI_GRAPHICS_RENDERER_GDI
-  GUI_GRAPHICS_RENDERER_DIRECT2D
 ***********************************************************************/
 
 #ifndef VCZH_PRESENTATION_GUINATIVEWINDOW
@@ -1569,304 +1554,38 @@ namespace vl
 {
 	namespace presentation
 	{
+
+/***********************************************************************
+INativeWindow
+***********************************************************************/
+
 		class GuiImageData;
 		class DocumentModel;
-		class INativeWindow;
+		class INativeCursor;
 		class INativeWindowListener;
-		class INativeController;
-		class INativeControllerListener;
 
-/***********************************************************************
-System Object
-***********************************************************************/
-
-		/// <summary>
-		/// Represents a screen.
-		/// </summary>
-		class INativeScreen : public virtual IDescriptable, public Description<INativeScreen>
+		enum class BoolOption
 		{
-		public:
-			/// <summary>
-			/// Get the bounds of the screen.
-			/// </summary>
-			/// <returns>The bounds of the screen.</returns>
-			virtual NativeRect			GetBounds()=0;
-			/// <summary>
-			/// Get the bounds of the screen client area.
-			/// </summary>
-			/// <returns>The bounds of the screen client area.</returns>
-			virtual NativeRect			GetClientBounds()=0;
-			/// <summary>
-			/// Get the name of the screen.
-			/// </summary>
-			/// <returns>The name of the screen.</returns>
-			virtual WString				GetName()=0;
-			/// <summary>
-			/// Test is the screen is a primary screen.
-			/// </summary>
-			/// <returns>Returns true if the screen is a primary screen.</returns>
-			virtual bool				IsPrimary()=0;
-			/// <summary>
-			/// Get the scaling for the screen's horizontal edge.
-			/// </summary>
-			/// <returns>The scaling. For example, in Windows when you have a 96 DPI, this function returns 1.0.</returns>
-			virtual double				GetScalingX() = 0;
-			/// <summary>
-			/// Get the scaling for the screen's vertical edge.
-			/// </summary>
-			/// <returns>The scaling. For example, in Windows when you have a 96 DPI, this function returns 1.0.</returns>
-			virtual double				GetScalingY() = 0;
-		};
-		
-		/// <summary>
-		/// Represents a cursor.
-		/// </summary>
-		class INativeCursor : public virtual IDescriptable, public Description<INativeCursor>
-		{
-		public:
-			/// <summary>
-			/// Represents a predefined cursor type.
-			/// </summary>
-			enum SystemCursorType
-			{
-				/// <summary>
-				/// Small waiting cursor.
-				/// </summary>
-				SmallWaiting,
-				/// <summary>
-				/// large waiting cursor.
-				/// </summary>
-				LargeWaiting,
-				/// <summary>
-				/// Arrow cursor.
-				/// </summary>
-				Arrow,
-				/// <summary>
-				/// Cross cursor.
-				/// </summary>
-				Cross,
-				/// <summary>
-				/// Hand cursor.
-				/// </summary>
-				Hand,
-				/// <summary>
-				/// Help cursor.
-				/// </summary>
-				Help,
-				/// <summary>
-				/// I beam cursor.
-				/// </summary>
-				IBeam,
-				/// <summary>
-				/// Sizing in all direction cursor.
-				/// </summary>
-				SizeAll,
-				/// <summary>
-				/// Sizing NE-SW cursor.
-				/// </summary>
-				SizeNESW,
-				/// <summary>
-				/// Sizing N-S cursor.
-				/// </summary>
-				SizeNS,
-				/// <summary>
-				/// Sizing NW-SE cursor.
-				/// </summary>
-				SizeNWSE,
-				/// <summary>
-				/// Sizing W-E cursor.
-				/// </summary>
-				SizeWE,
-				/// <summary>
-				/// Number of available cursors, this is not an available cursor by itself.
-				/// </summary>
-				LastSystemCursor=SizeWE,
-			};
-
-			static const vint			SystemCursorCount=LastSystemCursor+1;
-		public:
-			/// <summary>
-			/// Test is the cursor a system provided cursor.
-			/// </summary>
-			/// <returns>Returns true if the cursor a system provided cursor.</returns>
-			virtual bool				IsSystemCursor()=0;
-			/// <summary>
-			/// Get the cursor type if the cursor a system provided cursor.
-			/// </summary>
-			/// <returns>The cursor type.</returns>
-			virtual SystemCursorType	GetSystemCursorType()=0;
+			AlwaysTrue,
+			AlwaysFalse,
+			Customizable,
 		};
 
-/***********************************************************************
-Image Object
-***********************************************************************/
-
-		class INativeImageService;
-		class INativeImage;
-		class INativeImageFrame;
-		
-		/// <summary>
-		/// Represents a customized cache object for an image frame.
-		/// </summary>
-		class INativeImageFrameCache : public Interface
+		struct NativeWindowFrameConfig
 		{
-		public:
-			/// <summary>
-			/// Called when this cache object is attached to an image frame.
-			/// </summary>
-			/// <param name="frame">The image frame that attached to.</param>
-			virtual void						OnAttach(INativeImageFrame* frame)=0;
-			/// <summary>
-			/// Called when this cache object is detached to an image frame.
-			/// </summary>
-			/// <param name="frame">The image frame that detached from.</param>
-			virtual void						OnDetach(INativeImageFrame* frame)=0;
+			BoolOption MaximizedBoxOption = BoolOption::Customizable;
+			BoolOption MinimizedBoxOption = BoolOption::Customizable;
+			BoolOption BorderOption = BoolOption::Customizable;
+			BoolOption SizeBoxOption = BoolOption::Customizable;
+			BoolOption IconVisibleOption = BoolOption::Customizable;
+			BoolOption TitleBarOption = BoolOption::Customizable;
+			BoolOption CustomFrameEnabled = BoolOption::Customizable;
+
+			std::strong_ordering operator<=>(const NativeWindowFrameConfig&) const = default;
+			bool operator==(const NativeWindowFrameConfig&) const = default;
+
+			static const NativeWindowFrameConfig Default;
 		};
-
-		/// <summary>
-		/// Represents an image frame.
-		/// </summary>
-		class INativeImageFrame : public virtual IDescriptable, public Description<INativeImageFrame>
-		{
-		public:
-			/// <summary>
-			/// Get the image that owns this frame.
-			/// </summary>
-			/// <returns>The image that owns this frame.</returns>
-			virtual INativeImage*				GetImage()=0;
-			/// <summary>
-			/// Get the size of this frame.
-			/// </summary>
-			/// <returns>The size of this frame.</returns>
-			virtual Size						GetSize()=0;
-
-			/// <summary>
-			/// Attach a customized cache object to this image frame and bind to a key.
-			/// </summary>
-			/// <returns>Returns true if this operation succeeded.</returns>
-			/// <param name="key">The key binded with the customized cache object.</param>
-			/// <param name="cache">The customized cache object.</param>
-			virtual bool						SetCache(void* key, Ptr<INativeImageFrameCache> cache)=0;
-			/// <summary>
-			/// Get the attached customized cache object that is already binded to a key.
-			/// </summary>
-			/// <returns>The attached customized cache object.</returns>
-			/// <param name="key">The key binded with the customized cache object.</param>
-			virtual Ptr<INativeImageFrameCache>	GetCache(void* key)=0;
-			/// <summary>
-			/// Get the attached customized cache object that is already binded to a key, and then detach it.
-			/// </summary>
-			/// <returns>The detached customized cache object.</returns>
-			/// <param name="key">The key binded with the customized cache object.</param>
-			virtual Ptr<INativeImageFrameCache>	RemoveCache(void* key)=0;
-		};
-		
-		/// <summary>
-		/// Represents an image.
-		/// </summary>
-		class INativeImage : public virtual IDescriptable, public Description<INativeImage>
-		{
-		public:
-			/// <summary>
-			/// Represents an image format.
-			/// </summary>
-			enum FormatType
-			{
-				/// <summary>
-				/// Bitmap format.
-				/// </summary>
-				Bmp,
-				/// <summary>
-				/// GIF format.
-				/// </summary>
-				Gif,
-				/// <summary>
-				/// Icon format.
-				/// </summary>
-				Icon,
-				/// <summary>
-				/// JPEG format.
-				/// </summary>
-				Jpeg,
-				/// <summary>
-				/// PNG format.
-				/// </summary>
-				Png,
-				/// <summary>
-				/// TIFF format.
-				/// </summary>
-				Tiff,
-				/// <summary>
-				/// WMP format.
-				/// </summary>
-				Wmp,
-				/// <summary>
-				/// Unknown format.
-				/// </summary>
-				Unknown,
-			};
-			
-			/// <summary>
-			/// Get the image service that creates this image.
-			/// </summary>
-			/// <returns>The image service that creates this image.</returns>
-			virtual INativeImageService*		GetImageService()=0;
-			/// <summary>
-			/// Get the image format.
-			/// </summary>
-			/// <returns>The image format.</returns>
-			virtual FormatType					GetFormat()=0;
-			/// <summary>
-			/// Get the number of frames in this image.
-			/// </summary>
-			/// <returns>The number of frames in this image.</returns>
-			virtual vint						GetFrameCount()=0;
-			/// <summary>
-			/// Get the frame in this image by a specified frame index.
-			/// </summary>
-			/// <returns>The frame in this image by a specified frame index.</returns>
-			/// <param name="index">The specified frame index.</param>
-			virtual INativeImageFrame*			GetFrame(vint index)=0;
-			/// <summary>
-			/// Save the image to a stream.
-			/// </summary>
-			/// <param name="imageStream">The stream.</param>
-			/// <param name="formatType">The format of the image.</param>
-			virtual void						SaveToStream(stream::IStream& imageStream, FormatType formatType = FormatType::Unknown) = 0;
-		};
-		
-		/// <summary>
-		/// Image service. To access this service, use [M:vl.presentation.INativeController.ImageService].
-		/// </summary>
-		class INativeImageService : public virtual IDescriptable, public Description<INativeImageService>
-		{
-		public:
-			/// <summary>
-			/// Create an image from file.
-			/// </summary>
-			/// <returns>The created image.</returns>
-			/// <param name="path">The file path.</param>
-			virtual Ptr<INativeImage>			CreateImageFromFile(const WString& path)=0;
-
-			/// <summary>
-			/// Create an image from memory.
-			/// </summary>
-			/// <returns>The created image.</returns>
-			/// <param name="buffer">The memory pointer.</param>
-			/// <param name="length">The memory length.</param>
-			virtual Ptr<INativeImage>			CreateImageFromMemory(void* buffer, vint length)=0;
-
-			/// <summary>
-			/// Create an image from stream.
-			/// </summary>
-			/// <returns>The created image.</returns>
-			/// <param name="imageStream">The stream.</param>
-			virtual Ptr<INativeImage>			CreateImageFromStream(stream::IStream& imageStream)=0;
-		};
-
-/***********************************************************************
-Native Window
-***********************************************************************/
 		
 		/// <summary>
 		/// Represents a window.
@@ -1874,6 +1593,19 @@ Native Window
 		class INativeWindow : public Interface, public Description<INativeWindow>
 		{
 		public:
+			/// <summary>
+			/// Test if the window needs to actively refreshing itself.
+			/// It should return true if it has an exclusive OS native window.
+			/// </summary>
+			/// <returns>Returns true if the window needs to actively refreshing itself.</returns>
+			virtual bool				IsActivelyRefreshing() = 0;
+			/// <summary>
+			/// Get the rendering offset to the render target.
+			/// It should return (0,0) if it has an exclusive OS native window.
+			/// </summary>
+			/// <returns>Returns the rendering offset to the render target.</returns>
+			virtual NativeSize			GetRenderingOffset() = 0;
+
 			/// <summary>
 			/// Convert point from native coordinate to GUI coordinate.
 			/// </summary>
@@ -1946,7 +1678,7 @@ Native Window
 			/// Set the title of the window. A title will be displayed as a name of this window.
 			/// </summary>
 			/// <param name="title">The title of the window.</param>
-			virtual void				SetTitle(WString title)=0;
+			virtual void				SetTitle(const WString& title)=0;
 			/// <summary>
 			/// Get the mouse cursor of the window. When the mouse is on the window, the mouse cursor will be rendered.
 			/// </summary>
@@ -1990,13 +1722,6 @@ Native Window
 				/// </summary>
 				Normal,
 				/// <summary>
-				/// A tooltip window.
-				/// Such window is expected to be disabled activation, [M:vl.presentation.INativeWindow.DisableActivate] must be called manually.
-				/// Such window is expected to have a parent window, [M:vl.presentation.INativeWindow.SetParent] must be called before [M:vl.presentation.INativeWindow.ShowDeactivated].
-				/// This window is automatically closed when the top level window is deactivated or clicked.
-				/// </summary>
-				Tooltip,
-				/// <summary>
 				/// A popup window.
 				/// Such window is expected to be disabled activation, [M:vl.presentation.INativeWindow.DisableActivate] must be called manually.
 				/// Such window is expected to have a parent window, [M:vl.presentation.INativeWindow.SetParent] must be called before [M:vl.presentation.INativeWindow.ShowDeactivated].
@@ -2004,10 +1729,11 @@ Native Window
 				/// </summary>
 				Popup,
 				/// <summary>
-				/// A menu window.
-				/// Such window is expected to be disabled activation, [M:vl.presentation.INativeWindow.DisableActivate] must be called manually.
-				/// Such window is expected to have a parent window, [M:vl.presentation.INativeWindow.SetParent] must be called before [M:vl.presentation.INativeWindow.ShowDeactivated].
-				/// This window is automatically closed when the top level window is deactivated or clicked.
+				/// A tooltip window, just like Popup.
+				/// </summary>
+				Tooltip,
+				/// <summary>
+				/// A menu window, just like Menu.
 				/// </summary>
 				Menu,
 			};
@@ -2111,16 +1837,6 @@ Native Window
 			virtual bool				IsEnabled()=0;
 			
 			/// <summary>
-			/// Set focus to the window.
-			/// A window with activation disabled cannot receive focus.
-			/// </summary>
-			virtual void				SetFocus()=0;
-			/// <summary>
-			/// Test is the window focused.
-			/// </summary>
-			/// <returns>Returns true if the window is focused.</returns>
-			virtual bool				IsFocused()=0;
-			/// <summary>
 			/// Activate to the window.
 			/// If the window disabled activation, this function enables it again.
 			/// </summary>
@@ -2130,6 +1846,11 @@ Native Window
 			/// </summary>
 			/// <returns>Returns true if the window is activated.</returns>
 			virtual bool				IsActivated()=0;
+			/// <summary>
+			/// Test is the window rendering as activated.
+			/// </summary>
+			/// <returns>Returns true if the window is rendering as activated.</returns>
+			virtual bool				IsRenderingAsActivated() = 0;
 			
 			/// <summary>
 			/// Show the icon in the task bar.
@@ -2151,7 +1872,7 @@ Native Window
 			virtual void				EnableActivate()=0;
 			/// <summary>
 			/// Disable activation to the window.
-			/// Clicking a window with activation disabled doesn't bring activation and focus.
+			/// Clicking a window with activation disabled doesn't bring activation.
 			/// Activation will be automatically enabled by calling <see cref="Show"/> or <see cref="SetActivate"/>.
 			/// </summary>
 			virtual void				DisableActivate()=0;
@@ -2405,8 +2126,10 @@ Native Window
 			virtual void				Moved();
 			/// <summary>
 			/// Called when the dpi associated with this window is changed.
+			/// The native window should call DpiChanged(true) before DpiChanged(false).
 			/// </summary>
-			virtual void				DpiChanged();
+			/// <param name="preparing">True for before changing phase, false for after changing phase.</param>
+			virtual void				DpiChanged(bool preparing);
 			/// <summary>
 			/// Called when the window is enabled.
 			/// </summary>
@@ -2424,13 +2147,13 @@ Native Window
 			/// </summary>
 			virtual void				LostFocus();
 			/// <summary>
-			/// Called when the window is activated.
+			/// Called when the window is rending as activated.
 			/// </summary>
-			virtual void				Activated();
+			virtual void				RenderingAsActivated();
 			/// <summary>
-			/// Called when the window is deactivated.
+			/// Called when the window is rendering as deactivated.
 			/// </summary>
-			virtual void				Deactivated();
+			virtual void				RenderingAsDeactivated();
 			/// <summary>
 			/// Called when the window is opened.
 			/// </summary>
@@ -2439,7 +2162,11 @@ Native Window
 			/// Called when the window is closing.
 			/// </summary>
 			/// <param name="cancel">Change the value to true to prevent the windows from being closed.</param>
-			virtual void				Closing(bool& cancel);
+			virtual void				BeforeClosing(bool& cancel);
+			/// <summary>
+			/// Called when all <see cref="BeforeClosing"/> callback agree to close.
+			/// </summary>
+			virtual void				AfterClosing();
 			/// <summary>
 			/// Called when the window is closed.
 			/// </summary>
@@ -2537,25 +2264,279 @@ Native Window
 			/// <param name="info">Detailed information to this message.</param>
 			virtual void				KeyUp(const NativeWindowKeyInfo& info);
 			/// <summary>
-			/// Called a system key is pressed.
-			/// </summary>
-			/// <param name="info">Detailed information to this message.</param>
-			virtual void				SysKeyDown(const NativeWindowKeyInfo& info);
-			/// <summary>
-			/// Called a system key is released.
-			/// </summary>
-			/// <param name="info">Detailed information to this message.</param>
-			virtual void				SysKeyUp(const NativeWindowKeyInfo& info);
-			/// <summary>
 			/// Called an input character is generated.
 			/// </summary>
 			/// <param name="info">Detailed information to this message.</param>
 			virtual void				Char(const NativeWindowCharInfo& info);
+
+			/// <summary>
+			/// Called to test if the window needs to be updated, only when <see cref="INativeWindow::IsActivelyRefreshing"/> returns false.
+			/// </summary>
+			/// <returns>Returns true if the window needs to be updated.</returns>
+			virtual bool				NeedRefresh();
+			/// <summary>
+			/// Called to refresh the window, only when <see cref="INativeWindow::IsActivelyRefreshing"/> returns false.
+			/// </summary>
+			/// <returns>Returns true if the window needs to be updated.</returns>
+			/// <param name="cleanBeforeRender">True when the whole render target needs to be cleaned.</param>
+			virtual void				ForceRefresh(bool handleFailure, bool& updated, bool& failureByResized, bool& failureByLostDevice);
+			/// <summary>
+			/// Called when the frame config of a window is decided.
+			/// This callback is only called in hosted mode.
+			/// This callback is only called once on a window.
+			/// </summary>
+			virtual void				AssignFrameConfig(const NativeWindowFrameConfig& config);
 		};
 
 /***********************************************************************
-Native Window Services
+INativeImageService
 ***********************************************************************/
+
+		class INativeImageService;
+		class INativeImage;
+		class INativeImageFrame;
+		
+		/// <summary>
+		/// Represents a customized cache object for an image frame.
+		/// </summary>
+		class INativeImageFrameCache : public Interface
+		{
+		public:
+			/// <summary>
+			/// Called when this cache object is attached to an image frame.
+			/// </summary>
+			/// <param name="frame">The image frame that attached to.</param>
+			virtual void						OnAttach(INativeImageFrame* frame)=0;
+			/// <summary>
+			/// Called when this cache object is detached to an image frame.
+			/// </summary>
+			/// <param name="frame">The image frame that detached from.</param>
+			virtual void						OnDetach(INativeImageFrame* frame)=0;
+		};
+
+		/// <summary>
+		/// Represents an image frame.
+		/// </summary>
+		class INativeImageFrame : public virtual IDescriptable, public Description<INativeImageFrame>
+		{
+		public:
+			/// <summary>
+			/// Get the image that owns this frame.
+			/// </summary>
+			/// <returns>The image that owns this frame.</returns>
+			virtual INativeImage*				GetImage()=0;
+			/// <summary>
+			/// Get the size of this frame.
+			/// </summary>
+			/// <returns>The size of this frame.</returns>
+			virtual Size						GetSize()=0;
+
+			/// <summary>
+			/// Attach a customized cache object to this image frame and bind to a key.
+			/// </summary>
+			/// <returns>Returns true if this operation succeeded.</returns>
+			/// <param name="key">The key binded with the customized cache object.</param>
+			/// <param name="cache">The customized cache object.</param>
+			virtual bool						SetCache(void* key, Ptr<INativeImageFrameCache> cache)=0;
+			/// <summary>
+			/// Get the attached customized cache object that is already binded to a key.
+			/// </summary>
+			/// <returns>The attached customized cache object.</returns>
+			/// <param name="key">The key binded with the customized cache object.</param>
+			virtual Ptr<INativeImageFrameCache>	GetCache(void* key)=0;
+			/// <summary>
+			/// Get the attached customized cache object that is already binded to a key, and then detach it.
+			/// </summary>
+			/// <returns>The detached customized cache object.</returns>
+			/// <param name="key">The key binded with the customized cache object.</param>
+			virtual Ptr<INativeImageFrameCache>	RemoveCache(void* key)=0;
+		};
+		
+		/// <summary>
+		/// Represents an image.
+		/// </summary>
+		class INativeImage : public virtual IDescriptable, public Description<INativeImage>
+		{
+		public:
+			/// <summary>
+			/// Represents an image format.
+			/// </summary>
+			enum FormatType
+			{
+				/// <summary>
+				/// Bitmap format.
+				/// </summary>
+				Bmp,
+				/// <summary>
+				/// GIF format.
+				/// </summary>
+				Gif,
+				/// <summary>
+				/// Icon format.
+				/// </summary>
+				Icon,
+				/// <summary>
+				/// JPEG format.
+				/// </summary>
+				Jpeg,
+				/// <summary>
+				/// PNG format.
+				/// </summary>
+				Png,
+				/// <summary>
+				/// TIFF format.
+				/// </summary>
+				Tiff,
+				/// <summary>
+				/// WMP format.
+				/// </summary>
+				Wmp,
+				/// <summary>
+				/// Unknown format.
+				/// </summary>
+				Unknown,
+			};
+			
+			/// <summary>
+			/// Get the image service that creates this image.
+			/// </summary>
+			/// <returns>The image service that creates this image.</returns>
+			virtual INativeImageService*		GetImageService()=0;
+			/// <summary>
+			/// Get the image format.
+			/// </summary>
+			/// <returns>The image format.</returns>
+			virtual FormatType					GetFormat()=0;
+			/// <summary>
+			/// Get the number of frames in this image.
+			/// </summary>
+			/// <returns>The number of frames in this image.</returns>
+			virtual vint						GetFrameCount()=0;
+			/// <summary>
+			/// Get the frame in this image by a specified frame index.
+			/// </summary>
+			/// <returns>The frame in this image by a specified frame index.</returns>
+			/// <param name="index">The specified frame index.</param>
+			virtual INativeImageFrame*			GetFrame(vint index)=0;
+			/// <summary>
+			/// Save the image to a stream.
+			/// </summary>
+			/// <param name="imageStream">The stream.</param>
+			/// <param name="formatType">The format of the image.</param>
+			virtual void						SaveToStream(stream::IStream& imageStream, FormatType formatType = FormatType::Unknown) = 0;
+		};
+		
+		/// <summary>
+		/// Image service. To access this service, use [M:vl.presentation.INativeController.ImageService].
+		/// </summary>
+		class INativeImageService : public virtual IDescriptable, public Description<INativeImageService>
+		{
+		public:
+			/// <summary>
+			/// Create an image from file.
+			/// </summary>
+			/// <returns>The created image.</returns>
+			/// <param name="path">The file path.</param>
+			virtual Ptr<INativeImage>			CreateImageFromFile(const WString& path)=0;
+
+			/// <summary>
+			/// Create an image from memory.
+			/// </summary>
+			/// <returns>The created image.</returns>
+			/// <param name="buffer">The memory pointer.</param>
+			/// <param name="length">The memory length.</param>
+			virtual Ptr<INativeImage>			CreateImageFromMemory(void* buffer, vint length)=0;
+
+			/// <summary>
+			/// Create an image from stream.
+			/// </summary>
+			/// <returns>The created image.</returns>
+			/// <param name="imageStream">The stream.</param>
+			virtual Ptr<INativeImage>			CreateImageFromStream(stream::IStream& imageStream)=0;
+		};
+
+/***********************************************************************
+INativeResourceService
+***********************************************************************/
+		
+		/// <summary>
+		/// Represents a cursor.
+		/// </summary>
+		class INativeCursor : public virtual IDescriptable, public Description<INativeCursor>
+		{
+		public:
+			/// <summary>
+			/// Represents a predefined cursor type.
+			/// </summary>
+			enum SystemCursorType
+			{
+				/// <summary>
+				/// Small waiting cursor.
+				/// </summary>
+				SmallWaiting,
+				/// <summary>
+				/// large waiting cursor.
+				/// </summary>
+				LargeWaiting,
+				/// <summary>
+				/// Arrow cursor.
+				/// </summary>
+				Arrow,
+				/// <summary>
+				/// Cross cursor.
+				/// </summary>
+				Cross,
+				/// <summary>
+				/// Hand cursor.
+				/// </summary>
+				Hand,
+				/// <summary>
+				/// Help cursor.
+				/// </summary>
+				Help,
+				/// <summary>
+				/// I beam cursor.
+				/// </summary>
+				IBeam,
+				/// <summary>
+				/// Sizing in all direction cursor.
+				/// </summary>
+				SizeAll,
+				/// <summary>
+				/// Sizing NE-SW cursor.
+				/// </summary>
+				SizeNESW,
+				/// <summary>
+				/// Sizing N-S cursor.
+				/// </summary>
+				SizeNS,
+				/// <summary>
+				/// Sizing NW-SE cursor.
+				/// </summary>
+				SizeNWSE,
+				/// <summary>
+				/// Sizing W-E cursor.
+				/// </summary>
+				SizeWE,
+				/// <summary>
+				/// Number of available cursors, this is not an available cursor by itself.
+				/// </summary>
+				LastSystemCursor=SizeWE,
+			};
+
+			static const vint			SystemCursorCount=LastSystemCursor+1;
+		public:
+			/// <summary>
+			/// Test is the cursor a system provided cursor.
+			/// </summary>
+			/// <returns>Returns true if the cursor a system provided cursor.</returns>
+			virtual bool				IsSystemCursor()=0;
+			/// <summary>
+			/// Get the cursor type if the cursor a system provided cursor.
+			/// </summary>
+			/// <returns>The cursor type.</returns>
+			virtual SystemCursorType	GetSystemCursorType()=0;
+		};
 
 		/// <summary>
 		/// System resource service. To access this service, use [M:vl.presentation.INativeController.ResourceService].
@@ -2585,7 +2566,16 @@ Native Window Services
 			/// </summary>
 			/// <param name="value">The font configuration to override.</param>
 			virtual void					SetDefaultFont(const FontProperties& value)=0;
+			/// <summary>
+			/// Enumerate all system fonts.
+			/// </summary>
+			/// <param name="fonts">The collection to receive all fonts.</param>
+			virtual void					EnumerateFonts(collections::List<WString>& fonts)=0;
 		};
+
+/***********************************************************************
+INativeAsyncService
+***********************************************************************/
 
 		/// <summary>
 		/// Delay execution controller.
@@ -2666,6 +2656,10 @@ Native Window Services
 			virtual Ptr<INativeDelay>		DelayExecuteInMainThread(const Func<void()>& proc, vint milliseconds)=0;
 		};
 
+/***********************************************************************
+INativeClipboardService
+***********************************************************************/
+
 		/// <summary>
 		/// Clipboard reader.
 		/// </summary>
@@ -2733,6 +2727,48 @@ Native Window Services
 			/// <returns>The clipboard writer.</returns>
 			virtual Ptr<INativeClipboardWriter>		WriteClipboard() = 0;
 		};
+
+/***********************************************************************
+INativeScreenService
+***********************************************************************/
+
+		/// <summary>
+		/// Represents a screen.
+		/// </summary>
+		class INativeScreen : public virtual IDescriptable, public Description<INativeScreen>
+		{
+		public:
+			/// <summary>
+			/// Get the bounds of the screen.
+			/// </summary>
+			/// <returns>The bounds of the screen.</returns>
+			virtual NativeRect			GetBounds()=0;
+			/// <summary>
+			/// Get the bounds of the screen client area.
+			/// </summary>
+			/// <returns>The bounds of the screen client area.</returns>
+			virtual NativeRect			GetClientBounds()=0;
+			/// <summary>
+			/// Get the name of the screen.
+			/// </summary>
+			/// <returns>The name of the screen.</returns>
+			virtual WString				GetName()=0;
+			/// <summary>
+			/// Test is the screen is a primary screen.
+			/// </summary>
+			/// <returns>Returns true if the screen is a primary screen.</returns>
+			virtual bool				IsPrimary()=0;
+			/// <summary>
+			/// Get the scaling for the screen's horizontal edge.
+			/// </summary>
+			/// <returns>The scaling. For example, in Windows when you have a 96 DPI, this function returns 1.0.</returns>
+			virtual double				GetScalingX() = 0;
+			/// <summary>
+			/// Get the scaling for the screen's vertical edge.
+			/// </summary>
+			/// <returns>The scaling. For example, in Windows when you have a 96 DPI, this function returns 1.0.</returns>
+			virtual double				GetScalingY() = 0;
+		};
 		
 		/// <summary>
 		/// Screen information service. To access this service, use [M:vl.presentation.INativeController.ScreenService].
@@ -2744,20 +2780,24 @@ Native Window Services
 			/// Get the number of all available screens.
 			/// </summary>
 			///  <returns>The number of all available screens.</returns>
-			virtual vint					GetScreenCount()=0;
+			virtual vint							GetScreenCount()=0;
 			/// <summary>
 			/// Get the screen object by a specified screen index.
 			/// </summary>
 			/// <returns>The screen object.</returns>
 			/// <param name="index">The specified screen index.</param>
-			virtual INativeScreen*			GetScreen(vint index)=0;
+			virtual INativeScreen*					GetScreen(vint index)=0;
 			/// <summary>
 			/// Get the screen object where the main part of the specified window is inside.
 			/// </summary>
 			/// <returns>The screen object.</returns>
 			/// <param name="window">The specified window.</param>
-			virtual INativeScreen*			GetScreen(INativeWindow* window)=0;
+			virtual INativeScreen*					GetScreen(INativeWindow* window)=0;
 		};
+
+/***********************************************************************
+INativeWindowService
+***********************************************************************/
 		
 		/// <summary>
 		/// Window service. To access this service, use [M:vl.presentation.INativeController.WindowService].
@@ -2765,6 +2805,22 @@ Native Window Services
 		class INativeWindowService : public virtual Interface
 		{
 		public:
+			/// <summary>
+			/// Get the frame configuration for the main window.
+			/// It limit values of frame properties and control template of the main window.
+			/// This function must return "NativeWindowFrameConfig::Default",
+			/// unless it is only designed to be used under hosted mode.
+			/// </summary>
+			/// <returns>The frame configuration for the main window.</returns>
+			virtual const NativeWindowFrameConfig&	GetMainWindowFrameConfig()=0;
+			/// <summary>
+			/// Get the frame configuration for non-main windows.
+			/// It limit values of frame properties and control template of all non-main windows.
+			/// This function must return "NativeWindowFrameConfig::Default",
+			/// unless it is only designed to be used under hosted mode.
+			/// </summary>
+			/// <returns>The frame configuration for non-main windows.</returns>
+			virtual const NativeWindowFrameConfig&	GetNonMainWindowFrameConfig()=0;
 			/// <summary>
 			/// Create a window.
 			/// </summary>
@@ -2788,10 +2844,26 @@ Native Window Services
 			/// <param name="location">The specified position in screen space.</param>
 			virtual INativeWindow*			GetWindow(NativePoint location) = 0;
 			/// <summary>
-			/// Make the specified window a main window, show that window, and wait until the windows is closed.
+			/// Make the specified window a main window, show that window, process events, and wait until the windows is closed.
 			/// </summary>
 			/// <param name="window">The specified window.</param>
 			virtual void					Run(INativeWindow* window) = 0;
+			/// <summary>
+			/// Process minimum necessary events and execute some async tasks.
+			/// </summary>
+			/// <returns>Return false when the main window has been closed and all finalizing are done.</returns>
+			virtual bool					RunOneCycle() = 0;
+		};
+
+/***********************************************************************
+INativeInputService
+***********************************************************************/
+
+		enum class NativeGlobalShortcutKeyResult : vint
+		{
+			NotSupported = -2,
+			Occupied = -1,
+			ValidIdBegins = 0,
 		};
 		
 		/// <summary>
@@ -2799,46 +2871,101 @@ Native Window Services
 		/// </summary>
 		class INativeInputService : public virtual IDescriptable, public Description<INativeInputService>
 		{
-		public:			
+		public:
 			/// <summary>
 			/// Start to reveive global timer message.
 			/// </summary>
-			virtual void					StartTimer()=0;
+			virtual void							StartTimer()=0;
 			/// <summary>
 			/// Stop to receive global timer message.
 			/// </summary>
-			virtual void					StopTimer()=0;
+			virtual void							StopTimer()=0;
 			/// <summary>
 			/// Test is the global timer message receiving enabled.
 			/// </summary>
 			/// <returns>Returns true if the global timer message receiving is enabled.</returns>
-			virtual bool					IsTimerEnabled()=0;
+			virtual bool							IsTimerEnabled()=0;
 			
 			/// <summary>
 			/// Test is the specified key pressing.
 			/// </summary>
 			/// <returns>Returns true if the specified key is pressing.</returns>
 			/// <param name="code">The key code to test.</param>
-			virtual bool					IsKeyPressing(VKEY code)=0;
+			virtual bool							IsKeyPressing(VKEY code)=0;
 			/// <summary>
 			/// Test is the specified key toggled.
 			/// </summary>
 			/// <returns>Returns true if the specified key is toggled.</returns>
 			/// <param name="code">The key code to test.</param>
-			virtual bool					IsKeyToggled(VKEY code)=0;
+			virtual bool							IsKeyToggled(VKEY code)=0;
 
 			/// <summary>
 			/// Get the name of a key.
 			/// </summary>
 			/// <returns>The name of a key.</returns>
 			/// <param name="code">The key code.</param>
-			virtual WString					GetKeyName(VKEY code)=0;
+			virtual WString							GetKeyName(VKEY code)=0;
 			/// <summary>
 			/// Get the key from a name.
 			/// </summary>
 			/// <returns>The key, returns -1 if the key name doesn't exist.</returns>
 			/// <param name="name">Key name</param>
-			virtual VKEY					GetKey(const WString& name)=0;
+			virtual VKEY							GetKey(const WString& name)=0;
+
+			/// <summary>
+			/// Register a system-wide shortcut key that doesn't require any window to be foreground window.
+			/// If the shortcut key is activated, <see cref="INativeControllerListener::GlobalShortcutKeyActivated"/> will be called.
+			/// </summary>
+			/// <param name="ctrl">Set to true if the CTRL key is required.</param>
+			/// <param name="shift">Set to true if the SHIFT key is required.</param>
+			/// <param name="alt">Set to true if the ALT key is required.</param>
+			/// <param name="key">The non-control key.</param>
+			/// <param name="id"></param>
+			/// <returns>Returns the created id. If it fails, the id equals to one of an item in <see cref="NativeGlobalShortcutKeyResult"/> except "ValidIdBegins".</returns>
+			virtual vint							RegisterGlobalShortcutKey(bool ctrl, bool shift, bool alt, VKEY key)=0;
+
+			/// <summary>
+			/// Unregister a system-wide shortcut key.
+			/// </summary>
+			/// <param name="id">The created id.</param>
+			/// <returns>Returns true if this operation succeeded.</returns>
+			virtual bool							UnregisterGlobalShortcutKey(vint id)=0;
+		};
+
+/***********************************************************************
+INativeCallbackService
+***********************************************************************/
+
+		class INativeControllerListener;
+
+		/// <summary>
+		/// Callback invoker.
+		/// </summary>
+		class INativeCallbackInvoker : public virtual Interface
+		{
+		public:
+			/// <summary>
+			/// Invoke <see cref="INativeControllerListener::GlobalTimer"/> of all installed listeners. 
+			/// </summary>
+			virtual void					InvokeGlobalTimer()=0;
+			/// <summary>
+			/// Invoke <see cref="INativeControllerListener::ClipboardUpdated"/> of all installed listeners.
+			/// </summary>
+			virtual void					InvokeClipboardUpdated()=0;
+			/// <summary>
+			/// Invoke <see cref="INativeControllerListener::ClipboardUpdated"/> of all installed listeners.
+			/// </summary>
+			virtual void					InvokeGlobalShortcutKeyActivated(vint id) = 0;
+			/// <summary>
+			/// Invoke <see cref="INativeControllerListener::NativeWindowCreated"/> of all installed listeners.
+			/// </summary>
+			/// <param name="window">The argument to the callback.</param>
+			virtual void					InvokeNativeWindowCreated(INativeWindow* window)=0;
+			/// <summary>
+			/// Invoke <see cref="INativeControllerListener::NativeWindowDestroying"/> of all installed listeners.
+			/// </summary>
+			/// <param name="window">The argument to the callback.</param>
+			virtual void					InvokeNativeWindowDestroying(INativeWindow* window)=0;
 		};
 		
 		/// <summary>
@@ -2859,8 +2986,16 @@ Native Window Services
 			/// <returns>Returns true if this operation succeeded.</returns>
 			/// <param name="listener">The global message listener to uninstall.</param>
 			virtual bool					UninstallListener(INativeControllerListener* listener)=0;
+			/// <summary>
+			/// Get the invoker that invoke all listeners.
+			/// </summary>
+			/// <returns>The invoker.</returns>
+			virtual INativeCallbackInvoker*	Invoker()=0;
 		};
 
+/***********************************************************************
+INativeDialogService
+***********************************************************************/
 
 		/// <summary>
 		/// Dialog service. To access this service, use [M:vl.presentation.INativeController.DialogService].
@@ -3016,10 +3151,12 @@ Native Window Services
 			};
 
 			/// <summary>
-			/// File dialog options.
+			/// File dialog option flags.
 			/// </summary>
 			enum FileDialogOptions
 			{
+				/// <summary>No option are selected.</summary>
+				None = 0,
 				/// <summary>Allow multiple selection.</summary>
 				FileDialogAllowMultipleSelection = 1,
 				/// <summary>Prevent the user to select unexisting files.</summary>
@@ -3142,6 +3279,11 @@ Native Window Controller
 			/// </summary>
 			virtual void					ClipboardUpdated();
 			/// <summary>
+			/// Called when a registered system-wide shortcut key is activated.
+			/// </summary>
+			/// <param name="id"></param>
+			virtual void					GlobalShortcutKeyActivated(vint id);
+			/// <summary>
 			/// Called when a window is created.
 			/// </summary>
 			/// <param name="window">The created window.</param>
@@ -3162,14 +3304,72 @@ Native Window Controller
 		/// Set the global native system service controller.
 		/// </summary>
 		/// <param name="controller">The global native system service controller.</param>
-		extern void							SetCurrentController(INativeController* controller);
+		extern void							SetNativeController(INativeController* controller);
+
+#define GUI_SUBSTITUTABLE_SERVICES(F)	\
+		F(Clipboard)					\
+		F(Dialog)						\
+
+#define GUI_UNSUBSTITUTABLE_SERVICES(F)	\
+		F(Callback)						\
+		F(Resource)						\
+		F(Async)						\
+		F(Image)						\
+		F(Screen)						\
+		F(Window)						\
+		F(Input)						\
+
+		class INativeServiceSubstitution : public Interface
+		{
+		public:
+
+#define SUBSTITUTE_SERVICE(NAME)																			\
+			virtual void					Substitute(INative##NAME##Service* service, bool optional) = 0;	\
+			virtual void					Unsubstitute(INative##NAME##Service* service) = 0;				\
+
+			GUI_SUBSTITUTABLE_SERVICES(SUBSTITUTE_SERVICE)
+#undef SUBSTITUTE_SERVICE
+		};
+
+		extern INativeServiceSubstitution*	GetNativeServiceSubstitution();
+
+		/// <summary>
+		/// Get a cursor according to the hit test result.
+		/// </summary>
+		/// <param name="hitTestResult">The hit test result.</param>
+		/// <param name="resourceService">The resource service to get cursors.</param>
+		/// <returns>Returns the cursor according to the hit test result. It could return nullptr when the cursor is not defined.</returns>
+		extern INativeCursor*				GetCursorFromHitTest(INativeWindowListener::HitTestResult hitTestResult, INativeResourceService* resourceService);
+
+		/// <summary>
+		/// A helper function calling multiple <see cref="INativeWindowListener::HitTest"/>.
+		/// </summary>
+		/// <returns>The hit test result.</returns>
+		template<typename T>
+		INativeWindowListener::HitTestResult PerformHitTest(collections::LazyList<T> listeners, NativePoint location)
+		{
+			auto hitTestResult = INativeWindowListener::NoDecision;
+			for (auto listener : listeners)
+			{
+				auto singleResult = listener->HitTest(location);
+				CHECK_ERROR(
+					hitTestResult == INativeWindowListener::NoDecision || singleResult == INativeWindowListener::NoDecision,
+					L"vl::presentation::PerformHitTest(LazyList<T>, NativePoint)#Incompatible INativeWindowListener::HitTest() callback results occured."
+					);
+				if (singleResult != INativeWindowListener::NoDecision)
+				{
+					hitTestResult = singleResult;
+				}
+			}
+			return hitTestResult;
+		}
 	}
 }
 
 #endif
 
 /***********************************************************************
-.\GRAPHICSCOMPOSITION\GUIGRAPHICSEVENTRECEIVER.H
+.\APPLICATION\GRAPHICSCOMPOSITIONS\GUIGRAPHICSEVENTRECEIVER.H
 ***********************************************************************/
 /***********************************************************************
 Vczh Library++ 3.0
@@ -3274,7 +3474,7 @@ Event
 							currentHandler = &(*currentHandler)->next;
 						}
 					}
-					(*currentHandler) = new HandlerNode;
+					(*currentHandler) = Ptr(new HandlerNode);
 					(*currentHandler)->handler = handler;
 					return true;
 				}
@@ -3301,21 +3501,21 @@ Event
 				template<typename TClass, typename TMethod>
 				Ptr<IGuiGraphicsEventHandler> AttachMethod(TClass* receiver, TMethod TClass::* method)
 				{
-					auto handler=MakePtr<FunctionHandler>(FunctionType(receiver, method));
+					auto handler=Ptr(new FunctionHandler(FunctionType(receiver, method)));
 					Attach(handler);
 					return handler;
 				}
 
 				Ptr<IGuiGraphicsEventHandler> AttachFunction(RawFunctionType* function)
 				{
-					auto handler = MakePtr<FunctionHandler>(FunctionType(function));
+					auto handler = Ptr(new FunctionHandler(FunctionType(function)));
 					Attach(handler);
 					return handler;
 				}
 
 				Ptr<IGuiGraphicsEventHandler> AttachFunction(const FunctionType& function)
 				{
-					auto handler = MakePtr<FunctionHandler>(function);
+					auto handler = Ptr(new FunctionHandler(function));
 					Attach(handler);
 					return handler;
 				}
@@ -3323,7 +3523,7 @@ Event
 				template<typename TLambda>
 				Ptr<IGuiGraphicsEventHandler> AttachLambda(const TLambda& lambda)
 				{
-					auto handler = MakePtr<FunctionHandler>(FunctionType(lambda));
+					auto handler = Ptr(new FunctionHandler(FunctionType(lambda)));
 					Attach(handler);
 					return handler;
 				}
@@ -3492,6 +3692,10 @@ Predefined Events
 				ParentLineChanged,
 				/// <summary>Service added changed.</summary>
 				ServiceAdded,
+				/// <summary>The window need to update when data or layout is changed. This even only triggered on <see cref="controls::GuiControlHost"/>.</summary>
+				UpdateRequested,
+				/// <summary>The window finished all the updating works after data or layout is changed. This even only triggered on <see cref="controls::GuiControlHost"/>.</summary>
+				UpdateFullfilled,
 			};
 
 			/// <summary>Control signal event arguments.</summary>
@@ -3666,10 +3870,6 @@ Event Receiver
 				GuiKeyEvent						keyDown;
 				/// <summary>Key up event.</summary>
 				GuiKeyEvent						keyUp;
-				/// <summary>System key down event.</summary>
-				GuiKeyEvent						systemKeyDown;
-				/// <summary>System key up event.</summary>
-				GuiKeyEvent						systemKeyUp;
 				/// <summary>Preview char input event.</summary>
 				GuiCharEvent					previewCharInput;
 				/// <summary>Char input event.</summary>
@@ -3720,10 +3920,10 @@ Workflow to C++ Codegen Helpers
 
 			static Ptr<reflection::description::IEventHandler> Attach(Event& e, Handler handler)
 			{
-				return MakePtr<EventHandlerImpl>(e.AttachLambda([=](Sender* sender, T& args)
+				return Ptr(new EventHandlerImpl(e.AttachLambda([=](Sender* sender, T& args)
 				{
 					handler(sender, &args);
-				}));
+				})));
 			}
 
 			static bool Detach(Event& e, Ptr<reflection::description::IEventHandler> handler)
@@ -3747,7 +3947,7 @@ Workflow to C++ Codegen Helpers
 #endif
 
 /***********************************************************************
-.\GRAPHICSCOMPOSITION\GUIGRAPHICSCOMPOSITIONBASE.H
+.\APPLICATION\GRAPHICSCOMPOSITIONS\GUIGRAPHICSCOMPOSITIONBASE.H
 ***********************************************************************/
 /***********************************************************************
 Vczh Library++ 3.0
@@ -3803,7 +4003,9 @@ Basic Construction
 
 				friend class controls::GuiControl;
 				friend class GuiGraphicsHost;
-				friend void InvokeOnCompositionStateChanged(compositions::GuiGraphicsComposition* composition);
+				friend void InvokeOnCompositionStateChanged(GuiGraphicsComposition* composition);
+				friend Size InvokeGetMinPreferredClientSizeInternal(GuiGraphicsComposition* composition, bool considerPreferredMinSize);
+				friend Rect InvokeGetPreferredBoundsInternal(GuiGraphicsComposition* composition, bool considerPreferredMinSize);
 			public:
 				/// <summary>
 				/// Minimum size limitation.
@@ -3858,6 +4060,9 @@ Basic Construction
 				void										SetAssociatedControl(controls::GuiControl* control);
 				void										InvokeOnCompositionStateChanged();
 
+				virtual Size								GetMinPreferredClientSizeInternal(bool considerPreferredMinSize) = 0;
+				virtual Rect								GetPreferredBoundsInternal(bool considerPreferredMinSize) = 0;
+
 				static bool									SharedPtrDestructorProc(DescriptableObject* obj, bool forceDisposing);
 			public:
 				GuiGraphicsComposition();
@@ -3902,6 +4107,9 @@ Basic Construction
 				/// <summary>Set the visibility of the composition.</summary>
 				/// <param name="value">Set to true to make the composition visible.</param>
 				void										SetVisible(bool value);
+				/// <summary>Get the visibility of the composition all the way to the root.</summary>
+				/// <returns>Returns true if the composition and all ancestors are visible.</returns>
+				bool										GetEventuallyVisible();
 				/// <summary>Get the minimum size limitation of the composition.</summary>
 				/// <returns>The minimum size limitation of the composition.</returns>
 				MinSizeLimitation							GetMinSizeLimitation();
@@ -3991,16 +4199,17 @@ Basic Construction
 				virtual Rect								GetClientArea();
 				/// <summary>Force to calculate layout and size immediately</summary>
 				virtual void								ForceCalculateSizeImmediately();
+
+				/// <summary>Get the preferred minimum client size.</summary>
+				/// <returns>The preferred minimum client size.</returns>
+				Size										GetMinPreferredClientSize();
+				/// <summary>Get the preferred bounds.</summary>
+				/// <returns>The preferred bounds.</returns>
+				Rect										GetPreferredBounds();
 				
 				/// <summary>Test is the size calculation affected by the parent.</summary>
 				/// <returns>Returns true if the size calculation is affected by the parent.</returns>
 				virtual bool								IsSizeAffectParent()=0;
-				/// <summary>Get the preferred minimum client size.</summary>
-				/// <returns>The preferred minimum client size.</returns>
-				virtual Size								GetMinPreferredClientSize()=0;
-				/// <summary>Get the preferred bounds.</summary>
-				/// <returns>The preferred bounds.</returns>
-				virtual Rect								GetPreferredBounds()=0;
 				/// <summary>Get the bounds.</summary>
 				/// <returns>The bounds.</returns>
 				virtual Rect								GetBounds()=0;
@@ -4011,15 +4220,18 @@ Basic Construction
 			/// </summary>
 			class GuiGraphicsSite : public GuiGraphicsComposition, public Description<GuiGraphicsSite>
 			{
+				friend Rect							InvokeGetBoundsInternal(GuiGraphicsSite* composition, Rect expectedBounds, bool considerPreferredMinSize);
 			protected:
 				Rect								previousBounds;
 
 				/// <summary>Calculate the final bounds from an expected bounds.</summary>
 				/// <returns>The final bounds according to some configuration like margin, minimum size, etc..</returns>
 				/// <param name="expectedBounds">The expected bounds.</param>
-				virtual Rect						GetBoundsInternal(Rect expectedBounds);
+				virtual Rect						GetBoundsInternal(Rect expectedBounds, bool considerPreferredMinSize);
 
 				void								UpdatePreviousBounds(Rect bounds);
+				Size								GetMinPreferredClientSizeInternal(bool considerPreferredMinSize)override;
+				Rect								GetPreferredBoundsInternal(bool considerPreferredMinSize)override;
 			public:
 				GuiGraphicsSite();
 				~GuiGraphicsSite();
@@ -4028,8 +4240,23 @@ Basic Construction
 				compositions::GuiNotifyEvent		BoundsChanged;
 				
 				bool								IsSizeAffectParent()override;
-				Size								GetMinPreferredClientSize()override;
-				Rect								GetPreferredBounds()override;
+
+				/// <summary>Get the previous calculated bounds, ignoring any surrounding changes that could affect the bounds.</summary>
+				/// <returns>The previous calculated bounds.</returns>
+				Rect								GetPreviousCalculatedBounds();
+			};
+			
+			/// <summary>
+			/// Represents a composition for the client area in an <see cref="INativeWindow"/>.
+			/// </summary>
+			class GuiWindowComposition : public GuiGraphicsSite, public Description<GuiWindowComposition>
+			{
+			public:
+				GuiWindowComposition();
+				~GuiWindowComposition();
+
+				Rect								GetBounds()override;
+				void								SetMargin(Margin value)override;
 			};
 
 /***********************************************************************
@@ -4058,7 +4285,7 @@ Helper Functions
 #endif
 
 /***********************************************************************
-.\GRAPHICSCOMPOSITION\GUIGRAPHICSBASICCOMPOSITION.H
+.\APPLICATION\GRAPHICSCOMPOSITIONS\GUIGRAPHICSBASICCOMPOSITION.H
 ***********************************************************************/
 /***********************************************************************
 Vczh Library++ 3.0
@@ -4082,19 +4309,6 @@ namespace vl
 /***********************************************************************
 Basic Compositions
 ***********************************************************************/
-			
-			/// <summary>
-			/// Represents a composition for the client area in an <see cref="INativeWindow"/>.
-			/// </summary>
-			class GuiWindowComposition : public GuiGraphicsSite, public Description<GuiWindowComposition>
-			{
-			public:
-				GuiWindowComposition();
-				~GuiWindowComposition();
-
-				Rect								GetBounds()override;
-				void								SetMargin(Margin value)override;
-			};
 
 			/// <summary>
 			/// Represents a composition that is free to change the expected bounds.
@@ -4105,7 +4319,8 @@ Basic Compositions
 				bool								sizeAffectParent = true;
 				Rect								compositionBounds;
 				Margin								alignmentToParent{ -1,-1,-1,-1 };
-				
+
+				Rect								GetPreferredBoundsInternal(bool considerPreferredMinSize)override;
 			public:
 				GuiBoundsComposition();
 				~GuiBoundsComposition();
@@ -4118,7 +4333,6 @@ Basic Compositions
 				void								SetSizeAffectParent(bool value);
 				
 				bool								IsSizeAffectParent()override;
-				Rect								GetPreferredBounds()override;
 				Rect								GetBounds()override;
 				/// <summary>Set the expected bounds.</summary>
 				/// <param name="value">The expected bounds.</param>
@@ -4133,6 +4347,567 @@ Basic Compositions
 				/// <summary>Test is the composition aligned to its parent.</summary>
 				/// <returns>Returns true if the composition is aligned to its parent.</returns>
 				bool								IsAlignedToParent();
+			};
+		}
+	}
+}
+
+#endif
+
+/***********************************************************************
+.\APPLICATION\GRAPHICSHOST\GUIGRAPHICSHOST_ALT.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI::Graphics Composition Host
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_PRESENTATION_HOST_GUIGRAPHICSHOST_ALT
+#define VCZH_PRESENTATION_HOST_GUIGRAPHICSHOST_ALT
+
+
+namespace vl
+{
+	namespace presentation
+	{
+		namespace controls
+		{
+			class GuiControl;
+			class GuiControlHost;
+		}
+
+		namespace compositions
+		{
+
+/***********************************************************************
+Alt-Combined Shortcut Key Interfaces
+***********************************************************************/
+
+			class IGuiAltActionHost;
+			
+			/// <summary>IGuiAltAction is the handler when an alt-combined shortcut key is activated.</summary>
+			class IGuiAltAction : public virtual IDescriptable
+			{
+			public:
+				/// <summary>The identifier for this service.</summary>
+				static const wchar_t* const				Identifier;
+
+				static bool								IsLegalAlt(const WString& alt);
+
+				virtual const WString&					GetAlt() = 0;
+				virtual bool							IsAltEnabled() = 0;
+				virtual bool							IsAltAvailable() = 0;
+				virtual GuiGraphicsComposition*			GetAltComposition() = 0;
+				virtual IGuiAltActionHost*				GetActivatingAltHost() = 0;
+				virtual void							OnActiveAlt() = 0;
+			};
+			
+			/// <summary>IGuiAltActionContainer enumerates multiple <see cref="IGuiAltAction"/>.</summary>
+			class IGuiAltActionContainer : public virtual IDescriptable
+			{
+			public:
+				/// <summary>The identifier for this service.</summary>
+				static const wchar_t* const				Identifier;
+
+				virtual vint							GetAltActionCount() = 0;
+				virtual IGuiAltAction*					GetAltAction(vint index) = 0;
+			};
+			
+			/// <summary>IGuiAltActionHost is an alt-combined shortcut key host. A host can also be entered or leaved, with multiple sub actions enabled or disabled.</summary>
+			class IGuiAltActionHost : public virtual IDescriptable
+			{
+			public:
+				/// <summary>The identifier for this service.</summary>
+				static const wchar_t* const				Identifier;
+
+				static void								CollectAltActionsFromControl(controls::GuiControl* control, bool includeThisControl, collections::Group<WString, IGuiAltAction*>& actions);
+				
+				virtual GuiGraphicsComposition*			GetAltComposition() = 0;
+				virtual IGuiAltActionHost*				GetPreviousAltHost() = 0;
+				virtual void							OnActivatedAltHost(IGuiAltActionHost* previousHost) = 0;
+				virtual void							OnDeactivatedAltHost() = 0;
+				virtual void							CollectAltActions(collections::Group<WString, IGuiAltAction*>& actions) = 0;
+			};
+
+			/// <summary>Default implementation for <see cref="IGuiAltActionHost"/></summary>
+			class GuiAltActionHostBase : public virtual IGuiAltActionHost
+			{
+			private:
+				GuiGraphicsComposition*					composition = nullptr;
+				controls::GuiControl*					control = nullptr;
+				bool									includeControl = true;
+				IGuiAltActionHost*						previousHost = nullptr;
+
+			protected:
+				void									SetAltComposition(GuiGraphicsComposition* _composition);
+				void									SetAltControl(controls::GuiControl* _control, bool _includeControl);
+
+			public:
+				GuiGraphicsComposition*					GetAltComposition()override;
+				IGuiAltActionHost*						GetPreviousAltHost()override;
+				void									OnActivatedAltHost(IGuiAltActionHost* _previousHost)override;
+				void									OnDeactivatedAltHost()override;
+				void									CollectAltActions(collections::Group<WString, IGuiAltAction*>& actions)override;
+			};
+
+/***********************************************************************
+Alt-Combined Shortcut Key Interfaces Helpers
+***********************************************************************/
+
+			class GuiAltActionManager : public Object
+			{
+				typedef collections::Dictionary<WString, IGuiAltAction*>					AltActionMap;
+				typedef collections::Dictionary<WString, controls::GuiControl*>				AltControlMap;
+			protected:
+				controls::GuiControlHost*				controlHost = nullptr;
+				IGuiAltActionHost*						currentAltHost = nullptr;
+				AltActionMap							currentActiveAltActions;
+				AltControlMap							currentActiveAltTitles;
+				WString									currentAltPrefix;
+				VKEY									supressAltKey = VKEY::KEY_UNKNOWN;
+
+				void									EnterAltHost(IGuiAltActionHost* host);
+				void									LeaveAltHost();
+				bool									EnterAltKey(wchar_t key);
+				void									LeaveAltKey();
+				void									CreateAltTitles(const collections::Group<WString, IGuiAltAction*>& actions);
+				vint									FilterTitles();
+				void									ClearAltHost();
+			public:
+				GuiAltActionManager(controls::GuiControlHost* _controlHost);
+				~GuiAltActionManager();
+
+				void									CloseAltHost();
+				bool									KeyDown(const NativeWindowKeyInfo& info);
+				bool									KeyUp(const NativeWindowKeyInfo& info);
+				bool									Char(const NativeWindowCharInfo& info);
+			};
+		}
+	}
+}
+
+#endif
+
+/***********************************************************************
+.\APPLICATION\GRAPHICSHOST\GUIGRAPHICSHOST_SHORTCUTKEY.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI::Graphics Composition Host
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_PRESENTATION_HOST_GUIGRAPHICSHOST_SHORTCUTKEY
+#define VCZH_PRESENTATION_HOST_GUIGRAPHICSHOST_SHORTCUTKEY
+
+
+namespace vl
+{
+	namespace presentation
+	{
+		namespace compositions
+		{
+
+/***********************************************************************
+Shortcut Key Manager
+***********************************************************************/
+
+			class IGuiShortcutKeyManager;
+
+			/// <summary>Shortcut key item.</summary>
+			class IGuiShortcutKeyItem : public virtual IDescriptable, public Description<IGuiShortcutKeyItem>
+			{
+			public:
+				/// <summary>Shortcut key executed event.</summary>
+				GuiNotifyEvent							Executed;
+
+				/// <summary>Get the associated <see cref="IGuiShortcutKeyManager"/> object.</summary>
+				/// <returns>The associated shortcut key manager.</returns>
+				virtual IGuiShortcutKeyManager*			GetManager()=0;
+				/// <summary>Get the name represents the shortcut key combination for this item.</summary>
+				/// <returns>The name represents the shortcut key combination for this item.</returns>
+				virtual WString							GetName()=0;
+			};
+			
+			/// <summary>Shortcut key manager item.</summary>
+			class IGuiShortcutKeyManager : public virtual IDescriptable, public Description<IGuiShortcutKeyManager>
+			{
+			public:
+				/// <summary>Get the number of shortcut key items that already attached to the manager.</summary>
+				/// <returns>T number of shortcut key items that already attached to the manager.</returns>
+				virtual vint							GetItemCount()=0;
+				/// <summary>Get the <see cref="IGuiShortcutKeyItem"/> associated with the index.</summary>
+				/// <returns>The shortcut key item.</returns>
+				/// <param name="index">The index.</param>
+				virtual IGuiShortcutKeyItem*			GetItem(vint index)=0;
+				/// <summary>Execute shortcut key items using a key event info.</summary>
+				/// <returns>Returns true if at least one shortcut key item is executed.</returns>
+				/// <param name="info">The key event info.</param>
+				virtual bool							Execute(const NativeWindowKeyInfo& info)=0;
+				
+				/// <summary>Get a shortcut key item using a key combination. If the item for the key combination does not exist, this function returns null.</summary>
+				/// <returns>The shortcut key item.</returns>
+				/// <param name="ctrl">Set to true if the CTRL key is required.</param>
+				/// <param name="shift">Set to true if the SHIFT key is required.</param>
+				/// <param name="alt">Set to true if the ALT key is required.</param>
+				/// <param name="key">The non-control key.</param>
+				virtual IGuiShortcutKeyItem*			TryGetShortcut(bool ctrl, bool shift, bool alt, VKEY key)=0;
+				/// <summary>Create a shortcut key item using a key combination. If the item for the key combination exists, this function crashes.</summary>
+				/// <returns>The created shortcut key item.</returns>
+				/// <param name="ctrl">Set to true if the CTRL key is required.</param>
+				/// <param name="shift">Set to true if the SHIFT key is required.</param>
+				/// <param name="alt">Set to true if the ALT key is required.</param>
+				/// <param name="key">The non-control key.</param>
+				virtual IGuiShortcutKeyItem*			CreateNewShortcut(bool ctrl, bool shift, bool alt, VKEY key)=0;
+				/// <summary>Create a shortcut key item using a key combination. If the item for the key combination exists, this function returns the item that is created before.</summary>
+				/// <returns>The created shortcut key item.</returns>
+				/// <param name="ctrl">Set to true if the CTRL key is required.</param>
+				/// <param name="shift">Set to true if the SHIFT key is required.</param>
+				/// <param name="alt">Set to true if the ALT key is required.</param>
+				/// <param name="key">The non-control key.</param>
+				virtual IGuiShortcutKeyItem*			CreateShortcutIfNotExist(bool ctrl, bool shift, bool alt, VKEY key)=0;
+				/// <summary>Destroy a shortcut key item using a key combination</summary>
+				/// <returns>Returns true if the manager destroyed a existing shortcut key item.</returns>
+				/// <param name="item">The shortcut key item.</param>
+				virtual bool							DestroyShortcut(IGuiShortcutKeyItem* item)=0;
+			};
+
+/***********************************************************************
+Shortcut Key Manager Helpers
+***********************************************************************/
+
+			class GuiShortcutKeyManager;
+
+			class GuiShortcutKeyItem : public Object, public IGuiShortcutKeyItem
+			{
+			protected:
+				GuiShortcutKeyManager*			shortcutKeyManager;
+				bool							global;
+				bool							ctrl;
+				bool							shift;
+				bool							alt;
+				VKEY							key;
+
+			public:
+				GuiShortcutKeyItem(GuiShortcutKeyManager* _shortcutKeyManager, bool _global, bool _ctrl, bool _shift, bool _alt, VKEY _key);
+				~GuiShortcutKeyItem();
+
+				IGuiShortcutKeyManager*			GetManager()override;
+				WString							GetName()override;
+
+				void							ReadKeyConfig(bool& _ctrl, bool& _shift, bool& _alt, VKEY& _key);
+				bool							CanActivate(const NativeWindowKeyInfo& info);
+				bool							CanActivate(bool _ctrl, bool _shift, bool _alt, VKEY _key);
+				void							Execute();
+			};
+
+			/// <summary>A default implementation for <see cref="IGuiShortcutKeyManager"/>.</summary>
+			class GuiShortcutKeyManager : public Object, public IGuiShortcutKeyManager, public Description<GuiShortcutKeyManager>
+			{
+				typedef collections::List<Ptr<GuiShortcutKeyItem>>		ShortcutKeyItemList;
+			protected:
+				ShortcutKeyItemList				shortcutKeyItems;
+				
+				virtual bool					IsGlobal();
+				virtual bool					OnCreatingShortcut(GuiShortcutKeyItem* item);
+				virtual void					OnDestroyingShortcut(GuiShortcutKeyItem* item);
+				IGuiShortcutKeyItem*			CreateShortcutInternal(bool ctrl, bool shift, bool alt, VKEY key);
+			public:
+				/// <summary>Create the shortcut key manager.</summary>
+				GuiShortcutKeyManager();
+				~GuiShortcutKeyManager();
+
+				vint							GetItemCount()override;
+				IGuiShortcutKeyItem*			GetItem(vint index)override;
+				bool							Execute(const NativeWindowKeyInfo& info)override;
+				
+				IGuiShortcutKeyItem*			TryGetShortcut(bool ctrl, bool shift, bool alt, VKEY key)override;
+				IGuiShortcutKeyItem*			CreateNewShortcut(bool ctrl, bool shift, bool alt, VKEY key)override;
+				IGuiShortcutKeyItem*			CreateShortcutIfNotExist(bool ctrl, bool shift, bool alt, VKEY key)override;
+				bool							DestroyShortcut(IGuiShortcutKeyItem* item)override;
+			};
+		}
+	}
+}
+
+#endif
+
+/***********************************************************************
+.\APPLICATION\GRAPHICSHOST\GUIGRAPHICSHOST_TAB.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI::Graphics Composition Host
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_PRESENTATION_HOST_GUIGRAPHICSHOST_TAB
+#define VCZH_PRESENTATION_HOST_GUIGRAPHICSHOST_TAB
+
+
+namespace vl
+{
+	namespace presentation
+	{
+		namespace controls
+		{
+			class GuiControl;
+			class GuiControlHost;
+		}
+
+		namespace compositions
+		{
+
+/***********************************************************************
+Tab-Combined Shortcut Key Interfaces
+***********************************************************************/
+			
+			/// <summary>IGuiTabAction is the handler when an tab-combined shortcut key is activated.</summary>
+			class IGuiTabAction : public virtual IDescriptable
+			{
+			public:
+				/// <summary>The identifier for this service.</summary>
+				static const wchar_t* const				Identifier;
+
+				virtual bool							GetAcceptTabInput() = 0;
+				virtual vint							GetTabPriority() = 0;
+				virtual bool							IsTabEnabled() = 0;
+				virtual bool							IsTabAvailable() = 0;
+			};
+
+/***********************************************************************
+Tab-Combined Shortcut Key Interfaces Helpers
+***********************************************************************/
+
+			class GuiTabActionManager : public Object
+			{
+				using ControlList = collections::List<controls::GuiControl*>;
+			protected:
+				controls::GuiControlHost*				controlHost = nullptr;
+				ControlList								controlsInOrder;
+				bool									available = true;
+				bool									supressTabOnce = false;
+
+				void									BuildControlList();
+				controls::GuiControl*					GetNextFocusControl(controls::GuiControl* focusedControl, vint offset);
+			public:
+				GuiTabActionManager(controls::GuiControlHost* _controlHost);
+				~GuiTabActionManager();
+
+				void									InvalidateTabOrderCache();
+				bool									KeyDown(const NativeWindowKeyInfo& info, GuiGraphicsComposition* focusedComposition);
+				bool									Char(const NativeWindowCharInfo& info);
+			};
+		}
+	}
+}
+
+#endif
+
+/***********************************************************************
+.\APPLICATION\GRAPHICSHOST\GUIGRAPHICSHOST.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI::Graphics Composition Host
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_PRESENTATION_HOST_GUIGRAPHICSHOST
+#define VCZH_PRESENTATION_HOST_GUIGRAPHICSHOST
+
+
+namespace vl
+{
+	namespace presentation
+	{
+		namespace controls
+		{
+			class GuiWindow;
+		}
+
+		namespace compositions
+		{
+
+/***********************************************************************
+Animation
+***********************************************************************/
+
+			/// <summary>
+			/// Represents a timer callback object.
+			/// </summary>
+			class IGuiGraphicsTimerCallback : public virtual IDescriptable, public Description<IGuiGraphicsTimerCallback>
+			{
+			public:
+				/// <summary>Called periodically.</summary>
+				/// <returns>Returns false to indicate that this callback need to be removed.</returns>
+				virtual bool					Play() = 0;
+			};
+
+			/// <summary>
+			/// Timer callback manager.
+			/// </summary>
+			class GuiGraphicsTimerManager : public Object, public Description<GuiGraphicsTimerManager>
+			{
+				typedef collections::List<Ptr<IGuiGraphicsTimerCallback>>		CallbackList;
+			protected:
+				CallbackList					callbacks;
+
+			public:
+				GuiGraphicsTimerManager();
+				~GuiGraphicsTimerManager();
+
+				/// <summary>Add a new callback.</summary>
+				/// <param name="callback">The new callback to add.</param>
+				void							AddCallback(Ptr<IGuiGraphicsTimerCallback> callback);
+				/// <summary>Called periodically.</summary>
+				void							Play();
+			};
+
+/***********************************************************************
+Host
+***********************************************************************/
+
+			/// <summary>
+			/// GuiGraphicsHost hosts an <see cref="GuiWindowComposition"/> in an <see cref="INativeWindow"/>. The composition will fill the whole window.
+			/// </summary>
+			class GuiGraphicsHost : public Object, private INativeWindowListener, private INativeControllerListener, public Description<GuiGraphicsHost>
+			{
+				typedef collections::List<GuiGraphicsComposition*>							CompositionList;
+				typedef GuiGraphicsComposition::GraphicsHostRecord							HostRecord;
+				typedef collections::Pair<DescriptableObject*, vint>						ProcKey;
+				typedef collections::List<Func<void()>>										ProcList;
+				typedef collections::Dictionary<ProcKey, Func<void()>>						ProcMap;
+			public:
+				static const vuint64_t					CaretInterval = 500;
+
+			protected:
+				HostRecord								hostRecord;
+				bool									supressPaint = false;
+				bool									needRender = true;
+				bool									renderingTriggeredInLastFrame = false;
+				ProcList								afterRenderProcs;
+				ProcMap									afterRenderKeyedProcs;
+
+				GuiAltActionManager*					altActionManager = nullptr;
+				GuiTabActionManager*					tabActionManager = nullptr;
+				IGuiShortcutKeyManager*					shortcutKeyManager = nullptr;
+
+				controls::GuiControlHost*				controlHost = nullptr;
+				GuiWindowComposition*					windowComposition = nullptr;
+				GuiGraphicsComposition*					focusedComposition = nullptr;
+				NativeSize								previousClientSize;
+				Size									minSize;
+				Point									caretPoint;
+				vuint64_t								lastCaretTime = 0;
+
+				GuiGraphicsTimerManager					timerManager;
+				GuiGraphicsComposition*					mouseCaptureComposition = nullptr;
+				CompositionList							mouseEnterCompositions;
+				void									RefreshRelatedHostRecord(INativeWindow* nativeWindow);
+
+				void									DisconnectCompositionInternal(GuiGraphicsComposition* composition);
+				void									MouseCapture(const NativeWindowMouseInfo& info);
+				void									MouseUncapture(const NativeWindowMouseInfo& info);
+				void									OnCharInput(const NativeWindowCharInfo& info, GuiGraphicsComposition* composition, GuiCharEvent GuiGraphicsEventReceiver::* eventReceiverEvent);
+				void									OnKeyInput(const NativeWindowKeyInfo& info, GuiGraphicsComposition* composition, GuiKeyEvent GuiGraphicsEventReceiver::* eventReceiverEvent);
+				void									RaiseMouseEvent(GuiMouseEventArgs& arguments, GuiGraphicsComposition* composition, GuiMouseEvent GuiGraphicsEventReceiver::* eventReceiverEvent);
+				void									OnMouseInput(const NativeWindowMouseInfo& info, bool capture, bool release, GuiMouseEvent GuiGraphicsEventReceiver::* eventReceiverEvent);
+
+				void									ResetRenderTarget();
+				void									CreateRenderTarget();
+				
+			private:
+				INativeWindowListener::HitTestResult	HitTest(NativePoint location)override;
+				void									Moving(NativeRect& bounds, bool fixSizeOnly, bool draggingBorder)override;
+				void									Moved()override;
+				void									DpiChanged(bool preparing)override;
+				void									Paint()override;
+
+				void									LeftButtonDown(const NativeWindowMouseInfo& info)override;
+				void									LeftButtonUp(const NativeWindowMouseInfo& info)override;
+				void									LeftButtonDoubleClick(const NativeWindowMouseInfo& info)override;
+				void									RightButtonDown(const NativeWindowMouseInfo& info)override;
+				void									RightButtonUp(const NativeWindowMouseInfo& info)override;
+				void									RightButtonDoubleClick(const NativeWindowMouseInfo& info)override;
+				void									MiddleButtonDown(const NativeWindowMouseInfo& info)override;
+				void									MiddleButtonUp(const NativeWindowMouseInfo& info)override;
+				void									MiddleButtonDoubleClick(const NativeWindowMouseInfo& info)override;
+				void									HorizontalWheel(const NativeWindowMouseInfo& info)override;
+				void									VerticalWheel(const NativeWindowMouseInfo& info)override;
+				void									MouseMoving(const NativeWindowMouseInfo& info)override;
+				void									MouseEntered()override;
+				void									MouseLeaved()override;
+
+				void									KeyDown(const NativeWindowKeyInfo& info)override;
+				void									KeyUp(const NativeWindowKeyInfo& info)override;
+				void									Char(const NativeWindowCharInfo& info)override;
+
+				bool									NeedRefresh()override;
+				void									ForceRefresh(bool handleFailure, bool& updated, bool& failureByResized, bool& failureByLostDevice)override;
+				void									GlobalTimer()override;
+
+				elements::RenderTargetFailure			Render(bool forceUpdate, bool handleFailure, bool& updated);
+
+			public:
+				GuiGraphicsHost(controls::GuiControlHost* _controlHost, GuiGraphicsComposition* boundsComposition);
+				~GuiGraphicsHost();
+
+				/// <summary>Get the associated window.</summary>
+				/// <returns>The associated window.</returns>
+				INativeWindow*							GetNativeWindow();
+				/// <summary>Associate a window. A <see cref="GuiWindowComposition"/> will fill and appear in the window.</summary>
+				/// <param name="_nativeWindow">The window to associated.</param>
+				void									SetNativeWindow(INativeWindow* _nativeWindow);
+				/// <summary>Get the main <see cref="GuiWindowComposition"/>. If a window is associated, everything that put into the main composition will be shown in the window.</summary>
+				/// <returns>The main compositoin.</returns>
+				GuiGraphicsComposition*					GetMainComposition();
+				/// <summary>Request a rendering</summary>
+				void									RequestRender();
+				/// <summary>Invoke a specified function after rendering.</summary>
+				/// <param name="proc">The specified function.</param>
+				/// <param name="key">A key to cancel a previous binded key if not null.</param>
+				void									InvokeAfterRendering(const Func<void()>& proc, ProcKey key = { nullptr,-1 });
+
+				/// <summary>Invalidte the internal tab order control list. Next time when TAB is pressed it will be rebuilt.</summary>
+				void									InvalidateTabOrderCache();
+				/// <summary>Get the <see cref="IGuiShortcutKeyManager"/> attached with this graphics host.</summary>
+				/// <returns>The shortcut key manager.</returns>
+				IGuiShortcutKeyManager*					GetShortcutKeyManager();
+				/// <summary>Attach or detach the <see cref="IGuiShortcutKeyManager"/> associated with this graphics host. When this graphics host is disposing, the associated shortcut key manager will be deleted if exists.</summary>
+				/// <param name="value">The shortcut key manager. Set to null to detach the previous shortcut key manager from this graphics host.</param>
+				void									SetShortcutKeyManager(IGuiShortcutKeyManager* value);
+
+				/// <summary>Set the focus composition. A focused composition will receive keyboard messages.</summary>
+				/// <returns>Returns true if this operation succeeded.</returns>
+				/// <param name="composition">The composition to set focus. This composition should be or in the main composition.</param>
+				bool									SetFocus(GuiGraphicsComposition* composition);
+				/// <summary>Get the focus composition. A focused composition will receive keyboard messages.</summary>
+				/// <returns>The focus composition.</returns>
+				GuiGraphicsComposition*					GetFocusedComposition();
+				/// <summary>Get the caret point. A caret point is the position to place the edit box of the activated input method editor.</summary>
+				/// <returns>The caret point.</returns>
+				Point									GetCaretPoint();
+				/// <summary>Set the caret point. A caret point is the position to place the edit box of the activated input method editor.</summary>
+				/// <param name="value">The caret point.</param>
+				/// <param name="referenceComposition">The point space. If this argument is null, the "value" argument will use the point space of the client area in the main composition.</param>
+				void									SetCaretPoint(Point value, GuiGraphicsComposition* referenceComposition=0);
+
+				/// <summary>Get the timer manager.</summary>
+				/// <returns>The timer manager.</returns>
+				GuiGraphicsTimerManager*				GetTimerManager();
+				/// <summary>Notify that a composition is going to disconnect from this graphics host. Generally this happens when a composition's parent line changes.</summary>
+				/// <param name="composition">The composition to disconnect</param>
+				void									DisconnectComposition(GuiGraphicsComposition* composition);
 			};
 		}
 	}
@@ -4258,6 +5033,7 @@ Flow Compositions
 				void								OnBoundsChanged(GuiGraphicsComposition* sender, GuiEventArgs& arguments);
 				void								OnChildInserted(GuiGraphicsComposition* child)override;
 				void								OnChildRemoved(GuiGraphicsComposition* child)override;
+				Size								GetMinPreferredClientSizeInternal(bool considerPreferredMinSize)override;
 			public:
 				GuiFlowComposition();
 				~GuiFlowComposition();
@@ -4307,7 +5083,6 @@ Flow Compositions
 				void								SetAlignment(FlowAlignment value);
 				
 				void								ForceCalculateSizeImmediately()override;
-				Size								GetMinPreferredClientSize()override;
 				Rect								GetBounds()override;
 			};
 			
@@ -4333,6 +5108,8 @@ Flow Compositions
 				double								percentage = 0.0;
 				/// <summary>The distance value.</summary>
 				vint								distance = 0;
+
+				bool operator==(const GuiFlowOption& value) const = default;
 			};
 			
 			/// <summary>
@@ -4929,6 +5706,7 @@ Stack Compositions
 				void								OnBoundsChanged(GuiGraphicsComposition* sender, GuiEventArgs& arguments);
 				void								OnChildInserted(GuiGraphicsComposition* child)override;
 				void								OnChildRemoved(GuiGraphicsComposition* child)override;
+				Size								GetMinPreferredClientSizeInternal(bool considerPreferredMinSize)override;
 			public:
 				GuiStackComposition();
 				~GuiStackComposition();
@@ -4956,7 +5734,6 @@ Stack Compositions
 				void								SetPadding(vint value);
 				
 				void								ForceCalculateSizeImmediately()override;
-				Size								GetMinPreferredClientSize()override;
 				Rect								GetBounds()override;
 				
 				/// <summary>Get the extra margin inside the stack composition.</summary>
@@ -5159,8 +5936,7 @@ Table Compositions
 				{
 				}
 
-				bool operator==(const GuiCellOption& value){return false;}
-				bool operator!=(const GuiCellOption& value){return true;}
+				bool operator==(const GuiCellOption& value) const = default;
 
 				/// <summary>Creates an absolute sizing option</summary>
 				/// <returns>The created option.</returns>
@@ -5252,6 +6028,7 @@ Table Compositions
 														);
 				
 				void								OnRenderContextChanged()override;
+				Size								GetMinPreferredClientSizeInternal(bool considerPreferredMinSize)override;
 			public:
 				GuiTableComposition();
 				~GuiTableComposition();
@@ -5312,7 +6089,6 @@ Table Compositions
 				void								UpdateCellBounds();
 				
 				void								ForceCalculateSizeImmediately()override;
-				Size								GetMinPreferredClientSize()override;
 				Rect								GetBounds()override;
 			};
 
@@ -5502,40 +6278,31 @@ Resource Manager
 ***********************************************************************/
 
 			/// <summary>
-			/// This is a class for managing grpahics element factories and graphics renderer factories
+			/// This is an interface for managing grpahics element factories and graphics renderer factories
 			/// </summary>
-			class GuiGraphicsResourceManager : public Object
+			class IGuiGraphicsResourceManager : public Interface, public Description<INativeWindow>
 			{
-			protected:
-				collections::List<WString>								elementTypes;
-				collections::Array<Ptr<IGuiGraphicsRendererFactory>>	rendererFactories;
 			public:
-				/// <summary>
-				/// Create a graphics resource manager without any predefined factories
-				/// </summary>
-				GuiGraphicsResourceManager();
-				~GuiGraphicsResourceManager();
-
 				/// <summary>
 				/// Register a element type name.
 				/// This function crashes when an element type has already been registered.
 				/// </summary>
 				/// <param name="elementTypeName">The element type.</param>
 				/// <returns>A number identifies this element type.</returns>
-				vint									RegisterElementType(const WString& elementTypeName);
+				virtual vint							RegisterElementType(const WString& elementTypeName) = 0;
 				/// <summary>
 				/// Register a <see cref="IGuiGraphicsRendererFactory"/> and bind it to an registered element type from <see cref="RegisterElementType"/>.
 				/// This function crashes when an element type has already been binded a renderer factory.
 				/// </summary>
 				/// <param name="elementType">The element type to represent a graphics element factory.</param>
 				/// <param name="factory">The instance of the graphics renderer factory to register.</param>
-				void									RegisterRendererFactory(vint elementType, Ptr<IGuiGraphicsRendererFactory> factory);
+				virtual void							RegisterRendererFactory(vint elementType, Ptr<IGuiGraphicsRendererFactory> factory) = 0;
 				/// <summary>
 				/// Get the instance of a registered <see cref="IGuiGraphicsRendererFactory"/> that is binded to a specified element type.
 				/// </summary>
 				/// <returns>Returns the renderer factory.</returns>
 				/// <param name="elementType">The registered element type from <see cref="RegisterElementType"/> to get a binded graphics renderer factory.</param>
-				IGuiGraphicsRendererFactory*			GetRendererFactory(vint elementType);
+				virtual IGuiGraphicsRendererFactory*	GetRendererFactory(vint elementType) = 0;
 				/// <summary>
 				/// Get the instance of a <see cref="IGuiGraphicsRenderTarget"/> that is binded to an <see cref="INativeWindow"/>.
 				/// </summary>
@@ -5560,15 +6327,35 @@ Resource Manager
 			};
 
 			/// <summary>
+			/// This is a default implementation for <see cref="IGuiGraphicsResourceManager"/>
+			/// </summary>
+			class GuiGraphicsResourceManager : public Object, public virtual IGuiGraphicsResourceManager
+			{
+			protected:
+				collections::List<WString>								elementTypes;
+				collections::Array<Ptr<IGuiGraphicsRendererFactory>>	rendererFactories;
+			public:
+				/// <summary>
+				/// Create a graphics resource manager without any predefined factories
+				/// </summary>
+				GuiGraphicsResourceManager();
+				~GuiGraphicsResourceManager();
+
+				vint									RegisterElementType(const WString& elementTypeName);
+				void									RegisterRendererFactory(vint elementType, Ptr<IGuiGraphicsRendererFactory> factory);
+				IGuiGraphicsRendererFactory*			GetRendererFactory(vint elementType);
+			};
+
+			/// <summary>
 			/// Get the current <see cref="GuiGraphicsResourceManager"/>.
 			/// </summary>
 			/// <returns>Returns the current resource manager.</returns>
-			extern GuiGraphicsResourceManager*			GetGuiGraphicsResourceManager();
+			extern IGuiGraphicsResourceManager*			GetGuiGraphicsResourceManager();
 			/// <summary>
 			/// Set the current <see cref="GuiGraphicsResourceManager"/>.
 			/// </summary>
 			/// <param name="resourceManager">The resource manager to set.</param>
-			extern void									SetGuiGraphicsResourceManager(GuiGraphicsResourceManager* resourceManager);
+			extern void									SetGuiGraphicsResourceManager(IGuiGraphicsResourceManager* resourceManager);
 
 /***********************************************************************
 Helpers
@@ -5609,7 +6396,7 @@ Helpers
 					CHECK_ERROR(rendererFactory != nullptr, L"This element is not supported by the selected renderer.");
 
 					auto element = new TElement;
-					element->renderer = rendererFactory->Create();
+					element->renderer = Ptr(rendererFactory->Create());
 					element->renderer->Initialize(element);
 					return element;
 				}
@@ -5657,8 +6444,8 @@ Helpers
 					{\
 						TRENDERER* renderer=new TRENDERER;\
 						renderer->factory=this;\
-						renderer->element=0;\
-						renderer->renderTarget=0;\
+						renderer->element=nullptr;\
+						renderer->renderTarget=nullptr;\
 						return renderer;\
 					}\
 				};\
@@ -5672,7 +6459,7 @@ Helpers
 				{\
 					auto manager = GetGuiGraphicsResourceManager();\
 					CHECK_ERROR(manager != nullptr, L"SetGuiGraphicsResourceManager must be called before registering element renderers.");\
-					manager->RegisterRendererFactory(TELEMENT::GetElementType(), new TRENDERER::Factory);\
+					manager->RegisterRendererFactory(TELEMENT::GetElementType(), Ptr(new TRENDERER::Factory));\
 				}\
 				IGuiGraphicsRendererFactory* GetFactory()override\
 				{\
@@ -5704,16 +6491,14 @@ Helpers
 				struct Package\
 				{\
 					TVALUE							resource;\
-					vint								counter;\
+					vint							counter;\
 					bool operator==(const Package& package)const{return false;}\
-					bool operator!=(const Package& package)const{return true;}\
 				};\
 				struct DeadPackage\
 				{\
 					TKEY							key;\
 					TVALUE							value;\
 					bool operator==(const DeadPackage& package)const{return false;}\
-					bool operator!=(const DeadPackage& package)const{return true;}\
 				};\
 				Dictionary<TKEY, Package>			aliveResources;\
 				List<DeadPackage>					deadResources;\
@@ -5781,131 +6566,53 @@ Helpers
 #endif
 
 /***********************************************************************
-.\GRAPHICSHOST\GUIGRAPHICSHOST_ALT.H
+.\PLATFORMPROVIDERS\HOSTED\GUIHOSTEDGRAPHICS.H
 ***********************************************************************/
 /***********************************************************************
 Vczh Library++ 3.0
 Developer: Zihan Chen(vczh)
-GacUI::Graphics Composition Host
+GacUI::Hosted Window
 
 Interfaces:
+  IGuiGraphicsResourceManager
+
 ***********************************************************************/
 
-#ifndef VCZH_PRESENTATION_HOST_GUIGRAPHICSHOST_ALT
-#define VCZH_PRESENTATION_HOST_GUIGRAPHICSHOST_ALT
+#ifndef VCZH_PRESENTATION_GUIHOSTEDGRAPHICS
+#define VCZH_PRESENTATION_GUIHOSTEDGRAPHICS
 
 
 namespace vl
 {
 	namespace presentation
 	{
-		namespace compositions
+		class GuiHostedController;
+
+		namespace elements
 		{
 
 /***********************************************************************
-Alt-Combined Shortcut Key Interfaces
+GuiHostedGraphicsResourceManager
 ***********************************************************************/
 
-			class IGuiAltActionHost;
-			
-			/// <summary>IGuiAltAction is the handler when an alt-combined shortcut key is activated.</summary>
-			class IGuiAltAction : public virtual IDescriptable
+			class GuiHostedGraphicsResourceManager : public Object, public virtual IGuiGraphicsResourceManager
 			{
-			public:
-				/// <summary>The identifier for this service.</summary>
-				static const wchar_t* const				Identifier;
-
-				static bool								IsLegalAlt(const WString& alt);
-
-				virtual const WString&					GetAlt() = 0;
-				virtual bool							IsAltEnabled() = 0;
-				virtual bool							IsAltAvailable() = 0;
-				virtual GuiGraphicsComposition*			GetAltComposition() = 0;
-				virtual IGuiAltActionHost*				GetActivatingAltHost() = 0;
-				virtual void							OnActiveAlt() = 0;
-			};
-			
-			/// <summary>IGuiAltActionContainer enumerates multiple <see cref="IGuiAltAction"/>.</summary>
-			class IGuiAltActionContainer : public virtual IDescriptable
-			{
-			public:
-				/// <summary>The identifier for this service.</summary>
-				static const wchar_t* const				Identifier;
-
-				virtual vint							GetAltActionCount() = 0;
-				virtual IGuiAltAction*					GetAltAction(vint index) = 0;
-			};
-			
-			/// <summary>IGuiAltActionHost is an alt-combined shortcut key host. A host can also be entered or leaved, with multiple sub actions enabled or disabled.</summary>
-			class IGuiAltActionHost : public virtual IDescriptable
-			{
-			public:
-				/// <summary>The identifier for this service.</summary>
-				static const wchar_t* const				Identifier;
-
-				static void								CollectAltActionsFromControl(controls::GuiControl* control, bool includeThisControl, collections::Group<WString, IGuiAltAction*>& actions);
-				
-				virtual GuiGraphicsComposition*			GetAltComposition() = 0;
-				virtual IGuiAltActionHost*				GetPreviousAltHost() = 0;
-				virtual void							OnActivatedAltHost(IGuiAltActionHost* previousHost) = 0;
-				virtual void							OnDeactivatedAltHost() = 0;
-				virtual void							CollectAltActions(collections::Group<WString, IGuiAltAction*>& actions) = 0;
-			};
-
-			/// <summary>Default implementation for <see cref="IGuiAltActionHost"/></summary>
-			class GuiAltActionHostBase : public virtual IGuiAltActionHost
-			{
-			private:
-				GuiGraphicsComposition*					composition = nullptr;
-				controls::GuiControl*					control = nullptr;
-				bool									includeControl = true;
-				IGuiAltActionHost*						previousHost = nullptr;
-
+				friend class vl::presentation::GuiHostedController;
 			protected:
-				void									SetAltComposition(GuiGraphicsComposition* _composition);
-				void									SetAltControl(controls::GuiControl* _control, bool _includeControl);
+				GuiHostedController*				hostedController = nullptr;
+				IGuiGraphicsResourceManager*		nativeManager = nullptr;
 
 			public:
-				GuiGraphicsComposition*					GetAltComposition()override;
-				IGuiAltActionHost*						GetPreviousAltHost()override;
-				void									OnActivatedAltHost(IGuiAltActionHost* _previousHost)override;
-				void									OnDeactivatedAltHost()override;
-				void									CollectAltActions(collections::Group<WString, IGuiAltAction*>& actions)override;
-			};
+				GuiHostedGraphicsResourceManager(GuiHostedController* _hostedController, IGuiGraphicsResourceManager* _nativeManager);
+				~GuiHostedGraphicsResourceManager();
 
-/***********************************************************************
-Alt-Combined Shortcut Key Interfaces Helpers
-***********************************************************************/
-
-			class GuiAltActionManager : public Object
-			{
-				typedef collections::Dictionary<WString, IGuiAltAction*>					AltActionMap;
-				typedef collections::Dictionary<WString, controls::GuiControl*>				AltControlMap;
-			protected:
-				controls::GuiControlHost*				controlHost = nullptr;
-				IGuiAltActionHost*						currentAltHost = nullptr;
-				AltActionMap							currentActiveAltActions;
-				AltControlMap							currentActiveAltTitles;
-				WString									currentAltPrefix;
-				VKEY									supressAltKey = VKEY::KEY_UNKNOWN;
-
-				void									EnterAltHost(IGuiAltActionHost* host);
-				void									LeaveAltHost();
-				bool									EnterAltKey(wchar_t key);
-				void									LeaveAltKey();
-				void									CreateAltTitles(const collections::Group<WString, IGuiAltAction*>& actions);
-				vint									FilterTitles();
-				void									ClearAltHost();
-			public:
-				GuiAltActionManager(controls::GuiControlHost* _controlHost);
-				~GuiAltActionManager();
-
-				void									CloseAltHost();
-				bool									KeyDown(const NativeWindowKeyInfo& info);
-				bool									KeyUp(const NativeWindowKeyInfo& info);
-				bool									SysKeyDown(const NativeWindowKeyInfo& info);
-				bool									SysKeyUp(const NativeWindowKeyInfo& info);
-				bool									Char(const NativeWindowCharInfo& info);
+				vint								RegisterElementType(const WString& elementTypeName) override;
+				void								RegisterRendererFactory(vint elementType, Ptr<IGuiGraphicsRendererFactory> factory) override;
+				IGuiGraphicsRendererFactory*		GetRendererFactory(vint elementType) override;
+				IGuiGraphicsRenderTarget*			GetRenderTarget(INativeWindow* window) override;
+				void								RecreateRenderTarget(INativeWindow* window) override;
+				void								ResizeRenderTarget(INativeWindow* window) override;
+				IGuiGraphicsLayoutProvider*			GetLayoutProvider() override;
 			};
 		}
 	}
@@ -5914,129 +6621,658 @@ Alt-Combined Shortcut Key Interfaces Helpers
 #endif
 
 /***********************************************************************
-.\GRAPHICSHOST\GUIGRAPHICSHOST_SHORTCUTKEY.H
+.\PLATFORMPROVIDERS\HOSTED\GUIHOSTEDWINDOWMANAGER.H
 ***********************************************************************/
 /***********************************************************************
 Vczh Library++ 3.0
 Developer: Zihan Chen(vczh)
-GacUI::Graphics Composition Host
+GacUI::Hosted Window
 
 Interfaces:
+  Window<T>
+  WindowManager<T>
+
 ***********************************************************************/
 
-#ifndef VCZH_PRESENTATION_HOST_GUIGRAPHICSHOST_SHORTCUTKEY
-#define VCZH_PRESENTATION_HOST_GUIGRAPHICSHOST_SHORTCUTKEY
+#ifndef VCZH_PRESENTATION_GUIHOSTEDWINDOWMANAGER
+#define VCZH_PRESENTATION_GUIHOSTEDWINDOWMANAGER
 
 
 namespace vl
 {
 	namespace presentation
 	{
-		namespace compositions
+		namespace hosted_window_manager
 		{
+			template<typename T>
+			struct WindowManager;
 
 /***********************************************************************
-Shortcut Key Manager
+Window
 ***********************************************************************/
 
-			class IGuiShortcutKeyManager;
-
-			/// <summary>Shortcut key item.</summary>
-			class IGuiShortcutKeyItem : public virtual IDescriptable, public Description<IGuiShortcutKeyItem>
+			template<typename T>
+			struct Window
 			{
-			public:
-				/// <summary>Shortcut key executed event.</summary>
-				GuiNotifyEvent							Executed;
+				friend struct WindowManager<T>;
+			protected:
+				WindowManager<T>*							windowManager = nullptr;
 
-				/// <summary>Get the associated <see cref="IGuiShortcutKeyManager"/> object.</summary>
-				/// <returns>The associated shortcut key manager.</returns>
-				virtual IGuiShortcutKeyManager*			GetManager()=0;
-				/// <summary>Get the name represents the shortcut key combination for this item.</summary>
-				/// <returns>The name represents the shortcut key combination for this item.</returns>
-				virtual WString							GetName()=0;
-			};
-			
-			/// <summary>Shortcut key manager item.</summary>
-			class IGuiShortcutKeyManager : public virtual IDescriptable, public Description<IGuiShortcutKeyManager>
-			{
 			public:
-				/// <summary>Get the number of shortcut key items that already attached to the manager.</summary>
-				/// <returns>T number of shortcut key items that already attached to the manager.</returns>
-				virtual vint							GetItemCount()=0;
-				/// <summary>Get the <see cref="IGuiShortcutKeyItem"/> associated with the index.</summary>
-				/// <returns>The shortcut key item.</returns>
-				/// <param name="index">The index.</param>
-				virtual IGuiShortcutKeyItem*			GetItem(vint index)=0;
-				/// <summary>Execute shortcut key items using a key event info.</summary>
-				/// <returns>Returns true if at least one shortcut key item is executed.</returns>
-				/// <param name="info">The key event info.</param>
-				virtual bool							Execute(const NativeWindowKeyInfo& info)=0;
+				const T										id = {};
+				Window<T>*									parent = nullptr;
+				collections::List<Window<T>*>				children;
+
+				NativeRect									bounds;
+				bool										topMost = false;
+				bool										visible = false;
+				bool										enabled = true;
+				bool										active = false;
+				bool										renderedAsActive = false;
+
+			protected:
+
+				Window<T>* GetVisibleParent()
+				{
+					auto visibleParent = parent;
+					while (visibleParent && !visibleParent->visible)
+					{
+						visibleParent = visibleParent->parent;
+					}
+					return visibleParent;
+				}
+
+				template<typename TWindows>
+				void CollectVisibleSubTreeInSamePriority(TWindows& windows, bool inTopMostLevel)
+				{
+					if (visible)
+					{
+						windows.Add(this);
+					}
+					for (auto child : children)
+					{
+						if (inTopMostLevel || !child->topMost)
+						{
+							child->CollectVisibleSubTreeInSamePriority(windows, inTopMostLevel);
+						}
+					}
+				}
+
+				void EnsureChildrenMovedInFrontOf(bool eventuallyTopMost, Window<T>* baseline)
+				{
+					auto&& orderedWindows = eventuallyTopMost ? windowManager->topMostedWindowsInOrder : windowManager->ordinaryWindowsInOrder;
+					vint order = -1;
+					if (baseline) order = orderedWindows.IndexOf(baseline);
+					if (order == -1) order = orderedWindows.Count();
+
+					for (auto child : children)
+					{
+						if (eventuallyTopMost || !child->topMost)
+						{
+							if (child->visible)
+							{
+								vint childOrder = orderedWindows.IndexOf(child);
+								if (childOrder == -1 || childOrder > order)
+								{
+									windowManager->ordinaryWindowsInOrder.Remove(child);
+									windowManager->topMostedWindowsInOrder.Remove(child);
+									orderedWindows.Insert(order, child);
+								}
+							}
+							child->EnsureChildrenMovedInFrontOf(eventuallyTopMost || child->topMost, (child->visible ? child : baseline));
+						}
+					}
+				}
+
+				void EnsureMovedInFrontOf(collections::List<Window<T>*>& windowsInOrder, Window<T>* baseline, bool wasEventuallyTopMost, bool eventuallyTopMost)
+				{
+					vint maxOrder = -1;
+					vint order = windowsInOrder.IndexOf(this);
+
+					if (wasEventuallyTopMost && order == -1)
+					{
+						maxOrder = 0;
+					}
+					else if (baseline)
+					{
+						maxOrder = windowsInOrder.IndexOf(baseline);
+					}
+					else if (order == -1)
+					{
+						maxOrder = windowsInOrder.Count();
+					}
+					else
+					{
+						maxOrder = windowsInOrder.Count() - 1;
+					}
+
+					if (order == -1)
+					{
+						windowsInOrder.Insert(maxOrder, this);
+						windowManager->needRefresh = true;
+					}
+					else if (order > maxOrder)
+					{
+						windowsInOrder.RemoveAt(order);
+						windowsInOrder.Insert(maxOrder, this);
+						windowManager->needRefresh = true;
+					}
+				}
+
+				void FixWindowInOrder(bool wasEventuallyTopMost, bool isEventuallyTopMost)
+				{
+					if (!visible)
+					{
+						if (windowManager->ordinaryWindowsInOrder.Remove(this) || windowManager->topMostedWindowsInOrder.Remove(this))
+						{
+							windowManager->needRefresh = true;
+						}
+					}
+
+					auto visibleParent = GetVisibleParent();
+
+					if (visible)
+					{
+
+						if (isEventuallyTopMost)
+						{
+							if (windowManager->ordinaryWindowsInOrder.Remove(this))
+							{
+								windowManager->needRefresh = true;
+							}
+
+							if (visibleParent && !visibleParent->IsEventuallyTopMost())
+							{
+								visibleParent = nullptr;
+							}
+							EnsureMovedInFrontOf(windowManager->topMostedWindowsInOrder, visibleParent, wasEventuallyTopMost, true);
+						}
+						else
+						{
+							if (windowManager->topMostedWindowsInOrder.Remove(this))
+							{
+								windowManager->needRefresh = true;
+							}
+							EnsureMovedInFrontOf(windowManager->ordinaryWindowsInOrder, visibleParent, wasEventuallyTopMost, false);
+						}
+					}
+
+					EnsureChildrenMovedInFrontOf(isEventuallyTopMost, (visible ? this : visibleParent));
+				}
+
+				void FixRenderedAsActive()
+				{
+					if (enabled && visible)
+					{
+						auto current = windowManager->activeWindow;
+						while (current && current != this)
+						{
+							current = current->parent;
+						}
+						if (current == this && !renderedAsActive)
+						{
+							renderedAsActive = true;
+							windowManager->OnActivated(this);
+						}
+					}
+					else if (active)
+					{
+						Deactivate();
+					}
+					else if (renderedAsActive)
+					{
+						renderedAsActive = false;
+						windowManager->OnDeactivated(this);
+					}
+				}
+
+			public:
+				Window(T _id)
+					: id(_id)
+				{
+				}
+
+				~Window()
+				{
+				}
+
+				bool IsEventuallyTopMost()
+				{
+					bool result = visible && topMost;
+					auto current = parent;
+					while (current && !result)
+					{
+						result |= current->visible && current->topMost;
+						current = current->parent;
+					}
+					return result;
+				}
+
+#define ENSURE_WINDOW_MANAGER CHECK_ERROR(windowManager, ERROR_MESSAGE_PREFIX L"This operation can only be called between window manager's RegisterWindow and Stop.")
+
+				void SetParent(Window<T>* value)
+				{
+#define ERROR_MESSAGE_PREFIX L"vl::presentation::hosted_window_manager::Window<T>::SetParent(Window<T>*)#"
+					ENSURE_WINDOW_MANAGER;
+
+					if (parent == value) return;
+					CHECK_ERROR(
+						!windowManager || windowManager->mainWindow != this || !value,
+						ERROR_MESSAGE_PREFIX L"A main window should not have a parent window."
+						);
+
+					if (!value)
+					{
+						value = windowManager->mainWindow;
+					}
+
+					auto current = value;
+					while (current)
+					{
+						CHECK_ERROR(current != this, ERROR_MESSAGE_PREFIX L"Parent window should not be cyclic.");
+						current = current->parent;
+					}
+
+					if (parent)
+					{
+						parent->children.Remove(this);
+					}
+					parent = value;
+					if (parent)
+					{
+						parent->children.Add(this);
+					}
+					bool isEventuallyTopMost = IsEventuallyTopMost();
+					FixWindowInOrder(isEventuallyTopMost, isEventuallyTopMost);
+#undef ERROR_MESSAGE_PREFIX
+				}
+
+				void SetBounds(const NativeRect& value)
+				{
+#define ERROR_MESSAGE_PREFIX L"vl::presentation::hosted_window_manager::Window<T>::SetBounds(const NativeRect&)#"
+					ENSURE_WINDOW_MANAGER;
+
+					if (bounds == value) return;
+					bounds = value;
+					windowManager->needRefresh = true;
+#undef ERROR_MESSAGE_PREFIX
+				}
+
+				void SetVisible(bool value)
+				{
+#define ERROR_MESSAGE_PREFIX L"vl::presentation::hosted_window_manager::Window<T>::SetVisible(bool)#"
+					ENSURE_WINDOW_MANAGER;
+
+					if (visible == value) return;
+
+					bool parentEventuallyTopMost = parent ? parent->IsEventuallyTopMost() : false;
+					visible = value;
+					FixRenderedAsActive();
+
+					FixWindowInOrder(
+						parentEventuallyTopMost || (!visible && topMost),
+						parentEventuallyTopMost || (visible && topMost)
+						);
+
+					if (visible) windowManager->OnOpened(this); else windowManager->OnClosed(this);
+#undef ERROR_MESSAGE_PREFIX
+				}
+
+				void SetTopMost(bool value)
+				{
+#define ERROR_MESSAGE_PREFIX L"vl::presentation::hosted_window_manager::Window<T>::SetTopMost(bool)#"
+					ENSURE_WINDOW_MANAGER;
+
+					if (topMost == value) return;
+					bool parentEventuallyTopMost = parent ? parent->IsEventuallyTopMost() : false;
+					bool wasEventuallyTopMost = parentEventuallyTopMost || (visible && topMost);
+					topMost = value;
+					bool isEventuallyTopMost = parentEventuallyTopMost || (visible && topMost);
+					FixWindowInOrder(wasEventuallyTopMost, isEventuallyTopMost);
+#undef ERROR_MESSAGE_PREFIX
+				}
+
+				void SetEnabled(bool value)
+				{
+#define ERROR_MESSAGE_PREFIX L"vl::presentation::hosted_window_manager::Window<T>::SetEnabled(bool)#"
+					ENSURE_WINDOW_MANAGER;
+
+					if (enabled == value) return;
+					enabled = value;
+					FixRenderedAsActive();
+
+					windowManager->needRefresh = true;
+					if (enabled) windowManager->OnEnabled(this); else windowManager->OnDisabled(this);
+#undef ERROR_MESSAGE_PREFIX
+				}
+
+				void BringToFront()
+				{
+#define ERROR_MESSAGE_PREFIX L"vl::presentation::hosted_window_manager::Window<T>::BringToFront()#"
+					ENSURE_WINDOW_MANAGER;
+
+					bool eventuallyTopMost = IsEventuallyTopMost();
+					auto&& orderedWindows = eventuallyTopMost ? windowManager->topMostedWindowsInOrder : windowManager->ordinaryWindowsInOrder;
+
+					if (orderedWindows.Contains(this))
+					{
+						collections::SortedList<Window<T>*> windows;
+						CollectVisibleSubTreeInSamePriority(windows, eventuallyTopMost);
+
+						collections::List<Window<T>*> selected, remainings;
+						for (auto window : orderedWindows)
+						{
+							if (windows.Contains(window))
+							{
+								selected.Add(window);
+							}
+							else
+							{
+								remainings.Add(window);
+							}
+						}
+
+						if (collections::CompareEnumerable(selected, From(orderedWindows).Take(selected.Count())) != 0)
+						{
+							collections::CopyFrom(orderedWindows, selected);
+							collections::CopyFrom(orderedWindows, remainings, true);
+							windowManager->needRefresh = true;
+						}
+					}
+					else
+					{
+						collections::List<Window<T>*> windows, remainings;
+						CollectVisibleSubTreeInSamePriority(windows, eventuallyTopMost);
+
+						CopyFrom(remainings, orderedWindows);
+						orderedWindows.Clear();
+						for (vint i = windows.Count() - 1; i >= 0; i--)
+						{
+							orderedWindows.Add(windows[i]);
+						}
+						CopyFrom(orderedWindows, remainings, true);
+						windowManager->needRefresh = true;
+					}
+#undef ERROR_MESSAGE_PREFIX
+				}
+
+				void Activate()
+				{
+#define ERROR_MESSAGE_PREFIX L"vl::presentation::hosted_window_manager::Window<T>::Activate()#"
+					ENSURE_WINDOW_MANAGER;
+
+					if (active)
+					{
+						BringToFront();
+						return;
+					}
+					if (!windowManager->mainWindow) return;
+					if (!visible) return;
+					if (!enabled) return;
+
+					auto previous = windowManager->activeWindow;
+					if (previous != this)
+					{
+						if (previous)
+						{
+							previous->active = false;
+							windowManager->OnLostFocus(previous);
+						}
+						windowManager->activeWindow = this;
+						active = true;
+						windowManager->OnGotFocus(this);
+					}
+
+					vint previousCount = 0;
+					vint thisCount = 0;
+					Window<T>* commonParent = nullptr;
+					{
+						auto current = previous;
+						while (current)
+						{
+							previousCount++;
+							current = current->parent;
+						}
+					}
+					{
+						auto current = this;
+						while (current)
+						{
+							thisCount++;
+							current = current->parent;
+						}
+					}
+					{
+						auto previousStep = previous;
+						auto thisStep = this;
+						if (previousCount < thisCount)
+						{
+							while (thisCount-- != previousCount)
+							{
+								thisStep = thisStep->parent;
+							}
+						}
+						else if (previousCount > thisCount)
+						{
+							while (previousCount-- != thisCount)
+							{
+								previousStep = previousStep->parent;
+							}
+						}
+
+						while (previousStep && thisStep && previousStep != thisStep)
+						{
+							previousStep = previousStep->parent;
+							thisStep = thisStep->parent;
+						}
+						commonParent = thisStep;
+					}
+					{
+						auto current = previous;
+						while (current != commonParent)
+						{
+							if (current->renderedAsActive)
+							{
+								current->renderedAsActive = false;
+								windowManager->OnDeactivated(current);
+							}
+							current = current->parent;
+						}
+					}
+					{
+						auto current = this;
+						while (current != commonParent)
+						{
+							if (current->enabled && !current->renderedAsActive)
+							{
+								current->renderedAsActive = true;
+								windowManager->OnActivated(current);
+							}
+							current = current->parent;
+						}
+					}
+
+					if (commonParent != previous || commonParent != this)
+					{
+						windowManager->needRefresh = true;
+					}
+
+					BringToFront();
+#undef ERROR_MESSAGE_PREFIX
+				}
+
+				void Deactivate()
+				{
+#define ERROR_MESSAGE_PREFIX L"vl::presentation::hosted_window_manager::Window<T>::Deactivate()#"
+					ENSURE_WINDOW_MANAGER;
+
+					if (!windowManager->mainWindow) return;
+					if (!active) return;
+					active = false;
+					renderedAsActive = false;
+					windowManager->OnLostFocus(this);
+					windowManager->OnDeactivated(this);
+
+					if (windowManager->activeWindow == this)
+					{
+						auto current = parent;
+						while (current && !current->enabled)
+						{
+							current = current->parent;
+						}
+						if (current)
+						{
+							current->active = true;
+							windowManager->OnGotFocus(current);
+						}
+						windowManager->activeWindow = current;
+						windowManager->needRefresh = true;
+					}
+#undef ERROR_MESSAGE_PREFIX
+				}
+
+				void Show()
+				{
+					SetVisible(true);
+					Activate();
+				}
+#undef ENSURE_WINDOW_MANAGER
 			};
 
 /***********************************************************************
-Shortcut Key Manager Helpers
+WindowManager
 ***********************************************************************/
 
-			class GuiShortcutKeyManager;
-
-			class GuiShortcutKeyItem : public Object, public IGuiShortcutKeyItem
+			template<typename T>
+			struct WindowManager
 			{
-			protected:
-				GuiShortcutKeyManager*			shortcutKeyManager;
-				bool							ctrl;
-				bool							shift;
-				bool							alt;
-				VKEY							key;
+				collections::Dictionary<T, Window<T>*>		registeredWindows;
+				collections::List<Window<T>*>				topMostedWindowsInOrder;
+				collections::List<Window<T>*>				ordinaryWindowsInOrder;
 
-				void							AttachManager(GuiShortcutKeyManager* manager);
-				void							DetachManager(GuiShortcutKeyManager* manager);
-			public:
-				GuiShortcutKeyItem(GuiShortcutKeyManager* _shortcutKeyManager, bool _ctrl, bool _shift, bool _alt, VKEY _key);
-				~GuiShortcutKeyItem();
+				Window<T>*									mainWindow = nullptr;
+				Window<T>*									activeWindow = nullptr;
+				bool										needRefresh = false;
 
-				IGuiShortcutKeyManager*			GetManager()override;
-				WString							GetName()override;
-				bool							CanActivate(const NativeWindowKeyInfo& info);
-				bool							CanActivate(bool _ctrl, bool _shift, bool _alt, VKEY _key);
-			};
+				virtual void OnOpened(Window<T>* window) = 0;
+				virtual void OnClosed(Window<T>* window) = 0;
+				virtual void OnEnabled(Window<T>* window) = 0;
+				virtual void OnDisabled(Window<T>* window) = 0;
+				virtual void OnGotFocus(Window<T>* window) = 0;
+				virtual void OnLostFocus(Window<T>* window) = 0;
+				virtual void OnActivated(Window<T>* window) = 0;
+				virtual void OnDeactivated(Window<T>* window) = 0;
 
-			/// <summary>A default implementation for <see cref="IGuiShortcutKeyManager"/>.</summary>
-			class GuiShortcutKeyManager : public Object, public IGuiShortcutKeyManager, public Description<GuiShortcutKeyManager>
-			{
-				typedef collections::List<Ptr<GuiShortcutKeyItem>>		ShortcutKeyItemList;
-			protected:
-				ShortcutKeyItemList				shortcutKeyItems;
+				void RegisterWindow(Window<T>* window)
+				{
+#define ERROR_MESSAGE_PREFIX L"vl::presentation::hosted_window_manager::WindowManager<T>::RegisterWindow(Window<T>*)#"
+					CHECK_ERROR(!window->windowManager, ERROR_MESSAGE_PREFIX L"The window has been registered.");
+					CHECK_ERROR(!registeredWindows.Keys().Contains(window->id), ERROR_MESSAGE_PREFIX L"The window has a duplicated key with an existing window.");
+					CHECK_ERROR(!window->visible, ERROR_MESSAGE_PREFIX L"RegisterWindow must be called right after a window is created.");
 
-			public:
-				/// <summary>Create the shortcut key manager.</summary>
-				GuiShortcutKeyManager();
-				~GuiShortcutKeyManager();
+					window->windowManager = this;
+					registeredWindows.Add(window->id, window);
+#undef ERROR_MESSAGE_PREFIX
+				}
 
-				vint							GetItemCount()override;
-				IGuiShortcutKeyItem*			GetItem(vint index)override;
-				bool							Execute(const NativeWindowKeyInfo& info)override;
+				void UnregisterWindow(Window<T>* window)
+				{
+#define ERROR_MESSAGE_PREFIX L"vl::presentation::hosted_window_manager::WindowManager<T>::UnregisterWindow(Window<T>*)#"
+					CHECK_ERROR(window->windowManager == this, ERROR_MESSAGE_PREFIX L"The window has not been registered.");
+					CHECK_ERROR(window != mainWindow, ERROR_MESSAGE_PREFIX L"The main window cannot be unregistered before stopping the window manager.");
+					if (mainWindow)
+					{
+						window->SetVisible(false);
 
-				/// <summary>Create a shortcut key item using a key combination. If the item for the key combination exists, this function returns the item that is created before.</summary>
-				/// <returns>The created shortcut key item.</returns>
-				/// <param name="ctrl">Set to true if the CTRL key is required.</param>
-				/// <param name="shift">Set to true if the SHIFT key is required.</param>
-				/// <param name="alt">Set to true if the ALT key is required.</param>
-				/// <param name="key">The non-control key.</param>
-				IGuiShortcutKeyItem*			CreateShortcut(bool ctrl, bool shift, bool alt, VKEY key);
-				/// <summary>Destroy a shortcut key item using a key combination</summary>
-				/// <returns>Returns true if the manager destroyed a existing shortcut key item.</returns>
-				/// <param name="ctrl">Set to true if the CTRL key is required.</param>
-				/// <param name="shift">Set to true if the SHIFT key is required.</param>
-				/// <param name="alt">Set to true if the ALT key is required.</param>
-				/// <param name="key">The non-control key.</param>
-				bool							DestroyShortcut(bool ctrl, bool shift, bool alt, VKEY key);
-				/// <summary>Get a shortcut key item using a key combination. If the item for the key combination does not exist, this function returns null.</summary>
-				/// <returns>The shortcut key item.</returns>
-				/// <param name="ctrl">Set to true if the CTRL key is required.</param>
-				/// <param name="shift">Set to true if the SHIFT key is required.</param>
-				/// <param name="alt">Set to true if the ALT key is required.</param>
-				/// <param name="key">The non-control key.</param>
-				IGuiShortcutKeyItem*			TryGetShortcut(bool ctrl, bool shift, bool alt, VKEY key);
+						auto parent = window->parent;
+						for (auto child : window->children)
+						{
+							child->parent = parent;
+						}
+
+						if (parent)
+						{
+							CopyFrom(parent->children, window->children, true);
+							parent->children.Remove(window);
+						}
+						window->parent = nullptr;
+						window->children.Clear();
+					}
+
+					registeredWindows.Remove(window->id);
+					window->windowManager = nullptr;
+#undef ERROR_MESSAGE_PREFIX
+				}
+
+				void Start(Window<T>* window)
+				{
+#define ERROR_MESSAGE_PREFIX L"vl::presentation::hosted_window_manager::WindowManager<T>::Start(Window<T>*)#"
+					CHECK_ERROR(!mainWindow, ERROR_MESSAGE_PREFIX L"The window manager has started.");
+					CHECK_ERROR(!window->parent, ERROR_MESSAGE_PREFIX L"A main window should not have a parent window.");
+
+					mainWindow = window;
+					for (auto normalWindow : registeredWindows.Values())
+					{
+						if (!normalWindow->parent && normalWindow != mainWindow)
+						{
+							normalWindow->parent = mainWindow;
+							mainWindow->children.Add(normalWindow);
+						}
+					}
+#undef ERROR_MESSAGE_PREFIX
+				}
+
+				void Stop()
+				{
+#define ERROR_MESSAGE_PREFIX L"vl::presentation::hosted_window_manager::WindowManager<T>::Stop(Window<T>*)#"
+					CHECK_ERROR(mainWindow, ERROR_MESSAGE_PREFIX L"The window manager has stopped.");
+					mainWindow = nullptr;
+					activeWindow = nullptr;
+					ordinaryWindowsInOrder.Clear();
+					topMostedWindowsInOrder.Clear();
+
+					for (auto window : registeredWindows.Values())
+					{
+						window->parent = nullptr;
+						window->children.Clear();
+
+						if (window->active)
+						{
+							window->active = false;
+							OnLostFocus(window);
+						}
+
+						if (window->renderedAsActive)
+						{
+							window->renderedAsActive = false;
+							OnDeactivated(window);
+						}
+
+						if (window->visible)
+						{
+							window->visible = false;
+							OnClosed(window);
+						}
+					}
+#undef ERROR_MESSAGE_PREFIX
+				}
+
+				Window<T>* HitTest(NativePoint position)
+				{
+					for (auto window : topMostedWindowsInOrder)
+					{
+						if (!window->visible) continue;
+						if (window->bounds.Contains(position)) return window;
+					}
+
+					for (auto window : ordinaryWindowsInOrder)
+					{
+						if (!window->visible) continue;
+						if (window->bounds.Contains(position)) return window;
+					}
+
+					return nullptr;
+				}
 			};
 		}
 	}
@@ -6045,269 +7281,301 @@ Shortcut Key Manager Helpers
 #endif
 
 /***********************************************************************
-.\GRAPHICSHOST\GUIGRAPHICSHOST_TAB.H
+.\PLATFORMPROVIDERS\HOSTED\GUIHOSTEDWINDOW.H
 ***********************************************************************/
 /***********************************************************************
 Vczh Library++ 3.0
 Developer: Zihan Chen(vczh)
-GacUI::Graphics Composition Host
+GacUI::Hosted Window
 
 Interfaces:
+  GuiHostedWindow
+
 ***********************************************************************/
 
-#ifndef VCZH_PRESENTATION_HOST_GUIGRAPHICSHOST_TAB
-#define VCZH_PRESENTATION_HOST_GUIGRAPHICSHOST_TAB
+#ifndef VCZH_PRESENTATION_GUIHOSTEDWINDOW
+#define VCZH_PRESENTATION_GUIHOSTEDWINDOW
 
 
 namespace vl
 {
 	namespace presentation
 	{
-		namespace compositions
+		class GuiHostedWindow;
+		class GuiHostedController;
+
+/***********************************************************************
+Proxy
+***********************************************************************/
+
+		struct GuiHostedWindowData
 		{
+			hosted_window_manager::Window<GuiHostedWindow*>		wmWindow;
+			GuiHostedController*								controller = nullptr;
+			INativeWindow::WindowMode							windowMode = INativeWindow::WindowMode::Normal;
+			collections::List<INativeWindowListener*>			listeners;
+
+			WString												windowTitle;
+			INativeCursor*										windowCursor = nullptr;
+			NativePoint											windowCaretPoint;
+			Ptr<GuiImageData>									windowIcon;
+
+			bool												windowMaximizedBox = true;
+			bool												windowMinimizedBox = true;
+			bool												windowBorder = true;
+			bool												windowSizeBox = true;
+			bool												windowIconVisible = true;
+			bool												windowTitleBar = true;
+
+			INativeWindow::WindowSizeState						windowSizeState = INativeWindow::Restored;
+			bool												windowShowInTaskBar = true;
+			bool												windowEnabledActivate = true;
+			bool												windowCustomFrameMode = true;
+
+			GuiHostedWindowData(GuiHostedController* _controller, GuiHostedWindow* _window, INativeWindow::WindowMode _windowMode)
+				: wmWindow(_window)
+				, controller(_controller)
+				, windowMode(_windowMode)
+			{
+			}
+		};
+
+		class IGuiHostedWindowProxy
+			: public virtual Interface
+		{
+		public:
+			virtual void			CheckAndSyncProperties() = 0;
+
+			virtual NativeRect		FixBounds(const NativeRect& bounds) = 0;
+			virtual void			UpdateBounds() = 0;
+			virtual void			UpdateTitle() = 0;
+			virtual void			UpdateIcon() = 0;
+			virtual void			UpdateEnabled() = 0;
+			virtual void			UpdateTopMost() = 0;
+
+			virtual void			UpdateMaximizedBox() = 0;
+			virtual void			UpdateMinimizedBox() = 0;
+			virtual void			UpdateBorderVisible() = 0;
+			virtual void			UpdateSizeBox() = 0;
+			virtual void			UpdateIconVisible() = 0;
+			virtual void			UpdateTitleBar() = 0;
+
+			virtual void			UpdateShowInTaskBar() = 0;
+			virtual void			UpdateEnabledActivate() = 0;
+			virtual void			UpdateCustomFrameMode() = 0;
+
+			virtual void			Show() = 0;
+			virtual void			ShowDeactivated() = 0;
+			virtual void			ShowRestored() = 0;
+			virtual void			ShowMaximized() = 0;
+			virtual void			ShowMinimized() = 0;
+			virtual void			Hide() = 0;
+			virtual void			Close() = 0;
+			virtual void			SetFocus() = 0;
+		};
+
+		extern Ptr<IGuiHostedWindowProxy>		CreatePlaceholderHostedWindowProxy(GuiHostedWindowData* data);
+		extern Ptr<IGuiHostedWindowProxy>		CreateMainHostedWindowProxy(GuiHostedWindowData* data, INativeWindow* nativeWindow);
+		extern Ptr<IGuiHostedWindowProxy>		CreateNonMainHostedWindowProxy(GuiHostedWindowData* data);
 
 /***********************************************************************
-Tab-Combined Shortcut Key Interfaces
-***********************************************************************/
-			
-			/// <summary>IGuiTabAction is the handler when an tab-combined shortcut key is activated.</summary>
-			class IGuiTabAction : public virtual IDescriptable
-			{
-			public:
-				/// <summary>The identifier for this service.</summary>
-				static const wchar_t* const				Identifier;
-
-				virtual bool							GetAcceptTabInput() = 0;
-				virtual vint							GetTabPriority() = 0;
-				virtual bool							IsTabEnabled() = 0;
-				virtual bool							IsTabAvailable() = 0;
-			};
-
-/***********************************************************************
-Tab-Combined Shortcut Key Interfaces Helpers
+GuiHostedWindow
 ***********************************************************************/
 
-			class GuiTabActionManager : public Object
-			{
-				using ControlList = collections::List<controls::GuiControl*>;
-			protected:
-				controls::GuiControlHost*				controlHost = nullptr;
-				ControlList								controlsInOrder;
-				bool									available = true;
-				bool									supressTabOnce = false;
+		class GuiHostedWindow
+			: public Object
+			, public INativeWindow
+			, protected GuiHostedWindowData
+		{
+			friend class GuiHostedController;
+		protected:
+			Ptr<IGuiHostedWindowProxy>		proxy;
 
-				void									BuildControlList();
-				controls::GuiControl*					GetNextFocusControl(controls::GuiControl* focusedControl, vint offset);
-			public:
-				GuiTabActionManager(controls::GuiControlHost* _controlHost);
-				~GuiTabActionManager();
+			void							BecomeMainWindow();
+			void							BecomeNonMainWindow();
+			void							BecomeFocusedWindow();
+			void							BecomeHoveringWindow();
 
-				void									InvalidateTabOrderCache();
-				bool									KeyDown(const NativeWindowKeyInfo& info, GuiGraphicsComposition* focusedComposition);
-				bool									Char(const NativeWindowCharInfo& info);
-			};
-		}
+		public:
+			GuiHostedWindow(GuiHostedController* _controller, INativeWindow::WindowMode _windowMode);
+			~GuiHostedWindow();
+
+			// =============================================================
+			// INativeWindowListener
+			// =============================================================
+
+			bool							IsActivelyRefreshing() override;
+			NativeSize						GetRenderingOffset() override;
+			Point							Convert(NativePoint value) override;
+			NativePoint						Convert(Point value) override;
+			Size							Convert(NativeSize value) override;
+			NativeSize						Convert(Size value) override;
+			Margin							Convert(NativeMargin value) override;
+			NativeMargin					Convert(Margin value) override;
+			NativeRect						GetBounds() override;
+			void							SetBounds(const NativeRect& bounds) override;
+			NativeSize						GetClientSize() override;
+			void							SetClientSize(NativeSize size) override;
+			NativeRect						GetClientBoundsInScreen() override;
+			WString							GetTitle() override;
+			void							SetTitle(const WString& title) override;
+			INativeCursor*					GetWindowCursor() override;
+			void							SetWindowCursor(INativeCursor* cursor) override;
+			NativePoint						GetCaretPoint() override;
+			void							SetCaretPoint(NativePoint point) override;
+			INativeWindow*					GetParent() override;
+			void							SetParent(INativeWindow* parent) override;
+			WindowMode						GetWindowMode() override;
+			void							EnableCustomFrameMode() override;
+			void							DisableCustomFrameMode() override;
+			bool							IsCustomFrameModeEnabled() override;
+			NativeMargin					GetCustomFramePadding() override;
+			Ptr<GuiImageData>				GetIcon() override;
+			void							SetIcon(Ptr<GuiImageData> icon) override;
+			WindowSizeState					GetSizeState() override;
+			void							Show() override;
+			void							ShowDeactivated() override;
+			void							ShowRestored() override;
+			void							ShowMaximized() override;
+			void							ShowMinimized() override;
+			void							Hide(bool closeWindow) override;
+			bool							IsVisible() override;
+			void							Enable() override;
+			void							Disable() override;
+			bool							IsEnabled() override;
+			void							SetActivate() override;
+			bool							IsActivated() override;
+			bool							IsRenderingAsActivated() override;
+			void							ShowInTaskBar() override;
+			void							HideInTaskBar() override;
+			bool							IsAppearedInTaskBar() override;
+			void							EnableActivate() override;
+			void							DisableActivate() override;
+			bool							IsEnabledActivate() override;
+			bool							RequireCapture() override;
+			bool							ReleaseCapture() override;
+			bool							IsCapturing() override;
+			bool							GetMaximizedBox() override;
+			void							SetMaximizedBox(bool visible) override;
+			bool							GetMinimizedBox() override;
+			void							SetMinimizedBox(bool visible) override;
+			bool							GetBorder() override;
+			void							SetBorder(bool visible) override;
+			bool							GetSizeBox() override;
+			void							SetSizeBox(bool visible) override;
+			bool							GetIconVisible() override;
+			void							SetIconVisible(bool visible) override;
+			bool							GetTitleBar() override;
+			void							SetTitleBar(bool visible) override;
+			bool							GetTopMost() override;
+			void							SetTopMost(bool topmost) override;
+			void							SupressAlt() override;
+			bool							InstallListener(INativeWindowListener* listener) override;
+			bool							UninstallListener(INativeWindowListener* listener) override;
+			void							RedrawContent() override;
+		};
 	}
 }
 
 #endif
 
 /***********************************************************************
-.\GRAPHICSHOST\GUIGRAPHICSHOST.H
+.\RESOURCES\GUIPLUGINMANAGER.H
 ***********************************************************************/
 /***********************************************************************
 Vczh Library++ 3.0
 Developer: Zihan Chen(vczh)
-GacUI::Graphics Composition Host
+GacUI::Resource
 
 Interfaces:
 ***********************************************************************/
 
-#ifndef VCZH_PRESENTATION_HOST_GUIGRAPHICSHOST
-#define VCZH_PRESENTATION_HOST_GUIGRAPHICSHOST
+#ifndef VCZH_PRESENTATION_RESOURCES_GUIPLUGINMANAGER
+#define VCZH_PRESENTATION_RESOURCES_GUIPLUGINMANAGER
 
 
 namespace vl
 {
 	namespace presentation
 	{
-		namespace controls
-		{
-			class GuiWindow;
-		}
-
-		namespace compositions
-		{
 
 /***********************************************************************
-Animation
+Plugin
 ***********************************************************************/
 
-			/// <summary>
-			/// Represents a timer callback object.
-			/// </summary>
-			class IGuiGraphicsTimerCallback : public virtual IDescriptable, public Description<IGuiGraphicsTimerCallback>
-			{
-			public:
-				/// <summary>Called periodically.</summary>
-				/// <returns>Returns false to indicate that this callback need to be removed.</returns>
-				virtual bool					Play() = 0;
-			};
+		/// <summary>Represents a plugin for the gui.</summary>
+		class IGuiPlugin : public IDescriptable, public Description<IGuiPlugin>
+		{
+		public:
+			/// <summary>Get the name of this plugin.</summary>
+			/// <returns>Returns the name of the plugin.</returns>
+			virtual WString									GetName() = 0;
+			/// <summary>Get all dependencies of this plugin.</summary>
+			/// <param name="dependencies">To receive all dependencies.</param>
+			virtual void									GetDependencies(collections::List<WString>& dependencies) = 0;
+			/// <summary>Called when the plugin manager want to load this plugin.</summary>
+			virtual void									Load()=0;
+			/// <summary>Called when the plugin manager want to unload this plugin.</summary>
+			virtual void									Unload()=0;
+		};
 
-			/// <summary>
-			/// Timer callback manager.
-			/// </summary>
-			class GuiGraphicsTimerManager : public Object, public Description<GuiGraphicsTimerManager>
-			{
-				typedef collections::List<Ptr<IGuiGraphicsTimerCallback>>		CallbackList;
-			protected:
-				CallbackList					callbacks;
-
-			public:
-				GuiGraphicsTimerManager();
-				~GuiGraphicsTimerManager();
-
-				/// <summary>Add a new callback.</summary>
-				/// <param name="callback">The new callback to add.</param>
-				void							AddCallback(Ptr<IGuiGraphicsTimerCallback> callback);
-				/// <summary>Called periodically.</summary>
-				void							Play();
-			};
+		/// <summary>Represents a plugin manager.</summary>
+		class IGuiPluginManager : public IDescriptable, public Description<IGuiPluginManager>
+		{
+		public:
+			/// <summary>Add a plugin before [F:vl.presentation.controls.IGuiPluginManager.Load] is called.</summary>
+			/// <param name="plugin">The plugin.</param>
+			virtual void									AddPlugin(Ptr<IGuiPlugin> plugin)=0;
+			/// <summary>Load all plugins, and check if dependencies of all plugins are ready.</summary>
+			virtual void									Load()=0;
+			/// <summary>Unload all plugins.</summary>
+			virtual void									Unload()=0;
+			/// <returns>Returns true if all plugins are loaded.</returns>
+			virtual bool									IsLoaded()=0;
+		};
 
 /***********************************************************************
-Host
+Plugin Manager
 ***********************************************************************/
 
-			/// <summary>
-			/// GuiGraphicsHost hosts an <see cref="GuiWindowComposition"/> in an <see cref="INativeWindow"/>. The composition will fill the whole window.
-			/// </summary>
-			class GuiGraphicsHost : public Object, private INativeWindowListener, private INativeControllerListener, public Description<GuiGraphicsHost>
-			{
-				typedef collections::List<GuiGraphicsComposition*>							CompositionList;
-				typedef GuiGraphicsComposition::GraphicsHostRecord							HostRecord;
-				typedef collections::Pair<DescriptableObject*, vint>						ProcKey;
-				typedef collections::List<Func<void()>>										ProcList;
-				typedef collections::Dictionary<ProcKey, Func<void()>>						ProcMap;
-			public:
-				static const vuint64_t					CaretInterval = 500;
+		struct GuiPluginDescriptor
+		{
+			GuiPluginDescriptor*							next = nullptr;
 
-			protected:
-				HostRecord								hostRecord;
-				bool									supressPaint = false;
-				bool									needRender = true;
-				ProcList								afterRenderProcs;
-				ProcMap									afterRenderKeyedProcs;
+			virtual Ptr<IGuiPlugin>							CreatePlugin() = 0;
+		};
 
-				GuiAltActionManager*					altActionManager = nullptr;
-				GuiTabActionManager*					tabActionManager = nullptr;
-				IGuiShortcutKeyManager*					shortcutKeyManager = nullptr;
+		/// <summary>Get the global <see cref="IGuiPluginManager"/> object.</summary>
+		/// <returns>The global <see cref="IGuiPluginManager"/> object.</returns>
+		extern IGuiPluginManager*							GetPluginManager();
 
-				controls::GuiControlHost*				controlHost = nullptr;
-				GuiWindowComposition*					windowComposition = nullptr;
-				GuiGraphicsComposition*					focusedComposition = nullptr;
-				NativeSize								previousClientSize;
-				Size									minSize;
-				Point									caretPoint;
-				vuint64_t								lastCaretTime = 0;
+		/// <summary>Register a plugin descriptor. Do not call this function directly, use GUI_REGISTER_PLUGIN macro instead.</summary>
+		/// <param name="pluginDescriptor">The plugin descriptor.</param>
+		extern void											RegisterPluginDescriptor(GuiPluginDescriptor* pluginDescriptor);
 
-				GuiGraphicsTimerManager					timerManager;
-				GuiGraphicsComposition*					mouseCaptureComposition = nullptr;
-				CompositionList							mouseEnterCompositions;
-				void									RefreshRelatedHostRecord(INativeWindow* nativeWindow);
+		/// <summary>Destroy the global <see cref="IGuiPluginManager"/> object.</summary>
+		extern void											DestroyPluginManager();
 
-				void									DisconnectCompositionInternal(GuiGraphicsComposition* composition);
-				void									MouseCapture(const NativeWindowMouseInfo& info);
-				void									MouseUncapture(const NativeWindowMouseInfo& info);
-				void									OnCharInput(const NativeWindowCharInfo& info, GuiGraphicsComposition* composition, GuiCharEvent GuiGraphicsEventReceiver::* eventReceiverEvent);
-				void									OnKeyInput(const NativeWindowKeyInfo& info, GuiGraphicsComposition* composition, GuiKeyEvent GuiGraphicsEventReceiver::* eventReceiverEvent);
-				void									RaiseMouseEvent(GuiMouseEventArgs& arguments, GuiGraphicsComposition* composition, GuiMouseEvent GuiGraphicsEventReceiver::* eventReceiverEvent);
-				void									OnMouseInput(const NativeWindowMouseInfo& info, GuiMouseEvent GuiGraphicsEventReceiver::* eventReceiverEvent);
-				void									RecreateRenderTarget();
-				
-			private:
-				INativeWindowListener::HitTestResult	HitTest(NativePoint location)override;
-				void									Moving(NativeRect& bounds, bool fixSizeOnly, bool draggingBorder)override;
-				void									Moved()override;
-				void									DpiChanged()override;
-				void									Paint()override;
+#define GUI_REGISTER_PLUGIN(TYPE)\
+	struct GuiRegisterPluginClass_##TYPE : private vl::presentation::GuiPluginDescriptor\
+	{\
+	private:\
+		vl::Ptr<vl::presentation::IGuiPlugin> CreatePlugin() override\
+		{\
+			return vl::Ptr(new TYPE);\
+		}\
+	public:\
+		GuiRegisterPluginClass_##TYPE()\
+		{\
+			vl::presentation::RegisterPluginDescriptor(this);\
+		}\
+	} instance_GuiRegisterPluginClass_##TYPE;\
 
-				void									LeftButtonDown(const NativeWindowMouseInfo& info)override;
-				void									LeftButtonUp(const NativeWindowMouseInfo& info)override;
-				void									LeftButtonDoubleClick(const NativeWindowMouseInfo& info)override;
-				void									RightButtonDown(const NativeWindowMouseInfo& info)override;
-				void									RightButtonUp(const NativeWindowMouseInfo& info)override;
-				void									RightButtonDoubleClick(const NativeWindowMouseInfo& info)override;
-				void									MiddleButtonDown(const NativeWindowMouseInfo& info)override;
-				void									MiddleButtonUp(const NativeWindowMouseInfo& info)override;
-				void									MiddleButtonDoubleClick(const NativeWindowMouseInfo& info)override;
-				void									HorizontalWheel(const NativeWindowMouseInfo& info)override;
-				void									VerticalWheel(const NativeWindowMouseInfo& info)override;
-				void									MouseMoving(const NativeWindowMouseInfo& info)override;
-				void									MouseEntered()override;
-				void									MouseLeaved()override;
+#define GUI_PLUGIN_NAME(NAME)\
+	vl::WString GetName()override { return L ## #NAME; }\
+	void GetDependencies(vl::collections::List<WString>& dependencies)override\
 
-				void									KeyDown(const NativeWindowKeyInfo& info)override;
-				void									KeyUp(const NativeWindowKeyInfo& info)override;
-				void									SysKeyDown(const NativeWindowKeyInfo& info)override;
-				void									SysKeyUp(const NativeWindowKeyInfo& info)override;
-				void									Char(const NativeWindowCharInfo& info)override;
-
-				void									GlobalTimer()override;
-			public:
-				GuiGraphicsHost(controls::GuiControlHost* _controlHost, GuiGraphicsComposition* boundsComposition);
-				~GuiGraphicsHost();
-
-				/// <summary>Get the associated window.</summary>
-				/// <returns>The associated window.</returns>
-				INativeWindow*							GetNativeWindow();
-				/// <summary>Associate a window. A <see cref="GuiWindowComposition"/> will fill and appear in the window.</summary>
-				/// <param name="_nativeWindow">The window to associated.</param>
-				void									SetNativeWindow(INativeWindow* _nativeWindow);
-				/// <summary>Get the main <see cref="GuiWindowComposition"/>. If a window is associated, everything that put into the main composition will be shown in the window.</summary>
-				/// <returns>The main compositoin.</returns>
-				GuiGraphicsComposition*					GetMainComposition();
-				/// <summary>Render the main composition and all content to the associated window.</summary>
-				/// <param name="forceUpdate">Set to true to force updating layout and then render.</param>
-				void									Render(bool forceUpdate);
-				/// <summary>Request a rendering</summary>
-				void									RequestRender();
-				/// <summary>Invoke a specified function after rendering.</summary>
-				/// <param name="proc">The specified function.</param>
-				/// <param name="key">A key to cancel a previous binded key if not null.</param>
-				void									InvokeAfterRendering(const Func<void()>& proc, ProcKey key = { nullptr,-1 });
-
-				/// <summary>Invalidte the internal tab order control list. Next time when TAB is pressed it will be rebuilt.</summary>
-				void									InvalidateTabOrderCache();
-				/// <summary>Get the <see cref="IGuiShortcutKeyManager"/> attached with this graphics host.</summary>
-				/// <returns>The shortcut key manager.</returns>
-				IGuiShortcutKeyManager*					GetShortcutKeyManager();
-				/// <summary>Attach or detach the <see cref="IGuiShortcutKeyManager"/> associated with this graphics host. When this graphics host is disposing, the associated shortcut key manager will be deleted if exists.</summary>
-				/// <param name="value">The shortcut key manager. Set to null to detach the previous shortcut key manager from this graphics host.</param>
-				void									SetShortcutKeyManager(IGuiShortcutKeyManager* value);
-
-				/// <summary>Set the focus composition. A focused composition will receive keyboard messages.</summary>
-				/// <returns>Returns true if this operation succeeded.</returns>
-				/// <param name="composition">The composition to set focus. This composition should be or in the main composition.</param>
-				bool									SetFocus(GuiGraphicsComposition* composition);
-				/// <summary>Get the focus composition. A focused composition will receive keyboard messages.</summary>
-				/// <returns>The focus composition.</returns>
-				GuiGraphicsComposition*					GetFocusedComposition();
-				/// <summary>Get the caret point. A caret point is the position to place the edit box of the activated input method editor.</summary>
-				/// <returns>The caret point.</returns>
-				Point									GetCaretPoint();
-				/// <summary>Set the caret point. A caret point is the position to place the edit box of the activated input method editor.</summary>
-				/// <param name="value">The caret point.</param>
-				/// <param name="referenceComposition">The point space. If this argument is null, the "value" argument will use the point space of the client area in the main composition.</param>
-				void									SetCaretPoint(Point value, GuiGraphicsComposition* referenceComposition=0);
-
-				/// <summary>Get the timer manager.</summary>
-				/// <returns>The timer manager.</returns>
-				GuiGraphicsTimerManager*				GetTimerManager();
-				/// <summary>Notify that a composition is going to disconnect from this graphics host. Generally this happens when a composition's parent line changes.</summary>
-				/// <param name="composition">The composition to disconnect</param>
-				void									DisconnectComposition(GuiGraphicsComposition* composition);
-			};
-		}
+#define GUI_PLUGIN_DEPEND(NAME) dependencies.Add(L ## #NAME)
 	}
 }
 
@@ -6340,6 +7608,7 @@ namespace vl
 		class GuiResourceItem;
 		class GuiResourceFolder;
 		class GuiResource;
+		class GuiResourcePathResolver;
 
 /***********************************************************************
 Helper Functions
@@ -6391,7 +7660,6 @@ Global String Key
 			vint									key = -1;
 
 		public:
-			inline vint Compare(GlobalStringKey value)const{ return key - value.key; }
 			GUI_DEFINE_COMPARE_OPERATORS(GlobalStringKey)
 
 			static GlobalStringKey					Get(const WString& string);
@@ -6452,6 +7720,56 @@ Resource String
 		};
 
 /***********************************************************************
+Resource Precompile Context
+***********************************************************************/
+
+		/// <summary>
+		/// CPU architecture
+		/// </summary>
+		enum class GuiResourceCpuArchitecture
+		{
+			x86,
+			x64,
+			Unspecified,
+		};
+
+		/// <summary>
+		/// Resource usage
+		/// </summary>
+		enum class GuiResourceUsage
+		{
+			DataOnly,
+			InstanceClass,
+		};
+
+		/// <summary>Provide a context for resource precompiling</summary>
+		struct GuiResourcePrecompileContext
+		{
+			typedef collections::Dictionary<Ptr<DescriptableObject>, Ptr<DescriptableObject>>	PropertyMap;
+
+			/// <summary>The target CPU architecture.</summary>
+			GuiResourceCpuArchitecture							targetCpuArchitecture = GuiResourceCpuArchitecture::Unspecified;
+			/// <summary>Progress callback.</summary>
+			workflow::IWfCompilerCallback*						compilerCallback = nullptr;
+			/// <summary>The folder to contain compiled objects.</summary>
+			Ptr<GuiResourceFolder>								targetFolder;
+			/// <summary>The root resource object.</summary>
+			GuiResource*										rootResource = nullptr;
+			/// <summary>Indicate the pass index of this precompiling pass.</summary>
+			vint												passIndex = -1;
+			/// <summary>The path resolver. This is only for delay load resource.</summary>
+			Ptr<GuiResourcePathResolver>						resolver;
+			/// <summary>Additional properties for resource item contents</summary>
+			PropertyMap											additionalProperties;
+		};
+
+		/// <summary>Provide a context for resource initializing</summary>
+		struct GuiResourceInitializeContext : GuiResourcePrecompileContext
+		{
+			GuiResourceUsage									usage;
+		};
+
+/***********************************************************************
 Resource Structure
 ***********************************************************************/
 
@@ -6499,8 +7817,7 @@ Resource Structure
 			GuiResourceLocation(const WString& _resourcePath, const WString& _filePath);
 			GuiResourceLocation(Ptr<GuiResourceNodeBase> node);
 
-			bool operator==(const GuiResourceLocation& b)const { return resourcePath == b.resourcePath && filePath == b.filePath; }
-			bool operator!=(const GuiResourceLocation& b)const { return !(*this == b); }
+			GUI_DEFINE_COMPARE_OPERATORS(GuiResourceLocation)
 		};
 
 		struct GuiResourceTextPos
@@ -6512,8 +7829,7 @@ Resource Structure
 			GuiResourceTextPos() = default;
 			GuiResourceTextPos(GuiResourceLocation location, glr::ParsingTextPos position);
 
-			bool operator==(const GuiResourceTextPos& b)const { return originalLocation == b.originalLocation && row == b.row && column == b.column; }
-			bool operator!=(const GuiResourceTextPos& b)const { return !(*this == b); }
+			GUI_DEFINE_COMPARE_OPERATORS(GuiResourceTextPos)
 		};
 
 		struct GuiResourceError
@@ -6530,8 +7846,7 @@ Resource Structure
 			GuiResourceError(GuiResourceLocation _location, const WString& _message);
 			GuiResourceError(GuiResourceLocation _location, GuiResourceTextPos _position, const WString& _message);
 
-			bool operator==(const GuiResourceError& b)const { return location == b.location && position == b.position && message == b.message; }
-			bool operator!=(const GuiResourceError& b)const { return !(*this == b); }
+			GUI_DEFINE_COMPARE_OPERATORS(GuiResourceError)
 
 			static void								Transform(GuiResourceLocation _location, GuiResourceError::List& errors, collections::List<glr::ParsingError>& parsingErrors);
 			static void								Transform(GuiResourceLocation _location, GuiResourceError::List& errors, collections::List<glr::ParsingError>& parsingErrors, glr::ParsingTextPos offset);
@@ -6540,9 +7855,6 @@ Resource Structure
 		};
 
 		class DocumentModel;
-		class GuiResourcePathResolver;
-		struct GuiResourcePrecompileContext;
-		struct GuiResourceInitializeContext;
 		class IGuiResourcePrecompileCallback;
 		
 		/// <summary>Resource item.</summary>
@@ -6684,12 +7996,6 @@ Resource Structure
 Resource
 ***********************************************************************/
 
-		enum class GuiResourceUsage
-		{
-			DataOnly,
-			InstanceClass,
-		};
-
 		/// <summary>Resource metadata.</summary>
 		class GuiResourceMetadata : public Object
 		{
@@ -6762,7 +8068,7 @@ Resource
 			/// <returns>The resource folder contains all precompiled result. The folder will be added to the resource if there is no error.</returns>
 			/// <param name="callback">A callback to receive progress.</param>
 			/// <param name="errors">All collected errors during precompiling a resource.</param>
-			Ptr<GuiResourceFolder>					Precompile(IGuiResourcePrecompileCallback* callback, GuiResourceError::List& errors);
+			Ptr<GuiResourceFolder>					Precompile(GuiResourceCpuArchitecture targetCpuArchitecture, IGuiResourcePrecompileCallback* callback, GuiResourceError::List& errors);
 
 			/// <summary>Initialize a precompiled resource.</summary>
 			/// <param name="usage">In which role an application is initializing this resource.</param>
@@ -6865,38 +8171,19 @@ Resource Type Resolver
 			
 			/// <summary>Get the precompiler for the type resolver.</summary>
 			/// <returns>Returns null if the type resolve does not support precompiling.</returns>
-			virtual IGuiResourceTypeResolver_Precompile*		Precompile(){ return 0; }
+			virtual IGuiResourceTypeResolver_Precompile*		Precompile(){ return nullptr; }
 			/// <summary>Get the initializer for the type resolver.</summary>
 			/// <returns>Returns null if the type resolve does not support initializing.</returns>
-			virtual IGuiResourceTypeResolver_Initialize*		Initialize(){ return 0; }
+			virtual IGuiResourceTypeResolver_Initialize*		Initialize(){ return nullptr; }
 			/// <summary>Get the object for convert the resource between xml and object.</summary>
 			/// <returns>Returns null if the type resolver does not have this ability.</returns>
-			virtual IGuiResourceTypeResolver_DirectLoadXml*		DirectLoadXml(){ return 0; }
+			virtual IGuiResourceTypeResolver_DirectLoadXml*		DirectLoadXml(){ return nullptr; }
 			/// <summary>Get the object for convert the resource between stream and object.</summary>
 			/// <returns>Returns null if the type resolver does not have this ability.</returns>
-			virtual IGuiResourceTypeResolver_DirectLoadStream*	DirectLoadStream(){ return 0; }
+			virtual IGuiResourceTypeResolver_DirectLoadStream*	DirectLoadStream(){ return nullptr; }
 			/// <summary>Get the object for convert the resource between the preload type and the current type.</summary>
 			/// <returns>Returns null if the type resolver does not have this ability.</returns>
-			virtual IGuiResourceTypeResolver_IndirectLoad*		IndirectLoad(){ return 0; }
-		};
-
-		/// <summary>Provide a context for resource precompiling</summary>
-		struct GuiResourcePrecompileContext
-		{
-			typedef collections::Dictionary<Ptr<DescriptableObject>, Ptr<DescriptableObject>>	PropertyMap;
-
-			/// <summary>Progress callback.</summary>
-			workflow::IWfCompilerCallback*						compilerCallback = nullptr;
-			/// <summary>The folder to contain compiled objects.</summary>
-			Ptr<GuiResourceFolder>								targetFolder;
-			/// <summary>The root resource object.</summary>
-			GuiResource*										rootResource = nullptr;
-			/// <summary>Indicate the pass index of this precompiling pass.</summary>
-			vint												passIndex = -1;
-			/// <summary>The path resolver. This is only for delay load resource.</summary>
-			Ptr<GuiResourcePathResolver>						resolver;
-			/// <summary>Additional properties for resource item contents</summary>
-			PropertyMap											additionalProperties;
+			virtual IGuiResourceTypeResolver_IndirectLoad*		IndirectLoad(){ return nullptr; }
 		};
 
 		/// <summary>
@@ -6910,7 +8197,7 @@ Resource Type Resolver
 		///			Pass  3: Compile
 		///			Pass  4: Generate instance types with event handler functions to TemporaryClass	/ Compile animation types
 		///			Pass  5: Compile
-		///			Pass  6: Generate instance types with everything to InstanceCtor				/ Compile animation types
+		///			Pass  6: Generate instance types with everything to InstanceCtor				/ Compile animation types / Compile localized strings injection
 		///			Pass  7: Compile
 		/// </summary>
 		class IGuiResourceTypeResolver_Precompile : public virtual IDescriptable, public Description<IGuiResourceTypeResolver_Precompile>
@@ -6929,6 +8216,8 @@ Resource Type Resolver
 				Instance_GenerateInstanceClass		= 6,
 				Instance_CompileInstanceClass		= 7,
 				Instance_Max						= Instance_CompileInstanceClass,
+
+				Everything_Max						= Instance_Max,
 			};
 
 			enum PassSupport
@@ -6938,13 +8227,10 @@ Resource Type Resolver
 				PerPass,
 			};
 
-			/// <summary>Get the maximum pass index that the precompiler needs.</summary>
-			/// <returns>Returns the maximum pass index. The precompiler doesn't not need to response to every pass.</returns>
-			virtual vint										GetMaxPassIndex() = 0;
 			/// <summary>Get how this resolver supports precompiling.</summary>
 			/// <param name="passIndex">The pass index.</param>
 			/// <returns>Returns how this resolver supports precompiling.</returns>
-			virtual PassSupport									GetPassSupport(vint passIndex) = 0;
+			virtual PassSupport									GetPrecompilePassSupport(vint passIndex) = 0;
 			/// <summary>Precompile the resource item.</summary>
 			/// <param name="resource">The resource to precompile.</param>
 			/// <param name="context">The context for precompiling.</param>
@@ -6964,12 +8250,6 @@ Resource Type Resolver
 			virtual void										OnPerResource(vint passIndex, Ptr<GuiResourceItem> resource) = 0;
 		};
 
-		/// <summary>Provide a context for resource initializing</summary>
-		struct GuiResourceInitializeContext : GuiResourcePrecompileContext
-		{
-			GuiResourceUsage									usage;
-		};
-
 		/// <summary>
 		///		Represents a precompiler for resources of a specified type.
 		///		Current resources that needs precompiling:
@@ -6980,9 +8260,16 @@ Resource Type Resolver
 		class IGuiResourceTypeResolver_Initialize : public virtual IDescriptable, public Description<IGuiResourceTypeResolver_Initialize>
 		{
 		public:
-			/// <summary>Get the maximum pass index that the initializer needs.</summary>
-			/// <returns>Returns the maximum pass index. The initializer doesn't not need to response to every pass.</returns>
-			virtual vint										GetMaxPassIndex() = 0;
+			enum PassNames
+			{
+				Workflow_Initialize					= 0,
+				Everything_Max						= Workflow_Initialize,
+			};
+
+			/// <summary>Get how this resolver supports precompiling.</summary>
+			/// <param name="passIndex">The pass index.</param>
+			/// <returns>Returns how this resolver supports precompiling.</returns>
+			virtual bool										GetInitializePassSupport(vint passIndex) = 0;
 			/// <summary>Initialize the resource item.</summary>
 			/// <param name="resource">The resource to initializer.</param>
 			/// <param name="context">The context for initializing.</param>
@@ -7082,12 +8369,6 @@ Resource Resolver Manager
 			/// <returns>Returns true if this operation succeeded.</returns>
 			/// <param name="resolver">The resolver.</param>
 			virtual bool										SetTypeResolver(Ptr<IGuiResourceTypeResolver> resolver) = 0;
-			/// <summary>Get the maximum precompiling pass index.</summary>
-			/// <returns>The maximum precompiling pass index.</returns>
-			virtual vint										GetMaxPrecompilePassIndex() = 0;
-			/// <summary>Get the maximum initializing pass index.</summary>
-			/// <returns>The maximum initializing pass index.</returns>
-			virtual vint										GetMaxInitializePassIndex() = 0;
 			/// <summary>Get names of all per resource resolvers for a pass.</summary>
 			/// <param name="passIndex">The pass index.</param>
 			/// <param name="names">Names of resolvers</param>
@@ -7106,7 +8387,7 @@ Resource Resolver Manager
 #endif
 
 /***********************************************************************
-.\CONTROLS\TEMPLATES\GUICONTROLSHARED.H
+.\APPLICATION\CONTROLS\GUIINSTANCEROOTOBJECT.H
 ***********************************************************************/
 /***********************************************************************
 Vczh Library++ 3.0
@@ -7116,130 +8397,27 @@ GacUI::Template System
 Interfaces:
 ***********************************************************************/
 
-#ifndef VCZH_PRESENTATION_CONTROLS_TEMPLATES_GUICONTROLSHARED
-#define VCZH_PRESENTATION_CONTROLS_TEMPLATES_GUICONTROLSHARED
+#ifndef VCZH_PRESENTATION_CONTROLS_TEMPLATES_GUIINSTANCEROOTOBJECT
+#define VCZH_PRESENTATION_CONTROLS_TEMPLATES_GUIINSTANCEROOTOBJECT
 
 
 namespace vl
 {
 	namespace presentation
 	{
+		namespace templates
+		{
+			class GuiTemplate;
+		}
+
 		namespace controls
 		{
 			class GuiControlHost;
 			class GuiCustomControl;
 
-			/// <summary>The visual state for button.</summary>
-			enum class ButtonState
-			{
-				/// <summary>Normal state.</summary>
-				Normal,
-				/// <summary>Active state (when the cursor is hovering on a button).</summary>
-				Active,
-				/// <summary>Pressed state (when the buttin is being pressed).</summary>
-				Pressed,
-			};
-
-			/// <summary>Represents the sorting state of list view items related to this column.</summary>
-			enum class ColumnSortingState
-			{
-				/// <summary>Not sorted.</summary>
-				NotSorted,
-				/// <summary>Ascending.</summary>
-				Ascending,
-				/// <summary>Descending.</summary>
-				Descending,
-			};
-
-			/// <summary>Represents the order of tab pages.</summary>
-			enum class TabPageOrder
-			{
-				/// <summary>Unknown.</summary>
-				Unknown,
-				/// <summary>Left to right.</summary>
-				LeftToRight,
-				/// <summary>Right to left.</summary>
-				RightToLeft,
-				/// <summary>Top to bottom.</summary>
-				TopToBottom,
-				/// <summary>Bottom to top.</summary>
-				BottomToTop,
-			};
-
-			/// <summary>A command executor for the combo box to change the control state.</summary>
-			class ITextBoxCommandExecutor : public virtual IDescriptable, public Description<ITextBoxCommandExecutor>
-			{
-			public:
-				/// <summary>Override the text content in the control.</summary>
-				/// <param name="value">The new text content.</param>
-				virtual void						UnsafeSetText(const WString& value) = 0;
-			};
-
-			/// <summary>A command executor for the style controller to change the control state.</summary>
-			class IScrollCommandExecutor : public virtual IDescriptable, public Description<IScrollCommandExecutor>
-			{
-			public:
-				/// <summary>Do small decrement.</summary>
-				virtual void						SmallDecrease() = 0;
-				/// <summary>Do small increment.</summary>
-				virtual void						SmallIncrease() = 0;
-				/// <summary>Do big decrement.</summary>
-				virtual void						BigDecrease() = 0;
-				/// <summary>Do big increment.</summary>
-				virtual void						BigIncrease() = 0;
-
-				/// <summary>Change to total size of the scroll.</summary>
-				/// <param name="value">The total size.</param>
-				virtual void						SetTotalSize(vint value) = 0;
-				/// <summary>Change to page size of the scroll.</summary>
-				/// <param name="value">The page size.</param>
-				virtual void						SetPageSize(vint value) = 0;
-				/// <summary>Change to position of the scroll.</summary>
-				/// <param name="value">The position.</param>
-				virtual void						SetPosition(vint value) = 0;
-			};
-
-			/// <summary>A command executor for the style controller to change the control state.</summary>
-			class ITabCommandExecutor : public virtual IDescriptable, public Description<ITabCommandExecutor>
-			{
-			public:
-				/// <summary>Select a tab page.</summary>
-				/// <param name="index">The specified position for the tab page.</param>
-				/// <param name="setFocus">Set to true to set focus to the tab control.</param>
-				virtual void						ShowTab(vint index, bool setFocus) = 0;
-			};
-
-			/// <summary>A command executor for the style controller to change the control state.</summary>
-			class IDatePickerCommandExecutor : public virtual IDescriptable, public Description<IDatePickerCommandExecutor>
-			{
-			public:
-				/// <summary>Called when the date has been changed.</summary>
-				virtual void						NotifyDateChanged() = 0;
-				/// <summary>Called when navigated to a date.</summary>
-				virtual void						NotifyDateNavigated() = 0;
-				/// <summary>Called when selected a date.</summary>
-				virtual void						NotifyDateSelected() = 0;
-			};
-
-			/// <summary>A command executor for the style controller to change the control state.</summary>
-			class IRibbonGroupCommandExecutor : public virtual IDescriptable, public Description<IRibbonGroupCommandExecutor>
-			{
-			public:
-				/// <summary>Called when the expand button is clicked.</summary>
-				virtual void						NotifyExpandButtonClicked() = 0;
-			};
-
-			/// <summary>A command executor for the style controller to change the control state.</summary>
-			class IRibbonGalleryCommandExecutor : public virtual IDescriptable, public Description<IRibbonGalleryCommandExecutor>
-			{
-			public:
-				/// <summary>Called when the scroll up button is clicked.</summary>
-				virtual void						NotifyScrollUp() = 0;
-				/// <summary>Called when the scroll down button is clicked.</summary>
-				virtual void						NotifyScrollDown() = 0;
-				/// <summary>Called when the dropdown button is clicked.</summary>
-				virtual void						NotifyDropdown() = 0;
-			};
+/***********************************************************************
+Component
+***********************************************************************/
 
 			class GuiInstanceRootObject;
 
@@ -7377,6 +8555,1772 @@ Root Object
 #endif
 
 /***********************************************************************
+.\APPLICATION\CONTROLS\GUITHEMEMANAGER.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI::Control Styles::Common Style Helpers
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_PRESENTATION_CONTROLS_GUITHEMEMANAGER
+#define VCZH_PRESENTATION_CONTROLS_GUITHEMEMANAGER
+
+
+namespace vl
+{
+	namespace presentation
+	{
+		namespace templates
+		{
+
+/***********************************************************************
+Theme Builders
+***********************************************************************/
+
+#define GUI_TEMPLATE_PROPERTY_DECL(CLASS, TYPE, NAME, VALUE)\
+			private:\
+				TYPE NAME##_ = VALUE;\
+			public:\
+				TYPE Get##NAME();\
+				void Set##NAME(TYPE const& value);\
+				compositions::GuiNotifyEvent NAME##Changed;\
+
+#define GUI_TEMPLATE_PROPERTY_IMPL(CLASS, TYPE, NAME, VALUE)\
+			TYPE CLASS::Get##NAME()\
+			{\
+				return NAME##_;\
+			}\
+			void CLASS::Set##NAME(TYPE const& value)\
+			{\
+				if (NAME##_ != value)\
+				{\
+					NAME##_ = value;\
+					NAME##Changed.Execute(compositions::GuiEventArgs(this));\
+				}\
+			}\
+
+#define GUI_TEMPLATE_PROPERTY_EVENT_INIT(CLASS, TYPE, NAME, VALUE)\
+			NAME##Changed.SetAssociatedComposition(this);
+
+#define GUI_TEMPLATE_CLASS_DECL(CLASS, BASE)\
+			class CLASS : public BASE, public AggregatableDescription<CLASS>\
+			{\
+			public:\
+				CLASS();\
+				~CLASS();\
+				CLASS ## _PROPERTIES(GUI_TEMPLATE_PROPERTY_DECL)\
+			};\
+
+#define GUI_TEMPLATE_CLASS_IMPL(CLASS, BASE)\
+			CLASS ## _PROPERTIES(GUI_TEMPLATE_PROPERTY_IMPL)\
+			CLASS::CLASS()\
+			{\
+				CLASS ## _PROPERTIES(GUI_TEMPLATE_PROPERTY_EVENT_INIT)\
+			}\
+			CLASS::~CLASS()\
+			{\
+				FinalizeAggregation();\
+			}\
+
+/***********************************************************************
+GuiTemplate
+***********************************************************************/
+
+			/// <summary>Represents a user customizable template.</summary>
+			class GuiTemplate : public compositions::GuiBoundsComposition, public controls::GuiInstanceRootObject, public Description<GuiTemplate>
+			{
+			protected:
+				controls::GuiControlHost*		GetControlHostForInstance()override;
+				void							OnParentLineChanged()override;
+			public:
+				/// <summary>Create a template.</summary>
+				GuiTemplate();
+				~GuiTemplate();
+				
+#define GuiTemplate_PROPERTIES(F)\
+				F(GuiTemplate,	FontProperties,		Font,				{}	)\
+				F(GuiTemplate,	description::Value,	Context,			{}	)\
+				F(GuiTemplate,	WString,			Text,				{}	)\
+				F(GuiTemplate,	bool,				VisuallyEnabled,	true)\
+
+				GuiTemplate_PROPERTIES(GUI_TEMPLATE_PROPERTY_DECL)
+			};
+
+/***********************************************************************
+Core Themes
+***********************************************************************/
+
+#define GUI_CORE_CONTROL_TEMPLATE_DECL(F)\
+			F(GuiControlTemplate,				GuiTemplate)				\
+			F(GuiLabelTemplate,					GuiControlTemplate)			\
+			F(GuiWindowTemplate,				GuiControlTemplate)			\
+
+#define GuiControlTemplate_PROPERTIES(F)\
+				F(GuiControlTemplate, compositions::GuiGraphicsComposition*, ContainerComposition, this)\
+				F(GuiControlTemplate, compositions::GuiGraphicsComposition*, FocusableComposition, nullptr)\
+				F(GuiControlTemplate, bool, Focused, false)\
+
+#define GuiLabelTemplate_PROPERTIES(F)\
+				F(GuiLabelTemplate, Color, DefaultTextColor, {})\
+				F(GuiLabelTemplate, Color, TextColor, {})\
+
+#define GuiWindowTemplate_PROPERTIES(F)\
+				F(GuiWindowTemplate, BoolOption, MaximizedBoxOption, BoolOption::Customizable)\
+				F(GuiWindowTemplate, BoolOption, MinimizedBoxOption, BoolOption::Customizable)\
+				F(GuiWindowTemplate, BoolOption, BorderOption, BoolOption::Customizable)\
+				F(GuiWindowTemplate, BoolOption, SizeBoxOption, BoolOption::Customizable)\
+				F(GuiWindowTemplate, BoolOption, IconVisibleOption, BoolOption::Customizable)\
+				F(GuiWindowTemplate, BoolOption, TitleBarOption, BoolOption::Customizable)\
+				F(GuiWindowTemplate, bool, MaximizedBox, true)\
+				F(GuiWindowTemplate, bool, MinimizedBox, true)\
+				F(GuiWindowTemplate, bool, Border, true)\
+				F(GuiWindowTemplate, bool, SizeBox, true)\
+				F(GuiWindowTemplate, bool, IconVisible, true)\
+				F(GuiWindowTemplate, bool, TitleBar, true)\
+				F(GuiWindowTemplate, bool, Maximized, false)\
+				F(GuiWindowTemplate, bool, Activated, false)\
+				F(GuiWindowTemplate, TemplateProperty<GuiWindowTemplate>, TooltipTemplate, {})\
+				F(GuiWindowTemplate, TemplateProperty<GuiLabelTemplate>, ShortcutKeyTemplate, {})\
+				F(GuiWindowTemplate, bool, CustomFrameEnabled, true)\
+				F(GuiWindowTemplate, Margin, CustomFramePadding, {})\
+				F(GuiWindowTemplate, Ptr<GuiImageData>, Icon, {})\
+
+/***********************************************************************
+Template Declarations
+***********************************************************************/
+
+			GUI_CORE_CONTROL_TEMPLATE_DECL(GUI_TEMPLATE_CLASS_DECL)
+		}
+
+/***********************************************************************
+Theme Names
+***********************************************************************/
+
+		namespace theme
+		{
+
+#define GUI_CONTROL_TEMPLATE_TYPES(F) \
+			F(WindowTemplate,				SystemFrameWindow)			\
+			F(WindowTemplate,				CustomFrameWindow)			\
+			F(ControlTemplate,				CustomControl)				\
+			F(WindowTemplate,				Tooltip)					\
+			F(LabelTemplate,				Label)						\
+			F(LabelTemplate,				ShortcutKey)				\
+			F(ScrollViewTemplate,			ScrollView)					\
+			F(ControlTemplate,				GroupBox)					\
+			F(TabTemplate,					Tab)						\
+			F(ComboBoxTemplate,				ComboBox)					\
+			F(MultilineTextBoxTemplate,		MultilineTextBox)			\
+			F(SinglelineTextBoxTemplate,	SinglelineTextBox)			\
+			F(DocumentViewerTemplate,		DocumentViewer)				\
+			F(DocumentLabelTemplate,		DocumentLabel)				\
+			F(DocumentLabelTemplate,		DocumentTextBox)			\
+			F(ListViewTemplate,				ListView)					\
+			F(TreeViewTemplate,				TreeView)					\
+			F(TextListTemplate,				TextList)					\
+			F(SelectableButtonTemplate,		ListItemBackground)			\
+			F(SelectableButtonTemplate,		TreeItemExpander)			\
+			F(SelectableButtonTemplate,		CheckTextListItem)			\
+			F(SelectableButtonTemplate,		RadioTextListItem)			\
+			F(MenuTemplate,					Menu)						\
+			F(ControlTemplate,				MenuBar)					\
+			F(ControlTemplate,				MenuSplitter)				\
+			F(ToolstripButtonTemplate,		MenuBarButton)				\
+			F(ToolstripButtonTemplate,		MenuItemButton)				\
+			F(ControlTemplate,				ToolstripToolBar)			\
+			F(ToolstripButtonTemplate,		ToolstripButton)			\
+			F(ToolstripButtonTemplate,		ToolstripDropdownButton)	\
+			F(ToolstripButtonTemplate,		ToolstripSplitButton)		\
+			F(ControlTemplate,				ToolstripSplitter)			\
+			F(RibbonTabTemplate,			RibbonTab)					\
+			F(RibbonGroupTemplate,			RibbonGroup)				\
+			F(RibbonIconLabelTemplate,		RibbonIconLabel)			\
+			F(RibbonIconLabelTemplate,		RibbonSmallIconLabel)		\
+			F(RibbonButtonsTemplate,		RibbonButtons)				\
+			F(RibbonToolstripsTemplate,		RibbonToolstrips)			\
+			F(RibbonGalleryTemplate,		RibbonGallery)				\
+			F(RibbonToolstripMenuTemplate,	RibbonToolstripMenu)		\
+			F(RibbonGalleryListTemplate,	RibbonGalleryList)			\
+			F(TextListTemplate,				RibbonGalleryItemList)		\
+			F(ToolstripButtonTemplate,		RibbonSmallButton)			\
+			F(ToolstripButtonTemplate,		RibbonSmallDropdownButton)	\
+			F(ToolstripButtonTemplate,		RibbonSmallSplitButton)		\
+			F(ToolstripButtonTemplate,		RibbonLargeButton)			\
+			F(ToolstripButtonTemplate,		RibbonLargeDropdownButton)	\
+			F(ToolstripButtonTemplate,		RibbonLargeSplitButton)		\
+			F(ControlTemplate,				RibbonSplitter)				\
+			F(ControlTemplate,				RibbonToolstripHeader)		\
+			F(ButtonTemplate,				Button)						\
+			F(SelectableButtonTemplate,		CheckBox)					\
+			F(SelectableButtonTemplate,		RadioButton)				\
+			F(DatePickerTemplate,			DatePicker)					\
+			F(DateComboBoxTemplate,			DateComboBox)				\
+			F(ScrollTemplate,				HScroll)					\
+			F(ScrollTemplate,				VScroll)					\
+			F(ScrollTemplate,				HTracker)					\
+			F(ScrollTemplate,				VTracker)					\
+			F(ScrollTemplate,				ProgressBar)				\
+
+			enum class ThemeName
+			{
+				Unknown,
+				Window,
+#define GUI_DEFINE_THEME_NAME(TEMPLATE, CONTROL) CONTROL,
+				GUI_CONTROL_TEMPLATE_TYPES(GUI_DEFINE_THEME_NAME)
+#undef GUI_DEFINE_THEME_NAME
+			};
+
+			/// <summary>Theme interface. A theme creates appropriate style controllers or style providers for default controls. Call [M:vl.presentation.theme.GetCurrentTheme] to access this interface.</summary>
+			class ITheme : public virtual IDescriptable, public Description<ITheme>
+			{
+			public:
+				virtual TemplateProperty<templates::GuiControlTemplate>				CreateStyle(ThemeName themeName) = 0;
+			};
+
+			/// <summary>Get the current theme style factory object. Call <see cref="RegisterTheme"/> or <see cref="UnregisterTheme"/> to change the default theme.</summary>
+			/// <returns>The current theme style factory object.</returns>
+			extern ITheme*						GetCurrentTheme();
+			extern void							InitializeTheme();
+			extern void							FinalizeTheme();
+		}
+	}
+}
+
+#endif
+
+/***********************************************************************
+.\APPLICATION\CONTROLS\GUIBASICCONTROLS.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI::Control System
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_PRESENTATION_CONTROLS_GUIBASICCONTROLS
+#define VCZH_PRESENTATION_CONTROLS_GUIBASICCONTROLS
+
+
+namespace vl
+{
+	namespace presentation
+	{
+		namespace theme
+		{
+			enum class ThemeName;
+		}
+
+		namespace controls
+		{
+			template<typename T, typename=void>
+			struct QueryServiceHelper;
+
+			template<typename T>
+			struct QueryServiceHelper<T, std::enable_if_t<std::is_convertible_v<decltype(T::Identifier), const wchar_t* const>>>
+			{
+				static WString GetIdentifier()
+				{
+					return WString::Unmanaged(T::Identifier);
+				}
+			};
+
+			template<typename T>
+			struct QueryServiceHelper<T, std::enable_if_t<std::is_convertible_v<decltype(T::GetIdentifier()), WString>>>
+			{
+				static WString GetIdentifier()
+				{
+					return MoveValue<WString>(T::GetIdentifier());
+				}
+			};
+
+/***********************************************************************
+Basic Construction
+***********************************************************************/
+
+			/// <summary>
+			/// A helper object to test if a control has been deleted or not.
+			/// </summary>
+			class GuiDisposedFlag : public Object, public Description<GuiDisposedFlag>
+			{
+				friend class GuiControl;
+			protected:
+				GuiControl*								owner = nullptr;
+				bool									disposed = false;
+
+				void									SetDisposed();
+			public:
+				GuiDisposedFlag(GuiControl* _owner);
+				~GuiDisposedFlag();
+
+				bool									IsDisposed();
+			};
+
+			/// <summary>
+			/// The base class of all controls.
+			/// When the control is destroyed, it automatically destroys sub controls, and the bounds composition from the style controller.
+			/// If you want to manually destroy a control, you should first remove it from its parent.
+			/// The only way to remove a control from a parent control, is to remove the bounds composition from its parent composition. The same to inserting a control.
+			/// </summary>
+			class GuiControl
+				: public Object
+				, protected compositions::IGuiAltAction
+				, protected compositions::IGuiTabAction
+				, public Description<GuiControl>
+			{
+				friend class compositions::GuiGraphicsComposition;
+
+			protected:
+				using ControlList = collections::List<GuiControl*>;
+				using ControlServiceMap = collections::Dictionary<WString, Ptr<IDescriptable>>;
+				using ControlTemplatePropertyType = TemplateProperty<templates::GuiControlTemplate>;
+				using IGuiGraphicsEventHandler = compositions::IGuiGraphicsEventHandler;
+
+			private:
+				theme::ThemeName						controlThemeName;
+				ControlTemplatePropertyType				controlTemplate;
+				templates::GuiControlTemplate*			controlTemplateObject = nullptr;
+				Ptr<GuiDisposedFlag>					disposedFlag;
+
+			public:
+				Ptr<GuiDisposedFlag>					GetDisposedFlag();
+
+			protected:
+				compositions::GuiBoundsComposition*		boundsComposition = nullptr;
+				compositions::GuiBoundsComposition*		containerComposition = nullptr;
+				compositions::GuiGraphicsComposition*	focusableComposition = nullptr;
+				compositions::GuiGraphicsEventReceiver*	eventReceiver = nullptr;
+
+				bool									isFocused = false;
+				Ptr<IGuiGraphicsEventHandler>			gotFocusHandler;
+				Ptr<IGuiGraphicsEventHandler>			lostFocusHandler;
+
+				bool									acceptTabInput = false;
+				vint									tabPriority = -1;
+				bool									isEnabled = true;
+				bool									isVisuallyEnabled = true;
+				bool									isVisible = true;
+				WString									alt;
+				WString									text;
+				Nullable<FontProperties>				font;
+				FontProperties							displayFont;
+				description::Value						context;
+				compositions::IGuiAltActionHost*		activatingAltHost = nullptr;
+				ControlServiceMap						controlServices;
+
+				GuiControl*								parent = nullptr;
+				ControlList								children;
+				description::Value						tag;
+				GuiControl*								tooltipControl = nullptr;
+				vint									tooltipWidth = 0;
+
+				virtual void							BeforeControlTemplateUninstalled();
+				virtual void							AfterControlTemplateInstalled(bool initialize);
+				virtual void							CheckAndStoreControlTemplate(templates::GuiControlTemplate* value);
+				virtual void							EnsureControlTemplateExists();
+				virtual void							RebuildControlTemplate();
+				virtual void							OnChildInserted(GuiControl* control);
+				virtual void							OnChildRemoved(GuiControl* control);
+				virtual void							OnParentChanged(GuiControl* oldParent, GuiControl* newParent);
+				virtual void							OnParentLineChanged();
+				virtual void							OnServiceAdded();
+				virtual void							OnRenderTargetChanged(elements::IGuiGraphicsRenderTarget* renderTarget);
+				virtual void							OnBeforeReleaseGraphicsHost();
+				virtual void							UpdateVisuallyEnabled();
+				virtual void							UpdateDisplayFont();
+				void									OnGotFocus(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
+				void									OnLostFocus(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
+				void									SetFocusableComposition(compositions::GuiGraphicsComposition* value);
+
+				bool									IsControlVisibleAndEnabled();
+				bool									IsAltEnabled()override;
+				bool									IsAltAvailable()override;
+				compositions::GuiGraphicsComposition*	GetAltComposition()override;
+				compositions::IGuiAltActionHost*		GetActivatingAltHost()override;
+				void									OnActiveAlt()override;
+				bool									IsTabEnabled()override;
+				bool									IsTabAvailable()override;
+
+				static bool								SharedPtrDestructorProc(DescriptableObject* obj, bool forceDisposing);
+
+			public:
+				using ControlTemplateType = templates::GuiControlTemplate;
+
+				/// <summary>Create a control with a specified default theme.</summary>
+				/// <param name="themeName">The theme name for retriving a default control template.</param>
+				GuiControl(theme::ThemeName themeName);
+				~GuiControl();
+
+				/// <summary>Theme name changed event. This event raises when the theme name is changed.</summary>
+				compositions::GuiNotifyEvent			ControlThemeNameChanged;
+				/// <summary>Control template changed event. This event raises when the control template is changed.</summary>
+				compositions::GuiNotifyEvent			ControlTemplateChanged;
+				/// <summary>Control signal trigerred. This raises be raised because of multiple reason specified in the argument.</summary>
+				compositions::GuiControlSignalEvent		ControlSignalTrigerred;
+				/// <summary>Visible event. This event raises when the visibility state of the control is changed.</summary>
+				compositions::GuiNotifyEvent			VisibleChanged;
+				/// <summary>Enabled event. This event raises when the enabling state of the control is changed.</summary>
+				compositions::GuiNotifyEvent			EnabledChanged;
+				/// <summary>Focused event. This event raises when the focusing state of the control is changed.</summary>
+				compositions::GuiNotifyEvent			FocusedChanged;
+				/// <summary>
+				/// Enabled event. This event raises when the visually enabling state of the control is changed. A visually enabling is combined by the enabling state and the parent's visually enabling state.
+				/// A control is rendered as disabled, not only when the control itself is disabled, but also when the parent control is rendered as disabled.
+				/// </summary>
+				compositions::GuiNotifyEvent			VisuallyEnabledChanged;
+				/// <summary>Alt changed event. This event raises when the associated Alt-combined shortcut key of the control is changed.</summary>
+				compositions::GuiNotifyEvent			AltChanged;
+				/// <summary>Text changed event. This event raises when the text of the control is changed.</summary>
+				compositions::GuiNotifyEvent			TextChanged;
+				/// <summary>Font changed event. This event raises when the font of the control is changed.</summary>
+				compositions::GuiNotifyEvent			FontChanged;
+				/// <summary>Display font changed event. This event raises when the display font of the control is changed.</summary>
+				compositions::GuiNotifyEvent			DisplayFontChanged;
+				/// <summary>Context changed event. This event raises when the font of the control is changed.</summary>
+				compositions::GuiNotifyEvent			ContextChanged;
+
+				void									TryDelayExecuteIfNotDeleted(Func<void()> proc);
+
+				/// <summary>A function to create the argument for notify events that raised by itself.</summary>
+				/// <returns>The created argument.</returns>
+				compositions::GuiEventArgs				GetNotifyEventArguments();
+				/// <summary>Get the associated theme name.</summary>
+				/// <returns>The theme name.</returns>
+				theme::ThemeName						GetControlThemeName();
+				/// <summary>Set the associated control theme name.</summary>
+				/// <param name="value">The theme name.</param>
+				void									SetControlThemeName(theme::ThemeName value);
+				/// <summary>Get the associated control template.</summary>
+				/// <returns>The control template.</returns>
+				ControlTemplatePropertyType				GetControlTemplate();
+				/// <summary>Set the associated control template.</summary>
+				/// <param name="value">The control template.</param>
+				void									SetControlTemplate(const ControlTemplatePropertyType& value);
+				/// <summary>Set the associated control theme name and template and the same time.</summary>
+				/// <param name="themeNameValue">The theme name.</param>
+				/// <param name="controlTemplateValue">The control template.</param>
+				void									SetControlThemeNameAndTemplate(theme::ThemeName themeNameValue, const ControlTemplatePropertyType& controlTemplateValue);
+				/// <summary>Get the associated style controller.</summary>
+				/// <returns>The associated style controller.</returns>
+				templates::GuiControlTemplate*			GetControlTemplateObject();
+				/// <summary>Get the bounds composition for the control.</summary>
+				/// <returns>The bounds composition.</returns>
+				compositions::GuiBoundsComposition*		GetBoundsComposition();
+				/// <summary>Get the container composition for the control.</summary>
+				/// <returns>The container composition.</returns>
+				compositions::GuiGraphicsComposition*	GetContainerComposition();
+				/// <summary>Get the focusable composition for the control. A focusable composition is the composition to be focused when the control is focused.</summary>
+				/// <returns>The focusable composition.</returns>
+				compositions::GuiGraphicsComposition*	GetFocusableComposition();
+				/// <summary>Get the parent control.</summary>
+				/// <returns>The parent control.</returns>
+				GuiControl*								GetParent();
+				/// <summary>Get the number of child controls.</summary>
+				/// <returns>The number of child controls.</returns>
+				vint									GetChildrenCount();
+				/// <summary>Get the child control using a specified index.</summary>
+				/// <returns>The child control.</returns>
+				/// <param name="index">The specified index.</param>
+				GuiControl*								GetChild(vint index);
+				/// <summary>Put another control in the container composition of this control.</summary>
+				/// <returns>Returns true if this operation succeeded.</returns>
+				/// <param name="control">The control to put in this control.</param>
+				bool									AddChild(GuiControl* control);
+				/// <summary>Test if a control owned by this control.</summary>
+				/// <returns>Returns true if the control is owned by this control.</returns>
+				/// <param name="control">The control to test.</param>
+				bool									HasChild(GuiControl* control);
+				
+				/// <summary>Get the <see cref="GuiControlHost"/> that contains this control.</summary>
+				/// <returns>The <see cref="GuiControlHost"/> that contains this control.</returns>
+				virtual GuiControlHost*					GetRelatedControlHost();
+				/// <summary>Test if this control is rendered as enabled.</summary>
+				/// <returns>Returns true if this control is rendered as enabled.</returns>
+				virtual bool							GetVisuallyEnabled();
+				/// <summary>Test if this control is focused.</summary>
+				/// <returns>Returns true if this control is focused.</returns>
+				virtual bool							GetFocused();
+				/// <summary>Focus this control.</summary>
+				virtual void							SetFocused();
+				/// <summary>Test if this control accepts tab character input.</summary>
+				/// <returns>Returns true if this control accepts tab character input.</returns>
+				virtual bool							GetAcceptTabInput()override;
+				/// <summary>Set if this control accepts tab character input.</summary>
+				/// <param name="value">Set to true to make this control accept tab character input.</param>
+				void									SetAcceptTabInput(bool value);
+				/// <summary>Get the tab priority associated with this control.</summary>
+				/// <returns>Returns he tab priority associated with this control.</returns>
+				virtual vint							GetTabPriority()override;
+				/// <summary>Associate a tab priority with this control.</summary>
+				/// <param name="value">The tab priority to associate. TAB key will go through controls in the order of priority: 0, 1, 2, ..., -1. All negative numbers will be converted to -1. The priority of containers affects all children if it is not -1.</param>
+				void									SetTabPriority(vint value);
+				/// <summary>Test if this control is enabled.</summary>
+				/// <returns>Returns true if this control is enabled.</returns>
+				virtual bool							GetEnabled();
+				/// <summary>Make the control enabled or disabled.</summary>
+				/// <param name="value">Set to true to make the control enabled.</param>
+				virtual void							SetEnabled(bool value);
+				/// <summary>Test if this visible or invisible.</summary>
+				/// <returns>Returns true if this control is visible.</returns>
+				virtual bool							GetVisible();
+				/// <summary>Make the control visible or invisible.</summary>
+				/// <param name="value">Set to true to make the visible enabled.</param>
+				virtual void							SetVisible(bool value);
+				/// <summary>Get the Alt-combined shortcut key associated with this control.</summary>
+				/// <returns>The Alt-combined shortcut key associated with this control.</returns>
+				virtual const WString&					GetAlt()override;
+				/// <summary>Associate a Alt-combined shortcut key with this control.</summary>
+				/// <returns>Returns true if this operation succeeded.</returns>
+				/// <param name="value">The Alt-combined shortcut key to associate. The key should contain only upper-case letters or digits.</param>
+				virtual bool							SetAlt(const WString& value);
+				/// <summary>Make the control as the parent of multiple Alt-combined shortcut key activatable controls.</summary>
+				/// <param name="host">The alt action host object.</param>
+				void									SetActivatingAltHost(compositions::IGuiAltActionHost* host);
+				/// <summary>Get the text to display on the control.</summary>
+				/// <returns>The text to display on the control.</returns>
+				virtual const WString&					GetText();
+				/// <summary>Set the text to display on the control.</summary>
+				/// <param name="value">The text to display on the control.</param>
+				virtual void							SetText(const WString& value);
+				/// <summary>Get the font of this control.</summary>
+				/// <returns>The font of this control.</returns>
+				virtual const Nullable<FontProperties>&	GetFont();
+				/// <summary>Set the font of this control.</summary>
+				/// <param name="value">The font of this control.</param>
+				virtual void							SetFont(const Nullable<FontProperties>& value);
+				/// <summary>Get the font to render the text. If the font of this control is null, then the display font is either the parent control's display font, or the system's default font when there is no parent control.</summary>
+				/// <returns>The font to render the text.</returns>
+				virtual const FontProperties&			GetDisplayFont();
+				/// <summary>Get the context of this control. The control template and all item templates (if it has) will see this context property.</summary>
+				/// <returns>The context of this context.</returns>
+				virtual description::Value				GetContext();
+				/// <summary>Set the context of this control.</summary>
+				/// <param name="value">The context of this control.</param>
+				virtual void							SetContext(const description::Value& value);
+
+				/// <summary>Get the tag object of the control.</summary>
+				/// <returns>The tag object of the control.</returns>
+				description::Value						GetTag();
+				/// <summary>Set the tag object of the control.</summary>
+				/// <param name="value">The tag object of the control.</param>
+				void									SetTag(const description::Value& value);
+				/// <summary>Get the tooltip control of the control.</summary>
+				/// <returns>The tooltip control of the control.</returns>
+				GuiControl*								GetTooltipControl();
+				/// <summary>Set the tooltip control of the control. The tooltip control will be released when this control is released. If you set a new tooltip control to replace the old one, the old one will not be owned by this control anymore, therefore user should release the old tooltip control manually.</summary>
+				/// <returns>The old tooltip control.</returns>
+				/// <param name="value">The tooltip control of the control.</param>
+				GuiControl*								SetTooltipControl(GuiControl* value);
+				/// <summary>Get the tooltip width of the control.</summary>
+				/// <returns>The tooltip width of the control.</returns>
+				vint									GetTooltipWidth();
+				/// <summary>Set the tooltip width of the control.</summary>
+				/// <param name="value">The tooltip width of the control.</param>
+				void									SetTooltipWidth(vint value);
+				/// <summary>Display the tooltip.</summary>
+				/// <returns>Returns true if this operation succeeded.</returns>
+				/// <param name="location">The relative location to specify the left-top position of the tooltip.</param>
+				bool									DisplayTooltip(Point location);
+				/// <summary>Close the tooltip that owned by this control.</summary>
+				void									CloseTooltip();
+
+				/// <summary>Query a service using an identifier. If you want to get a service of type IXXX, use IXXX::Identifier as the identifier.</summary>
+				/// <returns>The requested service. If the control doesn't support this service, it will be null.</returns>
+				/// <param name="identifier">The identifier.</param>
+				virtual IDescriptable*					QueryService(const WString& identifier);
+
+				template<typename T>
+				T* QueryTypedService()
+				{
+					return dynamic_cast<T*>(QueryService(QueryServiceHelper<T>::GetIdentifier()));
+				}
+
+				templates::GuiControlTemplate* TypedControlTemplateObject(bool ensureExists)
+				{
+					if (ensureExists)
+					{
+						EnsureControlTemplateExists();
+					}
+					return controlTemplateObject;
+				}
+
+				/// <summary>Add a service to this control dynamically. The added service cannot override existing services.</summary>
+				/// <returns>Returns true if this operation succeeded.</returns>
+				/// <param name="identifier">The identifier. You are suggested to fill this parameter using the value from the interface's GetIdentifier function, or <see cref="QueryTypedService`1"/> will not work on this service.</param>
+				/// <param name="value">The service.</param>
+				bool									AddService(const WString& identifier, Ptr<IDescriptable> value);
+			};
+
+			/// <summary>Represnets a user customizable control.</summary>
+			class GuiCustomControl : public GuiControl, public GuiInstanceRootObject, public AggregatableDescription<GuiCustomControl>
+			{
+			protected:
+				controls::GuiControlHost*				GetControlHostForInstance()override;
+				void									OnParentLineChanged()override;
+			public:
+				/// <summary>Create a control with a specified default theme.</summary>
+				/// <param name="themeName">The theme name for retriving a default control template.</param>
+				GuiCustomControl(theme::ThemeName themeName);
+				~GuiCustomControl();
+			};
+
+			template<typename T>
+			class GuiObjectComponent : public GuiComponent
+			{
+			public:
+				Ptr<T>				object;
+
+				GuiObjectComponent()
+				{
+				}
+
+				GuiObjectComponent(Ptr<T> _object)
+					:object(_object)
+				{
+				}
+			};
+
+#define GUI_GENERATE_CONTROL_TEMPLATE_OBJECT_NAME_3(UNIQUE) controlTemplateObject ## UNIQUE
+#define GUI_GENERATE_CONTROL_TEMPLATE_OBJECT_NAME_2(UNIQUE) GUI_GENERATE_CONTROL_TEMPLATE_OBJECT_NAME_3(UNIQUE)
+#define GUI_GENERATE_CONTROL_TEMPLATE_OBJECT_NAME GUI_GENERATE_CONTROL_TEMPLATE_OBJECT_NAME_2(__LINE__)
+
+#define GUI_SPECIFY_CONTROL_TEMPLATE_TYPE_2(TEMPLATE, BASE_TYPE, NAME) \
+			public: \
+				using ControlTemplateType = templates::Gui##TEMPLATE; \
+			private: \
+				templates::Gui##TEMPLATE* NAME = nullptr; \
+				void BeforeControlTemplateUninstalled_(); \
+				void AfterControlTemplateInstalled_(bool initialize); \
+			protected: \
+				void BeforeControlTemplateUninstalled()override \
+				{\
+					BeforeControlTemplateUninstalled_(); \
+					BASE_TYPE::BeforeControlTemplateUninstalled(); \
+				}\
+				void AfterControlTemplateInstalled(bool initialize)override \
+				{\
+					BASE_TYPE::AfterControlTemplateInstalled(initialize); \
+					AfterControlTemplateInstalled_(initialize); \
+				}\
+				void CheckAndStoreControlTemplate(templates::GuiControlTemplate* value)override \
+				{ \
+					auto ct = dynamic_cast<templates::Gui##TEMPLATE*>(value); \
+					CHECK_ERROR(ct, L"The assigned control template is not vl::presentation::templates::Gui" L ## # TEMPLATE L"."); \
+					NAME = ct; \
+					BASE_TYPE::CheckAndStoreControlTemplate(value); \
+				} \
+			public: \
+				templates::Gui##TEMPLATE* TypedControlTemplateObject(bool ensureExists) \
+				{ \
+					if (ensureExists) \
+					{ \
+						EnsureControlTemplateExists(); \
+					} \
+					return NAME; \
+				} \
+			private: \
+
+#define GUI_SPECIFY_CONTROL_TEMPLATE_TYPE(TEMPLATE, BASE_TYPE) GUI_SPECIFY_CONTROL_TEMPLATE_TYPE_2(TEMPLATE, BASE_TYPE, GUI_GENERATE_CONTROL_TEMPLATE_OBJECT_NAME)
+
+		}
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\APPLICATION\CONTROLS\GUILABELCONTROLS.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI::Control System
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_PRESENTATION_CONTROLS_GUILABELCONTROLS
+#define VCZH_PRESENTATION_CONTROLS_GUILABELCONTROLS
+
+
+namespace vl
+{
+	namespace presentation
+	{
+		namespace controls
+		{
+
+/***********************************************************************
+Label
+***********************************************************************/
+
+			/// <summary>A control to display a text.</summary>
+			class GuiLabel : public GuiControl, public Description<GuiLabel>
+			{
+				GUI_SPECIFY_CONTROL_TEMPLATE_TYPE(LabelTemplate, GuiControl)
+			protected:
+				Color									textColor;
+				bool									textColorConsisted = true;
+
+			public:
+				/// <summary>Create a control with a specified default theme.</summary>
+				/// <param name="themeName">The theme name for retriving a default control template.</param>
+				GuiLabel(theme::ThemeName themeName);
+				~GuiLabel();
+
+				/// <summary>Get the text color.</summary>
+				/// <returns>The text color.</returns>
+				Color									GetTextColor();
+				/// <summary>Set the text color.</summary>
+				/// <param name="value">The text color.</param>
+				void									SetTextColor(Color value);
+			};
+		}
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\APPLICATION\CONTROLS\GUIWINDOWCONTROLS.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI::Control System
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_PRESENTATION_CONTROLS_GUIWINDOWCONTROLS
+#define VCZH_PRESENTATION_CONTROLS_GUIWINDOWCONTROLS
+
+
+namespace vl
+{
+	namespace presentation
+	{
+		namespace compositions
+		{
+			class IGuiShortcutKeyManager;
+			class GuiGraphicsTimerManager;
+		}
+
+		namespace controls
+		{
+
+/***********************************************************************
+Control Host
+***********************************************************************/
+
+			/// <summary>
+			/// Represents a control that host by a <see cref="INativeWindow"/>.
+			/// </summary>
+			class GuiControlHost : public GuiControl, public GuiInstanceRootObject, protected INativeWindowListener, public Description<GuiControlHost>
+			{
+				friend class compositions::GuiGraphicsHost;
+			protected:
+				Func<void()>									callbackAfterDeleteThis;
+				compositions::GuiGraphicsHost*					host;
+				INativeWindow::WindowMode						windowMode = INativeWindow::Normal;
+
+				void											DeleteThis();
+				virtual void									OnNativeWindowChanged();
+				virtual void									OnVisualStatusChanged();
+			protected:
+				static const vint								TooltipDelayOpenTime = 500;
+				static const vint								TooltipDelayCloseTime = 500;
+				static const vint								TooltipDelayLifeTime = 5000;
+
+				Ptr<INativeDelay>								tooltipOpenDelay;
+				Ptr<INativeDelay>								tooltipCloseDelay;
+				Point											tooltipLocation;
+
+				bool											calledDestroyed = false;
+				bool											deleteWhenDestroyed = false;
+
+				controls::GuiControlHost*						GetControlHostForInstance()override;
+				GuiControl*										GetTooltipOwner(Point location);
+				void											MoveIntoTooltipControl(GuiControl* tooltipControl, Point location);
+				void											MouseMoving(const NativeWindowMouseInfo& info)override;
+				void											MouseLeaved()override;
+				void											Moved()override;
+				void											Enabled()override;
+				void											Disabled()override;
+				void											GotFocus()override;
+				void											LostFocus()override;
+				void											RenderingAsActivated()override;
+				void											RenderingAsDeactivated()override;
+				void											Opened()override;
+				void											BeforeClosing(bool& cancel)override;
+				void											AfterClosing()override;
+				void											Closed()override;
+				void											Destroying()override;
+
+				virtual void									UpdateClientSizeAfterRendering(Size preferredSize, Size clientSize);
+			public:
+				/// <summary>Create a control with a specified default theme.</summary>
+				/// <param name="themeName">The theme name for retriving a default control template.</param>
+				/// <param name="mode">The window mode.</param>
+				GuiControlHost(theme::ThemeName themeName, INativeWindow::WindowMode mode);
+				~GuiControlHost();
+				
+				/// <summary>Window got focus event.</summary>
+				compositions::GuiNotifyEvent					WindowGotFocus;
+				/// <summary>Window lost focus event.</summary>
+				compositions::GuiNotifyEvent					WindowLostFocus;
+				/// <summary>Window activated event.</summary>
+				compositions::GuiNotifyEvent					WindowActivated;
+				/// <summary>Window deactivated event.</summary>
+				compositions::GuiNotifyEvent					WindowDeactivated;
+				/// <summary>Window opened event.</summary>
+				compositions::GuiNotifyEvent					WindowOpened;
+				/// <summary>Window closing event, raised to offer a chance to stop closing the window.</summary>
+				compositions::GuiRequestEvent					WindowClosing;
+				/// <summary>Window ready to close event, raised when a window is about to close.</summary>
+				compositions::GuiNotifyEvent					WindowReadyToClose;
+				/// <summary>Window closed event, raised when a window is closed.</summary>
+				compositions::GuiNotifyEvent					WindowClosed;
+				/// <summary>Window destroying event.</summary>
+				compositions::GuiNotifyEvent					WindowDestroying;
+
+				/// <summary>Delete this control host after processing all events.</summary>
+				/// <param name="callback">The callback to call after the window is deleted.</param>
+				void											DeleteAfterProcessingAllEvents(const Func<void()>& callback);
+
+				/// <summary>Get the internal <see cref="compositions::GuiGraphicsHost"/> object to host the window content.</summary>
+				/// <returns>The internal <see cref="compositions::GuiGraphicsHost"/> object to host the window content.</returns>
+				compositions::GuiGraphicsHost*					GetGraphicsHost();
+				/// <summary>Get the main composition to host the window content.</summary>
+				/// <returns>The main composition to host the window content.</returns>
+				compositions::GuiGraphicsComposition*			GetMainComposition();
+				/// <summary>Get the internal <see cref="INativeWindow"/> object to host the content.</summary>
+				/// <returns>The the internal <see cref="INativeWindow"/> object to host the content.</returns>
+				INativeWindow*									GetNativeWindow();
+				/// <summary>Set the internal <see cref="INativeWindow"/> object to host the content.</summary>
+				/// <param name="window">The the internal <see cref="INativeWindow"/> object to host the content.</param>
+				void											SetNativeWindow(INativeWindow* window);
+				/// <summary>Force to calculate layout and size immediately</summary>
+				void											ForceCalculateSizeImmediately();
+				
+				/// <summary>Test is the window enabled.</summary>
+				/// <returns>Returns true if the window is enabled.</returns>
+				bool											GetEnabled()override;
+				/// <summary>Enable or disable the window.</summary>
+				/// <param name="value">Set to true to enable the window.</param>
+				void											SetEnabled(bool value)override;
+				/// <summary>Test is the window focused.</summary>
+				/// <returns>Returns true if the window is focused.</returns>
+				bool											GetFocused()override;
+				/// <summary>Focus the window. A window with activation disabled cannot receive focus.</summary>
+				void											SetFocused()override;
+				/// <summary>Test is the window rendering as activated.</summary>
+				/// <returns>Returns true if the window is rendering as activated.</returns>
+				bool											GetRenderingAsActivated();
+				/// <summary>Test is the window icon shown in the task bar.</summary>
+				/// <returns>Returns true if the window is icon shown in the task bar.</returns>
+				bool											GetShowInTaskBar();
+				/// <summary>Show or hide the window icon in the task bar.</summary>
+				/// <param name="value">Set to true to show the window icon in the task bar.</param>
+				void											SetShowInTaskBar(bool value);
+				/// <summary>Test is the window allowed to be activated.</summary>
+				/// <returns>Returns true if the window is allowed to be activated.</returns>
+				bool											GetEnabledActivate();
+				/// <summary>
+				/// Allow or forbid the window to be activated.
+				/// Clicking a window with activation disabled doesn't bring activation and focus.
+				/// Activation will be automatically enabled by calling <see cref="Show"/> or <see cref="SetActivated"/>.
+				/// </summary>
+				/// <param name="value">Set to true to allow the window to be activated.</param>
+				void											SetEnabledActivate(bool value);
+				/// <summary>
+				/// Test is the window always on top of the desktop.
+				/// </summary>
+				/// <returns>Returns true if the window is always on top of the desktop.</returns>
+				bool											GetTopMost();
+				/// <summary>
+				/// Make the window always or never on top of the desktop.
+				/// </summary>
+				/// <param name="topmost">True to make the window always  on top of the desktop.</param>
+				void											SetTopMost(bool topmost);
+
+				/// <summary>Get the <see cref="compositions::IGuiShortcutKeyManager"/> attached with this control host.</summary>
+				/// <returns>The shortcut key manager.</returns>
+				compositions::IGuiShortcutKeyManager*			GetShortcutKeyManager();
+				/// <summary>Attach or detach the <see cref="compositions::IGuiShortcutKeyManager"/> associated with this control host. When this control host is disposing, the associated shortcut key manager will be deleted if exists.</summary>
+				/// <param name="value">The shortcut key manager. Set to null to detach the previous shortcut key manager from this control host.</param>
+				void											SetShortcutKeyManager(compositions::IGuiShortcutKeyManager* value);
+				/// <summary>Get the timer manager.</summary>
+				/// <returns>The timer manager.</returns>
+				compositions::GuiGraphicsTimerManager*			GetTimerManager();
+
+				/// <summary>Get the client size of the window.</summary>
+				/// <returns>The client size of the window.</returns>
+				Size											GetClientSize();
+				/// <summary>Set the client size of the window.</summary>
+				/// <param name="value">The client size of the window.</param>
+				void											SetClientSize(Size value);
+				/// <summary>Get the location of the window in screen space.</summary>
+				/// <returns>The location of the window.</returns>
+				NativePoint										GetLocation();
+				/// <summary>Set the location of the window in screen space.</summary>
+				/// <param name="value">The location of the window.</param>
+				void											SetLocation(NativePoint value);
+				/// <summary>Set the location in screen space and the client size of the window.</summary>
+				/// <param name="location">The location of the window.</param>
+				/// <param name="size">The client size of the window.</param>
+				void											SetBounds(NativePoint location, Size size);
+
+				GuiControlHost*									GetRelatedControlHost()override;
+				const WString&									GetText()override;
+				void											SetText(const WString& value)override;
+
+				/// <summary>Get the screen that contains the window.</summary>
+				/// <returns>The screen that contains the window.</returns>
+				INativeScreen*									GetRelatedScreen();
+				/// <summary>
+				/// Show the window.
+				/// If the window disabled activation, this function enables it again.
+				/// </summary>
+				void											Show();
+				/// <summary>
+				/// Show the window without activation.
+				/// </summary>
+				void											ShowDeactivated();
+				/// <summary>
+				/// Restore the window.
+				/// </summary>
+				void											ShowRestored();
+				/// <summary>
+				/// Maximize the window.
+				/// </summary>
+				void											ShowMaximized();
+				/// <summary>
+				/// Minimize the window.
+				/// </summary>
+				void											ShowMinimized();
+				/// <summary>
+				/// Hide the window.
+				/// </summary>
+				void											Hide();
+				/// <summary>
+				/// Close the window and destroy the internal <see cref="INativeWindow"/> object.
+				/// </summary>
+				void											Close();
+				/// <summary>Test is the window opened.</summary>
+				/// <returns>Returns true if the window is opened.</returns>
+				bool											GetOpening();
+			};
+
+/***********************************************************************
+Window
+***********************************************************************/
+
+			/// <summary>
+			/// Represents a normal window.
+			/// </summary>
+			class GuiWindow : public GuiControlHost, protected compositions::GuiAltActionHostBase, public AggregatableDescription<GuiWindow>
+			{
+				GUI_SPECIFY_CONTROL_TEMPLATE_TYPE(WindowTemplate, GuiControlHost)
+				friend class GuiApplication;
+			protected:
+				bool									registeredInApplication = false;
+
+			protected:
+				compositions::IGuiAltActionHost*		previousAltHost = nullptr;
+				const NativeWindowFrameConfig*			frameConfig = nullptr;
+				bool									hasMaximizedBox = true;
+				bool									hasMinimizedBox = true;
+				bool									hasBorder = true;
+				bool									hasSizeBox = true;
+				bool									isIconVisible = true;
+				bool									hasTitleBar = true;
+				Ptr<GuiImageData>						icon;
+				
+				void									UpdateIcon(INativeWindow* window, templates::GuiWindowTemplate* ct);
+				void									UpdateCustomFramePadding(INativeWindow* window, templates::GuiWindowTemplate* ct);
+				void									SetControlTemplateProperties();
+				void									SetNativeWindowFrameProperties();
+				bool									ApplyFrameConfigOnVariable(BoolOption frameConfig, BoolOption templateConfig, bool& variable);
+				void									ApplyFrameConfig();
+
+				void									Moved()override;
+				void									Opened()override;
+				void									DpiChanged(bool preparing)override;
+				void									AssignFrameConfig(const NativeWindowFrameConfig& config)override;
+				void									OnNativeWindowChanged()override;
+				void									OnVisualStatusChanged()override;
+				
+				void									OnWindowActivated(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
+				void									OnWindowDeactivated(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
+
+				/// <summary>Create a control with a specified default theme and a window mode.</summary>
+				/// <param name="themeName">The theme name for retriving a default control template.</param>
+				/// <param name="mode">The window mode.</param>
+				GuiWindow(theme::ThemeName themeName, INativeWindow::WindowMode mode);
+			public:
+				/// <summary>Create a control with a specified default theme.</summary>
+				/// <param name="themeName">The theme name for retriving a default control template.</param>
+				GuiWindow(theme::ThemeName themeName);
+				~GuiWindow();
+
+				IDescriptable*							QueryService(const WString& identifier)override;
+
+				/// <summary>Clipboard updated event.</summary>
+				compositions::GuiNotifyEvent			ClipboardUpdated;
+				/// <summary>Frame configuration changed event.</summary>
+				compositions::GuiNotifyEvent			FrameConfigChanged;
+
+				/// <summary>Move the window to the center of the screen. If multiple screens exist, the window move to the screen that contains the biggest part of the window.</summary>
+				void									MoveToScreenCenter();
+				/// <summary>Move the window to the center of the specified screen.</summary>
+				/// <param name="screen">The screen.</param>
+				void									MoveToScreenCenter(INativeScreen* screen);
+
+				const NativeWindowFrameConfig&			GetFrameConfig();
+				
+				/// <summary>
+				/// Test is the maximize box visible.
+				/// </summary>
+				/// <returns>Returns true if the maximize box is visible.</returns>
+				bool									GetMaximizedBox();
+				/// <summary>
+				/// Make the maximize box visible or invisible.
+				/// </summary>
+				/// <param name="visible">True to make the maximize box visible.</param>
+				void									SetMaximizedBox(bool visible);
+				/// <summary>
+				/// Test is the minimize box visible.
+				/// </summary>
+				/// <returns>Returns true if the minimize box is visible.</returns>
+				bool									GetMinimizedBox();
+				/// <summary>
+				/// Make the minimize box visible or invisible.
+				/// </summary>
+				/// <param name="visible">True to make the minimize box visible.</param>
+				void									SetMinimizedBox(bool visible);
+				/// <summary>
+				/// Test is the border visible.
+				/// </summary>
+				/// <returns>Returns true if the border is visible.</returns>
+				bool									GetBorder();
+				/// <summary>
+				/// Make the border visible or invisible.
+				/// </summary>
+				/// <param name="visible">True to make the border visible.</param>
+				void									SetBorder(bool visible);
+				/// <summary>
+				/// Test is the size box visible.
+				/// </summary>
+				/// <returns>Returns true if the size box is visible.</returns>
+				bool									GetSizeBox();
+				/// <summary>
+				/// Make the size box visible or invisible.
+				/// </summary>
+				/// <param name="visible">True to make the size box visible.</param>
+				void									SetSizeBox(bool visible);
+				/// <summary>
+				/// Test is the icon visible.
+				/// </summary>
+				/// <returns>Returns true if the icon is visible.</returns>
+				bool									GetIconVisible();
+				/// <summary>
+				/// Make the icon visible or invisible.
+				/// </summary>
+				/// <param name="visible">True to make the icon visible.</param>
+				void									SetIconVisible(bool visible);
+				/// <summary>
+				/// Get the icon which replaces the default one.
+				/// </summary>
+				/// <returns>Returns the icon that replaces the default one.</returns>
+				Ptr<GuiImageData>						GetIcon();
+				/// <summary>
+				/// Set the icon that replaces the default one.
+				/// </summary>
+				/// <param name="value">The icon that replaces the default one.</param>
+				void									SetIcon(Ptr<GuiImageData> value);
+				/// <summary>
+				/// Test is the title bar visible.
+				/// </summary>
+				/// <returns>Returns true if the title bar is visible.</returns>
+				bool									GetTitleBar();
+				/// <summary>
+				/// Make the title bar visible or invisible.
+				/// </summary>
+				/// <param name="visible">True to make the title bar visible.</param>
+				void									SetTitleBar(bool visible);
+				/// <summary>
+				/// Show a window and keep it always in front of the owner window.
+				/// </summary>
+				/// <param name="owner">The window to disable as a parent window.</param>
+				void									ShowWithOwner(GuiWindow* owner);
+				/// <summary>
+				/// Show a model window, get a callback when the window is closed.
+				/// </summary>
+				/// <param name="owner">The window to disable as a parent window.</param>
+				/// <param name="callback">The callback to call after the window is closed.</param>
+				void									ShowModal(GuiWindow* owner, const Func<void()>& callback);
+				/// <summary>
+				/// Show a model window, get a callback when the window is closed, and then delete itself.
+				/// </summary>
+				/// <param name="owner">The window to disable as a parent window.</param>
+				/// <param name="callback">The callback to call after the window is closed.</param>
+				void									ShowModalAndDelete(GuiWindow* owner, const Func<void()>& callback);
+				/// <summary>
+				/// Show a model window, get a callback when the window is closed, and then delete itself.
+				/// </summary>
+				/// <param name="owner">The window to disable as a parent window.</param>
+				/// <param name="callbackClosed">The callback to call after the window is closed.</param>
+				/// <param name="callbackDeleted">The callback to call after the window is closed.</param>
+				void									ShowModalAndDelete(GuiWindow* owner, const Func<void()>& callbackClosed, const Func<void()>& callbackDeleted);
+				/// <summary>
+				/// Show a model window as an async operation, which ends when the window is closed.
+				/// </summary>
+				/// <returns>Returns true if the size box is visible.</returns>
+				/// <param name="owner">The window to disable as a parent window.</param>
+				Ptr<reflection::description::IAsync>	ShowModalAsync(GuiWindow* owner);
+			};
+			
+			/// <summary>
+			/// Represents a popup window. When the mouse click on other window or the desktop, the popup window will be closed automatically.
+			/// </summary>
+			class GuiPopup : public GuiWindow, public Description<GuiPopup>
+			{
+			protected:
+				union PopupInfo
+				{
+					struct _s1 { NativePoint location; INativeScreen* screen; };
+					struct _s2 { GuiControl* control; INativeWindow* controlWindow; Rect bounds; bool preferredTopBottomSide; };
+					struct _s3 { GuiControl* control; INativeWindow* controlWindow; Point location; };
+					struct _s4 { GuiControl* control; INativeWindow* controlWindow; bool preferredTopBottomSide; };
+
+					_s1 _1;
+					_s2 _2;
+					_s3 _3;
+					_s4 _4;
+
+					PopupInfo() {}
+				};
+			protected:
+				vint									popupType = -1;
+				PopupInfo								popupInfo;
+
+				void									UpdateClientSizeAfterRendering(Size preferredSize, Size clientSize)override;
+				void									PopupOpened(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
+				void									PopupClosed(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
+				void									OnKeyDown(compositions::GuiGraphicsComposition* sender, compositions::GuiKeyEventArgs& arguments);
+
+				static bool								IsClippedByScreen(NativeSize size, NativePoint location, INativeScreen* screen);
+				static NativePoint						CalculatePopupPosition(NativeSize windowSize, NativePoint location, INativeScreen* screen);
+				static NativePoint						CalculatePopupPosition(NativeSize windowSize, GuiControl* control, INativeWindow* controlWindow, Rect bounds, bool preferredTopBottomSide);
+				static NativePoint						CalculatePopupPosition(NativeSize windowSize, GuiControl* control, INativeWindow* controlWindow, Point location);
+				static NativePoint						CalculatePopupPosition(NativeSize windowSize, GuiControl* control, INativeWindow* controlWindow, bool preferredTopBottomSide);
+				static NativePoint						CalculatePopupPosition(NativeSize windowSize, vint popupType, const PopupInfo& popupInfo);
+
+				void									ShowPopupInternal();
+
+				/// <summary>Create a control with a specified default theme and a window mode.</summary>
+				/// <param name="themeName">The theme name for retriving a default control template.</param>
+				/// <param name="mode">The window mode.</param>
+				GuiPopup(theme::ThemeName themeName, INativeWindow::WindowMode mode);
+			public:
+				/// <summary>Create a control with a specified default theme.</summary>
+				/// <param name="themeName">The theme name for retriving a default control template.</param>
+				GuiPopup(theme::ThemeName themeName);
+				~GuiPopup();
+
+				/// <summary>Test will the whole popup window be in the screen if the popup's left-top position is set to a specified value.</summary>
+				/// <returns>Returns true if the whole popup window will be in the screen.</returns>
+				/// <param name="location">The specified left-top position.</param>
+				bool									IsClippedByScreen(Point location);
+				/// <summary>Show the popup window with the left-top position set to a specified value. The position of the popup window will be adjusted to make it totally inside the screen if possible.</summary>
+				/// <param name="location">The specified left-top position.</param>
+				/// <param name="screen">The expected screen. If you don't want to specify any screen, don't set this parameter.</param>
+				void									ShowPopup(NativePoint location, INativeScreen* screen = 0);
+				/// <summary>Show the popup window with the bounds set to a specified control-relative value. The position of the popup window will be adjusted to make it totally inside the screen if possible.</summary>
+				/// <param name="control">The control that owns this popup temporary. And the location is relative to this control.</param>
+				/// <param name="bounds">The specified bounds.</param>
+				/// <param name="preferredTopBottomSide">Set to true if the popup window is expected to be opened at the top or bottom side of that bounds.</param>
+				void									ShowPopup(GuiControl* control, Rect bounds, bool preferredTopBottomSide);
+				/// <summary>Show the popup window with the left-top position set to a specified control-relative value. The position of the popup window will be adjusted to make it totally inside the screen if possible.</summary>
+				/// <param name="control">The control that owns this popup temporary. And the location is relative to this control.</param>
+				/// <param name="location">The specified left-top position.</param>
+				void									ShowPopup(GuiControl* control, Point location);
+				/// <summary>Show the popup window aligned with a specified control. The position of the popup window will be adjusted to make it totally inside the screen if possible.</summary>
+				/// <param name="control">The control that owns this popup temporary.</param>
+				/// <param name="preferredTopBottomSide">Set to true if the popup window is expected to be opened at the top or bottom side of that control.</param>
+				void									ShowPopup(GuiControl* control, bool preferredTopBottomSide);
+			};
+
+			/// <summary>Represents a tooltip window.</summary>
+			class GuiTooltip : public GuiPopup, private INativeControllerListener, public Description<GuiTooltip>
+			{
+			protected:
+				GuiControl*								temporaryContentControl = nullptr;
+
+				void									GlobalTimer()override;
+				void									TooltipOpened(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
+				void									TooltipClosed(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
+
+			public:
+				/// <summary>Create a control with a specified default theme.</summary>
+				/// <param name="themeName">The theme name for retriving a default control template.</param>
+				GuiTooltip(theme::ThemeName themeName);
+				~GuiTooltip();
+
+				/// <summary>Get the preferred content width.</summary>
+				/// <returns>The preferred content width.</returns>
+				vint									GetPreferredContentWidth();
+				/// <summary>Set the preferred content width.</summary>
+				/// <param name="value">The preferred content width.</param>
+				void									SetPreferredContentWidth(vint value);
+
+				/// <summary>Get the temporary content control.</summary>
+				/// <returns>The temporary content control.</returns>
+				GuiControl*								GetTemporaryContentControl();
+				/// <summary>Set the temporary content control.</summary>
+				/// <param name="control">The temporary content control.</param>
+				void									SetTemporaryContentControl(GuiControl* control);
+			};
+		}
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\APPLICATION\CONTROLS\GUIAPPLICATION.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI::Application Framework
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_PRESENTATION_CONTROLS_GUIAPPLICATION
+#define VCZH_PRESENTATION_CONTROLS_GUIAPPLICATION
+
+
+namespace vl
+{
+	namespace presentation
+	{
+		namespace controls
+		{
+
+/***********************************************************************
+Application
+***********************************************************************/
+
+			/// <summary>Represents an GacUI application, for window management and asynchronized operation supporting. Use [M:vl.presentation.controls.GetApplication] to access the instance of this class.</summary>
+			class GuiApplication : public Object, private INativeControllerListener, public Description<GuiApplication>
+			{
+				friend void GuiApplicationInitialize();
+				friend class GuiControlHost;
+				friend class GuiWindow;
+				friend class GuiPopup;
+				friend class Ptr<GuiApplication>;
+			private:
+
+				void											InvokeClipboardNotify(compositions::GuiGraphicsComposition* composition, compositions::GuiEventArgs& arguments);
+				void											ClipboardUpdated()override;
+				void											GlobalShortcutKeyActivated(vint id)override;
+
+			protected:
+				using WindowMap = collections::Dictionary<INativeWindow*, GuiWindow*>;
+
+				Locale											locale;
+				GuiWindow*										mainWindow = nullptr;
+				GuiWindow*										sharedTooltipOwnerWindow = nullptr;
+				GuiControl*										sharedTooltipOwner = nullptr;
+				GuiTooltip*										sharedTooltipControl = nullptr;
+				bool											sharedTooltipHovering = false;
+				bool											sharedTooltipClosing = false;
+				collections::List<GuiWindow*>					windows;
+				WindowMap										windowMap;
+				collections::SortedList<GuiPopup*>				openingPopups;
+				Ptr<compositions::GuiShortcutKeyManager>		globalShortcutKeyManager;
+
+				GuiApplication();
+				~GuiApplication();
+
+				INativeWindow*									GetThreadContextNativeWindow(GuiControlHost* controlHost);
+				void											RegisterWindow(GuiWindow* window);
+				void											UnregisterWindow(GuiWindow* window);
+				void											NotifyNativeWindowChanged(GuiControlHost* controlHost, INativeWindow* previousNativeWindow);
+				void											RegisterPopupOpened(GuiPopup* popup);
+				void											RegisterPopupClosed(GuiPopup* popup);
+				void											TooltipMouseEnter(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
+				void											TooltipMouseLeave(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
+			public:
+				/// <summary>Locale changed event.</summary>
+				Event<void()>									LocaleChanged;
+
+				/// <summary>Returns the selected locale for all windows.</summary>
+				/// <returns>The selected locale.</returns>
+				Locale											GetLocale();
+				/// <summary>Set the locale for all windows.</summary>
+				/// <param name="value">The selected locale.</param>
+				void											SetLocale(Locale value);
+
+				/// <summary>Run a <see cref="GuiWindow"/> as the main window and show it. This function can only be called once in the entry point. When the main window is closed or hiden, the Run function will finished, and the application should prepare for finalization.</summary>
+				/// <param name="_mainWindow">The main window.</param>
+				void											Run(GuiWindow* _mainWindow);
+				/// <summary>
+				/// Process minimum necessary events and execute some async tasks.
+				/// </summary>
+				/// <returns>Return false when the main window has been closed and all finalizing are done.</returns>
+				bool											RunOneCycle();
+				/// <summary>Get the main window.</summary>
+				/// <returns>The main window.</returns>
+				GuiWindow*										GetMainWindow();
+				/// <summary>Get all created <see cref="GuiWindow"/> instances. This contains normal windows, popup windows, menus, or other types of windows that inherits from <see cref="GuiWindow"/>.</summary>
+				/// <returns>All created <see cref="GuiWindow"/> instances.</returns>
+				const collections::List<GuiWindow*>&			GetWindows();
+				/// <summary>Get the <see cref="GuiWindow"/> instance that the mouse cursor are directly in.</summary>
+				/// <returns>The <see cref="GuiWindow"/> instance that the mouse cursor are directly in.</returns>
+				/// <param name="location">The mouse cursor.</param>
+				GuiWindow*										GetWindow(NativePoint location);
+				/// <summary>Get the <see cref="GuiWindow"/> instance that associated with the specified native window.</summary>
+				/// <returns>The <see cref="GuiWindow"/> instance that associated with the specified native window.</returns>
+				/// <param name="nativeWindow">The native window.</param>
+				GuiWindow*										GetWindowFromNative(INativeWindow* nativeWindow);
+				/// <summary>Show a tooltip.</summary>
+				/// <param name="owner">The control that owns this tooltip temporary.</param>
+				/// <param name="tooltip">The control as the tooltip content. This control is not owned by the tooltip. User should manually release this control if no longer needed (usually when the application exit).</param>
+				/// <param name="preferredContentWidth">The preferred content width for this tooltip.</param>
+				/// <param name="location">The relative location to specify the left-top position of the tooltip.</param>
+				void											ShowTooltip(GuiControl* owner, GuiControl* tooltip, vint preferredContentWidth, Point location);
+				/// <summary>Close the tooltip</summary>
+				void											CloseTooltip();
+				/// <summary>Get the tooltip owner. When the tooltip closed, it returns null.</summary>
+				/// <returns>The tooltip owner.</returns>
+				GuiControl*										GetTooltipOwner();
+				/// <summary>Get the <see cref="compositions::IGuiShortcutKeyManager"/> attached with this control host.</summary>
+				/// <returns>The shortcut key manager.</returns>
+				compositions::IGuiShortcutKeyManager*			GetGlobalShortcutKeyManager();
+				/// <summary>Get the file path of the current executable.</summary>
+				/// <returns>The file path of the current executable.</returns>
+				WString											GetExecutablePath();
+				/// <summary>Get the folder of the current executable.</summary>
+				/// <returns>The folder of the current executable.</returns>
+				WString											GetExecutableFolder();
+
+				/// <summary>Test is the current thread the main thread for GUI.</summary>
+				/// <returns>Returns true if the current thread is the main thread for GUI.</returns>
+				/// <param name="controlHost">A control host to access the corressponding main thread.</param>
+				bool											IsInMainThread(GuiControlHost* controlHost);
+				/// <summary>Invoke a specified function asynchronously.</summary>
+				/// <param name="proc">The specified function.</param>
+				void											InvokeAsync(const Func<void()>& proc);
+				/// <summary>Invoke a specified function in the main thread.</summary>
+				/// <param name="controlHost">A control host to access the corressponding main thread.</param>
+				/// <param name="proc">The specified function.</param>
+				void											InvokeInMainThread(GuiControlHost* controlHost, const Func<void()>& proc);
+				/// <summary>Invoke a specified function in the main thread and wait for the function to complete or timeout.</summary>
+				/// <returns>Return true if the function complete. Return false if the function has not completed during a specified period of time.</returns>
+				/// <param name="controlHost">A control host to access the corressponding main thread.</param>
+				/// <param name="proc">The specified function.</param>
+				/// <param name="milliseconds">The specified period of time to wait. Set to -1 (default value) to wait forever until the function completed.</param>
+				bool											InvokeInMainThreadAndWait(GuiControlHost* controlHost, const Func<void()>& proc, vint milliseconds=-1);
+				/// <summary>Delay execute a specified function with an specified argument asynchronisly.</summary>
+				/// <returns>The Delay execution controller for this task.</returns>
+				/// <param name="proc">The specified function.</param>
+				/// <param name="milliseconds">Time to delay.</param>
+				Ptr<INativeDelay>								DelayExecute(const Func<void()>& proc, vint milliseconds);
+				/// <summary>Delay execute a specified function with an specified argument in the main thread.</summary>
+				/// <returns>The Delay execution controller for this task.</returns>
+				/// <param name="proc">The specified function.</param>
+				/// <param name="milliseconds">Time to delay.</param>
+				Ptr<INativeDelay>								DelayExecuteInMainThread(const Func<void()>& proc, vint milliseconds);
+				/// <summary>Run the specified function in the main thread. If the caller is in the main thread, then run the specified function directly.</summary>
+				/// <param name="controlHost">A control host to access the corressponding main thread.</param>
+				/// <param name="proc">The specified function.</param>
+				void											RunGuiTask(GuiControlHost* controlHost, const Func<void()>& proc);
+
+				template<typename T>
+				T RunGuiValue(GuiControlHost* controlHost, const Func<T()>& proc)
+				{
+					T result;
+					RunGuiTask(controlHost, [&result, &proc]()
+					{
+						result=proc();
+					});
+					return result;
+				}
+
+				template<typename T>
+				void InvokeLambdaInMainThread(GuiControlHost* controlHost, const T& proc)
+				{
+					InvokeInMainThread(controlHost, Func<void()>(proc));
+				}
+				
+				template<typename T>
+				bool InvokeLambdaInMainThreadAndWait(GuiControlHost* controlHost, const T& proc, vint milliseconds=-1)
+				{
+					return InvokeInMainThreadAndWait(controlHost, Func<void()>(proc), milliseconds);
+				}
+			};
+
+/***********************************************************************
+Helper Functions
+***********************************************************************/
+
+			/// <summary>Get the global <see cref="GuiApplication"/> object.</summary>
+			/// <returns>The global <see cref="GuiApplication"/> object.</returns>
+			extern GuiApplication*								GetApplication();
+		}
+	}
+}
+
+extern void GuiApplicationMain();
+
+#define GUI_VALUE(x) vl::presentation::controls::GetApplication()->RunGuiValue(LAMBDA([&](){return (x);}))
+#define GUI_RUN(x) vl::presentation::controls::GetApplication()->RunGuiTask([=](){x})
+
+#endif
+
+/***********************************************************************
+.\CONTROLS\GUIDIALOGS.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI::Control System
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_PRESENTATION_CONTROLS_GUIDIALOGS
+#define VCZH_PRESENTATION_CONTROLS_GUIDIALOGS
+
+
+namespace vl
+{
+	namespace presentation
+	{
+		namespace controls
+		{
+			class GuiWindow;
+
+/***********************************************************************
+Dialogs
+***********************************************************************/
+
+			/// <summary>Base class for dialogs.</summary>
+			class GuiDialogBase abstract : public GuiComponent, public Description<GuiDialogBase>
+			{
+			protected:
+				GuiInstanceRootObject*								rootObject = nullptr;
+
+				GuiWindow*											GetHostWindow();
+			public:
+				GuiDialogBase();
+				~GuiDialogBase();
+
+				void												Attach(GuiInstanceRootObject* _rootObject);
+				void												Detach(GuiInstanceRootObject* _rootObject);
+			};
+			
+			/// <summary>Message dialog.</summary>
+			class GuiMessageDialog : public GuiDialogBase, public Description<GuiMessageDialog>
+			{
+			protected:
+				INativeDialogService::MessageBoxButtonsInput		input = INativeDialogService::DisplayOK;
+				INativeDialogService::MessageBoxDefaultButton		defaultButton = INativeDialogService::DefaultFirst;
+				INativeDialogService::MessageBoxIcons				icon = INativeDialogService::IconNone;
+				INativeDialogService::MessageBoxModalOptions		modalOption = INativeDialogService::ModalWindow;
+				WString												text;
+				WString												title;
+
+			public:
+				/// <summary>Create a message dialog.</summary>
+				GuiMessageDialog();
+				~GuiMessageDialog();
+
+				/// <summary>Get the button combination that appear on the dialog.</summary>
+				/// <returns>The button combination.</returns>
+				INativeDialogService::MessageBoxButtonsInput		GetInput();
+				/// <summary>Set the button combination that appear on the dialog.</summary>
+				/// <param name="value">The button combination.</param>
+				void												SetInput(INativeDialogService::MessageBoxButtonsInput value);
+				
+				/// <summary>Get the default button for the selected button combination.</summary>
+				/// <returns>The default button.</returns>
+				INativeDialogService::MessageBoxDefaultButton		GetDefaultButton();
+				/// <summary>Set the default button for the selected button combination.</summary>
+				/// <param name="value">The default button.</param>
+				void												SetDefaultButton(INativeDialogService::MessageBoxDefaultButton value);
+
+				/// <summary>Get the icon that appears on the dialog.</summary>
+				/// <returns>The icon.</returns>
+				INativeDialogService::MessageBoxIcons				GetIcon();
+				/// <summary>Set the icon that appears on the dialog.</summary>
+				/// <param name="value">The icon.</param>
+				void												SetIcon(INativeDialogService::MessageBoxIcons value);
+
+				/// <summary>Get the way that how this dialog disable windows of the current process.</summary>
+				/// <returns>The way that how this dialog disable windows of the current process.</returns>
+				INativeDialogService::MessageBoxModalOptions		GetModalOption();
+				/// <summary>Set the way that how this dialog disable windows of the current process.</summary>
+				/// <param name="value">The way that how this dialog disable windows of the current process.</param>
+				void												SetModalOption(INativeDialogService::MessageBoxModalOptions value);
+
+				/// <summary>Get the text for the dialog.</summary>
+				/// <returns>The text.</returns>
+				const WString&										GetText();
+				/// <summary>Set the text for the dialog.</summary>
+				/// <param name="value">The text.</param>
+				void												SetText(const WString& value);
+
+				/// <summary>Get the title for the dialog.</summary>
+				/// <returns>The title.</returns>
+				const WString&										GetTitle();
+				/// <summary>Set the title for the dialog. If the title is empty, the dialog will use the title of the window that host this dialog.</summary>
+				/// <param name="value">The title.</param>
+				void												SetTitle(const WString& value);
+				
+				/// <summary>Show the dialog.</summary>
+				/// <returns>Returns the clicked button.</returns>
+				INativeDialogService::MessageBoxButtonsOutput		ShowDialog();
+			};
+			
+			/// <summary>Color dialog.</summary>
+			class GuiColorDialog : public GuiDialogBase, public Description<GuiColorDialog>
+			{
+			protected:
+				bool												enabledCustomColor = true;
+				bool												openedCustomColor = false;
+				Color												selectedColor;
+				bool												showSelection = true;
+				collections::List<Color>							customColors;
+
+			public:
+				/// <summary>Create a color dialog.</summary>
+				GuiColorDialog();
+				~GuiColorDialog();
+
+				/// <summary>Selected color changed event.</summary>
+				compositions::GuiNotifyEvent						SelectedColorChanged;
+				
+				/// <summary>Get if the custom color panel is enabled for the dialog.</summary>
+				/// <returns>Returns true if the color panel is enabled for the dialog.</returns>
+				bool												GetEnabledCustomColor();
+				/// <summary>Set if custom color panel is enabled for the dialog.</summary>
+				/// <param name="value">Set to true to enable the custom color panel for the dialog.</param>
+				void												SetEnabledCustomColor(bool value);
+				
+				/// <summary>Get if the custom color panel is opened by default when it is enabled.</summary>
+				/// <returns>Returns true if the custom color panel is opened by default.</returns>
+				bool												GetOpenedCustomColor();
+				/// <summary>Set if the custom color panel is opened by default when it is enabled.</summary>
+				/// <param name="value">Set to true to open custom color panel by default if it is enabled.</param>
+				void												SetOpenedCustomColor(bool value);
+				
+				/// <summary>Get the selected color.</summary>
+				/// <returns>The selected color.</returns>
+				Color												GetSelectedColor();
+				/// <summary>Set the selected color.</summary>
+				/// <param name="value">The selected color.</param>
+				void												SetSelectedColor(Color value);
+				
+				/// <summary>Get the list to access 16 selected custom colors on the palette. Colors in the list is guaranteed to have exactly 16 items after the dialog is closed.</summary>
+				/// <returns>The list to access custom colors on the palette.</returns>
+				collections::List<Color>&							GetCustomColors();
+				
+				/// <summary>Show the dialog.</summary>
+				/// <returns>Returns true if the "OK" button is clicked.</returns>
+				bool												ShowDialog();
+			};
+			
+			/// <summary>Font dialog.</summary>
+			class GuiFontDialog : public GuiDialogBase, public Description<GuiFontDialog>
+			{
+			protected:
+				FontProperties										selectedFont;
+				Color												selectedColor;
+				bool												showSelection = true;
+				bool												showEffect = true;
+				bool												forceFontExist = true;
+
+			public:
+				/// <summary>Create a font dialog.</summary>
+				GuiFontDialog();
+				~GuiFontDialog();
+
+				/// <summary>Selected font changed event.</summary>
+				compositions::GuiNotifyEvent						SelectedFontChanged;
+				/// <summary>Selected color changed event.</summary>
+				compositions::GuiNotifyEvent						SelectedColorChanged;
+				
+				/// <summary>Get the selected font.</summary>
+				/// <returns>The selected font.</returns>
+				const FontProperties&								GetSelectedFont();
+				/// <summary>Set the selected font.</summary>
+				/// <param name="value">The selected font.</param>
+				void												SetSelectedFont(const FontProperties& value);
+				
+				/// <summary>Get the selected color.</summary>
+				/// <returns>The selected color.</returns>
+				Color												GetSelectedColor();
+				/// <summary>Set the selected color.</summary>
+				/// <param name="value">The selected color.</param>
+				void												SetSelectedColor(Color value);
+				
+				/// <summary>Get if the selected font is already selected on the dialog when it is opened.</summary>
+				/// <returns>Returns true if the selected font is already selected on the dialog when it is opened.</returns>
+				bool												GetShowSelection();
+				/// <summary>Set if the selected font is already selected on the dialog when it is opened.</summary>
+				/// <param name="value">Set to true to select the selected font when the dialog is opened.</param>
+				void												SetShowSelection(bool value);
+				
+				/// <summary>Get if the font preview is enabled.</summary>
+				/// <returns>Returns true if the font preview is enabled.</returns>
+				bool												GetShowEffect();
+				/// <summary>Set if the font preview is enabled.</summary>
+				/// <param name="value">Set to true to enable the font preview.</param>
+				void												SetShowEffect(bool value);
+				
+				/// <summary>Get if the dialog only accepts an existing font.</summary>
+				/// <returns>Returns true if the dialog only accepts an existing font.</returns>
+				bool												GetForceFontExist();
+				/// <summary>Set if the dialog only accepts an existing font.</summary>
+				/// <param name="value">Set to true to let the dialog only accept an existing font.</param>
+				void												SetForceFontExist(bool value);
+				
+				/// <summary>Show the dialog.</summary>
+				/// <returns>Returns true if the "OK" button is clicked.</returns>
+				bool												ShowDialog();
+			};
+			
+			/// <summary>Base class for file dialogs.</summary>
+			class GuiFileDialogBase abstract : public GuiDialogBase, public Description<GuiFileDialogBase>
+			{
+			protected:
+				WString												filter = L"All Files (*.*)|*.*";
+				vint												filterIndex = 0;
+				bool												enabledPreview = false;
+				WString												title;
+				WString												fileName;
+				WString												directory;
+				WString												defaultExtension;
+				INativeDialogService::FileDialogOptions				options;
+
+			public:
+				GuiFileDialogBase();
+				~GuiFileDialogBase();
+
+				/// <summary>File name changed event.</summary>
+				compositions::GuiNotifyEvent						FileNameChanged;
+				/// <summary>Filter index changed event.</summary>
+				compositions::GuiNotifyEvent						FilterIndexChanged;
+				
+				/// <summary>Get the filter.</summary>
+				/// <returns>The filter.</returns>
+				const WString&										GetFilter();
+				/// <summary>Set the filter. The filter is formed by pairs of filter name and wildcard concatenated by "|", like "Text Files (*.txt)|*.txt|All Files (*.*)|*.*".</summary>
+				/// <param name="value">The filter.</param>
+				void												SetFilter(const WString& value);
+				
+				/// <summary>Get the filter index.</summary>
+				/// <returns>The filter index.</returns>
+				vint												GetFilterIndex();
+				/// <summary>Set the filter index.</summary>
+				/// <param name="value">The filter index.</param>
+				void												SetFilterIndex(vint value);
+				
+				/// <summary>Get if the file preview is enabled.</summary>
+				/// <returns>Returns true if the file preview is enabled.</returns>
+				bool												GetEnabledPreview();
+				/// <summary>Set if the file preview is enabled.</summary>
+				/// <param name="value">Set to true to enable the file preview.</param>
+				void												SetEnabledPreview(bool value);
+				
+				/// <summary>Get the title.</summary>
+				/// <returns>The title.</returns>
+				WString												GetTitle();
+				/// <summary>Set the title.</summary>
+				/// <param name="value">The title.</param>
+				void												SetTitle(const WString& value);
+				
+				/// <summary>Get the selected file name.</summary>
+				/// <returns>The selected file name.</returns>
+				WString												GetFileName();
+				/// <summary>Set the selected file name.</summary>
+				/// <param name="value">The selected file name.</param>
+				void												SetFileName(const WString& value);
+				
+				/// <summary>Get the default folder.</summary>
+				/// <returns>The default folder.</returns>
+				WString												GetDirectory();
+				/// <summary>Set the default folder.</summary>
+				/// <param name="value">The default folder.</param>
+				void												SetDirectory(const WString& value);
+				
+				/// <summary>Get the default file extension.</summary>
+				/// <returns>The default file extension.</returns>
+				WString												GetDefaultExtension();
+				/// <summary>Set the default file extension like "txt". If the user does not specify a file extension, the default file extension will be appended using "." after the file name.</summary>
+				/// <param name="value">The default file extension.</param>
+				void												SetDefaultExtension(const WString& value);
+				
+				/// <summary>Get the dialog options.</summary>
+				/// <returns>The dialog options.</returns>
+				INativeDialogService::FileDialogOptions				GetOptions();
+				/// <summary>Set the dialog options.</summary>
+				/// <param name="value">The dialog options.</param>
+				void												SetOptions(INativeDialogService::FileDialogOptions value);
+			};
+			
+			/// <summary>Open file dialog.</summary>
+			class GuiOpenFileDialog : public GuiFileDialogBase, public Description<GuiOpenFileDialog>
+			{
+			protected:
+				collections::List<WString>							fileNames;
+
+			public:
+				/// <summary>Create a open file dialog.</summary>
+				GuiOpenFileDialog();
+				~GuiOpenFileDialog();
+				
+				/// <summary>Get the list to access multiple selected file names.</summary>
+				/// <returns>The list to access multiple selected file names.</returns>
+				collections::List<WString>&							GetFileNames();
+				
+				/// <summary>Show the dialog.</summary>
+				/// <returns>Returns true if the "Open" button is clicked.</returns>
+				bool												ShowDialog();
+			};
+			
+			/// <summary>Save file dialog.</summary>
+			class GuiSaveFileDialog : public GuiFileDialogBase, public Description<GuiSaveFileDialog>
+			{
+			public:
+				/// <summary>Create a save file dialog.</summary>
+				GuiSaveFileDialog();
+				~GuiSaveFileDialog();
+
+				/// <summary>Show the dialog.</summary>
+				/// <returns>Returns true if the "Save" button is clicked.</returns>
+				bool												ShowDialog();
+			};
+		}
+	}
+}
+
+#endif
+
+
+/***********************************************************************
 .\CONTROLS\TEMPLATES\GUIANIMATION.H
 ***********************************************************************/
 /***********************************************************************
@@ -7416,6 +10360,130 @@ namespace vl
 				static void					WaitForGroupAndPause(IImpl* impl, vint groupId);
 				static void					ReturnAndExit(IImpl* impl);
 				static Ptr<IGuiAnimation>	Create(const Creator& creator);
+			};
+		}
+	}
+}
+
+#endif
+
+/***********************************************************************
+.\CONTROLS\TOOLSTRIPPACKAGE\GUITOOLSTRIPCOMMAND.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI::Control System
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_PRESENTATION_CONTROLS_GUITOOLSTRIPCOMMAND
+#define VCZH_PRESENTATION_CONTROLS_GUITOOLSTRIPCOMMAND
+
+
+namespace vl
+{
+	namespace presentation
+	{
+		namespace compositions
+		{
+			class IGuiShortcutKeyItem;
+			class IGuiShortcutKeyManager;
+		}
+
+		namespace controls
+		{
+			/// <summary>A command for toolstrip controls.</summary>
+			class GuiToolstripCommand : public GuiComponent, public Description<GuiToolstripCommand>
+			{
+			public:
+				class ShortcutBuilder : public Object
+				{
+				public:
+					WString									text;
+					bool									global = false;
+					bool									ctrl = false;
+					bool									shift = false;
+					bool									alt = false;
+					VKEY									key = VKEY::KEY_UNKNOWN;
+				};
+			protected:
+				Ptr<GuiImageData>							image;
+				Ptr<GuiImageData>							largeImage;
+				WString										text;
+				compositions::IGuiShortcutKeyItem*			shortcutKeyItem = nullptr;
+				bool										enabled = true;
+				bool										selected = false;
+				Ptr<compositions::IGuiGraphicsEventHandler>	shortcutKeyItemExecutedHandler;
+				Ptr<ShortcutBuilder>						shortcutBuilder;
+
+				GuiInstanceRootObject*						attachedRootObject = nullptr;
+				GuiControlHost*								attachedControlHost = nullptr;
+				Ptr<compositions::IGuiGraphicsEventHandler>	renderTargetChangedHandler;
+
+				void										OnShortcutKeyItemExecuted(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
+				void										OnRenderTargetChanged(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
+				void										InvokeDescriptionChanged();
+
+				compositions::IGuiShortcutKeyManager*		GetShortcutManagerFromBuilder(Ptr<ShortcutBuilder> builder);
+				void										RemoveShortcut();
+				void										ReplaceShortcut(compositions::IGuiShortcutKeyItem* value);
+				void										BuildShortcut(const WString& builderText);
+				void										UpdateShortcutOwner();
+			public:
+				/// <summary>Create the command.</summary>
+				GuiToolstripCommand();
+				~GuiToolstripCommand();
+
+				void										Attach(GuiInstanceRootObject* rootObject)override;
+				void										Detach(GuiInstanceRootObject* rootObject)override;
+
+				/// <summary>Executed event.</summary>
+				compositions::GuiNotifyEvent				Executed;
+
+				/// <summary>Description changed event, raised when any description property is modified.</summary>
+				compositions::GuiNotifyEvent				DescriptionChanged;
+
+				/// <summary>Get the large image for this command.</summary>
+				/// <returns>The large image for this command.</returns>
+				Ptr<GuiImageData>							GetLargeImage();
+				/// <summary>Set the large image for this command.</summary>
+				/// <param name="value">The large image for this command.</param>
+				void										SetLargeImage(Ptr<GuiImageData> value);
+				/// <summary>Get the image for this command.</summary>
+				/// <returns>The image for this command.</returns>
+				Ptr<GuiImageData>							GetImage();
+				/// <summary>Set the image for this command.</summary>
+				/// <param name="value">The image for this command.</param>
+				void										SetImage(Ptr<GuiImageData> value);
+				/// <summary>Get the text for this command.</summary>
+				/// <returns>The text for this command.</returns>
+				const WString&								GetText();
+				/// <summary>Set the text for this command.</summary>
+				/// <param name="value">The text for this command.</param>
+				void										SetText(const WString& value);
+				/// <summary>Get the shortcut key item for this command.</summary>
+				/// <returns>The shortcut key item for this command.</returns>
+				compositions::IGuiShortcutKeyItem*			GetShortcut();
+				/// <summary>Get the shortcut builder for this command.</summary>
+				/// <returns>The shortcut builder for this command.</returns>
+				WString										GetShortcutBuilder();
+				/// <summary>Set the shortcut builder for this command. When the command is attached to a window as a component without a shortcut, the command will try to convert the shortcut builder to a shortcut key item.</summary>
+				/// <param name="value">The shortcut builder for this command.</param>
+				void										SetShortcutBuilder(const WString& value);
+				/// <summary>Get the enablility for this command.</summary>
+				/// <returns>The enablility for this command.</returns>
+				bool										GetEnabled();
+				/// <summary>Set the enablility for this command.</summary>
+				/// <param name="value">The enablility for this command.</param>
+				void										SetEnabled(bool value);
+				/// <summary>Get the selection for this command.</summary>
+				/// <returns>The selection for this command.</returns>
+				bool										GetSelected();
+				/// <summary>Set the selection for this command.</summary>
+				/// <param name="value">The selection for this command.</param>
+				void										SetSelected(bool value);
 			};
 		}
 	}
@@ -7472,15 +10540,8 @@ Rich Content Document (style)
 			static DocumentFontSize			Parse(const WString& value);
 			WString							ToString()const;
 
-			bool operator==(const DocumentFontSize& value)const
-			{
-				return size == value.size && relative == value.relative;
-			}
-
-			bool operator!=(const DocumentFontSize& value)const
-			{
-				return size != value.size || relative != value.relative;
-			}
+			std::partial_ordering operator<=>(const DocumentFontSize&) const = default;
+			bool operator==(const DocumentFontSize&) const = default;
 		};
 
 		/// <summary>Represents a text style.</summary>
@@ -7861,8 +10922,7 @@ Elements
 				int						radiusX = 0;
 				int						radiusY = 0;
 
-				bool operator==(const ElementShape& value)const { return shapeType == value.shapeType && radiusX == value.radiusX && radiusY == value.radiusY; }
-				bool operator!=(const ElementShape& value)const { return !(*this == value); }
+				bool operator==(const ElementShape& value) const = default;
 			};
 
 			/// <summary>
@@ -8854,8 +11914,7 @@ Colorized Plain Text (model)
 					~TextLine();
 
 					static vint						CalculateBufferLength(vint dataLength);
-					bool							operator==(const TextLine& value)const{return false;}
-					bool							operator!=(const TextLine& value)const{return true;}
+					bool							operator==(const TextLine& value) const { return false; }
 
 					/// <summary>
 					/// Initialize the <see cref="TextLine"/> instance to be an empty line.
@@ -9205,13 +12264,6 @@ Colorized Plain Text (model)
 					/// </summary>
 					Color							background;
 
-					inline vint Compare(const ColorItem& value)const
-					{
-						vint result;
-						if ((result = text.Compare(value.text)) != 0) return result;
-						if ((result = background.Compare(value.background)) != 0) return result;
-						return 0;
-					}
 					GUI_DEFINE_COMPARE_OPERATORS(ColorItem)
 				};
 				
@@ -9233,14 +12285,6 @@ Colorized Plain Text (model)
 					/// </summary>
 					ColorItem						selectedUnfocused;
 
-					inline vint Compare(const ColorEntry& value)const
-					{
-						vint result;
-						if ((result = normal.Compare(value.normal)) != 0) return result;
-						if ((result = selectedFocused.Compare(value.selectedFocused)) != 0) return result;
-						if ((result = selectedUnfocused.Compare(value.selectedUnfocused)) != 0) return result;
-						return 0;
-					}
 					GUI_DEFINE_COMPARE_OPERATORS(ColorEntry)
 				};
 			}
@@ -9450,60 +12494,134 @@ namespace vl
 			class GuiScroll;
 		}
 
+		namespace controls
+		{
+			class GuiControlHost;
+			class GuiCustomControl;
+
+			/// <summary>The visual state for button.</summary>
+			enum class ButtonState
+			{
+				/// <summary>Normal state.</summary>
+				Normal,
+				/// <summary>Active state (when the cursor is hovering on a button).</summary>
+				Active,
+				/// <summary>Pressed state (when the buttin is being pressed).</summary>
+				Pressed,
+			};
+
+			/// <summary>Represents the sorting state of list view items related to this column.</summary>
+			enum class ColumnSortingState
+			{
+				/// <summary>Not sorted.</summary>
+				NotSorted,
+				/// <summary>Ascending.</summary>
+				Ascending,
+				/// <summary>Descending.</summary>
+				Descending,
+			};
+
+			/// <summary>Represents the order of tab pages.</summary>
+			enum class TabPageOrder
+			{
+				/// <summary>Unknown.</summary>
+				Unknown,
+				/// <summary>Left to right.</summary>
+				LeftToRight,
+				/// <summary>Right to left.</summary>
+				RightToLeft,
+				/// <summary>Top to bottom.</summary>
+				TopToBottom,
+				/// <summary>Bottom to top.</summary>
+				BottomToTop,
+			};
+
+			/// <summary>A command executor for the combo box to change the control state.</summary>
+			class ITextBoxCommandExecutor : public virtual IDescriptable, public Description<ITextBoxCommandExecutor>
+			{
+			public:
+				/// <summary>Override the text content in the control.</summary>
+				/// <param name="value">The new text content.</param>
+				virtual void						UnsafeSetText(const WString& value) = 0;
+			};
+
+			/// <summary>A command executor for the style controller to change the control state.</summary>
+			class IScrollCommandExecutor : public virtual IDescriptable, public Description<IScrollCommandExecutor>
+			{
+			public:
+				/// <summary>Do small decrement.</summary>
+				virtual void						SmallDecrease() = 0;
+				/// <summary>Do small increment.</summary>
+				virtual void						SmallIncrease() = 0;
+				/// <summary>Do big decrement.</summary>
+				virtual void						BigDecrease() = 0;
+				/// <summary>Do big increment.</summary>
+				virtual void						BigIncrease() = 0;
+
+				/// <summary>Change to total size of the scroll.</summary>
+				/// <param name="value">The total size.</param>
+				virtual void						SetTotalSize(vint value) = 0;
+				/// <summary>Change to page size of the scroll.</summary>
+				/// <param name="value">The page size.</param>
+				virtual void						SetPageSize(vint value) = 0;
+				/// <summary>Change to position of the scroll.</summary>
+				/// <param name="value">The position.</param>
+				virtual void						SetPosition(vint value) = 0;
+			};
+
+			/// <summary>A command executor for the style controller to change the control state.</summary>
+			class ITabCommandExecutor : public virtual IDescriptable, public Description<ITabCommandExecutor>
+			{
+			public:
+				/// <summary>Select a tab page.</summary>
+				/// <param name="index">The specified position for the tab page.</param>
+				/// <param name="setFocus">Set to true to set focus to the tab control.</param>
+				virtual void						ShowTab(vint index, bool setFocus) = 0;
+			};
+
+			/// <summary>A command executor for the style controller to change the control state.</summary>
+			class IDatePickerCommandExecutor : public virtual IDescriptable, public Description<IDatePickerCommandExecutor>
+			{
+			public:
+				/// <summary>Called when the date has been changed.</summary>
+				virtual void						NotifyDateChanged() = 0;
+				/// <summary>Called when navigated to a date.</summary>
+				virtual void						NotifyDateNavigated() = 0;
+				/// <summary>Called when selected a date.</summary>
+				virtual void						NotifyDateSelected() = 0;
+			};
+
+			/// <summary>A command executor for the style controller to change the control state.</summary>
+			class IRibbonGroupCommandExecutor : public virtual IDescriptable, public Description<IRibbonGroupCommandExecutor>
+			{
+			public:
+				/// <summary>Called when the expand button is clicked.</summary>
+				virtual void						NotifyExpandButtonClicked() = 0;
+			};
+
+			/// <summary>A command executor for the style controller to change the control state.</summary>
+			class IRibbonGalleryCommandExecutor : public virtual IDescriptable, public Description<IRibbonGalleryCommandExecutor>
+			{
+			public:
+				/// <summary>Called when the scroll up button is clicked.</summary>
+				virtual void						NotifyScrollUp() = 0;
+				/// <summary>Called when the scroll down button is clicked.</summary>
+				virtual void						NotifyScrollDown() = 0;
+				/// <summary>Called when the dropdown button is clicked.</summary>
+				virtual void						NotifyDropdown() = 0;
+			};
+		}
+
+/***********************************************************************
+Templates
+***********************************************************************/
+
 		namespace templates
 		{
 
-#define GUI_TEMPLATE_PROPERTY_DECL(CLASS, TYPE, NAME, VALUE)\
-			private:\
-				TYPE NAME##_ = VALUE;\
-			public:\
-				TYPE Get##NAME();\
-				void Set##NAME(TYPE const& value);\
-				compositions::GuiNotifyEvent NAME##Changed;\
-
-#define GUI_TEMPLATE_PROPERTY_IMPL(CLASS, TYPE, NAME, VALUE)\
-			TYPE CLASS::Get##NAME()\
-			{\
-				return NAME##_;\
-			}\
-			void CLASS::Set##NAME(TYPE const& value)\
-			{\
-				if (NAME##_ != value)\
-				{\
-					NAME##_ = value;\
-					NAME##Changed.Execute(compositions::GuiEventArgs(this));\
-				}\
-			}\
-
-#define GUI_TEMPLATE_PROPERTY_EVENT_INIT(CLASS, TYPE, NAME, VALUE)\
-			NAME##Changed.SetAssociatedComposition(this);
-
-#define GUI_TEMPLATE_CLASS_DECL(CLASS, BASE)\
-			class CLASS : public BASE, public AggregatableDescription<CLASS>\
-			{\
-			public:\
-				CLASS();\
-				~CLASS();\
-				CLASS ## _PROPERTIES(GUI_TEMPLATE_PROPERTY_DECL)\
-			};\
-
-#define GUI_TEMPLATE_CLASS_IMPL(CLASS, BASE)\
-			CLASS ## _PROPERTIES(GUI_TEMPLATE_PROPERTY_IMPL)\
-			CLASS::CLASS()\
-			{\
-				CLASS ## _PROPERTIES(GUI_TEMPLATE_PROPERTY_EVENT_INIT)\
-			}\
-			CLASS::~CLASS()\
-			{\
-				FinalizeAggregation();\
-			}\
-
 #define GUI_CONTROL_TEMPLATE_DECL(F)\
-			F(GuiControlTemplate,				GuiTemplate)				\
-			F(GuiLabelTemplate,					GuiControlTemplate)			\
 			F(GuiSinglelineTextBoxTemplate,		GuiControlTemplate)			\
 			F(GuiDocumentLabelTemplate,			GuiControlTemplate)			\
-			F(GuiWindowTemplate,				GuiControlTemplate)			\
 			F(GuiMenuTemplate,					GuiWindowTemplate)			\
 			F(GuiButtonTemplate,				GuiControlTemplate)			\
 			F(GuiSelectableButtonTemplate,		GuiButtonTemplate)			\
@@ -9538,30 +12656,6 @@ namespace vl
 			F(GuiGridEditorTemplate,			GuiGridCellTemplate)		\
 
 /***********************************************************************
-GuiTemplate
-***********************************************************************/
-
-			/// <summary>Represents a user customizable template.</summary>
-			class GuiTemplate : public compositions::GuiBoundsComposition, public controls::GuiInstanceRootObject, public Description<GuiTemplate>
-			{
-			protected:
-				controls::GuiControlHost*		GetControlHostForInstance()override;
-				void							OnParentLineChanged()override;
-			public:
-				/// <summary>Create a template.</summary>
-				GuiTemplate();
-				~GuiTemplate();
-				
-#define GuiTemplate_PROPERTIES(F)\
-				F(GuiTemplate,	FontProperties,		Font,				{}	)\
-				F(GuiTemplate,	description::Value,	Context,			{}	)\
-				F(GuiTemplate,	WString,			Text,				{}	)\
-				F(GuiTemplate,	bool,				VisuallyEnabled,	true)\
-
-				GuiTemplate_PROPERTIES(GUI_TEMPLATE_PROPERTY_DECL)
-			};
-
-/***********************************************************************
 GuiListItemTemplate
 ***********************************************************************/
 
@@ -9590,22 +12684,6 @@ GuiListItemTemplate
 Control Template
 ***********************************************************************/
 
-			enum class BoolOption
-			{
-				AlwaysTrue,
-				AlwaysFalse,
-				Customizable,
-			};
-
-#define GuiControlTemplate_PROPERTIES(F)\
-				F(GuiControlTemplate, compositions::GuiGraphicsComposition*, ContainerComposition, this)\
-				F(GuiControlTemplate, compositions::GuiGraphicsComposition*, FocusableComposition, nullptr)\
-				F(GuiControlTemplate, bool, Focused, false)\
-
-#define GuiLabelTemplate_PROPERTIES(F)\
-				F(GuiLabelTemplate, Color, DefaultTextColor, {})\
-				F(GuiLabelTemplate, Color, TextColor, {})\
-
 #define GuiSinglelineTextBoxTemplate_PROPERTIES(F)\
 				F(GuiSinglelineTextBoxTemplate, elements::text::ColorEntry, TextColor, {})\
 				F(GuiSinglelineTextBoxTemplate, Color, CaretColor, {})\
@@ -9613,27 +12691,6 @@ Control Template
 #define GuiDocumentLabelTemplate_PROPERTIES(F)\
 				F(GuiDocumentLabelTemplate, Ptr<DocumentModel>, BaselineDocument, {})\
 				F(GuiDocumentLabelTemplate, Color, CaretColor, {})\
-
-#define GuiWindowTemplate_PROPERTIES(F)\
-				F(GuiWindowTemplate, BoolOption, MaximizedBoxOption, BoolOption::Customizable)\
-				F(GuiWindowTemplate, BoolOption, MinimizedBoxOption, BoolOption::Customizable)\
-				F(GuiWindowTemplate, BoolOption, BorderOption, BoolOption::Customizable)\
-				F(GuiWindowTemplate, BoolOption, SizeBoxOption, BoolOption::Customizable)\
-				F(GuiWindowTemplate, BoolOption, IconVisibleOption, BoolOption::Customizable)\
-				F(GuiWindowTemplate, BoolOption, TitleBarOption, BoolOption::Customizable)\
-				F(GuiWindowTemplate, bool, MaximizedBox, true)\
-				F(GuiWindowTemplate, bool, MinimizedBox, true)\
-				F(GuiWindowTemplate, bool, Border, true)\
-				F(GuiWindowTemplate, bool, SizeBox, true)\
-				F(GuiWindowTemplate, bool, IconVisible, true)\
-				F(GuiWindowTemplate, bool, TitleBar, true)\
-				F(GuiWindowTemplate, bool, Maximized, false)\
-				F(GuiWindowTemplate, bool, Activated, false)\
-				F(GuiWindowTemplate, TemplateProperty<GuiWindowTemplate>, TooltipTemplate, {})\
-				F(GuiWindowTemplate, TemplateProperty<GuiLabelTemplate>, ShortcutKeyTemplate, {})\
-				F(GuiWindowTemplate, bool, CustomFrameEnabled, true)\
-				F(GuiWindowTemplate, Margin, CustomFramePadding, {})\
-				F(GuiWindowTemplate, Ptr<GuiImageData>, Icon, {})\
 
 #define GuiMenuTemplate_PROPERTIES(F)
 
@@ -9803,448 +12860,6 @@ Template Declarations
 #endif
 
 /***********************************************************************
-.\CONTROLS\GUIBASICCONTROLS.H
-***********************************************************************/
-/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-GacUI::Control System
-
-Interfaces:
-***********************************************************************/
-
-#ifndef VCZH_PRESENTATION_CONTROLS_GUIBASICCONTROLS
-#define VCZH_PRESENTATION_CONTROLS_GUIBASICCONTROLS
-
-
-namespace vl
-{
-	namespace presentation
-	{
-		namespace theme
-		{
-			enum class ThemeName;
-		}
-
-		namespace controls
-		{
-			template<typename T, typename=void>
-			struct QueryServiceHelper;
-
-			template<typename T>
-			struct QueryServiceHelper<T, std::enable_if_t<std::is_convertible_v<decltype(T::Identifier), const wchar_t* const>>>
-			{
-				static WString GetIdentifier()
-				{
-					return WString::Unmanaged(T::Identifier);
-				}
-			};
-
-			template<typename T>
-			struct QueryServiceHelper<T, std::enable_if_t<std::is_convertible_v<decltype(T::GetIdentifier()), WString>>>
-			{
-				static WString GetIdentifier()
-				{
-					return MoveValue<WString>(T::GetIdentifier());
-				}
-			};
-
-/***********************************************************************
-Basic Construction
-***********************************************************************/
-
-			/// <summary>
-			/// A helper object to test if a control has been deleted or not.
-			/// </summary>
-			class GuiDisposedFlag : public Object, public Description<GuiDisposedFlag>
-			{
-				friend class GuiControl;
-			protected:
-				GuiControl*								owner = nullptr;
-				bool									disposed = false;
-
-				void									SetDisposed();
-			public:
-				GuiDisposedFlag(GuiControl* _owner);
-				~GuiDisposedFlag();
-
-				bool									IsDisposed();
-			};
-
-			/// <summary>
-			/// The base class of all controls.
-			/// When the control is destroyed, it automatically destroys sub controls, and the bounds composition from the style controller.
-			/// If you want to manually destroy a control, you should first remove it from its parent.
-			/// The only way to remove a control from a parent control, is to remove the bounds composition from its parent composition. The same to inserting a control.
-			/// </summary>
-			class GuiControl
-				: public Object
-				, protected compositions::IGuiAltAction
-				, protected compositions::IGuiTabAction
-				, public Description<GuiControl>
-			{
-				friend class compositions::GuiGraphicsComposition;
-
-			protected:
-				using ControlList = collections::List<GuiControl*>;
-				using ControlServiceMap = collections::Dictionary<WString, Ptr<IDescriptable>>;
-				using ControlTemplatePropertyType = TemplateProperty<templates::GuiControlTemplate>;
-				using IGuiGraphicsEventHandler = compositions::IGuiGraphicsEventHandler;
-
-			private:
-				theme::ThemeName						controlThemeName;
-				ControlTemplatePropertyType				controlTemplate;
-				templates::GuiControlTemplate*			controlTemplateObject = nullptr;
-				Ptr<GuiDisposedFlag>					disposedFlag;
-
-			public:
-				Ptr<GuiDisposedFlag>					GetDisposedFlag();
-
-			protected:
-				compositions::GuiBoundsComposition*		boundsComposition = nullptr;
-				compositions::GuiBoundsComposition*		containerComposition = nullptr;
-				compositions::GuiGraphicsComposition*	focusableComposition = nullptr;
-				compositions::GuiGraphicsEventReceiver*	eventReceiver = nullptr;
-
-				bool									isFocused = false;
-				Ptr<IGuiGraphicsEventHandler>			gotFocusHandler;
-				Ptr<IGuiGraphicsEventHandler>			lostFocusHandler;
-
-				bool									acceptTabInput = false;
-				vint									tabPriority = -1;
-				bool									isEnabled = true;
-				bool									isVisuallyEnabled = true;
-				bool									isVisible = true;
-				WString									alt;
-				WString									text;
-				Nullable<FontProperties>				font;
-				FontProperties							displayFont;
-				description::Value						context;
-				compositions::IGuiAltActionHost*		activatingAltHost = nullptr;
-				ControlServiceMap						controlServices;
-
-				GuiControl*								parent = nullptr;
-				ControlList								children;
-				description::Value						tag;
-				GuiControl*								tooltipControl = nullptr;
-				vint									tooltipWidth = 0;
-
-				virtual void							BeforeControlTemplateUninstalled();
-				virtual void							AfterControlTemplateInstalled(bool initialize);
-				virtual void							CheckAndStoreControlTemplate(templates::GuiControlTemplate* value);
-				virtual void							EnsureControlTemplateExists();
-				virtual void							RebuildControlTemplate();
-				virtual void							OnChildInserted(GuiControl* control);
-				virtual void							OnChildRemoved(GuiControl* control);
-				virtual void							OnParentChanged(GuiControl* oldParent, GuiControl* newParent);
-				virtual void							OnParentLineChanged();
-				virtual void							OnServiceAdded();
-				virtual void							OnRenderTargetChanged(elements::IGuiGraphicsRenderTarget* renderTarget);
-				virtual void							OnBeforeReleaseGraphicsHost();
-				virtual void							UpdateVisuallyEnabled();
-				virtual void							UpdateDisplayFont();
-				void									OnGotFocus(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
-				void									OnLostFocus(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
-				void									SetFocusableComposition(compositions::GuiGraphicsComposition* value);
-
-				bool									IsControlVisibleAndEnabled();
-				bool									IsAltEnabled()override;
-				bool									IsAltAvailable()override;
-				compositions::GuiGraphicsComposition*	GetAltComposition()override;
-				compositions::IGuiAltActionHost*		GetActivatingAltHost()override;
-				void									OnActiveAlt()override;
-				bool									IsTabEnabled()override;
-				bool									IsTabAvailable()override;
-
-				static bool								SharedPtrDestructorProc(DescriptableObject* obj, bool forceDisposing);
-
-			public:
-				using ControlTemplateType = templates::GuiControlTemplate;
-
-				/// <summary>Create a control with a specified default theme.</summary>
-				/// <param name="themeName">The theme name for retriving a default control template.</param>
-				GuiControl(theme::ThemeName themeName);
-				~GuiControl();
-
-				/// <summary>Theme name changed event. This event raises when the theme name is changed.</summary>
-				compositions::GuiNotifyEvent			ControlThemeNameChanged;
-				/// <summary>Control template changed event. This event raises when the control template is changed.</summary>
-				compositions::GuiNotifyEvent			ControlTemplateChanged;
-				/// <summary>Control signal trigerred. This raises be raised because of multiple reason specified in the argument.</summary>
-				compositions::GuiControlSignalEvent		ControlSignalTrigerred;
-				/// <summary>Visible event. This event raises when the visibility state of the control is changed.</summary>
-				compositions::GuiNotifyEvent			VisibleChanged;
-				/// <summary>Enabled event. This event raises when the enabling state of the control is changed.</summary>
-				compositions::GuiNotifyEvent			EnabledChanged;
-				/// <summary>Focused event. This event raises when the focusing state of the control is changed.</summary>
-				compositions::GuiNotifyEvent			FocusedChanged;
-				/// <summary>
-				/// Enabled event. This event raises when the visually enabling state of the control is changed. A visually enabling is combined by the enabling state and the parent's visually enabling state.
-				/// A control is rendered as disabled, not only when the control itself is disabled, but also when the parent control is rendered as disabled.
-				/// </summary>
-				compositions::GuiNotifyEvent			VisuallyEnabledChanged;
-				/// <summary>Alt changed event. This event raises when the associated Alt-combined shortcut key of the control is changed.</summary>
-				compositions::GuiNotifyEvent			AltChanged;
-				/// <summary>Text changed event. This event raises when the text of the control is changed.</summary>
-				compositions::GuiNotifyEvent			TextChanged;
-				/// <summary>Font changed event. This event raises when the font of the control is changed.</summary>
-				compositions::GuiNotifyEvent			FontChanged;
-				/// <summary>Display font changed event. This event raises when the display font of the control is changed.</summary>
-				compositions::GuiNotifyEvent			DisplayFontChanged;
-				/// <summary>Context changed event. This event raises when the font of the control is changed.</summary>
-				compositions::GuiNotifyEvent			ContextChanged;
-
-				void									InvokeOrDelayIfRendering(Func<void()> proc);
-
-				/// <summary>A function to create the argument for notify events that raised by itself.</summary>
-				/// <returns>The created argument.</returns>
-				compositions::GuiEventArgs				GetNotifyEventArguments();
-				/// <summary>Get the associated theme name.</summary>
-				/// <returns>The theme name.</returns>
-				theme::ThemeName						GetControlThemeName();
-				/// <summary>Set the associated control theme name.</summary>
-				/// <param name="value">The theme name.</param>
-				void									SetControlThemeName(theme::ThemeName value);
-				/// <summary>Get the associated control template.</summary>
-				/// <returns>The control template.</returns>
-				ControlTemplatePropertyType				GetControlTemplate();
-				/// <summary>Set the associated control template.</summary>
-				/// <param name="value">The control template.</param>
-				void									SetControlTemplate(const ControlTemplatePropertyType& value);
-				/// <summary>Set the associated control theme name and template and the same time.</summary>
-				/// <param name="themeNameValue">The theme name.</param>
-				/// <param name="controlTemplateValue">The control template.</param>
-				void									SetControlThemeNameAndTemplate(theme::ThemeName themeNameValue, const ControlTemplatePropertyType& controlTemplateValue);
-				/// <summary>Get the associated style controller.</summary>
-				/// <returns>The associated style controller.</returns>
-				templates::GuiControlTemplate*			GetControlTemplateObject();
-				/// <summary>Get the bounds composition for the control.</summary>
-				/// <returns>The bounds composition.</returns>
-				compositions::GuiBoundsComposition*		GetBoundsComposition();
-				/// <summary>Get the container composition for the control.</summary>
-				/// <returns>The container composition.</returns>
-				compositions::GuiGraphicsComposition*	GetContainerComposition();
-				/// <summary>Get the focusable composition for the control. A focusable composition is the composition to be focused when the control is focused.</summary>
-				/// <returns>The focusable composition.</returns>
-				compositions::GuiGraphicsComposition*	GetFocusableComposition();
-				/// <summary>Get the parent control.</summary>
-				/// <returns>The parent control.</returns>
-				GuiControl*								GetParent();
-				/// <summary>Get the number of child controls.</summary>
-				/// <returns>The number of child controls.</returns>
-				vint									GetChildrenCount();
-				/// <summary>Get the child control using a specified index.</summary>
-				/// <returns>The child control.</returns>
-				/// <param name="index">The specified index.</param>
-				GuiControl*								GetChild(vint index);
-				/// <summary>Put another control in the container composition of this control.</summary>
-				/// <returns>Returns true if this operation succeeded.</returns>
-				/// <param name="control">The control to put in this control.</param>
-				bool									AddChild(GuiControl* control);
-				/// <summary>Test if a control owned by this control.</summary>
-				/// <returns>Returns true if the control is owned by this control.</returns>
-				/// <param name="control">The control to test.</param>
-				bool									HasChild(GuiControl* control);
-				
-				/// <summary>Get the <see cref="GuiControlHost"/> that contains this control.</summary>
-				/// <returns>The <see cref="GuiControlHost"/> that contains this control.</returns>
-				virtual GuiControlHost*					GetRelatedControlHost();
-				/// <summary>Test if this control is rendered as enabled.</summary>
-				/// <returns>Returns true if this control is rendered as enabled.</returns>
-				virtual bool							GetVisuallyEnabled();
-				/// <summary>Test if this control is focused.</summary>
-				/// <returns>Returns true if this control is focused.</returns>
-				virtual bool							GetFocused();
-				/// <summary>Test if this control accepts tab character input.</summary>
-				/// <returns>Returns true if this control accepts tab character input.</returns>
-				virtual bool							GetAcceptTabInput()override;
-				/// <summary>Set if this control accepts tab character input.</summary>
-				/// <param name="value">Set to true to make this control accept tab character input.</param>
-				void									SetAcceptTabInput(bool value);
-				/// <summary>Get the tab priority associated with this control.</summary>
-				/// <returns>Returns he tab priority associated with this control.</returns>
-				virtual vint							GetTabPriority()override;
-				/// <summary>Associate a tab priority with this control.</summary>
-				/// <param name="value">The tab priority to associate. TAB key will go through controls in the order of priority: 0, 1, 2, ..., -1. All negative numbers will be converted to -1. The priority of containers affects all children if it is not -1.</param>
-				void									SetTabPriority(vint value);
-				/// <summary>Test if this control is enabled.</summary>
-				/// <returns>Returns true if this control is enabled.</returns>
-				virtual bool							GetEnabled();
-				/// <summary>Make the control enabled or disabled.</summary>
-				/// <param name="value">Set to true to make the control enabled.</param>
-				virtual void							SetEnabled(bool value);
-				/// <summary>Test if this visible or invisible.</summary>
-				/// <returns>Returns true if this control is visible.</returns>
-				virtual bool							GetVisible();
-				/// <summary>Make the control visible or invisible.</summary>
-				/// <param name="value">Set to true to make the visible enabled.</param>
-				virtual void							SetVisible(bool value);
-				/// <summary>Get the Alt-combined shortcut key associated with this control.</summary>
-				/// <returns>The Alt-combined shortcut key associated with this control.</returns>
-				virtual const WString&					GetAlt()override;
-				/// <summary>Associate a Alt-combined shortcut key with this control.</summary>
-				/// <returns>Returns true if this operation succeeded.</returns>
-				/// <param name="value">The Alt-combined shortcut key to associate. The key should contain only upper-case letters or digits.</param>
-				virtual bool							SetAlt(const WString& value);
-				/// <summary>Make the control as the parent of multiple Alt-combined shortcut key activatable controls.</summary>
-				/// <param name="host">The alt action host object.</param>
-				void									SetActivatingAltHost(compositions::IGuiAltActionHost* host);
-				/// <summary>Get the text to display on the control.</summary>
-				/// <returns>The text to display on the control.</returns>
-				virtual const WString&					GetText();
-				/// <summary>Set the text to display on the control.</summary>
-				/// <param name="value">The text to display on the control.</param>
-				virtual void							SetText(const WString& value);
-				/// <summary>Get the font of this control.</summary>
-				/// <returns>The font of this control.</returns>
-				virtual const Nullable<FontProperties>&	GetFont();
-				/// <summary>Set the font of this control.</summary>
-				/// <param name="value">The font of this control.</param>
-				virtual void							SetFont(const Nullable<FontProperties>& value);
-				/// <summary>Get the font to render the text. If the font of this control is null, then the display font is either the parent control's display font, or the system's default font when there is no parent control.</summary>
-				/// <returns>The font to render the text.</returns>
-				virtual const FontProperties&			GetDisplayFont();
-				/// <summary>Get the context of this control. The control template and all item templates (if it has) will see this context property.</summary>
-				/// <returns>The context of this context.</returns>
-				virtual description::Value				GetContext();
-				/// <summary>Set the context of this control.</summary>
-				/// <param name="value">The context of this control.</param>
-				virtual void							SetContext(const description::Value& value);
-				/// <summary>Focus this control.</summary>
-				virtual void							SetFocus();
-
-				/// <summary>Get the tag object of the control.</summary>
-				/// <returns>The tag object of the control.</returns>
-				description::Value						GetTag();
-				/// <summary>Set the tag object of the control.</summary>
-				/// <param name="value">The tag object of the control.</param>
-				void									SetTag(const description::Value& value);
-				/// <summary>Get the tooltip control of the control.</summary>
-				/// <returns>The tooltip control of the control.</returns>
-				GuiControl*								GetTooltipControl();
-				/// <summary>Set the tooltip control of the control. The tooltip control will be released when this control is released. If you set a new tooltip control to replace the old one, the old one will not be owned by this control anymore, therefore user should release the old tooltip control manually.</summary>
-				/// <returns>The old tooltip control.</returns>
-				/// <param name="value">The tooltip control of the control.</param>
-				GuiControl*								SetTooltipControl(GuiControl* value);
-				/// <summary>Get the tooltip width of the control.</summary>
-				/// <returns>The tooltip width of the control.</returns>
-				vint									GetTooltipWidth();
-				/// <summary>Set the tooltip width of the control.</summary>
-				/// <param name="value">The tooltip width of the control.</param>
-				void									SetTooltipWidth(vint value);
-				/// <summary>Display the tooltip.</summary>
-				/// <returns>Returns true if this operation succeeded.</returns>
-				/// <param name="location">The relative location to specify the left-top position of the tooltip.</param>
-				bool									DisplayTooltip(Point location);
-				/// <summary>Close the tooltip that owned by this control.</summary>
-				void									CloseTooltip();
-
-				/// <summary>Query a service using an identifier. If you want to get a service of type IXXX, use IXXX::Identifier as the identifier.</summary>
-				/// <returns>The requested service. If the control doesn't support this service, it will be null.</returns>
-				/// <param name="identifier">The identifier.</param>
-				virtual IDescriptable*					QueryService(const WString& identifier);
-
-				template<typename T>
-				T* QueryTypedService()
-				{
-					return dynamic_cast<T*>(QueryService(QueryServiceHelper<T>::GetIdentifier()));
-				}
-
-				templates::GuiControlTemplate* TypedControlTemplateObject(bool ensureExists)
-				{
-					if (ensureExists)
-					{
-						EnsureControlTemplateExists();
-					}
-					return controlTemplateObject;
-				}
-
-				/// <summary>Add a service to this control dynamically. The added service cannot override existing services.</summary>
-				/// <returns>Returns true if this operation succeeded.</returns>
-				/// <param name="identifier">The identifier. You are suggested to fill this parameter using the value from the interface's GetIdentifier function, or <see cref="QueryTypedService`1"/> will not work on this service.</param>
-				/// <param name="value">The service.</param>
-				bool									AddService(const WString& identifier, Ptr<IDescriptable> value);
-			};
-
-			/// <summary>Represnets a user customizable control.</summary>
-			class GuiCustomControl : public GuiControl, public GuiInstanceRootObject, public AggregatableDescription<GuiCustomControl>
-			{
-			protected:
-				controls::GuiControlHost*				GetControlHostForInstance()override;
-				void									OnParentLineChanged()override;
-			public:
-				/// <summary>Create a control with a specified default theme.</summary>
-				/// <param name="themeName">The theme name for retriving a default control template.</param>
-				GuiCustomControl(theme::ThemeName themeName);
-				~GuiCustomControl();
-			};
-
-			template<typename T>
-			class GuiObjectComponent : public GuiComponent
-			{
-			public:
-				Ptr<T>				object;
-
-				GuiObjectComponent()
-				{
-				}
-
-				GuiObjectComponent(Ptr<T> _object)
-					:object(_object)
-				{
-				}
-			};
-
-#define GUI_GENERATE_CONTROL_TEMPLATE_OBJECT_NAME_3(UNIQUE) controlTemplateObject ## UNIQUE
-#define GUI_GENERATE_CONTROL_TEMPLATE_OBJECT_NAME_2(UNIQUE) GUI_GENERATE_CONTROL_TEMPLATE_OBJECT_NAME_3(UNIQUE)
-#define GUI_GENERATE_CONTROL_TEMPLATE_OBJECT_NAME GUI_GENERATE_CONTROL_TEMPLATE_OBJECT_NAME_2(__LINE__)
-
-#define GUI_SPECIFY_CONTROL_TEMPLATE_TYPE_2(TEMPLATE, BASE_TYPE, NAME) \
-			public: \
-				using ControlTemplateType = templates::Gui##TEMPLATE; \
-			private: \
-				templates::Gui##TEMPLATE* NAME = nullptr; \
-				void BeforeControlTemplateUninstalled_(); \
-				void AfterControlTemplateInstalled_(bool initialize); \
-			protected: \
-				void BeforeControlTemplateUninstalled()override \
-				{\
-					BeforeControlTemplateUninstalled_(); \
-					BASE_TYPE::BeforeControlTemplateUninstalled(); \
-				}\
-				void AfterControlTemplateInstalled(bool initialize)override \
-				{\
-					BASE_TYPE::AfterControlTemplateInstalled(initialize); \
-					AfterControlTemplateInstalled_(initialize); \
-				}\
-				void CheckAndStoreControlTemplate(templates::GuiControlTemplate* value)override \
-				{ \
-					auto ct = dynamic_cast<templates::Gui##TEMPLATE*>(value); \
-					CHECK_ERROR(ct, L"The assigned control template is not vl::presentation::templates::Gui" L ## # TEMPLATE L"."); \
-					NAME = ct; \
-					BASE_TYPE::CheckAndStoreControlTemplate(value); \
-				} \
-			public: \
-				templates::Gui##TEMPLATE* TypedControlTemplateObject(bool ensureExists) \
-				{ \
-					if (ensureExists) \
-					{ \
-						EnsureControlTemplateExists(); \
-					} \
-					return NAME; \
-				} \
-			private: \
-
-#define GUI_SPECIFY_CONTROL_TEMPLATE_TYPE(TEMPLATE, BASE_TYPE) GUI_SPECIFY_CONTROL_TEMPLATE_TYPE_2(TEMPLATE, BASE_TYPE, GUI_GENERATE_CONTROL_TEMPLATE_OBJECT_NAME)
-
-		}
-	}
-}
-
-#endif
-
-
-/***********************************************************************
 .\CONTROLS\GUIBUTTONCONTROLS.H
 ***********************************************************************/
 /***********************************************************************
@@ -10406,391 +13021,6 @@ Buttons
 				/// <summary>Set the selected state.</summary>
 				/// <param name="value">The selected state.</param>
 				virtual void							SetSelected(bool value);
-			};
-		}
-	}
-}
-
-#endif
-
-
-/***********************************************************************
-.\CONTROLS\GUIDIALOGS.H
-***********************************************************************/
-/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-GacUI::Control System
-
-Interfaces:
-***********************************************************************/
-
-#ifndef VCZH_PRESENTATION_CONTROLS_GUIDIALOGS
-#define VCZH_PRESENTATION_CONTROLS_GUIDIALOGS
-
-
-namespace vl
-{
-	namespace presentation
-	{
-		namespace controls
-		{
-			class GuiWindow;
-
-/***********************************************************************
-Dialogs
-***********************************************************************/
-
-			/// <summary>Base class for dialogs.</summary>
-			class GuiDialogBase abstract : public GuiComponent, public Description<GuiDialogBase>
-			{
-			protected:
-				GuiInstanceRootObject*								rootObject = nullptr;
-
-				GuiWindow*											GetHostWindow();
-			public:
-				GuiDialogBase();
-				~GuiDialogBase();
-
-				void												Attach(GuiInstanceRootObject* _rootObject);
-				void												Detach(GuiInstanceRootObject* _rootObject);
-			};
-			
-			/// <summary>Message dialog.</summary>
-			class GuiMessageDialog : public GuiDialogBase, public Description<GuiMessageDialog>
-			{
-			protected:
-				INativeDialogService::MessageBoxButtonsInput		input = INativeDialogService::DisplayOK;
-				INativeDialogService::MessageBoxDefaultButton		defaultButton = INativeDialogService::DefaultFirst;
-				INativeDialogService::MessageBoxIcons				icon = INativeDialogService::IconNone;
-				INativeDialogService::MessageBoxModalOptions		modalOption = INativeDialogService::ModalWindow;
-				WString												text;
-				WString												title;
-
-			public:
-				/// <summary>Create a message dialog.</summary>
-				GuiMessageDialog();
-				~GuiMessageDialog();
-
-				/// <summary>Get the button combination that appear on the dialog.</summary>
-				/// <returns>The button combination.</returns>
-				INativeDialogService::MessageBoxButtonsInput		GetInput();
-				/// <summary>Set the button combination that appear on the dialog.</summary>
-				/// <param name="value">The button combination.</param>
-				void												SetInput(INativeDialogService::MessageBoxButtonsInput value);
-				
-				/// <summary>Get the default button for the selected button combination.</summary>
-				/// <returns>The default button.</returns>
-				INativeDialogService::MessageBoxDefaultButton		GetDefaultButton();
-				/// <summary>Set the default button for the selected button combination.</summary>
-				/// <param name="value">The default button.</param>
-				void												SetDefaultButton(INativeDialogService::MessageBoxDefaultButton value);
-
-				/// <summary>Get the icon that appears on the dialog.</summary>
-				/// <returns>The icon.</returns>
-				INativeDialogService::MessageBoxIcons				GetIcon();
-				/// <summary>Set the icon that appears on the dialog.</summary>
-				/// <param name="value">The icon.</param>
-				void												SetIcon(INativeDialogService::MessageBoxIcons value);
-
-				/// <summary>Get the way that how this dialog disable windows of the current process.</summary>
-				/// <returns>The way that how this dialog disable windows of the current process.</returns>
-				INativeDialogService::MessageBoxModalOptions		GetModalOption();
-				/// <summary>Set the way that how this dialog disable windows of the current process.</summary>
-				/// <param name="value">The way that how this dialog disable windows of the current process.</param>
-				void												SetModalOption(INativeDialogService::MessageBoxModalOptions value);
-
-				/// <summary>Get the text for the dialog.</summary>
-				/// <returns>The text.</returns>
-				const WString&										GetText();
-				/// <summary>Set the text for the dialog.</summary>
-				/// <param name="value">The text.</param>
-				void												SetText(const WString& value);
-
-				/// <summary>Get the title for the dialog.</summary>
-				/// <returns>The title.</returns>
-				const WString&										GetTitle();
-				/// <summary>Set the title for the dialog. If the title is empty, the dialog will use the title of the window that host this dialog.</summary>
-				/// <param name="value">The title.</param>
-				void												SetTitle(const WString& value);
-				
-				/// <summary>Show the dialog.</summary>
-				/// <returns>Returns the clicked button.</returns>
-				INativeDialogService::MessageBoxButtonsOutput		ShowDialog();
-			};
-			
-			/// <summary>Color dialog.</summary>
-			class GuiColorDialog : public GuiDialogBase, public Description<GuiColorDialog>
-			{
-			protected:
-				bool												enabledCustomColor = true;
-				bool												openedCustomColor = false;
-				Color												selectedColor;
-				bool												showSelection = true;
-				collections::List<Color>							customColors;
-
-			public:
-				/// <summary>Create a color dialog.</summary>
-				GuiColorDialog();
-				~GuiColorDialog();
-
-				/// <summary>Selected color changed event.</summary>
-				compositions::GuiNotifyEvent						SelectedColorChanged;
-				
-				/// <summary>Get if the custom color panel is enabled for the dialog.</summary>
-				/// <returns>Returns true if the color panel is enabled for the dialog.</returns>
-				bool												GetEnabledCustomColor();
-				/// <summary>Set if custom color panel is enabled for the dialog.</summary>
-				/// <param name="value">Set to true to enable the custom color panel for the dialog.</param>
-				void												SetEnabledCustomColor(bool value);
-				
-				/// <summary>Get if the custom color panel is opened by default when it is enabled.</summary>
-				/// <returns>Returns true if the custom color panel is opened by default.</returns>
-				bool												GetOpenedCustomColor();
-				/// <summary>Set if the custom color panel is opened by default when it is enabled.</summary>
-				/// <param name="value">Set to true to open custom color panel by default if it is enabled.</param>
-				void												SetOpenedCustomColor(bool value);
-				
-				/// <summary>Get the selected color.</summary>
-				/// <returns>The selected color.</returns>
-				Color												GetSelectedColor();
-				/// <summary>Set the selected color.</summary>
-				/// <param name="value">The selected color.</param>
-				void												SetSelectedColor(Color value);
-				
-				/// <summary>Get the list to access 16 selected custom colors on the palette. Colors in the list is guaranteed to have exactly 16 items after the dialog is closed.</summary>
-				/// <returns>The list to access custom colors on the palette.</returns>
-				collections::List<Color>&							GetCustomColors();
-				
-				/// <summary>Show the dialog.</summary>
-				/// <returns>Returns true if the "OK" button is clicked.</returns>
-				bool												ShowDialog();
-			};
-			
-			/// <summary>Font dialog.</summary>
-			class GuiFontDialog : public GuiDialogBase, public Description<GuiFontDialog>
-			{
-			protected:
-				FontProperties										selectedFont;
-				Color												selectedColor;
-				bool												showSelection = true;
-				bool												showEffect = true;
-				bool												forceFontExist = true;
-
-			public:
-				/// <summary>Create a font dialog.</summary>
-				GuiFontDialog();
-				~GuiFontDialog();
-
-				/// <summary>Selected font changed event.</summary>
-				compositions::GuiNotifyEvent						SelectedFontChanged;
-				/// <summary>Selected color changed event.</summary>
-				compositions::GuiNotifyEvent						SelectedColorChanged;
-				
-				/// <summary>Get the selected font.</summary>
-				/// <returns>The selected font.</returns>
-				const FontProperties&								GetSelectedFont();
-				/// <summary>Set the selected font.</summary>
-				/// <param name="value">The selected font.</param>
-				void												SetSelectedFont(const FontProperties& value);
-				
-				/// <summary>Get the selected color.</summary>
-				/// <returns>The selected color.</returns>
-				Color												GetSelectedColor();
-				/// <summary>Set the selected color.</summary>
-				/// <param name="value">The selected color.</param>
-				void												SetSelectedColor(Color value);
-				
-				/// <summary>Get if the selected font is already selected on the dialog when it is opened.</summary>
-				/// <returns>Returns true if the selected font is already selected on the dialog when it is opened.</returns>
-				bool												GetShowSelection();
-				/// <summary>Set if the selected font is already selected on the dialog when it is opened.</summary>
-				/// <param name="value">Set to true to select the selected font when the dialog is opened.</param>
-				void												SetShowSelection(bool value);
-				
-				/// <summary>Get if the font preview is enabled.</summary>
-				/// <returns>Returns true if the font preview is enabled.</returns>
-				bool												GetShowEffect();
-				/// <summary>Set if the font preview is enabled.</summary>
-				/// <param name="value">Set to true to enable the font preview.</param>
-				void												SetShowEffect(bool value);
-				
-				/// <summary>Get if the dialog only accepts an existing font.</summary>
-				/// <returns>Returns true if the dialog only accepts an existing font.</returns>
-				bool												GetForceFontExist();
-				/// <summary>Set if the dialog only accepts an existing font.</summary>
-				/// <param name="value">Set to true to let the dialog only accept an existing font.</param>
-				void												SetForceFontExist(bool value);
-				
-				/// <summary>Show the dialog.</summary>
-				/// <returns>Returns true if the "OK" button is clicked.</returns>
-				bool												ShowDialog();
-			};
-			
-			/// <summary>Base class for file dialogs.</summary>
-			class GuiFileDialogBase abstract : public GuiDialogBase, public Description<GuiFileDialogBase>
-			{
-			protected:
-				WString												filter = L"All Files (*.*)|*.*";
-				vint												filterIndex = 0;
-				bool												enabledPreview = false;
-				WString												title;
-				WString												fileName;
-				WString												directory;
-				WString												defaultExtension;
-				INativeDialogService::FileDialogOptions				options;
-
-			public:
-				GuiFileDialogBase();
-				~GuiFileDialogBase();
-
-				/// <summary>File name changed event.</summary>
-				compositions::GuiNotifyEvent						FileNameChanged;
-				/// <summary>Filter index changed event.</summary>
-				compositions::GuiNotifyEvent						FilterIndexChanged;
-				
-				/// <summary>Get the filter.</summary>
-				/// <returns>The filter.</returns>
-				const WString&										GetFilter();
-				/// <summary>Set the filter. The filter is formed by pairs of filter name and wildcard concatenated by "|", like "Text Files (*.txt)|*.txt|All Files (*.*)|*.*".</summary>
-				/// <param name="value">The filter.</param>
-				void												SetFilter(const WString& value);
-				
-				/// <summary>Get the filter index.</summary>
-				/// <returns>The filter index.</returns>
-				vint												GetFilterIndex();
-				/// <summary>Set the filter index.</summary>
-				/// <param name="value">The filter index.</param>
-				void												SetFilterIndex(vint value);
-				
-				/// <summary>Get if the file preview is enabled.</summary>
-				/// <returns>Returns true if the file preview is enabled.</returns>
-				bool												GetEnabledPreview();
-				/// <summary>Set if the file preview is enabled.</summary>
-				/// <param name="value">Set to true to enable the file preview.</param>
-				void												SetEnabledPreview(bool value);
-				
-				/// <summary>Get the title.</summary>
-				/// <returns>The title.</returns>
-				WString												GetTitle();
-				/// <summary>Set the title.</summary>
-				/// <param name="value">The title.</param>
-				void												SetTitle(const WString& value);
-				
-				/// <summary>Get the selected file name.</summary>
-				/// <returns>The selected file name.</returns>
-				WString												GetFileName();
-				/// <summary>Set the selected file name.</summary>
-				/// <param name="value">The selected file name.</param>
-				void												SetFileName(const WString& value);
-				
-				/// <summary>Get the default folder.</summary>
-				/// <returns>The default folder.</returns>
-				WString												GetDirectory();
-				/// <summary>Set the default folder.</summary>
-				/// <param name="value">The default folder.</param>
-				void												SetDirectory(const WString& value);
-				
-				/// <summary>Get the default file extension.</summary>
-				/// <returns>The default file extension.</returns>
-				WString												GetDefaultExtension();
-				/// <summary>Set the default file extension like "txt". If the user does not specify a file extension, the default file extension will be appended using "." after the file name.</summary>
-				/// <param name="value">The default file extension.</param>
-				void												SetDefaultExtension(const WString& value);
-				
-				/// <summary>Get the dialog options.</summary>
-				/// <returns>The dialog options.</returns>
-				INativeDialogService::FileDialogOptions				GetOptions();
-				/// <summary>Set the dialog options.</summary>
-				/// <param name="value">The dialog options.</param>
-				void												SetOptions(INativeDialogService::FileDialogOptions value);
-			};
-			
-			/// <summary>Open file dialog.</summary>
-			class GuiOpenFileDialog : public GuiFileDialogBase, public Description<GuiOpenFileDialog>
-			{
-			protected:
-				collections::List<WString>							fileNames;
-
-			public:
-				/// <summary>Create a open file dialog.</summary>
-				GuiOpenFileDialog();
-				~GuiOpenFileDialog();
-				
-				/// <summary>Get the list to access multiple selected file names.</summary>
-				/// <returns>The list to access multiple selected file names.</returns>
-				collections::List<WString>&							GetFileNames();
-				
-				/// <summary>Show the dialog.</summary>
-				/// <returns>Returns true if the "Open" button is clicked.</returns>
-				bool												ShowDialog();
-			};
-			
-			/// <summary>Save file dialog.</summary>
-			class GuiSaveFileDialog : public GuiFileDialogBase, public Description<GuiSaveFileDialog>
-			{
-			public:
-				/// <summary>Create a save file dialog.</summary>
-				GuiSaveFileDialog();
-				~GuiSaveFileDialog();
-
-				/// <summary>Show the dialog.</summary>
-				/// <returns>Returns true if the "Save" button is clicked.</returns>
-				bool												ShowDialog();
-			};
-		}
-	}
-}
-
-#endif
-
-
-/***********************************************************************
-.\CONTROLS\GUILABELCONTROLS.H
-***********************************************************************/
-/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-GacUI::Control System
-
-Interfaces:
-***********************************************************************/
-
-#ifndef VCZH_PRESENTATION_CONTROLS_GUILABELCONTROLS
-#define VCZH_PRESENTATION_CONTROLS_GUILABELCONTROLS
-
-
-namespace vl
-{
-	namespace presentation
-	{
-		namespace controls
-		{
-
-/***********************************************************************
-Label
-***********************************************************************/
-
-			/// <summary>A control to display a text.</summary>
-			class GuiLabel : public GuiControl, public Description<GuiLabel>
-			{
-				GUI_SPECIFY_CONTROL_TEMPLATE_TYPE(LabelTemplate, GuiControl)
-			protected:
-				Color									textColor;
-				bool									textColorConsisted = true;
-
-			public:
-				/// <summary>Create a control with a specified default theme.</summary>
-				/// <param name="themeName">The theme name for retriving a default control template.</param>
-				GuiLabel(theme::ThemeName themeName);
-				~GuiLabel();
-
-				/// <summary>Get the text color.</summary>
-				/// <returns>The text color.</returns>
-				Color									GetTextColor();
-				/// <summary>Set the text color.</summary>
-				/// <param name="value">The text color.</param>
-				void									SetTextColor(Color value);
 			};
 		}
 	}
@@ -11153,714 +13383,6 @@ Scroll View
 
 #endif
 
-
-/***********************************************************************
-.\CONTROLS\GUIWINDOWCONTROLS.H
-***********************************************************************/
-/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-GacUI::Control System
-
-Interfaces:
-***********************************************************************/
-
-#ifndef VCZH_PRESENTATION_CONTROLS_GUIWINDOWCONTROLS
-#define VCZH_PRESENTATION_CONTROLS_GUIWINDOWCONTROLS
-
-
-namespace vl
-{
-	namespace presentation
-	{
-		namespace compositions
-		{
-			class IGuiShortcutKeyManager;
-			class GuiGraphicsTimerManager;
-		}
-
-		namespace controls
-		{
-
-/***********************************************************************
-Control Host
-***********************************************************************/
-
-			/// <summary>
-			/// Represents a control that host by a <see cref="INativeWindow"/>.
-			/// </summary>
-			class GuiControlHost : public GuiControl, public GuiInstanceRootObject, protected INativeWindowListener, public Description<GuiControlHost>
-			{
-				friend class compositions::GuiGraphicsHost;
-			protected:
-				compositions::GuiGraphicsHost*					host;
-				INativeWindow::WindowMode						windowMode = INativeWindow::Normal;
-
-				virtual void									OnNativeWindowChanged();
-				virtual void									OnVisualStatusChanged();
-			protected:
-				static const vint								TooltipDelayOpenTime = 500;
-				static const vint								TooltipDelayCloseTime = 500;
-				static const vint								TooltipDelayLifeTime = 5000;
-
-				Ptr<INativeDelay>								tooltipOpenDelay;
-				Ptr<INativeDelay>								tooltipCloseDelay;
-				Point											tooltipLocation;
-
-				bool											calledDestroyed = false;
-				bool											deleteWhenDestroyed = false;
-
-				controls::GuiControlHost*						GetControlHostForInstance()override;
-				GuiControl*										GetTooltipOwner(Point location);
-				void											MoveIntoTooltipControl(GuiControl* tooltipControl, Point location);
-				void											MouseMoving(const NativeWindowMouseInfo& info)override;
-				void											MouseLeaved()override;
-				void											Moved()override;
-				void											Enabled()override;
-				void											Disabled()override;
-				void											GotFocus()override;
-				void											LostFocus()override;
-				void											Activated()override;
-				void											Deactivated()override;
-				void											Opened()override;
-				void											Closing(bool& cancel)override;
-				void											Closed()override;
-				void											Destroying()override;
-
-				virtual void									UpdateClientSizeAfterRendering(Size preferredSize, Size clientSize);
-			public:
-				/// <summary>Create a control with a specified default theme.</summary>
-				/// <param name="themeName">The theme name for retriving a default control template.</param>
-				/// <param name="mode">The window mode.</param>
-				GuiControlHost(theme::ThemeName themeName, INativeWindow::WindowMode mode);
-				~GuiControlHost();
-				
-				/// <summary>Window got focus event.</summary>
-				compositions::GuiNotifyEvent					WindowGotFocus;
-				/// <summary>Window lost focus event.</summary>
-				compositions::GuiNotifyEvent					WindowLostFocus;
-				/// <summary>Window activated event.</summary>
-				compositions::GuiNotifyEvent					WindowActivated;
-				/// <summary>Window deactivated event.</summary>
-				compositions::GuiNotifyEvent					WindowDeactivated;
-				/// <summary>Window opened event.</summary>
-				compositions::GuiNotifyEvent					WindowOpened;
-				/// <summary>Window closing event.</summary>
-				compositions::GuiRequestEvent					WindowClosing;
-				/// <summary>Window closed event.</summary>
-				compositions::GuiNotifyEvent					WindowClosed;
-				/// <summary>Window destroying event.</summary>
-				compositions::GuiNotifyEvent					WindowDestroying;
-
-				/// <summary>Delete this control host after processing all events.</summary>
-				void											DeleteAfterProcessingAllEvents();
-
-				/// <summary>Get the internal <see cref="compositions::GuiGraphicsHost"/> object to host the window content.</summary>
-				/// <returns>The internal <see cref="compositions::GuiGraphicsHost"/> object to host the window content.</returns>
-				compositions::GuiGraphicsHost*					GetGraphicsHost();
-				/// <summary>Get the main composition to host the window content.</summary>
-				/// <returns>The main composition to host the window content.</returns>
-				compositions::GuiGraphicsComposition*			GetMainComposition();
-				/// <summary>Get the internal <see cref="INativeWindow"/> object to host the content.</summary>
-				/// <returns>The the internal <see cref="INativeWindow"/> object to host the content.</returns>
-				INativeWindow*									GetNativeWindow();
-				/// <summary>Set the internal <see cref="INativeWindow"/> object to host the content.</summary>
-				/// <param name="window">The the internal <see cref="INativeWindow"/> object to host the content.</param>
-				void											SetNativeWindow(INativeWindow* window);
-				/// <summary>Force to calculate layout and size immediately</summary>
-				void											ForceCalculateSizeImmediately();
-				
-				/// <summary>Test is the window enabled.</summary>
-				/// <returns>Returns true if the window is enabled.</returns>
-				bool											GetEnabled()override;
-				/// <summary>Enable or disable the window.</summary>
-				/// <param name="value">Set to true to enable the window.</param>
-				void											SetEnabled(bool value)override;
-				/// <summary>Test is the window focused.</summary>
-				/// <returns>Returns true if the window is focused.</returns>
-				bool											GetFocused()override;
-				/// <summary>Focus the window. A window with activation disabled cannot receive focus.</summary>
-				void											SetFocused();
-				/// <summary>Test is the window activated.</summary>
-				/// <returns>Returns true if the window is activated.</returns>
-				bool											GetActivated();
-				/// <summary>Activate the window. If the window disabled activation, this function enables it again.</summary>
-				void											SetActivated();
-				/// <summary>Test is the window icon shown in the task bar.</summary>
-				/// <returns>Returns true if the window is icon shown in the task bar.</returns>
-				bool											GetShowInTaskBar();
-				/// <summary>Show or hide the window icon in the task bar.</summary>
-				/// <param name="value">Set to true to show the window icon in the task bar.</param>
-				void											SetShowInTaskBar(bool value);
-				/// <summary>Test is the window allowed to be activated.</summary>
-				/// <returns>Returns true if the window is allowed to be activated.</returns>
-				bool											GetEnabledActivate();
-				/// <summary>
-				/// Allow or forbid the window to be activated.
-				/// Clicking a window with activation disabled doesn't bring activation and focus.
-				/// Activation will be automatically enabled by calling <see cref="Show"/> or <see cref="SetActivated"/>.
-				/// </summary>
-				/// <param name="value">Set to true to allow the window to be activated.</param>
-				void											SetEnabledActivate(bool value);
-				/// <summary>
-				/// Test is the window always on top of the desktop.
-				/// </summary>
-				/// <returns>Returns true if the window is always on top of the desktop.</returns>
-				bool											GetTopMost();
-				/// <summary>
-				/// Make the window always or never on top of the desktop.
-				/// </summary>
-				/// <param name="topmost">True to make the window always  on top of the desktop.</param>
-				void											SetTopMost(bool topmost);
-
-				/// <summary>Get the <see cref="compositions::IGuiShortcutKeyManager"/> attached with this control host.</summary>
-				/// <returns>The shortcut key manager.</returns>
-				compositions::IGuiShortcutKeyManager*			GetShortcutKeyManager();
-				/// <summary>Attach or detach the <see cref="compositions::IGuiShortcutKeyManager"/> associated with this control host. When this control host is disposing, the associated shortcut key manager will be deleted if exists.</summary>
-				/// <param name="value">The shortcut key manager. Set to null to detach the previous shortcut key manager from this control host.</param>
-				void											SetShortcutKeyManager(compositions::IGuiShortcutKeyManager* value);
-				/// <summary>Get the timer manager.</summary>
-				/// <returns>The timer manager.</returns>
-				compositions::GuiGraphicsTimerManager*			GetTimerManager();
-
-				/// <summary>Get the client size of the window.</summary>
-				/// <returns>The client size of the window.</returns>
-				Size											GetClientSize();
-				/// <summary>Set the client size of the window.</summary>
-				/// <param name="value">The client size of the window.</param>
-				void											SetClientSize(Size value);
-				/// <summary>Get the location of the window in screen space.</summary>
-				/// <returns>The location of the window.</returns>
-				NativePoint										GetLocation();
-				/// <summary>Set the location of the window in screen space.</summary>
-				/// <param name="value">The location of the window.</param>
-				void											SetLocation(NativePoint value);
-				/// <summary>Set the location in screen space and the client size of the window.</summary>
-				/// <param name="location">The location of the window.</param>
-				/// <param name="size">The client size of the window.</param>
-				void											SetBounds(NativePoint location, Size size);
-
-				GuiControlHost*									GetRelatedControlHost()override;
-				const WString&									GetText()override;
-				void											SetText(const WString& value)override;
-
-				/// <summary>Get the screen that contains the window.</summary>
-				/// <returns>The screen that contains the window.</returns>
-				INativeScreen*									GetRelatedScreen();
-				/// <summary>
-				/// Show the window.
-				/// If the window disabled activation, this function enables it again.
-				/// </summary>
-				void											Show();
-				/// <summary>
-				/// Show the window without activation.
-				/// </summary>
-				void											ShowDeactivated();
-				/// <summary>
-				/// Restore the window.
-				/// </summary>
-				void											ShowRestored();
-				/// <summary>
-				/// Maximize the window.
-				/// </summary>
-				void											ShowMaximized();
-				/// <summary>
-				/// Minimize the window.
-				/// </summary>
-				void											ShowMinimized();
-				/// <summary>
-				/// Hide the window.
-				/// </summary>
-				void											Hide();
-				/// <summary>
-				/// Close the window and destroy the internal <see cref="INativeWindow"/> object.
-				/// </summary>
-				void											Close();
-				/// <summary>Test is the window opened.</summary>
-				/// <returns>Returns true if the window is opened.</returns>
-				bool											GetOpening();
-			};
-
-/***********************************************************************
-Window
-***********************************************************************/
-
-			/// <summary>
-			/// Represents a normal window.
-			/// </summary>
-			class GuiWindow : public GuiControlHost, protected compositions::GuiAltActionHostBase, public AggregatableDescription<GuiWindow>
-			{
-				GUI_SPECIFY_CONTROL_TEMPLATE_TYPE(WindowTemplate, GuiControlHost)
-				friend class GuiApplication;
-			protected:
-				compositions::IGuiAltActionHost*		previousAltHost = nullptr;
-				bool									hasMaximizedBox = true;
-				bool									hasMinimizedBox = true;
-				bool									hasBorder = true;
-				bool									hasSizeBox = true;
-				bool									isIconVisible = true;
-				bool									hasTitleBar = true;
-				Ptr<GuiImageData>						icon;
-				
-				void									UpdateCustomFramePadding(INativeWindow* window, templates::GuiWindowTemplate* ct);
-				void									SyncNativeWindowProperties();
-				void									Moved()override;
-				void									DpiChanged()override;
-				void									OnNativeWindowChanged()override;
-				void									OnVisualStatusChanged()override;
-				
-				void									OnWindowActivated(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
-				void									OnWindowDeactivated(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
-
-				/// <summary>Create a control with a specified default theme and a window mode.</summary>
-				/// <param name="themeName">The theme name for retriving a default control template.</param>
-				/// <param name="mode">The window mode.</param>
-				GuiWindow(theme::ThemeName themeName, INativeWindow::WindowMode mode);
-			public:
-				/// <summary>Create a control with a specified default theme.</summary>
-				/// <param name="themeName">The theme name for retriving a default control template.</param>
-				GuiWindow(theme::ThemeName themeName);
-				~GuiWindow();
-
-				IDescriptable*							QueryService(const WString& identifier)override;
-
-				/// <summary>Clipboard updated event.</summary>
-				compositions::GuiNotifyEvent			ClipboardUpdated;
-
-				/// <summary>Move the window to the center of the screen. If multiple screens exist, the window move to the screen that contains the biggest part of the window.</summary>
-				void									MoveToScreenCenter();
-				/// <summary>Move the window to the center of the specified screen.</summary>
-				/// <param name="screen">The screen.</param>
-				void									MoveToScreenCenter(INativeScreen* screen);
-				
-				/// <summary>
-				/// Test is the maximize box visible.
-				/// </summary>
-				/// <returns>Returns true if the maximize box is visible.</returns>
-				bool									GetMaximizedBox();
-				/// <summary>
-				/// Make the maximize box visible or invisible.
-				/// </summary>
-				/// <param name="visible">True to make the maximize box visible.</param>
-				void									SetMaximizedBox(bool visible);
-				/// <summary>
-				/// Test is the minimize box visible.
-				/// </summary>
-				/// <returns>Returns true if the minimize box is visible.</returns>
-				bool									GetMinimizedBox();
-				/// <summary>
-				/// Make the minimize box visible or invisible.
-				/// </summary>
-				/// <param name="visible">True to make the minimize box visible.</param>
-				void									SetMinimizedBox(bool visible);
-				/// <summary>
-				/// Test is the border visible.
-				/// </summary>
-				/// <returns>Returns true if the border is visible.</returns>
-				bool									GetBorder();
-				/// <summary>
-				/// Make the border visible or invisible.
-				/// </summary>
-				/// <param name="visible">True to make the border visible.</param>
-				void									SetBorder(bool visible);
-				/// <summary>
-				/// Test is the size box visible.
-				/// </summary>
-				/// <returns>Returns true if the size box is visible.</returns>
-				bool									GetSizeBox();
-				/// <summary>
-				/// Make the size box visible or invisible.
-				/// </summary>
-				/// <param name="visible">True to make the size box visible.</param>
-				void									SetSizeBox(bool visible);
-				/// <summary>
-				/// Test is the icon visible.
-				/// </summary>
-				/// <returns>Returns true if the icon is visible.</returns>
-				bool									GetIconVisible();
-				/// <summary>
-				/// Make the icon visible or invisible.
-				/// </summary>
-				/// <param name="visible">True to make the icon visible.</param>
-				void									SetIconVisible(bool visible);
-				/// <summary>
-				/// Get the icon which replaces the default one.
-				/// </summary>
-				/// <returns>Returns the icon that replaces the default one.</returns>
-				Ptr<GuiImageData>						GetIcon();
-				/// <summary>
-				/// Set the icon that replaces the default one.
-				/// </summary>
-				/// <param name="value">The icon that replaces the default one.</param>
-				void									SetIcon(Ptr<GuiImageData> value);
-				/// <summary>
-				/// Test is the title bar visible.
-				/// </summary>
-				/// <returns>Returns true if the title bar is visible.</returns>
-				bool									GetTitleBar();
-				/// <summary>
-				/// Make the title bar visible or invisible.
-				/// </summary>
-				/// <param name="visible">True to make the title bar visible.</param>
-				void									SetTitleBar(bool visible);
-				/// <summary>
-				/// Show a model window, get a callback when the window is closed.
-				/// </summary>
-				/// <param name="owner">The window to disable as a parent window.</param>
-				/// <param name="callback">The callback to call after the window is closed.</param>
-				void									ShowModal(GuiWindow* owner, const Func<void()>& callback);
-				/// <summary>
-				/// Show a model window, get a callback when the window is closed, and then delete itself.
-				/// </summary>
-				/// <param name="owner">The window to disable as a parent window.</param>
-				/// <param name="callback">The callback to call after the window is closed.</param>
-				void									ShowModalAndDelete(GuiWindow* owner, const Func<void()>& callback);
-				/// <summary>
-				/// Show a model window as an async operation, which ends when the window is closed.
-				/// </summary>
-				/// <returns>Returns true if the size box is visible.</returns>
-				/// <param name="owner">The window to disable as a parent window.</param>
-				Ptr<reflection::description::IAsync>	ShowModalAsync(GuiWindow* owner);
-			};
-			
-			/// <summary>
-			/// Represents a popup window. When the mouse click on other window or the desktop, the popup window will be closed automatically.
-			/// </summary>
-			class GuiPopup : public GuiWindow, public Description<GuiPopup>
-			{
-			protected:
-				union PopupInfo
-				{
-					struct _s1 { NativePoint location; INativeScreen* screen; };
-					struct _s2 { GuiControl* control; INativeWindow* controlWindow; Rect bounds; bool preferredTopBottomSide; };
-					struct _s3 { GuiControl* control; INativeWindow* controlWindow; Point location; };
-					struct _s4 { GuiControl* control; INativeWindow* controlWindow; bool preferredTopBottomSide; };
-
-					_s1 _1;
-					_s2 _2;
-					_s3 _3;
-					_s4 _4;
-
-					PopupInfo() {}
-				};
-			protected:
-				vint									popupType = -1;
-				PopupInfo								popupInfo;
-
-				void									UpdateClientSizeAfterRendering(Size preferredSize, Size clientSize)override;
-				void									PopupOpened(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
-				void									PopupClosed(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
-				void									OnKeyDown(compositions::GuiGraphicsComposition* sender, compositions::GuiKeyEventArgs& arguments);
-
-				static bool								IsClippedByScreen(NativeSize size, NativePoint location, INativeScreen* screen);
-				static NativePoint						CalculatePopupPosition(NativeSize windowSize, NativePoint location, INativeScreen* screen);
-				static NativePoint						CalculatePopupPosition(NativeSize windowSize, GuiControl* control, INativeWindow* controlWindow, Rect bounds, bool preferredTopBottomSide);
-				static NativePoint						CalculatePopupPosition(NativeSize windowSize, GuiControl* control, INativeWindow* controlWindow, Point location);
-				static NativePoint						CalculatePopupPosition(NativeSize windowSize, GuiControl* control, INativeWindow* controlWindow, bool preferredTopBottomSide);
-				static NativePoint						CalculatePopupPosition(NativeSize windowSize, vint popupType, const PopupInfo& popupInfo);
-
-				void									ShowPopupInternal();
-
-				/// <summary>Create a control with a specified default theme and a window mode.</summary>
-				/// <param name="themeName">The theme name for retriving a default control template.</param>
-				/// <param name="mode">The window mode.</param>
-				GuiPopup(theme::ThemeName themeName, INativeWindow::WindowMode mode);
-			public:
-				/// <summary>Create a control with a specified default theme.</summary>
-				/// <param name="themeName">The theme name for retriving a default control template.</param>
-				GuiPopup(theme::ThemeName themeName);
-				~GuiPopup();
-
-				/// <summary>Test will the whole popup window be in the screen if the popup's left-top position is set to a specified value.</summary>
-				/// <returns>Returns true if the whole popup window will be in the screen.</returns>
-				/// <param name="location">The specified left-top position.</param>
-				bool									IsClippedByScreen(Point location);
-				/// <summary>Show the popup window with the left-top position set to a specified value. The position of the popup window will be adjusted to make it totally inside the screen if possible.</summary>
-				/// <param name="location">The specified left-top position.</param>
-				/// <param name="screen">The expected screen. If you don't want to specify any screen, don't set this parameter.</param>
-				void									ShowPopup(NativePoint location, INativeScreen* screen = 0);
-				/// <summary>Show the popup window with the bounds set to a specified control-relative value. The position of the popup window will be adjusted to make it totally inside the screen if possible.</summary>
-				/// <param name="control">The control that owns this popup temporary. And the location is relative to this control.</param>
-				/// <param name="bounds">The specified bounds.</param>
-				/// <param name="preferredTopBottomSide">Set to true if the popup window is expected to be opened at the top or bottom side of that bounds.</param>
-				void									ShowPopup(GuiControl* control, Rect bounds, bool preferredTopBottomSide);
-				/// <summary>Show the popup window with the left-top position set to a specified control-relative value. The position of the popup window will be adjusted to make it totally inside the screen if possible.</summary>
-				/// <param name="control">The control that owns this popup temporary. And the location is relative to this control.</param>
-				/// <param name="location">The specified left-top position.</param>
-				void									ShowPopup(GuiControl* control, Point location);
-				/// <summary>Show the popup window aligned with a specified control. The position of the popup window will be adjusted to make it totally inside the screen if possible.</summary>
-				/// <param name="control">The control that owns this popup temporary.</param>
-				/// <param name="preferredTopBottomSide">Set to true if the popup window is expected to be opened at the top or bottom side of that control.</param>
-				void									ShowPopup(GuiControl* control, bool preferredTopBottomSide);
-			};
-
-			/// <summary>Represents a tooltip window.</summary>
-			class GuiTooltip : public GuiPopup, private INativeControllerListener, public Description<GuiTooltip>
-			{
-			protected:
-				GuiControl*								temporaryContentControl = nullptr;
-
-				void									GlobalTimer()override;
-				void									TooltipOpened(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
-				void									TooltipClosed(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
-
-			public:
-				/// <summary>Create a control with a specified default theme.</summary>
-				/// <param name="themeName">The theme name for retriving a default control template.</param>
-				GuiTooltip(theme::ThemeName themeName);
-				~GuiTooltip();
-
-				/// <summary>Get the preferred content width.</summary>
-				/// <returns>The preferred content width.</returns>
-				vint									GetPreferredContentWidth();
-				/// <summary>Set the preferred content width.</summary>
-				/// <param name="value">The preferred content width.</param>
-				void									SetPreferredContentWidth(vint value);
-
-				/// <summary>Get the temporary content control.</summary>
-				/// <returns>The temporary content control.</returns>
-				GuiControl*								GetTemporaryContentControl();
-				/// <summary>Set the temporary content control.</summary>
-				/// <param name="control">The temporary content control.</param>
-				void									SetTemporaryContentControl(GuiControl* control);
-			};
-		}
-	}
-}
-
-#endif
-
-
-/***********************************************************************
-.\CONTROLS\GUIAPPLICATION.H
-***********************************************************************/
-/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-GacUI::Application Framework
-
-Interfaces:
-***********************************************************************/
-
-#ifndef VCZH_PRESENTATION_CONTROLS_GUIAPPLICATION
-#define VCZH_PRESENTATION_CONTROLS_GUIAPPLICATION
-
-
-namespace vl
-{
-	namespace presentation
-	{
-		namespace controls
-		{
-
-/***********************************************************************
-Application
-***********************************************************************/
-
-			/// <summary>Represents an GacUI application, for window management and asynchronized operation supporting. Use [M:vl.presentation.controls.GetApplication] to access the instance of this class.</summary>
-			class GuiApplication : public Object, private INativeControllerListener, public Description<GuiApplication>
-			{
-				friend void GuiApplicationInitialize();
-				friend class GuiWindow;
-				friend class GuiPopup;
-				friend class Ptr<GuiApplication>;
-			private:
-				void											InvokeClipboardNotify(compositions::GuiGraphicsComposition* composition, compositions::GuiEventArgs& arguments);
-				void											ClipboardUpdated()override;
-			protected:
-				Locale											locale;
-				GuiWindow*										mainWindow = nullptr;
-				GuiWindow*										sharedTooltipOwnerWindow = nullptr;
-				GuiControl*										sharedTooltipOwner = nullptr;
-				GuiTooltip*										sharedTooltipControl = nullptr;
-				bool											sharedTooltipHovering = false;
-				bool											sharedTooltipClosing = false;
-				collections::List<GuiWindow*>					windows;
-				collections::SortedList<GuiPopup*>				openingPopups;
-
-				GuiApplication();
-				~GuiApplication();
-
-				INativeWindow*									GetThreadContextNativeWindow(GuiControlHost* controlHost);
-				void											RegisterWindow(GuiWindow* window);
-				void											UnregisterWindow(GuiWindow* window);
-				void											RegisterPopupOpened(GuiPopup* popup);
-				void											RegisterPopupClosed(GuiPopup* popup);
-				void											TooltipMouseEnter(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
-				void											TooltipMouseLeave(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
-			public:
-				/// <summary>Locale changed event.</summary>
-				Event<void()>									LocaleChanged;
-
-				/// <summary>Returns the selected locale for all windows.</summary>
-				/// <returns>The selected locale.</returns>
-				Locale											GetLocale();
-				/// <summary>Set the locale for all windows.</summary>
-				/// <param name="value">The selected locale.</param>
-				void											SetLocale(Locale value);
-
-				/// <summary>Run a <see cref="GuiWindow"/> as the main window and show it. This function can only be called once in the entry point. When the main window is closed or hiden, the Run function will finished, and the application should prepare for finalization.</summary>
-				/// <param name="_mainWindow">The main window.</param>
-				void											Run(GuiWindow* _mainWindow);
-				/// <summary>Get the main window.</summary>
-				/// <returns>The main window.</returns>
-				GuiWindow*										GetMainWindow();
-				/// <summary>Get all created <see cref="GuiWindow"/> instances. This contains normal windows, popup windows, menus, or other types of windows that inherits from <see cref="GuiWindow"/>.</summary>
-				/// <returns>All created <see cref="GuiWindow"/> instances.</returns>
-				const collections::List<GuiWindow*>&			GetWindows();
-				/// <summary>Get the <see cref="GuiWindow"/> instance that the mouse cursor are directly in.</summary>
-				/// <returns>The <see cref="GuiWindow"/> instance that the mouse cursor are directly in.</returns>
-				/// <param name="location">The mouse cursor.</param>
-				GuiWindow*										GetWindow(NativePoint location);
-				/// <summary>Show a tooltip.</summary>
-				/// <param name="owner">The control that owns this tooltip temporary.</param>
-				/// <param name="tooltip">The control as the tooltip content. This control is not owned by the tooltip. User should manually release this control if no longer needed (usually when the application exit).</param>
-				/// <param name="preferredContentWidth">The preferred content width for this tooltip.</param>
-				/// <param name="location">The relative location to specify the left-top position of the tooltip.</param>
-				void											ShowTooltip(GuiControl* owner, GuiControl* tooltip, vint preferredContentWidth, Point location);
-				/// <summary>Close the tooltip</summary>
-				void											CloseTooltip();
-				/// <summary>Get the tooltip owner. When the tooltip closed, it returns null.</summary>
-				/// <returns>The tooltip owner.</returns>
-				GuiControl*										GetTooltipOwner();
-				/// <summary>Get the file path of the current executable.</summary>
-				/// <returns>The file path of the current executable.</returns>
-				WString											GetExecutablePath();
-				/// <summary>Get the folder of the current executable.</summary>
-				/// <returns>The folder of the current executable.</returns>
-				WString											GetExecutableFolder();
-
-				/// <summary>Test is the current thread the main thread for GUI.</summary>
-				/// <returns>Returns true if the current thread is the main thread for GUI.</returns>
-				/// <param name="controlHost">A control host to access the corressponding main thread.</param>
-				bool											IsInMainThread(GuiControlHost* controlHost);
-				/// <summary>Invoke a specified function asynchronously.</summary>
-				/// <param name="proc">The specified function.</param>
-				void											InvokeAsync(const Func<void()>& proc);
-				/// <summary>Invoke a specified function in the main thread.</summary>
-				/// <param name="controlHost">A control host to access the corressponding main thread.</param>
-				/// <param name="proc">The specified function.</param>
-				void											InvokeInMainThread(GuiControlHost* controlHost, const Func<void()>& proc);
-				/// <summary>Invoke a specified function in the main thread and wait for the function to complete or timeout.</summary>
-				/// <returns>Return true if the function complete. Return false if the function has not completed during a specified period of time.</returns>
-				/// <param name="controlHost">A control host to access the corressponding main thread.</param>
-				/// <param name="proc">The specified function.</param>
-				/// <param name="milliseconds">The specified period of time to wait. Set to -1 (default value) to wait forever until the function completed.</param>
-				bool											InvokeInMainThreadAndWait(GuiControlHost* controlHost, const Func<void()>& proc, vint milliseconds=-1);
-				/// <summary>Delay execute a specified function with an specified argument asynchronisly.</summary>
-				/// <returns>The Delay execution controller for this task.</returns>
-				/// <param name="proc">The specified function.</param>
-				/// <param name="milliseconds">Time to delay.</param>
-				Ptr<INativeDelay>								DelayExecute(const Func<void()>& proc, vint milliseconds);
-				/// <summary>Delay execute a specified function with an specified argument in the main thread.</summary>
-				/// <returns>The Delay execution controller for this task.</returns>
-				/// <param name="proc">The specified function.</param>
-				/// <param name="milliseconds">Time to delay.</param>
-				Ptr<INativeDelay>								DelayExecuteInMainThread(const Func<void()>& proc, vint milliseconds);
-				/// <summary>Run the specified function in the main thread. If the caller is in the main thread, then run the specified function directly.</summary>
-				/// <param name="controlHost">A control host to access the corressponding main thread.</param>
-				/// <param name="proc">The specified function.</param>
-				void											RunGuiTask(GuiControlHost* controlHost, const Func<void()>& proc);
-
-				template<typename T>
-				T RunGuiValue(GuiControlHost* controlHost, const Func<T()>& proc)
-				{
-					T result;
-					RunGuiTask(controlHost, [&result, &proc]()
-					{
-						result=proc();
-					});
-					return result;
-				}
-
-				template<typename T>
-				void InvokeLambdaInMainThread(GuiControlHost* controlHost, const T& proc)
-				{
-					InvokeInMainThread(controlHost, Func<void()>(proc));
-				}
-				
-				template<typename T>
-				bool InvokeLambdaInMainThreadAndWait(GuiControlHost* controlHost, const T& proc, vint milliseconds=-1)
-				{
-					return InvokeInMainThreadAndWait(controlHost, Func<void()>(proc), milliseconds);
-				}
-			};
-
-/***********************************************************************
-Plugin
-***********************************************************************/
-
-			/// <summary>Represents a plugin for the gui.</summary>
-			class IGuiPlugin : public IDescriptable, public Description<IGuiPlugin>
-			{
-			public:
-				/// <summary>Get the name of this plugin.</summary>
-				/// <returns>Returns the name of the plugin.</returns>
-				virtual WString									GetName() = 0;
-				/// <summary>Get all dependencies of this plugin.</summary>
-				/// <param name="dependencies">To receive all dependencies.</param>
-				virtual void									GetDependencies(collections::List<WString>& dependencies) = 0;
-				/// <summary>Called when the plugin manager want to load this plugin.</summary>
-				virtual void									Load()=0;
-				/// <summary>Called when the plugin manager want to unload this plugin.</summary>
-				virtual void									Unload()=0;
-			};
-
-			/// <summary>Represents a plugin manager.</summary>
-			class IGuiPluginManager : public IDescriptable, public Description<IGuiPluginManager>
-			{
-			public:
-				/// <summary>Add a plugin before [F:vl.presentation.controls.IGuiPluginManager.Load] is called.</summary>
-				/// <param name="plugin">The plugin.</param>
-				virtual void									AddPlugin(Ptr<IGuiPlugin> plugin)=0;
-				/// <summary>Load all plugins, and check if dependencies of all plugins are ready.</summary>
-				virtual void									Load()=0;
-				/// <summary>Unload all plugins.</summary>
-				virtual void									Unload()=0;
-				/// <returns>Returns true if all plugins are loaded.</returns>
-				virtual bool									IsLoaded()=0;
-			};
-
-/***********************************************************************
-Helper Functions
-***********************************************************************/
-
-			/// <summary>Get the global <see cref="GuiApplication"/> object.</summary>
-			/// <returns>The global <see cref="GuiApplication"/> object.</returns>
-			extern GuiApplication*								GetApplication();
-
-			/// <summary>Get the global <see cref="IGuiPluginManager"/> object.</summary>
-			/// <returns>The global <see cref="GuiApplication"/> object.</returns>
-			extern IGuiPluginManager*							GetPluginManager();
-
-			/// <summary>Destroy the global <see cref="IGuiPluginManager"/> object.</summary>
-			extern void											DestroyPluginManager();
-		}
-	}
-}
-
-extern void GuiApplicationMain();
-
-#define GUI_VALUE(x) vl::presentation::controls::GetApplication()->RunGuiValue(LAMBDA([&](){return (x);}))
-#define GUI_RUN(x) vl::presentation::controls::GetApplication()->RunGuiTask([=](){x})
-
-#define GUI_REGISTER_PLUGIN(TYPE)\
-	class GuiRegisterPluginClass_##TYPE\
-	{\
-	public:\
-		GuiRegisterPluginClass_##TYPE()\
-		{\
-			vl::presentation::controls::GetPluginManager()->AddPlugin(new TYPE);\
-		}\
-	} instance_GuiRegisterPluginClass_##TYPE;\
-
-#define GUI_PLUGIN_NAME(NAME)\
-	vl::WString GetName()override { return L ## #NAME; }\
-	void GetDependencies(vl::collections::List<WString>& dependencies)override\
-
-#define GUI_PLUGIN_DEPEND(NAME) dependencies.Add(L ## #NAME)
-
-#endif
 
 /***********************************************************************
 .\CONTROLS\INCLUDEFORWARD.H
@@ -12345,6 +13867,8 @@ Selectable List Control
 				void											NormalizeSelectedItemIndexStartEnd();
 				void											SetMultipleItemsSelectedSilently(vint start, vint end, bool selected);
 				void											OnKeyDown(compositions::GuiGraphicsComposition* sender, compositions::GuiKeyEventArgs& arguments);
+
+				virtual vint									FindItemByVirtualKeyDirection(vint index, compositions::KeyDirection keyDirection);
 			public:
 				/// <summary>Create a control with a specified style provider.</summary>
 				/// <param name="themeName">The theme name for retriving a default control template.</param>
@@ -12756,7 +14280,6 @@ TextItemProvider
 					~TextItem();
 
 					bool										operator==(const TextItem& value)const;
-					bool										operator!=(const TextItem& value)const;
 					
 					/// <summary>Get the text of this item.</summary>
 					/// <returns>The text of this item.</returns>
@@ -13189,6 +14712,7 @@ GuiVirtualTreeListControl
 				void								OnItemExpanded(tree::INodeProvider* node)override;
 				void								OnItemCollapsed(tree::INodeProvider* node)override;
 
+				vint								FindItemByVirtualKeyDirection(vint index, compositions::KeyDirection keyDirection)override;
 			protected:
 				tree::NodeItemProvider*				nodeItemProvider;
 				tree::INodeItemView*				nodeItemView;
@@ -13585,82 +15109,6 @@ namespace vl
 	{
 		namespace theme
 		{
-#define GUI_CONTROL_TEMPLATE_TYPES(F) \
-			F(WindowTemplate,				Window)						\
-			F(ControlTemplate,				CustomControl)				\
-			F(WindowTemplate,				Tooltip)					\
-			F(LabelTemplate,				Label)						\
-			F(LabelTemplate,				ShortcutKey)				\
-			F(ScrollViewTemplate,			ScrollView)					\
-			F(ControlTemplate,				GroupBox)					\
-			F(TabTemplate,					Tab)						\
-			F(ComboBoxTemplate,				ComboBox)					\
-			F(MultilineTextBoxTemplate,		MultilineTextBox)			\
-			F(SinglelineTextBoxTemplate,	SinglelineTextBox)			\
-			F(DocumentViewerTemplate,		DocumentViewer)				\
-			F(DocumentLabelTemplate,		DocumentLabel)				\
-			F(DocumentLabelTemplate,		DocumentTextBox)			\
-			F(ListViewTemplate,				ListView)					\
-			F(TreeViewTemplate,				TreeView)					\
-			F(TextListTemplate,				TextList)					\
-			F(SelectableButtonTemplate,		ListItemBackground)			\
-			F(SelectableButtonTemplate,		TreeItemExpander)			\
-			F(SelectableButtonTemplate,		CheckTextListItem)			\
-			F(SelectableButtonTemplate,		RadioTextListItem)			\
-			F(MenuTemplate,					Menu)						\
-			F(ControlTemplate,				MenuBar)					\
-			F(ControlTemplate,				MenuSplitter)				\
-			F(ToolstripButtonTemplate,		MenuBarButton)				\
-			F(ToolstripButtonTemplate,		MenuItemButton)				\
-			F(ControlTemplate,				ToolstripToolBar)			\
-			F(ToolstripButtonTemplate,		ToolstripButton)			\
-			F(ToolstripButtonTemplate,		ToolstripDropdownButton)	\
-			F(ToolstripButtonTemplate,		ToolstripSplitButton)		\
-			F(ControlTemplate,				ToolstripSplitter)			\
-			F(RibbonTabTemplate,			RibbonTab)					\
-			F(RibbonGroupTemplate,			RibbonGroup)				\
-			F(RibbonIconLabelTemplate,		RibbonIconLabel)			\
-			F(RibbonIconLabelTemplate,		RibbonSmallIconLabel)		\
-			F(RibbonButtonsTemplate,		RibbonButtons)				\
-			F(RibbonToolstripsTemplate,		RibbonToolstrips)			\
-			F(RibbonGalleryTemplate,		RibbonGallery)				\
-			F(RibbonToolstripMenuTemplate,	RibbonToolstripMenu)		\
-			F(RibbonGalleryListTemplate,	RibbonGalleryList)			\
-			F(TextListTemplate,				RibbonGalleryItemList)		\
-			F(ToolstripButtonTemplate,		RibbonSmallButton)			\
-			F(ToolstripButtonTemplate,		RibbonSmallDropdownButton)	\
-			F(ToolstripButtonTemplate,		RibbonSmallSplitButton)		\
-			F(ToolstripButtonTemplate,		RibbonLargeButton)			\
-			F(ToolstripButtonTemplate,		RibbonLargeDropdownButton)	\
-			F(ToolstripButtonTemplate,		RibbonLargeSplitButton)		\
-			F(ControlTemplate,				RibbonSplitter)				\
-			F(ControlTemplate,				RibbonToolstripHeader)		\
-			F(ButtonTemplate,				Button)						\
-			F(SelectableButtonTemplate,		CheckBox)					\
-			F(SelectableButtonTemplate,		RadioButton)				\
-			F(DatePickerTemplate,			DatePicker)					\
-			F(DateComboBoxTemplate,			DateComboBox)				\
-			F(ScrollTemplate,				HScroll)					\
-			F(ScrollTemplate,				VScroll)					\
-			F(ScrollTemplate,				HTracker)					\
-			F(ScrollTemplate,				VTracker)					\
-			F(ScrollTemplate,				ProgressBar)				\
-
-			enum class ThemeName
-			{
-				Unknown,
-#define GUI_DEFINE_THEME_NAME(TEMPLATE, CONTROL) CONTROL,
-				GUI_CONTROL_TEMPLATE_TYPES(GUI_DEFINE_THEME_NAME)
-#undef GUI_DEFINE_THEME_NAME
-			};
-
-			/// <summary>Theme interface. A theme creates appropriate style controllers or style providers for default controls. Call [M:vl.presentation.theme.GetCurrentTheme] to access this interface.</summary>
-			class ITheme : public virtual IDescriptable, public Description<ITheme>
-			{
-			public:
-				virtual TemplateProperty<templates::GuiControlTemplate>				CreateStyle(ThemeName themeName) = 0;
-			};
-
 			class Theme;
 
 			/// <summary>Partial control template collections. [F:vl.presentation.theme.GetCurrentTheme] will returns an object, which walks through multiple registered [T:vl.presentation.theme.ThemeTemplates] to create a correct template object for a control.</summary>
@@ -13676,17 +15124,13 @@ namespace vl
 				~ThemeTemplates();
 
 				WString							Name;
+				Nullable<bool>					PreferCustomFrameWindow;
 
 #define GUI_DEFINE_ITEM_PROPERTY(TEMPLATE, CONTROL) TemplateProperty<templates::Gui##TEMPLATE> CONTROL;
 				GUI_CONTROL_TEMPLATE_TYPES(GUI_DEFINE_ITEM_PROPERTY)
 #undef GUI_DEFINE_ITEM_PROPERTY
 			};
 
-			/// <summary>Get the current theme style factory object. Call <see cref="RegisterTheme"/> or <see cref="UnregisterTheme"/> to change the default theme.</summary>
-			/// <returns>The current theme style factory object.</returns>
-			extern ITheme*						GetCurrentTheme();
-			extern void							InitializeTheme();
-			extern void							FinalizeTheme();
 			/// <summary>Register a control template collection object.</summary>
 			/// <returns>Returns true if this operation succeeded.</returns>
 			/// <param name="theme">The control template collection object.</param>
@@ -16001,6 +17445,26 @@ ComboBox Base
 			};
 
 /***********************************************************************
+ComboBox with GuiControl
+***********************************************************************/
+
+			/// <summary>Combo box control. This control is a combo box with a control in its popup.</summary>
+			class GuiComboButton
+				: public GuiComboBoxBase
+				, public Description<GuiComboButton>
+			{
+			protected:
+				GuiControl*									dropdownControl = nullptr;
+
+			public:
+				/// <summary>Create a control with a specified default theme and a control that will be put in the popup control.</summary>
+				/// <param name="themeName">The theme name for retriving a default control template.</param>
+				/// <param name="_dropdownControl">The contained control.</param>
+				GuiComboButton(theme::ThemeName themeName, GuiControl* _dropdownControl);
+				~GuiComboButton();
+			};
+
+/***********************************************************************
 ComboBox with GuiListControl
 ***********************************************************************/
 
@@ -16044,7 +17508,7 @@ ComboBox with GuiListControl
 			public:
 				/// <summary>Create a control with a specified default theme and a list control that will be put in the popup control to show all items.</summary>
 				/// <param name="themeName">The theme name for retriving a default control template.</param>
-				/// <param name="_containedListControl">The list controller.</param>
+				/// <param name="_containedListControl">The list control.</param>
 				GuiComboBoxListControl(theme::ThemeName themeName, GuiSelectableListControl* _containedListControl);
 				~GuiComboBoxListControl();
 				
@@ -18356,128 +19820,6 @@ GalleryItemArranger
 
 
 /***********************************************************************
-.\CONTROLS\TOOLSTRIPPACKAGE\GUITOOLSTRIPCOMMAND.H
-***********************************************************************/
-/***********************************************************************
-Vczh Library++ 3.0
-Developer: Zihan Chen(vczh)
-GacUI::Control System
-
-Interfaces:
-***********************************************************************/
-
-#ifndef VCZH_PRESENTATION_CONTROLS_GUITOOLSTRIPCOMMAND
-#define VCZH_PRESENTATION_CONTROLS_GUITOOLSTRIPCOMMAND
-
-
-namespace vl
-{
-	namespace presentation
-	{
-		namespace compositions
-		{
-			class IGuiShortcutKeyItem;
-		}
-
-		namespace controls
-		{
-			/// <summary>A command for toolstrip controls.</summary>
-			class GuiToolstripCommand : public GuiComponent, public Description<GuiToolstripCommand>
-			{
-			public:
-				class ShortcutBuilder : public Object
-				{
-				public:
-					WString									text;
-					bool									ctrl;
-					bool									shift;
-					bool									alt;
-					VKEY									key;
-				};
-			protected:
-				Ptr<GuiImageData>							image;
-				Ptr<GuiImageData>							largeImage;
-				WString										text;
-				compositions::IGuiShortcutKeyItem*			shortcutKeyItem = nullptr;
-				bool										enabled = true;
-				bool										selected = false;
-				Ptr<compositions::IGuiGraphicsEventHandler>	shortcutKeyItemExecutedHandler;
-				Ptr<ShortcutBuilder>						shortcutBuilder;
-
-				GuiInstanceRootObject*						attachedRootObject = nullptr;
-				Ptr<compositions::IGuiGraphicsEventHandler>	renderTargetChangedHandler;
-				GuiControlHost*								shortcutOwner = nullptr;
-
-				void										OnShortcutKeyItemExecuted(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
-				void										OnRenderTargetChanged(compositions::GuiGraphicsComposition* sender, compositions::GuiEventArgs& arguments);
-				void										InvokeDescriptionChanged();
-				void										ReplaceShortcut(compositions::IGuiShortcutKeyItem* value, Ptr<ShortcutBuilder> builder);
-				void										BuildShortcut(const WString& builderText);
-				void										UpdateShortcutOwner();
-			public:
-				/// <summary>Create the command.</summary>
-				GuiToolstripCommand();
-				~GuiToolstripCommand();
-
-				void										Attach(GuiInstanceRootObject* rootObject)override;
-				void										Detach(GuiInstanceRootObject* rootObject)override;
-
-				/// <summary>Executed event.</summary>
-				compositions::GuiNotifyEvent				Executed;
-
-				/// <summary>Description changed event, raised when any description property is modified.</summary>
-				compositions::GuiNotifyEvent				DescriptionChanged;
-
-				/// <summary>Get the large image for this command.</summary>
-				/// <returns>The large image for this command.</returns>
-				Ptr<GuiImageData>							GetLargeImage();
-				/// <summary>Set the large image for this command.</summary>
-				/// <param name="value">The large image for this command.</param>
-				void										SetLargeImage(Ptr<GuiImageData> value);
-				/// <summary>Get the image for this command.</summary>
-				/// <returns>The image for this command.</returns>
-				Ptr<GuiImageData>							GetImage();
-				/// <summary>Set the image for this command.</summary>
-				/// <param name="value">The image for this command.</param>
-				void										SetImage(Ptr<GuiImageData> value);
-				/// <summary>Get the text for this command.</summary>
-				/// <returns>The text for this command.</returns>
-				const WString&								GetText();
-				/// <summary>Set the text for this command.</summary>
-				/// <param name="value">The text for this command.</param>
-				void										SetText(const WString& value);
-				/// <summary>Get the shortcut key item for this command.</summary>
-				/// <returns>The shortcut key item for this command.</returns>
-				compositions::IGuiShortcutKeyItem*			GetShortcut();
-				/// <summary>Set the shortcut key item for this command.</summary>
-				/// <param name="value">The shortcut key item for this command.</param>
-				void										SetShortcut(compositions::IGuiShortcutKeyItem* value);
-				/// <summary>Get the shortcut builder for this command.</summary>
-				/// <returns>The shortcut builder for this command.</returns>
-				WString										GetShortcutBuilder();
-				/// <summary>Set the shortcut builder for this command. When the command is attached to a window as a component without a shortcut, the command will try to convert the shortcut builder to a shortcut key item.</summary>
-				/// <param name="value">The shortcut builder for this command.</param>
-				void										SetShortcutBuilder(const WString& value);
-				/// <summary>Get the enablility for this command.</summary>
-				/// <returns>The enablility for this command.</returns>
-				bool										GetEnabled();
-				/// <summary>Set the enablility for this command.</summary>
-				/// <param name="value">The enablility for this command.</param>
-				void										SetEnabled(bool value);
-				/// <summary>Get the selection for this command.</summary>
-				/// <returns>The selection for this command.</returns>
-				bool										GetSelected();
-				/// <summary>Set the selection for this command.</summary>
-				/// <param name="value">The selection for this command.</param>
-				void										SetSelected(bool value);
-			};
-		}
-	}
-}
-
-#endif
-
-/***********************************************************************
 .\CONTROLS\TOOLSTRIPPACKAGE\GUITOOLSTRIPMENU.H
 ***********************************************************************/
 /***********************************************************************
@@ -19195,13 +20537,6 @@ Ribbon Gallery List
 				{
 				}
 
-				inline vint Compare(const GalleryPos& value)const
-				{
-					vint result;
-					if ((result = group - value.group) != 0) return result;
-					if ((result = item - value.item) != 0) return result;
-					return 0;
-				}
 				GUI_DEFINE_COMPARE_OPERATORS(GalleryPos)
 			};
 
@@ -19686,6 +21021,644 @@ IGuiResourceManager
 #endif
 
 /***********************************************************************
+.\UTILITIES\FAKESERVICES\GUIFAKECLIPBOARDSERVICE.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI::Native Window::Default Service Implementation
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_PRESENTATION_UTILITIES_FAKESERVICES_FAKECLIPBOARDSERVICE
+#define VCZH_PRESENTATION_UTILITIES_FAKESERVICES_FAKECLIPBOARDSERVICE
+
+
+namespace vl
+{
+	namespace presentation
+	{
+		class FakeClipboardReader;
+		class FakeClipboardWriter;
+
+		/// <summary>
+		/// An <see cref="INativeClipboardService"/> implementation that interchange objects only in the current process.
+		/// </summary>
+		class FakeClipboardService
+			: public Object
+			, public INativeClipboardService
+		{
+			friend class FakeClipboardReader;
+			friend class FakeClipboardWriter;
+		protected:
+			Ptr<INativeClipboardReader>		reader;
+
+		public:
+			FakeClipboardService();
+			~FakeClipboardService();
+
+			Ptr<INativeClipboardReader>		ReadClipboard() override;
+			Ptr<INativeClipboardWriter>		WriteClipboard() override;
+		};
+	}
+}
+
+#endif
+
+/***********************************************************************
+.\UTILITIES\FAKESERVICES\GUIFAKEDIALOGSERVICEBASE.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI::Native Window::Default Service Implementation
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_PRESENTATION_UTILITIES_FAKESERVICES_FAKEDIALOGSERVICEBASE
+#define VCZH_PRESENTATION_UTILITIES_FAKESERVICES_FAKEDIALOGSERVICEBASE
+
+
+namespace vl
+{
+	namespace presentation
+	{
+		namespace controls
+		{
+			class GuiWindow;
+		}
+
+/***********************************************************************
+View Models (MessageBox)
+***********************************************************************/
+
+		/// <summary>
+		/// The view model for message box button. It is implemented by <see cref="FakeDialogServiceBase"/>.
+		/// </summary>
+		class IMessageBoxDialogAction : public virtual IDescriptable
+		{
+		public:
+			using ButtonItem = INativeDialogService::MessageBoxButtonsOutput;
+
+			/// <summary>
+			/// Get the button that it stands for.
+			/// </summary>
+			/// <returns>The button.</returns>
+			virtual ButtonItem				GetButton() = 0;
+			/// <summary>
+			/// Select this button.
+			/// </summary>
+			virtual void					PerformAction() = 0;
+		};
+
+		/// <summary>
+		/// The view model for message box. It is implemented by <see cref="FakeDialogServiceBase"/>.
+		/// </summary>
+		class IMessageBoxDialogViewModel : public virtual IDescriptable
+		{
+		public:
+			using Icon = INativeDialogService::MessageBoxIcons;
+			using ButtonItem = Ptr<IMessageBoxDialogAction>;
+			using ButtonItemList = collections::List<ButtonItem>;
+
+			/// <summary>
+			/// Get the text to display on the message box.
+			/// </summary>
+			/// <returns>The text.</returns>
+			virtual WString					GetText() = 0;
+			/// <summary>
+			/// Get the title to display on the message box.
+			/// </summary>
+			/// <returns>The title.</returns>
+			virtual WString					GetTitle() = 0;
+			/// <summary>
+			/// Get the icon to display on the message box.
+			/// </summary>
+			/// <returns>The icon.</returns>
+			virtual Icon					GetIcon() = 0;
+			/// <summary>
+			/// Get all buttons to display on the message box.
+			/// </summary>
+			/// <returns>All buttons.</returns>
+			virtual const ButtonItemList&	GetButtons() = 0;
+			/// <summary>
+			/// Get the button that should have the focus by default.
+			/// </summary>
+			/// <returns>The button to be focused.</returns>
+			virtual ButtonItem				GetDefaultButton() = 0;
+			/// <summary>
+			/// Get the selected button. It is set by <see cref="IMessageBoxDialogAction::PerformAction"/>.
+			/// </summary>
+			/// <returns>The selected button.</returns>
+			virtual ButtonItem				GetResult() = 0;
+		};
+
+/***********************************************************************
+View Models (Confirmation)
+***********************************************************************/
+
+		/// <summary>
+		/// The view model for all dialogs with "OK" and "Cancel" button.  It is implemented by <see cref="FakeDialogServiceBase"/>.
+		/// </summary>
+		class IDialogConfirmation : public virtual IDescriptable
+		{
+		public:
+			/// <summary>
+			/// Test is the OK button is selected.
+			/// </summary>
+			/// <returns>Returns true if the OK button is selected.</returns>
+			virtual bool					GetConfirmed() = 0;
+			/// <summary>
+			/// Set the selected button.
+			/// </summary>
+			/// <param name="value">True for OK, false for Cancel.</param>
+			virtual void					SetConfirmed(bool value) = 0;
+		};
+
+/***********************************************************************
+View Models (ColorDialog)
+***********************************************************************/
+
+		/// <summary>
+		/// The view model for color dialog. It is implemented by <see cref="FakeDialogServiceBase"/>.
+		/// </summary>
+		class IColorDialogViewModel : public virtual IDialogConfirmation
+		{
+		public:
+			/// <summary>
+			/// Get the selected color. When the dialog is opened, it returns the pre-selected color.
+			/// </summary>
+			/// <returns>The selected color.</returns>
+			virtual Color					GetColor() = 0;
+			/// <summary>
+			/// Set the selected color.
+			/// </summary>
+			/// <param name="value">The selected color.</param>
+			virtual void					SetColor(Color value) = 0;
+		};
+
+/***********************************************************************
+View Models (FontDialog)
+***********************************************************************/
+
+		/// <summary>
+		/// The view model for all font dialogs. It is implemented by <see cref="FakeDialogServiceBase"/>.
+		/// </summary>
+		class ICommonFontDialogViewModel : public virtual IDescriptable
+		{
+		public:
+			using FontList = collections::List<WString>;
+
+			/// <summary>
+			/// Test if the selected font should be one in <see cref="GetFontList"/>. If it is true and the selected font does not exist, the OK button should be disabled.
+			/// </summary>
+			/// <returns>Returns true if the selected font should be one in <see cref="GetFontList"/>.</returns>
+			virtual bool					GetFontMustExist() = 0;
+			/// <summary>
+			/// All registered fonts in the system.
+			/// </summary>
+			/// <returns>All registered fonts.</returns>
+			virtual const FontList&			GetFontList() = 0;
+		};
+
+		/// <summary>
+		/// The view model for simple font dialog. It is implemented by <see cref="FakeDialogServiceBase"/>.
+		/// </summary>
+		class ISimpleFontDialogViewModel : public virtual ICommonFontDialogViewModel, public virtual IDialogConfirmation
+		{
+		public:
+			/// <summary>
+			/// Get the selected font. When the dialog is opened, it returns the pre-selected font.
+			/// </summary>
+			/// <returns>The selected font.</returns>
+			virtual WString					GetFontFamily() = 0;
+			/// <summary>
+			/// Set the selected font.
+			/// </summary>
+			/// <param name="fontface">The selected font.</param>
+			virtual void					SetFontFamily(const WString& fontface) = 0;
+			/// <summary>
+			/// Get the selected size. When the dialog is opened, it returns the pre-selected size.
+			/// </summary>
+			/// <returns>The selected size.</returns>
+			virtual vint					GetFontSize() = 0;
+			/// <summary>
+			/// Set the selected size.
+			/// </summary>
+			/// <param name="value">The selected size.</param>
+			virtual void					SetFontSize(vint value) = 0;
+		};
+
+		/// <summary>
+		/// The view model for full font dialog. It is implemented by <see cref="FakeDialogServiceBase"/>.
+		/// </summary>
+		class IFullFontDialogViewModel : public virtual ICommonFontDialogViewModel, public virtual IColorDialogViewModel
+		{
+		public:
+			/// <summary>
+			/// Get the selected font. When the dialog is opened, it returns the pre-selected font.
+			/// </summary>
+			/// <returns>The selected font.</returns>
+			virtual FontProperties			GetFont() = 0;
+			/// <summary>
+			/// Set the selected font.
+			/// </summary>
+			/// <param name="value">The selected font.</param>
+			virtual void					SetFont(const FontProperties& value) = 0;
+			/// <summary>
+			/// Display a color dialog and change the Color property in <see cref="IColorDialogViewModel"/>.
+			/// </summary>
+			/// <returns>Returns true when a color is selected.</returns>
+			/// <param name="owner">A owner window for displaying color dialogs.</param>
+			virtual bool					SelectColor(controls::GuiWindow* owner) = 0;
+		};
+
+/***********************************************************************
+View Models (FileDialog)
+***********************************************************************/
+
+		/// <summary>
+		/// Type of a folder in a file dialog.
+		/// </summary>
+		enum class FileDialogFolderType
+		{
+			/// <summary>
+			/// The root folder, it does not render in the dialog.
+			/// </summary>
+			Root,
+			/// <summary>
+			/// A placeolder item, it means folders are being loaded.
+			/// </summary>
+			Placeholder,
+			/// <summary>
+			/// A folder.
+			/// </summary>
+			Folder,
+		};
+
+		/// <summary>
+		/// The view model for a folder in a file dialog. It is implemented by <see cref="FakeDialogServiceBase"/>.
+		/// </summary>
+		class IFileDialogFolder : public virtual IDescriptable
+		{
+		public:
+			using Folders = collections::ObservableList<Ptr<IFileDialogFolder>>;
+
+			/// <summary>
+			/// Get the parent folder of this folder.
+			/// </summary>
+			/// <returns>The parent folder. It returns null for the root folder.</returns>
+			virtual Ptr<IFileDialogFolder>	GetParent() = 0;
+			/// <summary>
+			/// Get the type of this folder.
+			/// </summary>
+			/// <returns>The type.</returns>
+			virtual FileDialogFolderType	GetType() = 0;
+			/// <summary>
+			/// Get the full path of this folder.
+			/// </summary>
+			/// <returns>The full path. It returns an empty string for root or placeholder.</returns>
+			virtual WString					GetFullPath() = 0;
+			/// <summary>
+			/// Get the name of this folder.
+			/// </summary>
+			/// <returns>The name. It returns an empty string for root.</returns>
+			virtual WString					GetName() = 0;
+			/// <summary>
+			/// Get the rendering position of this folder in its parent folder.
+			/// </summary>
+			/// <returns>The rendering position.</returns>
+			virtual vint					GetIndex() = 0;
+			/// <summary>
+			/// Get all sub folders of this folder.
+			/// </summary>
+			/// <returns>All sub folders.</returns>
+			virtual Folders&				GetFolders() = 0;
+			/// <summary>
+			/// Get a sub folder by its name.
+			/// </summary>
+			/// <param name="name">The name of the sub folder.</param>
+			/// <returns>The sub folder. It returns null if the object has not been created yet, this doesn't mean the folder doesn't exist.</returns>
+			virtual Ptr<IFileDialogFolder>	TryGetFolder(const WString& name) = 0;
+		};
+
+		/// <summary>
+		/// Type of a file in a file dialog.
+		/// </summary>
+		enum class FileDialogFileType
+		{
+			/// <summary>
+			/// A placeholder item, it means files and folders are being loaded.
+			/// </summary>
+			Placeholder,
+			/// <summary>
+			/// A folder.
+			/// </summary>
+			Folder,
+			/// <summary>
+			/// A file.
+			/// </summary>
+			File,
+		};
+
+		/// <summary>
+		/// The view model for a file in a file dialog. It is implemented by <see cref="FakeDialogServiceBase"/>.
+		/// </summary>
+		class IFileDialogFile : public virtual IDescriptable
+		{
+		public:
+			using Files = collections::ObservableList<Ptr<IFileDialogFile>>;
+
+			/// <summary>
+			/// Get the type of this file.
+			/// </summary>
+			/// <returns></returns>
+			virtual FileDialogFileType		GetType() = 0;
+			/// <summary>
+			/// Get the associated folder of this file.
+			/// </summary>
+			/// <returns>The associated folder. It returns null for placeholder or file.</returns>
+			virtual Ptr<IFileDialogFolder>	GetAssociatedFolder() = 0;
+			/// <summary>
+			/// Get the name of this file.
+			/// </summary>
+			/// <returns>The name.</returns>
+			virtual WString					GetName() = 0;
+		};
+
+		/// <summary>
+		/// The view model for a filter in a file dialog. It is implemented by <see cref="FakeDialogServiceBase"/>.
+		/// </summary>
+		class IFileDialogFilter : public virtual IDescriptable
+		{
+		public:
+			using Filters = collections::List<Ptr<IFileDialogFilter>>;
+
+			/// <summary>
+			/// Get the name of this filter.
+			/// </summary>
+			/// <returns>The name.</returns>
+			virtual WString					GetName() = 0;
+			/// <summary>
+			/// Get the wildcard of this filter.
+			/// </summary>
+			/// <returns>The wildcard.</returns>
+			virtual WString					GetFilter() = 0;
+			/// <summary>
+			/// Get the default extension for this filter.
+			/// </summary>
+			/// <returns>The default extension. It returns null if it is not defined.</returns>
+			virtual Nullable<WString>		GetDefaultExtension() = 0;
+			/// <summary>
+			/// Filter a file.
+			/// </summary>
+			/// <param name="file">The file to filter.</param>
+			/// <returns>Returns true if the file satisfies the filter.</returns>
+			virtual bool					FilterFile(Ptr<IFileDialogFile> file) = 0;
+		};
+
+		/// <summary>
+		/// The view model for file dialog. It is implemented by <see cref="FakeDialogServiceBase"/>.
+		/// </summary>
+		class IFileDialogViewModel : public virtual IDescriptable
+		{
+		public:
+			using Filters = IFileDialogFilter::Filters;
+			using Folders = IFileDialogFolder::Folders;
+			using Files = IFileDialogFile::Files;
+			using Selection = collections::LazyList<WString>;
+
+			/// <summary>
+			/// Raised when the <see cref="GetSelectedFilter"/> is changed.
+			/// </summary>
+			Event<void()>					SelectedFilterChanged;
+			/// <summary>
+			/// Raised when the <see cref="GetSelectedFolder"/> is changed.
+			/// </summary>
+			Event<void()>					SelectedFolderChanged;
+			/// <summary>
+			/// Raised when the <see cref="GetIsLoadingFiles"/> property is changed.
+			/// </summary>
+			Event<void()>					IsLoadingFilesChanged;
+
+			/// <summary>
+			/// Get the title of this dialog.
+			/// </summary>
+			/// <returns></returns>
+			virtual WString					GetTitle() = 0;
+			/// <summary>
+			/// Test if multiple selection is allowed.
+			/// </summary>
+			/// <returns>Returns true if multiple selection is allowed.</returns>
+			virtual bool					GetEnabledMultipleSelection() = 0;
+
+			/// <summary>
+			/// Get the default extension.
+			/// </summary>
+			/// <returns>The default extension.</returns>
+			virtual WString					GetDefaultExtension() = 0;
+			/// <summary>
+			/// Get all filters of this dialog.
+			/// </summary>
+			/// <returns>All filters.</returns>
+			virtual const Filters&			GetFilters() = 0;
+			/// <summary>
+			/// Get the selected filter of this dialog.
+			/// </summary>
+			/// <returns>The selected filter of this dialog.</returns>
+			virtual Ptr<IFileDialogFilter>	GetSelectedFilter() = 0;
+			/// <summary>
+			/// Set the selected filter of this dialog. It could cause folders and files to be refreshed.
+			/// </summary>
+			/// <param name="value">The selected filter of this dialog.</param>
+			virtual void					SetSelectedFilter(Ptr<IFileDialogFilter> value) = 0;
+
+			/// <summary>
+			/// Get the root folder.
+			/// </summary>
+			/// <returns>The root folder.</returns>
+			virtual Ptr<IFileDialogFolder>	GetRootFolder() = 0;
+			/// <summary>
+			/// Get the selected folder.
+			/// </summary>
+			/// <returns>The selected folder.</returns>
+			virtual Ptr<IFileDialogFolder>	GetSelectedFolder() = 0;
+			/// <summary>
+			/// Set the selected folder.
+			/// </summary>
+			/// <param name="value">The selected folder.</param>
+			virtual void					SetSelectedFolder(Ptr<IFileDialogFolder> value) = 0;
+
+			/// <summary>
+			/// Test if folders and files are being loaded.
+			/// </summary>
+			/// <returns>Returns true if folders and files are being loaded.</returns>
+			virtual bool					GetIsLoadingFiles() = 0;
+			/// <summary>
+			/// Get all folders and files in the selected folder.
+			/// </summary>
+			/// <returns>All folders and files to display.</returns>
+			virtual Files&					GetFiles() = 0;
+			/// <summary>
+			/// Refresh the folders and files list.
+			/// </summary>
+			virtual void					RefreshFiles() = 0;
+
+			/// <summary>
+			/// Convert files to a display string.
+			/// </summary>
+			/// <param name="files">The files.</param>
+			/// <returns>The display string, items are separated by ";".</returns>
+			virtual WString					GetDisplayString(collections::LazyList<Ptr<IFileDialogFile>> files) = 0;
+
+			/// <summary>
+			/// Split the display string to items.
+			/// </summary>
+			/// <param name="displayString">The display string.</param>
+			/// <returns>The items, each item is either a relative path or an absolute path.</returns>
+			virtual Selection				ParseDisplayString(const WString& displayString) = 0;
+			/// <summary>
+			/// Test if the selection is valid. Dialogs could be displayed and ask for input accordingly.
+			/// </summary>
+			/// <param name="owner">A owner window for displaying message boxes.</param>
+			/// <param name="selectedPaths">All selected items in string format. Each of them could be either full path, relative path or file name.</param>
+			/// <returns>Returns true if the selection is valid.</returns>
+			virtual bool					TryConfirm(controls::GuiWindow* owner, Selection selection) = 0;
+
+			/// <summary>
+			/// Initialize the view model with localized texts.
+			/// </summary>
+			/// <param name="textLoadingFolders">The name for placeholder folder.</param>
+			/// <param name="textLoadingFiles">The name for placeholder file.</param>
+			/// <param name="dialogErrorEmptySelection">The message saying selection is empty.</param>
+			/// <param name="dialogErrorFileNotExist">The message saying selected files do not exist.</param>
+			/// <param name="dialogErrorFileExpected">The message saying selected files are expected but they are folders.</param>
+			/// <param name="dialogErrorFolderNotExist">The message saying the selected folder do not exist.</param>
+			/// <param name="dialogErrorMultipleSelectionNotEnabled">The message saying multiple selection is not allowed.</param>
+			/// <param name="dialogAskCreateFile">The message asking if user wants to create a file.</param>
+			/// <param name="dialogAskOverrideFile">The message asking if user wants to override a file.</param>
+			virtual void					InitLocalizedText(
+												const WString& textLoadingFolders,
+												const WString& textLoadingFiles,
+												const WString& dialogErrorEmptySelection,
+												const WString& dialogErrorFileNotExist,
+												const WString& dialogErrorFileExpected,
+												const WString& dialogErrorFolderNotExist,
+												const WString& dialogErrorMultipleSelectionNotEnabled,
+												const WString& dialogAskCreateFile,
+												const WString& dialogAskOverrideFile
+											) = 0;
+		};
+
+/***********************************************************************
+FakeDialogServiceBase
+***********************************************************************/
+
+		/// <summary>
+		/// View model implementations for <see cref="INativeDialogService"/>.
+		/// </summary>
+		class FakeDialogServiceBase
+			: public Object
+			, public INativeDialogService
+		{
+		protected:
+
+			/// <summary>
+			/// A callback to create a message box from the given view model.
+			/// </summary>
+			/// <param name="viewModel">The given view model.</param>
+			/// <returns>The created window to be displayed.</returns>
+			virtual controls::GuiWindow*	CreateMessageBoxDialog(Ptr<IMessageBoxDialogViewModel> viewModel) = 0;
+
+			/// <summary>
+			/// A callback to create a color dialog from the given view model.
+			/// </summary>
+			/// <param name="viewModel">The given view model.</param>
+			/// <returns>The created window to be displayed.</returns>
+			virtual controls::GuiWindow*	CreateColorDialog(Ptr<IColorDialogViewModel> viewModel) = 0;
+
+			/// <summary>
+			/// A callback to create a simple font dialog from the given view model.
+			/// </summary>
+			/// <param name="viewModel">The given view model.</param>
+			/// <returns>The created window to be displayed.</returns>
+			virtual controls::GuiWindow*	CreateSimpleFontDialog(Ptr<ISimpleFontDialogViewModel> viewModel) = 0;
+
+			/// <summary>
+			/// A callback to create a full font dialog from the given view model.
+			/// </summary>
+			/// <param name="viewModel">The given view model.</param>
+			/// <returns>The created window to be displayed.</returns>
+			virtual controls::GuiWindow*	CreateFullFontDialog(Ptr<IFullFontDialogViewModel> viewModel) = 0;
+
+			/// <summary>
+			/// A callback to create a open file dialog from the given view model.
+			/// </summary>
+			/// <param name="viewModel">The given view model.</param>
+			/// <returns>The created window to be displayed.</returns>
+			virtual controls::GuiWindow*	CreateOpenFileDialog(Ptr<IFileDialogViewModel> viewModel) = 0;
+
+			/// <summary>
+			/// A callback to create a save file dialog from the given view model.
+			/// </summary>
+			/// <param name="viewModel">The given view model.</param>
+			/// <returns>The created window to be displayed.</returns>
+			virtual controls::GuiWindow*	CreateSaveFileDialog(Ptr<IFileDialogViewModel> viewModel) = 0;
+
+			void							ShowModalDialogAndDelete(Ptr<IDescriptable> viewModel, controls::GuiWindow* owner, controls::GuiWindow* dialog);
+
+		public:
+			FakeDialogServiceBase();
+			~FakeDialogServiceBase();
+
+			MessageBoxButtonsOutput	ShowMessageBox(
+										INativeWindow* window,
+										const WString& text,
+										const WString& title,
+										MessageBoxButtonsInput buttons,
+										MessageBoxDefaultButton defaultButton,
+										MessageBoxIcons icon,
+										MessageBoxModalOptions modal
+										) override;
+
+			bool					ShowColorDialog(
+										INativeWindow* window,
+										Color& selection,
+										bool selected,
+										ColorDialogCustomColorOptions customColorOptions,
+										Color* customColors
+										) override;
+
+			bool					ShowFontDialog(
+										INativeWindow* window,
+										FontProperties& selectionFont,
+										Color& selectionColor,
+										bool selected,
+										bool showEffect,
+										bool forceFontExist
+										) override;
+
+			bool					ShowFileDialog(
+										INativeWindow* window,
+										collections::List<WString>& selectionFileNames,
+										vint& selectionFilterIndex,
+										FileDialogTypes dialogType,
+										const WString& title,
+										const WString& initialFileName,
+										const WString& initialDirectory,
+										const WString& defaultExtension,
+										const WString& filter,
+										FileDialogOptions options
+										) override;
+		};
+	}
+}
+
+#endif
+
+/***********************************************************************
 .\GACUIREFLECTIONHELPER.H
 ***********************************************************************/
 /***********************************************************************
@@ -19707,10 +21680,16 @@ namespace vl
 		{
 			struct SiteValue
 			{
-				vint			row = 0;
-				vint			column = 0;
-				vint			rowSpan = 1;
-				vint			columnSpan = 1;
+				vint					row = 0;
+				vint					column = 0;
+				vint					rowSpan = 1;
+				vint					columnSpan = 1;
+			};
+
+			class LocalizedStrings
+			{
+			public:
+				static WString			FirstOrEmpty(const collections::LazyList<WString>& formats);
 			};
 		}
 	}
@@ -19730,7 +21709,6 @@ Serialization
 				static presentation::Color GetDefaultValue();
 				static bool Serialize(const presentation::Color& input, WString& output);
 				static bool Deserialize(const WString& input, presentation::Color& output);
-				static IBoxedValue::CompareResult Compare(const presentation::Color& a, const presentation::Color& b);
 			};
 
 			template<>
@@ -19739,7 +21717,6 @@ Serialization
 				static presentation::DocumentFontSize GetDefaultValue();
 				static bool Serialize(const presentation::DocumentFontSize& input, WString& output);
 				static bool Deserialize(const WString& input, presentation::DocumentFontSize& output);
-				static IBoxedValue::CompareResult Compare(const presentation::DocumentFontSize& a, const presentation::DocumentFontSize& b);
 			};
 
 			template<>
@@ -19748,7 +21725,6 @@ Serialization
 				static presentation::GlobalStringKey GetDefaultValue();
 				static bool Serialize(const presentation::GlobalStringKey& input, WString& output);
 				static bool Deserialize(const WString& input, presentation::GlobalStringKey& output);
-				static IBoxedValue::CompareResult Compare(const presentation::GlobalStringKey& a, const presentation::GlobalStringKey& b);
 			};
 
 /***********************************************************************
@@ -19762,7 +21738,7 @@ External Functions
 			template<typename T>
 			Ptr<T> Element_Constructor()
 			{
-				return T::Create();
+				return Ptr(T::Create());
 			}
 			extern presentation::elements::text::TextLines*					GuiColorizedTextElement_GetLines(presentation::elements::GuiColorizedTextElement* thisObject);
 
@@ -19818,8 +21794,3524 @@ using namespace vl::presentation::templates;
 
 #endif
 
+// GacUI Compiler
+extern int SetupGacGenNativeController();
+
+// Windows
 extern int SetupWindowsGDIRenderer();
 extern int SetupWindowsDirect2DRenderer();
+extern int SetupHostedWindowsGDIRenderer();
+extern int SetupHostedWindowsDirect2DRenderer();
+
+// Gtk
+extern int SetupGtkRenderer();
+
+// macOS
 extern int SetupOSXCoreGraphicsRenderer();
+
+#endif
+
+/***********************************************************************
+.\UTILITIES\FAKESERVICES\DIALOGS\GUIFAKEDIALOGSERVICE.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI::Native Window::Default Service Implementation
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_PRESENTATION_UTILITIES_FAKESERVICES_FAKEDIALOGSERVICE
+#define VCZH_PRESENTATION_UTILITIES_FAKESERVICES_FAKEDIALOGSERVICE
+
+
+namespace vl
+{
+	namespace presentation
+	{
+		namespace controls
+		{
+			class GuiWindow;
+		}
+
+		/// <summary>
+		/// UI implementations for <see cref="INativeDialogService"/>.
+		/// </summary>
+		class FakeDialogService : public FakeDialogServiceBase
+		{
+		protected:
+
+			controls::GuiWindow*	CreateMessageBoxDialog(Ptr< IMessageBoxDialogViewModel> viewModel) override;
+			controls::GuiWindow*	CreateColorDialog(Ptr<IColorDialogViewModel> viewModel) override;
+			controls::GuiWindow*	CreateSimpleFontDialog(Ptr<ISimpleFontDialogViewModel> viewModel) override;
+			controls::GuiWindow*	CreateFullFontDialog(Ptr<IFullFontDialogViewModel> viewModel) override;
+			controls::GuiWindow*	CreateOpenFileDialog(Ptr<IFileDialogViewModel> viewModel) override;
+			controls::GuiWindow*	CreateSaveFileDialog(Ptr<IFileDialogViewModel> viewModel) override;
+
+		public:
+			FakeDialogService();
+			~FakeDialogService();
+		};
+	}
+}
+
+#endif
+
+/***********************************************************************
+.\UTILITIES\FAKESERVICES\DIALOGS\SOURCE\GUIFAKEDIALOGSERVICEUI.H
+***********************************************************************/
+/***********************************************************************
+!!!!!! DO NOT MODIFY !!!!!!
+
+GacGen.exe Resource.xml
+
+This file is generated by Workflow compiler
+https://github.com/vczh-libraries
+***********************************************************************/
+
+#ifndef VCZH_WORKFLOW_COMPILER_GENERATED_GUIFAKEDIALOGSERVICEUI
+#define VCZH_WORKFLOW_COMPILER_GENERATED_GUIFAKEDIALOGSERVICEUI
+
+
+#if defined( _MSC_VER)
+#pragma warning(push)
+#pragma warning(disable:4250)
+#elif defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wparentheses-equality"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#endif
+
+namespace vl_workflow_global
+{
+	struct __vwsnf10_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+	struct __vwsnf11_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+	struct __vwsnf12_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+	struct __vwsnf13_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+	struct __vwsnf14_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+	struct __vwsnf15_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+	struct __vwsnf16_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+	struct __vwsnf17_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+	struct __vwsnf18_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+	struct __vwsnf19_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__;
+	struct __vwsnf1_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_;
+	struct __vwsnf20_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+	struct __vwsnf21_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+	struct __vwsnf22_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+	struct __vwsnf23_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+	struct __vwsnf24_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+	struct __vwsnf25_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindow___vwsn_instance_ctor__;
+	struct __vwsnf26_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+	struct __vwsnf27_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+	struct __vwsnf28_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+	struct __vwsnf29_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+	struct __vwsnf2_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_;
+	struct __vwsnf30_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+	struct __vwsnf32_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+	struct __vwsnf33_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+	struct __vwsnf35_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+	struct __vwsnf36_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+	struct __vwsnf37_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__;
+	struct __vwsnf38_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+	struct __vwsnf39_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+	struct __vwsnf3_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_;
+	struct __vwsnf40_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+	struct __vwsnf41_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+	struct __vwsnf42_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+	struct __vwsnf43_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+	struct __vwsnf44_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControl_GetSelectedFiles_;
+	struct __vwsnf46_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+	struct __vwsnf47_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+	struct __vwsnf48_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+	struct __vwsnf49_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+	struct __vwsnf4_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_;
+	struct __vwsnf50_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+	struct __vwsnf51_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+	struct __vwsnf53_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+	struct __vwsnf54_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+	struct __vwsnf55_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+	struct __vwsnf56_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+	struct __vwsnf57_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+	struct __vwsnf58_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+	struct __vwsnf59_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf5_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+	struct __vwsnf60_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf61_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf62_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf63_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf64_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf65_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf66_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf67_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf68_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf69_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf6_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+	struct __vwsnf70_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf71_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf72_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf73_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf74_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf75_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf76_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+	struct __vwsnf77_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+	struct __vwsnf78_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+	struct __vwsnf79_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+	struct __vwsnf7_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+	struct __vwsnf80_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+	struct __vwsnf81_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+	struct __vwsnf82_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+	struct __vwsnf83_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+	struct __vwsnf84_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+	struct __vwsnf85_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+	struct __vwsnf86_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize_;
+	struct __vwsnf87_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize_;
+	struct __vwsnf88_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize_;
+	struct __vwsnf89_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxWindowConstructor___vwsn_gaclib_controls_MessageBoxWindow_Initialize_;
+	struct __vwsnf8_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+	struct __vwsnf9_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+	struct __vwsno31_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+	struct __vwsno34_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+	struct __vwsno45_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+	struct __vwsno52_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+	class __vwsnc10_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc11_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc12_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc13_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc14_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc15_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc16_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc17_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc18_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc19_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc1_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc20_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc21_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc22_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc23_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc24_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControl_GetSelectedFiles___vl_reflection_description_ICoroutine;
+	class __vwsnc25_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControl_CreateFileFilter__vl_presentation_controls_list_IDataFilter;
+	class __vwsnc26_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc27_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc28_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc29_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc2_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc30_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc31_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc32_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc33_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc34_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc35_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc36_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc37_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc38_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc39_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc3_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc40_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc41_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc42_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc43_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc44_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc45_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc46_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc47_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc48_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc49_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc4_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc50_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc51_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc52_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc53_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc54_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc55_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc56_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc57_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc58_GuiFakeDialogServiceUI_gaclib_controls_DialogStrings___vwsn_ls_en_US_BuildStrings__gaclib_controls_IDialogStringsStrings;
+	class __vwsnc5_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc6_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc7_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc8_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+	class __vwsnc9_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+}
+
+namespace gaclib_controls
+{
+	class ColorComponentControlConstructor;
+	class ColorComponentControl;
+	class ColorDialogControlConstructor;
+	class ColorDialogControl;
+	class ColorDialogWindowConstructor;
+	class ColorDialogWindow;
+	class DialogStrings;
+	class FileDialogWindowConstructor;
+	class FileDialogWindow;
+	class FilePickerControlConstructor;
+	class FilePickerControl;
+	class FontNameControlConstructor;
+	class FontNameControl;
+	class FontSizeControlConstructor;
+	class FontSizeControl;
+	class FullFontDialogWindowConstructor;
+	class FullFontDialogWindow;
+	class IDialogStringsStrings;
+	class MessageBoxButtonTemplateConstructor;
+	class MessageBoxButtonTemplate;
+	class MessageBoxWindowConstructor;
+	class MessageBoxWindow;
+	class SimpleFontDialogWindowConstructor;
+	class SimpleFontDialogWindow;
+
+	class ColorComponentControlConstructor : public ::vl::Object, public ::vl::reflection::Description<ColorComponentControlConstructor>
+	{
+		friend class ::vl_workflow_global::__vwsnc1_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc2_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc3_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf1_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf2_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf3_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf4_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<ColorComponentControlConstructor>;
+#endif
+	protected:
+		::gaclib_controls::ColorComponentControl* self;
+		::vl::presentation::controls::GuiSinglelineTextBox* textBox;
+		::vl::presentation::controls::GuiScroll* tracker;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_0;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_1;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_2;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_3;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_4;
+		void __vwsn_gaclib_controls_ColorComponentControl_Initialize(::gaclib_controls::ColorComponentControl* __vwsn_this_);
+	public:
+		ColorComponentControlConstructor();
+	};
+
+	class ColorComponentControl : public ::vl::presentation::controls::GuiCustomControl, public ::gaclib_controls::ColorComponentControlConstructor, public ::vl::reflection::Description<ColorComponentControl>
+	{
+		friend class ::gaclib_controls::ColorComponentControlConstructor;
+		friend class ::vl_workflow_global::__vwsnc1_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc2_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc3_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf1_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf2_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf3_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf4_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<ColorComponentControl>;
+#endif
+	public:
+		::vl::vint __vwsn_prop_Value;
+		::vl::vint GetValue();
+		void SetValue(::vl::vint __vwsn_value_);
+		::vl::Event<void()> ValueChanged;
+		::vl::WString __vwsn_prop_TextBoxAlt;
+		::vl::WString GetTextBoxAlt();
+		void SetTextBoxAlt(const ::vl::WString& __vwsn_value_);
+		::vl::Event<void()> TextBoxAltChanged;
+		ColorComponentControl();
+		~ColorComponentControl();
+	};
+
+	class ColorDialogControlConstructor : public ::vl::Object, public ::vl::reflection::Description<ColorDialogControlConstructor>
+	{
+		friend class ::vl_workflow_global::__vwsnc10_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc4_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc5_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc6_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc7_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc8_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc9_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf10_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf11_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf5_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf6_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf7_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf8_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf9_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<ColorDialogControlConstructor>;
+#endif
+	protected:
+		::gaclib_controls::ColorDialogControl* self;
+		::vl::Ptr<::vl::presentation::IColorDialogViewModel> ViewModel;
+		::gaclib_controls::ColorComponentControl* colorRed;
+		::gaclib_controls::ColorComponentControl* colorGreen;
+		::gaclib_controls::ColorComponentControl* colorBlue;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_0;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_1;
+		::vl::presentation::controls::GuiLabel* __vwsn_precompile_2;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_3;
+		::vl::presentation::controls::GuiLabel* __vwsn_precompile_4;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_5;
+		::vl::presentation::controls::GuiLabel* __vwsn_precompile_6;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_7;
+		::vl::presentation::controls::GuiLabel* __vwsn_precompile_8;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_9;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_10;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_11;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_12;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_13;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_14;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_15;
+		::vl::Ptr<::vl::presentation::elements::GuiSolidBackgroundElement> __vwsn_precompile_16;
+		void __vwsn_gaclib_controls_ColorDialogControl_Initialize(::gaclib_controls::ColorDialogControl* __vwsn_this_);
+	public:
+		ColorDialogControlConstructor();
+	};
+
+	class ColorDialogControl : public ::vl::presentation::controls::GuiCustomControl, public ::gaclib_controls::ColorDialogControlConstructor, public ::vl::reflection::Description<ColorDialogControl>
+	{
+		friend class ::gaclib_controls::ColorDialogControlConstructor;
+		friend class ::vl_workflow_global::__vwsnc10_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc4_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc5_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc6_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc7_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc8_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc9_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf10_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf11_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf5_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf6_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf7_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf8_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf9_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<ColorDialogControl>;
+#endif
+	public:
+		::vl::presentation::Color __vwsn_prop_Value;
+		::vl::presentation::Color GetValue();
+		void SetValue(::vl::presentation::Color __vwsn_value_);
+		::vl::Event<void()> ValueChanged;
+		::vl::presentation::Color ReadColor();
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_prop_Strings;
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> GetStrings();
+		void SetStrings(::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_value_);
+		::vl::Event<void()> StringsChanged;
+		::vl::Ptr<::vl::presentation::IColorDialogViewModel> __vwsn_parameter_ViewModel;
+		::vl::Ptr<::vl::presentation::IColorDialogViewModel> GetViewModel();
+		ColorDialogControl(::vl::Ptr<::vl::presentation::IColorDialogViewModel> __vwsn_ctor_parameter_ViewModel);
+		~ColorDialogControl();
+	};
+
+	class ColorDialogWindowConstructor : public ::vl::Object, public ::vl::reflection::Description<ColorDialogWindowConstructor>
+	{
+		friend class ::vl_workflow_global::__vwsnc11_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc12_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc13_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc14_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf12_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf13_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf14_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf15_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf16_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf17_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<ColorDialogWindowConstructor>;
+#endif
+	protected:
+		::gaclib_controls::ColorDialogWindow* self;
+		::vl::Ptr<::vl::presentation::IColorDialogViewModel> ViewModel;
+		::gaclib_controls::ColorDialogControl* colorControl;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_0;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_1;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_2;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_3;
+		::vl::presentation::controls::GuiButton* __vwsn_precompile_4;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_5;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_6;
+		::vl::presentation::controls::GuiButton* __vwsn_precompile_7;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_8;
+		void __vwsn_gaclib_controls_ColorDialogWindow_Initialize(::gaclib_controls::ColorDialogWindow* __vwsn_this_);
+	public:
+		ColorDialogWindowConstructor();
+	};
+
+	class ColorDialogWindow : public ::vl::presentation::controls::GuiWindow, public ::gaclib_controls::ColorDialogWindowConstructor, public ::vl::reflection::Description<ColorDialogWindow>
+	{
+		friend class ::gaclib_controls::ColorDialogWindowConstructor;
+		friend class ::vl_workflow_global::__vwsnc11_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc12_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc13_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc14_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf12_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf13_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf14_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf15_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf16_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf17_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<ColorDialogWindow>;
+#endif
+	public:
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_prop_Strings;
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> GetStrings();
+		void SetStrings(::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_value_);
+		::vl::Event<void()> StringsChanged;
+		::vl::Ptr<::vl::presentation::IColorDialogViewModel> __vwsn_parameter_ViewModel;
+		::vl::Ptr<::vl::presentation::IColorDialogViewModel> GetViewModel();
+		ColorDialogWindow(::vl::Ptr<::vl::presentation::IColorDialogViewModel> __vwsn_ctor_parameter_ViewModel);
+		~ColorDialogWindow();
+	};
+
+	class DialogStrings : public ::vl::Object, public ::vl::reflection::Description<DialogStrings>
+	{
+		friend class ::vl_workflow_global::__vwsnc58_GuiFakeDialogServiceUI_gaclib_controls_DialogStrings___vwsn_ls_en_US_BuildStrings__gaclib_controls_IDialogStringsStrings;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<DialogStrings>;
+#endif
+	public:
+		static ::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_ls_en_US_BuildStrings(::vl::Locale __vwsn_ls_locale);
+		static void Install(::vl::Locale __vwsn_ls_locale, ::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_ls_impl);
+		static ::vl::Ptr<::gaclib_controls::IDialogStringsStrings> Get(::vl::Locale __vwsn_ls_locale);
+		DialogStrings();
+	};
+
+	class FileDialogWindowConstructor : public ::vl::Object, public ::vl::reflection::Description<FileDialogWindowConstructor>
+	{
+		friend class ::vl_workflow_global::__vwsnc15_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc16_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc17_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf18_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf19_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__;
+		friend struct ::vl_workflow_global::__vwsnf20_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf21_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf22_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf23_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf24_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<FileDialogWindowConstructor>;
+#endif
+	protected:
+		::gaclib_controls::FileDialogWindow* self;
+		::vl::Ptr<::vl::presentation::IFileDialogViewModel> ViewModel;
+		::gaclib_controls::FilePickerControl* filePickerControl;
+		::vl::presentation::controls::GuiButton* buttonOK;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_0;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_1;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_2;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_3;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_4;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_5;
+		::vl::presentation::controls::GuiButton* __vwsn_precompile_6;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_7;
+		void __vwsn_gaclib_controls_FileDialogWindow_Initialize(::gaclib_controls::FileDialogWindow* __vwsn_this_);
+	public:
+		FileDialogWindowConstructor();
+	};
+
+	class FileDialogWindow : public ::vl::presentation::controls::GuiWindow, public ::gaclib_controls::FileDialogWindowConstructor, public ::vl::reflection::Description<FileDialogWindow>
+	{
+		friend struct ::vl_workflow_global::__vwsnf25_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindow___vwsn_instance_ctor__;
+		friend class ::gaclib_controls::FileDialogWindowConstructor;
+		friend class ::vl_workflow_global::__vwsnc15_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc16_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc17_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf18_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf19_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__;
+		friend struct ::vl_workflow_global::__vwsnf20_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf21_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf22_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf23_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf24_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<FileDialogWindow>;
+#endif
+	public:
+		void MakeOpenFileDialog();
+		void MakeSaveFileDialog();
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_prop_Strings;
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> GetStrings();
+		void SetStrings(::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_value_);
+		::vl::Event<void()> StringsChanged;
+		::vl::Ptr<::vl::presentation::IFileDialogViewModel> __vwsn_parameter_ViewModel;
+		::vl::Ptr<::vl::presentation::IFileDialogViewModel> GetViewModel();
+		FileDialogWindow(::vl::Ptr<::vl::presentation::IFileDialogViewModel> __vwsn_ctor_parameter_ViewModel);
+		void __vwsn_instance_ctor_();
+		~FileDialogWindow();
+	};
+
+	class FilePickerControlConstructor : public ::vl::Object, public ::vl::reflection::Description<FilePickerControlConstructor>
+	{
+		friend class ::vl_workflow_global::__vwsnc18_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc19_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc20_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc21_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc22_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc23_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf26_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf27_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf28_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf29_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf30_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf32_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf33_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf35_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf36_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf37_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__;
+		friend struct ::vl_workflow_global::__vwsnf38_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf39_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf40_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf41_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf42_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf43_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsno31_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsno34_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<FilePickerControlConstructor>;
+#endif
+	protected:
+		::gaclib_controls::FilePickerControl* self;
+		::vl::Ptr<::vl::presentation::IFileDialogViewModel> ViewModel;
+		::vl::presentation::controls::GuiSinglelineTextBox* textBox;
+		::vl::presentation::controls::GuiBindableTreeView* treeView;
+		::vl::presentation::controls::GuiBindableDataGrid* dataGrid;
+		::vl::presentation::controls::GuiComboBoxListControl* comboBox;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_0;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_1;
+		::vl::presentation::controls::GuiLabel* __vwsn_precompile_2;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_3;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_4;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_5;
+		::vl::presentation::compositions::GuiColumnSplitterComposition* __vwsn_precompile_6;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_7;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_8;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_9;
+		::vl::Ptr<::vl::presentation::controls::list::DataColumn> __vwsn_precompile_10;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_11;
+		::vl::presentation::compositions::GuiGraphicsComposition* __vwsn_precompile_12;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_13;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_14;
+		::vl::presentation::compositions::GuiColumnSplitterComposition* __vwsn_precompile_15;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_16;
+		::vl::presentation::controls::GuiLabel* __vwsn_precompile_17;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_18;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_19;
+		::vl::presentation::compositions::GuiGraphicsComposition* __vwsn_precompile_20;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_21;
+		::vl::presentation::controls::GuiBindableTextList* __vwsn_precompile_22;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_23;
+		::vl::Ptr<::vl::presentation::IFileDialogViewModel> __vwsn_precompile_24;
+		void __vwsn_gaclib_controls_FilePickerControl_Initialize(::gaclib_controls::FilePickerControl* __vwsn_this_);
+	public:
+		FilePickerControlConstructor();
+	};
+
+	class FilePickerControl : public ::vl::presentation::controls::GuiCustomControl, public ::gaclib_controls::FilePickerControlConstructor, public ::vl::reflection::Description<FilePickerControl>
+	{
+		friend class ::vl_workflow_global::__vwsnc24_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControl_GetSelectedFiles___vl_reflection_description_ICoroutine;
+		friend class ::vl_workflow_global::__vwsnc25_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControl_CreateFileFilter__vl_presentation_controls_list_IDataFilter;
+		friend struct ::vl_workflow_global::__vwsnf44_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControl_GetSelectedFiles_;
+		friend class ::gaclib_controls::FilePickerControlConstructor;
+		friend class ::vl_workflow_global::__vwsnc18_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc19_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc20_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc21_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc22_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc23_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf26_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf27_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf28_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf29_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf30_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf32_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf33_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf35_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf36_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf37_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__;
+		friend struct ::vl_workflow_global::__vwsnf38_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf39_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf40_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf41_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf42_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf43_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsno31_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsno34_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<FilePickerControl>;
+#endif
+	public:
+		::vl::Ptr<::vl::presentation::GuiImageData> imageFolder;
+		::vl::Ptr<::vl::presentation::GuiImageData> imageFile;
+		::vl::Event<void()> RequestClose;
+		::vl::collections::LazyList<::vl::Ptr<::vl::presentation::IFileDialogFile>> GetSelectedFiles();
+		::vl::collections::LazyList<::vl::WString> GetSelection();
+		void LocateSelectedFolderInTreeView();
+		::vl::Ptr<::vl::presentation::controls::list::IDataFilter> CreateFileFilter(::vl::Ptr<::vl::presentation::IFileDialogFilter> filter);
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_prop_Strings;
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> GetStrings();
+		void SetStrings(::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_value_);
+		::vl::Event<void()> StringsChanged;
+		::vl::Ptr<::vl::presentation::IFileDialogViewModel> __vwsn_parameter_ViewModel;
+		::vl::Ptr<::vl::presentation::IFileDialogViewModel> GetViewModel();
+		FilePickerControl(::vl::Ptr<::vl::presentation::IFileDialogViewModel> __vwsn_ctor_parameter_ViewModel);
+		void __vwsn_instance_ctor_();
+		~FilePickerControl();
+	};
+
+	class FontNameControlConstructor : public ::vl::Object, public ::vl::reflection::Description<FontNameControlConstructor>
+	{
+		friend class ::vl_workflow_global::__vwsnc26_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc27_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc28_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc29_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf46_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf47_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf48_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf49_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf50_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf51_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsno45_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<FontNameControlConstructor>;
+#endif
+	protected:
+		::gaclib_controls::FontNameControl* self;
+		::vl::Ptr<::vl::presentation::ICommonFontDialogViewModel> ViewModel;
+		::vl::presentation::controls::GuiSinglelineTextBox* textBox;
+		::vl::presentation::controls::GuiBindableTextList* textList;
+		::vl::presentation::controls::GuiControl* __vwsn_precompile_0;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_1;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_2;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_3;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_4;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_5;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_6;
+		void __vwsn_gaclib_controls_FontNameControl_Initialize(::gaclib_controls::FontNameControl* __vwsn_this_);
+	public:
+		FontNameControlConstructor();
+	};
+
+	class FontNameControl : public ::vl::presentation::controls::GuiCustomControl, public ::gaclib_controls::FontNameControlConstructor, public ::vl::reflection::Description<FontNameControl>
+	{
+		friend class ::gaclib_controls::FontNameControlConstructor;
+		friend class ::vl_workflow_global::__vwsnc26_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc27_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc28_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc29_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf46_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf47_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf48_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf49_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf50_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf51_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsno45_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<FontNameControl>;
+#endif
+	public:
+		::vl::WString __vwsn_prop_Value;
+		::vl::WString GetValue();
+		void SetValue(const ::vl::WString& __vwsn_value_);
+		::vl::Event<void()> ValueChanged;
+		bool __vwsn_prop_Legal;
+		bool GetLegal();
+		void SetLegal(bool __vwsn_value_);
+		::vl::Event<void()> LegalChanged;
+		void UpdateSelectedIndex();
+		void InitValue(const ::vl::WString& value);
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_prop_Strings;
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> GetStrings();
+		void SetStrings(::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_value_);
+		::vl::Event<void()> StringsChanged;
+		::vl::Ptr<::vl::presentation::ICommonFontDialogViewModel> __vwsn_parameter_ViewModel;
+		::vl::Ptr<::vl::presentation::ICommonFontDialogViewModel> GetViewModel();
+		FontNameControl(::vl::Ptr<::vl::presentation::ICommonFontDialogViewModel> __vwsn_ctor_parameter_ViewModel);
+		~FontNameControl();
+	};
+
+	class FontSizeControlConstructor : public ::vl::Object, public ::vl::reflection::Description<FontSizeControlConstructor>
+	{
+		friend class ::vl_workflow_global::__vwsnc30_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc31_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc32_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc33_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf53_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf54_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf55_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf56_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf57_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf58_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsno52_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<FontSizeControlConstructor>;
+#endif
+	protected:
+		::gaclib_controls::FontSizeControl* self;
+		::vl::presentation::controls::GuiSinglelineTextBox* textBox;
+		::vl::presentation::controls::GuiBindableTextList* textList;
+		::vl::presentation::controls::GuiControl* __vwsn_precompile_0;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_1;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_2;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_3;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_4;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_5;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_6;
+		void __vwsn_gaclib_controls_FontSizeControl_Initialize(::gaclib_controls::FontSizeControl* __vwsn_this_);
+	public:
+		FontSizeControlConstructor();
+	};
+
+	class FontSizeControl : public ::vl::presentation::controls::GuiCustomControl, public ::gaclib_controls::FontSizeControlConstructor, public ::vl::reflection::Description<FontSizeControl>
+	{
+		friend class ::gaclib_controls::FontSizeControlConstructor;
+		friend class ::vl_workflow_global::__vwsnc30_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc31_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc32_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc33_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf53_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf54_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf55_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf56_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf57_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf58_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+		friend struct ::vl_workflow_global::__vwsno52_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<FontSizeControl>;
+#endif
+	public:
+		::vl::Ptr<::vl::reflection::description::IValueList> __vwsn_prop_SizeList;
+		::vl::Ptr<::vl::reflection::description::IValueList> GetSizeList();
+		void SetSizeList(::vl::Ptr<::vl::reflection::description::IValueList> __vwsn_value_);
+		::vl::vint __vwsn_prop_Value;
+		::vl::vint GetValue();
+		void SetValue(::vl::vint __vwsn_value_);
+		::vl::Event<void()> ValueChanged;
+		bool __vwsn_prop_Legal;
+		bool GetLegal();
+		void SetLegal(bool __vwsn_value_);
+		::vl::Event<void()> LegalChanged;
+		void UpdateSelectedIndex();
+		void InitValue(::vl::vint value);
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_prop_Strings;
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> GetStrings();
+		void SetStrings(::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_value_);
+		::vl::Event<void()> StringsChanged;
+		FontSizeControl();
+		~FontSizeControl();
+	};
+
+	class FullFontDialogWindowConstructor : public ::vl::Object, public ::vl::reflection::Description<FullFontDialogWindowConstructor>
+	{
+		friend class ::vl_workflow_global::__vwsnc34_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc35_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc36_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc37_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc38_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc39_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc40_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc41_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc42_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc43_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc44_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc45_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc46_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc47_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc48_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf59_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf60_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf61_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf62_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf63_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf64_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf65_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf66_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf67_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf68_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf69_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf70_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf71_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf72_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf73_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf74_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf75_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf76_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<FullFontDialogWindowConstructor>;
+#endif
+	protected:
+		::gaclib_controls::FullFontDialogWindow* self;
+		::vl::Ptr<::vl::presentation::IFullFontDialogViewModel> ViewModel;
+		::gaclib_controls::FontNameControl* nameControl;
+		::gaclib_controls::FontSizeControl* sizeControl;
+		::vl::presentation::controls::GuiSelectableButton* checkBold;
+		::vl::presentation::controls::GuiSelectableButton* checkItalic;
+		::vl::presentation::controls::GuiSelectableButton* checkUnderline;
+		::vl::presentation::controls::GuiSelectableButton* checkStrikeline;
+		::vl::presentation::controls::GuiSelectableButton* checkHAA;
+		::vl::presentation::controls::GuiSelectableButton* checkVAA;
+		::vl::presentation::compositions::GuiBoundsComposition* colorBounds;
+		::vl::Ptr<::vl::presentation::elements::GuiSolidBackgroundElement> colorBackground;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_0;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_1;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_2;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_3;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_4;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_5;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_6;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_7;
+		::vl::presentation::controls::GuiControl* __vwsn_precompile_8;
+		::vl::presentation::compositions::GuiStackComposition* __vwsn_precompile_9;
+		::vl::presentation::compositions::GuiStackItemComposition* __vwsn_precompile_10;
+		::vl::presentation::compositions::GuiStackItemComposition* __vwsn_precompile_11;
+		::vl::presentation::compositions::GuiStackItemComposition* __vwsn_precompile_12;
+		::vl::presentation::compositions::GuiStackItemComposition* __vwsn_precompile_13;
+		::vl::presentation::compositions::GuiStackItemComposition* __vwsn_precompile_14;
+		::vl::presentation::compositions::GuiStackItemComposition* __vwsn_precompile_15;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_16;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_17;
+		::vl::presentation::controls::GuiControl* __vwsn_precompile_18;
+		::vl::Ptr<::vl::presentation::elements::Gui3DBorderElement> __vwsn_precompile_19;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_20;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_21;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_22;
+		::vl::presentation::controls::GuiControl* __vwsn_precompile_23;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_24;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_25;
+		::vl::presentation::controls::GuiLabel* __vwsn_precompile_26;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_27;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_28;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_29;
+		::vl::presentation::controls::GuiButton* __vwsn_precompile_30;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_31;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_32;
+		::vl::presentation::controls::GuiButton* __vwsn_precompile_33;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_34;
+		void __vwsn_gaclib_controls_FullFontDialogWindow_Initialize(::gaclib_controls::FullFontDialogWindow* __vwsn_this_);
+	public:
+		FullFontDialogWindowConstructor();
+	};
+
+	class FullFontDialogWindow : public ::vl::presentation::controls::GuiWindow, public ::gaclib_controls::FullFontDialogWindowConstructor, public ::vl::reflection::Description<FullFontDialogWindow>
+	{
+		friend class ::gaclib_controls::FullFontDialogWindowConstructor;
+		friend class ::vl_workflow_global::__vwsnc34_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc35_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc36_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc37_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc38_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc39_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc40_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc41_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc42_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc43_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc44_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc45_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc46_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc47_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc48_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf59_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf60_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf61_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf62_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf63_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf64_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf65_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf66_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf67_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf68_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf69_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf70_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf71_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf72_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf73_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf74_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf75_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf76_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<FullFontDialogWindow>;
+#endif
+	public:
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_prop_Strings;
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> GetStrings();
+		void SetStrings(::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_value_);
+		::vl::Event<void()> StringsChanged;
+		::vl::Ptr<::vl::presentation::IFullFontDialogViewModel> __vwsn_parameter_ViewModel;
+		::vl::Ptr<::vl::presentation::IFullFontDialogViewModel> GetViewModel();
+		FullFontDialogWindow(::vl::Ptr<::vl::presentation::IFullFontDialogViewModel> __vwsn_ctor_parameter_ViewModel);
+		void __vwsn_instance_ctor_();
+		~FullFontDialogWindow();
+	};
+
+	class IDialogStringsStrings : public virtual ::vl::reflection::IDescriptable, public ::vl::reflection::Description<IDialogStringsStrings>
+	{
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<IDialogStringsStrings>;
+#endif
+	public:
+		virtual ::vl::WString Abort() = 0;
+		virtual ::vl::WString Blue() = 0;
+		virtual ::vl::WString Bold() = 0;
+		virtual ::vl::WString Cancel() = 0;
+		virtual ::vl::WString Color() = 0;
+		virtual ::vl::WString ColorDialogTitle() = 0;
+		virtual ::vl::WString Continue() = 0;
+		virtual ::vl::WString FileDialogAskCreateFile() = 0;
+		virtual ::vl::WString FileDialogAskOverrideFile() = 0;
+		virtual ::vl::WString FileDialogErrorEmptySelection() = 0;
+		virtual ::vl::WString FileDialogErrorFileExpected() = 0;
+		virtual ::vl::WString FileDialogErrorFileNotExist() = 0;
+		virtual ::vl::WString FileDialogErrorFolderNotExist() = 0;
+		virtual ::vl::WString FileDialogErrorMultipleSelectionNotEnabled() = 0;
+		virtual ::vl::WString FileDialogFileName() = 0;
+		virtual ::vl::WString FileDialogOpen() = 0;
+		virtual ::vl::WString FileDialogSave() = 0;
+		virtual ::vl::WString FileDialogTextLoadingFiles() = 0;
+		virtual ::vl::WString FileDialogTextLoadingFolders() = 0;
+		virtual ::vl::WString FontColorGroup() = 0;
+		virtual ::vl::WString FontColorGroup2() = 0;
+		virtual ::vl::WString FontDialogTitle() = 0;
+		virtual ::vl::WString FontEffectGroup() = 0;
+		virtual ::vl::WString FontNameGroup() = 0;
+		virtual ::vl::WString FontPreviewGroup() = 0;
+		virtual ::vl::WString FontSizeGroup() = 0;
+		virtual ::vl::WString Green() = 0;
+		virtual ::vl::WString HAA() = 0;
+		virtual ::vl::WString Ignore() = 0;
+		virtual ::vl::WString Italic() = 0;
+		virtual ::vl::WString No() = 0;
+		virtual ::vl::WString OK() = 0;
+		virtual ::vl::WString Red() = 0;
+		virtual ::vl::WString Retry() = 0;
+		virtual ::vl::WString Strikeline() = 0;
+		virtual ::vl::WString TryAgain() = 0;
+		virtual ::vl::WString Underline() = 0;
+		virtual ::vl::WString VAA() = 0;
+		virtual ::vl::WString Yes() = 0;
+	};
+
+	class MessageBoxButtonTemplateConstructor : public ::vl::Object, public ::vl::reflection::Description<MessageBoxButtonTemplateConstructor>
+	{
+		friend class ::vl_workflow_global::__vwsnc56_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc57_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf86_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf87_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf88_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<MessageBoxButtonTemplateConstructor>;
+#endif
+	protected:
+		::vl::Ptr<::vl::presentation::IMessageBoxDialogAction> Action;
+		::gaclib_controls::MessageBoxButtonTemplate* self;
+		::vl::presentation::controls::GuiButton* buttonControl;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_0;
+		void __vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize(::gaclib_controls::MessageBoxButtonTemplate* __vwsn_this_);
+	public:
+		MessageBoxButtonTemplateConstructor();
+	};
+
+	class MessageBoxButtonTemplate : public ::vl::presentation::templates::GuiControlTemplate, public ::gaclib_controls::MessageBoxButtonTemplateConstructor, public ::vl::reflection::Description<MessageBoxButtonTemplate>
+	{
+		friend class ::gaclib_controls::MessageBoxButtonTemplateConstructor;
+		friend class ::vl_workflow_global::__vwsnc56_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc57_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf86_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf87_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf88_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<MessageBoxButtonTemplate>;
+#endif
+	public:
+		::vl::presentation::controls::GuiButton* __vwsn_prop_ButtonControl;
+		::vl::presentation::controls::GuiButton* GetButtonControl();
+		void SetButtonControl(::vl::presentation::controls::GuiButton* __vwsn_value_);
+		::vl::Event<void()> ButtonControlChanged;
+		::vl::WString GetButtonText(::vl::presentation::INativeDialogService::MessageBoxButtonsOutput button, ::vl::Ptr<::gaclib_controls::IDialogStringsStrings> strings);
+		::vl::WString GetButtonAlt(::vl::presentation::INativeDialogService::MessageBoxButtonsOutput button);
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_prop_Strings;
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> GetStrings();
+		void SetStrings(::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_value_);
+		::vl::Event<void()> StringsChanged;
+		::vl::Ptr<::vl::presentation::IMessageBoxDialogAction> __vwsn_parameter_Action;
+		::vl::Ptr<::vl::presentation::IMessageBoxDialogAction> GetAction();
+		MessageBoxButtonTemplate(::vl::Ptr<::vl::presentation::IMessageBoxDialogAction> __vwsn_ctor_parameter_Action);
+		void __vwsn_instance_ctor_();
+		~MessageBoxButtonTemplate();
+	};
+
+	class MessageBoxWindowConstructor : public ::vl::Object, public ::vl::reflection::Description<MessageBoxWindowConstructor>
+	{
+		friend struct ::vl_workflow_global::__vwsnf89_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxWindowConstructor___vwsn_gaclib_controls_MessageBoxWindow_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<MessageBoxWindowConstructor>;
+#endif
+	protected:
+		::gaclib_controls::MessageBoxWindow* self;
+		::vl::Ptr<::vl::presentation::IMessageBoxDialogViewModel> ViewModel;
+		::vl::presentation::compositions::GuiRepeatStackComposition* buttonStack;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_0;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_1;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_2;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_3;
+		::vl::Ptr<::vl::presentation::elements::GuiSolidBackgroundElement> __vwsn_precompile_4;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_5;
+		::vl::Ptr<::vl::presentation::elements::GuiImageFrameElement> __vwsn_precompile_6;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_7;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_8;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_9;
+		::vl::presentation::controls::GuiLabel* __vwsn_precompile_10;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_11;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_12;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_13;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_14;
+		void __vwsn_gaclib_controls_MessageBoxWindow_Initialize(::gaclib_controls::MessageBoxWindow* __vwsn_this_);
+	public:
+		MessageBoxWindowConstructor();
+	};
+
+	class MessageBoxWindow : public ::vl::presentation::controls::GuiWindow, public ::gaclib_controls::MessageBoxWindowConstructor, public ::vl::reflection::Description<MessageBoxWindow>
+	{
+		friend class ::gaclib_controls::MessageBoxWindowConstructor;
+		friend struct ::vl_workflow_global::__vwsnf89_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxWindowConstructor___vwsn_gaclib_controls_MessageBoxWindow_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<MessageBoxWindow>;
+#endif
+	public:
+		::vl::Ptr<::vl::presentation::INativeImage> GetIcon(::vl::presentation::INativeDialogService::MessageBoxIcons icon);
+		::vl::Ptr<::vl::presentation::IMessageBoxDialogViewModel> __vwsn_parameter_ViewModel;
+		::vl::Ptr<::vl::presentation::IMessageBoxDialogViewModel> GetViewModel();
+		MessageBoxWindow(::vl::Ptr<::vl::presentation::IMessageBoxDialogViewModel> __vwsn_ctor_parameter_ViewModel);
+		void __vwsn_instance_ctor_();
+		~MessageBoxWindow();
+	};
+
+	class SimpleFontDialogWindowConstructor : public ::vl::Object, public ::vl::reflection::Description<SimpleFontDialogWindowConstructor>
+	{
+		friend class ::vl_workflow_global::__vwsnc49_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc50_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc51_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc52_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc53_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc54_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc55_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf77_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf78_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf79_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf80_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf81_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf82_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf83_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf84_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf85_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<SimpleFontDialogWindowConstructor>;
+#endif
+	protected:
+		::gaclib_controls::SimpleFontDialogWindow* self;
+		::vl::Ptr<::vl::presentation::ISimpleFontDialogViewModel> ViewModel;
+		::gaclib_controls::FontNameControl* nameControl;
+		::gaclib_controls::FontSizeControl* sizeControl;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_0;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_1;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_2;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_3;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_4;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_5;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_6;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_7;
+		::vl::presentation::controls::GuiControl* __vwsn_precompile_8;
+		::vl::presentation::compositions::GuiTableComposition* __vwsn_precompile_9;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_10;
+		::vl::presentation::controls::GuiLabel* __vwsn_precompile_11;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_12;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_13;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_14;
+		::vl::presentation::controls::GuiButton* __vwsn_precompile_15;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_16;
+		::vl::presentation::compositions::GuiCellComposition* __vwsn_precompile_17;
+		::vl::presentation::controls::GuiButton* __vwsn_precompile_18;
+		::vl::presentation::compositions::GuiBoundsComposition* __vwsn_precompile_19;
+		void __vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize(::gaclib_controls::SimpleFontDialogWindow* __vwsn_this_);
+	public:
+		SimpleFontDialogWindowConstructor();
+	};
+
+	class SimpleFontDialogWindow : public ::vl::presentation::controls::GuiWindow, public ::gaclib_controls::SimpleFontDialogWindowConstructor, public ::vl::reflection::Description<SimpleFontDialogWindow>
+	{
+		friend class ::gaclib_controls::SimpleFontDialogWindowConstructor;
+		friend class ::vl_workflow_global::__vwsnc49_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc50_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc51_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc52_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc53_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc54_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend class ::vl_workflow_global::__vwsnc55_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription;
+		friend struct ::vl_workflow_global::__vwsnf77_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf78_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf79_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf80_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf81_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf82_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf83_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf84_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+		friend struct ::vl_workflow_global::__vwsnf85_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_;
+#ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
+		friend struct ::vl::reflection::description::CustomTypeDescriptorSelector<SimpleFontDialogWindow>;
+#endif
+	public:
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_prop_Strings;
+		::vl::Ptr<::gaclib_controls::IDialogStringsStrings> GetStrings();
+		void SetStrings(::vl::Ptr<::gaclib_controls::IDialogStringsStrings> __vwsn_value_);
+		::vl::Event<void()> StringsChanged;
+		::vl::Ptr<::vl::presentation::ISimpleFontDialogViewModel> __vwsn_parameter_ViewModel;
+		::vl::Ptr<::vl::presentation::ISimpleFontDialogViewModel> GetViewModel();
+		SimpleFontDialogWindow(::vl::Ptr<::vl::presentation::ISimpleFontDialogViewModel> __vwsn_ctor_parameter_ViewModel);
+		void __vwsn_instance_ctor_();
+		~SimpleFontDialogWindow();
+	};
+
+}
+/***********************************************************************
+Global Variables and Functions
+***********************************************************************/
+
+namespace vl_workflow_global
+{
+	class GuiFakeDialogServiceUI
+	{
+	public:
+
+		::vl::Ptr<::vl::reflection::description::IValueDictionary> __vwsn_ls_DialogStrings;
+
+		static GuiFakeDialogServiceUI& Instance();
+	};
+
+/***********************************************************************
+Closures
+***********************************************************************/
+
+	struct __vwsnf10_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_
+	{
+		::gaclib_controls::ColorDialogControlConstructor* __vwsnthis_0;
+
+		__vwsnf10_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_(::gaclib_controls::ColorDialogControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf11_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_
+	{
+		::gaclib_controls::ColorDialogControlConstructor* __vwsnthis_0;
+
+		__vwsnf11_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_(::gaclib_controls::ColorDialogControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf12_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_
+	{
+		::gaclib_controls::ColorDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf12_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_(::gaclib_controls::ColorDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf13_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_
+	{
+		::gaclib_controls::ColorDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf13_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_(::gaclib_controls::ColorDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(::vl::presentation::compositions::GuiGraphicsComposition* sender, ::vl::presentation::compositions::GuiEventArgs* arguments) const;
+	};
+
+	struct __vwsnf14_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_
+	{
+		::gaclib_controls::ColorDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf14_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_(::gaclib_controls::ColorDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf15_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_
+	{
+		::gaclib_controls::ColorDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf15_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_(::gaclib_controls::ColorDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(::vl::presentation::compositions::GuiGraphicsComposition* sender, ::vl::presentation::compositions::GuiEventArgs* arguments) const;
+	};
+
+	struct __vwsnf16_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_
+	{
+		::gaclib_controls::ColorDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf16_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_(::gaclib_controls::ColorDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf17_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_
+	{
+		::gaclib_controls::ColorDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf17_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize_(::gaclib_controls::ColorDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf18_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_
+	{
+		::gaclib_controls::FileDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf18_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_(::gaclib_controls::FileDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()() const;
+	};
+
+	struct __vwsnf19_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__
+	{
+		::gaclib_controls::FileDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf19_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__(::gaclib_controls::FileDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()() const;
+	};
+
+	struct __vwsnf1_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_
+	{
+		::gaclib_controls::ColorComponentControlConstructor* __vwsnthis_0;
+
+		__vwsnf1_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_(::gaclib_controls::ColorComponentControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf20_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_
+	{
+		::gaclib_controls::FileDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf20_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_(::gaclib_controls::FileDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf21_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_
+	{
+		::gaclib_controls::FileDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf21_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_(::gaclib_controls::FileDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(::vl::presentation::compositions::GuiGraphicsComposition* sender, ::vl::presentation::compositions::GuiEventArgs* arguments) const;
+	};
+
+	struct __vwsnf22_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_
+	{
+		::gaclib_controls::FileDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf22_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_(::gaclib_controls::FileDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf23_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_
+	{
+		::gaclib_controls::FileDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf23_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_(::gaclib_controls::FileDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(::vl::presentation::compositions::GuiGraphicsComposition* sender, ::vl::presentation::compositions::GuiEventArgs* arguments) const;
+	};
+
+	struct __vwsnf24_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_
+	{
+		::gaclib_controls::FileDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf24_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize_(::gaclib_controls::FileDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf25_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindow___vwsn_instance_ctor__
+	{
+		::gaclib_controls::FileDialogWindow* __vwsnthis_0;
+
+		__vwsnf25_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindow___vwsn_instance_ctor__(::gaclib_controls::FileDialogWindow* __vwsnctorthis_0);
+
+		void operator()() const;
+	};
+
+	struct __vwsnf26_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_
+	{
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnf26_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		::vl::Ptr<::vl::reflection::description::IValueEnumerable> operator()(const ::vl::reflection::description::Value& __vwsn_item_) const;
+	};
+
+	struct __vwsnf27_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_
+	{
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnf27_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		::vl::WString operator()(const ::vl::reflection::description::Value& __vwsn_item_) const;
+	};
+
+	struct __vwsnf28_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_
+	{
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnf28_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		::vl::WString operator()(const ::vl::reflection::description::Value& __vwsn_item_) const;
+	};
+
+	struct __vwsnf29_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_
+	{
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnf29_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		::vl::WString operator()(const ::vl::reflection::description::Value& __vwsn_item_) const;
+	};
+
+	struct __vwsnf2_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_
+	{
+		::gaclib_controls::ColorComponentControlConstructor* __vwsnthis_0;
+
+		__vwsnf2_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_(::gaclib_controls::ColorComponentControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf30_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_
+	{
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnf30_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf32_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_
+	{
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnf32_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf33_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_
+	{
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnf33_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		void operator()(::vl::presentation::compositions::GuiGraphicsComposition* sender, ::vl::presentation::compositions::GuiKeyEventArgs* arguments) const;
+	};
+
+	struct __vwsnf35_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_
+	{
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnf35_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		void operator()(::vl::presentation::compositions::GuiGraphicsComposition* sender, ::vl::presentation::compositions::GuiEventArgs* arguments) const;
+	};
+
+	struct __vwsnf36_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_
+	{
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnf36_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		void operator()(::vl::presentation::compositions::GuiGraphicsComposition* sender, ::vl::presentation::compositions::GuiItemMouseEventArgs* arguments) const;
+	};
+
+	struct __vwsnf37_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__
+	{
+		::vl::collections::LazyList<::vl::WString> selection;
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnf37_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__(::vl::collections::LazyList<::vl::WString> __vwsnctor_selection, ::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		void operator()() const;
+	};
+
+	struct __vwsnf38_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_
+	{
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnf38_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf39_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_
+	{
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnf39_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		void operator()(::vl::presentation::compositions::GuiGraphicsComposition* sender, ::vl::presentation::compositions::GuiKeyEventArgs* arguments) const;
+	};
+
+	struct __vwsnf3_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_
+	{
+		::gaclib_controls::ColorComponentControlConstructor* __vwsnthis_0;
+
+		__vwsnf3_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_(::gaclib_controls::ColorComponentControlConstructor* __vwsnctorthis_0);
+
+		void operator()(::vl::presentation::compositions::GuiGraphicsComposition* sender, ::vl::presentation::compositions::GuiEventArgs* arguments) const;
+	};
+
+	struct __vwsnf40_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_
+	{
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnf40_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf41_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_
+	{
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnf41_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf42_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_
+	{
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnf42_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		void operator()() const;
+	};
+
+	struct __vwsnf43_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_
+	{
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnf43_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf44_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControl_GetSelectedFiles_
+	{
+		::gaclib_controls::FilePickerControl* __vwsnthis_0;
+
+		__vwsnf44_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControl_GetSelectedFiles_(::gaclib_controls::FilePickerControl* __vwsnctorthis_0);
+
+		::vl::Ptr<::vl::reflection::description::ICoroutine> operator()(::vl::reflection::description::EnumerableCoroutine::IImpl* __vwsn_co_impl_) const;
+	};
+
+	struct __vwsnf46_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_
+	{
+		::gaclib_controls::FontNameControlConstructor* __vwsnthis_0;
+
+		__vwsnf46_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_(::gaclib_controls::FontNameControlConstructor* __vwsnctorthis_0);
+
+		void operator()(::vl::presentation::compositions::GuiGraphicsComposition* sender, ::vl::presentation::compositions::GuiEventArgs* arguments) const;
+	};
+
+	struct __vwsnf47_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_
+	{
+		::gaclib_controls::FontNameControlConstructor* __vwsnthis_0;
+
+		__vwsnf47_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_(::gaclib_controls::FontNameControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf48_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_
+	{
+		::gaclib_controls::FontNameControlConstructor* __vwsnthis_0;
+
+		__vwsnf48_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_(::gaclib_controls::FontNameControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf49_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_
+	{
+		::gaclib_controls::FontNameControlConstructor* __vwsnthis_0;
+
+		__vwsnf49_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_(::gaclib_controls::FontNameControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf4_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_
+	{
+		::gaclib_controls::ColorComponentControlConstructor* __vwsnthis_0;
+
+		__vwsnf4_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize_(::gaclib_controls::ColorComponentControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf50_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_
+	{
+		::gaclib_controls::FontNameControlConstructor* __vwsnthis_0;
+
+		__vwsnf50_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_(::gaclib_controls::FontNameControlConstructor* __vwsnctorthis_0);
+
+		void operator()() const;
+	};
+
+	struct __vwsnf51_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_
+	{
+		::gaclib_controls::FontNameControlConstructor* __vwsnthis_0;
+
+		__vwsnf51_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_(::gaclib_controls::FontNameControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf53_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_
+	{
+		::gaclib_controls::FontSizeControlConstructor* __vwsnthis_0;
+
+		__vwsnf53_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_(::gaclib_controls::FontSizeControlConstructor* __vwsnctorthis_0);
+
+		void operator()(::vl::presentation::compositions::GuiGraphicsComposition* sender, ::vl::presentation::compositions::GuiEventArgs* arguments) const;
+	};
+
+	struct __vwsnf54_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_
+	{
+		::gaclib_controls::FontSizeControlConstructor* __vwsnthis_0;
+
+		__vwsnf54_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_(::gaclib_controls::FontSizeControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf55_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_
+	{
+		::gaclib_controls::FontSizeControlConstructor* __vwsnthis_0;
+
+		__vwsnf55_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_(::gaclib_controls::FontSizeControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf56_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_
+	{
+		::gaclib_controls::FontSizeControlConstructor* __vwsnthis_0;
+
+		__vwsnf56_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_(::gaclib_controls::FontSizeControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf57_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_
+	{
+		::gaclib_controls::FontSizeControlConstructor* __vwsnthis_0;
+
+		__vwsnf57_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_(::gaclib_controls::FontSizeControlConstructor* __vwsnctorthis_0);
+
+		void operator()() const;
+	};
+
+	struct __vwsnf58_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_
+	{
+		::gaclib_controls::FontSizeControlConstructor* __vwsnthis_0;
+
+		__vwsnf58_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_(::gaclib_controls::FontSizeControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf59_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf59_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf5_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_
+	{
+		::gaclib_controls::ColorDialogControlConstructor* __vwsnthis_0;
+
+		__vwsnf5_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_(::gaclib_controls::ColorDialogControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf60_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf60_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf61_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf61_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf62_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf62_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf63_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf63_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf64_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf64_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf65_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf65_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf66_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf66_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(::vl::presentation::compositions::GuiGraphicsComposition* sender, ::vl::presentation::compositions::GuiMouseEventArgs* arguments) const;
+	};
+
+	struct __vwsnf67_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf67_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf68_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf68_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf69_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf69_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf6_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_
+	{
+		::gaclib_controls::ColorDialogControlConstructor* __vwsnthis_0;
+
+		__vwsnf6_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_(::gaclib_controls::ColorDialogControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf70_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf70_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf71_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf71_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf72_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf72_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(::vl::presentation::compositions::GuiGraphicsComposition* sender, ::vl::presentation::compositions::GuiEventArgs* arguments) const;
+	};
+
+	struct __vwsnf73_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf73_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf74_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf74_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(::vl::presentation::compositions::GuiGraphicsComposition* sender, ::vl::presentation::compositions::GuiEventArgs* arguments) const;
+	};
+
+	struct __vwsnf75_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf75_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf76_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf76_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize_(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf77_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf77_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_(::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf78_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf78_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_(::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf79_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf79_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_(::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf7_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_
+	{
+		::gaclib_controls::ColorDialogControlConstructor* __vwsnthis_0;
+
+		__vwsnf7_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_(::gaclib_controls::ColorDialogControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf80_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf80_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_(::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf81_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf81_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_(::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(::vl::presentation::compositions::GuiGraphicsComposition* sender, ::vl::presentation::compositions::GuiEventArgs* arguments) const;
+	};
+
+	struct __vwsnf82_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf82_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_(::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf83_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf83_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_(::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(::vl::presentation::compositions::GuiGraphicsComposition* sender, ::vl::presentation::compositions::GuiEventArgs* arguments) const;
+	};
+
+	struct __vwsnf84_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf84_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_(::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf85_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_
+	{
+		::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnf85_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize_(::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf86_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize_
+	{
+		::gaclib_controls::MessageBoxButtonTemplateConstructor* __vwsnthis_0;
+
+		__vwsnf86_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize_(::gaclib_controls::MessageBoxButtonTemplateConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf87_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize_
+	{
+		::gaclib_controls::MessageBoxButtonTemplateConstructor* __vwsnthis_0;
+
+		__vwsnf87_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize_(::gaclib_controls::MessageBoxButtonTemplateConstructor* __vwsnctorthis_0);
+
+		void operator()(::vl::presentation::compositions::GuiGraphicsComposition* sender, ::vl::presentation::compositions::GuiEventArgs* arguments) const;
+	};
+
+	struct __vwsnf88_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize_
+	{
+		::gaclib_controls::MessageBoxButtonTemplateConstructor* __vwsnthis_0;
+
+		__vwsnf88_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize_(::gaclib_controls::MessageBoxButtonTemplateConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf89_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxWindowConstructor___vwsn_gaclib_controls_MessageBoxWindow_Initialize_
+	{
+		::gaclib_controls::MessageBoxWindowConstructor* __vwsnthis_0;
+
+		__vwsnf89_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxWindowConstructor___vwsn_gaclib_controls_MessageBoxWindow_Initialize_(::gaclib_controls::MessageBoxWindowConstructor* __vwsnctorthis_0);
+
+		::vl::presentation::templates::GuiTemplate* operator()(const ::vl::reflection::description::Value& __vwsn_viewModel_) const;
+	};
+
+	struct __vwsnf8_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_
+	{
+		::gaclib_controls::ColorDialogControlConstructor* __vwsnthis_0;
+
+		__vwsnf8_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_(::gaclib_controls::ColorDialogControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsnf9_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_
+	{
+		::gaclib_controls::ColorDialogControlConstructor* __vwsnthis_0;
+
+		__vwsnf9_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize_(::gaclib_controls::ColorDialogControlConstructor* __vwsnctorthis_0);
+
+		void operator()(const ::vl::reflection::description::Value& __vwsn_value_) const;
+	};
+
+	struct __vwsno31_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_
+	{
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsno31_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		::vl::Ptr<::vl::presentation::GuiImageData> operator()(const ::vl::reflection::description::Value& __vwsno_1) const;
+	};
+
+	struct __vwsno34_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_
+	{
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsno34_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize_(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		::vl::Ptr<::vl::presentation::GuiImageData> operator()(const ::vl::reflection::description::Value& __vwsno_1) const;
+	};
+
+	struct __vwsno45_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_
+	{
+		::gaclib_controls::FontNameControlConstructor* __vwsnthis_0;
+
+		__vwsno45_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize_(::gaclib_controls::FontNameControlConstructor* __vwsnctorthis_0);
+
+		::vl::WString operator()(const ::vl::reflection::description::Value& __vwsno_1) const;
+	};
+
+	struct __vwsno52_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_
+	{
+		::gaclib_controls::FontSizeControlConstructor* __vwsnthis_0;
+
+		__vwsno52_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize_(::gaclib_controls::FontSizeControlConstructor* __vwsnctorthis_0);
+
+		::vl::WString operator()(const ::vl::reflection::description::Value& __vwsno_1) const;
+	};
+
+	class __vwsnc10_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::ColorDialogControlConstructor* __vwsnthis_0;
+
+		__vwsnc10_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::ColorDialogControlConstructor* __vwsnctorthis_0);
+
+		::vl::presentation::controls::GuiApplication* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc11_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::ColorDialogWindow* __vwsn_this_;
+		::gaclib_controls::ColorDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc11_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::ColorDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::ColorDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::ColorDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc12_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::ColorDialogWindow* __vwsn_this_;
+		::gaclib_controls::ColorDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc12_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::ColorDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::ColorDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::ColorDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc13_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::ColorDialogWindow* __vwsn_this_;
+		::gaclib_controls::ColorDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc13_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::ColorDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::ColorDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::ColorDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc14_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::ColorDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc14_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogWindowConstructor___vwsn_gaclib_controls_ColorDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::ColorDialogWindowConstructor* __vwsnctorthis_0);
+
+		::vl::presentation::controls::GuiApplication* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc15_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FileDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc15_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FileDialogWindowConstructor* __vwsnctorthis_0);
+
+		::vl::Ptr<::vl::presentation::IFileDialogViewModel> __vwsn_bind_cache_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc16_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FileDialogWindow* __vwsn_this_;
+		::gaclib_controls::FileDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc16_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FileDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::FileDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FileDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc17_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FileDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc17_GuiFakeDialogServiceUI_gaclib_controls_FileDialogWindowConstructor___vwsn_gaclib_controls_FileDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FileDialogWindowConstructor* __vwsnctorthis_0);
+
+		::vl::presentation::controls::GuiApplication* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc18_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnc18_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		::vl::Ptr<::vl::presentation::IFileDialogViewModel> __vwsn_bind_cache_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc19_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnc19_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		::vl::Ptr<::vl::presentation::IFileDialogViewModel> __vwsn_bind_cache_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc1_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::ColorComponentControlConstructor* __vwsnthis_0;
+
+		__vwsnc1_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::ColorComponentControlConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::ColorComponentControl* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc20_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FilePickerControl* __vwsn_this_;
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnc20_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FilePickerControl* __vwsnctor___vwsn_this_, ::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FilePickerControl* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc21_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnc21_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		::vl::presentation::controls::GuiComboBoxListControl* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0(::vl::presentation::compositions::GuiGraphicsComposition* __vwsn_bind_callback_argument_0, ::vl::presentation::compositions::GuiEventArgs* __vwsn_bind_callback_argument_1);
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc22_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnc22_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		::vl::presentation::controls::GuiBindableTreeView* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0(::vl::presentation::compositions::GuiGraphicsComposition* __vwsn_bind_callback_argument_0, ::vl::presentation::compositions::GuiEventArgs* __vwsn_bind_callback_argument_1);
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc23_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FilePickerControlConstructor* __vwsnthis_0;
+
+		__vwsnc23_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControlConstructor___vwsn_gaclib_controls_FilePickerControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FilePickerControlConstructor* __vwsnctorthis_0);
+
+		::vl::presentation::controls::GuiApplication* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc24_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControl_GetSelectedFiles___vl_reflection_description_ICoroutine : public ::vl::Object, public virtual ::vl::reflection::description::ICoroutine
+	{
+	public:
+		::vl::reflection::description::EnumerableCoroutine::IImpl* __vwsn_co_impl_;
+		::gaclib_controls::FilePickerControl* __vwsnthis_0;
+
+		__vwsnc24_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControl_GetSelectedFiles___vl_reflection_description_ICoroutine(::vl::reflection::description::EnumerableCoroutine::IImpl* __vwsnctor___vwsn_co_impl_, ::gaclib_controls::FilePickerControl* __vwsnctorthis_0);
+
+		::vl::Ptr<::vl::presentation::IFileDialogFile> __vwsn_co0_file;
+		::vl::vint __vwsn_co1_item = 0;
+		::vl::Ptr<::vl::reflection::description::IValueEnumerable> __vwsn_co2_for_enumerable_item;
+		::vl::Ptr<::vl::reflection::description::IValueEnumerator> __vwsn_co3_for_enumerator_item;
+		::vl::vint __vwsn_co_state_ = 0;
+		::vl::vint __vwsn_co_state_before_pause_ = 0;
+		::vl::Ptr<::vl::reflection::description::IValueException> __vwsn_prop_Failure;
+		::vl::Ptr<::vl::reflection::description::IValueException> GetFailure() override;
+		void SetFailure(::vl::Ptr<::vl::reflection::description::IValueException> __vwsn_value_);
+		::vl::reflection::description::CoroutineStatus __vwsn_prop_Status = static_cast<::vl::reflection::description::CoroutineStatus>(0);
+		::vl::reflection::description::CoroutineStatus GetStatus() override;
+		void SetStatus(::vl::reflection::description::CoroutineStatus __vwsn_value_);
+		void Resume(bool __vwsn_raise_exception_, ::vl::Ptr<::vl::reflection::description::CoroutineResult> __vwsn_co_result_) override;
+	};
+
+	class __vwsnc25_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControl_CreateFileFilter__vl_presentation_controls_list_IDataFilter : public ::vl::Object, public virtual ::vl::presentation::controls::list::IDataFilter
+	{
+	public:
+		::vl::Ptr<::vl::presentation::IFileDialogFilter> filter;
+		::gaclib_controls::FilePickerControl* __vwsnthis_0;
+
+		__vwsnc25_GuiFakeDialogServiceUI_gaclib_controls_FilePickerControl_CreateFileFilter__vl_presentation_controls_list_IDataFilter(::vl::Ptr<::vl::presentation::IFileDialogFilter> __vwsnctor_filter, ::gaclib_controls::FilePickerControl* __vwsnctorthis_0);
+
+		void SetCallback(::vl::presentation::controls::list::IDataProcessorCallback* value) override;
+		bool Filter(const ::vl::reflection::description::Value& row) override;
+	};
+
+	class __vwsnc26_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FontNameControl* __vwsn_this_;
+		::gaclib_controls::FontNameControlConstructor* __vwsnthis_0;
+
+		__vwsnc26_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FontNameControl* __vwsnctor___vwsn_this_, ::gaclib_controls::FontNameControlConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FontNameControl* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc27_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FontNameControlConstructor* __vwsnthis_0;
+
+		__vwsnc27_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FontNameControlConstructor* __vwsnctorthis_0);
+
+		::vl::presentation::controls::GuiSinglelineTextBox* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0(::vl::presentation::compositions::GuiGraphicsComposition* __vwsn_bind_callback_argument_0, ::vl::presentation::compositions::GuiEventArgs* __vwsn_bind_callback_argument_1);
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc28_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FontNameControlConstructor* __vwsnthis_0;
+
+		__vwsnc28_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FontNameControlConstructor* __vwsnctorthis_0);
+
+		::vl::presentation::controls::GuiSinglelineTextBox* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0(::vl::presentation::compositions::GuiGraphicsComposition* __vwsn_bind_callback_argument_0, ::vl::presentation::compositions::GuiEventArgs* __vwsn_bind_callback_argument_1);
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc29_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FontNameControlConstructor* __vwsnthis_0;
+
+		__vwsnc29_GuiFakeDialogServiceUI_gaclib_controls_FontNameControlConstructor___vwsn_gaclib_controls_FontNameControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FontNameControlConstructor* __vwsnctorthis_0);
+
+		::vl::presentation::controls::GuiApplication* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc2_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::ColorComponentControlConstructor* __vwsnthis_0;
+
+		__vwsnc2_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::ColorComponentControlConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::ColorComponentControl* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc30_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FontSizeControl* __vwsn_this_;
+		::gaclib_controls::FontSizeControlConstructor* __vwsnthis_0;
+
+		__vwsnc30_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FontSizeControl* __vwsnctor___vwsn_this_, ::gaclib_controls::FontSizeControlConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FontSizeControl* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc31_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FontSizeControlConstructor* __vwsnthis_0;
+
+		__vwsnc31_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FontSizeControlConstructor* __vwsnctorthis_0);
+
+		::vl::presentation::controls::GuiSinglelineTextBox* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0(::vl::presentation::compositions::GuiGraphicsComposition* __vwsn_bind_callback_argument_0, ::vl::presentation::compositions::GuiEventArgs* __vwsn_bind_callback_argument_1);
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc32_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FontSizeControlConstructor* __vwsnthis_0;
+
+		__vwsnc32_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FontSizeControlConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FontSizeControl* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc33_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FontSizeControlConstructor* __vwsnthis_0;
+
+		__vwsnc33_GuiFakeDialogServiceUI_gaclib_controls_FontSizeControlConstructor___vwsn_gaclib_controls_FontSizeControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FontSizeControlConstructor* __vwsnctorthis_0);
+
+		::vl::presentation::controls::GuiApplication* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc34_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FullFontDialogWindow* __vwsn_this_;
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc34_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FullFontDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FullFontDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc35_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FullFontDialogWindow* __vwsn_this_;
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc35_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FullFontDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FullFontDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc36_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FullFontDialogWindow* __vwsn_this_;
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc36_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FullFontDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FullFontDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc37_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FullFontDialogWindow* __vwsn_this_;
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc37_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FullFontDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FullFontDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc38_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FullFontDialogWindow* __vwsn_this_;
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc38_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FullFontDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FullFontDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc39_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FullFontDialogWindow* __vwsn_this_;
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc39_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FullFontDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FullFontDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc3_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::ColorComponentControlConstructor* __vwsnthis_0;
+
+		__vwsnc3_GuiFakeDialogServiceUI_gaclib_controls_ColorComponentControlConstructor___vwsn_gaclib_controls_ColorComponentControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::ColorComponentControlConstructor* __vwsnctorthis_0);
+
+		::vl::presentation::controls::GuiScroll* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0(::vl::presentation::compositions::GuiGraphicsComposition* __vwsn_bind_callback_argument_0, ::vl::presentation::compositions::GuiEventArgs* __vwsn_bind_callback_argument_1);
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc40_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FullFontDialogWindow* __vwsn_this_;
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc40_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FullFontDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FullFontDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc41_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FullFontDialogWindow* __vwsn_this_;
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc41_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FullFontDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FullFontDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc42_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc42_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FontNameControl* __vwsn_bind_cache_0 = nullptr;
+		::gaclib_controls::FontNameControl* __vwsn_bind_cache_1 = nullptr;
+		::gaclib_controls::FontSizeControl* __vwsn_bind_cache_2 = nullptr;
+		::gaclib_controls::FontSizeControl* __vwsn_bind_cache_3 = nullptr;
+		::vl::presentation::controls::GuiSelectableButton* __vwsn_bind_cache_4 = nullptr;
+		::vl::presentation::controls::GuiSelectableButton* __vwsn_bind_cache_5 = nullptr;
+		::vl::presentation::controls::GuiSelectableButton* __vwsn_bind_cache_6 = nullptr;
+		::vl::presentation::controls::GuiSelectableButton* __vwsn_bind_cache_7 = nullptr;
+		::vl::presentation::controls::GuiSelectableButton* __vwsn_bind_cache_8 = nullptr;
+		::vl::presentation::controls::GuiSelectableButton* __vwsn_bind_cache_9 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_1_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_2_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_3_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_4_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_5_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_6_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_7_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_8_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_9_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		void __vwsn_bind_callback_1_0();
+		void __vwsn_bind_callback_2_0();
+		void __vwsn_bind_callback_3_0();
+		void __vwsn_bind_callback_4_0(::vl::presentation::compositions::GuiGraphicsComposition* __vwsn_bind_callback_argument_0, ::vl::presentation::compositions::GuiEventArgs* __vwsn_bind_callback_argument_1);
+		void __vwsn_bind_callback_5_0(::vl::presentation::compositions::GuiGraphicsComposition* __vwsn_bind_callback_argument_0, ::vl::presentation::compositions::GuiEventArgs* __vwsn_bind_callback_argument_1);
+		void __vwsn_bind_callback_6_0(::vl::presentation::compositions::GuiGraphicsComposition* __vwsn_bind_callback_argument_0, ::vl::presentation::compositions::GuiEventArgs* __vwsn_bind_callback_argument_1);
+		void __vwsn_bind_callback_7_0(::vl::presentation::compositions::GuiGraphicsComposition* __vwsn_bind_callback_argument_0, ::vl::presentation::compositions::GuiEventArgs* __vwsn_bind_callback_argument_1);
+		void __vwsn_bind_callback_8_0(::vl::presentation::compositions::GuiGraphicsComposition* __vwsn_bind_callback_argument_0, ::vl::presentation::compositions::GuiEventArgs* __vwsn_bind_callback_argument_1);
+		void __vwsn_bind_callback_9_0(::vl::presentation::compositions::GuiGraphicsComposition* __vwsn_bind_callback_argument_0, ::vl::presentation::compositions::GuiEventArgs* __vwsn_bind_callback_argument_1);
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc43_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FullFontDialogWindow* __vwsn_this_;
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc43_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FullFontDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FullFontDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc44_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FullFontDialogWindow* __vwsn_this_;
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc44_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FullFontDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FullFontDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc45_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc45_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FontNameControl* __vwsn_bind_cache_0 = nullptr;
+		::gaclib_controls::FontSizeControl* __vwsn_bind_cache_1 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_1_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		void __vwsn_bind_callback_1_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc46_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FullFontDialogWindow* __vwsn_this_;
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc46_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FullFontDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FullFontDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc47_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FullFontDialogWindow* __vwsn_this_;
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc47_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FullFontDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FullFontDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc48_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::FullFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc48_GuiFakeDialogServiceUI_gaclib_controls_FullFontDialogWindowConstructor___vwsn_gaclib_controls_FullFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::FullFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::vl::presentation::controls::GuiApplication* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc49_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc49_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FontNameControl* __vwsn_bind_cache_0 = nullptr;
+		::gaclib_controls::FontNameControl* __vwsn_bind_cache_1 = nullptr;
+		::gaclib_controls::FontSizeControl* __vwsn_bind_cache_2 = nullptr;
+		::gaclib_controls::FontSizeControl* __vwsn_bind_cache_3 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_1_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_2_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_3_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		void __vwsn_bind_callback_1_0();
+		void __vwsn_bind_callback_2_0();
+		void __vwsn_bind_callback_3_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc4_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::ColorDialogControl* __vwsn_this_;
+		::gaclib_controls::ColorDialogControlConstructor* __vwsnthis_0;
+
+		__vwsnc4_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::ColorDialogControl* __vwsnctor___vwsn_this_, ::gaclib_controls::ColorDialogControlConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::ColorDialogControl* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc50_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::SimpleFontDialogWindow* __vwsn_this_;
+		::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc50_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::SimpleFontDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::SimpleFontDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc51_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::SimpleFontDialogWindow* __vwsn_this_;
+		::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc51_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::SimpleFontDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::SimpleFontDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc52_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc52_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::FontNameControl* __vwsn_bind_cache_0 = nullptr;
+		::gaclib_controls::FontSizeControl* __vwsn_bind_cache_1 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_1_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		void __vwsn_bind_callback_1_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc53_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::SimpleFontDialogWindow* __vwsn_this_;
+		::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc53_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::SimpleFontDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::SimpleFontDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc54_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::SimpleFontDialogWindow* __vwsn_this_;
+		::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc54_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::SimpleFontDialogWindow* __vwsnctor___vwsn_this_, ::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::SimpleFontDialogWindow* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc55_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnthis_0;
+
+		__vwsnc55_GuiFakeDialogServiceUI_gaclib_controls_SimpleFontDialogWindowConstructor___vwsn_gaclib_controls_SimpleFontDialogWindow_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::SimpleFontDialogWindowConstructor* __vwsnctorthis_0);
+
+		::vl::presentation::controls::GuiApplication* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc56_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::MessageBoxButtonTemplateConstructor* __vwsnthis_0;
+
+		__vwsnc56_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::MessageBoxButtonTemplateConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::MessageBoxButtonTemplate* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc57_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::MessageBoxButtonTemplateConstructor* __vwsnthis_0;
+
+		__vwsnc57_GuiFakeDialogServiceUI_gaclib_controls_MessageBoxButtonTemplateConstructor___vwsn_gaclib_controls_MessageBoxButtonTemplate_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::MessageBoxButtonTemplateConstructor* __vwsnctorthis_0);
+
+		::vl::presentation::controls::GuiApplication* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc58_GuiFakeDialogServiceUI_gaclib_controls_DialogStrings___vwsn_ls_en_US_BuildStrings__gaclib_controls_IDialogStringsStrings : public ::vl::Object, public virtual ::gaclib_controls::IDialogStringsStrings
+	{
+	public:
+		__vwsnc58_GuiFakeDialogServiceUI_gaclib_controls_DialogStrings___vwsn_ls_en_US_BuildStrings__gaclib_controls_IDialogStringsStrings();
+
+		::vl::WString Abort() override;
+		::vl::WString Blue() override;
+		::vl::WString Bold() override;
+		::vl::WString Cancel() override;
+		::vl::WString Color() override;
+		::vl::WString ColorDialogTitle() override;
+		::vl::WString Continue() override;
+		::vl::WString FileDialogAskCreateFile() override;
+		::vl::WString FileDialogAskOverrideFile() override;
+		::vl::WString FileDialogErrorEmptySelection() override;
+		::vl::WString FileDialogErrorFileExpected() override;
+		::vl::WString FileDialogErrorFileNotExist() override;
+		::vl::WString FileDialogErrorFolderNotExist() override;
+		::vl::WString FileDialogErrorMultipleSelectionNotEnabled() override;
+		::vl::WString FileDialogFileName() override;
+		::vl::WString FileDialogOpen() override;
+		::vl::WString FileDialogSave() override;
+		::vl::WString FileDialogTextLoadingFiles() override;
+		::vl::WString FileDialogTextLoadingFolders() override;
+		::vl::WString FontColorGroup() override;
+		::vl::WString FontColorGroup2() override;
+		::vl::WString FontDialogTitle() override;
+		::vl::WString FontEffectGroup() override;
+		::vl::WString FontNameGroup() override;
+		::vl::WString FontPreviewGroup() override;
+		::vl::WString FontSizeGroup() override;
+		::vl::WString Green() override;
+		::vl::WString HAA() override;
+		::vl::WString Ignore() override;
+		::vl::WString Italic() override;
+		::vl::WString No() override;
+		::vl::WString OK() override;
+		::vl::WString Red() override;
+		::vl::WString Retry() override;
+		::vl::WString Strikeline() override;
+		::vl::WString TryAgain() override;
+		::vl::WString Underline() override;
+		::vl::WString VAA() override;
+		::vl::WString Yes() override;
+	};
+
+	class __vwsnc5_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::ColorDialogControl* __vwsn_this_;
+		::gaclib_controls::ColorDialogControlConstructor* __vwsnthis_0;
+
+		__vwsnc5_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::ColorDialogControl* __vwsnctor___vwsn_this_, ::gaclib_controls::ColorDialogControlConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::ColorDialogControl* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc6_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::ColorDialogControl* __vwsn_this_;
+		::gaclib_controls::ColorDialogControlConstructor* __vwsnthis_0;
+
+		__vwsnc6_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::ColorDialogControl* __vwsnctor___vwsn_this_, ::gaclib_controls::ColorDialogControlConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::ColorDialogControl* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc7_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::ColorDialogControl* __vwsn_this_;
+		::gaclib_controls::ColorDialogControlConstructor* __vwsnthis_0;
+
+		__vwsnc7_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::ColorDialogControl* __vwsnctor___vwsn_this_, ::gaclib_controls::ColorDialogControlConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::ColorDialogControl* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc8_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::ColorDialogControlConstructor* __vwsnthis_0;
+
+		__vwsnc8_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::ColorDialogControlConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::ColorDialogControl* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+
+	class __vwsnc9_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription : public ::vl::Object, public virtual ::vl::reflection::description::IValueSubscription
+	{
+	public:
+		::gaclib_controls::ColorDialogControlConstructor* __vwsnthis_0;
+
+		__vwsnc9_GuiFakeDialogServiceUI_gaclib_controls_ColorDialogControlConstructor___vwsn_gaclib_controls_ColorDialogControl_Initialize__vl_reflection_description_IValueSubscription(::gaclib_controls::ColorDialogControlConstructor* __vwsnctorthis_0);
+
+		::gaclib_controls::ColorDialogControl* __vwsn_bind_cache_0 = nullptr;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_0;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_1;
+		::vl::Ptr<::vl::reflection::description::IEventHandler> __vwsn_bind_handler_0_2;
+		bool __vwsn_bind_opened_ = false;
+		bool __vwsn_bind_closed_ = false;
+		void __vwsn_bind_activator_();
+		void __vwsn_bind_callback_0_0();
+		void __vwsn_bind_callback_0_1();
+		void __vwsn_bind_callback_0_2();
+		bool Open() override;
+		bool Update() override;
+		bool Close() override;
+	};
+}
+
+#if defined( _MSC_VER)
+#pragma warning(pop)
+#elif defined(__clang__)
+#pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif
+
+#endif
+
+
+/***********************************************************************
+.\UTILITIES\FAKESERVICES\DIALOGS\SOURCE\GUIFAKEDIALOGSERVICEUIINCLUDES.H
+***********************************************************************/
+/***********************************************************************
+!!!!!! DO NOT MODIFY !!!!!!
+
+GacGen.exe Resource.xml
+
+This file is generated by Workflow compiler
+https://github.com/vczh-libraries
+***********************************************************************/
+
+#ifndef VCZH_WORKFLOW_COMPILER_GENERATED_GUIFAKEDIALOGSERVICEUIINCLUDES
+#define VCZH_WORKFLOW_COMPILER_GENERATED_GUIFAKEDIALOGSERVICEUIINCLUDES
+
+
+#endif
+
+
+/***********************************************************************
+.\UTILITIES\SHAREDSERVICES\GUISHAREDASYNCSERVICE.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI::Native Window::Default Service Implementation
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_PRESENTATION_UTILITIES_SHAREDSERVICES_SHAREDASYNCSERVICE
+#define VCZH_PRESENTATION_UTILITIES_SHAREDSERVICES_SHAREDASYNCSERVICE
+
+
+namespace vl
+{
+	namespace presentation
+	{
+		/// <summary>
+		/// A general <see cref="INativeAsyncService/> implementation.
+		/// </summary>
+		class SharedAsyncService : public INativeAsyncService
+		{
+		protected:
+			struct TaskItem
+			{
+				Semaphore*							semaphore;
+				Func<void()>						proc;
+
+				TaskItem();
+				TaskItem(Semaphore* _semaphore, const Func<void()>& _proc);
+				~TaskItem();
+			};
+
+			class DelayItem : public Object, public INativeDelay
+			{
+			public:
+				DelayItem(SharedAsyncService* _service, const Func<void()>& _proc, bool _executeInMainThread, vint milliseconds);
+				~DelayItem();
+
+				SharedAsyncService*					service;
+				Func<void()>						proc;
+				ExecuteStatus						status;
+				DateTime							executeTime;
+				bool								executeInMainThread;
+
+				ExecuteStatus						GetStatus()override;
+				bool								Delay(vint milliseconds)override;
+				bool								Cancel()override;
+			};
+		protected:
+			vint									mainThreadId;
+			SpinLock								taskListLock;
+			collections::List<TaskItem>				taskItems;
+			collections::List<Ptr<DelayItem>>		delayItems;
+		public:
+			SharedAsyncService();
+			~SharedAsyncService();
+
+			void									ExecuteAsyncTasks();
+			bool									IsInMainThread(INativeWindow* window)override;
+			void									InvokeAsync(const Func<void()>& proc)override;
+			void									InvokeInMainThread(INativeWindow* window, const Func<void()>& proc)override;
+			bool									InvokeInMainThreadAndWait(INativeWindow* window, const Func<void()>& proc, vint milliseconds)override;
+			Ptr<INativeDelay>						DelayExecute(const Func<void()>& proc, vint milliseconds)override;
+			Ptr<INativeDelay>						DelayExecuteInMainThread(const Func<void()>& proc, vint milliseconds)override;
+		};
+	}
+}
+
+#endif
+
+/***********************************************************************
+.\UTILITIES\SHAREDSERVICES\GUISHAREDCALLBACKSERVICE.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI::Native Window::Default Service Implementation
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_PRESENTATION_UTILITIES_SHAREDSERVICES_SHAREDCALLBACKSERVICE
+#define VCZH_PRESENTATION_UTILITIES_SHAREDSERVICES_SHAREDCALLBACKSERVICE
+
+
+namespace vl
+{
+	namespace presentation
+	{
+		/// <summary>
+		/// A general <see cref="INativeCallbackService/> implementation.
+		/// </summary>
+		class SharedCallbackService
+			: public Object
+			, public INativeCallbackService
+			, public INativeCallbackInvoker
+		{
+		protected:
+			collections::List<INativeControllerListener*>	listeners;
+
+		public:
+			SharedCallbackService();
+			~SharedCallbackService();
+
+			bool											InstallListener(INativeControllerListener* listener) override;
+			bool											UninstallListener(INativeControllerListener* listener) override;
+			INativeCallbackInvoker*							Invoker() override;
+
+			void											InvokeGlobalTimer() override;
+			void											InvokeClipboardUpdated() override;
+			void											InvokeGlobalShortcutKeyActivated(vint id) override;
+			void											InvokeNativeWindowCreated(INativeWindow* window) override;
+			void											InvokeNativeWindowDestroying(INativeWindow* window) override;
+		};
+	}
+}
+
+#endif
+
+/***********************************************************************
+.\PLATFORMPROVIDERS\HOSTED\GUIHOSTEDCONTROLLER.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+GacUI::Hosted Window
+
+Interfaces:
+  GuiHostedController
+
+***********************************************************************/
+
+#ifndef VCZH_PRESENTATION_GUIHOSTEDCONTROLLER
+#define VCZH_PRESENTATION_GUIHOSTEDCONTROLLER
+
+
+namespace vl
+{
+	namespace presentation
+	{
+
+/***********************************************************************
+GuiHostedController
+***********************************************************************/
+
+		class GuiHostedController
+			: public Object
+			, protected hosted_window_manager::WindowManager<GuiHostedWindow*>
+			, protected INativeWindowListener
+			, protected INativeControllerListener
+			, public INativeController
+			, protected INativeAsyncService
+			, protected INativeScreenService
+			, protected INativeScreen
+			, protected INativeWindowService
+		{
+			friend class GuiHostedWindow;
+			friend class elements::GuiHostedGraphicsResourceManager;
+		protected:
+			SharedCallbackService										callbackService;
+			hosted_window_manager::WindowManager<GuiHostedWindow*>*		wmManager = nullptr;
+			bool														windowsUpdatedInLastFrame = false;
+			INativeController*											nativeController = nullptr;
+			elements::GuiHostedGraphicsResourceManager*					hostedResourceManager = nullptr;
+			collections::SortedList<Ptr<GuiHostedWindow>>				createdWindows;
+
+			INativeWindow*												nativeWindow = nullptr;
+			bool														nativeWindowDestroyed = false;
+
+			GuiHostedWindow*											mainWindow = nullptr;
+			GuiHostedWindow*											capturingWindow = nullptr;
+			GuiHostedWindow*											enteringWindow = nullptr;
+
+			NativePoint													hoveringLocation{ -1,-1 };
+			GuiHostedWindow*											hoveringWindow = nullptr;
+			GuiHostedWindow*											lastFocusedWindow = nullptr;
+
+			enum class WindowManagerOperation
+			{
+				None,
+				Title,
+				BorderLeft,
+				BorderRight,
+				BorderTop,
+				BorderBottom,
+				BorderLeftTop,
+				BorderRightTop,
+				BorderLeftBottom,
+				BorderRightBottom,
+			};
+			WindowManagerOperation										wmOperation = WindowManagerOperation::None;
+			GuiHostedWindow*											wmWindow = nullptr;
+			NativePoint													wmRelative;
+
+			NativePoint						GetPointInClientSpace(NativePoint location);
+			GuiHostedWindow*				HitTestInClientSpace(NativePoint location);
+			void							UpdateHoveringWindow(Nullable<NativePoint> location);
+			void							UpdateEnteringWindow(GuiHostedWindow* window);
+
+			// =============================================================
+			// WindowManager<GuiHostedWindow*>
+			// =============================================================
+
+			void							OnOpened(hosted_window_manager::Window<GuiHostedWindow*>* window) override;
+			void							OnClosed(hosted_window_manager::Window<GuiHostedWindow*>* window) override;
+			void							OnEnabled(hosted_window_manager::Window<GuiHostedWindow*>* window) override;
+			void							OnDisabled(hosted_window_manager::Window<GuiHostedWindow*>* window) override;
+			void							OnGotFocus(hosted_window_manager::Window<GuiHostedWindow*>* window) override;
+			void							OnLostFocus(hosted_window_manager::Window<GuiHostedWindow*>* window) override;
+			void							OnActivated(hosted_window_manager::Window<GuiHostedWindow*>* window) override;
+			void							OnDeactivated(hosted_window_manager::Window<GuiHostedWindow*>* window) override;
+
+			// =============================================================
+			// INativeWindowListener
+			// =============================================================
+
+			HitTestResult					HitTest(NativePoint location) override;
+			void							Moving(NativeRect& bounds, bool fixSizeOnly, bool draggingBorder) override;
+			void							Moved() override;
+			void							DpiChanged(bool preparing) override;
+			void							GotFocus() override;
+			void							LostFocus() override;
+			void							BeforeClosing(bool& cancel) override;
+			void							AfterClosing() override;
+			void							Paint() override;
+			
+			GuiHostedWindow*				GetSelectedWindow_MouseDown(const NativeWindowMouseInfo& info);
+			GuiHostedWindow*				GetSelectedWindow_MouseMoving(const NativeWindowMouseInfo& info);
+			GuiHostedWindow*				GetSelectedWindow_Other(const NativeWindowMouseInfo& info);
+
+			void							PreAction_LeftButtonDown(const NativeWindowMouseInfo& info);
+			void							PreAction_MouseDown(const NativeWindowMouseInfo& info);
+			void							PreAction_MouseMoving(const NativeWindowMouseInfo& info);
+			void							PreAction_Other(const NativeWindowMouseInfo& info);
+
+			void							PostAction_LeftButtonUp(GuiHostedWindow* selectedWindow, const NativeWindowMouseInfo& info);
+			void							PostAction_Other(GuiHostedWindow* selectedWindow, const NativeWindowMouseInfo& info);
+
+			template<
+				void (GuiHostedController::* PreAction)(const NativeWindowMouseInfo&),
+				GuiHostedWindow* (GuiHostedController::* GetSelectedWindow)(const NativeWindowMouseInfo&),
+				void (GuiHostedController::* PostAction)(GuiHostedWindow*, const NativeWindowMouseInfo&),
+				void (INativeWindowListener::* Callback)(const NativeWindowMouseInfo&)
+				>
+			void							HandleMouseCallback(const NativeWindowMouseInfo& info);
+
+			template<
+				typename TInfo,
+				void (INativeWindowListener::* Callback)(const TInfo&)
+			>
+			void							HandleKeyboardCallback(const TInfo& info);
+
+			void							LeftButtonDown(const NativeWindowMouseInfo& info) override;
+			void							LeftButtonUp(const NativeWindowMouseInfo& info) override;
+			void							LeftButtonDoubleClick(const NativeWindowMouseInfo& info) override;
+			void							RightButtonDown(const NativeWindowMouseInfo& info) override;
+			void							RightButtonUp(const NativeWindowMouseInfo& info) override;
+			void							RightButtonDoubleClick(const NativeWindowMouseInfo& info) override;
+			void							MiddleButtonDown(const NativeWindowMouseInfo& info) override;
+			void							MiddleButtonUp(const NativeWindowMouseInfo& info) override;
+			void							MiddleButtonDoubleClick(const NativeWindowMouseInfo& info) override;
+			void							HorizontalWheel(const NativeWindowMouseInfo& info) override;
+			void							VerticalWheel(const NativeWindowMouseInfo& info) override;
+			void							MouseMoving(const NativeWindowMouseInfo& info) override;
+			void							MouseEntered() override;
+			void							MouseLeaved() override;
+
+			void							KeyDown(const NativeWindowKeyInfo& info) override;
+			void							KeyUp(const NativeWindowKeyInfo& info) override;
+			void							Char(const NativeWindowCharInfo& info) override;
+
+			// =============================================================
+			// INativeControllerListener
+			// =============================================================
+
+			void							GlobalTimer() override;
+			void							ClipboardUpdated() override;
+			void							GlobalShortcutKeyActivated(vint id) override;
+			void							NativeWindowDestroying(INativeWindow* window) override;
+
+			// =============================================================
+			// INativeAsyncService
+			// =============================================================
+
+			bool							IsInMainThread(INativeWindow* window) override;
+			void							InvokeAsync(const Func<void()>& proc) override;
+			void							InvokeInMainThread(INativeWindow* window, const Func<void()>& proc) override;
+			bool							InvokeInMainThreadAndWait(INativeWindow* window, const Func<void()>& proc, vint milliseconds) override;
+			Ptr<INativeDelay>				DelayExecute(const Func<void()>& proc, vint milliseconds) override;
+			Ptr<INativeDelay>				DelayExecuteInMainThread(const Func<void()>& proc, vint milliseconds) override;
+
+			// =============================================================
+			// INativeScreenService
+			// =============================================================
+
+			vint							GetScreenCount() override;
+			INativeScreen*					GetScreen(vint index) override;
+			INativeScreen*					GetScreen(INativeWindow* window) override;
+
+			// =============================================================
+			// INativeScreen
+			// =============================================================
+
+			NativeRect						GetBounds() override;
+			NativeRect						GetClientBounds() override;
+			WString							GetName() override;
+			bool							IsPrimary() override;
+			double							GetScalingX() override;
+			double							GetScalingY() override;
+
+			// =============================================================
+			// INativeWindowService
+			// =============================================================
+			
+			const NativeWindowFrameConfig&	GetMainWindowFrameConfig() override;
+			const NativeWindowFrameConfig&	GetNonMainWindowFrameConfig() override;
+			INativeWindow*					CreateNativeWindow(INativeWindow::WindowMode windowMode) override;
+			void							DestroyNativeWindow(INativeWindow* window) override;
+			INativeWindow*					GetMainWindow() override;
+			INativeWindow*					GetWindow(NativePoint location) override;
+
+			void							SettingHostedWindowsBeforeRunning();
+			void							DestroyHostedWindowsAfterRunning();
+			void							Run(INativeWindow* window) override;
+			bool							RunOneCycle() override;
+		public:
+			GuiHostedController(INativeController* _nativeController);
+			~GuiHostedController();
+
+			void							Initialize();
+			void							Finalize();
+
+			// =============================================================
+			// INativeController
+			// =============================================================
+
+			INativeCallbackService*			CallbackService() override;
+			INativeResourceService*			ResourceService() override;
+			INativeAsyncService*			AsyncService() override;
+			INativeClipboardService*		ClipboardService() override;
+			INativeImageService*			ImageService() override;
+			INativeInputService*			InputService() override;
+			INativeDialogService*			DialogService() override;
+			WString							GetExecutablePath() override;
+			
+			INativeScreenService*			ScreenService() override;
+			INativeWindowService*			WindowService() override;
+		};
+	}
+}
 
 #endif

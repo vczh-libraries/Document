@@ -704,7 +704,6 @@ Custom Type
 					WfValueType(WfStruct* _owner);
 
 					Value								CreateDefault()override;
-					IBoxedValue::CompareResult			Compare(const Value& a, const Value& b)override;
 				};
 
 			protected:
@@ -740,7 +739,6 @@ Custom Type
 					WfValueType(WfEnum* _owner);
 
 					Value								CreateDefault()override;
-					IBoxedValue::CompareResult			Compare(const Value& a, const Value& b)override;
 				};
 
 				class WfEnumType : public Object, public virtual IEnumType
@@ -803,34 +801,32 @@ Instance
 				Ptr<IValueInterfaceProxy>				GetProxy();
 			};
 
-			struct WfStructInstance
+			class WfStructInstance : public Object, public reflection::description::IBoxedValue
 			{
 				using FieldValueMap = collections::Dictionary<WfStructField*, reflection::description::Value>;
 
-				FieldValueMap							fieldValues;
+			public:
+				reflection::description::ITypeDescriptor*		typeDescriptor = nullptr;
+				FieldValueMap									fieldValues;
 
-				WfStructInstance()
-				{
-				}
+				WfStructInstance(reflection::description::ITypeDescriptor* _typeDescriptor);
 
-				WfStructInstance(const WfStructInstance& si)
-				{
-					CopyFrom(fieldValues, si.fieldValues);
-				}
-
-				WfStructInstance& operator=(const WfStructInstance& si)
-				{
-					if (this != &si)
-					{
-						CopyFrom(fieldValues, si.fieldValues);
-					}
-					return *this;
-				}
+				reflection::description::PredefinedBoxableType	GetBoxableType() override;
+				Ptr<IBoxedValue>								Copy() override;
+				CompareResult									ComparePrimitive(Ptr<IBoxedValue> boxedValue) override;
 			};
 
-			struct WfEnumInstance
+			class WfEnumInstance : public Object, public reflection::description::IBoxedValue
 			{
-				vuint64_t								value = 0;
+			public:
+				reflection::description::ITypeDescriptor*		typeDescriptor = nullptr;
+				vuint64_t										value = 0;
+
+				WfEnumInstance(reflection::description::ITypeDescriptor* _typeDescriptor);
+
+				reflection::description::PredefinedBoxableType	GetBoxableType() override;
+				Ptr<IBoxedValue>								Copy() override;
+				CompareResult									ComparePrimitive(Ptr<IBoxedValue> boxedValue) override;
 			};
 
 /***********************************************************************
@@ -1048,7 +1044,7 @@ Range
 
 				Ptr<reflection::description::IValueEnumerator> CreateEnumerator()override
 				{
-					return MakePtr<Enumerator>(begin, end);
+					return Ptr(new Enumerator(begin, end));
 				}
 			};
 			
@@ -1060,7 +1056,11 @@ Lambda
 			{
 				typedef reflection::description::Value										Value;
 			public:
-				Ptr<WfRuntimeGlobalContext>			globalContext;
+				// use raw pointer because
+				// if a lambda is stored in a global variable
+				// it is stored in globalContext->globalVariables->variables[i]
+				// so that globalContext has a cyclic reference to itself
+				WfRuntimeGlobalContext*				globalContext = nullptr;
 				Ptr<WfRuntimeVariableContext>		capturedVariables;
 				vint								functionIndex;
 
@@ -1082,7 +1082,11 @@ InterfaceInstance
 				typedef reflection::description::IValueReadonlyList							IValueReadonlyList;
 				typedef collections::Dictionary<IMethodInfo*, vint>							FunctionMap;
 			public:
-				Ptr<WfRuntimeGlobalContext>			globalContext;
+				// use raw pointer because
+				// if a lambda is stored in a global variable
+				// it is stored in globalContext->globalVariables->variables[i]
+				// so that globalContext has a cyclic reference to itself
+				WfRuntimeGlobalContext*				globalContext = nullptr;
 				Ptr<WfRuntimeVariableContext>		capturedVariables;
 				FunctionMap							functions;
 

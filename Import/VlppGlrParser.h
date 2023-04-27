@@ -83,47 +83,45 @@ ParsingTextPos
 				return { token->start + token->length - 1,token->rowEnd,token->columnEnd };
 			}
 
-			static vint Compare(const ParsingTextPos& a, const ParsingTextPos& b)
+			friend std::strong_ordering operator<=>(const ParsingTextPos& a, const ParsingTextPos& b)
 			{
 				if (a.IsInvalid() && b.IsInvalid())
 				{
-					return 0;
+					return std::strong_ordering::equal;
 				}
 				else if (a.IsInvalid())
 				{
-					return -1;
+					return std::strong_ordering::less;
 				}
 				else if (b.IsInvalid())
 				{
-					return 1;
+					return std::strong_ordering::greater;
 				}
 				else if (a.index >= 0 && b.index >= 0)
 				{
-					return a.index - b.index;
+					return a.index <=> b.index;
 				}
 				else if (a.row >= 0 && a.column >= 0 && b.row >= 0 && b.column >= 0)
 				{
 					if (a.row == b.row)
 					{
-						return a.column - b.column;
+						return a.column <=> b.column;
 					}
 					else
 					{
-						return a.row - b.row;
+						return a.row <=> b.row;
 					}
 				}
 				else
 				{
-					return 0;
+					return std::strong_ordering::equal;
 				}
 			}
 
-			bool operator==(const ParsingTextPos& pos)const { return Compare(*this, pos) == 0; }
-			bool operator!=(const ParsingTextPos& pos)const { return Compare(*this, pos) != 0; }
-			bool operator<(const ParsingTextPos& pos)const { return Compare(*this, pos) < 0; }
-			bool operator<=(const ParsingTextPos& pos)const { return Compare(*this, pos) <= 0; }
-			bool operator>(const ParsingTextPos& pos)const { return Compare(*this, pos) > 0; }
-			bool operator>=(const ParsingTextPos& pos)const { return Compare(*this, pos) >= 0; }
+			friend bool operator==(const ParsingTextPos& a, const ParsingTextPos& b)
+			{
+				return(a <=> b) == 0;
+			}
 		};
 
 /***********************************************************************
@@ -211,7 +209,7 @@ AST (Builder)
 		class ParsingAstBuilder
 		{
 		protected:
-			Ptr<TAst> node = MakePtr<TAst>();
+			Ptr<TAst> node{ new TAst };
 			ParsingAstBuilder() {}
 		public:
 
@@ -275,12 +273,14 @@ Instructions
 			Token,										// Token()							: Push the current token as a value.
 			EnumItem,									// EnumItem(Value)					: Push an enum item.
 			BeginObject,								// BeginObject(Type)				: Begin creating an AST node.
-			BeginObjectLeftRecursive,					// BeginObjectLeftRecursive(Type)	: Begin creating an AST node, taking the ownership of the last pushed object.
 			DelayFieldAssignment,						// DelayFieldAssignment()			: An object will be created later by ReopenObject, delay future field assignments to this object before ReopenObject.
 			ReopenObject,								// ReopenObject()					: Move the last pushed object back to creating status.
 			EndObject,									// EndObject()						: Finish creating an AST node, all objects pushed after BeginObject are supposed to be its fields.
 			DiscardValue,								// DiscardValue()					: Remove a pushed value.
+			LriStore,									// LriStore()						: Take the top object away and store to a register temporarily.
+			LriFetch,									// LriFetch()						: Clear the register and put it back as a top object.
 			Field,										// Field(Field)						: Associate a field name with the top object.
+			FieldIfUnassigned,							// FieldIfUnassigned(Field)			: Like Field(Field) but only take effect if such field has never been assigned.
 			ResolveAmbiguity,							// ResolveAmbiguity(Type, Count)	: Combine several top objects to one using an ambiguity node. Type is the type of each top object.
 
 			AccumulatedDfa,								// AccumulatedDfa(Count)			: Multiple DelayFieldAssignment
@@ -293,21 +293,19 @@ Instructions
 			vint32_t									param = -1;
 			vint										count = -1;
 
-			vint Compare(const AstIns& ins) const
+			std::strong_ordering operator<=>(const AstIns& ins) const
 			{
-				auto result = (vint)type - (vint)ins.type;
-				if (result != 0) return result;
-				result = (vint)param - (vint)ins.param;
-				if (result != 0) return result;
-				return count - ins.count;
+				std::strong_ordering
+				result = type <=> ins.type; if (result != 0) return result;
+				result = param <=> ins.param; if (result != 0) return result;
+				result = count <=> ins.count; if (result != 0) return result;
+				return result;
 			}
 
-			bool operator==(const AstIns& ins) const { return Compare(ins) == 0; }
-			bool operator!=(const AstIns& ins) const { return Compare(ins) != 0; }
-			bool operator< (const AstIns& ins) const { return Compare(ins) < 0; }
-			bool operator<=(const AstIns& ins) const { return Compare(ins) <= 0; }
-			bool operator> (const AstIns& ins) const { return Compare(ins) > 0; }
-			bool operator>=(const AstIns& ins) const { return Compare(ins) >= 0; }
+			bool operator==(const AstIns& ins) const
+			{
+				return (*this <=> ins) == 0;
+			}
 		};
 
 		enum class AstInsErrorType
@@ -319,17 +317,20 @@ Instructions
 			UnexpectedAmbiguousCandidate,				// UnexpectedAmbiguousCandidate(Type)	: The type of the ambiguous candidate is not compatible to the required type.
 			FieldNotExistsInType,						// FieldNotExistsInType(Field)			: The type doesn't have such field.
 			FieldReassigned,							// FieldReassigned(Field)				: An object is assigned to a field but this field has already been assigned.
+			FieldWeakAssignmentOnNonEnum,				// FieldWeakAssignmentOnNonEnum(Field)	: Weak assignment only available for field of enum type.
 			ObjectTypeMismatchedToField,				// ObjectTypeMismatchedToField(Field)	: Unable to assign an object to a field because the type does not match.
 
 			NoRootObject,								// NoRootObject()						: There is no created objects.
 			NoRootObjectAfterDfa,						// NoRootObjectAfterDfa()				: There is no created objects after DelayFieldAssignment.
-			MissingLeftRecursiveValue,					// MissingLeftRecursiveValue()			: There is no pushed value to create left recursive object.
-			LeftRecursiveValueIsNotObject,				// LeftRecursiveValueIsNotObject()		: The pushed value to create left recursive object is not an object.
 			TooManyUnassignedValues,					// LeavingUnassignedValues()			: The value to reopen is not the only unassigned value.
 			MissingDfaBeforeReopen,						// MissingDfaBeforeReopen()				: DelayFieldAssignment is not submitted before ReopenObject.
 			MissingValueToReopen,						// MissingValueToReopen()				: There is no pushed value to reopen.
 			ReopenedValueIsNotObject,					// ReopenedValueIsNotObject()			: The pushed value to reopen is not an object.
 			MissingValueToDiscard,						// MissingValueToDiscard()				: There is no pushed value to discard.
+			MissingValueToLriStore,						// MissingValueToLriStore()				: There is no pushed value to run LriStore.
+			LriStoredValueIsNotObject,					// LriStoredValueIsNotObject()			: The value to run LriStore is not an object.
+			LriStoredValueNotCleared,					// LriStoredValueNotCleared()			: LriFetch is not executed before the next LriStore.
+			LriStoredValueNotExists,					// LriStoredValueNotExists()			: LriStore is not executed before the next LriFetch.
 			LeavingUnassignedValues,					// LeavingUnassignedValues()			: There are still values to assign to fields before finishing an object.
 			MissingFieldValue,							// MissingFieldValue()					: There is no pushed value to be assigned to a field.
 			MissingAmbiguityCandidate,					// MissingAmbiguityCandidate()			: There are not enough candidates to create an ambiguity node.
@@ -382,7 +383,8 @@ IAstInsReceiver
 			struct FieldAssignment
 			{
 				ObjectOrToken							value;
-				vint32_t								field;
+				vint32_t								field = -1;
+				bool									weakAssignment = false;
 			};
 
 			struct CreatedObject
@@ -410,11 +412,12 @@ IAstInsReceiver
 
 			collections::List<CreatedObject>			created;
 			collections::List<ObjectOrToken>			pushed;
+			Ptr<ParsingAstBase>							lriStoredObject;
 			bool										finished = false;
 			bool										corrupted = false;
 
 			void										EnsureContinuable();
-			void										SetField(ParsingAstBase* object, vint32_t field, const ObjectOrToken& value);
+			void										SetField(ParsingAstBase* object, vint32_t field, const ObjectOrToken& value, bool weakAssignment);
 
 			CreatedObject&								PushCreated(CreatedObject&& createdObject);
 			const CreatedObject&						TopCreated();
@@ -424,7 +427,7 @@ IAstInsReceiver
 			virtual Ptr<ParsingAstBase>					CreateAstNode(vint32_t type) = 0;
 			virtual void								SetField(ParsingAstBase* object, vint32_t field, Ptr<ParsingAstBase> value) = 0;
 			virtual void								SetField(ParsingAstBase* object, vint32_t field, const regex::RegexToken& token, vint32_t tokenIndex) = 0;
-			virtual void								SetField(ParsingAstBase* object, vint32_t field, vint32_t enumValue) = 0;
+			virtual void								SetField(ParsingAstBase* object, vint32_t field, vint32_t enumValue, bool weakAssignment) = 0;
 			virtual Ptr<ParsingAstBase>					ResolveAmbiguity(vint32_t type, collections::Array<Ptr<ParsingAstBase>>& candidates) = 0;
 
 		public:
@@ -526,7 +529,7 @@ IAstInsReceiver (Code Generation Templates)
 		}
 
 		template<typename TClass, typename TField>
-		void AssemblerSetEnumField(TField(TClass::* member), ParsingAstBase* object, vint32_t field, vint32_t enumItem, const wchar_t* cppFieldName)
+		void AssemblerSetEnumField(TField(TClass::* member), ParsingAstBase* object, vint32_t field, vint32_t enumItem, bool weakAssignment, const wchar_t* cppFieldName)
 		{
 			auto typedObject = dynamic_cast<TClass*>(object);
 			if (!typedObject)
@@ -539,6 +542,7 @@ IAstInsReceiver (Code Generation Templates)
 			}
 			if ((typedObject->*member) != TField::UNDEFINED_ENUM_ITEM_VALUE)
 			{
+				if (weakAssignment) return;
 				throw AstInsException(
 					WString::Unmanaged(L"Field \"") +
 					WString::Unmanaged(cppFieldName) +
@@ -551,7 +555,7 @@ IAstInsReceiver (Code Generation Templates)
 		template<typename TElement, typename TAmbiguity>
 		Ptr<ParsingAstBase> AssemblerResolveAmbiguity(vint32_t type, collections::Array<Ptr<ParsingAstBase>>& candidates, const wchar_t* cppTypeName)
 		{
-			Ptr<TAmbiguity> ast = new TAmbiguity();
+			auto ast = Ptr(new TAmbiguity());
 			for (auto candidate : candidates)
 			{
 				if (auto typedAst = candidate.Cast<TElement>())
@@ -763,6 +767,12 @@ Executable
 				vint32_t							count = 0;
 			};
 
+			struct StringLiteral
+			{
+				vint32_t							start = -1;
+				vint32_t							count = 0;
+			};
+
 			struct ReturnIndexArray
 			{
 				vint32_t							start = -1;
@@ -782,11 +792,20 @@ Executable
 				LowPriority,
 			};
 
+			enum class ReturnRuleType
+			{
+				Field,
+				Partial,
+				Discard,
+				Reuse,
+			};
+
 			struct ReturnDesc
 			{
 				vint32_t							consumedRule = -1;
 				vint32_t							returnState = -1;
 				EdgePriority						priority = EdgePriority::NoCompetition;
+				ReturnRuleType						ruleType = ReturnRuleType::Field;
 				InstructionArray					insAfterInput;
 			};
 
@@ -794,6 +813,7 @@ Executable
 			{
 				vint32_t							fromState = -1;
 				vint32_t							toState = -1;
+				StringLiteral						condition;
 				EdgePriority						priority = EdgePriority::NoCompetition;
 				InstructionArray					insBeforeInput;
 				InstructionArray					insAfterInput;
@@ -818,11 +838,12 @@ Executable
 				vint32_t							ruleCount = 0;
 				collections::Array<vint32_t>		ruleStartStates;		// ruleStartStates[rule] = the start state of this rule.
 				collections::Array<EdgeArray>		transitions;			// transitions[state * (TokenBegin + tokenCount) + input] = edges from state with specified input.
-				collections::Array<AstIns>			instructions;			// referenced by InstructionArray
+				collections::Array<AstIns>			astInstructions;		// referenced by EdgeDesc::insBeforeInput and EdgeDesc::insAfterInput
 				collections::Array<vint32_t>		returnIndices;			// referenced by ReturnIndexArray
 				collections::Array<ReturnDesc>		returns;				// referenced by Executable::returnIndices
 				collections::Array<EdgeDesc>		edges;					// referenced by EdgeArray
-				collections::Array<StateDesc>		states;					// refereced by returnState/fromState/toState
+				collections::Array<StateDesc>		states;					// referenced by returnState/fromState/toState
+				WString								stringLiteralBuffer;	// referenced by StringLiteral
 
 				Executable() = default;
 				Executable(stream::IStream& inputStream);
@@ -840,367 +861,50 @@ Executable
 				collections::Array<WString>			ruleNames;
 				collections::Array<WString>			stateLabels;
 			};
-		}
-	}
-}
-
-#endif
 
 /***********************************************************************
-.\TRACEMANAGER\TRACEMANAGER.H
-***********************************************************************/
-/***********************************************************************
-Author: Zihan Chen (vczh)
-Licensed under https://github.com/vczh-libraries/License
+IExecutor
 ***********************************************************************/
 
-#ifndef VCZH_PARSER2_TRACEMANAGER_TRACEMANAGER
-#define VCZH_PARSER2_TRACEMANAGER_TRACEMANAGER
-
-
-namespace vl
-{
-	namespace glr
-	{
-		namespace automaton
-		{
-/***********************************************************************
-AllocateOnly<T>
-***********************************************************************/
-
-			template<typename T>
-			class AllocateOnly : public Object
+			class UnableToResolveAmbiguityException : public Exception
 			{
-			protected:
-				vint											blockSize;
-				vint											remains;
-				collections::List<Ptr<collections::Array<T>>>	buffers;
-
 			public:
-				AllocateOnly(vint _blockSize = 65536)
-					: blockSize(_blockSize)
-					, remains(0)
+				vint32_t							class1 = -1;
+				vint32_t							class2 = -1;
+				vint32_t							tokenIndex1 = -1;
+				vint32_t							tokenIndex2 = -1;
+
+				UnableToResolveAmbiguityException(const WString& message, vint32_t _class1, vint32_t _class2, vint32_t _tokenIndex1, vint32_t _tokenIndex2)
+					: Exception(message)
+					, class1(_class1)
+					, class2(_class2)
+					, tokenIndex1(_tokenIndex1)
+					, tokenIndex2(_tokenIndex2)
 				{
 				}
-
-				T* Get(vint32_t index)
-				{
-					vint row = index / blockSize;
-					vint column = index % blockSize;
-					CHECK_ERROR(0 <= row && row < buffers.Count(), L"vl::glr::automaton::AllocateOnly<T>::Get(vint)#Index out of range.");
-					if (row == buffers.Count() - 1)
-					{
-						CHECK_ERROR(0 <= column && column < (blockSize - remains), L"vl::glr::automaton::AllocateOnly<T>::Get(vint)#Index out of range.");
-					}
-					else
-					{
-						CHECK_ERROR(0 <= column && column < blockSize, L"vl::glr::automaton::AllocateOnly<T>::Get(vint)#Index out of range.");
-					}
-					return &buffers[row]->operator[](column);
-				}
-
-				vint32_t Allocate()
-				{
-					if (remains == 0)
-					{
-						buffers.Add(new collections::Array<T>(blockSize));
-						remains = blockSize;
-					}
-					vint index = blockSize * (buffers.Count() - 1) + (blockSize - remains);
-					buffers[buffers.Count() - 1]->operator[](blockSize - remains).allocatedIndex = (vint32_t)index;
-					remains--;
-					return (vint32_t)index;
-				}
-
-				void Clear()
-				{
-					remains = 0;
-					buffers.Clear();
-				}
 			};
 
-/***********************************************************************
-TraceManager (Data Structures)
-***********************************************************************/
+			struct Trace;
 
-			struct ReturnStackSuccessors
-			{
-				vint32_t				createdTokenIndex = -1;		// index of the token when this ReturnStack is created
-				vint32_t				successorTokenIndex = -1;	// index of the token when this ReturnStack has its first successor
-																	// the following members records all successors
-																	// that is created at the token index
-
-				vint32_t				first = -1;					// first successor
-				vint32_t				last = -1;					// last successor
-				vint32_t				prev = -1;					// previous successor of ReturnStack::previous
-				vint32_t				next = -1;					// next successor of ReturnStack::previous
-			};
-
-			struct ReturnStack
-			{
-				vint32_t				allocatedIndex = -1;		// id of this ReturnStack
-				vint32_t				previous = -1;				// id of the previous ReturnStack
-				vint32_t				returnIndex = -1;			// index of ReturnDesc
-				ReturnStackSuccessors	successors;
-			};
-
-			struct TraceCollection
-			{
-				vint32_t				first = -1;					// first trace in the collection
-				vint32_t				last = -1;					// last trace in the collection
-				vint32_t				siblingPrev = -1;			// previous trace in the collection of the owned trace
-				vint32_t				siblingNext = -1;			// next trace in the collection of the owned trace
-			};
-
-			struct TraceAmbiguity
-			{
-				vint32_t				insEndObject = -1;			// the index of the first EndObject instruction
-																	// in {byEdge.insBeforeInput, byEdge.insAfterInput, executedReturnStack.returnIndex.insAfterInput} combined
-																	// when this member is valid, the trace should satisfies:
-																	// trace.ambiguity.insEndObject == trace.byEdge.insBeforeInput.count - trace.ambiguityInsPostfix
-
-				vint32_t				traceBeginObject = -1;		// id of the trace containing BeginObject or DelayFieldAssignment
-																	// that ends by the above EndObject
-
-				vint32_t				insBeginObject = -1;		// the index of the BeginObject instruction
-																	// from traceBeginObject
-																	// in {byEdge.insBeforeInput, byEdge.insAfterInput, executedReturnStack.returnIndex.insAfterInput} combined
-																	// if insBeginObject is larger than the number of instructions in traceBeginObject
-																	// then the branches begin from the (insBeginObject - instruction-count(traceBeginObject))-th instruction (starting from 0) in all successors
-
-				vint32_t				ambiguityType = -1;			// when the BeginObject creates an object that later be consumed by BeginObjectLeftRecursive
-																	// than the correct type is the type in BeginObjectLeftRecursive
-			};
-
-			enum class CompetitionStatus
-			{
-				Holding,
-				HighPriorityWin,
-				LowPriorityWin,
-			};
-
-			struct Competition
-			{
-				vint32_t				allocatedIndex = -1;
-				vint32_t				nextActiveCompetition = -1;				// next active Competition
-				vint32_t				nextHoldCompetition = -1;				// next Competition hold by this trace
-
-				CompetitionStatus		status = CompetitionStatus::Holding;	// if predecessors from this trace have different priority, the competition begins
-																				// when the competition is over, it will be changed to HighPriorityWin or LowPriorityWin
-																				// if all candidates fail, it could be Holding forever
-
-				vint32_t				currentTokenIndex = -1;		// currentTokenIndex from the trace that creates this competition
-				vint32_t				ruleId = -1;				// the rule id of state, when an edge starts this competition
-				vint32_t				clauseId = -1;				// the clause id of the state, when an edge starts this competition
-																	// an state must be picked up and ensure that, the syntax creating the priority and the state belong to the same clause
-
-				vint32_t				highCounter = 0;			// temporary counter for all existing high bets
-																	// in the current step of input
-				vint32_t				lowCounter = 0;				// temporary counter for all existing low bets
-																	// in the current step of input
-			};
-
-			struct AttendingCompetitions
-			{
-				vint32_t				allocatedIndex = -1;		// id of this AttendingCompetitions
-				vint32_t				nextActiveAC = -1;			// the next AttendingCompetitions for RuntimeRouting::attendingCompetitions
-				vint32_t				nextCarriedAC = -1;			// the next AttendingCompetitions for RuntimeRouting::carriedCompetitions
-				vint32_t				competition = -1;			// the id of the Competition
-				bool					forHighPriority = false;	// bet of this competition
-
-				vint32_t				returnStack = -1;			// the ReturnStack object for the competition
-																	// if the competition is attended by a ReturnDesc
-																	// then the ReturnStack object is the one before a ReturnDesc transition happens
-
-				bool					closed = false;				// true if the competition has been closed
-																	// this flag is not always updated for discarded AttendingCompetitions objects
-			};
-
-			struct CompetitionRouting
-			{
-				vint32_t				holdingCompetitions = -1;	// the id of the active Competition
-
-				vint32_t				attendingCompetitions = -1;	// a linked list containing all AttendingCompetitions that this trace is attending
-																	// predecessors could share and modify the same linked list
-																	// if a competition is over, node could be removed from the linked list
-																	// one competition only creates two AttendingCompetitions, traces with the same bet share the object
-
-				vint32_t				carriedCompetitions = -1;	// all attended competitions regardless of the status of the competition
-			};
-
-			struct AmbiguityRouting
-			{
-				vint32_t				predecessorCount = -1;		// the number of predecessors
-																	// (filled by ExecuteTrace)
-
-				vint32_t				branchVisited = 0;			// the number of visited branches in the current loop.
-																	// if these branches are contained in a larger ambiguity resolving loop, all branches could be visited multiple times
-																	// (filled by ExecuteTrace)
-			};
-
-			struct Trace
-			{
-				vint32_t				allocatedIndex = -1;		// id of this Trace
-				TraceCollection			predecessors;				// id of the predecessor Trace
-				TraceCollection			successors;					// successors (filled by PrepareTraceRoute)
-
-				vint32_t				state = -1;					// id of the current StateDesc
-				vint32_t				returnStack = -1;			// id of the current ReturnStack
-				vint32_t				executedReturnStack = -1;	// id of the executed ReturnStack that contains the ReturnDesc being executed
-				vint32_t				byEdge = -1;				// id of the last EdgeDesc that make this trace
-				vint32_t				byInput = -1;				// the last input that make this trace
-				vint32_t				currentTokenIndex = -1;		// the index of the token that is byInput
-
-				TraceAmbiguity			ambiguity;					// where to end resolving ambiguity in instructions from this trace
-																	// this member is useful when it has multiple predecessors
-																	// (filled by PrepareTraceRoute)
-
-				vint32_t				ambiguityBranchInsPostfix = -1;		// this member is useful when it is not -1 and the trace has multiple successors
-																			// specifying the length of the postfix
-																			// of {byEdge.insBeforeInput, byEdge.insAfterInput, executedReturnStack.returnIndex.insAfterInput} combined
-																			// only execute the specified prefix of instructions
-																			// usually EndObject is the last instruction in the prefix
-
-				vint32_t				ambiguityMergeInsPostfix = -1;		// this member is useful when it is not -1 and the trace has multiple predecessors
-																			// specifying the length of the postfix
-																			// of {byEdge.insBeforeInput, byEdge.insAfterInput, executedReturnStack.returnIndex.insAfterInput} combined
-																			// only execute the specified postfix of instructions
-																			// usually EndObject is the last instruction in the prefix
-
-				CompetitionRouting		competitionRouting;			// a data structure carrying priority and competition information
-
-				AmbiguityRouting		ambiguityRouting;			// a data structure guiding instruction execution when a trace need to be executed multiple times
-																	// this member is useful when it has multiple predecessors or successors
-			};
-
-			enum class TraceManagerState
-			{
-				Uninitialized,
-				WaitingForInput,
-				Finished,
-				PreparedTraceRoute,
-			};
-
-			struct TraceInsLists
-			{
-				InstructionArray					edgeInsBeforeInput;
-				InstructionArray					edgeInsAfterInput;
-				InstructionArray					returnInsAfterInput;
-				vint32_t							c1;
-				vint32_t							c2;
-				vint32_t							c3;
-			};
-
-/***********************************************************************
-TraceManager
-***********************************************************************/
-
-			class TraceManager : public Object
+			class IExecutor : public virtual Interface
 			{
 			public:
 				class ITypeCallback : public virtual Interface
 				{
 				public:
-					virtual vint32_t				FindCommonBaseClass(vint32_t class1, vint32_t class2) const= 0;
+					virtual WString					GetClassName(vint32_t classIndex) const = 0;
+					virtual vint32_t				FindCommonBaseClass(vint32_t class1, vint32_t class2) const = 0;
 				};
 
-			protected:
-				Executable&							executable;
-				const ITypeCallback*				typeCallback = nullptr;
-
-				TraceManagerState					state = TraceManagerState::Uninitialized;
-				AllocateOnly<ReturnStack>			returnStacks;
-				AllocateOnly<Trace>					traces;
-				AllocateOnly<Competition>			competitions;
-				AllocateOnly<AttendingCompetitions>	attendingCompetitions;
-
-				collections::List<Trace*>			traces1;
-				collections::List<Trace*>			traces2;
-
-				Trace*								initialTrace = nullptr;
-				vint32_t							activeCompetitions = -1;
-				ReturnStackSuccessors				initialReturnStackSuccessors;
-
-				void								BeginSwap();
-				void								AddTrace(Trace* trace);
-				void								EndSwap();
-				void								AddTraceToCollection(Trace* owner, Trace* element, TraceCollection(Trace::* collection));
-
-				// Ambiguity
-				bool								AreTwoEndingInputTraceEqual(vint32_t state, vint32_t returnStack, vint32_t executedReturnStack, vint32_t acId, Trace* candidate);
-				vint32_t							GetInstructionPostfix(EdgeDesc& oldEdge, EdgeDesc& newEdge);
-				void								MergeTwoEndingInputTrace(
-														Trace* trace,
-														Trace* ambiguityTraceToMerge,
-														vint32_t currentTokenIndex,
-														vint32_t input,
-														vint32_t byEdge,
-														EdgeDesc& edgeDesc,
-														vint32_t state,
-														vint32_t returnStack,
-														vint32_t attendingCompetitions,
-														vint32_t carriedCompetitions,
-														vint32_t executedReturnStack);
-
-				// Competition
-				void								AttendCompetition(Trace* trace, vint32_t& newAttendingCompetitions, vint32_t& newCarriedCompetitions, vint32_t returnStack, vint32_t ruleId, vint32_t clauseId, bool forHighPriority);
-				ReturnStack*						PushReturnStack(vint32_t base, vint32_t returnIndex, vint32_t currentTokenIndex);
-				void								AttendCompetitionIfNecessary(Trace* trace, vint32_t currentTokenIndex, EdgeDesc& edgeDesc, vint32_t& newAttendingCompetitions, vint32_t& newCarriedCompetitions, vint32_t& newReturnStack);
-				void								CheckAttendingCompetitionsOnEndingEdge(Trace* trace, EdgeDesc& edgeDesc, vint32_t acId, vint32_t returnStack);
-				void								CheckBackupTracesBeforeSwapping(vint32_t currentTokenIndex);
-
-				// Walk
-				Trace*								WalkAlongSingleEdge(vint32_t currentTokenIndex, vint32_t input, Trace* trace, vint32_t byEdge, EdgeDesc& edgeDesc);
-				void								WalkAlongLeftrecEdges(vint32_t currentTokenIndex, vint32_t lookAhead, Trace* trace, EdgeArray& edgeArray);
-				void								WalkAlongEpsilonEdges(vint32_t currentTokenIndex, vint32_t lookAhead, Trace* trace);
-				void								WalkAlongTokenEdges(vint32_t currentTokenIndex, vint32_t input, vint32_t lookAhead, Trace* trace, EdgeArray& edgeArray);
-
-				// PrepareTraceRoute
-				struct SharedBeginObject
-				{
-					Trace*							traceBeginObject = nullptr;
-					vint32_t						insBeginObject = -1;
-					vint32_t						type = -1;
-				};
-
-				void								ReadInstructionList(Trace* trace, TraceInsLists& insLists);
-				AstIns&								ReadInstruction(vint32_t instruction, TraceInsLists& insLists);
-				bool								RunInstruction(vint32_t instruction, TraceInsLists& insLists, vint32_t& objectCount, vint32_t& reopenCount);
-				void								AdjustToRealTrace(SharedBeginObject& shared);
-
-				void								FindBalancedBoOrBolr(SharedBeginObject& balanced, vint32_t& objectCount, vint32_t& reopenCount);
-				void								FindBalancedBoOrDfa(Trace* trace, vint32_t objectCount, SharedBeginObject& branch);
-
-				void								MergeAmbiguityType(vint32_t& ambiguityType, vint32_t branchType);
-				SharedBeginObject					MergeSharedBeginObjectsSingleRoot(Trace* trace, collections::Dictionary<Trace*, SharedBeginObject>& predecessorToBranches);
-				SharedBeginObject					MergeSharedBeginObjectsMultipleRoot(Trace* trace, collections::Dictionary<Trace*, SharedBeginObject>& predecessorToBranches);
-				SharedBeginObject					MergeSharedBeginObjectsPartialMultipleRoot(Trace* trace, vint32_t ambiguityType, collections::Group<Trace*, Trace*>& beginToPredecessors, collections::Dictionary<Trace*, SharedBeginObject>& predecessorToBranches);
-
-				SharedBeginObject					FillAmbiguityInfoForMergingTrace(Trace* trace);
-				void								FillAmbiguityInfoForPredecessorTraces(Trace* trace);
-				void								CreateLastMergingTrace(Trace* rootTraceCandidate);
-			public:
-				TraceManager(Executable& _executable, const ITypeCallback* _typeCallback = nullptr);
-
-				vint32_t							concurrentCount = 0;
-				collections::List<Trace*>*			concurrentTraces = nullptr;
-				collections::List<Trace*>*			backupTraces = nullptr;
-
-				ReturnStack*						GetReturnStack(vint32_t index);
-				ReturnStack*						AllocateReturnStack();
-				Trace*								GetTrace(vint32_t index);
-				Trace*								AllocateTrace();
-				Competition*						GetCompetition(vint32_t index);
-				Competition*						AllocateCompetition();
-				AttendingCompetitions*				GetAttendingCompetitions(vint32_t index);
-				AttendingCompetitions*				AllocateAttendingCompetitions();
-
-				void								Initialize(vint32_t startState);
-				void								Input(vint32_t currentTokenIndex, vint32_t token, vint32_t lookAhead);
-				void								EndOfInput();
-				Trace*								PrepareTraceRoute();
-				Ptr<ParsingAstBase>					ExecuteTrace(Trace* trace, IAstInsReceiver& receiver, collections::List<regex::RegexToken>& tokens);
+				virtual void						Initialize(vint32_t startState) = 0;
+				virtual bool						Input(vint32_t currentTokenIndex, regex::RegexToken* token, regex::RegexToken* lookAhead) = 0;
+				virtual bool						EndOfInput(bool& ambiguityInvolved) = 0;
+				virtual void						PrepareTraceRoute() = 0;
+				virtual void						ResolveAmbiguity() = 0;
+				virtual Ptr<ParsingAstBase>			ExecuteTrace(IAstInsReceiver& receiver, collections::List<regex::RegexToken>& tokens) = 0;
 			};
+
+			extern Ptr<IExecutor>					CreateExecutor(Executable& executable, const IExecutor::ITypeCallback* typeCallback, vint _blockSize);
 		}
 	}
 }
@@ -1235,12 +939,28 @@ ParserBase<TTokens, TStates, TReceiver, TStateTypes>
 			UnexpectedAstType,		// (tokens, executable, traceManager, ast)		unexpected type of the created AST
 		};
 
-		struct EndOfInputArgs
+		enum class TraceProcessingPhase
+		{
+			EndOfInput,
+			PrepareTraceRoute,
+			ResolveAmbiguity,
+		};
+
+		struct TraceProcessingArgs
 		{
 			collections::List<regex::RegexToken>&			tokens;
 			automaton::Executable&							executable;
-			automaton::TraceManager&						traceManager;
-			automaton::Trace*								rootTrace;
+			automaton::IExecutor*							executor;
+			bool											ambiguityInvolved;
+			TraceProcessingPhase							phase;
+		};
+
+		struct ReadyToExecuteArgs
+		{
+			collections::List<regex::RegexToken>& tokens;
+			automaton::Executable& executable;
+			automaton::IExecutor* executor;
+			bool											ambiguityInvolved;
 		};
 
 		struct ErrorArgs
@@ -1251,13 +971,13 @@ ParserBase<TTokens, TStates, TReceiver, TStateTypes>
 			regex::RegexToken&								token;
 			collections::List<regex::RegexToken>&			tokens;
 			automaton::Executable&							executable;
-			automaton::TraceManager&						traceManager;
+			automaton::IExecutor*							executor;
 			Ptr<ParsingAstBase>								ast;
 
 			static ErrorArgs								UnrecognizedToken	(const regex::RegexToken& token);
-			static ErrorArgs								InvalidToken		(regex::RegexToken& token, collections::List<regex::RegexToken>& tokens, automaton::Executable& executable, automaton::TraceManager& traceManager);
-			static ErrorArgs								InputIncomplete		(vint codeIndex, collections::List<regex::RegexToken>& tokens, automaton::Executable& executable, automaton::TraceManager& traceManager);
-			static ErrorArgs								UnexpectedAstType	(collections::List<regex::RegexToken>& tokens, automaton::Executable& executable, automaton::TraceManager& traceManager, Ptr<ParsingAstBase> ast);
+			static ErrorArgs								InvalidToken		(regex::RegexToken& token, collections::List<regex::RegexToken>& tokens, automaton::Executable& executable, automaton::IExecutor* executor);
+			static ErrorArgs								InputIncomplete		(vint codeIndex, collections::List<regex::RegexToken>& tokens, automaton::Executable& executable, automaton::IExecutor* executor);
+			static ErrorArgs								UnexpectedAstType	(collections::List<regex::RegexToken>& tokens, automaton::Executable& executable, automaton::IExecutor* executor, Ptr<ParsingAstBase> ast);
 
 			ParsingError									ToParsingError();
 		};
@@ -1285,7 +1005,8 @@ ParserBase<TTokens, TStates, TReceiver, TStateTypes>
 
 			using Deleter = bool(*)(vint);
 			using TokenList = collections::List<regex::RegexToken>;
-			using EndOfInputCallback = void(EndOfInputArgs&);
+			using TraceProcessingCallback = void(TraceProcessingArgs&);
+			using ReadyToExecuteCallback = void(ReadyToExecuteArgs&);
 			using ErrorCallback = void(ErrorArgs&);
 		protected:
 			Deleter									deleter;
@@ -1293,7 +1014,8 @@ ParserBase<TTokens, TStates, TReceiver, TStateTypes>
 			Ptr<automaton::Executable>				executable;
 
 		public:
-			Event<EndOfInputCallback>				OnEndOfInput;
+			Event<TraceProcessingCallback>			OnTraceProcessing;
+			Event<ReadyToExecuteCallback>			OnReadyToExecute;
 			Event<ErrorCallback>					OnError;
 
 			ParserBase(
@@ -1306,13 +1028,13 @@ ParserBase<TTokens, TStates, TReceiver, TStateTypes>
 					stream::MemoryStream data;
 					_lexerData(data);
 					data.SeekFromBegin(0);
-					lexer = new regex::RegexLexer(data);
+					lexer = Ptr(new regex::RegexLexer(data));
 				}
 				{
 					stream::MemoryStream data;
 					_parserData(data);
 					data.SeekFromBegin(0);
-					executable = new automaton::Executable(data);
+					executable = Ptr(new automaton::Executable(data));
 				}
 			}
 
@@ -1330,7 +1052,7 @@ ParserBase<TTokens, TStates, TReceiver, TStateTypes>
 			{
 				input.Buffer();
 				auto enumerable = lexer->Parse(input, {}, codeIndex);
-				Ptr<collections::IEnumerator<regex::RegexToken>> enumerator = enumerable.CreateEnumerator();
+				auto enumerator = Ptr(enumerable.CreateEnumerator());
 				while (enumerator->Next())
 				{
 					auto&& token = enumerator->Current();
@@ -1352,7 +1074,7 @@ ParserBase<TTokens, TStates, TReceiver, TStateTypes>
 			}
 
 		protected:
-			Ptr<ParsingAstBase> ParseInternal(TokenList& tokens, vint32_t state, automaton::TraceManager& tm, const automaton::TraceManager::ITypeCallback* typeCallback, vint codeIndex) const
+			Ptr<ParsingAstBase> ParseInternal(TokenList& tokens, vint32_t state, automaton::IExecutor* executor, const automaton::IExecutor::ITypeCallback* typeCallback, vint codeIndex) const
 			{
 #define ERROR_MESSAGE_PREFIX L"vl::glr::ParserBase<...>::ParseInternal(List<RegexToken>&, vint32_t TraceManager::ITypeCallback*)#"
 				if (codeIndex == -1 && tokens.Count() > 0)
@@ -1360,54 +1082,69 @@ ParserBase<TTokens, TStates, TReceiver, TStateTypes>
 					codeIndex = tokens[0].codeIndex;
 				}
 
-				tm.Initialize(state);
+				executor->Initialize(state);
 				for (vint32_t i = 0; i < tokens.Count(); i++)
 				{
-					auto&& token = tokens[i];
-					auto lookAhead = i == tokens.Count() - 1 ? -1 : tokens[i + 1].token;
-					tm.Input(i, (vint32_t)token.token, (vint32_t)lookAhead);
+					auto token = &tokens[i];
+					auto lookAhead = i == tokens.Count() - 1 ? nullptr : &tokens[i + 1];
 
-					if (tm.concurrentCount == 0)
+					if (!executor->Input(i, token, lookAhead))
 					{
-						auto args = ErrorArgs::InvalidToken(token, tokens, *executable.Obj(), tm);
+						auto args = ErrorArgs::InvalidToken(*token, tokens, *executable.Obj(), executor);
 						OnError(args);
 						if (args.throwError) CHECK_FAIL(ERROR_MESSAGE_PREFIX L"Error happens during parsing.");
 						return nullptr;
 					}
 				}
 
-				tm.EndOfInput();
-				if (tm.concurrentCount == 0)
+				bool ambiguityInvolved = false;
+				if (!executor->EndOfInput(ambiguityInvolved))
 				{
-					auto args = ErrorArgs::InputIncomplete(codeIndex, tokens, *executable.Obj(), tm);
+					auto args = ErrorArgs::InputIncomplete(codeIndex, tokens, *executable.Obj(), executor);
 					OnError(args);
 					if (args.throwError) CHECK_FAIL(ERROR_MESSAGE_PREFIX L"Input is incomplete.");
 					return nullptr;
 				}
 
-				auto rootTrace = tm.PrepareTraceRoute();
 				{
-					EndOfInputArgs args = { tokens, *executable.Obj(), tm, rootTrace };
-					OnEndOfInput(args);
+					TraceProcessingArgs args = { tokens, *executable.Obj(), executor, ambiguityInvolved, TraceProcessingPhase::EndOfInput };
+					OnTraceProcessing(args);
+				}
+				if (ambiguityInvolved)
+				{
+					{
+						executor->PrepareTraceRoute();
+						TraceProcessingArgs args = { tokens, *executable.Obj(), executor, ambiguityInvolved, TraceProcessingPhase::PrepareTraceRoute };
+						OnTraceProcessing(args);
+					}
+					{
+						executor->ResolveAmbiguity();
+						TraceProcessingArgs args = { tokens, *executable.Obj(), executor, ambiguityInvolved, TraceProcessingPhase::ResolveAmbiguity };
+						OnTraceProcessing(args);
+					}
+				}
+				{
+					ReadyToExecuteArgs args = { tokens, *executable.Obj(), executor, ambiguityInvolved };
+					OnReadyToExecute(args);
 				}
 
 				TReceiver receiver;
-				return tm.ExecuteTrace(rootTrace, receiver, tokens);
+				return executor->ExecuteTrace(receiver, tokens);
 
 #undef ERROR_MESSAGE_PREFIX
 			}
 
 			template<typename TAst, TStates State>
-			Ptr<TAst> ParseWithTokens(TokenList& tokens, const automaton::TraceManager::ITypeCallback* typeCallback, vint codeIndex) const
+			Ptr<TAst> ParseWithTokens(TokenList& tokens, const automaton::IExecutor::ITypeCallback* typeCallback, vint codeIndex, vint blockSize = 1024) const
 			{
 #define ERROR_MESSAGE_PREFIX L"vl::glr::ParserBase<...>::Parse<TAst, TStates>(List<RegexToken>& TraceManager::ITypeCallback*)#"
-				automaton::TraceManager tm(*executable.Obj(), typeCallback);
-				auto ast = ParseInternal(tokens, (vint32_t)State, tm, typeCallback, codeIndex);
+				auto executor = automaton::CreateExecutor(*executable.Obj(), typeCallback, blockSize);
+				auto ast = ParseInternal(tokens, (vint32_t)State, executor.Obj(), typeCallback, codeIndex);
 				auto typedAst = ast.template Cast<TAst>();
 
 				if (ast && !typedAst)
 				{
-					auto args = ErrorArgs::UnexpectedAstType(tokens, *executable.Obj(), tm, ast);
+					auto args = ErrorArgs::UnexpectedAstType(tokens, *executable.Obj(), executor.Obj(), ast);
 					OnError(args);
 					if (args.throwError) CHECK_FAIL(ERROR_MESSAGE_PREFIX L"Unexpected type of the created AST.");
 				}
@@ -1416,11 +1153,11 @@ ParserBase<TTokens, TStates, TReceiver, TStateTypes>
 			}
 
 			template<typename TAst, TStates State>
-			Ptr<TAst> ParseWithString(const WString& input, const automaton::TraceManager::ITypeCallback* typeCallback, vint codeIndex) const
+			Ptr<TAst> ParseWithString(const WString& input, const automaton::IExecutor::ITypeCallback* typeCallback, vint codeIndex, vint blockSize = 1024) const
 			{
 				TokenList tokens;
 				Tokenize(input, tokens, codeIndex);
-				return ParseWithTokens<TAst, State>(tokens, typeCallback, codeIndex);
+				return ParseWithTokens<TAst, State>(tokens, typeCallback, codeIndex, blockSize);
 			}
 		};
 	}
@@ -1441,148 +1178,136 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_JSON_AST_AST
 
 
-namespace vl
+namespace vl::glr::json
 {
-	namespace glr
+	class JsonArray;
+	class JsonLiteral;
+	class JsonNode;
+	class JsonNumber;
+	class JsonObject;
+	class JsonObjectField;
+	class JsonString;
+
+	enum class JsonLiteralValue
 	{
-		namespace json
+		UNDEFINED_ENUM_ITEM_VALUE = -1,
+		True = 0,
+		False = 1,
+		Null = 2,
+	};
+
+	class JsonNode abstract : public vl::glr::ParsingAstBase, vl::reflection::Description<JsonNode>
+	{
+	public:
+		class IVisitor : public virtual vl::reflection::IDescriptable, vl::reflection::Description<IVisitor>
 		{
-			class JsonArray;
-			class JsonLiteral;
-			class JsonNode;
-			class JsonNumber;
-			class JsonObject;
-			class JsonObjectField;
-			class JsonString;
+		public:
+			virtual void Visit(JsonLiteral* node) = 0;
+			virtual void Visit(JsonString* node) = 0;
+			virtual void Visit(JsonNumber* node) = 0;
+			virtual void Visit(JsonArray* node) = 0;
+			virtual void Visit(JsonObject* node) = 0;
+		};
 
-			enum class JsonLiteralValue
-			{
-				UNDEFINED_ENUM_ITEM_VALUE = -1,
-				True = 0,
-				False = 1,
-				Null = 2,
-			};
+		virtual void Accept(JsonNode::IVisitor* visitor) = 0;
 
-			class JsonNode abstract : public vl::glr::ParsingAstBase, vl::reflection::Description<JsonNode>
-			{
-			public:
-				class IVisitor : public virtual vl::reflection::IDescriptable, vl::reflection::Description<IVisitor>
-				{
-				public:
-					virtual void Visit(JsonLiteral* node) = 0;
-					virtual void Visit(JsonString* node) = 0;
-					virtual void Visit(JsonNumber* node) = 0;
-					virtual void Visit(JsonArray* node) = 0;
-					virtual void Visit(JsonObject* node) = 0;
-				};
+	};
 
-				virtual void Accept(JsonNode::IVisitor* visitor) = 0;
+	class JsonLiteral : public JsonNode, vl::reflection::Description<JsonLiteral>
+	{
+	public:
+		JsonLiteralValue value = JsonLiteralValue::UNDEFINED_ENUM_ITEM_VALUE;
 
-			};
+		void Accept(JsonNode::IVisitor* visitor) override;
+	};
 
-			class JsonLiteral : public JsonNode, vl::reflection::Description<JsonLiteral>
-			{
-			public:
-				JsonLiteralValue value = JsonLiteralValue::UNDEFINED_ENUM_ITEM_VALUE;
+	class JsonString : public JsonNode, vl::reflection::Description<JsonString>
+	{
+	public:
+		vl::glr::ParsingToken content;
 
-				void Accept(JsonNode::IVisitor* visitor) override;
-			};
+		void Accept(JsonNode::IVisitor* visitor) override;
+	};
 
-			class JsonString : public JsonNode, vl::reflection::Description<JsonString>
-			{
-			public:
-				vl::glr::ParsingToken content;
+	class JsonNumber : public JsonNode, vl::reflection::Description<JsonNumber>
+	{
+	public:
+		vl::glr::ParsingToken content;
 
-				void Accept(JsonNode::IVisitor* visitor) override;
-			};
+		void Accept(JsonNode::IVisitor* visitor) override;
+	};
 
-			class JsonNumber : public JsonNode, vl::reflection::Description<JsonNumber>
-			{
-			public:
-				vl::glr::ParsingToken content;
+	class JsonArray : public JsonNode, vl::reflection::Description<JsonArray>
+	{
+	public:
+		vl::collections::List<vl::Ptr<JsonNode>> items;
 
-				void Accept(JsonNode::IVisitor* visitor) override;
-			};
+		void Accept(JsonNode::IVisitor* visitor) override;
+	};
 
-			class JsonArray : public JsonNode, vl::reflection::Description<JsonArray>
-			{
-			public:
-				vl::collections::List<vl::Ptr<JsonNode>> items;
+	class JsonObjectField : public vl::glr::ParsingAstBase, vl::reflection::Description<JsonObjectField>
+	{
+	public:
+		vl::glr::ParsingToken name;
+		vl::Ptr<JsonNode> value;
+	};
 
-				void Accept(JsonNode::IVisitor* visitor) override;
-			};
+	class JsonObject : public JsonNode, vl::reflection::Description<JsonObject>
+	{
+	public:
+		vl::collections::List<vl::Ptr<JsonObjectField>> fields;
 
-			class JsonObjectField : public vl::glr::ParsingAstBase, vl::reflection::Description<JsonObjectField>
-			{
-			public:
-				vl::glr::ParsingToken name;
-				vl::Ptr<JsonNode> value;
-			};
-
-			class JsonObject : public JsonNode, vl::reflection::Description<JsonObject>
-			{
-			public:
-				vl::collections::List<vl::Ptr<JsonObjectField>> fields;
-
-				void Accept(JsonNode::IVisitor* visitor) override;
-			};
-		}
-	}
+		void Accept(JsonNode::IVisitor* visitor) override;
+	};
 }
-namespace vl
+namespace vl::reflection::description
 {
-	namespace reflection
-	{
-		namespace description
-		{
 #ifndef VCZH_DEBUG_NO_REFLECTION
-			DECL_TYPE_INFO(vl::glr::json::JsonNode)
-			DECL_TYPE_INFO(vl::glr::json::JsonNode::IVisitor)
-			DECL_TYPE_INFO(vl::glr::json::JsonLiteralValue)
-			DECL_TYPE_INFO(vl::glr::json::JsonLiteral)
-			DECL_TYPE_INFO(vl::glr::json::JsonString)
-			DECL_TYPE_INFO(vl::glr::json::JsonNumber)
-			DECL_TYPE_INFO(vl::glr::json::JsonArray)
-			DECL_TYPE_INFO(vl::glr::json::JsonObjectField)
-			DECL_TYPE_INFO(vl::glr::json::JsonObject)
+	DECL_TYPE_INFO(vl::glr::json::JsonNode)
+	DECL_TYPE_INFO(vl::glr::json::JsonNode::IVisitor)
+	DECL_TYPE_INFO(vl::glr::json::JsonLiteralValue)
+	DECL_TYPE_INFO(vl::glr::json::JsonLiteral)
+	DECL_TYPE_INFO(vl::glr::json::JsonString)
+	DECL_TYPE_INFO(vl::glr::json::JsonNumber)
+	DECL_TYPE_INFO(vl::glr::json::JsonArray)
+	DECL_TYPE_INFO(vl::glr::json::JsonObjectField)
+	DECL_TYPE_INFO(vl::glr::json::JsonObject)
 
 #ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
 
-			BEGIN_INTERFACE_PROXY_NOPARENT_SHAREDPTR(vl::glr::json::JsonNode::IVisitor)
-				void Visit(vl::glr::json::JsonLiteral* node) override
-				{
-					INVOKE_INTERFACE_PROXY(Visit, node);
-				}
-
-				void Visit(vl::glr::json::JsonString* node) override
-				{
-					INVOKE_INTERFACE_PROXY(Visit, node);
-				}
-
-				void Visit(vl::glr::json::JsonNumber* node) override
-				{
-					INVOKE_INTERFACE_PROXY(Visit, node);
-				}
-
-				void Visit(vl::glr::json::JsonArray* node) override
-				{
-					INVOKE_INTERFACE_PROXY(Visit, node);
-				}
-
-				void Visit(vl::glr::json::JsonObject* node) override
-				{
-					INVOKE_INTERFACE_PROXY(Visit, node);
-				}
-
-			END_INTERFACE_PROXY(vl::glr::json::JsonNode::IVisitor)
-
-#endif
-#endif
-			/// <summary>Load all reflectable AST types, only available when <b>VCZH_DEBUG_NO_REFLECTION</b> is off.</summary>
-			/// <returns>Returns true if this operation succeeded.</returns>
-			extern bool JsonAstLoadTypes();
+	BEGIN_INTERFACE_PROXY_NOPARENT_SHAREDPTR(vl::glr::json::JsonNode::IVisitor)
+		void Visit(vl::glr::json::JsonLiteral* node) override
+		{
+			INVOKE_INTERFACE_PROXY(Visit, node);
 		}
-	}
+
+		void Visit(vl::glr::json::JsonString* node) override
+		{
+			INVOKE_INTERFACE_PROXY(Visit, node);
+		}
+
+		void Visit(vl::glr::json::JsonNumber* node) override
+		{
+			INVOKE_INTERFACE_PROXY(Visit, node);
+		}
+
+		void Visit(vl::glr::json::JsonArray* node) override
+		{
+			INVOKE_INTERFACE_PROXY(Visit, node);
+		}
+
+		void Visit(vl::glr::json::JsonObject* node) override
+		{
+			INVOKE_INTERFACE_PROXY(Visit, node);
+		}
+
+	END_INTERFACE_PROXY(vl::glr::json::JsonNode::IVisitor)
+
+#endif
+#endif
+	/// <summary>Load all reflectable AST types, only available when <b>VCZH_DEBUG_NO_REFLECTION</b> is off.</summary>
+	/// <returns>Returns true if this operation succeeded.</returns>
+	extern bool JsonAstLoadTypes();
 }
 #endif
 
@@ -1599,54 +1324,45 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_JSON_AST_AST_BUILDER
 
 
-namespace vl
+namespace vl::glr::json::builder
 {
-	namespace glr
+	class MakeArray : public vl::glr::ParsingAstBuilder<JsonArray>
 	{
-		namespace json
-		{
-			namespace builder
-			{
-				class MakeArray : public vl::glr::ParsingAstBuilder<JsonArray>
-				{
-				public:
-					MakeArray& items(const vl::Ptr<JsonNode>& value);
-				};
+	public:
+		MakeArray& items(const vl::Ptr<JsonNode>& value);
+	};
 
-				class MakeLiteral : public vl::glr::ParsingAstBuilder<JsonLiteral>
-				{
-				public:
-					MakeLiteral& value(JsonLiteralValue value);
-				};
+	class MakeLiteral : public vl::glr::ParsingAstBuilder<JsonLiteral>
+	{
+	public:
+		MakeLiteral& value(JsonLiteralValue value);
+	};
 
-				class MakeNumber : public vl::glr::ParsingAstBuilder<JsonNumber>
-				{
-				public:
-					MakeNumber& content(const vl::WString& value);
-				};
+	class MakeNumber : public vl::glr::ParsingAstBuilder<JsonNumber>
+	{
+	public:
+		MakeNumber& content(const vl::WString& value);
+	};
 
-				class MakeObject : public vl::glr::ParsingAstBuilder<JsonObject>
-				{
-				public:
-					MakeObject& fields(const vl::Ptr<JsonObjectField>& value);
-				};
+	class MakeObject : public vl::glr::ParsingAstBuilder<JsonObject>
+	{
+	public:
+		MakeObject& fields(const vl::Ptr<JsonObjectField>& value);
+	};
 
-				class MakeObjectField : public vl::glr::ParsingAstBuilder<JsonObjectField>
-				{
-				public:
-					MakeObjectField& name(const vl::WString& value);
-					MakeObjectField& value(const vl::Ptr<JsonNode>& value);
-				};
+	class MakeObjectField : public vl::glr::ParsingAstBuilder<JsonObjectField>
+	{
+	public:
+		MakeObjectField& name(const vl::WString& value);
+		MakeObjectField& value(const vl::Ptr<JsonNode>& value);
+	};
 
-				class MakeString : public vl::glr::ParsingAstBuilder<JsonString>
-				{
-				public:
-					MakeString& content(const vl::WString& value);
-				};
+	class MakeString : public vl::glr::ParsingAstBuilder<JsonString>
+	{
+	public:
+		MakeString& content(const vl::WString& value);
+	};
 
-			}
-		}
-	}
 }
 #endif
 
@@ -1663,50 +1379,41 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_JSON_AST_AST_COPY_VISITOR
 
 
-namespace vl
+namespace vl::glr::json::copy_visitor
 {
-	namespace glr
+	/// <summary>A copy visitor, overriding all abstract methods with AST copying code.</summary>
+	class AstVisitor
+		: public virtual vl::glr::CopyVisitorBase
+		, protected virtual JsonNode::IVisitor
 	{
-		namespace json
-		{
-			namespace copy_visitor
-			{
-				/// <summary>A copy visitor, overriding all abstract methods with AST copying code.</summary>
-				class AstVisitor
-					: public virtual vl::glr::CopyVisitorBase
-					, protected virtual JsonNode::IVisitor
-				{
-				protected:
-					void CopyFields(JsonArray* from, JsonArray* to);
-					void CopyFields(JsonLiteral* from, JsonLiteral* to);
-					void CopyFields(JsonNode* from, JsonNode* to);
-					void CopyFields(JsonNumber* from, JsonNumber* to);
-					void CopyFields(JsonObject* from, JsonObject* to);
-					void CopyFields(JsonObjectField* from, JsonObjectField* to);
-					void CopyFields(JsonString* from, JsonString* to);
+	protected:
+		void CopyFields(JsonArray* from, JsonArray* to);
+		void CopyFields(JsonLiteral* from, JsonLiteral* to);
+		void CopyFields(JsonNode* from, JsonNode* to);
+		void CopyFields(JsonNumber* from, JsonNumber* to);
+		void CopyFields(JsonObject* from, JsonObject* to);
+		void CopyFields(JsonObjectField* from, JsonObjectField* to);
+		void CopyFields(JsonString* from, JsonString* to);
 
-				protected:
-					virtual void Visit(JsonObjectField* node);
+	protected:
+		virtual void Visit(JsonObjectField* node);
 
-					void Visit(JsonLiteral* node) override;
-					void Visit(JsonString* node) override;
-					void Visit(JsonNumber* node) override;
-					void Visit(JsonArray* node) override;
-					void Visit(JsonObject* node) override;
+		void Visit(JsonLiteral* node) override;
+		void Visit(JsonString* node) override;
+		void Visit(JsonNumber* node) override;
+		void Visit(JsonArray* node) override;
+		void Visit(JsonObject* node) override;
 
-				public:
-					virtual vl::Ptr<JsonNode> CopyNode(JsonNode* node);
-					virtual vl::Ptr<JsonObjectField> CopyNode(JsonObjectField* node);
+	public:
+		virtual vl::Ptr<JsonNode> CopyNode(JsonNode* node);
+		virtual vl::Ptr<JsonObjectField> CopyNode(JsonObjectField* node);
 
-					vl::Ptr<JsonArray> CopyNode(JsonArray* node);
-					vl::Ptr<JsonLiteral> CopyNode(JsonLiteral* node);
-					vl::Ptr<JsonNumber> CopyNode(JsonNumber* node);
-					vl::Ptr<JsonObject> CopyNode(JsonObject* node);
-					vl::Ptr<JsonString> CopyNode(JsonString* node);
-				};
-			}
-		}
-	}
+		vl::Ptr<JsonArray> CopyNode(JsonArray* node);
+		vl::Ptr<JsonLiteral> CopyNode(JsonLiteral* node);
+		vl::Ptr<JsonNumber> CopyNode(JsonNumber* node);
+		vl::Ptr<JsonObject> CopyNode(JsonObject* node);
+		vl::Ptr<JsonString> CopyNode(JsonString* node);
+	};
 }
 #endif
 
@@ -1723,32 +1430,23 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_JSON_AST_AST_EMPTY_VISITOR
 
 
-namespace vl
+namespace vl::glr::json::empty_visitor
 {
-	namespace glr
+	/// <summary>An empty visitor, overriding all abstract methods with empty implementations.</summary>
+	class NodeVisitor : public vl::Object, public JsonNode::IVisitor
 	{
-		namespace json
-		{
-			namespace empty_visitor
-			{
-				/// <summary>An empty visitor, overriding all abstract methods with empty implementations.</summary>
-				class NodeVisitor : public vl::Object, public JsonNode::IVisitor
-				{
-				protected:
-					// Dispatch (virtual) --------------------------------
+	protected:
+		// Dispatch (virtual) --------------------------------
 
-				public:
-					// Visitor Members -----------------------------------
-					void Visit(JsonLiteral* node) override;
-					void Visit(JsonString* node) override;
-					void Visit(JsonNumber* node) override;
-					void Visit(JsonArray* node) override;
-					void Visit(JsonObject* node) override;
-				};
+	public:
+		// Visitor Members -----------------------------------
+		void Visit(JsonLiteral* node) override;
+		void Visit(JsonString* node) override;
+		void Visit(JsonNumber* node) override;
+		void Visit(JsonArray* node) override;
+		void Visit(JsonObject* node) override;
+	};
 
-			}
-		}
-	}
 }
 #endif
 
@@ -1765,44 +1463,35 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_JSON_AST_AST_JSON_VISITOR
 
 
-namespace vl
+namespace vl::glr::json::json_visitor
 {
-	namespace glr
+	/// <summary>A JSON visitor, overriding all abstract methods with AST to JSON serialization code.</summary>
+	class AstVisitor
+		: public vl::glr::JsonVisitorBase
+		, protected virtual JsonNode::IVisitor
 	{
-		namespace json
-		{
-			namespace json_visitor
-			{
-				/// <summary>A JSON visitor, overriding all abstract methods with AST to JSON serialization code.</summary>
-				class AstVisitor
-					: public vl::glr::JsonVisitorBase
-					, protected virtual JsonNode::IVisitor
-				{
-				protected:
-					virtual void PrintFields(JsonArray* node);
-					virtual void PrintFields(JsonLiteral* node);
-					virtual void PrintFields(JsonNode* node);
-					virtual void PrintFields(JsonNumber* node);
-					virtual void PrintFields(JsonObject* node);
-					virtual void PrintFields(JsonObjectField* node);
-					virtual void PrintFields(JsonString* node);
+	protected:
+		virtual void PrintFields(JsonArray* node);
+		virtual void PrintFields(JsonLiteral* node);
+		virtual void PrintFields(JsonNode* node);
+		virtual void PrintFields(JsonNumber* node);
+		virtual void PrintFields(JsonObject* node);
+		virtual void PrintFields(JsonObjectField* node);
+		virtual void PrintFields(JsonString* node);
 
-				protected:
-					void Visit(JsonLiteral* node) override;
-					void Visit(JsonString* node) override;
-					void Visit(JsonNumber* node) override;
-					void Visit(JsonArray* node) override;
-					void Visit(JsonObject* node) override;
+	protected:
+		void Visit(JsonLiteral* node) override;
+		void Visit(JsonString* node) override;
+		void Visit(JsonNumber* node) override;
+		void Visit(JsonArray* node) override;
+		void Visit(JsonObject* node) override;
 
-				public:
-					AstVisitor(vl::stream::StreamWriter& _writer);
+	public:
+		AstVisitor(vl::stream::StreamWriter& _writer);
 
-					void Print(JsonNode* node);
-					void Print(JsonObjectField* node);
-				};
-			}
-		}
-	}
+		void Print(JsonNode* node);
+		void Print(JsonObjectField* node);
+	};
 }
 #endif
 
@@ -1819,54 +1508,45 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_JSON_AST_AST_TRAVERSE_VISITOR
 
 
-namespace vl
+namespace vl::glr::json::traverse_visitor
 {
-	namespace glr
+	/// <summary>A traverse visitor, overriding all abstract methods with AST visiting code.</summary>
+	class AstVisitor
+		: public vl::Object
+		, protected virtual JsonNode::IVisitor
 	{
-		namespace json
-		{
-			namespace traverse_visitor
-			{
-				/// <summary>A traverse visitor, overriding all abstract methods with AST visiting code.</summary>
-				class AstVisitor
-					: public vl::Object
-					, protected virtual JsonNode::IVisitor
-				{
-				protected:
-					virtual void Traverse(vl::glr::ParsingToken& token);
-					virtual void Traverse(vl::glr::ParsingAstBase* node);
-					virtual void Traverse(JsonArray* node);
-					virtual void Traverse(JsonLiteral* node);
-					virtual void Traverse(JsonNode* node);
-					virtual void Traverse(JsonNumber* node);
-					virtual void Traverse(JsonObject* node);
-					virtual void Traverse(JsonObjectField* node);
-					virtual void Traverse(JsonString* node);
+	protected:
+		virtual void Traverse(vl::glr::ParsingToken& token);
+		virtual void Traverse(vl::glr::ParsingAstBase* node);
+		virtual void Traverse(JsonArray* node);
+		virtual void Traverse(JsonLiteral* node);
+		virtual void Traverse(JsonNode* node);
+		virtual void Traverse(JsonNumber* node);
+		virtual void Traverse(JsonObject* node);
+		virtual void Traverse(JsonObjectField* node);
+		virtual void Traverse(JsonString* node);
 
-				protected:
-					virtual void Finishing(vl::glr::ParsingAstBase* node);
-					virtual void Finishing(JsonArray* node);
-					virtual void Finishing(JsonLiteral* node);
-					virtual void Finishing(JsonNode* node);
-					virtual void Finishing(JsonNumber* node);
-					virtual void Finishing(JsonObject* node);
-					virtual void Finishing(JsonObjectField* node);
-					virtual void Finishing(JsonString* node);
+	protected:
+		virtual void Finishing(vl::glr::ParsingAstBase* node);
+		virtual void Finishing(JsonArray* node);
+		virtual void Finishing(JsonLiteral* node);
+		virtual void Finishing(JsonNode* node);
+		virtual void Finishing(JsonNumber* node);
+		virtual void Finishing(JsonObject* node);
+		virtual void Finishing(JsonObjectField* node);
+		virtual void Finishing(JsonString* node);
 
-				protected:
-					void Visit(JsonLiteral* node) override;
-					void Visit(JsonString* node) override;
-					void Visit(JsonNumber* node) override;
-					void Visit(JsonArray* node) override;
-					void Visit(JsonObject* node) override;
+	protected:
+		void Visit(JsonLiteral* node) override;
+		void Visit(JsonString* node) override;
+		void Visit(JsonNumber* node) override;
+		void Visit(JsonArray* node) override;
+		void Visit(JsonObject* node) override;
 
-				public:
-					void InspectInto(JsonNode* node);
-					void InspectInto(JsonObjectField* node);
-				};
-			}
-		}
-	}
+	public:
+		void InspectInto(JsonNode* node);
+		void InspectInto(JsonObjectField* node);
+	};
 }
 #endif
 
@@ -1883,50 +1563,44 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_JSON_AST_ASSEMBLER
 
 
-namespace vl
+namespace vl::glr::json
 {
-	namespace glr
+	enum class JsonClasses : vl::vint32_t
 	{
-		namespace json
-		{
-			enum class JsonClasses : vl::vint32_t
-			{
-				Array = 0,
-				Literal = 1,
-				Node = 2,
-				Number = 3,
-				Object = 4,
-				ObjectField = 5,
-				String = 6,
-			};
+		Array = 0,
+		Literal = 1,
+		Node = 2,
+		Number = 3,
+		Object = 4,
+		ObjectField = 5,
+		String = 6,
+	};
 
-			enum class JsonFields : vl::vint32_t
-			{
-				Array_items = 0,
-				Literal_value = 1,
-				Number_content = 2,
-				Object_fields = 3,
-				ObjectField_name = 4,
-				ObjectField_value = 5,
-				String_content = 6,
-			};
+	enum class JsonFields : vl::vint32_t
+	{
+		Array_items = 0,
+		Literal_value = 1,
+		Number_content = 2,
+		Object_fields = 3,
+		ObjectField_name = 4,
+		ObjectField_value = 5,
+		String_content = 6,
+	};
 
-			extern const wchar_t* JsonTypeName(JsonClasses type);
-			extern const wchar_t* JsonCppTypeName(JsonClasses type);
-			extern const wchar_t* JsonFieldName(JsonFields field);
-			extern const wchar_t* JsonCppFieldName(JsonFields field);
+	extern const wchar_t* JsonTypeName(JsonClasses type);
+	extern const wchar_t* JsonCppTypeName(JsonClasses type);
+	extern const wchar_t* JsonFieldName(JsonFields field);
+	extern const wchar_t* JsonCppFieldName(JsonFields field);
 
-			class JsonAstInsReceiver : public vl::glr::AstInsReceiverBase
-			{
-			protected:
-				vl::Ptr<vl::glr::ParsingAstBase> CreateAstNode(vl::vint32_t type) override;
-				void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, vl::Ptr<vl::glr::ParsingAstBase> value) override;
-				void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, const vl::regex::RegexToken& token, vl::vint32_t tokenIndex) override;
-				void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, vl::vint32_t enumItem) override;
-				vl::Ptr<vl::glr::ParsingAstBase> ResolveAmbiguity(vl::vint32_t type, vl::collections::Array<vl::Ptr<vl::glr::ParsingAstBase>>& candidates) override;
-			};
-		}
-	}
+	class JsonAstInsReceiver : public vl::glr::AstInsReceiverBase
+	{
+	protected:
+		vl::Ptr<vl::glr::ParsingAstBase> CreateAstNode(vl::vint32_t type) override;
+		void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, vl::Ptr<vl::glr::ParsingAstBase> value) override;
+		void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, const vl::regex::RegexToken& token, vl::vint32_t tokenIndex) override;
+		void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, vl::vint32_t enumItem, bool weakAssignment) override;
+		vl::Ptr<vl::glr::ParsingAstBase> ResolveAmbiguity(vl::vint32_t type, vl::collections::Array<vl::Ptr<vl::glr::ParsingAstBase>>& candidates) override;
+	};
 }
 #endif
 
@@ -1943,36 +1617,30 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_JSON_LEXER
 
 
-namespace vl
+namespace vl::glr::json
 {
-	namespace glr
+	enum class JsonTokens : vl::vint32_t
 	{
-		namespace json
-		{
-			enum class JsonTokens : vl::vint32_t
-			{
-				TRUE_VALUE = 0,
-				FALSE_VALUE = 1,
-				NULL_VALUE = 2,
-				OBJOPEN = 3,
-				OBJCLOSE = 4,
-				ARROPEN = 5,
-				ARRCLOSE = 6,
-				COMMA = 7,
-				COLON = 8,
-				NUMBER = 9,
-				STRING = 10,
-				SPACE = 11,
-			};
+		TRUE_VALUE = 0,
+		FALSE_VALUE = 1,
+		NULL_VALUE = 2,
+		OBJOPEN = 3,
+		OBJCLOSE = 4,
+		ARROPEN = 5,
+		ARRCLOSE = 6,
+		COMMA = 7,
+		COLON = 8,
+		NUMBER = 9,
+		STRING = 10,
+		SPACE = 11,
+	};
 
-			constexpr vl::vint JsonTokenCount = 12;
-			extern bool JsonTokenDeleter(vl::vint token);
-			extern const wchar_t* JsonTokenId(JsonTokens token);
-			extern const wchar_t* JsonTokenDisplayText(JsonTokens token);
-			extern const wchar_t* JsonTokenRegex(JsonTokens token);
-			extern void JsonLexerData(vl::stream::IStream& outputStream);
-		}
-	}
+	constexpr vl::vint JsonTokenCount = 12;
+	extern bool JsonTokenDeleter(vl::vint token);
+	extern const wchar_t* JsonTokenId(JsonTokens token);
+	extern const wchar_t* JsonTokenDisplayText(JsonTokens token);
+	extern const wchar_t* JsonTokenRegex(JsonTokens token);
+	extern void JsonLexerData(vl::stream::IStream& outputStream);
 }
 #endif
 
@@ -1989,39 +1657,35 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_JSON_PARSER_SYNTAX
 
 
-namespace vl
+namespace vl::glr::json
 {
-	namespace glr
+	enum class ParserStates
 	{
-		namespace json
-		{
-			enum class ParserStates
-			{
-				JLiteral = 0,
-				JField = 7,
-				JObject = 12,
-				JArray = 18,
-				JValue = 24,
-				JRoot = 29,
-			};
+		JLiteral = 0,
+		JField = 7,
+		JObject = 12,
+		JArray = 18,
+		JValue = 24,
+		JRoot = 29,
+	};
 
-			const wchar_t* ParserRuleName(vl::vint index);
-			const wchar_t* ParserStateLabel(vl::vint index);
-			extern void JsonParserData(vl::stream::IStream& outputStream);
+	const wchar_t* ParserRuleName(vl::vint index);
+	const wchar_t* ParserStateLabel(vl::vint index);
+	extern void JsonParserData(vl::stream::IStream& outputStream);
 
-			class Parser
-				: public vl::glr::ParserBase<JsonTokens, ParserStates, JsonAstInsReceiver>				, protected vl::glr::automaton::TraceManager::ITypeCallback
-			{
-			protected:
-				vl::vint32_t FindCommonBaseClass(vl::vint32_t class1, vl::vint32_t class2) const override;
-			public:
-				Parser();
+	class Parser
+		: public vl::glr::ParserBase<JsonTokens, ParserStates, JsonAstInsReceiver>
+		, protected vl::glr::automaton::IExecutor::ITypeCallback
+	{
+	protected:
+		vl::WString GetClassName(vl::vint32_t classIndex) const override;
+		vl::vint32_t FindCommonBaseClass(vl::vint32_t class1, vl::vint32_t class2) const override;
+	public:
+		Parser();
 
-				vl::Ptr<vl::glr::json::JsonNode> ParseJRoot(const vl::WString& input, vl::vint codeIndex = -1) const;
-				vl::Ptr<vl::glr::json::JsonNode> ParseJRoot(vl::collections::List<vl::regex::RegexToken>& tokens, vl::vint codeIndex = -1) const;
-			};
-		}
-	}
+		vl::Ptr<vl::glr::json::JsonNode> ParseJRoot(const vl::WString& input, vl::vint codeIndex = -1) const;
+		vl::Ptr<vl::glr::json::JsonNode> ParseJRoot(vl::collections::List<vl::regex::RegexToken>& tokens, vl::vint codeIndex = -1) const;
+	};
 }
 #endif
 
@@ -2067,6 +1731,803 @@ namespace vl
 #endif
 
 /***********************************************************************
+.\TRACEMANAGER\TRACEMANAGER.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_PARSER2_TRACEMANAGER_TRACEMANAGER
+#define VCZH_PARSER2_TRACEMANAGER_TRACEMANAGER
+
+
+namespace vl
+{
+	namespace glr
+	{
+		namespace automaton
+		{
+/***********************************************************************
+AllocateOnly<T>
+***********************************************************************/
+
+			struct WithMagicCounter
+			{
+				vuint64_t							mergeCounter = 0;		// a temporary counter for internal use
+			};
+
+			struct NullRef {};
+			constexpr auto nullref = NullRef{};
+
+			template<typename T>
+			struct Ref
+			{
+				vint32_t		handle = -1;
+
+				Ref() = default;
+				Ref(NullRef) :handle(-1) {}
+				Ref(T* obj) :handle(obj == nullptr ? -1 : obj->allocatedIndex) {}
+				Ref(const Ref<T>& ref) :handle(ref.handle) {}
+				explicit Ref(vint32_t _handle) :handle(_handle) {}
+
+				__forceinline bool operator==(NullRef) const { return handle == -1; }
+
+				__forceinline std::strong_ordering operator<=>(const Ref<T>& ref) const { return handle <=> ref.handle; }
+				__forceinline bool operator==(const Ref<T>& ref) const { return handle == ref.handle; }
+
+				__forceinline Ref& operator=(const Ref<T>& ref) { handle = ref.handle; return *this; }
+				__forceinline Ref& operator=(T* obj) { handle = obj == nullptr ? -1 : obj->allocatedIndex; return *this; }
+				__forceinline Ref& operator=(NullRef) { handle = -1; return *this; }
+
+				__forceinline std::strong_ordering operator<=>(vint32_t) = delete;
+				__forceinline bool operator==(vint32_t) = delete;
+				__forceinline Ref& operator=(vint32_t) = delete;
+			};
+
+			template<typename T>
+			struct Allocatable
+			{
+				vint32_t		allocatedIndex = -1;
+			};
+
+			template<typename T>
+			class AllocateOnly : public Object
+			{
+				static_assert(std::is_base_of_v<Allocatable<T>, T>, "T in AllocateOnly<T> does not inherit from Allocatable<T>.");
+			protected:
+				vint											blockSize;
+				vint											remains;
+				collections::List<Ptr<collections::Array<T>>>	buffers;
+
+			public:
+				AllocateOnly(vint _blockSize)
+					: blockSize(_blockSize)
+					, remains(0)
+				{
+				}
+
+				T* Get(Ref<T> index)
+				{
+					vint row = index.handle / blockSize;
+					vint column = index.handle % blockSize;
+					CHECK_ERROR(0 <= row && row < buffers.Count(), L"vl::glr::automaton::AllocateOnly<T>::Get(vint)#Index out of range.");
+					if (row == buffers.Count() - 1)
+					{
+						CHECK_ERROR(0 <= column && column < (blockSize - remains), L"vl::glr::automaton::AllocateOnly<T>::Get(vint)#Index out of range.");
+					}
+					else
+					{
+						CHECK_ERROR(0 <= column && column < blockSize, L"vl::glr::automaton::AllocateOnly<T>::Get(vint)#Index out of range.");
+					}
+					return &buffers[row]->operator[](column);
+				}
+
+				Ref<T> Allocate()
+				{
+					if (remains == 0)
+					{
+						buffers.Add(Ptr(new collections::Array<T>(blockSize)));
+						remains = blockSize;
+					}
+					vint index = blockSize * (buffers.Count() - 1) + (blockSize - remains);
+					buffers[buffers.Count() - 1]->operator[](blockSize - remains).allocatedIndex = (vint32_t)index;
+					remains--;
+					return Ref<T>((vint32_t)index);
+				}
+
+				void Clear()
+				{
+					remains = 0;
+					buffers.Clear();
+				}
+			};
+
+			struct ReturnStack;
+			struct Trace;
+			struct TraceExec;
+			struct InsExec_Object;
+
+/***********************************************************************
+TraceManager (Data Structures)
+***********************************************************************/
+
+			struct ReturnStackSuccessors
+			{
+				vint32_t				tokenIndex = -1;			// index of the token when successors in this list are created
+																	// the following members records all successors
+																	// that is created at the token index
+
+				Ref<ReturnStack>		first;						// first successor
+				Ref<ReturnStack>		last;						// last successor
+			};
+
+			struct ReturnStackCache
+			{
+				ReturnStackSuccessors	lastSuccessors;				// the value of successors before the current one is changed
+				ReturnStackSuccessors	successors;					// successors of ReturnStack for a token
+				vint32_t				tokenIndex = -1;			// index of the token when this ReturnStack is created.
+				Ref<ReturnStack>		prev;						// previous successor of ReturnStack::previous
+				Ref<ReturnStack>		next;						// next successor of ReturnStack::previous
+			};
+
+			struct ReturnStack : Allocatable<ReturnStack>
+			{
+				Ref<ReturnStack>		previous;					// id of the previous ReturnStack
+				vint32_t				returnIndex = -1;			// index of the ReturnDesc
+				Ref<Trace>				fromTrace;					// id of the Trace which has a transition containing this ReturnStack
+				ReturnStackCache		cache;
+			};
+
+			enum class CompetitionStatus
+			{
+				Holding,
+				HighPriorityWin,
+				LowPriorityWin,
+			};
+
+			struct Competition : Allocatable<Competition>
+			{
+				Ref<Competition>		nextActiveCompetition;					// next active Competition
+				Ref<Competition>		nextHoldCompetition;					// next Competition hold by this trace
+
+				CompetitionStatus		status = CompetitionStatus::Holding;	// if predecessors from this trace have different priority, the competition begins
+																				// when the competition is over, it will be changed to HighPriorityWin or LowPriorityWin
+																				// if all candidates fail, it could be Holding forever
+
+				vint32_t				currentTokenIndex = -1;					// currentTokenIndex from the trace that creates this competition
+				vint32_t				ruleId = -1;							// the rule id of state, when an edge starts this competition
+				vint32_t				clauseId = -1;							// the clause id of the state, when an edge starts this competition
+																				// an state must be picked up and ensure that, the syntax creating the priority and the state belong to the same clause
+
+				vint32_t				highCounter = 0;						// temporary counter for all existing high bets
+																				// in the current step of input
+				vint32_t				lowCounter = 0;							// temporary counter for all existing low bets
+																				// in the current step of input
+			};
+
+			struct AttendingCompetitions : Allocatable<AttendingCompetitions>
+			{
+				Ref<AttendingCompetitions>	nextActiveAC;				// the next AttendingCompetitions for RuntimeRouting::attendingCompetitions
+				Ref<AttendingCompetitions>	nextCarriedAC;				// the next AttendingCompetitions for RuntimeRouting::carriedCompetitions
+				Ref<Competition>			competition;				// the id of the Competition
+				bool						forHighPriority = false;	// bet of this competition
+
+				Ref<ReturnStack>			returnStack;				// the ReturnStack object for the competition
+																		// if the competition is attended by a ReturnDesc
+																		// then the ReturnStack object is the one before a ReturnDesc transition happens
+
+				bool						closed = false;				// true if the competition has been closed
+																		// this flag is not always updated for discarded AttendingCompetitions objects
+			};
+
+/***********************************************************************
+TraceManager (Data Structures -- Input/EndOfInput)
+***********************************************************************/
+
+			struct TraceCollection
+			{
+				Ref<Trace>					first;						// first trace in the collection
+				Ref<Trace>					last;						// last trace in the collection
+				Ref<Trace>					siblingPrev;				// previous trace in the collection of the owned trace
+				Ref<Trace>					siblingNext;				// next trace in the collection of the owned trace
+			};
+
+			struct CompetitionRouting
+			{
+				Ref<Competition>			holdingCompetitions;		// the id of the active Competition
+
+				Ref<AttendingCompetitions>	attendingCompetitions;		// a linked list containing all AttendingCompetitions that this trace is attending
+																		// predecessors could share and modify the same linked list
+																		// if a competition is over, node could be removed from the linked list
+																		// one competition only creates two AttendingCompetitions, traces with the same bet share the object
+
+				Ref<AttendingCompetitions>	carriedCompetitions;		// all attended competitions regardless of the status of the competition
+			};
+
+			struct Trace : Allocatable<Trace>
+			{
+				TraceCollection			predecessors;				// ids of predecessor Trace
+
+				// (filled by EndOfInput)
+				TraceCollection			successors;					// ids of successor Trace
+				vint32_t				predecessorCount = 0;
+				vint32_t				successorCount = 0;
+
+				// if state == -1
+				// it means this is an ambiguity resolving trace
+				// all merged traces are in predecessors
+
+				vint32_t				state = -1;					// id of the current StateDesc
+				Ref<ReturnStack>		returnStack;				// id of the current ReturnStack
+				Ref<ReturnStack>		executedReturnStack;		// id of the executed ReturnStack that contains the ReturnDesc being executed
+				vint32_t				byEdge = -1;				// id of the last EdgeDesc that make this trace
+				vint32_t				byInput = -1;				// the last input that make this trace
+				vint32_t				currentTokenIndex = -1;		// the index of the token that is byInput
+				CompetitionRouting		competitionRouting;			// a data structure carrying priority and competition information
+
+				// (filled by PrepareTraceRoute)
+				Ref<TraceExec>			traceExecRef;				// the allocated TraceExec
+				vint32_t				iterateCounter = 0;			// a temporary counter for IterateSurvivedTraces internal use
+			};
+
+/***********************************************************************
+TraceManager (Data Structures -- PrepareTraceRoute/ResolveAmbiguity)
+***********************************************************************/
+
+			struct InsRef
+			{
+				Ref<Trace>							trace;
+				vint32_t							ins = -1;
+			};
+
+			struct InsExec_InsRefLink : Allocatable<InsExec_InsRefLink>
+			{
+				Ref<InsExec_InsRefLink>				previous;
+				InsRef								insRef;
+			};
+
+			struct InsExec_ObjRefLink : Allocatable<InsExec_ObjRefLink>
+			{
+				Ref<InsExec_ObjRefLink>				previous;
+				Ref<InsExec_Object>					id;
+			};
+
+			struct InsExec_Object : Allocatable<InsExec_Object>, WithMagicCounter
+			{
+				static const vint32_t				TokenOrEnumItemObjectId = -2;
+
+				// previous allocated object
+				Ref<InsExec_Object>					previous;
+
+				// fieldObjectIds are object fields of this object
+				Ref<InsExec_ObjRefLink>				fieldObjectIds;
+
+				// assignedToObjectIds are objects who has at least one field that is this object
+				Ref<InsExec_ObjRefLink>				assignedToObjectIds;
+
+				// instruction that creates this object
+				InsRef								createInsRef;
+
+				// DelayFieldAssignment instructions that associates to the current object
+				Ref<InsExec_InsRefLink>				dfaInsRefs;
+
+				// first instruction that creates this object
+				InsRef								topLocalInsRef;
+
+				// first instruction that creates this object or its fields
+				InsRef								topInsRef;
+
+				// last instructions that closes this object
+				Ref<InsExec_InsRefLink>				bottomInsRefs;
+			};
+
+			struct InsExec_ObjectStack : Allocatable<InsExec_ObjectStack>, WithMagicCounter
+			{
+				Ref<InsExec_ObjectStack>			previous;
+				Ref<InsExec_ObjRefLink>				objectIds;
+				vint32_t							pushedCount = -1;		// number for InsExec_CreateStack::stackBase
+			};
+
+			struct InsExec_CreateStack : Allocatable<InsExec_CreateStack>, WithMagicCounter
+			{
+				Ref<InsExec_CreateStack>			previous;
+				vint32_t							stackBase = -1;			// the number of objects in the object stack that is frozen
+
+				// All InsExec_InsRefLink that create the current InsExec_CreateStack
+				Ref<InsExec_InsRefLink>				createInsRefs;
+
+				// InsExec_ObjRefLink assigned by BO/BOLA/RO
+				Ref<InsExec_ObjRefLink>				objectIds;
+
+				// objectIds will be added to reverseAssignedToObjectIds::assignedToObjectIds when ReopenObject happens
+				// it happens when a field is assigned to a DFA created object, the objectIds are unknown yet
+				Ref<InsExec_ObjRefLink>				reverseAssignedToObjectIds;
+			};
+
+			struct InsExec_Context
+			{
+				Ref<InsExec_ObjectStack>			objectStack;			// InsExec_ObjectStack after executing instructions
+				Ref<InsExec_CreateStack>			createStack;			// InsExec_CreateStack after executing instructions
+				Ref<InsExec_ObjRefLink>				lriStoredObjects;		// LriStore stored InsExec_ObjRefLink after executing instructions
+			};
+
+			struct InsExec : WithMagicCounter
+			{
+				// BO:
+				//   the created object
+				Ref<InsExec_Object>					createdObjectId;
+
+				// DFA:
+				//   all associated objects
+				// EO:
+				//   all ended objects
+				Ref<InsExec_ObjRefLink>				objRefs;
+
+				// InsExec_InsRefLink
+				// BO/DFA:
+				//   EndingObject instructions that close objects or create stack created by the current instruction
+				Ref<InsExec_InsRefLink>				eoInsRefs;
+
+				// context before executing the current instruction
+				InsExec_Context						contextBeforeExecution;
+			};
+
+			struct TraceAmbiguity : Allocatable<TraceAmbiguity>
+			{
+				// all objects to merge
+				Ref<InsExec_ObjRefLink>				bottomObjectIds;
+
+				// if multiple TraceAmbiguity are assigned to the same place
+				// it records the one it overrides
+				Ref<TraceAmbiguity>					overridedAmbiguity;
+
+				// the trace where ambiguity resolution begins
+				// prefix is the number of instructions before BO/DFA
+				// if prefix + 1 is larger than instructions in firstTrace
+				// then BO/DFA is in all successors
+				// these instructions create topObjectIds
+				Ref<Trace>							firstTrace;
+				vint32_t							prefix = -1;
+
+				// the trace when ambiguity resolution ends
+				// postfix is the number of instructions after EO
+				// if lastTrace is a merge trace
+				// then EO is in all predecessors
+				// these instructions end bottomObjectIds
+				Ref<Trace>							lastTrace;
+				vint32_t							postfix = -1;
+			};
+
+			struct TraceAmbiguityLink : Allocatable<TraceAmbiguityLink>
+			{
+				Ref<TraceAmbiguityLink>				previous;
+				Ref<TraceAmbiguity>					ambiguity;
+			};
+
+			struct TraceInsLists
+			{
+				InstructionArray					edgeInsBeforeInput;
+				InstructionArray					edgeInsAfterInput;
+				InstructionArray					returnInsAfterInput;
+				vint32_t							c1;
+				vint32_t							c2;
+				vint32_t							c3;
+			};
+
+			struct TraceBranchData : WithMagicCounter
+			{
+				// it stores the first trace of non branching path that this trace is in
+				// such trace could be:
+				//   the initial trace
+				//   successors of a branch trace
+				//   a merge trace
+				Ref<Trace>							forwardTrace;
+
+				// for merge trace, it stores the latest forwardTrace that all comming branches share
+				Ref<Trace>							commonForwardBranch;
+			};
+
+			struct TraceExec : Allocatable<TraceExec>
+			{
+				Ref<Trace>							traceId;
+				TraceInsLists						insLists;				// instruction list of this trace
+				InstructionArray					insExecRefs;			// allocated InsExec for instructions
+
+				InsExec_Context						context;
+				TraceBranchData						branchData;
+
+				// linked list of branch traces
+				Ref<Trace>							nextBranchTrace;
+
+				// linked list of merge traces
+				Ref<Trace>							nextMergeTrace;
+
+				// linked list of ambiguity critical trace (order by trace id ascending)
+				// the linked list begins from a trace whose forwardTrace is itself
+				// record all traces that is
+				//   a branch trace
+				//   a predecessor of a merge trace
+				//   a trace pointed by TraceAmbiguity::firstTrace
+				Ref<Trace>							nextAmbiguityCriticalTrace;
+
+				// TraceAmbiguity associated to the trace
+				// it could be associated to
+				//   firstTrace (order by prefix ascending)
+				//   lastTrace  (order by postfix ascending)
+				//   the merge trace that create this TraceAmbiguity
+				// ambiguityBegins will contain multiple TraceAmbiguity when
+				//   multiple ambiguity begins in different group of successors
+				//   there is also a possibility when all ambiguities don't cover all successors
+				Ref<TraceAmbiguity>					ambiguityDetected;
+				Ref<TraceAmbiguityLink>				ambiguityBegins;
+
+				// when this trace is a successor of a branch trace
+				// and such branch trace has non-empty ambiguityBegins
+				// ambiguityCoveredInForward points to the ambiguity which begins in the current trace
+				Ref<TraceAmbiguity>					ambiguityCoveredInForward;
+			};
+
+/***********************************************************************
+TraceManager (Data Structures -- BuildExecutionOrder)
+***********************************************************************/
+
+			struct ExecutionStep;
+
+			enum class ExecutionType
+			{
+				Empty,
+				Instruction,
+				ResolveAmbiguity,
+			};
+
+			struct ExecutionStep : Allocatable<ExecutionStep>
+			{
+				struct ETI
+				{
+					vint32_t						startTrace;
+					vint32_t						startIns;
+					vint32_t						endTrace;
+					vint32_t						endIns;
+				};
+
+				struct ETRA
+				{
+					vint32_t						count;
+					vint32_t						type;
+					vint32_t						trace;
+				};
+
+				ExecutionType						type = ExecutionType::Instruction;
+
+				// for steps that ready to execute
+				// "next" means the next step to execute
+				// for steps that returns from BuildStepTree
+				// "next" in a leaf step points to the next leaf step
+				Ref<ExecutionStep>					next;
+
+				// for steps that returns from BuildStepTree
+				// "next" is the parent step in the tree
+				Ref<ExecutionStep>					parent;
+
+				vint32_t							copyCount = 0;
+				vint32_t							visitCount = 0;
+
+				union
+				{
+					ETI								et_i;
+					ETRA							et_ra;
+				};
+			};
+
+/***********************************************************************
+TraceManager
+***********************************************************************/
+
+			enum class TraceManagerState
+			{
+				Uninitialized,
+				WaitingForInput,
+				Finished,
+				PreparedTraceRoute,
+				ResolvedAmbiguity,
+			};
+
+			struct WalkingTrace
+			{
+				Trace*								currentTrace;
+				Trace*								stateTrace;
+
+				operator bool() const
+				{
+					return currentTrace && stateTrace;
+				}
+			};
+
+			struct TraceManagerSubmitter;
+
+			class TraceManager : public Object, public virtual IExecutor
+			{
+			protected:
+				Executable&									executable;
+				const ITypeCallback*						typeCallback = nullptr;
+
+				TraceManagerState							state = TraceManagerState::Uninitialized;
+				AllocateOnly<ReturnStack>					returnStacks;
+				AllocateOnly<Trace>							traces;
+				AllocateOnly<Competition>					competitions;
+				AllocateOnly<AttendingCompetitions>			attendingCompetitions;
+
+				collections::List<Trace*>					traces1;
+				collections::List<Trace*>					traces2;
+
+				Trace*										initialTrace = nullptr;
+				Ref<Competition>							activeCompetitions;
+				ReturnStackCache							initialReturnStackCache;
+
+				collections::List<bool>						temporaryConditionStack;
+				vint32_t									temporaryConditionStackSize = 0;
+
+				void										BeginSwap();
+				void										AddTrace(Trace* trace);
+				void										EndSwap();
+				void										AddTraceToCollection(Trace* owner, Trace* element, TraceCollection(Trace::* collection));
+
+				// Ambiguity
+				Trace*										EnsureTraceWithValidStates(Trace* trace);
+				bool										AreTwoEndingInputTraceEqual(Trace* newTrace, Trace* candidate);
+				void										MergeTwoEndingInputTrace(Trace* newTrace, Trace* candidate);
+
+				// Competition
+				void										AttendCompetition(Trace* trace, Ref<AttendingCompetitions>& newAttendingCompetitions, Ref<AttendingCompetitions>& newCarriedCompetitions, Ref<ReturnStack> returnStack, vint32_t ruleId, vint32_t clauseId, bool forHighPriority);
+				void										AttendCompetitionIfNecessary(Trace* trace, vint32_t currentTokenIndex, EdgeDesc& edgeDesc, Ref<AttendingCompetitions>& newAttendingCompetitions, Ref<AttendingCompetitions>& newCarriedCompetitions, Ref<ReturnStack>& newReturnStack);
+				void										CheckAttendingCompetitionsOnEndingEdge(Trace* trace, EdgeDesc& edgeDesc, Ref<AttendingCompetitions> acId, Ref<ReturnStack> returnStack);
+				void										CheckBackupTracesBeforeSwapping(vint32_t currentTokenIndex);
+
+				// ReturnStack
+				ReturnStackSuccessors*						GetCurrentSuccessorInReturnStack(Ref<ReturnStack> base, vint32_t currentTokenIndex);
+				ReturnStack*								PushReturnStack(Ref<ReturnStack> base, vint32_t returnIndex, Ref<Trace> fromTrace, vint32_t currentTokenIndex, bool allowReuse);
+
+				// Walk
+				bool										IsQualifiedTokenForCondition(regex::RegexToken* token, StringLiteral condition);
+				bool										IsQualifiedTokenForEdgeArray(regex::RegexToken* token, EdgeArray& edgeArray);
+				WalkingTrace								WalkAlongSingleEdge(vint32_t currentTokenIndex, vint32_t input, WalkingTrace trace, vint32_t byEdge, EdgeDesc& edgeDesc);
+				void										WalkAlongLeftrecEdges(vint32_t currentTokenIndex, regex::RegexToken* lookAhead, WalkingTrace trace, EdgeArray& edgeArray);
+				void										WalkAlongEpsilonEdges(vint32_t currentTokenIndex, regex::RegexToken* lookAhead, WalkingTrace trace);
+				void										WalkAlongTokenEdges(vint32_t currentTokenIndex, vint32_t input, regex::RegexToken* token, regex::RegexToken* lookAhead, WalkingTrace trace, EdgeArray& edgeArray);
+
+				// EndOfInput
+				void										FillSuccessorsAfterEndOfInput(bool& ambiguityInvolved);
+
+			protected:
+				// Common
+				vuint64_t									MergeStack_MagicCounter = 0;
+
+				template<typename TCallback>
+				void										IterateSurvivedTraces(TCallback&& callback);
+				void										ReadInstructionList(Trace* trace, TraceInsLists& insLists);
+				AstIns&										ReadInstruction(vint32_t instruction, TraceInsLists& insLists);
+
+			protected:
+				// PrepareTraceRoute
+				AllocateOnly<TraceExec>						traceExecs;
+				collections::Array<InsExec>					insExecs;
+				AllocateOnly<InsExec_Object>				insExec_Objects;
+				AllocateOnly<InsExec_InsRefLink>			insExec_InsRefLinks;
+				AllocateOnly<InsExec_ObjRefLink>			insExec_ObjRefLinks;
+				AllocateOnly<InsExec_ObjectStack>			insExec_ObjectStacks;
+				AllocateOnly<InsExec_CreateStack>			insExec_CreateStacks;
+
+				// phase: AllocateExecutionData
+				void										AllocateExecutionData();
+
+				// phase: PartialExecuteTraces - PartialExecuteOrdinaryTrace
+				InsExec_Object*								NewObject();
+				vint32_t									GetStackBase(InsExec_Context& context);
+				vint32_t									GetStackTop(InsExec_Context& context);
+				void										PushInsRefLink(Ref<InsExec_InsRefLink>& link, InsRef insRef);
+				void										PushObjRefLink(Ref<InsExec_ObjRefLink>& link, Ref<InsExec_Object> id);
+				Ref<InsExec_InsRefLink>						JoinInsRefLink(Ref<InsExec_InsRefLink> first, Ref<InsExec_InsRefLink> second);
+				Ref<InsExec_ObjRefLink>						JoinObjRefLink(Ref<InsExec_ObjRefLink> first, Ref<InsExec_ObjRefLink> second);
+				void										PushAssignedToObjectIdsSingleWithMagic(Ref<InsExec_ObjRefLink> fieldObjectIds, Ref<InsExec_Object> assignedToTarget);
+				void										PushAssignedToObjectIdsMultipleWithMagic(Ref<InsExec_ObjRefLink> fieldObjectIds, Ref<InsExec_ObjRefLink> assignedToTargets);
+				InsExec_ObjectStack*						PushObjectStackSingle(InsExec_Context& context, Ref<InsExec_Object> objectId);
+				InsExec_ObjectStack*						PushObjectStackMultiple(InsExec_Context& context, Ref<InsExec_ObjRefLink> linkId);
+				InsExec_CreateStack*						PushCreateStack(InsExec_Context& context);
+				void										PartialExecuteOrdinaryTrace(Trace* trace);
+
+				// phase: PartialExecuteTraces - EnsureInsExecContextCompatible
+				void										EnsureInsExecContextCompatible(Trace* baselineTrace, Trace* commingTrace);
+
+				// phase: PartialExecuteTraces - MergeInsExecContext
+				void										PushInsRefLinkWithCounter(Ref<InsExec_InsRefLink>& link, Ref<InsExec_InsRefLink> comming);
+				void										PushObjRefLinkWithCounter(Ref<InsExec_ObjRefLink>& link, Ref<InsExec_ObjRefLink> comming);
+				template<typename T, T* (TraceManager::*get)(Ref<T>), Ref<T> (InsExec_Context::*stack), typename TMerge>
+				Ref<T>										MergeStack(Trace* mergeTrace, AllocateOnly<T>& allocator, TMerge&& merge);
+				void										MergeInsExecContext(Trace* mergeTrace);
+
+				// phase: PartialExecuteTraces - CalculateObjectFirstInstruction
+				bool										UpdateTopTrace(InsRef& topInsRef, InsRef newInsRef);
+				void										InjectFirstInstruction(InsRef insRef, Ref<InsExec_ObjRefLink> injectTargets, vuint64_t magicInjection);
+				void										CalculateObjectFirstInstruction();
+
+				// phase: PartialExecuteTraces - CalculateObjectLastInstruction
+				bool										IsInTheSameBranch(Trace* forward, Trace* targetForwardAtFront);
+				void										CalculateObjectLastInstruction();
+
+				// phase: PartialExecuteTraces
+				void										PartialExecuteTraces();
+
+				// phase: BuildAmbiguityStructures
+				Trace*										StepForward(Trace* trace);
+				void										BuildAmbiguityStructures();
+
+#if defined VCZH_MSVC && defined _DEBUG
+				// phase: DebugCheckTraceExecData
+				void										DebugCheckTraceExecData();
+#endif
+
+			protected:
+				// ResolveAmbiguity
+				Ref<Trace>									firstBranchTrace;
+				Ref<Trace>									firstMergeTrace;
+				Ref<InsExec_Object>							firstObject;
+				Ref<ExecutionStep>							firstStep;
+				AllocateOnly<TraceAmbiguity>				traceAmbiguities;
+				AllocateOnly<TraceAmbiguityLink>			traceAmbiguityLinks;
+				AllocateOnly<ExecutionStep>					executionSteps;
+
+				// phase: CheckMergeTraces
+				template<typename TCallback>
+				bool										EnumerateObjects(Ref<InsExec_ObjRefLink> objRefLinkStartSet, bool withCounter, TCallback&& callback);
+				template<typename TCallback>
+				bool										EnumerateBottomInstructions(InsExec_Object* ieObject, TCallback&& callback);
+				bool										ComparePrefix(TraceExec* baselineTraceExec, TraceExec* commingTraceExec, vint32_t prefix);
+				bool										ComparePostfix(TraceExec* baselineTraceExec, TraceExec* commingTraceExec, vint32_t postfix);
+				template<typename TCallback>
+				bool										CheckAmbiguityResolution(TraceAmbiguity* ta, collections::List<Ref<InsExec_ObjRefLink>>& visitingIds, TCallback&& callback);
+				bool										CheckMergeTrace(TraceAmbiguity* ta, Trace* trace, TraceExec* traceExec, collections::List<Ref<InsExec_ObjRefLink>>& visitingIds);
+				void										LinkAmbiguityCriticalTrace(Ref<Trace> traceId);
+				void										CheckTraceAmbiguity(TraceAmbiguity* ta);
+#if defined VCZH_MSVC && defined _DEBUG
+				void										DebugCheckTraceAmbiguitiesInSameTrace(Trace* trace, TraceExec* traceExec);
+#endif
+				void										MarkAmbiguityCoveredForward(Trace* currentTrace, TraceAmbiguity* ta, Trace* firstTrace, TraceExec* firstTraceExec);
+				void										CategorizeTraceAmbiguities(Trace* trace, TraceExec* traceExec);
+				void										CheckMergeTraces();
+
+				// phase: BuildExecutionOrder
+#define DEFINE_EXECUTION_STEP_CONTEXT						ExecutionStep*& root, ExecutionStep*& firstLeaf, ExecutionStep*& currentStep, ExecutionStep*& currentLeaf
+				void										MarkNewLeafStep(ExecutionStep* step, ExecutionStep*& firstLeaf, ExecutionStep*& currentLeaf);
+				void										AppendStepLink(ExecutionStep* first, ExecutionStep* last, bool leapNode, DEFINE_EXECUTION_STEP_CONTEXT);
+				void										AppendStepsBeforeAmbiguity(Trace* startTrace, vint32_t startIns, TraceAmbiguity* ta, DEFINE_EXECUTION_STEP_CONTEXT);
+				void										AppendStepsAfterAmbiguity(Trace*& startTrace, vint32_t& startIns, TraceAmbiguity* ta, DEFINE_EXECUTION_STEP_CONTEXT);
+				void										AppendStepsForAmbiguity(TraceAmbiguity* ta, bool checkCoveredMark, DEFINE_EXECUTION_STEP_CONTEXT);
+				void										AppendStepsBeforeBranch(Trace* startTrace, vint32_t startIns, Trace* branchTrace, TraceExec* branchTraceExec, DEFINE_EXECUTION_STEP_CONTEXT);
+				void										BuildStepTree(Trace* startTrace, vint32_t startIns, Trace* endTrace, vint32_t endIns, ExecutionStep*& root, ExecutionStep*& firstLeaf, ExecutionStep* currentStep, ExecutionStep*& currentLeaf);
+				void										ConvertStepTreeToLink(ExecutionStep* root, ExecutionStep* firstLeaf, ExecutionStep*& first, ExecutionStep*& last);
+				void										BuildAmbiguousStepLink(TraceAmbiguity* ta, bool checkCoveredMark, ExecutionStep*& first, ExecutionStep*& last);
+				void										BuildExecutionOrder();
+#undef DEFINE_EXECUTION_STEP_CONTEXT
+
+			public:
+				TraceManager(Executable& _executable, const ITypeCallback* _typeCallback, vint blockSize);
+
+				vint32_t						concurrentCount = 0;
+				collections::List<Trace*>*		concurrentTraces = nullptr;
+				collections::List<Trace*>*		backupTraces = nullptr;
+
+				ReturnStack*					GetReturnStack(Ref<ReturnStack> index);
+				ReturnStack*					AllocateReturnStack();
+				Trace*							GetTrace(Ref<Trace> index);
+				Trace*							AllocateTrace();
+				Competition*					GetCompetition(Ref<Competition> index);
+				Competition*					AllocateCompetition();
+				AttendingCompetitions*			GetAttendingCompetitions(Ref<AttendingCompetitions> index);
+				AttendingCompetitions*			AllocateAttendingCompetitions();
+
+				InsExec*						GetInsExec(vint32_t index);
+				InsExec_Object*					GetInsExec_Object(Ref<InsExec_Object> index);
+				InsExec_InsRefLink*				GetInsExec_InsRefLink(Ref<InsExec_InsRefLink> index);
+				InsExec_ObjRefLink*				GetInsExec_ObjRefLink(Ref<InsExec_ObjRefLink> index);
+				InsExec_ObjectStack*			GetInsExec_ObjectStack(Ref<InsExec_ObjectStack> index);
+				InsExec_CreateStack*			GetInsExec_CreateStack(Ref<InsExec_CreateStack> index);
+				TraceExec*						GetTraceExec(Ref<TraceExec> index);
+				TraceAmbiguity*					GetTraceAmbiguity(Ref<TraceAmbiguity> index);
+				TraceAmbiguityLink*				GetTraceAmbiguityLink(Ref<TraceAmbiguityLink> index);
+				ExecutionStep*					GetExecutionStep(Ref<ExecutionStep> index);
+
+				void							Initialize(vint32_t startState) override;
+				Trace*							GetInitialTrace();
+				ExecutionStep*					GetInitialExecutionStep();
+
+				bool							Input(vint32_t currentTokenIndex, regex::RegexToken* token, regex::RegexToken* lookAhead) override;
+				bool							EndOfInput(bool& ambiguityInvolved) override;
+
+				void							PrepareTraceRoute() override;
+				void							ResolveAmbiguity() override;
+
+			protected:
+				void							ExecuteSingleTrace(TraceManagerSubmitter& submitter, Trace* trace, vint32_t firstIns, vint32_t lastIns, TraceInsLists& insLists, collections::List<regex::RegexToken>& tokens);
+				void							ExecuteSingleStep(TraceManagerSubmitter& submitter, ExecutionStep* step, collections::List<regex::RegexToken>& tokens);
+			public:
+				Ptr<ParsingAstBase>				ExecuteTrace(IAstInsReceiver& receiver, collections::List<regex::RegexToken>& tokens) override;
+			};
+		}
+	}
+}
+
+#endif
+
+/***********************************************************************
+.\TRACEMANAGER\TRACEMANAGER_COMMON.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_PARSER2_TRACEMANAGER_TRACEMANAGER_COMMON
+#define VCZH_PARSER2_TRACEMANAGER_TRACEMANAGER_COMMON
+
+
+namespace vl
+{
+	namespace glr
+	{
+		namespace automaton
+		{
+/***********************************************************************
+IterateSurvivedTraces
+***********************************************************************/
+
+			template<typename TCallback>
+			void TraceManager::IterateSurvivedTraces(TCallback&& callback)
+			{
+				Trace* lastTrace = nullptr;
+				collections::List<Trace*> traces;
+				traces.Add(initialTrace);
+
+				while (traces.Count() > 0)
+				{
+					auto current = traces[traces.Count() - 1];
+					traces.RemoveAt(traces.Count() - 1);
+
+					if (current->iterateCounter == current->predecessorCount)
+					{
+						current->iterateCounter = 0;
+					}
+
+					current->iterateCounter++;
+					callback(
+						current,
+						(
+							current->predecessorCount == 0 ? nullptr :
+							current->predecessorCount == 1 ? GetTrace(current->predecessors.first) :
+							lastTrace
+						),
+						current->iterateCounter,
+						current->predecessorCount
+						);
+					lastTrace = current;
+					if (current->iterateCounter < current->predecessorCount) continue;
+
+					auto successorId = current->successors.last;
+					while (successorId != nullref)
+					{
+						auto successor = GetTrace(successorId);
+						successorId = successor->successors.siblingPrev;
+						traces.Add(successor);
+					}
+				}
+			}
+		}
+	}
+}
+
+#endif
+
+/***********************************************************************
 .\XML\GENERATED\XMLAST.H
 ***********************************************************************/
 /***********************************************************************
@@ -2079,160 +2540,148 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_XML_AST_AST
 
 
-namespace vl
+namespace vl::glr::xml
 {
-	namespace glr
+	class XmlAttribute;
+	class XmlCData;
+	class XmlComment;
+	class XmlDocument;
+	class XmlElement;
+	class XmlInstruction;
+	class XmlNode;
+	class XmlText;
+
+	class XmlNode abstract : public vl::glr::ParsingAstBase, vl::reflection::Description<XmlNode>
 	{
-		namespace xml
+	public:
+		class IVisitor : public virtual vl::reflection::IDescriptable, vl::reflection::Description<IVisitor>
 		{
-			class XmlAttribute;
-			class XmlCData;
-			class XmlComment;
-			class XmlDocument;
-			class XmlElement;
-			class XmlInstruction;
-			class XmlNode;
-			class XmlText;
+		public:
+			virtual void Visit(XmlText* node) = 0;
+			virtual void Visit(XmlCData* node) = 0;
+			virtual void Visit(XmlComment* node) = 0;
+			virtual void Visit(XmlElement* node) = 0;
+			virtual void Visit(XmlInstruction* node) = 0;
+			virtual void Visit(XmlDocument* node) = 0;
+		};
 
-			class XmlNode abstract : public vl::glr::ParsingAstBase, vl::reflection::Description<XmlNode>
-			{
-			public:
-				class IVisitor : public virtual vl::reflection::IDescriptable, vl::reflection::Description<IVisitor>
-				{
-				public:
-					virtual void Visit(XmlText* node) = 0;
-					virtual void Visit(XmlCData* node) = 0;
-					virtual void Visit(XmlComment* node) = 0;
-					virtual void Visit(XmlElement* node) = 0;
-					virtual void Visit(XmlInstruction* node) = 0;
-					virtual void Visit(XmlDocument* node) = 0;
-				};
+		virtual void Accept(XmlNode::IVisitor* visitor) = 0;
 
-				virtual void Accept(XmlNode::IVisitor* visitor) = 0;
+	};
 
-			};
+	class XmlText : public XmlNode, vl::reflection::Description<XmlText>
+	{
+	public:
+		vl::glr::ParsingToken content;
 
-			class XmlText : public XmlNode, vl::reflection::Description<XmlText>
-			{
-			public:
-				vl::glr::ParsingToken content;
+		void Accept(XmlNode::IVisitor* visitor) override;
+	};
 
-				void Accept(XmlNode::IVisitor* visitor) override;
-			};
+	class XmlCData : public XmlNode, vl::reflection::Description<XmlCData>
+	{
+	public:
+		vl::glr::ParsingToken content;
 
-			class XmlCData : public XmlNode, vl::reflection::Description<XmlCData>
-			{
-			public:
-				vl::glr::ParsingToken content;
+		void Accept(XmlNode::IVisitor* visitor) override;
+	};
 
-				void Accept(XmlNode::IVisitor* visitor) override;
-			};
+	class XmlAttribute : public vl::glr::ParsingAstBase, vl::reflection::Description<XmlAttribute>
+	{
+	public:
+		vl::glr::ParsingToken name;
+		vl::glr::ParsingToken value;
+	};
 
-			class XmlAttribute : public vl::glr::ParsingAstBase, vl::reflection::Description<XmlAttribute>
-			{
-			public:
-				vl::glr::ParsingToken name;
-				vl::glr::ParsingToken value;
-			};
+	class XmlComment : public XmlNode, vl::reflection::Description<XmlComment>
+	{
+	public:
+		vl::glr::ParsingToken content;
 
-			class XmlComment : public XmlNode, vl::reflection::Description<XmlComment>
-			{
-			public:
-				vl::glr::ParsingToken content;
+		void Accept(XmlNode::IVisitor* visitor) override;
+	};
 
-				void Accept(XmlNode::IVisitor* visitor) override;
-			};
+	class XmlElement : public XmlNode, vl::reflection::Description<XmlElement>
+	{
+	public:
+		vl::glr::ParsingToken name;
+		vl::glr::ParsingToken closingName;
+		vl::collections::List<vl::Ptr<XmlAttribute>> attributes;
+		vl::collections::List<vl::Ptr<XmlNode>> subNodes;
 
-			class XmlElement : public XmlNode, vl::reflection::Description<XmlElement>
-			{
-			public:
-				vl::glr::ParsingToken name;
-				vl::glr::ParsingToken closingName;
-				vl::collections::List<vl::Ptr<XmlAttribute>> attributes;
-				vl::collections::List<vl::Ptr<XmlNode>> subNodes;
+		void Accept(XmlNode::IVisitor* visitor) override;
+	};
 
-				void Accept(XmlNode::IVisitor* visitor) override;
-			};
+	class XmlInstruction : public XmlNode, vl::reflection::Description<XmlInstruction>
+	{
+	public:
+		vl::glr::ParsingToken name;
+		vl::collections::List<vl::Ptr<XmlAttribute>> attributes;
 
-			class XmlInstruction : public XmlNode, vl::reflection::Description<XmlInstruction>
-			{
-			public:
-				vl::glr::ParsingToken name;
-				vl::collections::List<vl::Ptr<XmlAttribute>> attributes;
+		void Accept(XmlNode::IVisitor* visitor) override;
+	};
 
-				void Accept(XmlNode::IVisitor* visitor) override;
-			};
+	class XmlDocument : public XmlNode, vl::reflection::Description<XmlDocument>
+	{
+	public:
+		vl::collections::List<vl::Ptr<XmlNode>> prologs;
+		vl::Ptr<XmlElement> rootElement;
 
-			class XmlDocument : public XmlNode, vl::reflection::Description<XmlDocument>
-			{
-			public:
-				vl::collections::List<vl::Ptr<XmlNode>> prologs;
-				vl::Ptr<XmlElement> rootElement;
-
-				void Accept(XmlNode::IVisitor* visitor) override;
-			};
-		}
-	}
+		void Accept(XmlNode::IVisitor* visitor) override;
+	};
 }
-namespace vl
+namespace vl::reflection::description
 {
-	namespace reflection
-	{
-		namespace description
-		{
 #ifndef VCZH_DEBUG_NO_REFLECTION
-			DECL_TYPE_INFO(vl::glr::xml::XmlNode)
-			DECL_TYPE_INFO(vl::glr::xml::XmlNode::IVisitor)
-			DECL_TYPE_INFO(vl::glr::xml::XmlText)
-			DECL_TYPE_INFO(vl::glr::xml::XmlCData)
-			DECL_TYPE_INFO(vl::glr::xml::XmlAttribute)
-			DECL_TYPE_INFO(vl::glr::xml::XmlComment)
-			DECL_TYPE_INFO(vl::glr::xml::XmlElement)
-			DECL_TYPE_INFO(vl::glr::xml::XmlInstruction)
-			DECL_TYPE_INFO(vl::glr::xml::XmlDocument)
+	DECL_TYPE_INFO(vl::glr::xml::XmlNode)
+	DECL_TYPE_INFO(vl::glr::xml::XmlNode::IVisitor)
+	DECL_TYPE_INFO(vl::glr::xml::XmlText)
+	DECL_TYPE_INFO(vl::glr::xml::XmlCData)
+	DECL_TYPE_INFO(vl::glr::xml::XmlAttribute)
+	DECL_TYPE_INFO(vl::glr::xml::XmlComment)
+	DECL_TYPE_INFO(vl::glr::xml::XmlElement)
+	DECL_TYPE_INFO(vl::glr::xml::XmlInstruction)
+	DECL_TYPE_INFO(vl::glr::xml::XmlDocument)
 
 #ifdef VCZH_DESCRIPTABLEOBJECT_WITH_METADATA
 
-			BEGIN_INTERFACE_PROXY_NOPARENT_SHAREDPTR(vl::glr::xml::XmlNode::IVisitor)
-				void Visit(vl::glr::xml::XmlText* node) override
-				{
-					INVOKE_INTERFACE_PROXY(Visit, node);
-				}
-
-				void Visit(vl::glr::xml::XmlCData* node) override
-				{
-					INVOKE_INTERFACE_PROXY(Visit, node);
-				}
-
-				void Visit(vl::glr::xml::XmlComment* node) override
-				{
-					INVOKE_INTERFACE_PROXY(Visit, node);
-				}
-
-				void Visit(vl::glr::xml::XmlElement* node) override
-				{
-					INVOKE_INTERFACE_PROXY(Visit, node);
-				}
-
-				void Visit(vl::glr::xml::XmlInstruction* node) override
-				{
-					INVOKE_INTERFACE_PROXY(Visit, node);
-				}
-
-				void Visit(vl::glr::xml::XmlDocument* node) override
-				{
-					INVOKE_INTERFACE_PROXY(Visit, node);
-				}
-
-			END_INTERFACE_PROXY(vl::glr::xml::XmlNode::IVisitor)
-
-#endif
-#endif
-			/// <summary>Load all reflectable AST types, only available when <b>VCZH_DEBUG_NO_REFLECTION</b> is off.</summary>
-			/// <returns>Returns true if this operation succeeded.</returns>
-			extern bool XmlAstLoadTypes();
+	BEGIN_INTERFACE_PROXY_NOPARENT_SHAREDPTR(vl::glr::xml::XmlNode::IVisitor)
+		void Visit(vl::glr::xml::XmlText* node) override
+		{
+			INVOKE_INTERFACE_PROXY(Visit, node);
 		}
-	}
+
+		void Visit(vl::glr::xml::XmlCData* node) override
+		{
+			INVOKE_INTERFACE_PROXY(Visit, node);
+		}
+
+		void Visit(vl::glr::xml::XmlComment* node) override
+		{
+			INVOKE_INTERFACE_PROXY(Visit, node);
+		}
+
+		void Visit(vl::glr::xml::XmlElement* node) override
+		{
+			INVOKE_INTERFACE_PROXY(Visit, node);
+		}
+
+		void Visit(vl::glr::xml::XmlInstruction* node) override
+		{
+			INVOKE_INTERFACE_PROXY(Visit, node);
+		}
+
+		void Visit(vl::glr::xml::XmlDocument* node) override
+		{
+			INVOKE_INTERFACE_PROXY(Visit, node);
+		}
+
+	END_INTERFACE_PROXY(vl::glr::xml::XmlNode::IVisitor)
+
+#endif
+#endif
+	/// <summary>Load all reflectable AST types, only available when <b>VCZH_DEBUG_NO_REFLECTION</b> is off.</summary>
+	/// <returns>Returns true if this operation succeeded.</returns>
+	extern bool XmlAstLoadTypes();
 }
 #endif
 
@@ -2249,65 +2698,56 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_XML_AST_AST_BUILDER
 
 
-namespace vl
+namespace vl::glr::xml::builder
 {
-	namespace glr
+	class MakeAttribute : public vl::glr::ParsingAstBuilder<XmlAttribute>
 	{
-		namespace xml
-		{
-			namespace builder
-			{
-				class MakeAttribute : public vl::glr::ParsingAstBuilder<XmlAttribute>
-				{
-				public:
-					MakeAttribute& name(const vl::WString& value);
-					MakeAttribute& value(const vl::WString& value);
-				};
+	public:
+		MakeAttribute& name(const vl::WString& value);
+		MakeAttribute& value(const vl::WString& value);
+	};
 
-				class MakeCData : public vl::glr::ParsingAstBuilder<XmlCData>
-				{
-				public:
-					MakeCData& content(const vl::WString& value);
-				};
+	class MakeCData : public vl::glr::ParsingAstBuilder<XmlCData>
+	{
+	public:
+		MakeCData& content(const vl::WString& value);
+	};
 
-				class MakeComment : public vl::glr::ParsingAstBuilder<XmlComment>
-				{
-				public:
-					MakeComment& content(const vl::WString& value);
-				};
+	class MakeComment : public vl::glr::ParsingAstBuilder<XmlComment>
+	{
+	public:
+		MakeComment& content(const vl::WString& value);
+	};
 
-				class MakeDocument : public vl::glr::ParsingAstBuilder<XmlDocument>
-				{
-				public:
-					MakeDocument& prologs(const vl::Ptr<XmlNode>& value);
-					MakeDocument& rootElement(const vl::Ptr<XmlElement>& value);
-				};
+	class MakeDocument : public vl::glr::ParsingAstBuilder<XmlDocument>
+	{
+	public:
+		MakeDocument& prologs(const vl::Ptr<XmlNode>& value);
+		MakeDocument& rootElement(const vl::Ptr<XmlElement>& value);
+	};
 
-				class MakeElement : public vl::glr::ParsingAstBuilder<XmlElement>
-				{
-				public:
-					MakeElement& attributes(const vl::Ptr<XmlAttribute>& value);
-					MakeElement& closingName(const vl::WString& value);
-					MakeElement& name(const vl::WString& value);
-					MakeElement& subNodes(const vl::Ptr<XmlNode>& value);
-				};
+	class MakeElement : public vl::glr::ParsingAstBuilder<XmlElement>
+	{
+	public:
+		MakeElement& attributes(const vl::Ptr<XmlAttribute>& value);
+		MakeElement& closingName(const vl::WString& value);
+		MakeElement& name(const vl::WString& value);
+		MakeElement& subNodes(const vl::Ptr<XmlNode>& value);
+	};
 
-				class MakeInstruction : public vl::glr::ParsingAstBuilder<XmlInstruction>
-				{
-				public:
-					MakeInstruction& attributes(const vl::Ptr<XmlAttribute>& value);
-					MakeInstruction& name(const vl::WString& value);
-				};
+	class MakeInstruction : public vl::glr::ParsingAstBuilder<XmlInstruction>
+	{
+	public:
+		MakeInstruction& attributes(const vl::Ptr<XmlAttribute>& value);
+		MakeInstruction& name(const vl::WString& value);
+	};
 
-				class MakeText : public vl::glr::ParsingAstBuilder<XmlText>
-				{
-				public:
-					MakeText& content(const vl::WString& value);
-				};
+	class MakeText : public vl::glr::ParsingAstBuilder<XmlText>
+	{
+	public:
+		MakeText& content(const vl::WString& value);
+	};
 
-			}
-		}
-	}
 }
 #endif
 
@@ -2324,53 +2764,44 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_XML_AST_AST_COPY_VISITOR
 
 
-namespace vl
+namespace vl::glr::xml::copy_visitor
 {
-	namespace glr
+	/// <summary>A copy visitor, overriding all abstract methods with AST copying code.</summary>
+	class AstVisitor
+		: public virtual vl::glr::CopyVisitorBase
+		, protected virtual XmlNode::IVisitor
 	{
-		namespace xml
-		{
-			namespace copy_visitor
-			{
-				/// <summary>A copy visitor, overriding all abstract methods with AST copying code.</summary>
-				class AstVisitor
-					: public virtual vl::glr::CopyVisitorBase
-					, protected virtual XmlNode::IVisitor
-				{
-				protected:
-					void CopyFields(XmlAttribute* from, XmlAttribute* to);
-					void CopyFields(XmlCData* from, XmlCData* to);
-					void CopyFields(XmlComment* from, XmlComment* to);
-					void CopyFields(XmlDocument* from, XmlDocument* to);
-					void CopyFields(XmlElement* from, XmlElement* to);
-					void CopyFields(XmlInstruction* from, XmlInstruction* to);
-					void CopyFields(XmlNode* from, XmlNode* to);
-					void CopyFields(XmlText* from, XmlText* to);
+	protected:
+		void CopyFields(XmlAttribute* from, XmlAttribute* to);
+		void CopyFields(XmlCData* from, XmlCData* to);
+		void CopyFields(XmlComment* from, XmlComment* to);
+		void CopyFields(XmlDocument* from, XmlDocument* to);
+		void CopyFields(XmlElement* from, XmlElement* to);
+		void CopyFields(XmlInstruction* from, XmlInstruction* to);
+		void CopyFields(XmlNode* from, XmlNode* to);
+		void CopyFields(XmlText* from, XmlText* to);
 
-				protected:
-					virtual void Visit(XmlAttribute* node);
+	protected:
+		virtual void Visit(XmlAttribute* node);
 
-					void Visit(XmlText* node) override;
-					void Visit(XmlCData* node) override;
-					void Visit(XmlComment* node) override;
-					void Visit(XmlElement* node) override;
-					void Visit(XmlInstruction* node) override;
-					void Visit(XmlDocument* node) override;
+		void Visit(XmlText* node) override;
+		void Visit(XmlCData* node) override;
+		void Visit(XmlComment* node) override;
+		void Visit(XmlElement* node) override;
+		void Visit(XmlInstruction* node) override;
+		void Visit(XmlDocument* node) override;
 
-				public:
-					virtual vl::Ptr<XmlNode> CopyNode(XmlNode* node);
-					virtual vl::Ptr<XmlAttribute> CopyNode(XmlAttribute* node);
+	public:
+		virtual vl::Ptr<XmlNode> CopyNode(XmlNode* node);
+		virtual vl::Ptr<XmlAttribute> CopyNode(XmlAttribute* node);
 
-					vl::Ptr<XmlCData> CopyNode(XmlCData* node);
-					vl::Ptr<XmlComment> CopyNode(XmlComment* node);
-					vl::Ptr<XmlDocument> CopyNode(XmlDocument* node);
-					vl::Ptr<XmlElement> CopyNode(XmlElement* node);
-					vl::Ptr<XmlInstruction> CopyNode(XmlInstruction* node);
-					vl::Ptr<XmlText> CopyNode(XmlText* node);
-				};
-			}
-		}
-	}
+		vl::Ptr<XmlCData> CopyNode(XmlCData* node);
+		vl::Ptr<XmlComment> CopyNode(XmlComment* node);
+		vl::Ptr<XmlDocument> CopyNode(XmlDocument* node);
+		vl::Ptr<XmlElement> CopyNode(XmlElement* node);
+		vl::Ptr<XmlInstruction> CopyNode(XmlInstruction* node);
+		vl::Ptr<XmlText> CopyNode(XmlText* node);
+	};
 }
 #endif
 
@@ -2387,33 +2818,24 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_XML_AST_AST_EMPTY_VISITOR
 
 
-namespace vl
+namespace vl::glr::xml::empty_visitor
 {
-	namespace glr
+	/// <summary>An empty visitor, overriding all abstract methods with empty implementations.</summary>
+	class NodeVisitor : public vl::Object, public XmlNode::IVisitor
 	{
-		namespace xml
-		{
-			namespace empty_visitor
-			{
-				/// <summary>An empty visitor, overriding all abstract methods with empty implementations.</summary>
-				class NodeVisitor : public vl::Object, public XmlNode::IVisitor
-				{
-				protected:
-					// Dispatch (virtual) --------------------------------
+	protected:
+		// Dispatch (virtual) --------------------------------
 
-				public:
-					// Visitor Members -----------------------------------
-					void Visit(XmlText* node) override;
-					void Visit(XmlCData* node) override;
-					void Visit(XmlComment* node) override;
-					void Visit(XmlElement* node) override;
-					void Visit(XmlInstruction* node) override;
-					void Visit(XmlDocument* node) override;
-				};
+	public:
+		// Visitor Members -----------------------------------
+		void Visit(XmlText* node) override;
+		void Visit(XmlCData* node) override;
+		void Visit(XmlComment* node) override;
+		void Visit(XmlElement* node) override;
+		void Visit(XmlInstruction* node) override;
+		void Visit(XmlDocument* node) override;
+	};
 
-			}
-		}
-	}
 }
 #endif
 
@@ -2430,46 +2852,37 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_XML_AST_AST_JSON_VISITOR
 
 
-namespace vl
+namespace vl::glr::xml::json_visitor
 {
-	namespace glr
+	/// <summary>A JSON visitor, overriding all abstract methods with AST to JSON serialization code.</summary>
+	class AstVisitor
+		: public vl::glr::JsonVisitorBase
+		, protected virtual XmlNode::IVisitor
 	{
-		namespace xml
-		{
-			namespace json_visitor
-			{
-				/// <summary>A JSON visitor, overriding all abstract methods with AST to JSON serialization code.</summary>
-				class AstVisitor
-					: public vl::glr::JsonVisitorBase
-					, protected virtual XmlNode::IVisitor
-				{
-				protected:
-					virtual void PrintFields(XmlAttribute* node);
-					virtual void PrintFields(XmlCData* node);
-					virtual void PrintFields(XmlComment* node);
-					virtual void PrintFields(XmlDocument* node);
-					virtual void PrintFields(XmlElement* node);
-					virtual void PrintFields(XmlInstruction* node);
-					virtual void PrintFields(XmlNode* node);
-					virtual void PrintFields(XmlText* node);
+	protected:
+		virtual void PrintFields(XmlAttribute* node);
+		virtual void PrintFields(XmlCData* node);
+		virtual void PrintFields(XmlComment* node);
+		virtual void PrintFields(XmlDocument* node);
+		virtual void PrintFields(XmlElement* node);
+		virtual void PrintFields(XmlInstruction* node);
+		virtual void PrintFields(XmlNode* node);
+		virtual void PrintFields(XmlText* node);
 
-				protected:
-					void Visit(XmlText* node) override;
-					void Visit(XmlCData* node) override;
-					void Visit(XmlComment* node) override;
-					void Visit(XmlElement* node) override;
-					void Visit(XmlInstruction* node) override;
-					void Visit(XmlDocument* node) override;
+	protected:
+		void Visit(XmlText* node) override;
+		void Visit(XmlCData* node) override;
+		void Visit(XmlComment* node) override;
+		void Visit(XmlElement* node) override;
+		void Visit(XmlInstruction* node) override;
+		void Visit(XmlDocument* node) override;
 
-				public:
-					AstVisitor(vl::stream::StreamWriter& _writer);
+	public:
+		AstVisitor(vl::stream::StreamWriter& _writer);
 
-					void Print(XmlNode* node);
-					void Print(XmlAttribute* node);
-				};
-			}
-		}
-	}
+		void Print(XmlNode* node);
+		void Print(XmlAttribute* node);
+	};
 }
 #endif
 
@@ -2486,57 +2899,48 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_XML_AST_AST_TRAVERSE_VISITOR
 
 
-namespace vl
+namespace vl::glr::xml::traverse_visitor
 {
-	namespace glr
+	/// <summary>A traverse visitor, overriding all abstract methods with AST visiting code.</summary>
+	class AstVisitor
+		: public vl::Object
+		, protected virtual XmlNode::IVisitor
 	{
-		namespace xml
-		{
-			namespace traverse_visitor
-			{
-				/// <summary>A traverse visitor, overriding all abstract methods with AST visiting code.</summary>
-				class AstVisitor
-					: public vl::Object
-					, protected virtual XmlNode::IVisitor
-				{
-				protected:
-					virtual void Traverse(vl::glr::ParsingToken& token);
-					virtual void Traverse(vl::glr::ParsingAstBase* node);
-					virtual void Traverse(XmlAttribute* node);
-					virtual void Traverse(XmlCData* node);
-					virtual void Traverse(XmlComment* node);
-					virtual void Traverse(XmlDocument* node);
-					virtual void Traverse(XmlElement* node);
-					virtual void Traverse(XmlInstruction* node);
-					virtual void Traverse(XmlNode* node);
-					virtual void Traverse(XmlText* node);
+	protected:
+		virtual void Traverse(vl::glr::ParsingToken& token);
+		virtual void Traverse(vl::glr::ParsingAstBase* node);
+		virtual void Traverse(XmlAttribute* node);
+		virtual void Traverse(XmlCData* node);
+		virtual void Traverse(XmlComment* node);
+		virtual void Traverse(XmlDocument* node);
+		virtual void Traverse(XmlElement* node);
+		virtual void Traverse(XmlInstruction* node);
+		virtual void Traverse(XmlNode* node);
+		virtual void Traverse(XmlText* node);
 
-				protected:
-					virtual void Finishing(vl::glr::ParsingAstBase* node);
-					virtual void Finishing(XmlAttribute* node);
-					virtual void Finishing(XmlCData* node);
-					virtual void Finishing(XmlComment* node);
-					virtual void Finishing(XmlDocument* node);
-					virtual void Finishing(XmlElement* node);
-					virtual void Finishing(XmlInstruction* node);
-					virtual void Finishing(XmlNode* node);
-					virtual void Finishing(XmlText* node);
+	protected:
+		virtual void Finishing(vl::glr::ParsingAstBase* node);
+		virtual void Finishing(XmlAttribute* node);
+		virtual void Finishing(XmlCData* node);
+		virtual void Finishing(XmlComment* node);
+		virtual void Finishing(XmlDocument* node);
+		virtual void Finishing(XmlElement* node);
+		virtual void Finishing(XmlInstruction* node);
+		virtual void Finishing(XmlNode* node);
+		virtual void Finishing(XmlText* node);
 
-				protected:
-					void Visit(XmlText* node) override;
-					void Visit(XmlCData* node) override;
-					void Visit(XmlComment* node) override;
-					void Visit(XmlElement* node) override;
-					void Visit(XmlInstruction* node) override;
-					void Visit(XmlDocument* node) override;
+	protected:
+		void Visit(XmlText* node) override;
+		void Visit(XmlCData* node) override;
+		void Visit(XmlComment* node) override;
+		void Visit(XmlElement* node) override;
+		void Visit(XmlInstruction* node) override;
+		void Visit(XmlDocument* node) override;
 
-				public:
-					void InspectInto(XmlNode* node);
-					void InspectInto(XmlAttribute* node);
-				};
-			}
-		}
-	}
+	public:
+		void InspectInto(XmlNode* node);
+		void InspectInto(XmlAttribute* node);
+	};
 }
 #endif
 
@@ -2553,57 +2957,51 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_XML_AST_ASSEMBLER
 
 
-namespace vl
+namespace vl::glr::xml
 {
-	namespace glr
+	enum class XmlClasses : vl::vint32_t
 	{
-		namespace xml
-		{
-			enum class XmlClasses : vl::vint32_t
-			{
-				Attribute = 0,
-				CData = 1,
-				Comment = 2,
-				Document = 3,
-				Element = 4,
-				Instruction = 5,
-				Node = 6,
-				Text = 7,
-			};
+		Attribute = 0,
+		CData = 1,
+		Comment = 2,
+		Document = 3,
+		Element = 4,
+		Instruction = 5,
+		Node = 6,
+		Text = 7,
+	};
 
-			enum class XmlFields : vl::vint32_t
-			{
-				Attribute_name = 0,
-				Attribute_value = 1,
-				CData_content = 2,
-				Comment_content = 3,
-				Document_prologs = 4,
-				Document_rootElement = 5,
-				Element_attributes = 6,
-				Element_closingName = 7,
-				Element_name = 8,
-				Element_subNodes = 9,
-				Instruction_attributes = 10,
-				Instruction_name = 11,
-				Text_content = 12,
-			};
+	enum class XmlFields : vl::vint32_t
+	{
+		Attribute_name = 0,
+		Attribute_value = 1,
+		CData_content = 2,
+		Comment_content = 3,
+		Document_prologs = 4,
+		Document_rootElement = 5,
+		Element_attributes = 6,
+		Element_closingName = 7,
+		Element_name = 8,
+		Element_subNodes = 9,
+		Instruction_attributes = 10,
+		Instruction_name = 11,
+		Text_content = 12,
+	};
 
-			extern const wchar_t* XmlTypeName(XmlClasses type);
-			extern const wchar_t* XmlCppTypeName(XmlClasses type);
-			extern const wchar_t* XmlFieldName(XmlFields field);
-			extern const wchar_t* XmlCppFieldName(XmlFields field);
+	extern const wchar_t* XmlTypeName(XmlClasses type);
+	extern const wchar_t* XmlCppTypeName(XmlClasses type);
+	extern const wchar_t* XmlFieldName(XmlFields field);
+	extern const wchar_t* XmlCppFieldName(XmlFields field);
 
-			class XmlAstInsReceiver : public vl::glr::AstInsReceiverBase
-			{
-			protected:
-				vl::Ptr<vl::glr::ParsingAstBase> CreateAstNode(vl::vint32_t type) override;
-				void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, vl::Ptr<vl::glr::ParsingAstBase> value) override;
-				void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, const vl::regex::RegexToken& token, vl::vint32_t tokenIndex) override;
-				void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, vl::vint32_t enumItem) override;
-				vl::Ptr<vl::glr::ParsingAstBase> ResolveAmbiguity(vl::vint32_t type, vl::collections::Array<vl::Ptr<vl::glr::ParsingAstBase>>& candidates) override;
-			};
-		}
-	}
+	class XmlAstInsReceiver : public vl::glr::AstInsReceiverBase
+	{
+	protected:
+		vl::Ptr<vl::glr::ParsingAstBase> CreateAstNode(vl::vint32_t type) override;
+		void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, vl::Ptr<vl::glr::ParsingAstBase> value) override;
+		void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, const vl::regex::RegexToken& token, vl::vint32_t tokenIndex) override;
+		void SetField(vl::glr::ParsingAstBase* object, vl::vint32_t field, vl::vint32_t enumItem, bool weakAssignment) override;
+		vl::Ptr<vl::glr::ParsingAstBase> ResolveAmbiguity(vl::vint32_t type, vl::collections::Array<vl::Ptr<vl::glr::ParsingAstBase>>& candidates) override;
+	};
 }
 #endif
 
@@ -2620,37 +3018,31 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_XML_LEXER
 
 
-namespace vl
+namespace vl::glr::xml
 {
-	namespace glr
+	enum class XmlTokens : vl::vint32_t
 	{
-		namespace xml
-		{
-			enum class XmlTokens : vl::vint32_t
-			{
-				INSTRUCTION_OPEN = 0,
-				INSTRUCTION_CLOSE = 1,
-				COMPLEX_ELEMENT_OPEN = 2,
-				SINGLE_ELEMENT_CLOSE = 3,
-				ELEMENT_OPEN = 4,
-				ELEMENT_CLOSE = 5,
-				EQUAL = 6,
-				NAME = 7,
-				ATTVALUE = 8,
-				COMMENT = 9,
-				CDATA = 10,
-				TEXT = 11,
-				SPACE = 12,
-			};
+		INSTRUCTION_OPEN = 0,
+		INSTRUCTION_CLOSE = 1,
+		COMPLEX_ELEMENT_OPEN = 2,
+		SINGLE_ELEMENT_CLOSE = 3,
+		ELEMENT_OPEN = 4,
+		ELEMENT_CLOSE = 5,
+		EQUAL = 6,
+		NAME = 7,
+		ATTVALUE = 8,
+		COMMENT = 9,
+		CDATA = 10,
+		TEXT = 11,
+		SPACE = 12,
+	};
 
-			constexpr vl::vint XmlTokenCount = 13;
-			extern bool XmlTokenDeleter(vl::vint token);
-			extern const wchar_t* XmlTokenId(XmlTokens token);
-			extern const wchar_t* XmlTokenDisplayText(XmlTokens token);
-			extern const wchar_t* XmlTokenRegex(XmlTokens token);
-			extern void XmlLexerData(vl::stream::IStream& outputStream);
-		}
-	}
+	constexpr vl::vint XmlTokenCount = 13;
+	extern bool XmlTokenDeleter(vl::vint token);
+	extern const wchar_t* XmlTokenId(XmlTokens token);
+	extern const wchar_t* XmlTokenDisplayText(XmlTokens token);
+	extern const wchar_t* XmlTokenRegex(XmlTokens token);
+	extern void XmlLexerData(vl::stream::IStream& outputStream);
 }
 #endif
 
@@ -2667,43 +3059,39 @@ Licensed under https://github.com/vczh-libraries/License
 #define VCZH_PARSER2_BUILTIN_XML_PARSER_SYNTAX
 
 
-namespace vl
+namespace vl::glr::xml
 {
-	namespace glr
+	enum class ParserStates
 	{
-		namespace xml
-		{
-			enum class ParserStates
-			{
-				XAttribute = 0,
-				XText = 5,
-				XCData = 11,
-				XComment = 14,
-				XElement = 17,
-				XSubNode = 28,
-				XInstruction = 34,
-				XDocument = 40,
-			};
+		XAttribute = 0,
+		XText = 5,
+		XCData = 11,
+		XComment = 14,
+		XElement = 17,
+		XSubNode = 28,
+		XInstruction = 34,
+		XDocument = 40,
+	};
 
-			const wchar_t* ParserRuleName(vl::vint index);
-			const wchar_t* ParserStateLabel(vl::vint index);
-			extern void XmlParserData(vl::stream::IStream& outputStream);
+	const wchar_t* ParserRuleName(vl::vint index);
+	const wchar_t* ParserStateLabel(vl::vint index);
+	extern void XmlParserData(vl::stream::IStream& outputStream);
 
-			class Parser
-				: public vl::glr::ParserBase<XmlTokens, ParserStates, XmlAstInsReceiver>				, protected vl::glr::automaton::TraceManager::ITypeCallback
-			{
-			protected:
-				vl::vint32_t FindCommonBaseClass(vl::vint32_t class1, vl::vint32_t class2) const override;
-			public:
-				Parser();
+	class Parser
+		: public vl::glr::ParserBase<XmlTokens, ParserStates, XmlAstInsReceiver>
+		, protected vl::glr::automaton::IExecutor::ITypeCallback
+	{
+	protected:
+		vl::WString GetClassName(vl::vint32_t classIndex) const override;
+		vl::vint32_t FindCommonBaseClass(vl::vint32_t class1, vl::vint32_t class2) const override;
+	public:
+		Parser();
 
-				vl::Ptr<vl::glr::xml::XmlElement> ParseXElement(const vl::WString& input, vl::vint codeIndex = -1) const;
-				vl::Ptr<vl::glr::xml::XmlElement> ParseXElement(vl::collections::List<vl::regex::RegexToken>& tokens, vl::vint codeIndex = -1) const;
-				vl::Ptr<vl::glr::xml::XmlDocument> ParseXDocument(const vl::WString& input, vl::vint codeIndex = -1) const;
-				vl::Ptr<vl::glr::xml::XmlDocument> ParseXDocument(vl::collections::List<vl::regex::RegexToken>& tokens, vl::vint codeIndex = -1) const;
-			};
-		}
-	}
+		vl::Ptr<vl::glr::xml::XmlElement> ParseXElement(const vl::WString& input, vl::vint codeIndex = -1) const;
+		vl::Ptr<vl::glr::xml::XmlElement> ParseXElement(vl::collections::List<vl::regex::RegexToken>& tokens, vl::vint codeIndex = -1) const;
+		vl::Ptr<vl::glr::xml::XmlDocument> ParseXDocument(const vl::WString& input, vl::vint codeIndex = -1) const;
+		vl::Ptr<vl::glr::xml::XmlDocument> ParseXDocument(vl::collections::List<vl::regex::RegexToken>& tokens, vl::vint codeIndex = -1) const;
+	};
 }
 #endif
 

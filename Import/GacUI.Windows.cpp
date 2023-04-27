@@ -5,7 +5,2871 @@ DEVELOPER: Zihan Chen(vczh)
 #include "GacUI.Windows.h"
 
 /***********************************************************************
-.\GRAPHICSELEMENT\WINDOWSDIRECT2D\GUIGRAPHICSLAYOUTPROVIDERWINDOWSDIRECT2D.CPP
+.\WINNATIVEDPIAWARENESS.CPP
+***********************************************************************/
+
+#pragma comment(lib, "Shcore.lib")
+
+namespace vl
+{
+	namespace presentation
+	{
+		namespace windows
+		{
+#define USE_API(NAME, API) static auto proc_##API = (decltype(&API))(GetProcAddress(GetModuleHandle(L#NAME), #API))
+
+			void InitDpiAwareness(bool dpiAware)
+			{
+				USE_API(user32, SetProcessDpiAwarenessContext);
+				USE_API(shcore, SetProcessDpiAwareness);
+
+				if(proc_SetProcessDpiAwarenessContext)
+				{
+					proc_SetProcessDpiAwarenessContext(dpiAware ? DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2:  DPI_AWARENESS_CONTEXT_UNAWARE);
+					return;
+				}
+
+				if(proc_SetProcessDpiAwareness)
+				{
+					proc_SetProcessDpiAwareness(dpiAware ? PROCESS_PER_MONITOR_DPI_AWARE : PROCESS_DPI_UNAWARE);
+					return;
+				}
+			}
+
+			void DpiAwared_GetDpiForMonitor(HMONITOR monitor, UINT* x, UINT* y)
+			{
+				USE_API(shcore, GetDpiForMonitor);
+
+				if (proc_GetDpiForMonitor)
+				{
+					if (proc_GetDpiForMonitor(monitor, MDT_DEFAULT, x, y) == S_OK)
+					{
+						return;
+					}
+				}
+				*x = 96;
+				*y = 96;
+			}
+
+			void DpiAwared_GetDpiForWindow(HWND handle, UINT* x, UINT* y)
+			{
+				USE_API(user32, GetDpiForWindow);
+
+				if (proc_GetDpiForWindow)
+				{
+					*x = *y = proc_GetDpiForWindow(handle);
+				}
+				else
+				{
+					HMONITOR monitor = MonitorFromWindow(handle, MONITOR_DEFAULTTONULL);
+					if (monitor == NULL)
+					{
+						*x = *y = 96;
+					}
+					else
+					{
+						DpiAwared_GetDpiForMonitor(monitor, x, y);
+					}
+				}
+			}
+
+			void DpiAwared_AdjustWindowRect(LPRECT rect, HWND handle, UINT dpi)
+			{
+				USE_API(user32, AdjustWindowRectExForDpi);
+
+				if (proc_AdjustWindowRectExForDpi)
+				{
+					proc_AdjustWindowRectExForDpi(rect, (DWORD)GetWindowLongPtr(handle, GWL_STYLE), FALSE, (DWORD)GetWindowLongPtr(handle, GWL_EXSTYLE), dpi);
+				}
+				else
+				{
+					AdjustWindowRect(rect, (DWORD)GetWindowLongPtr(handle, GWL_STYLE), FALSE);
+				}
+			}
+
+			int DpiAwared_GetSystemMetrics(int index, UINT dpi)
+			{
+				USE_API(user32, GetSystemMetricsForDpi);
+
+				if (proc_GetSystemMetricsForDpi)
+				{
+					return proc_GetSystemMetricsForDpi(index, dpi);
+				}
+				else
+				{
+					return GetSystemMetrics(index);
+				}
+			}
+
+#undef USE_API
+		}
+	}
+}
+
+/***********************************************************************
+.\WINNATIVEWINDOW.CPP
+***********************************************************************/
+#include <CommCtrl.h>
+
+#pragma comment(lib, "Imm32.lib")
+#pragma comment(lib, "Shlwapi.lib")
+#pragma comment(lib, "Comctl32.lib")
+
+namespace vl
+{
+	namespace presentation
+	{
+		namespace windows
+		{
+			using namespace collections;
+
+			LPCWSTR defaultIconResourceName = nullptr;
+
+			HICON CreateWindowDefaultIcon(vint size = 0)
+			{
+				if (!defaultIconResourceName) return NULL;
+				return (HICON)LoadImage(GetModuleHandle(NULL), defaultIconResourceName, IMAGE_ICON, (int)size, (int)size, (size ? 0 : LR_DEFAULTSIZE) | LR_SHARED);
+			}
+
+			void SetWindowDefaultIcon(UINT resourceId)
+			{
+				CHECK_ERROR(defaultIconResourceName == nullptr, L"vl::presentation::windows::SetWindowDefaultIcon(UINT)#This function can only be called once.");
+				defaultIconResourceName = MAKEINTRESOURCE(resourceId);
+			}
+
+			HWND GetHWNDFromNativeWindowHandle(INativeWindow* window)
+			{
+				if(!window) return NULL;
+				IWindowsForm* form=GetWindowsForm(window);
+				if(!form) return NULL;
+				return form->GetWindowHandle();
+			}
+
+/***********************************************************************
+WindowsClass
+***********************************************************************/
+
+			class WinClass : public Object
+			{
+			protected:
+				WString									name;
+				WNDCLASSEX								windowClass;
+				ATOM									windowAtom;
+
+			public:
+				WinClass(WString _name, bool shadow, bool ownDC, WNDPROC procedure, HINSTANCE hInstance)
+				{
+					name=_name;
+					ZeroMemory(&windowClass, sizeof(windowClass));
+					windowClass.cbSize=sizeof(windowClass);
+					windowClass.style=CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | (shadow?CS_DROPSHADOW:0) | (ownDC?CS_OWNDC:0);
+					windowClass.lpfnWndProc=procedure;
+					windowClass.cbClsExtra=0;
+					windowClass.cbWndExtra=0;
+					windowClass.hInstance=hInstance;
+					if (defaultIconResourceName)
+					{
+						windowClass.hIcon = CreateWindowDefaultIcon();
+					}
+					windowClass.hCursor=NULL;//LoadCursor(NULL,IDC_ARROW);
+					windowClass.hbrBackground=GetSysColorBrush(COLOR_BTNFACE);
+					windowClass.lpszMenuName=NULL;
+					windowClass.lpszClassName=name.Buffer();
+					windowClass.hIconSm=NULL;
+					windowAtom=RegisterClassEx(&windowClass);
+				}
+
+				bool IsAvailable()
+				{
+					return windowAtom!=0;
+				}
+
+				WString GetName()
+				{
+					return name;
+				}
+
+				ATOM GetClassAtom()
+				{
+					return windowAtom;
+				}
+			};
+
+/***********************************************************************
+WindowsForm
+***********************************************************************/
+
+			class WindowsForm : public Object, public INativeWindow, public IWindowsForm
+			{
+			protected:
+				
+				LONG_PTR InternalGetExStyle()
+				{
+					return GetWindowLongPtr(handle, GWL_EXSTYLE);
+				}
+
+				void InternalSetExStyle(LONG_PTR exStyle)
+				{
+					LONG_PTR result = SetWindowLongPtr(handle, GWL_EXSTYLE, exStyle);
+					SetWindowPos(handle, 0, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
+				}
+
+				LONG_PTR InternalGetStyle()
+				{
+					return GetWindowLongPtr(handle, GWL_STYLE);
+				}
+
+				void InternalSetStyle(LONG_PTR style)
+				{
+					SetWindowLongPtr(handle, GWL_STYLE, style);
+					SetWindowPos(handle, 0, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
+				}
+
+				LONG_PTR TurnOnStyle(LONG_PTR combination, LONG_PTR style)
+				{
+					return combination | style;
+				}
+
+				LONG_PTR TurnOffStyle(LONG_PTR combination, LONG_PTR style)
+				{
+					return combination & (~style);
+				}
+
+				bool GetExStyle(LONG_PTR exStyle)
+				{
+					return (InternalGetExStyle() & exStyle) != 0;
+				}
+
+				void SetExStyle(LONG_PTR exStyle, bool available)
+				{
+					if (available)
+					{
+						InternalSetExStyle(TurnOnStyle(InternalGetExStyle(), exStyle));
+					}
+					else
+					{
+						InternalSetExStyle(TurnOffStyle(InternalGetExStyle(), exStyle));
+					}
+				}
+
+				bool GetStyle(LONG_PTR style)
+				{
+					return (InternalGetStyle() & style) != 0;
+				}
+
+				void SetStyle(LONG_PTR style, bool available)
+				{
+					if (available)
+					{
+						InternalSetStyle(TurnOnStyle(InternalGetStyle(), style));
+					}
+					else
+					{
+						InternalSetStyle(TurnOffStyle(InternalGetStyle(), style));
+					}
+				}
+#pragma push_macro("_CONTROL")
+#if defined _CONTROL
+#undef _CONTROL
+#endif
+				NativeWindowMouseInfo ConvertMouse(WPARAM wParam, LPARAM lParam, bool wheelMessage, bool nonClient)
+				{
+					NativeWindowMouseInfo info;
+
+					info.nonClient = false;
+					if (nonClient)
+					{
+						switch (wParam)
+						{
+						case HTMINBUTTON:
+						case HTMAXBUTTON:
+						case HTCLOSE:
+							break;
+						default:
+							info.nonClient = true;
+							break;
+						}
+					}
+
+					if(wheelMessage)
+					{
+						info.wheel=GET_WHEEL_DELTA_WPARAM(wParam);
+						wParam=GET_KEYSTATE_WPARAM(wParam);
+					}
+					else
+					{
+						info.wheel=0;
+					}
+
+					if (nonClient)
+					{
+						info.ctrl = WinIsKeyPressing(VKEY::KEY_CONTROL);
+						info.shift = WinIsKeyPressing(VKEY::KEY_SHIFT);
+						info.left= WinIsKeyPressing(VKEY::KEY_LBUTTON);
+						info.middle= WinIsKeyPressing(VKEY::KEY_MBUTTON);
+						info.right = WinIsKeyPressing(VKEY::KEY_RBUTTON);
+						
+						POINTS point = MAKEPOINTS(lParam);
+						NativePoint offset = GetClientBoundsInScreen().LeftTop();
+						info.x = point.x - offset.x.value;
+						info.y = point.y - offset.y.value;
+					}
+					else
+					{
+						info.ctrl=(wParam & MK_CONTROL)!=0;
+						info.shift=(wParam & MK_SHIFT)!= 0;
+						info.left=(wParam & MK_LBUTTON)!= 0;
+						info.middle=(wParam & MK_MBUTTON)!= 0;
+						info.right=(wParam & MK_RBUTTON)!= 0;
+
+						POINTS point = MAKEPOINTS(lParam);
+
+						if (wheelMessage)
+						{
+							NativePoint offset = GetClientBoundsInScreen().LeftTop();
+							info.x = point.x - offset.x.value;
+							info.y = point.y - offset.y.value;
+						}
+						else
+						{
+							info.x = point.x;
+							info.y = point.y;
+						}
+					}
+					return info;
+				}
+
+				NativeWindowKeyInfo ConvertKey(WPARAM wParam, LPARAM lParam)
+				{
+					NativeWindowKeyInfo info;
+					info.code=(VKEY)wParam;
+					info.ctrl=WinIsKeyPressing(VKEY::KEY_CONTROL);
+					info.shift=WinIsKeyPressing(VKEY::KEY_SHIFT);
+					info.alt=WinIsKeyPressing(VKEY::KEY_MENU);
+					info.capslock=WinIsKeyToggled(VKEY::KEY_CAPITAL);
+					info.autoRepeatKeyDown = (((vuint32_t)lParam) >> 30) % 2 == 1;
+					return info;
+				}
+
+				NativeWindowCharInfo ConvertChar(WPARAM wParam)
+				{
+					NativeWindowCharInfo info;
+					info.code=(wchar_t)wParam;
+					info.ctrl=WinIsKeyPressing(VKEY::KEY_CONTROL);
+					info.shift=WinIsKeyPressing(VKEY::KEY_SHIFT);
+					info.alt=WinIsKeyPressing(VKEY::KEY_MENU);
+					info.capslock=WinIsKeyToggled(VKEY::KEY_CAPITAL);
+					return info;
+				}
+#pragma pop_macro("_CONTROL")
+
+				void TrackMouse(bool enable)
+				{
+					TRACKMOUSEEVENT trackMouseEvent;
+					trackMouseEvent.cbSize=sizeof(trackMouseEvent);
+					trackMouseEvent.hwndTrack=handle;
+					trackMouseEvent.dwFlags=(enable?0:TME_CANCEL) | TME_HOVER | TME_LEAVE;
+					trackMouseEvent.dwHoverTime=HOVER_DEFAULT;
+					TrackMouseEvent(&trackMouseEvent);
+				}
+
+				void UpdateCompositionForContent()
+				{
+					HIMC imc = ImmGetContext(handle);
+					COMPOSITIONFORM cf;
+					cf.dwStyle = CFS_POINT;
+					cf.ptCurrentPos.x = (int)caretPoint.x.value;
+					cf.ptCurrentPos.y = (int)caretPoint.y.value;
+					ImmSetCompositionWindow(imc, &cf);
+					ImmReleaseContext(handle, imc);
+				}
+
+				bool supressClosePopups = false;
+
+				static void ClosePopupsOf(WindowsForm* owner, SortedList<WindowsForm*>& exceptions)
+				{
+					for (vint i = 0; i < owner->childWindows.Count(); i++)
+					{
+						auto popup = owner->childWindows[i];
+						if (popup->windowMode != Normal && popup->IsVisible())
+						{
+							if (!exceptions.Contains(popup))
+							{
+								popup->Hide(false);
+							}
+						}
+						ClosePopupsOf(popup, exceptions);
+					}
+				}
+
+				bool HandleMessageInternal(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& result)
+				{
+					if (!supressClosePopups)
+					{
+						bool closePopups = false;
+						WindowsForm* activatedWindow = nullptr;
+						WindowsForm* rootWindow = nullptr;
+						SortedList<WindowsForm*> exceptions;
+
+						switch (uMsg)
+						{
+						case WM_ACTIVATEAPP:
+							if (wParam == FALSE)
+							{
+								closePopups = true;
+							}
+							break;
+						case WM_ACTIVATE:
+							switch (LOWORD(wParam))
+							{
+							case WA_ACTIVE:
+							case WA_CLICKACTIVE:
+								activatedWindow = this;
+								closePopups = true;
+								break;
+							}
+							break;
+						case WM_LBUTTONDOWN:
+						case WM_MBUTTONDOWN:
+						case WM_RBUTTONDOWN:
+						case WM_NCLBUTTONDOWN:
+						case WM_NCMBUTTONDOWN:
+						case WM_NCRBUTTONDOWN:
+							activatedWindow = this;
+							closePopups = true;
+							break;
+						}
+
+						if (activatedWindow)
+						{
+							rootWindow = activatedWindow;
+							exceptions.Add(rootWindow);
+							while (auto parentWindow = rootWindow->parentWindow)
+							{
+								rootWindow = parentWindow;
+								exceptions.Add(parentWindow);
+							}
+						}
+
+						if (closePopups)
+						{
+							List<IWindowsForm*> allRootWindows;
+							GetAllCreatedWindows(allRootWindows, true);
+
+							for (vint i = 0; i < allRootWindows.Count(); i++)
+							{
+								if (auto windowsForm = dynamic_cast<WindowsForm*>(allRootWindows[i]))
+								{
+									ClosePopupsOf(windowsForm, exceptions);
+								}
+							}
+						}
+					}
+
+					bool nonClient = false;
+
+					switch(uMsg)
+					{
+					// ************************************** moving and sizing
+					case WM_MOVING:case WM_SIZING:
+						{
+							LPRECT rawBounds=(LPRECT)lParam;
+							NativeRect bounds(rawBounds->left, rawBounds->top, rawBounds->right, rawBounds->bottom);
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->Moving(bounds, false, (uMsg == WM_SIZING));
+							}
+							if(		rawBounds->left!=bounds.Left().value
+								||	rawBounds->top!=bounds.Top().value
+								||	rawBounds->right!=bounds.Right().value
+								||	rawBounds->bottom!=bounds.Bottom().value)
+							{
+								rawBounds->left=(int)bounds.Left().value;
+								rawBounds->top=(int)bounds.Top().value;
+								rawBounds->right=(int)bounds.Right().value;
+								rawBounds->bottom=(int)bounds.Bottom().value;
+								result=TRUE;
+							}
+						}
+						break;
+					case WM_MOVE:case WM_SIZE:
+						{
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->Moved();
+							}
+						}
+						break;
+					case WM_DPICHANGED:
+						{
+							dpiX = LOWORD(wParam);
+							dpiY = HIWORD(wParam);
+							UpdateDpiAwaredFields(false);
+							auto newRect = (RECT*)lParam;
+							MoveWindow(handle, newRect->left, newRect->top, (newRect->right - newRect->left), (newRect->bottom - newRect->top), FALSE);
+
+							for (vint i = 0; i < listeners.Count(); i++)
+							{
+								listeners[i]->DpiChanged(true);
+							}
+
+							for (vint i = 0; i < listeners.Count(); i++)
+							{
+								listeners[i]->DpiChanged(false);
+							}
+						}
+						break;
+					// ************************************** state
+					case WM_ENABLE:
+						{
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								if(wParam==TRUE)
+								{
+									listeners[i]->Enabled();
+								}
+								else
+								{
+									listeners[i]->Disabled();
+								}
+							}
+						}
+						break;
+					case WM_MOUSEACTIVATE:
+						if (!enabledActivate)
+						{
+							result = MA_NOACTIVATE;
+							return true;
+						}
+						break;
+					case WM_ACTIVATE:
+						{
+							for (vint i = 0; i < listeners.Count(); i++)
+							{
+								if (wParam == WA_ACTIVE || wParam == WA_CLICKACTIVE)
+								{
+									listeners[i]->GotFocus();
+									listeners[i]->RenderingAsActivated();
+								}
+								else
+								{
+									listeners[i]->LostFocus();
+									listeners[i]->RenderingAsDeactivated();
+								}
+							}
+						}
+						break;
+					case WM_SHOWWINDOW:
+						if (lParam == 0)
+						{
+							if (wParam == TRUE)
+							{
+								for (vint i = 0; i < listeners.Count(); i++)
+								{
+									listeners[i]->Opened();
+								}
+							}
+							else
+							{
+								for (vint i = 0; i < listeners.Count(); i++)
+								{
+									listeners[i]->Closed();
+								}
+							}
+						}
+						break;
+					case WM_CLOSE:
+						{
+							bool cancel = false;
+							for (vint i = 0; i < listeners.Count(); i++)
+							{
+								listeners[i]->BeforeClosing(cancel);
+							}
+							if (!cancel)
+							{
+								for (vint i = 0; i < listeners.Count(); i++)
+								{
+									listeners[i]->AfterClosing();
+								}
+							}
+							return cancel;
+						}
+						break;
+					// ************************************** mouse
+					case WM_NCLBUTTONDOWN:
+						if (!customFrameMode) break;
+						nonClient = true;
+					case WM_LBUTTONDOWN:
+						{
+							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->LeftButtonDown(info);
+							}
+						}
+						break;
+					case WM_NCLBUTTONUP:
+						if (!customFrameMode) break;
+						nonClient = true;
+					case WM_LBUTTONUP:
+						{
+							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->LeftButtonUp(info);
+							}
+						}
+						break;
+					case WM_NCLBUTTONDBLCLK:
+						if (!customFrameMode) break;
+						nonClient = true;
+					case WM_LBUTTONDBLCLK:
+						{
+							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->LeftButtonDoubleClick(info);
+							}
+						}
+						break;
+					case WM_NCRBUTTONDOWN:
+						if (!customFrameMode) break;
+						nonClient = true;
+					case WM_RBUTTONDOWN:
+						{
+							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->RightButtonDown(info);
+							}
+						}
+						break;
+					case WM_NCRBUTTONUP:
+						if (!customFrameMode) break;
+						nonClient = true;
+					case WM_RBUTTONUP:
+						{
+							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->RightButtonUp(info);
+							}
+						}
+						break;
+					case WM_NCRBUTTONDBLCLK:
+						if (!customFrameMode) break;
+						nonClient = true;
+					case WM_RBUTTONDBLCLK:
+						{
+							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->RightButtonDoubleClick(info);
+							}
+						}
+						break;
+					case WM_NCMBUTTONDOWN:
+						if (!customFrameMode) break;
+						nonClient = true;
+					case WM_MBUTTONDOWN:
+						{
+							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->MiddleButtonDown(info);
+							}
+						}
+						break;
+					case WM_NCMBUTTONUP:
+						if (!customFrameMode) break;
+						nonClient = true;
+					case WM_MBUTTONUP:
+						{
+							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->MiddleButtonUp(info);
+							}
+						}
+						break;
+					case WM_NCMBUTTONDBLCLK:
+						if (!customFrameMode) break;
+						nonClient = true;
+					case WM_MBUTTONDBLCLK:
+						{
+							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->MiddleButtonDoubleClick(info);
+							}
+						}
+						break;
+					case WM_NCMOUSEMOVE:
+						if (!customFrameMode) break;
+						nonClient = true;
+					case WM_MOUSEMOVE:
+						{
+							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
+							if(info.x!=mouseLastX || info.y!=mouseLastY)
+							{
+								if(!mouseHoving)
+								{
+									mouseHoving=true;
+									for(vint i=0;i<listeners.Count();i++)
+									{
+										listeners[i]->MouseEntered();
+									}
+									TrackMouse(true);
+								}
+								for(vint i=0;i<listeners.Count();i++)
+								{
+									listeners[i]->MouseMoving(info);
+								}
+							}
+						}
+						break;
+					// ************************************** wheel
+					case WM_MOUSEHWHEEL:
+						{
+							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, true, false);
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->HorizontalWheel(info);
+							}
+						}
+						break;
+					case WM_MOUSEWHEEL:
+						{
+							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, true, false);
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->VerticalWheel(info);
+							}
+						}
+						break;
+					// ************************************** mouse state
+					case WM_NCMOUSELEAVE:
+						nonClient = true;
+					case WM_MOUSELEAVE:
+						if (customFrameMode == nonClient)
+						{
+							mouseLastX=-1;
+							mouseLastY=-1;
+							mouseHoving=false;
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->MouseLeaved();
+							}
+						}
+						break;
+					case WM_NCMOUSEHOVER:
+					case WM_MOUSEHOVER:
+						{
+							TrackMouse(true);
+						}
+						break;
+					// ************************************** key
+					case WM_KEYUP:
+						{
+							NativeWindowKeyInfo info=ConvertKey(wParam, lParam);
+							info.autoRepeatKeyDown = false;
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->KeyUp(info);
+							}
+						}
+						break;
+					case WM_KEYDOWN:
+						{
+							NativeWindowKeyInfo info=ConvertKey(wParam, lParam);
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->KeyDown(info);
+							}
+						}
+						break;
+					case WM_SYSKEYUP:
+						{
+							NativeWindowKeyInfo info=ConvertKey(wParam, lParam);
+							info.autoRepeatKeyDown = false;
+							if (supressingAlt && !info.ctrl && !info.shift && info.code == VKEY::KEY_MENU)
+							{
+								supressingAlt = false;
+								break;
+							}
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->KeyUp(info);
+							}
+						}
+						break;
+					case WM_SYSKEYDOWN:
+						{
+							NativeWindowKeyInfo info=ConvertKey(wParam, lParam);
+							if (supressingAlt && !info.ctrl && !info.shift && info.code == VKEY::KEY_MENU)
+							{
+								break;
+							}
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->KeyDown(info);
+							}
+						}
+						break;
+					case WM_CHAR:
+						{
+							NativeWindowCharInfo info=ConvertChar(wParam);
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->Char(info);
+							}
+						}
+						break;
+					// ************************************** painting
+					case WM_PAINT:
+						{
+							for(vint i=0;i<listeners.Count();i++)
+							{
+								listeners[i]->Paint();
+							}
+						}
+						break;
+					case WM_ERASEBKGND:
+						result = 0;
+						return true;
+					case WM_NCPAINT:
+					case WM_SYNCPAINT:
+						if(customFrameMode)
+						{
+							result=0;
+							return true;
+						}
+						break;
+					// ************************************** IME
+					case WM_IME_SETCONTEXT:
+						if(wParam==TRUE)
+						{
+							HIMC imc = ImmGetContext(handle);
+							ImmAssociateContext(hwnd, imc);
+							ImmReleaseContext(handle, imc);
+						}
+						break;
+					case WM_IME_STARTCOMPOSITION:
+						UpdateCompositionForContent();
+						break;
+					// ************************************** hit test
+					case WM_NCHITTEST:
+						{
+							POINTS location = MAKEPOINTS(lParam);
+							NativePoint windowLocation = GetBounds().LeftTop();
+							location.x -= (SHORT)windowLocation.x.value;
+							location.y -= (SHORT)windowLocation.y.value;
+							switch (PerformHitTest(From(listeners), { location.x,location.y }))
+							{
+							case INativeWindowListener::BorderNoSizing:
+								result = HTBORDER;
+								return true;
+							case INativeWindowListener::BorderLeft:
+								result = HTLEFT;
+								return true;
+							case INativeWindowListener::BorderRight:
+								result = HTRIGHT;
+								return true;
+							case INativeWindowListener::BorderTop:
+								result = HTTOP;
+								return true;
+							case INativeWindowListener::BorderBottom:
+								result = HTBOTTOM;
+								return true;
+							case INativeWindowListener::BorderLeftTop:
+								result = HTTOPLEFT;
+								return true;
+							case INativeWindowListener::BorderRightTop:
+								result = HTTOPRIGHT;
+								return true;
+							case INativeWindowListener::BorderLeftBottom:
+								result = HTBOTTOMLEFT;
+								return true;
+							case INativeWindowListener::BorderRightBottom:
+								result = HTBOTTOMRIGHT;
+								return true;
+							case INativeWindowListener::Title:
+								result = HTCAPTION;
+								return true;
+							case INativeWindowListener::ButtonMinimum:
+								result = HTMINBUTTON;
+								return true;
+							case INativeWindowListener::ButtonMaximum:
+								result = HTMAXBUTTON;
+								return true;
+							case INativeWindowListener::ButtonClose:
+								result = HTCLOSE;
+								return true;
+							case INativeWindowListener::Client:
+								result = HTCLIENT;
+								return true;
+							case INativeWindowListener::Icon:
+								result = HTSYSMENU;
+								return true;
+							}
+						}
+						break;
+					// ************************************** MISC
+					case WM_SETCURSOR:
+						{
+							DWORD hitTestResult=LOWORD(lParam);
+							if(hitTestResult==HTCLIENT)
+							{
+								HCURSOR cursorHandle=cursor->GetCursorHandle();
+								if(GetCursor()!=cursorHandle)
+								{
+									SetCursor(cursorHandle);
+								}
+								result=TRUE;
+								return true;
+							}
+						}
+						break;
+					case WM_NCCALCSIZE:
+						if((BOOL)wParam && customFrameMode)
+						{
+							result=0;
+							return true;
+						}
+						break;
+					case WM_NCACTIVATE:
+						if(customFrameMode)
+						{
+							if(wParam==TRUE)
+							{
+								result=FALSE;
+							}
+							else
+							{
+								result=TRUE;
+							}
+							return true;
+						}
+						break;
+					}
+
+					// handling custom frame
+					if (customFrameMode)
+					{
+						switch (uMsg)
+						{
+						case WM_NCLBUTTONDOWN:
+							switch (wParam)
+							{
+							case HTMINBUTTON:
+							case HTMAXBUTTON:
+							case HTCLOSE:
+								result = 0;
+								return true;
+							}
+							break;
+						case WM_LBUTTONUP:
+							{
+								POINTS location = MAKEPOINTS(lParam);
+								for (vint i = 0; i < listeners.Count(); i++)
+								{
+									switch (PerformHitTest(From(listeners), { location.x,location.y }))
+									{
+									case INativeWindowListener::ButtonMinimum:
+										ShowMinimized();
+										return false;
+									case INativeWindowListener::ButtonMaximum:
+										if (GetSizeState() == INativeWindow::Maximized)
+										{
+											ShowRestored();
+										}
+										else
+										{
+											ShowMaximized();
+										}
+										return false;
+									case INativeWindowListener::ButtonClose:
+										Hide(true);
+										return false;
+									}
+								}
+							}
+							break;
+						}
+					}
+					return false;
+				}
+			protected:
+				HWND								handle;
+				WString								title;
+				WindowsCursor*						cursor = nullptr;
+				NativePoint							caretPoint;
+				WindowsForm*						parentWindow = nullptr;
+				List<WindowsForm*>					childWindows;
+				WindowMode							windowMode;
+				bool								isMainWindow = false;
+				List<INativeWindowListener*>		listeners;
+				vint								mouseLastX = -1;
+				vint								mouseLastY = -1;
+				bool								mouseHoving = false;
+				Interface*							graphicsHandler = nullptr;
+				bool								customFrameMode = false;
+				bool								enabledActivate = true;
+				List<Ptr<INativeMessageHandler>>	messageHandlers;
+				bool								supressingAlt = false;
+				Ptr<bool>							flagDisposed = Ptr(new bool(false));
+				NativeMargin						customFramePadding;
+				Ptr<GuiImageData>					defaultIcon;
+				Ptr<GuiImageData>					replacementIcon;
+				HICON								replacementHIcon = NULL;
+				vint								dpiX = 0;
+				vint								dpiY = 0;
+
+				void UpdateDpiAwaredFields(bool refreshDpiXY)
+				{
+					if (refreshDpiXY)
+					{
+						UINT x = 0;
+						UINT y = 0;
+						DpiAwared_GetDpiForWindow(handle, &x, &y);
+						dpiX = (vint)x;
+						dpiY = (vint)y;
+					}
+					auto padding = (vint)(DpiAwared_GetSystemMetrics(SM_CXSIZEFRAME, (UINT)dpiX) + DpiAwared_GetSystemMetrics(SM_CXPADDEDBORDER, (UINT)dpiX));
+					customFramePadding = NativeMargin(padding, padding, padding, padding);
+				}
+			public:
+				WindowsForm(HWND parent, WString className, HINSTANCE hInstance, INativeWindow::WindowMode _windowMode)
+					: windowMode(_windowMode)
+				{
+					{
+						DWORD exStyle = WS_EX_APPWINDOW | WS_EX_CONTROLPARENT;
+						DWORD style = WS_BORDER | WS_CAPTION | WS_SIZEBOX | WS_SYSMENU | WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_MAXIMIZEBOX | WS_MINIMIZEBOX;
+						handle = CreateWindowEx(exStyle, className.Buffer(), L"", style, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, parent, NULL, hInstance, NULL);
+					}
+					if (windowMode == INativeWindow::Normal)
+					{
+						// use WS_POPUP in CreateWindowEx, because CW_USERDEFAULT is interpreted as 0, unlike WS_OVERLAPPED
+						// if this is not a popup window, replace WS_POPUP with WS_OVERLAPPED
+						auto style = InternalGetStyle();
+						style = TurnOnStyle(style, WS_OVERLAPPED);
+						style = TurnOffStyle(style, WS_POPUP);
+						InternalSetStyle(style);
+					}
+					UpdateDpiAwaredFields(true);
+				}
+
+				~WindowsForm()
+				{
+					if (parentWindow)
+					{
+						parentWindow->childWindows.Remove(this);
+					}
+					for (vint i = childWindows.Count() - 1; i >= 0; i--)
+					{
+						childWindows[i]->SetParent(parentWindow);
+					}
+
+					*flagDisposed.Obj() = true;
+					List<INativeWindowListener*> copiedListeners;
+					CopyFrom(copiedListeners, listeners);
+					for (vint i = 0; i < copiedListeners.Count(); i++)
+					{
+						INativeWindowListener* listener = copiedListeners[i];
+						if (listeners.Contains(listener))
+						{
+							listener->Destroyed();
+						}
+					}
+					DestroyWindow(handle);
+				}
+
+				void SetIsMainWindow()
+				{
+					isMainWindow = true;
+				}
+
+				void InvokeDestroying()
+				{
+					for(vint i=0;i<listeners.Count();i++)
+					{
+						listeners[i]->Destroying();
+					}
+				}
+
+				bool HandleMessage(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& result)
+				{
+#define CHECK_DISPOSED if (*flag.Obj()) return skip
+					auto flag = flagDisposed;
+					bool skip = false;
+					{
+						for (auto handler : messageHandlers)
+						{
+							handler->BeforeHandle(hwnd, uMsg, wParam, lParam, skip);
+							CHECK_DISPOSED;
+						}
+						if (skip)
+						{
+							return true;
+						}
+					}
+					skip = HandleMessageInternal(hwnd, uMsg, wParam, lParam, result);
+					CHECK_DISPOSED;
+					if (GetWindowsFormFromHandle(hwnd))
+					{
+						for (auto handler : messageHandlers)
+						{
+							handler->AfterHandle(hwnd, uMsg, wParam, lParam, skip, result);
+							CHECK_DISPOSED;
+						}
+					}
+					return skip;
+#undef CHECK_DISPOSED
+				}
+
+				HWND GetWindowHandle()override
+				{
+					return handle;
+				}
+
+				Interface* GetGraphicsHandler()override
+				{
+					return graphicsHandler;
+				}
+
+				void SetGraphicsHandler(Interface* handler)override
+				{
+					graphicsHandler=handler;
+				}
+
+				bool InstallMessageHandler(Ptr<INativeMessageHandler> handler)override
+				{
+					if (messageHandlers.Contains(handler.Obj()))
+					{
+						return false;
+					}
+					messageHandlers.Add(handler);
+					return true;
+				}
+
+				bool UninstallMessageHandler(Ptr<INativeMessageHandler> handler)override
+				{
+					vint index = messageHandlers.IndexOf(handler.Obj());
+					if (index == -1)return false;
+					messageHandlers.RemoveAt(handler);
+					return true;
+				}
+
+				bool IsActivelyRefreshing()override
+				{
+					return true;
+				}
+
+				NativeSize GetRenderingOffset()override
+				{
+					return { 0,0 };
+				}
+
+				Point Convert(NativePoint value)override
+				{
+					return Point((vint)value.x.value * 96 / dpiX, (vint)value.y.value * 96 / dpiY);
+				}
+
+				NativePoint Convert(Point value)override
+				{
+					return NativePoint(value.x * dpiX / 96, value.y * dpiY / 96);
+				}
+
+				Size Convert(NativeSize value)override
+				{
+					return Size((vint)value.x.value * 96 / dpiX, (vint)value.y.value * 96 / dpiY);
+				}
+
+				NativeSize Convert(Size value)override
+				{
+					return NativeSize(value.x * dpiX / 96, value.y * dpiY / 96);
+				}
+
+				Margin Convert(NativeMargin value)override
+				{
+					return Margin(
+						(vint)value.left.value * 96 / dpiX,
+						(vint)value.top.value * 96 / dpiY,
+						(vint)value.right.value * 96 / dpiX,
+						(vint)value.bottom.value * 96 / dpiY
+					);
+				}
+
+				NativeMargin Convert(Margin value)override
+				{
+					return NativeMargin(
+						(vint)value.left * dpiX / 96,
+						(vint)value.top * dpiY / 96,
+						(vint)value.right * dpiX / 96,
+						(vint)value.bottom * dpiY / 96
+					);
+				}
+
+				NativeRect GetBounds()override
+				{
+					RECT rect;
+					GetWindowRect(handle, &rect);
+					return NativeRect(rect.left, rect.top, rect.right, rect.bottom);
+				}
+
+				void SetBounds(const NativeRect& bounds)override
+				{
+					NativeRect newBounds=bounds;
+					for(vint i=0;i<listeners.Count();i++)
+					{
+						listeners[i]->Moving(newBounds, true, false);
+					}
+					MoveWindow(handle, (int)newBounds.Left().value, (int)newBounds.Top().value, (int)newBounds.Width().value, (int)newBounds.Height().value, FALSE);
+				}
+
+				NativeSize GetClientSize()override
+				{
+					return GetClientBoundsInScreen().GetSize();
+				}
+
+				void SetClientSize(NativeSize size)override
+				{
+					if (customFrameMode)
+					{
+						RECT bounds;
+						GetWindowRect(handle, &bounds);
+						SetBounds(NativeRect(NativePoint(bounds.left, bounds.top), size));
+					}
+					else
+					{
+						RECT required = { 0,0,(int)size.x.value,(int)size.y.value };
+						RECT bounds;
+						GetWindowRect(handle, &bounds);
+						DpiAwared_AdjustWindowRect(&required, handle, (UINT)dpiX);
+						SetBounds(NativeRect(NativePoint(bounds.left, bounds.top), NativeSize(required.right - required.left, required.bottom - required.top)));
+					}
+				}
+
+				NativeRect GetClientBoundsInScreen()override
+				{
+					if(customFrameMode)
+					{
+						return GetBounds();
+					}
+					else
+					{
+						RECT required={0,0,0,0};
+						RECT bounds;
+						GetWindowRect(handle, &bounds);
+						DpiAwared_AdjustWindowRect(&required, handle, (UINT)dpiX);
+						return NativeRect(
+							NativePoint(
+								(bounds.left-required.left),
+								(bounds.top-required.top)
+								),
+							NativeSize(
+								(bounds.right-bounds.left)-(required.right-required.left),
+								(bounds.bottom-bounds.top)-(required.bottom-required.top)
+								)
+							);
+					}
+				}
+
+				WString GetTitle()override
+				{
+					return title;
+				}
+
+				void SetTitle(const WString& _title)override
+				{
+					title=_title;
+					SetWindowText(handle, title.Buffer());
+				}
+
+				INativeCursor* GetWindowCursor()override
+				{
+					return cursor;
+				}
+
+				void SetWindowCursor(INativeCursor* _cursor)override
+				{
+					WindowsCursor* newCursor=dynamic_cast<WindowsCursor*>(_cursor);
+					if(newCursor && cursor!=newCursor)
+					{
+						cursor=newCursor;
+						if(mouseHoving && IsVisible())
+						{
+							SetCursor(cursor->GetCursorHandle());
+						}
+					}
+				}
+				
+				NativePoint GetCaretPoint()override
+				{
+					return caretPoint;
+				}
+
+				void SetCaretPoint(NativePoint point)override
+				{
+					caretPoint=point;
+					UpdateCompositionForContent();
+				}
+
+				INativeWindow* GetParent()override
+				{
+					return parentWindow;
+				}
+
+				void SetParent(INativeWindow* parent)override
+				{
+					if (parentWindow)
+					{
+						parentWindow->childWindows.Remove(this);
+					}
+
+					if ((parentWindow = dynamic_cast<WindowsForm*>(parent)))
+					{
+						parentWindow->childWindows.Add(this);
+						// ::SetParent(handle, parentWindow->handle);
+						SetWindowLongPtr(handle, GWLP_HWNDPARENT, (LONG_PTR)parentWindow->handle);
+					}
+					else
+					{
+						// ::SetParent(handle, NULL);
+						SetWindowLongPtr(handle, GWLP_HWNDPARENT, NULL);
+					}
+				}
+
+				WindowMode GetWindowMode()override
+				{
+					return windowMode;
+				}
+
+				void EnableCustomFrameMode()override
+				{
+					customFrameMode=true;
+				}
+
+				void DisableCustomFrameMode()override
+				{
+					customFrameMode=false;
+				}
+
+				bool IsCustomFrameModeEnabled()override
+				{
+					return customFrameMode;
+				}
+
+				NativeMargin GetCustomFramePadding()override
+				{
+					if (GetSizeBox() || GetTitleBar())
+					{
+						return customFramePadding;
+					}
+					else
+					{
+						return NativeMargin(0, 0, 0, 0);
+					}
+				}
+
+				Ptr<GuiImageData> GetIcon()override
+				{
+					if (replacementIcon && replacementIcon->GetImage())
+					{
+						return replacementIcon;
+					}
+					else
+					{
+						if (!defaultIcon)
+						{
+							auto icon = CreateWindowDefaultIcon(16);
+							if (icon == NULL)
+							{
+								icon = (HICON)LoadImage(NULL, IDI_APPLICATION, IMAGE_ICON, 16, 16, LR_SHARED);
+							}
+							if (icon != NULL)
+							{
+								defaultIcon = Ptr(new GuiImageData(CreateImageFromHICON(icon), 0));
+							}
+						}
+						return defaultIcon;
+					}
+				}
+
+				static double GetSizeScore(vint size)
+				{
+					if (size > 32)
+					{
+						return 32.0 / size;
+					}
+					else if (size < 32)
+					{
+						return size / 32.0 - 1;
+					}
+					else
+					{
+						return 1.0;
+					}
+				}
+
+				static vint GetBppFromFormat(const WICPixelFormatGUID& format)
+				{
+					if (format == GUID_WICPixelFormat1bppIndexed)	return 1;
+					if (format == GUID_WICPixelFormat2bppIndexed)	return 2;
+					if (format == GUID_WICPixelFormat4bppIndexed)	return 4;
+					if (format == GUID_WICPixelFormat8bppIndexed)	return 8;
+					if (format == GUID_WICPixelFormatBlackWhite)	return 1;
+					if (format == GUID_WICPixelFormat2bppGray)		return 2;
+					if (format == GUID_WICPixelFormat4bppGray)		return 4;
+					if (format == GUID_WICPixelFormat8bppGray)		return 8;
+					if (format == GUID_WICPixelFormat8bppAlpha)		return 8;
+					if (format == GUID_WICPixelFormat16bppBGR555)	return 16;
+					if (format == GUID_WICPixelFormat16bppBGR565)	return 16;
+					if (format == GUID_WICPixelFormat16bppBGRA5551)	return 16;
+					if (format == GUID_WICPixelFormat16bppGray)		return 16;
+					if (format == GUID_WICPixelFormat24bppBGR)		return 24;
+					if (format == GUID_WICPixelFormat24bppRGB)		return 24;
+					if (format == GUID_WICPixelFormat32bppBGR)		return 32;
+					if (format == GUID_WICPixelFormat32bppBGRA)		return 32;
+					if (format == GUID_WICPixelFormat32bppPBGRA)	return 32;
+					return -1;
+				}
+
+				void SetIcon(Ptr<GuiImageData> icon)override
+				{
+					replacementIcon = icon;
+					HICON newReplacementHIcon = NULL;
+					if (replacementIcon && replacementIcon->GetImage())
+					{
+						stream::MemoryStream memoryStream;
+
+						replacementIcon->GetImage()->SaveToStream(memoryStream, INativeImage::Icon);
+						if (memoryStream.Size() > 0)
+						{
+							newReplacementHIcon = CreateIconFromResource((PBYTE)memoryStream.GetInternalBuffer(), (DWORD)memoryStream.Size(), TRUE, 0x00030000);
+							if (newReplacementHIcon != NULL)
+							{
+								goto SKIP;
+							}
+						}
+
+						INativeImageFrame* selectedFrame = nullptr;
+						for (vint i = 0; i < replacementIcon->GetImage()->GetFrameCount(); i++)
+						{
+							auto frame = replacementIcon->GetImage()->GetFrame(i);
+							auto size = frame->GetSize();
+							if (size.x == size.y)
+							{
+								auto bitmap = GetWICBitmap(frame);
+								WICPixelFormatGUID format;
+								HRESULT hr = bitmap->GetPixelFormat(&format);
+								if (hr != S_OK) continue;
+
+								if (!selectedFrame)
+								{
+									selectedFrame = frame;
+								}
+								else
+								{
+									auto score = GetSizeScore(size.x);
+									auto scoreSelected = GetSizeScore(selectedFrame->GetSize().x);
+									if (score > scoreSelected)
+									{
+										selectedFrame = frame;
+									}
+									else if (score == scoreSelected)
+									{
+										WICPixelFormatGUID selectedFormat;
+										auto selectedBitmap = GetWICBitmap(selectedFrame);
+										hr = selectedBitmap->GetPixelFormat(&selectedFormat);
+
+										auto bpp = GetBppFromFormat(format);
+										auto bppSelected = GetBppFromFormat(selectedFormat);
+										if (bpp > bppSelected)
+										{
+											selectedFrame = frame;
+										}
+									}
+								}
+							}
+						}
+
+						if (selectedFrame)
+						{
+							bool succeeded = false;
+							WindowsBitmapImage newBitmap(replacementIcon->GetImage()->GetImageService(), GetWICBitmap(selectedFrame), replacementIcon->GetImage()->GetFormat());
+							newBitmap.SaveToStream(memoryStream, INativeImage::Bmp);
+							if (memoryStream.Size() > 0)
+							{
+								auto pBuffer = (char*)memoryStream.GetInternalBuffer();
+								tagBITMAPFILEHEADER bfh = *(tagBITMAPFILEHEADER*)pBuffer;
+								tagBITMAPINFOHEADER bih = *(tagBITMAPINFOHEADER*)(pBuffer + sizeof(tagBITMAPFILEHEADER));
+								RGBQUAD rgb = *(RGBQUAD*)(pBuffer + sizeof(tagBITMAPFILEHEADER) + sizeof(tagBITMAPINFOHEADER));
+
+								BITMAPINFO bi;
+								bi.bmiColors[0] = rgb;
+								bi.bmiHeader = bih;
+
+								char* pPixels = (pBuffer + bfh.bfOffBits);
+								char* ppvBits;
+								auto hBitmap = CreateDIBSection(NULL, &bi, DIB_RGB_COLORS, (void**)&ppvBits, NULL, 0);
+								if (hBitmap != NULL)
+								{
+									SetDIBits(NULL, hBitmap, 0, bih.biHeight, pPixels, &bi, DIB_RGB_COLORS);
+									auto himl = ImageList_Create(32, 32, ILC_COLOR32, 1, 1);
+									if (himl != NULL)
+									{
+										int addResult = ImageList_Add(himl, hBitmap, NULL);
+										newReplacementHIcon = ImageList_GetIcon(himl, 0, ILD_NORMAL);
+										ImageList_Destroy(himl);
+									}
+									DeleteObject(hBitmap);
+								}
+							}
+						}
+					}
+
+				SKIP:
+					{
+						HICON hAppIcon = newReplacementHIcon;
+						if (hAppIcon == NULL) hAppIcon = CreateWindowDefaultIcon();
+						if (hAppIcon == NULL) hAppIcon = (HICON)LoadImage(NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_DEFAULTSIZE | LR_SHARED);
+						bool isVisible = IsVisible();
+						if (isVisible) SendMessage(handle, WM_SETREDRAW, (WPARAM)FALSE, NULL);
+						SendMessage(handle, WM_SETICON, ICON_BIG, (LPARAM)hAppIcon);
+						SendMessage(handle, WM_SETICON, ICON_SMALL, (LPARAM)hAppIcon);
+						if (isVisible) SendMessage(handle, WM_SETREDRAW, (WPARAM)TRUE, NULL);
+
+						if (isMainWindow)
+						{
+							SendMessage(GetWindow(handle, GW_OWNER), WM_SETICON, ICON_BIG, (LPARAM)hAppIcon);
+							SendMessage(GetWindow(handle, GW_OWNER), WM_SETICON, ICON_SMALL, (LPARAM)hAppIcon);
+						}
+					}
+
+					if (replacementHIcon != NULL)
+					{
+						DestroyIcon(replacementHIcon);
+					}
+					replacementHIcon = newReplacementHIcon;
+				}
+
+				WindowSizeState GetSizeState()override
+				{
+					if(IsIconic(handle))
+					{
+						return INativeWindow::Minimized;
+					}
+					else if(IsZoomed(handle))
+					{
+						return INativeWindow::Maximized;
+					}
+					else
+					{
+						return INativeWindow::Restored;
+					}
+				}
+
+				void Show()override
+				{
+					SetForegroundWindow(handle);
+					ShowWindow(handle, SW_SHOWNORMAL);
+				}
+
+				void ShowDeactivated()override
+				{
+					ShowWindow(handle, SW_SHOWNOACTIVATE);
+					SetWindowPos(handle, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE);
+				}
+
+				void ShowRestored()override
+				{
+					ShowWindow(handle, SW_RESTORE);
+				}
+
+				void ShowMaximized()override
+				{
+					ShowWindow(handle, SW_SHOWMAXIMIZED);
+				}
+
+				void ShowMinimized()override
+				{
+					ShowWindow(handle, SW_SHOWMINIMIZED);
+				}
+
+				void Hide(bool closeWindow)override
+				{
+					PostMessage(handle, WM_CLOSE, NULL, NULL);
+				}
+
+				bool IsVisible()override
+				{
+					return IsWindowVisible(handle)!=0;
+				}
+
+				void Enable()override
+				{
+					EnableWindow(handle, TRUE);
+				}
+
+				void Disable()override
+				{
+					EnableWindow(handle, FALSE);
+				}
+
+				bool IsEnabled()override
+				{
+					return IsWindowEnabled(handle)!=0;
+				}
+
+				void SetActivate()override
+				{
+					SetActiveWindow(handle);
+				}
+
+				bool IsActivated()override
+				{
+					return GetActiveWindow()==handle;
+				}
+
+				bool IsRenderingAsActivated()override
+				{
+					// TODO: should render as activated when
+					//   is activated
+					//   is a parent window of one that rendering as activated
+					return IsActivated();
+				}
+
+				void ShowInTaskBar()override
+				{
+					SetExStyle(WS_EX_APPWINDOW, true);
+				}
+
+				void HideInTaskBar()override
+				{
+					SetExStyle(WS_EX_APPWINDOW, false);
+				}
+
+				bool IsAppearedInTaskBar()override
+				{
+					return GetExStyle(WS_EX_APPWINDOW);
+				}
+
+				void EnableActivate()override
+				{
+					enabledActivate = true;
+					SetExStyle(WS_EX_NOACTIVATE, false);
+				}
+
+				void DisableActivate()override
+				{
+					enabledActivate = false;
+					SetExStyle(WS_EX_NOACTIVATE, true);
+				}
+
+				bool IsEnabledActivate()override
+				{
+					return enabledActivate;
+				}
+
+				bool RequireCapture()override
+				{
+					SetCapture(handle);
+					return true;
+				}
+
+				bool ReleaseCapture()override
+				{
+					::ReleaseCapture();
+					return true;
+				}
+
+				bool IsCapturing()override
+				{
+					return GetCapture()==handle;
+				}
+
+				bool GetMaximizedBox()override
+				{
+					return GetStyle(WS_MAXIMIZEBOX);
+				}
+
+				void SetMaximizedBox(bool visible)override
+				{
+					SetStyle(WS_MAXIMIZEBOX, visible);
+				}
+
+				bool GetMinimizedBox()override
+				{
+					return GetStyle(WS_MINIMIZEBOX);
+				}
+
+				void SetMinimizedBox(bool visible)override
+				{
+					SetStyle(WS_MINIMIZEBOX, visible);
+				}
+
+				bool GetBorder()override
+				{
+					return GetStyle(WS_BORDER);
+				}
+
+				void SetBorder(bool visible)override
+				{
+					SetStyle(WS_BORDER, visible);
+				}
+
+				bool GetSizeBox()override
+				{
+					return GetStyle(WS_SIZEBOX);
+				}
+
+				void SetSizeBox(bool visible)override
+				{
+					SetStyle(WS_SIZEBOX, visible);
+				}
+
+				bool GetIconVisible()override
+				{
+					return GetStyle(WS_SYSMENU);
+				}
+
+				void SetIconVisible(bool visible)override
+				{
+					SetStyle(WS_SYSMENU, visible);
+				}
+
+				bool GetTitleBar()override
+				{
+					return GetStyle(WS_CAPTION);
+				}
+
+				void SetTitleBar(bool visible)override
+				{
+					SetStyle(WS_CAPTION, visible);
+				}
+
+				bool GetTopMost()override
+				{
+					return GetExStyle(WS_EX_TOPMOST);
+				}
+
+				void SetTopMost(bool topmost)override
+				{
+					SetWindowPos(handle, (topmost ? HWND_TOPMOST : HWND_NOTOPMOST), 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE | SWP_FRAMECHANGED);
+				}
+
+				void SupressAlt()override
+				{
+					if (!supressingAlt)
+					{
+						supressingAlt = true;
+						PostMessage(handle, WM_SYSKEYDOWN, VK_MENU, 0);
+						PostMessage(handle, WM_SYSKEYUP, VK_MENU, 0);
+					}
+				}
+
+				bool InstallListener(INativeWindowListener* listener)override
+				{
+					if(listeners.Contains(listener))
+					{
+						return false;
+					}
+					else
+					{
+						listeners.Add(listener);
+						return true;
+					}
+				}
+
+				bool UninstallListener(INativeWindowListener* listener)override
+				{
+					if(listeners.Contains(listener))
+					{
+						listeners.Remove(listener);
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+
+				void RedrawContent()override
+				{
+					if(graphicsHandler)
+					{
+						SendMessage(this->handle, WM_PAINT, NULL, NULL);
+					}
+				}
+			};
+
+/***********************************************************************
+WindowsController
+***********************************************************************/
+
+			LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+			LRESULT CALLBACK GodProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+			class WindowsController : public Object, public virtual INativeController, public virtual INativeWindowService
+			{
+			protected:
+				WinClass							windowClass;
+				WinClass							godClass;
+				HINSTANCE							hInstance;
+				HWND								godWindow;
+				Dictionary<HWND, WindowsForm*>		windows;
+				WindowsForm*						mainWindow = nullptr;
+				HWND								mainWindowHandle = 0;
+
+				SharedCallbackService				callbackService;
+				SharedAsyncService					asyncService;
+				WindowsResourceService				resourceService;
+				WindowsClipboardService				clipboardService;
+				WindowsImageService					imageService;
+				WindowsScreenService				screenService;
+				WindowsInputService					inputService;
+				WindowsDialogService				dialogService;
+
+			public:
+				WindowsController(HINSTANCE _hInstance)
+					:hInstance(_hInstance)
+					,windowClass(L"VczhWindow", false, false, WndProc, _hInstance)
+					,godClass(L"GodWindow", false, false, GodProc, _hInstance)
+					,screenService(&GetHWNDFromNativeWindowHandle)
+					,dialogService(&GetHWNDFromNativeWindowHandle)
+				{
+					godWindow=CreateWindowEx(WS_EX_CONTROLPARENT, godClass.GetName().Buffer(), L"GodWindow", WS_OVERLAPPEDWINDOW, 0, 0, 0, 0, NULL, NULL, hInstance, NULL);
+					clipboardService.SetOwnerHandle(godWindow);
+					inputService.SetOwnerHandle(godWindow);
+				}
+
+				~WindowsController()
+				{
+					inputService.StopTimer();
+					clipboardService.SetOwnerHandle(NULL);
+					DestroyWindow(godWindow);
+				}
+
+				WindowsForm* GetWindowsFormFromHandle(HWND hwnd)
+				{
+					vint index = windows.Keys().IndexOf(hwnd);
+					if (index == -1)return 0;
+					return windows.Values()[index];
+				}
+
+				void GetAllCreatedWindows(collections::List<IWindowsForm*>& createdWindows, bool rootWindowOnly)
+				{
+					if (rootWindowOnly)
+					{
+						for (auto window : windows.Values())
+						{
+							if (window->GetWindowMode() == INativeWindow::Normal)
+							{
+								createdWindows.Add(window);
+							}
+						}
+					}
+					else
+					{
+						CopyFrom(createdWindows, windows.Values());
+					}
+				}
+
+				bool HandleMessage(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& result)
+				{
+					bool skipDefaultProcedure=false;
+					{
+						vint index = windows.Keys().IndexOf(hwnd);
+						if (index != -1)
+						{
+							WindowsForm* window = windows.Values().Get(index);
+							skipDefaultProcedure = window->HandleMessage(hwnd, uMsg, wParam, lParam, result);
+							switch (uMsg)
+							{
+							case WM_CLOSE:
+								if (!skipDefaultProcedure)
+								{
+									ShowWindow(window->GetWindowHandle(), SW_HIDE);
+									if (window != mainWindow)
+									{
+										skipDefaultProcedure = true;
+									}
+								}
+								break;
+							case WM_DESTROY:
+								DestroyNativeWindow(window);
+								break;
+							}
+						}
+					}
+					{
+						if (hwnd == mainWindowHandle && uMsg == WM_DESTROY)
+						{
+							for (auto window : windows.Values())
+							{
+								if (window->IsVisible())
+								{
+									window->Hide(true);
+								}
+							}
+							List<WindowsForm*> normalWindows;
+							CopyFrom(
+								normalWindows,
+								From(windows.Values())
+									.Where([](WindowsForm* window)
+									{
+										return window->GetWindowMode() == INativeWindow::Normal;
+									})
+								);
+							for (auto window : normalWindows)
+							{
+								DestroyNativeWindow(window);
+							}
+							for (vint i = windows.Count() - 1; i >= 0; i--)
+							{
+								auto window = windows.Values()[i];
+								DestroyNativeWindow(window);
+							}
+							
+							PostQuitMessage(0);
+						}
+					}
+					return skipDefaultProcedure;
+				}
+
+				//=======================================================================
+
+				const NativeWindowFrameConfig& GetMainWindowFrameConfig()
+				{
+					return NativeWindowFrameConfig::Default;
+				}
+
+				const NativeWindowFrameConfig& GetNonMainWindowFrameConfig()
+				{
+					return NativeWindowFrameConfig::Default;
+				}
+
+				INativeWindow* CreateNativeWindow(INativeWindow::WindowMode windowMode)override
+				{
+					WindowsForm* window = new WindowsForm(godWindow, windowClass.GetName(), hInstance, windowMode);
+					windows.Add(window->GetWindowHandle(), window);
+					callbackService.InvokeNativeWindowCreated(window);
+					window->SetWindowCursor(resourceService.GetDefaultSystemCursor());
+					return window;
+				}
+
+				void DestroyNativeWindow(INativeWindow* window)override
+				{
+					auto windowsForm = dynamic_cast<WindowsForm*>(window);
+					windowsForm->InvokeDestroying();
+					if (windowsForm != 0 && windows.Keys().Contains(windowsForm->GetWindowHandle()))
+					{
+						callbackService.InvokeNativeWindowDestroying(window);
+						windows.Remove(windowsForm->GetWindowHandle());
+						if (mainWindow == windowsForm)
+						{
+							mainWindow = nullptr;
+						}
+						delete windowsForm;
+					}
+				}
+
+				INativeWindow* GetMainWindow()override
+				{
+					return mainWindow;
+				}
+
+				inline bool RunOneCycleInternal()
+				{
+					MSG message;
+					if (!GetMessage(&message, NULL, 0, 0)) return false;
+					TranslateMessage(&message);
+					DispatchMessage(&message);
+					asyncService.ExecuteAsyncTasks();
+					return true;
+				}
+
+				void Run(INativeWindow* window)override
+				{
+					mainWindow = dynamic_cast<WindowsForm*>(GetWindowsForm(window));
+					mainWindowHandle = mainWindow->GetWindowHandle();
+					mainWindow->SetIsMainWindow();
+					mainWindow->Show();
+					while (RunOneCycleInternal());
+				}
+
+				bool RunOneCycle()override
+				{
+					return RunOneCycleInternal();
+				}
+
+				INativeWindow* GetWindow(NativePoint location)override
+				{
+					POINT p;
+					p.x=(int)location.x.value;
+					p.y=(int)location.y.value;
+					HWND handle=WindowFromPoint(p);
+					vint index=windows.Keys().IndexOf(handle);
+					if(index==-1)
+					{
+						return 0;
+					}
+					else
+					{
+						return windows.Values().Get(index);
+					}
+				}
+
+				//=======================================================================
+
+				INativeCallbackService* CallbackService()
+				{
+					return &callbackService;
+				}
+
+				INativeResourceService* ResourceService()
+				{
+					return &resourceService;
+				}
+				
+				INativeAsyncService* AsyncService()
+				{
+					return &asyncService;
+				}
+
+				INativeClipboardService* ClipboardService()
+				{
+					return &clipboardService;
+				}
+
+				INativeImageService* ImageService()
+				{
+					return &imageService;
+				}
+
+				INativeScreenService* ScreenService()
+				{
+					return &screenService;
+				}
+
+				INativeWindowService* WindowService()
+				{
+					return this;
+				}
+
+				INativeInputService* InputService()
+				{
+					return &inputService;
+				}
+
+				INativeDialogService* DialogService()
+				{
+					return &dialogService;
+				}
+
+				WString GetExecutablePath()
+				{
+					Array<wchar_t> buffer(65536);
+					GetModuleFileName(NULL, &buffer[0], (DWORD)buffer.Count());
+					return &buffer[0];
+				}
+
+				//=======================================================================
+
+				void InvokeGlobalTimer()
+				{
+					callbackService.InvokeGlobalTimer();
+				}
+
+				void InvokeClipboardUpdated()
+				{
+					callbackService.InvokeClipboardUpdated();
+				}
+
+				void InvokeGlobalShortcutkeyActivated(vint id)
+				{
+					callbackService.InvokeGlobalShortcutKeyActivated(id);
+				}
+			};
+
+/***********************************************************************
+Windows Procedure
+***********************************************************************/
+
+			WindowsController* windowsController = nullptr;
+
+			LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+			{
+				if (windowsController)
+				{
+					LRESULT result = 0;
+					if (windowsController->HandleMessage(hwnd, uMsg, wParam, lParam, result))
+					{
+						return result;
+					}
+				}
+				return DefWindowProc(hwnd, uMsg, wParam, lParam);
+			}
+
+			LRESULT CALLBACK GodProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+			{
+				if (windowsController)
+				{
+					switch (uMsg)
+					{
+					case WM_TIMER:
+						windowsController->InvokeGlobalTimer();
+						break;
+					case WM_CLIPBOARDUPDATE:
+						windowsController->InvokeClipboardUpdated();
+						break;
+					case WM_HOTKEY:
+						if (wParam > 0)
+						{
+							windowsController->InvokeGlobalShortcutkeyActivated((vint)wParam);
+						}
+						break;
+					}
+				}
+				return DefWindowProc(hwnd, uMsg, wParam, lParam);
+			}
+
+/***********************************************************************
+Windows Platform Native Controller
+***********************************************************************/
+
+			void StartWindowsNativeController(HINSTANCE hInstance)
+			{
+				CHECK_ERROR(!windowsController, L"vl::presentation::windows::StartWindowsNativeController(HINSTANCE)#The Windows native controller has been started.");
+				windowsController = new WindowsController(hInstance);
+			}
+
+			INativeController* GetWindowsNativeController()
+			{
+				return windowsController;
+			}
+
+			IWindowsForm* GetWindowsFormFromHandle(HWND hwnd)
+			{
+				if (windowsController)
+				{
+					return windowsController->GetWindowsFormFromHandle(hwnd);
+				}
+				return nullptr;
+			}
+
+			IWindowsForm* GetWindowsForm(INativeWindow* window)
+			{
+				return dynamic_cast<WindowsForm*>(window);
+			}
+
+			void GetAllCreatedWindows(collections::List<IWindowsForm*>& windows, bool rootWindowOnly)
+			{
+				if (windowsController)
+				{
+					windowsController->GetAllCreatedWindows(windows, rootWindowOnly);
+				}
+			}
+
+			void StopWindowsNativeController()
+			{
+				CHECK_ERROR(windowsController, L"vl::presentation::windows::StopWindowsNativeController()#The Windows native controller has been stopped.");
+				delete windowsController;
+				windowsController = nullptr;
+			}
+
+			void EnableCrossKernelCrashing()
+			{
+				/*
+				"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options"
+					DWORD DisableUserModeCallbackFilter = 1
+
+				"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\TestCppCodegen.exe"
+					DWORD DisableUserModeCallbackFilter = 1
+				*/
+				typedef BOOL (WINAPI *tGetPolicy)(LPDWORD lpFlags); 
+				typedef BOOL (WINAPI *tSetPolicy)(DWORD dwFlags); 
+				const DWORD EXCEPTION_SWALLOWING = 0x1;
+ 
+				HMODULE kernel32 = LoadLibrary(L"kernel32.dll"); 
+				tGetPolicy pGetPolicy = (tGetPolicy)GetProcAddress(kernel32, "GetProcessUserModeExceptionPolicy"); 
+				tSetPolicy pSetPolicy = (tSetPolicy)GetProcAddress(kernel32, "SetProcessUserModeExceptionPolicy"); 
+				if (pGetPolicy && pSetPolicy) 
+				{ 
+					DWORD dwFlags; 
+					if (pGetPolicy(&dwFlags)) 
+					{ 
+						// Turn off the filter 
+						pSetPolicy(dwFlags & ~EXCEPTION_SWALLOWING);
+					} 
+				} 
+			}
+		}
+	}
+}
+
+/***********************************************************************
+.\DIRECT2D\WINDIRECT2DAPPLICATION.CPP
+***********************************************************************/
+
+#pragma comment(lib, "d2d1.lib")
+#pragma comment(lib, "dxguid.lib")
+#pragma comment(lib, "dwrite.lib")
+#pragma comment(lib, "d3d11.lib")
+
+namespace vl
+{
+	namespace presentation
+	{
+		using namespace elements;
+
+		namespace windows
+		{
+			using namespace vl::collections;
+
+/***********************************************************************
+WindowListener
+***********************************************************************/
+
+			class Direct2DWindowsNativeWindowListener : public Object, public INativeWindowListener
+			{
+			protected:
+				ID2D1Factory*					d2dFactory;
+				INativeWindow*					window;
+				bool							rendering = false;
+				bool							movedWhileRendering = false;
+
+				virtual void					RebuildCanvas(NativeSize size) = 0;
+			public:
+				Direct2DWindowsNativeWindowListener(INativeWindow* _window, ID2D1Factory* _d2dFactory)
+					:window(_window)
+					,d2dFactory(_d2dFactory)
+				{
+				}
+
+				void Moved()override
+				{
+					if (rendering)
+					{
+						movedWhileRendering = true;
+					}
+					else
+					{
+						ResizeRenderTarget();
+					}
+				}
+
+				void ResizeRenderTarget()
+				{
+					RebuildCanvas(window->GetClientSize());
+				}
+
+				void StartRendering()
+				{
+					rendering = true;
+				}
+
+				void StopRendering()
+				{
+					rendering = false;
+				}
+
+				bool RetrieveAndResetMovedWhileRendering()
+				{
+					bool result = movedWhileRendering;
+					movedWhileRendering = false;
+					return result;
+				}
+
+				virtual ID2D1RenderTarget*		GetDirect2DRenderTarget() = 0;
+				virtual void					RecreateRenderTarget() = 0;
+				virtual bool					PresentRenderTarget() = 0;
+			};
+
+/***********************************************************************
+WindowListener 1.0
+***********************************************************************/
+
+			class Direct2DWindowsNativeWindowListener_1_0 : public Direct2DWindowsNativeWindowListener
+			{
+			protected:
+				ComPtr<ID2D1HwndRenderTarget>	d2dRenderTarget;
+				NativeSize						previousSize;
+
+				void RebuildCanvas(NativeSize size)override
+				{
+					if (size.x <= 1) size.x = 1;
+					if (size.y <= 1) size.y = 1;
+					if (!d2dRenderTarget)
+					{
+						ID2D1HwndRenderTarget* renderTarget = 0;
+						IWindowsForm* form = GetWindowsForm(window);
+						D2D1_RENDER_TARGET_PROPERTIES tp = D2D1::RenderTargetProperties();
+						{
+							UINT dpiX = 0;
+							UINT dpiY = 0;
+							DpiAwared_GetDpiForWindow(form->GetWindowHandle(), &dpiX, &dpiY);
+							tp.dpiX = (FLOAT)dpiX;
+							tp.dpiY = (FLOAT)dpiY;
+						}
+						HRESULT hr = d2dFactory->CreateHwndRenderTarget(
+							tp,
+							D2D1::HwndRenderTargetProperties(
+								form->GetWindowHandle(),
+								D2D1::SizeU((int)size.x.value, (int)size.y.value)
+							),
+							&renderTarget
+						);
+						if (!FAILED(hr))
+						{
+							d2dRenderTarget = renderTarget;
+							d2dRenderTarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE);
+						}
+					}
+					else if (previousSize != size)
+					{
+						d2dRenderTarget->Resize(D2D1::SizeU((int)size.x.value, (int)size.y.value));
+					}
+					previousSize = size;
+				}
+			public:
+				Direct2DWindowsNativeWindowListener_1_0(INativeWindow* _window, ID2D1Factory* _d2dFactory)
+					:Direct2DWindowsNativeWindowListener(_window, _d2dFactory)
+				{
+				}
+
+				ID2D1RenderTarget* GetDirect2DRenderTarget()override
+				{
+					if(!d2dRenderTarget) Moved();
+					return d2dRenderTarget.Obj();
+				}
+
+				void RecreateRenderTarget()override
+				{
+					if (d2dRenderTarget)
+					{
+						d2dRenderTarget = nullptr;
+					}
+				}
+
+				bool PresentRenderTarget()override
+				{
+					return true;
+				}
+			};
+
+/***********************************************************************
+WindowListener 1.1
+***********************************************************************/
+
+			class Direct2DWindowsNativeWindowListener_1_1 : public Direct2DWindowsNativeWindowListener
+			{
+			protected:
+				ComPtr<ID2D1Factory1>			d2dFactory1;
+				ID3D11Device*					d3d11Device;
+				ComPtr<IDXGIDevice>				dxgiDevice;
+				ComPtr<IDXGISwapChain1>			dxgiSwapChain;
+				ComPtr<ID2D1DeviceContext>		d2dDeviceContext;
+				NativeSize						previousSize;
+
+				ComPtr<IDXGIDevice> GetDXGIDevice()
+				{
+					IDXGIDevice* device = nullptr;
+					HRESULT hr = d3d11Device->QueryInterface(&device);
+					if (!SUCCEEDED(hr)) return nullptr;
+					return device;
+				}
+
+				ComPtr<IDXGISwapChain1> CreateSwapChain(IDXGIDevice* dxgiDevice)
+				{
+					ComPtr<IDXGIAdapter> dxgiAdapter;
+					{
+						IDXGIAdapter* adapter = nullptr;
+						HRESULT hr = dxgiDevice->GetAdapter(&adapter);
+						if (!SUCCEEDED(hr)) return nullptr;
+						dxgiAdapter = adapter;
+					}
+
+					ComPtr<IDXGIFactory2> dxgiFactory;
+					{
+						IDXGIFactory2* factory = nullptr;
+						HRESULT hr = dxgiAdapter->GetParent(__uuidof(IDXGIFactory2), (void**)&factory);
+						if (!SUCCEEDED(hr)) return nullptr;
+						dxgiFactory = factory;
+					}
+
+					IWindowsForm* form = GetWindowsForm(window);
+					ComPtr<IDXGISwapChain1> dxgiSwapChain;
+					{
+						DXGI_SWAP_CHAIN_DESC1 props = {};
+						props.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+						props.SampleDesc.Count = 1;
+						props.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+						props.BufferCount = 2;
+
+						IDXGISwapChain1* swapChain = nullptr;
+						HRESULT hr = dxgiFactory->CreateSwapChainForHwnd(d3d11Device, form->GetWindowHandle(), &props, nullptr, nullptr, &swapChain);
+						if (!SUCCEEDED(hr)) return nullptr;
+						dxgiSwapChain = swapChain;
+					}
+
+					return dxgiSwapChain;
+				}
+
+				ComPtr<ID2D1DeviceContext> CreateDeviceContext(IDXGIDevice* dxgiDevice)
+				{
+					ComPtr<ID2D1Device> d2d1Device;
+					{
+						ID2D1Device* device = nullptr;
+						HRESULT hr = d2dFactory1->CreateDevice(dxgiDevice, &device);
+						if (!SUCCEEDED(hr)) return nullptr;
+						d2d1Device = device;
+					}
+
+					ComPtr<ID2D1DeviceContext> d2dDeviceContext;
+					{
+						ID2D1DeviceContext* deviceContext = nullptr;
+						HRESULT hr = d2d1Device->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, &deviceContext);
+						if (!SUCCEEDED(hr)) return nullptr;
+						d2dDeviceContext = deviceContext;
+					}
+
+					return d2dDeviceContext;
+				}
+
+				ComPtr<ID2D1Bitmap1> CreateBitmap(IDXGISwapChain1* swapChain, ID2D1DeviceContext* deviceContext)
+				{
+					ComPtr<IDXGISurface> dxgiSurface;
+					{
+						IDXGISurface* surface = nullptr;
+						HRESULT hr = swapChain->GetBuffer(0, __uuidof(IDXGISurface), (void**)&surface);
+						if (!SUCCEEDED(hr))return nullptr;
+						dxgiSurface = surface;
+					}
+
+					ComPtr<ID2D1Bitmap1> d2dBitmap;
+					{
+						auto props = D2D1::BitmapProperties1(D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW, D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_IGNORE));
+
+						ID2D1Bitmap1* bitmap = nullptr;
+						HRESULT hr = deviceContext->CreateBitmapFromDxgiSurface(dxgiSurface.Obj(), props, &bitmap);
+						if (!SUCCEEDED(hr)) return nullptr;
+						d2dBitmap = bitmap;
+					}
+
+					return d2dBitmap;
+				}
+
+				void RebuildCanvas(NativeSize size)override
+				{
+					if (size.x <= 1) size.x = 1;
+					if (size.y <= 1) size.y = 1;
+
+					if(!d2dDeviceContext)
+					{
+						if (!dxgiDevice)
+						{
+							dxgiDevice = GetDXGIDevice();
+						}
+
+						if (!dxgiSwapChain)
+						{
+							dxgiSwapChain = CreateSwapChain(dxgiDevice.Obj());
+						}
+
+						d2dDeviceContext = CreateDeviceContext(dxgiDevice.Obj());
+						auto d2dBitmap = CreateBitmap(dxgiSwapChain.Obj(), d2dDeviceContext.Obj());
+						d2dDeviceContext->SetTarget(d2dBitmap.Obj());
+						IWindowsForm* form = GetWindowsForm(window);
+						{
+							UINT dpiX = 0;
+							UINT dpiY = 0;
+							DpiAwared_GetDpiForWindow(form->GetWindowHandle(), &dpiX, &dpiY);
+							d2dDeviceContext->SetDpi((FLOAT)dpiX, (FLOAT)dpiY);
+						}
+					}
+					else if(previousSize!=size)
+					{
+						d2dDeviceContext->SetTarget(nullptr);
+						HRESULT hr = dxgiSwapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
+						if (SUCCEEDED(hr))
+						{
+							auto d2dBitmap = CreateBitmap(dxgiSwapChain.Obj(), d2dDeviceContext.Obj());
+							d2dDeviceContext->SetTarget(d2dBitmap.Obj());
+						}
+					}
+					previousSize=size;
+				}
+			public:
+				Direct2DWindowsNativeWindowListener_1_1(INativeWindow* _window, ComPtr<ID2D1Factory1> _d2dFactory1, ID3D11Device* _d3d11Device)
+					:Direct2DWindowsNativeWindowListener(_window, _d2dFactory1.Obj())
+					,d2dFactory1(_d2dFactory1)
+					,d3d11Device(_d3d11Device)
+				{
+				}
+
+				ID2D1RenderTarget* GetDirect2DRenderTarget()override
+				{
+					if(!d2dDeviceContext) Moved();
+					return d2dDeviceContext.Obj();
+				}
+
+				void RecreateRenderTarget()override
+				{
+					if (d2dDeviceContext)
+					{
+						d2dDeviceContext = nullptr;
+						dxgiSwapChain = nullptr;
+					}
+				}
+
+				bool PresentRenderTarget()override
+				{
+					if (d2dDeviceContext)
+					{
+						if (dxgiSwapChain)
+						{
+							DXGI_PRESENT_PARAMETERS parameters = {0};
+							HRESULT hr = dxgiSwapChain->Present1(1, 0, &parameters);
+							return hr == S_OK || hr == DXGI_STATUS_OCCLUDED;
+						}
+					}
+					return false;
+				}
+			};
+
+/***********************************************************************
+ControllerListener
+***********************************************************************/
+
+			class Direct2DWindowsNativeControllerListener : public Object, public INativeControllerListener
+			{
+			public:
+				Dictionary<INativeWindow*, Ptr<Direct2DWindowsNativeWindowListener>>		nativeWindowListeners;
+				ComPtr<ID2D1Factory>														d2dFactory;
+				ComPtr<IDWriteFactory>														dwrite;
+				ComPtr<ID3D11Device>														d3d11Device;
+
+				Direct2DWindowsNativeControllerListener()
+				{
+					{
+						D2D1_FACTORY_OPTIONS fo = {};
+						#ifdef _DEBUG
+						fo.debugLevel = D2D1_DEBUG_LEVEL_INFORMATION;
+						#endif
+
+						ID2D1Factory* factory=0;
+						HRESULT hr=D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, fo, &factory);
+						if(!FAILED(hr))
+						{
+							d2dFactory=factory;
+						}
+					}
+					{
+						IDWriteFactory* factory=0;
+						HRESULT hr=DWriteCreateFactory(DWRITE_FACTORY_TYPE_ISOLATED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown**>(&factory));
+						if(!FAILED(hr))
+						{
+							dwrite=factory;
+						}
+					}
+				}
+
+				~Direct2DWindowsNativeControllerListener()
+				{
+					for (vint i = 0; i < nativeWindowListeners.Count(); i++)
+					{
+						auto window = nativeWindowListeners.Keys()[i];
+						auto listener = nativeWindowListeners.Values()[i];
+						window->UninstallListener(listener.Obj());
+					}
+				}
+
+				ComPtr<ID3D11Device> CreateD3D11Device(D3D_DRIVER_TYPE driverType)
+				{
+					UINT flags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+					#ifdef _DEBUG
+					flags |= D3D11_CREATE_DEVICE_DEBUG;
+					#endif
+
+					D3D_FEATURE_LEVEL featureLevels[] =
+					{
+						D3D_FEATURE_LEVEL_11_1,
+						D3D_FEATURE_LEVEL_11_0,
+						D3D_FEATURE_LEVEL_10_1,
+						D3D_FEATURE_LEVEL_10_0,
+						D3D_FEATURE_LEVEL_9_3,
+						D3D_FEATURE_LEVEL_9_2,
+						D3D_FEATURE_LEVEL_9_1
+					};
+
+
+					ID3D11Device* device = nullptr;
+					HRESULT hr = D3D11CreateDevice(
+						nullptr,
+						driverType,
+						nullptr,
+						flags,
+						featureLevels,
+						sizeof(featureLevels) / sizeof(*featureLevels),
+						D3D11_SDK_VERSION,
+						&device,
+						nullptr,
+						nullptr);
+					if (SUCCEEDED(hr))
+					{
+						return device;
+					}
+					else if (device)
+					{
+						device->Release();
+					}
+					return nullptr;
+				}
+
+				void NativeWindowCreated(INativeWindow* window)
+				{
+					ComPtr<ID2D1Factory1> d2dfactory1;
+					{
+						ID2D1Factory1* factory = nullptr;
+						HRESULT hr = windows::GetDirect2DFactory()->QueryInterface(&factory);
+						if (SUCCEEDED(hr))
+						{
+							d2dfactory1 = factory;
+						}
+					}
+
+					Ptr<Direct2DWindowsNativeWindowListener> listener;
+					if (d2dfactory1)
+					{
+						if (!d3d11Device)
+						{
+							d3d11Device = CreateD3D11Device(D3D_DRIVER_TYPE_HARDWARE);
+							if (!d3d11Device)
+							{
+								d3d11Device = CreateD3D11Device(D3D_DRIVER_TYPE_WARP);
+							}
+						}
+#if _DEBUG
+						CHECK_ERROR(d3d11Device,
+							L"Direct2DWindowsNativeControllerListener::NativeWindowCreated(INativeWindow*)#"
+							L"Failed to create Direct3D 11 Device. "
+							L"If you are running in Debug mode on Windows 10, please ensure the optional feature [Graphics Tools] is correctly installed. "
+							L"This error will be skipped in Release mode and GacUI will fallback to use Direct2D 1.0, but you still need to check your Windows SDK Installation."
+							);
+#endif
+					}
+
+					if (d2dfactory1 && d3d11Device)
+					{
+						listener = Ptr(new Direct2DWindowsNativeWindowListener_1_1(window, d2dfactory1, d3d11Device.Obj()));
+					}
+					else
+					{
+						listener = Ptr(new Direct2DWindowsNativeWindowListener_1_0(window, d2dFactory.Obj()));
+					}
+					window->InstallListener(listener.Obj());
+					nativeWindowListeners.Add(window, listener);
+				}
+
+				void NativeWindowDestroying(INativeWindow* window)
+				{
+					Ptr<Direct2DWindowsNativeWindowListener> listener=nativeWindowListeners[window];
+					nativeWindowListeners.Remove(window);
+					window->UninstallListener(listener.Obj());
+				}
+			};
+
+			Direct2DWindowsNativeControllerListener* direct2DListener = nullptr;
+
+			ID2D1Factory* GetDirect2DFactory()
+			{
+				return direct2DListener->d2dFactory.Obj();
+			}
+
+			IDWriteFactory* GetDirectWriteFactory()
+			{
+				return direct2DListener->dwrite.Obj();
+			}
+
+			ID3D11Device* GetD3D11Device()
+			{
+				return direct2DListener->d3d11Device.Obj();
+			}
+		}
+
+		namespace elements_windows_d2d
+		{
+/***********************************************************************
+OS Supporting
+***********************************************************************/
+
+			class WinDirect2DApplicationDirect2DObjectProvider : public IWindowsDirect2DObjectProvider
+			{
+			protected:
+
+				windows::Direct2DWindowsNativeWindowListener* GetNativeWindowListener(INativeWindow* window)
+				{
+					vint index = windows::direct2DListener->nativeWindowListeners.Keys().IndexOf(window);
+					return index == -1
+						? nullptr
+						: windows::direct2DListener->nativeWindowListeners.Values().Get(index).Obj();
+				}
+
+			public:
+				void RecreateRenderTarget(INativeWindow* window)override
+				{
+					if (auto listener = GetNativeWindowListener(window))
+					{
+						return listener->RecreateRenderTarget();
+					}
+				}
+
+				void ResizeRenderTarget(INativeWindow* window)override
+				{
+					if (auto listener = GetNativeWindowListener(window))
+					{
+						return listener->ResizeRenderTarget();
+					}
+				}
+
+				ID2D1RenderTarget* GetNativeWindowDirect2DRenderTarget(INativeWindow* window)override
+				{
+					if (auto listener = GetNativeWindowListener(window))
+					{
+						return listener->GetDirect2DRenderTarget();
+					}
+					return nullptr;
+				}
+
+				void StartRendering(INativeWindow* window)override
+				{
+					if (auto listener = GetNativeWindowListener(window))
+					{
+						listener->StartRendering();
+						if (auto renderTarget = listener->GetDirect2DRenderTarget())
+						{
+							renderTarget->BeginDraw();
+							renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
+						}
+					}
+				}
+
+				RenderTargetFailure StopRenderingAndPresent(INativeWindow* window)override
+				{
+					if (auto listener = GetNativeWindowListener(window))
+					{
+						listener->StopRendering();
+						bool moved = listener->RetrieveAndResetMovedWhileRendering();
+
+						if (auto renderTarget = listener->GetDirect2DRenderTarget())
+						{
+							HRESULT hr = renderTarget->EndDraw();
+							if (hr == S_OK)
+							{
+								if (moved)
+								{
+									return RenderTargetFailure::ResizeWhileRendering;
+								}
+								else if (listener->PresentRenderTarget())
+								{
+									return RenderTargetFailure::None;
+								}
+							}
+						}
+					}
+					return RenderTargetFailure::LostDevice;
+				}
+
+				ID2D1Factory* GetDirect2DFactory()override
+				{
+					return vl::presentation::windows::GetDirect2DFactory();
+				}
+
+				IDWriteFactory* GetDirectWriteFactory()override
+				{
+					return vl::presentation::windows::GetDirectWriteFactory();
+				}
+
+				IWindowsDirect2DRenderTarget* GetBindedRenderTarget(INativeWindow* window)override
+				{
+					auto windowsForm = vl::presentation::windows::GetWindowsForm(window);
+					auto graphicsHandler = windowsForm->GetGraphicsHandler();
+					return dynamic_cast<IWindowsDirect2DRenderTarget*>(graphicsHandler);
+				}
+
+				void SetBindedRenderTarget(INativeWindow* window, IWindowsDirect2DRenderTarget* renderTarget)override
+				{
+					vl::presentation::windows::GetWindowsForm(window)->SetGraphicsHandler(renderTarget);
+				}
+
+				IWICImagingFactory* GetWICImagingFactory()override
+				{
+					return vl::presentation::windows::GetWICImagingFactory();
+				}
+
+				IWICBitmap* GetWICBitmap(INativeImageFrame* frame)override
+				{
+					return vl::presentation::windows::GetWICBitmap(frame);
+				}
+			};
+		}
+	}
+}
+
+using namespace vl;
+using namespace vl::presentation;
+using namespace vl::presentation::windows;
+using namespace vl::presentation::elements_windows_d2d;
+
+int SetupWindowsDirect2DRendererInternal(bool hosted)
+{
+	InitDpiAwareness(true);
+	CoInitializeEx(NULL, COINIT_MULTITHREADED);
+	HINSTANCE hInstance = (HINSTANCE)GetModuleHandle(NULL);
+	WinDirect2DApplicationDirect2DObjectProvider objectProvider;
+	SetWindowsDirect2DObjectProvider(&objectProvider);
+	EnableCrossKernelCrashing();
+
+	// create controller
+	GuiHostedController* hostedController = nullptr;
+	StartWindowsNativeController(hInstance);
+	auto nativeController = GetWindowsNativeController();
+	if (hosted) hostedController = new GuiHostedController(nativeController);
+	SetNativeController(hostedController ? hostedController : nativeController);
+
+	{
+		// install listener
+		Direct2DWindowsNativeControllerListener listener;
+		nativeController->CallbackService()->InstallListener(&listener);
+		direct2DListener = &listener;
+		// main
+		RendererMainDirect2D(hostedController);
+		// uninstall listener
+		direct2DListener = nullptr;
+		nativeController->CallbackService()->UninstallListener(&listener);
+	}
+
+	// destroy controller
+	SetNativeController(nullptr);
+	if (hostedController) delete hostedController;
+	StopWindowsNativeController();
+	return 0;
+}
+
+int SetupWindowsDirect2DRenderer()
+{
+	return SetupWindowsDirect2DRendererInternal(false);
+}
+
+int SetupHostedWindowsDirect2DRenderer()
+{
+	return SetupWindowsDirect2DRendererInternal(true);
+}
+
+/***********************************************************************
+.\DIRECT2D\RENDERERS\GUIGRAPHICSLAYOUTPROVIDERWINDOWSDIRECT2D.CPP
 ***********************************************************************/
 
 namespace vl
@@ -224,13 +3088,6 @@ WindowsDirect2DParagraph
 					TextRange(){}
 					TextRange(vint _start, vint _end):start(_start),end(_end){}
 
-					inline vint Compare(const TextRange& value)const
-					{
-						vint result;
-						if ((result = start - value.start) != 0) return result;
-						if ((result = end - value.end) != 0) return result;
-						return 0;
-					}
 					GUI_DEFINE_COMPARE_OPERATORS(TextRange)
 				};
 
@@ -461,7 +3318,7 @@ WindowsDirect2DParagraph (Initialization)
 					,dwriteFactory(GetWindowsDirect2DObjectProvider()->GetDirectWriteFactory())
 					,renderTarget(dynamic_cast<IWindowsDirect2DRenderTarget*>(_renderTarget))
 					,paragraphText(_text)
-					,textLayout(0)
+					,textLayout(nullptr)
 					,wrapLine(true)
 					,maxWidth(-1)
 					,caret(-1)
@@ -470,7 +3327,7 @@ WindowsDirect2DParagraph (Initialization)
 					,formatDataAvailable(false)
 					,paragraphCallback(_paragraphCallback)
 				{
-					FontProperties defaultFont=GetCurrentController()->ResourceService()->GetDefaultFont();
+					FontProperties defaultFont= windows::GetWindowsNativeController()->ResourceService()->GetDefaultFont();
 					Direct2DTextFormatPackage* package=GetWindowsDirect2DResourceManager()->CreateDirect2DTextFormat(defaultFont);
 					defaultTextColor=renderTarget->CreateDirect2DBrush(Color(0, 0, 0));
 					usedColors.Add(Color(0, 0, 0));
@@ -1269,14 +4126,14 @@ WindowsDirect2DLayoutProvider
 
 			Ptr<IGuiGraphicsParagraph> WindowsDirect2DLayoutProvider::CreateParagraph(const WString& text, IGuiGraphicsRenderTarget* renderTarget, elements::IGuiGraphicsParagraphCallback* callback)
 			{
-				return new WindowsDirect2DParagraph(this, text, renderTarget, callback);
+				return Ptr(new WindowsDirect2DParagraph(this, text, renderTarget, callback));
 			}
 		}
 	}
 }
 
 /***********************************************************************
-.\GRAPHICSELEMENT\WINDOWSDIRECT2D\GUIGRAPHICSRENDERERSWINDOWSDIRECT2D.CPP
+.\DIRECT2D\RENDERERS\GUIGRAPHICSRENDERERSWINDOWSDIRECT2D.CPP
 ***********************************************************************/
 #include <math.h>
 
@@ -1904,7 +4761,7 @@ GuiSolidLabelElementRenderer
 				{
 					IWindowsDirect2DResourceManager* resourceManager=GetWindowsDirect2DResourceManager();
 					oldFont=element->GetFont();
-					if (oldFont.fontFamily == L"") oldFont.fontFamily = GetCurrentController()->ResourceService()->GetDefaultFont().fontFamily;
+					if (oldFont.fontFamily == L"") oldFont.fontFamily = windows::GetWindowsNativeController()->ResourceService()->GetDefaultFont().fontFamily;
 					if (oldFont.size == 0) oldFont.size = 12;
 					textFormat=resourceManager->CreateDirect2DTextFormat(oldFont);
 				}
@@ -2197,7 +5054,7 @@ GuiImageFrameElementRenderer
 				}
 				else
 				{
-					bitmap=0;
+					bitmap=nullptr;
 					minSize=Size(0, 0);
 				}
 			}
@@ -2563,7 +5420,7 @@ GuiColorizedTextElementRenderer
 					resourceManager->DestroyDirect2DCharMeasurer(oldFont);
 				}
 				oldFont = element->GetFont();
-				if (oldFont.fontFamily == L"") oldFont.fontFamily = GetCurrentController()->ResourceService()->GetDefaultFont().fontFamily;
+				if (oldFont.fontFamily == L"") oldFont.fontFamily = windows::GetWindowsNativeController()->ResourceService()->GetDefaultFont().fontFamily;
 				if (oldFont.size == 0) oldFont.size = 12;
 
 				textFormat = resourceManager->CreateDirect2DTextFormat(oldFont);
@@ -2784,7 +5641,7 @@ GuiDirect2DElementRenderer
 }
 
 /***********************************************************************
-.\GRAPHICSELEMENT\WINDOWSDIRECT2D\GUIGRAPHICSWINDOWSDIRECT2D.CPP
+.\DIRECT2D\RENDERERS\GUIGRAPHICSWINDOWSDIRECT2D.CPP
 ***********************************************************************/
 
 namespace vl
@@ -2811,7 +5668,7 @@ GuiDirect2DElement
 
 			D2D1::ColorF GetD2DColor(Color color)
 			{
-				return D2D1::ColorF(color.r/255.0f, color.g/255.0f, color.b/255.0f, color.a/255.0f);
+				return D2D1::ColorF(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f);
 			}
 
 /***********************************************************************
@@ -2822,10 +5679,9 @@ CachedResourceAllocator
 			{
 				DEFINE_CACHED_RESOURCE_ALLOCATOR(Color, ComPtr<ID2D1SolidColorBrush>)
 
-				IWindowsDirect2DRenderTarget*	guiRenderTarget;
+				IWindowsDirect2DRenderTarget* guiRenderTarget = nullptr;
 			public:
 				CachedSolidBrushAllocator()
-					:guiRenderTarget(0)
 				{
 				}
 
@@ -2849,10 +5705,9 @@ CachedResourceAllocator
 				typedef Pair<Color, Color> ColorPair;
 				DEFINE_CACHED_RESOURCE_ALLOCATOR(ColorPair, ComPtr<ID2D1LinearGradientBrush>)
 
-				IWindowsDirect2DRenderTarget*	guiRenderTarget;
+				IWindowsDirect2DRenderTarget*	guiRenderTarget = nullptr;
 			public:
 				CachedLinearBrushAllocator()
-					:guiRenderTarget(0)
 				{
 				}
 
@@ -2900,10 +5755,9 @@ CachedResourceAllocator
 				typedef Pair<Color, Color> ColorPair;
 				DEFINE_CACHED_RESOURCE_ALLOCATOR(ColorPair, ComPtr<ID2D1RadialGradientBrush>)
 
-				IWindowsDirect2DRenderTarget*	guiRenderTarget;
+				IWindowsDirect2DRenderTarget*	guiRenderTarget = nullptr;
 			public:
 				CachedRadialBrushAllocator()
-					:guiRenderTarget(0)
 				{
 				}
 
@@ -2972,7 +5826,7 @@ CachedResourceAllocator
 
 				Ptr<Direct2DTextFormatPackage> CreateInternal(const FontProperties& fontProperties)
 				{
-					Ptr<Direct2DTextFormatPackage> textFormat = new Direct2DTextFormatPackage;
+					auto textFormat = Ptr(new Direct2DTextFormatPackage);
 					textFormat->textFormat = CreateDirect2DFont(fontProperties);
 					textFormat->trimming.granularity = DWRITE_TRIMMING_GRANULARITY_CHARACTER;
 					textFormat->trimming.delimiter = 0;
@@ -2993,8 +5847,8 @@ CachedResourceAllocator
 				class Direct2DCharMeasurer : public text::CharMeasurer
 				{
 				protected:
-					ComPtr<IDWriteTextFormat>		font;
-					vint								size;
+					ComPtr<IDWriteTextFormat>	font;
+					vint						size;
 
 					Size MeasureInternal(text::UnicodeCodePoint codePoint, IGuiGraphicsRenderTarget* renderTarget)
 					{
@@ -3041,7 +5895,7 @@ CachedResourceAllocator
 			public:
 				Ptr<text::CharMeasurer> CreateInternal(const FontProperties& value)
 				{
-					return new Direct2DCharMeasurer(CachedTextFormatAllocator::CreateDirect2DFont(value), value.size);
+					return Ptr(new Direct2DCharMeasurer(CachedTextFormatAllocator::CreateDirect2DFont(value), value.size));
 				}
 			};
 
@@ -3052,8 +5906,8 @@ WindowsDirect2DRenderTarget
 			class WindowsDirect2DImageFrameCache : public Object, public INativeImageFrameCache
 			{
 			protected:
-				IWindowsDirect2DRenderTarget*	renderTarget;
-				INativeImageFrame*				cachedFrame;
+				IWindowsDirect2DRenderTarget*	renderTarget = nullptr;
+				INativeImageFrame*				cachedFrame = nullptr;
 				ComPtr<ID2D1Bitmap>				bitmap;
 				ComPtr<ID2D1Bitmap>				disabledBitmap;
 			public:
@@ -3090,7 +5944,7 @@ WindowsDirect2DRenderTarget
 
 				ComPtr<ID2D1Bitmap> GetBitmap(bool enabled)
 				{
-					if(enabled)
+					if (enabled)
 					{
 						return bitmap;
 					}
@@ -3112,11 +5966,11 @@ WindowsDirect2DRenderTarget
 							rect.Y = 0;
 							rect.Width = bitmap->GetPixelSize().width;
 							rect.Height = bitmap->GetPixelSize().height;
-							BYTE* buffer = new BYTE[rect.Width*rect.Height * 4];
-							hr = frameBitmap->CopyPixels(&rect, rect.Width * 4, rect.Width*rect.Height * 4, buffer);
+							BYTE* buffer = new BYTE[rect.Width * rect.Height * 4];
+							hr = frameBitmap->CopyPixels(&rect, rect.Width * 4, rect.Width * rect.Height * 4, buffer);
 							if (SUCCEEDED(hr))
 							{
-								vint count = rect.Width*rect.Height;
+								vint count = rect.Width * rect.Height;
 								BYTE* read = buffer;
 								for (vint i = 0; i < count; i++)
 								{
@@ -3140,7 +5994,7 @@ WindowsDirect2DRenderTarget
 				}
 			};
 
-			class WindowsDirect2DRenderTarget : public Object, public IWindowsDirect2DRenderTarget
+			class WindowsDirect2DRenderTarget : public IWindowsDirect2DRenderTarget
 			{
 				typedef SortedList<Ptr<WindowsDirect2DImageFrameCache>> ImageCacheList;
 			protected:
@@ -3149,6 +6003,8 @@ WindowsDirect2DRenderTarget
 				ID2D1DeviceContext*				d2dDeviceContext = nullptr;
 				List<Rect>						clippers;
 				vint							clipperCoverWholeTargetCounter = 0;
+				bool							hostedRendering = false;
+				bool							rendering = false;
 
 				CachedSolidBrushAllocator		solidBrushes;
 				CachedLinearBrushAllocator		linearBrushes;
@@ -3162,30 +6018,71 @@ WindowsDirect2DRenderTarget
 
 				ComPtr<IDWriteRenderingParams> CreateRenderingParams(DWRITE_RENDERING_MODE renderingMode, IDWriteRenderingParams* defaultParams, IDWriteFactory* dwriteFactory)
 				{
-					IDWriteRenderingParams* renderingParams=0;
-					FLOAT gamma=defaultParams->GetGamma();
-					FLOAT enhancedContrast=defaultParams->GetEnhancedContrast();
-					FLOAT clearTypeLevel=defaultParams->GetClearTypeLevel();
-					DWRITE_PIXEL_GEOMETRY pixelGeometry=defaultParams->GetPixelGeometry();
-					HRESULT hr=dwriteFactory->CreateCustomRenderingParams(
+					IDWriteRenderingParams* renderingParams = 0;
+					FLOAT gamma = defaultParams->GetGamma();
+					FLOAT enhancedContrast = defaultParams->GetEnhancedContrast();
+					FLOAT clearTypeLevel = defaultParams->GetClearTypeLevel();
+					DWRITE_PIXEL_GEOMETRY pixelGeometry = defaultParams->GetPixelGeometry();
+					HRESULT hr = dwriteFactory->CreateCustomRenderingParams(
 						gamma,
 						enhancedContrast,
 						clearTypeLevel,
 						pixelGeometry,
 						renderingMode,
 						&renderingParams);
-					if(!FAILED(hr))
+					if (!FAILED(hr))
 					{
 						return renderingParams;
 					}
 					else
 					{
-						return 0;
+						return nullptr;
 					}
+				}
+
+				void StartRenderingOnNativeWindow() override
+				{
+					d2dRenderTarget = GetWindowsDirect2DObjectProvider()->GetNativeWindowDirect2DRenderTarget(window);
+					CHECK_ERROR(d2dRenderTarget, L"vl::presentation::elements_windows_d2d::WindowsDirect2DRenderTarget::StartRenderingOnNativeWindow()#Invalid render target.");
+					GetWindowsDirect2DObjectProvider()->StartRendering(window);
+				}
+
+				RenderTargetFailure StopRenderingOnNativeWindow() override
+				{
+					CHECK_ERROR(d2dRenderTarget, L"vl::presentation::elements_windows_d2d::WindowsDirect2DRenderTarget::StopRenderingOnNativeWindow()#Invalid render target.");
+					auto result = GetWindowsDirect2DObjectProvider()->StopRenderingAndPresent(window);
+					d2dRenderTarget = nullptr;
+					return result;
+				}
+
+				Size GetCanvasSize() override
+				{
+					return window->Convert(window->GetClientSize());
+				}
+
+				void AfterPushedClipper(Rect clipper, Rect validArea) override
+				{
+					d2dRenderTarget->PushAxisAlignedClip(
+						D2D1::RectF((FLOAT)validArea.x1, (FLOAT)validArea.y1, (FLOAT)validArea.x2, (FLOAT)validArea.y2),
+						D2D1_ANTIALIAS_MODE_PER_PRIMITIVE
+						);
+				}
+
+				void AfterPushedClipperAndBecameInvalid(Rect clipper) override
+				{
+				}
+
+				void AfterPoppedClipperAndBecameValid(Rect validArea, bool clipperExists) override
+				{
+				}
+
+				void AfterPoppedClipper(Rect validArea, bool clipperExists) override
+				{
+					d2dRenderTarget->PopAxisAlignedClip();
 				}
 			public:
 				WindowsDirect2DRenderTarget(INativeWindow* _window)
-					:window(_window)
+					: window(_window)
 				{
 					solidBrushes.SetRenderTarget(this);
 					linearBrushes.SetRenderTarget(this);
@@ -3205,9 +6102,9 @@ WindowsDirect2DRenderTarget
 
 				~WindowsDirect2DRenderTarget()
 				{
-					while(imageCaches.Count())
+					while (imageCaches.Count())
 					{
-						Ptr<WindowsDirect2DImageFrameCache> cache=imageCaches[imageCaches.Count()-1];
+						Ptr<WindowsDirect2DImageFrameCache> cache = imageCaches[imageCaches.Count() - 1];
 						cache->GetFrame()->RemoveCache(this);
 					}
 				}
@@ -3219,128 +6116,51 @@ WindowsDirect2DRenderTarget
 
 				ComPtr<ID2D1Bitmap> GetBitmap(INativeImageFrame* frame, bool enabled)override
 				{
-					Ptr<INativeImageFrameCache> cache=frame->GetCache(this);
-					if(cache)
+					Ptr<INativeImageFrameCache> cache = frame->GetCache(this);
+					if (cache)
 					{
 						return cache.Cast<WindowsDirect2DImageFrameCache>()->GetBitmap(enabled);
 					}
 					else
 					{
-						Ptr<WindowsDirect2DImageFrameCache> d2dCache=new WindowsDirect2DImageFrameCache(this);
-						if(frame->SetCache(this, d2dCache))
+						auto d2dCache = Ptr(new WindowsDirect2DImageFrameCache(this));
+						if (frame->SetCache(this, d2dCache))
 						{
 							imageCaches.Add(d2dCache);
 							return d2dCache->GetBitmap(enabled);
 						}
 						else
 						{
-							return 0;
+							return nullptr;
 						}
 					}
 				}
 
 				void DestroyBitmapCache(INativeImageFrame* frame)override
 				{
-					WindowsDirect2DImageFrameCache* cache=frame->GetCache(this).Cast<WindowsDirect2DImageFrameCache>().Obj();
+					WindowsDirect2DImageFrameCache* cache = frame->GetCache(this).Cast<WindowsDirect2DImageFrameCache>().Obj();
 					imageCaches.Remove(cache);
 				}
 
 				void SetTextAntialias(bool antialias, bool verticalAntialias)override
 				{
 					ComPtr<IDWriteRenderingParams> params;
-					if(!antialias)
+					if (!antialias)
 					{
-						params=noAntialiasParams;
+						params = noAntialiasParams;
 					}
-					else if(!verticalAntialias)
+					else if (!verticalAntialias)
 					{
-						params=horizontalAntialiasParams;
+						params = horizontalAntialiasParams;
 					}
 					else
 					{
-						params=bidirectionalAntialiasParams;
+						params = bidirectionalAntialiasParams;
 					}
-					if(params && d2dRenderTarget)
+					if (params && d2dRenderTarget)
 					{
 						d2dRenderTarget->SetTextRenderingParams(params.Obj());
 					}
-				}
-
-				void StartRendering()override
-				{
-					d2dRenderTarget = GetWindowsDirect2DObjectProvider()->GetNativeWindowDirect2DRenderTarget(window);
-					CHECK_ERROR(d2dRenderTarget, L"vl::presentation::elements_windows_d2d::WindowsDirect2DRenderTarget::StartRendering()#Invalid render target.");
-
-					GetWindowsDirect2DObjectProvider()->StartRendering(window);
-				}
-
-				RenderTargetFailure StopRendering()override
-				{
-					CHECK_ERROR(d2dRenderTarget, L"vl::presentation::elements_windows_d2d::WindowsDirect2DRenderTarget::StartRendering()#Invalid render target.");
-					auto result = GetWindowsDirect2DObjectProvider()->StopRenderingAndPresent(window);
-					d2dRenderTarget = nullptr;
-					return result;
-				}
-
-				void PushClipper(Rect clipper)override
-				{
-					if(clipperCoverWholeTargetCounter>0)
-					{
-						clipperCoverWholeTargetCounter++;
-					}
-					else
-					{
-						Rect previousClipper=GetClipper();
-						Rect currentClipper;
-
-						currentClipper.x1=(previousClipper.x1>clipper.x1?previousClipper.x1:clipper.x1);
-						currentClipper.y1=(previousClipper.y1>clipper.y1?previousClipper.y1:clipper.y1);
-						currentClipper.x2=(previousClipper.x2<clipper.x2?previousClipper.x2:clipper.x2);
-						currentClipper.y2=(previousClipper.y2<clipper.y2?previousClipper.y2:clipper.y2);
-
-						if(currentClipper.x1<currentClipper.x2 && currentClipper.y1<currentClipper.y2)
-						{
-							clippers.Add(currentClipper);
-							d2dRenderTarget->PushAxisAlignedClip(
-								D2D1::RectF((FLOAT)currentClipper.x1, (FLOAT)currentClipper.y1, (FLOAT)currentClipper.x2, (FLOAT)currentClipper.y2),
-								D2D1_ANTIALIAS_MODE_PER_PRIMITIVE
-								);
-						}
-						else
-						{
-							clipperCoverWholeTargetCounter++;
-						}
-					}
-				}
-
-				void PopClipper()override
-				{
-					if(clipperCoverWholeTargetCounter>0)
-					{
-						clipperCoverWholeTargetCounter--;
-					}
-					else if(clippers.Count()>0)
-					{
-						clippers.RemoveAt(clippers.Count()-1);
-						d2dRenderTarget->PopAxisAlignedClip();
-					}
-				}
-
-				Rect GetClipper()override
-				{
-					if (clippers.Count() == 0)
-					{
-						return Rect(Point(0, 0), window->Convert(window->GetClientSize()));
-					}
-					else
-					{
-						return clippers[clippers.Count() - 1];
-					}
-				}
-
-				bool IsClipperCoverWholeTarget()override
-				{
-					return clipperCoverWholeTargetCounter>0;
 				}
 
 				ID2D1Effect* GetFocusRectangleEffect()override
@@ -3362,7 +6182,7 @@ WindowsDirect2DRenderTarget
 									"\x00\x00\x2F\x49\x44\x41\x54\x28\x53\x75\xC8\xB1\x0D\x00\x30\x0C\x02\x41\xEF\xBF\x34\xB1\x68\xA2\x47\xF8\x9B\x13"
 									"\x8C\xB6\xD9\x2E\x5D\x9E\x10\xA3\xE8\xF2\x84\x18\x45\x97\x27\xC4\x28\xBA\x3C\xBF\xD2\x03\xC2\xD7\x7F\x81\x23\x94"
 									"\x3E\x1F\x00\x00\x00\x00\x49\x45\x4E\x44\xAE\x42\x60\x82";
-								auto effectImage = GetCurrentController()->ImageService()->CreateImageFromMemory((void*)EffectBuffer, (vint)(sizeof(EffectBuffer) - 1));
+								auto effectImage = GetWindowsNativeController()->ImageService()->CreateImageFromMemory((void*)EffectBuffer, (vint)(sizeof(EffectBuffer) - 1));
 								IWICBitmap* wicEffectBitmap = effectImage ? GetWICBitmap(effectImage->GetFrame(0)) : nullptr;
 								if (wicEffectBitmap)
 								{
@@ -3434,14 +6254,14 @@ WindowsGDIResourceManager
 			public:
 				WindowsDirect2DResourceManager()
 				{
-					layoutProvider=new WindowsDirect2DLayoutProvider;
+					layoutProvider = Ptr(new WindowsDirect2DLayoutProvider);
 				}
 
 				IGuiGraphicsRenderTarget* GetRenderTarget(INativeWindow* window)override
 				{
 					return GetWindowsDirect2DObjectProvider()->GetBindedRenderTarget(window);
 				}
-				
+
 				void RecreateRenderTarget(INativeWindow* window)override
 				{
 					NativeWindowDestroying(window);
@@ -3461,14 +6281,14 @@ WindowsGDIResourceManager
 
 				void NativeWindowCreated(INativeWindow* window)override
 				{
-					WindowsDirect2DRenderTarget* renderTarget=new WindowsDirect2DRenderTarget(window);
+					auto renderTarget = Ptr(new WindowsDirect2DRenderTarget(window));
 					renderTargets.Add(renderTarget);
-					GetWindowsDirect2DObjectProvider()->SetBindedRenderTarget(window, renderTarget);
+					GetWindowsDirect2DObjectProvider()->SetBindedRenderTarget(window, renderTarget.Obj());
 				}
 
 				void NativeWindowDestroying(INativeWindow* window)override
 				{
-					WindowsDirect2DRenderTarget* renderTarget=dynamic_cast<WindowsDirect2DRenderTarget*>(GetWindowsDirect2DObjectProvider()->GetBindedRenderTarget(window));
+					WindowsDirect2DRenderTarget* renderTarget = dynamic_cast<WindowsDirect2DRenderTarget*>(GetWindowsDirect2DObjectProvider()->GetBindedRenderTarget(window));
 					GetWindowsDirect2DObjectProvider()->SetBindedRenderTarget(window, 0);
 					renderTargets.Remove(renderTarget);
 				}
@@ -3497,7 +6317,7 @@ WindowsGDIResourceManager
 
 		namespace elements_windows_d2d
 		{
-			IWindowsDirect2DResourceManager* windowsDirect2DResourceManager=0;
+			IWindowsDirect2DResourceManager* windowsDirect2DResourceManager = nullptr;
 
 			IWindowsDirect2DResourceManager* GetWindowsDirect2DResourceManager()
 			{
@@ -3506,14 +6326,14 @@ WindowsGDIResourceManager
 
 			void SetWindowsDirect2DResourceManager(IWindowsDirect2DResourceManager* resourceManager)
 			{
-				windowsDirect2DResourceManager=resourceManager;
+				windowsDirect2DResourceManager = resourceManager;
 			}
 
 /***********************************************************************
 OS Supporting
 ***********************************************************************/
 
-			IWindowsDirect2DObjectProvider* windowsDirect2DObjectProvider=0;
+			IWindowsDirect2DObjectProvider* windowsDirect2DObjectProvider = nullptr;
 
 			IWindowsDirect2DObjectProvider* GetWindowsDirect2DObjectProvider()
 			{
@@ -3522,7 +6342,7 @@ OS Supporting
 
 			void SetWindowsDirect2DObjectProvider(IWindowsDirect2DObjectProvider* provider)
 			{
-				windowsDirect2DObjectProvider=provider;
+				windowsDirect2DObjectProvider = provider;
 			}
 		}
 	}
@@ -3535,7253 +6355,50 @@ NativeMain
 using namespace vl::presentation;
 using namespace vl::presentation::elements;
 
-void RendererMainDirect2D()
+extern void GuiApplicationMain();
+
+void RendererMainDirect2D(GuiHostedController* hostedController)
 {
 	elements_windows_d2d::WindowsDirect2DResourceManager resourceManager;
-	SetGuiGraphicsResourceManager(&resourceManager);
 	elements_windows_d2d::SetWindowsDirect2DResourceManager(&resourceManager);
-	GetCurrentController()->CallbackService()->InstallListener(&resourceManager);
+	windows::GetWindowsNativeController()->CallbackService()->InstallListener(&resourceManager);
 
-	elements_windows_d2d::GuiFocusRectangleElementRenderer::Register();
-	elements_windows_d2d::GuiSolidBorderElementRenderer::Register();
-	elements_windows_d2d::Gui3DBorderElementRenderer::Register();
-	elements_windows_d2d::Gui3DSplitterElementRenderer::Register();
-	elements_windows_d2d::GuiSolidBackgroundElementRenderer::Register();
-	elements_windows_d2d::GuiGradientBackgroundElementRenderer::Register();
-	elements_windows_d2d::GuiInnerShadowElementRenderer::Register();
-	elements_windows_d2d::GuiSolidLabelElementRenderer::Register();
-	elements_windows_d2d::GuiImageFrameElementRenderer::Register();
-	elements_windows_d2d::GuiPolygonElementRenderer::Register();
-	elements_windows_d2d::GuiColorizedTextElementRenderer::Register();
-	elements_windows_d2d::GuiDirect2DElementRenderer::Register();
-	elements::GuiDocumentElement::GuiDocumentElementRenderer::Register();
+	auto hostedResourceManager = hostedController ? new GuiHostedGraphicsResourceManager(hostedController, &resourceManager) : nullptr;
+	SetGuiGraphicsResourceManager(
+		hostedResourceManager
+		? hostedResourceManager
+		: static_cast<IGuiGraphicsResourceManager*>(&resourceManager)
+		);
 
-	GuiApplicationMain();
-	elements_windows_d2d::SetWindowsDirect2DResourceManager(0);
-	SetGuiGraphicsResourceManager(0);
-}
-
-/***********************************************************************
-.\GRAPHICSELEMENT\WINDOWSGDI\GUIGRAPHICSLAYOUTPROVIDERWINDOWSGDI.CPP
-***********************************************************************/
-
-namespace vl
-{
-	namespace presentation
 	{
-		namespace elements_windows_gdi
-		{
-			using namespace elements;
-			using namespace collections;
-			using namespace windows;
+		elements_windows_d2d::GuiFocusRectangleElementRenderer::Register();
+		elements_windows_d2d::GuiSolidBorderElementRenderer::Register();
+		elements_windows_d2d::Gui3DBorderElementRenderer::Register();
+		elements_windows_d2d::Gui3DSplitterElementRenderer::Register();
+		elements_windows_d2d::GuiSolidBackgroundElementRenderer::Register();
+		elements_windows_d2d::GuiGradientBackgroundElementRenderer::Register();
+		elements_windows_d2d::GuiInnerShadowElementRenderer::Register();
+		elements_windows_d2d::GuiSolidLabelElementRenderer::Register();
+		elements_windows_d2d::GuiImageFrameElementRenderer::Register();
+		elements_windows_d2d::GuiPolygonElementRenderer::Register();
+		elements_windows_d2d::GuiColorizedTextElementRenderer::Register();
+		elements_windows_d2d::GuiDirect2DElementRenderer::Register();
+		elements::GuiDocumentElement::GuiDocumentElementRenderer::Register();
 
-/***********************************************************************
-WindowsGDIParagraph
-***********************************************************************/
-
-			class WindowsGDIParagraph : public Object, public IGuiGraphicsParagraph, protected UniscribeRun::IRendererCallback
-			{
-			protected:
-				IGuiGraphicsLayoutProvider*			provider;
-				Ptr<UniscribeParagraph>				paragraph;
-				WString								text;
-				IWindowsGDIRenderTarget*			renderTarget;
-
-				vint								caret;
-				Color								caretColor;
-				bool								caretFrontSide;
-				Ptr<WinPen>							caretPen;
-
-				WinDC*								paragraphDC;
-				Point								paragraphOffset;
-				IGuiGraphicsParagraphCallback*		paragraphCallback;
-
-				void PrepareUniscribeData()
-				{
-					if(paragraph->BuildUniscribeData(renderTarget->GetDC()))
-					{
-						vint width=paragraph->lastAvailableWidth==-1?65536:paragraph->lastAvailableWidth;
-						paragraph->Layout(width, paragraph->paragraphAlignment);
-					}
-				}
-
-				WinDC* GetWinDC()
-				{
-					return paragraphDC;
-				}
-
-				Point GetParagraphOffset()
-				{
-					return paragraphOffset;
-				}
-
-				IGuiGraphicsParagraphCallback* GetParagraphCallback()
-				{
-					return paragraphCallback;
-				}
-			public:
-				WindowsGDIParagraph(IGuiGraphicsLayoutProvider* _provider, const WString& _text, IGuiGraphicsRenderTarget* _renderTarget, IGuiGraphicsParagraphCallback* _paragraphCallback)
-					:provider(_provider)
-					,text(_text)
-					,renderTarget(dynamic_cast<IWindowsGDIRenderTarget*>(_renderTarget))
-					,caret(-1)
-					,caretFrontSide(false)
-					,paragraphDC(nullptr)
-					,paragraphCallback(_paragraphCallback)
-				{
-					paragraph=new UniscribeParagraph;
-					paragraph->paragraphText=text;
-
-					Ptr<UniscribeFragment> fragment=new UniscribeFragment(_text);
-					fragment->fontStyle=GetCurrentController()->ResourceService()->GetDefaultFont();
-					paragraph->documentFragments.Add(fragment);
-				}
-
-				~WindowsGDIParagraph()
-				{
-					CloseCaret();
-				}
-
-				IGuiGraphicsLayoutProvider* GetProvider()override
-				{
-					return provider;
-				}
-
-				IGuiGraphicsRenderTarget* GetRenderTarget()override
-				{
-					return renderTarget;
-				}
-
-				bool GetWrapLine()override
-				{
-					return true;
-				}
-
-				void SetWrapLine(bool value)override
-				{
-				}
-
-				vint GetMaxWidth()override
-				{
-					return paragraph->lastAvailableWidth;
-				}
-
-				void SetMaxWidth(vint value)override
-				{
-					paragraph->BuildUniscribeData(renderTarget->GetDC());
-					paragraph->Layout(value, paragraph->paragraphAlignment);
-				}
-
-				Alignment GetParagraphAlignment()override
-				{
-					return paragraph->paragraphAlignment;
-				}
-
-				void SetParagraphAlignment(Alignment value)override
-				{
-					paragraph->BuildUniscribeData(renderTarget->GetDC());
-					paragraph->Layout(paragraph->lastAvailableWidth, value);
-				}
-
-				bool SetFont(vint start, vint length, const WString& value)override
-				{
-					if(length==0) return true;
-					if(0<=start && start<text.Length() && length>=0 && 0<=start+length && start+length<=text.Length())
-					{
-						return paragraph->SetFont(start, length, value);
-					}
-					else
-					{
-						return false;
-					}
-				}
-
-				bool SetSize(vint start, vint length, vint value)override
-				{
-					if(length==0) return true;
-					if(0<=start && start<text.Length() && length>=0 && 0<=start+length && start+length<=text.Length())
-					{
-						return paragraph->SetSize(start, length, value);
-					}
-					else
-					{
-						return false;
-					}
-				}
-
-				bool SetStyle(vint start, vint length, TextStyle value)override
-				{
-					if(length==0) return true;
-					if(0<=start && start<text.Length() && length>=0 && 0<=start+length && start+length<=text.Length())
-					{
-						return paragraph->SetStyle(start, length, (value&Bold)!=0, (value&Italic)!=0, (value&Underline)!=0, (value&Strikeline)!=0);
-					}
-					else
-					{
-						return false;
-					}
-				}
-
-				bool SetColor(vint start, vint length, Color value)override
-				{
-					if(length==0) return true;
-					if(0<=start && start<text.Length() && length>=0 && 0<=start+length && start+length<=text.Length())
-					{
-						return paragraph->SetColor(start, length, value);
-					}
-					else
-					{
-						return false;
-					}
-				}
-
-				bool SetBackgroundColor(vint start, vint length, Color value)override
-				{
-					if(length==0) return true;
-					if(0<=start && start<text.Length() && length>=0 && 0<=start+length && start+length<=text.Length())
-					{
-						return paragraph->SetBackgroundColor(start, length, value);
-					}
-					else
-					{
-						return false;
-					}
-				}
-
-				bool SetInlineObject(vint start, vint length, const InlineObjectProperties& properties)override
-				{
-					if(length==0) return true;
-					if(0<=start && start<text.Length() && length>=0 && 0<=start+length && start+length<=text.Length())
-					{
-						if(paragraph->SetInlineObject(start, length, properties))
-						{
-							if (properties.backgroundImage)
-							{
-								IGuiGraphicsRenderer* renderer=properties.backgroundImage->GetRenderer();
-								if(renderer)
-								{
-									renderer->SetRenderTarget(renderTarget);
-								}
-							}
-							return true;
-						}
-					}
-					return false;
-				}
-
-				bool ResetInlineObject(vint start, vint length)override
-				{
-					if(length==0) return true;
-					if(0<=start && start<text.Length() && length>=0 && 0<=start+length && start+length<=text.Length())
-					{
-						if (auto inlineObject = paragraph->ResetInlineObject(start, length))
-						{
-							if (auto element = inlineObject.Value().backgroundImage)
-							{
-								auto renderer=element->GetRenderer();
-								if(renderer)
-								{
-									renderer->SetRenderTarget(0);
-								}
-							}
-							return true;
-						}
-					}
-					return false;
-				}
-
-				vint GetHeight()override
-				{
-					PrepareUniscribeData();
-					return paragraph->bounds.Height();
-				}
-
-				bool OpenCaret(vint _caret, Color _color, bool _frontSide)override
-				{
-					if(!IsValidCaret(_caret)) return false;
-					if(caret!=-1) CloseCaret();
-					caret=_caret;
-					caretColor=_color;
-					caretFrontSide=_frontSide;
-					caretPen=GetWindowsGDIResourceManager()->CreateGdiPen(caretColor);
-					return true;
-				}
-
-				bool CloseCaret()override
-				{
-					if(caret==-1) return false;
-					caret=-1;
-					GetWindowsGDIResourceManager()->DestroyGdiPen(caretColor);
-					caretPen=0;
-					return true;
-				}
-
-				void Render(Rect bounds)override
-				{
-					PrepareUniscribeData();
-
-					paragraphDC = renderTarget->GetDC();
-					paragraphOffset = bounds.LeftTop();
-					paragraph->Render(this, true);
-					paragraph->Render(this, false);
-					paragraphDC = 0;
-
-					if(caret!=-1)
-					{
-						Rect caretBounds=GetCaretBounds(caret, caretFrontSide);
-						vint x=caretBounds.x1+bounds.x1;
-						vint y1=caretBounds.y1+bounds.y1;
-						vint y2=y1+(vint)(caretBounds.Height()*1.5);
-
-						WinDC* dc=renderTarget->GetDC();
-						dc->SetPen(caretPen);
-						dc->MoveTo(x-1, y1);
-						dc->LineTo(x-1, y2);
-						dc->MoveTo(x, y1);
-						dc->LineTo(x, y2);
-					}
-				}
-
-				vint GetCaret(vint comparingCaret, CaretRelativePosition position, bool& preferFrontSide)override
-				{
-					PrepareUniscribeData();
-					return paragraph->GetCaret(comparingCaret, position, preferFrontSide);
-				}
-
-				Rect GetCaretBounds(vint caret, bool frontSide)override
-				{
-					PrepareUniscribeData();
-					return paragraph->GetCaretBounds(caret, frontSide);
-				}
-
-				vint GetCaretFromPoint(Point point)override
-				{
-					PrepareUniscribeData();
-					return paragraph->GetCaretFromPoint(point);
-				}
-
-				Nullable<InlineObjectProperties> GetInlineObjectFromPoint(Point point, vint& start, vint& length)override
-				{
-					PrepareUniscribeData();
-					return paragraph->GetInlineObjectFromPoint(point, start, length);
-				}
-
-				vint GetNearestCaretFromTextPos(vint textPos, bool frontSide)override
-				{
-					PrepareUniscribeData();
-					return paragraph->GetNearestCaretFromTextPos(textPos, frontSide);
-				}
-
-				bool IsValidCaret(vint caret)override
-				{
-					PrepareUniscribeData();
-					return paragraph->IsValidCaret(caret);
-				}
-
-				bool IsValidTextPos(vint textPos)override
-				{
-					PrepareUniscribeData();
-					return paragraph->IsValidTextPos(textPos);
-				}
-			};
-
-/***********************************************************************
-WindowsGDILayoutProvider
-***********************************************************************/
-
-			Ptr<IGuiGraphicsParagraph> WindowsGDILayoutProvider::CreateParagraph(const WString& text, IGuiGraphicsRenderTarget* renderTarget, elements::IGuiGraphicsParagraphCallback* callback)
-			{
-				return new WindowsGDIParagraph(this, text, renderTarget, callback);
-			}
-		}
+		if (hostedController) hostedController->Initialize();
+		GuiApplicationMain();
+		if (hostedController) hostedController->Finalize();
 	}
+
+	SetGuiGraphicsResourceManager(nullptr);
+	if (hostedResourceManager) delete hostedResourceManager;
+
+	windows::GetWindowsNativeController()->CallbackService()->UninstallListener(&resourceManager);
+	elements_windows_d2d::SetWindowsDirect2DResourceManager(nullptr);
 }
 
 /***********************************************************************
-.\GRAPHICSELEMENT\WINDOWSGDI\GUIGRAPHICSRENDERERSWINDOWSGDI.CPP
-***********************************************************************/
-
-namespace vl
-{
-	namespace presentation
-	{
-		namespace elements_windows_gdi
-		{
-			using namespace windows;
-			using namespace collections;
-
-/***********************************************************************
-GuiSolidBorderElementRenderer
-***********************************************************************/
-
-			void GuiFocusRectangleElementRenderer::InitializeInternal()
-			{
-				auto resourceManager = GetWindowsGDIResourceManager();
-				pen = resourceManager->GetFocusRectanglePen();
-			}
-
-			void GuiFocusRectangleElementRenderer::FinalizeInternal()
-			{
-			}
-
-			void GuiFocusRectangleElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
-			{
-			}
-
-			void GuiFocusRectangleElementRenderer::Render(Rect bounds)
-			{
-				int originRop2 = renderTarget->GetDC()->SetRasterOperation(R2_XORPEN);
-				renderTarget->GetDC()->SetPen(pen);
-				renderTarget->GetDC()->Rectangle(bounds.Left(), bounds.Top(), bounds.Right() - 1, bounds.Bottom() - 1);
-				renderTarget->GetDC()->SetRasterOperation(originRop2);
-			}
-
-			void GuiFocusRectangleElementRenderer::OnElementStateChanged()
-			{
-			}
-
-/***********************************************************************
-GuiSolidBorderElementRenderer
-***********************************************************************/
-
-			void GuiSolidBorderElementRenderer::InitializeInternal()
-			{
-				auto resourceManager=GetWindowsGDIResourceManager();
-				oldColor=element->GetColor();
-				pen=resourceManager->CreateGdiPen(oldColor);
-				brush=resourceManager->CreateGdiBrush(Color(0, 0, 0, 0));
-			}
-
-			void GuiSolidBorderElementRenderer::FinalizeInternal()
-			{
-				auto resourceManager=GetWindowsGDIResourceManager();
-				resourceManager->DestroyGdiPen(oldColor);
-				resourceManager->DestroyGdiBrush(Color(0, 0, 0, 0));
-			}
-
-			void GuiSolidBorderElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
-			{
-			}
-
-			void GuiSolidBorderElementRenderer::Render(Rect bounds)
-			{
-				if(oldColor.a>0)
-				{
-					renderTarget->GetDC()->SetBrush(brush);
-					renderTarget->GetDC()->SetPen(pen);
-					auto shape = element->GetShape();
-
-					switch(shape.shapeType)
-					{
-					case ElementShapeType::Rectangle:
-						renderTarget->GetDC()->Rectangle(bounds.Left(), bounds.Top(), bounds.Right()-1, bounds.Bottom()-1);
-						break;
-					case ElementShapeType::Ellipse:
-						renderTarget->GetDC()->Ellipse(bounds.Left(), bounds.Top(), bounds.Right()-1, bounds.Bottom()-1);
-						break;
-					case ElementShapeType::RoundRect:
-						renderTarget->GetDC()->RoundRect(bounds.Left(), bounds.Top(), bounds.Right() - 1, bounds.Bottom() - 1, shape.radiusX * 2, shape.radiusY * 2);
-						break;
-					}
-				}
-			}
-
-			void GuiSolidBorderElementRenderer::OnElementStateChanged()
-			{
-				Color color=element->GetColor();
-				if(oldColor!=color)
-				{
-					auto resourceManager=GetWindowsGDIResourceManager();
-					resourceManager->DestroyGdiPen(oldColor);
-					oldColor=color;
-					pen=resourceManager->CreateGdiPen(oldColor);
-				}
-			}
-
-/***********************************************************************
-Gui3DBorderElementRenderer
-***********************************************************************/
-
-			void Gui3DBorderElementRenderer::InitializeInternal()
-			{
-				auto resourceManager=GetWindowsGDIResourceManager();
-				oldColor1=element->GetColor1();
-				oldColor2=element->GetColor2();
-				pen1=resourceManager->CreateGdiPen(oldColor1);
-				pen2=resourceManager->CreateGdiPen(oldColor2);
-			}
-
-			void Gui3DBorderElementRenderer::FinalizeInternal()
-			{
-				auto resourceManager=GetWindowsGDIResourceManager();
-				resourceManager->DestroyGdiPen(oldColor1);
-				resourceManager->DestroyGdiPen(oldColor2);
-			}
-
-			void Gui3DBorderElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
-			{
-			}
-
-			void Gui3DBorderElementRenderer::Render(Rect bounds)
-			{
-				if(oldColor1.a>0)
-				{
-					renderTarget->GetDC()->SetPen(pen1);
-					renderTarget->GetDC()->MoveTo(bounds.x1, bounds.y1);
-					renderTarget->GetDC()->LineTo(bounds.x2, bounds.y1);
-					renderTarget->GetDC()->MoveTo(bounds.x1, bounds.y1);
-					renderTarget->GetDC()->LineTo(bounds.x1, bounds.y2);
-				}
-				if(oldColor2.a>0)
-				{
-					renderTarget->GetDC()->SetPen(pen2);
-					renderTarget->GetDC()->MoveTo(bounds.x2-1, bounds.y2-1);
-					renderTarget->GetDC()->LineTo(bounds.x1, bounds.y2-1);
-					renderTarget->GetDC()->MoveTo(bounds.x2-1, bounds.y2-1);
-					renderTarget->GetDC()->LineTo(bounds.x2-1, bounds.y1);
-				}
-			}
-
-			void Gui3DBorderElementRenderer::OnElementStateChanged()
-			{
-				Color color1=element->GetColor1();
-				if(oldColor1!=color1)
-				{
-					auto resourceManager=GetWindowsGDIResourceManager();
-					resourceManager->DestroyGdiPen(oldColor1);
-					oldColor1=color1;
-					pen1=resourceManager->CreateGdiPen(oldColor1);
-				}
-
-				Color color2=element->GetColor2();
-				if(oldColor2!=color2)
-				{
-					auto resourceManager=GetWindowsGDIResourceManager();
-					resourceManager->DestroyGdiPen(oldColor2);
-					oldColor2=color2;
-					pen2=resourceManager->CreateGdiPen(oldColor2);
-				}
-			}
-
-/***********************************************************************
-Gui3DSplitterElementRenderer
-***********************************************************************/
-
-			void Gui3DSplitterElementRenderer::InitializeInternal()
-			{
-				auto resourceManager=GetWindowsGDIResourceManager();
-				oldColor1=element->GetColor1();
-				oldColor2=element->GetColor2();
-				pen1=resourceManager->CreateGdiPen(oldColor1);
-				pen2=resourceManager->CreateGdiPen(oldColor2);
-			}
-
-			void Gui3DSplitterElementRenderer::FinalizeInternal()
-			{
-				auto resourceManager=GetWindowsGDIResourceManager();
-				resourceManager->DestroyGdiPen(oldColor1);
-				resourceManager->DestroyGdiPen(oldColor2);
-			}
-
-			void Gui3DSplitterElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
-			{
-			}
-
-			void Gui3DSplitterElementRenderer::Render(Rect bounds)
-			{
-				Point p11, p12, p21, p22;
-				switch(element->GetDirection())
-				{
-				case Gui3DSplitterElement::Horizontal:
-					{
-						vint y=bounds.y1+bounds.Height()/2-1;
-						p11=Point(bounds.x1, y);
-						p12=Point(bounds.x2, y);
-						p21=Point(bounds.x1, y+1);
-						p22=Point(bounds.x2, y+1);
-					}
-					break;
-				case Gui3DSplitterElement::Vertical:
-					{
-						vint x=bounds.x1+bounds.Width()/2-1;
-						p11=Point(x, bounds.y1);
-						p12=Point(x, bounds.y2);
-						p21=Point(x+1, bounds.y1);
-						p22=Point(x+1, bounds.y2);
-					}
-					break;
-				}
-				if(oldColor1.a>0)
-				{
-					renderTarget->GetDC()->SetPen(pen1);
-					renderTarget->GetDC()->MoveTo(p11.x, p11.y);
-					renderTarget->GetDC()->LineTo(p12.x, p12.y);
-				}
-				if(oldColor2.a>0)
-				{
-					renderTarget->GetDC()->SetPen(pen2);
-					renderTarget->GetDC()->MoveTo(p21.x, p21.y);
-					renderTarget->GetDC()->LineTo(p22.x, p22.y);
-				}
-			}
-
-			void Gui3DSplitterElementRenderer::OnElementStateChanged()
-			{
-				Color color1=element->GetColor1();
-				if(oldColor1!=color1)
-				{
-					auto resourceManager=GetWindowsGDIResourceManager();
-					resourceManager->DestroyGdiPen(oldColor1);
-					oldColor1=color1;
-					pen1=resourceManager->CreateGdiPen(oldColor1);
-				}
-
-				Color color2=element->GetColor2();
-				if(oldColor2!=color2)
-				{
-					auto resourceManager=GetWindowsGDIResourceManager();
-					resourceManager->DestroyGdiPen(oldColor2);
-					oldColor2=color2;
-					pen2=resourceManager->CreateGdiPen(oldColor2);
-				}
-			}
-
-/***********************************************************************
-GuiSolidBackgroundElementRenderer
-***********************************************************************/
-
-			void GuiSolidBackgroundElementRenderer::InitializeInternal()
-			{
-				auto resourceManager=GetWindowsGDIResourceManager();
-				oldColor=element->GetColor();
-				pen=resourceManager->CreateGdiPen(oldColor);
-				brush=resourceManager->CreateGdiBrush(oldColor);
-			}
-
-			void GuiSolidBackgroundElementRenderer::FinalizeInternal()
-			{
-				auto resourceManager=GetWindowsGDIResourceManager();
-				resourceManager->DestroyGdiPen(oldColor);
-				resourceManager->DestroyGdiBrush(oldColor);
-			}
-
-			void GuiSolidBackgroundElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
-			{
-			}
-
-			void GuiSolidBackgroundElementRenderer::Render(Rect bounds)
-			{
-				if(oldColor.a>0)
-				{
-					renderTarget->GetDC()->SetPen(pen);
-					renderTarget->GetDC()->SetBrush(brush);
-					auto shape = element->GetShape();
-
-					switch(shape.shapeType)
-					{
-					case ElementShapeType::Rectangle:
-						renderTarget->GetDC()->FillRect(bounds.Left(), bounds.Top(), bounds.Right(), bounds.Bottom());
-						break;
-					case ElementShapeType::Ellipse:
-						renderTarget->GetDC()->Ellipse(bounds.Left(), bounds.Top(), bounds.Right()-1, bounds.Bottom()-1);
-						break;
-					case ElementShapeType::RoundRect:
-						renderTarget->GetDC()->RoundRect(bounds.Left(), bounds.Top(), bounds.Right() - 1, bounds.Bottom() - 1, shape.radiusX * 2, shape.radiusY * 2);
-						break;
-					}
-				}
-			}
-
-			void GuiSolidBackgroundElementRenderer::OnElementStateChanged()
-			{
-				Color color=element->GetColor();
-				if(oldColor!=color)
-				{
-					auto resourceManager=GetWindowsGDIResourceManager();
-					resourceManager->DestroyGdiPen(oldColor);
-					resourceManager->DestroyGdiBrush(oldColor);
-					oldColor=color;
-					pen=resourceManager->CreateGdiPen(oldColor);
-					brush=resourceManager->CreateGdiBrush(oldColor);
-				}
-			}
-
-/***********************************************************************
-GuiGradientBackgroundElementRenderer
-***********************************************************************/
-
-			void GuiGradientBackgroundElementRenderer::InitializeInternal()
-			{
-			}
-
-			void GuiGradientBackgroundElementRenderer::FinalizeInternal()
-			{
-			}
-
-			void GuiGradientBackgroundElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
-			{
-			}
-
-			void GuiGradientBackgroundElementRenderer::Render(Rect bounds)
-			{
-				Color color1 = element->GetColor1();
-				Color color2 = element->GetColor2();
-				if (color1.a > 0 || color2.a > 0)
-				{
-					Ptr<WinRegion> targetRegion, oldRegion, newRegion;
-					auto shape = element->GetShape();
-					switch (shape.shapeType)
-					{
-					case ElementShapeType::Ellipse:
-						targetRegion = new WinRegion(bounds.x1, bounds.y1, bounds.x2 + 1, bounds.y2 + 1, false);
-						break;
-					case ElementShapeType::RoundRect:
-						targetRegion = new WinRegion(bounds.x1, bounds.y1, bounds.x2 + 1, bounds.y2 + 1, shape.radiusX * 2, shape.radiusY * 2);
-						break;
-					}
-
-					if (targetRegion)
-					{
-						oldRegion = renderTarget->GetDC()->GetClipRegion();
-						newRegion = new WinRegion(oldRegion, targetRegion, RGN_AND);
-						renderTarget->GetDC()->ClipRegion(newRegion);
-					}
-
-					switch (element->GetDirection())
-					{
-					case GuiGradientBackgroundElement::Horizontal:
-					case GuiGradientBackgroundElement::Vertical:
-						{
-							TRIVERTEX vertices[2];
-							GRADIENT_RECT rectangles[1];
-
-							vertices[0].x = (int)bounds.x1;
-							vertices[0].y = (int)bounds.y1;
-							vertices[1].x = (int)bounds.x2;
-							vertices[1].y = (int)bounds.y2;
-
-							rectangles[0].UpperLeft = 0;
-							rectangles[0].LowerRight = 1;
-
-							vertices[0].Red = color1.r << 8;
-							vertices[0].Green = color1.g << 8;
-							vertices[0].Blue = color1.b << 8;
-							vertices[0].Alpha = color1.a << 8;
-
-							vertices[1].Red = color2.r << 8;
-							vertices[1].Green = color2.g << 8;
-							vertices[1].Blue = color2.b << 8;
-							vertices[1].Alpha = color2.a << 8;
-
-							switch (element->GetDirection())
-							{
-							case GuiGradientBackgroundElement::Horizontal:
-								renderTarget->GetDC()->GradientRectH(vertices, sizeof(vertices) / sizeof(*vertices), rectangles, sizeof(rectangles) / sizeof(*rectangles));
-								break;
-							case GuiGradientBackgroundElement::Vertical:
-								renderTarget->GetDC()->GradientRectV(vertices, sizeof(vertices) / sizeof(*vertices), rectangles, sizeof(rectangles) / sizeof(*rectangles));
-								break;
-							}
-						}
-						break;
-					case GuiGradientBackgroundElement::Slash:
-					case GuiGradientBackgroundElement::Backslash:
-						{
-							TRIVERTEX vertices[4];
-							GRADIENT_TRIANGLE triangles[2];
-
-							switch (element->GetDirection())
-							{
-							case GuiGradientBackgroundElement::Slash:
-								vertices[0].x = (int)bounds.x2;
-								vertices[0].y = (int)bounds.y1;
-								vertices[1].x = (int)bounds.x1;
-								vertices[1].y = (int)bounds.y1;
-								vertices[2].x = (int)bounds.x2;
-								vertices[2].y = (int)bounds.y2;
-								vertices[3].x = (int)bounds.x1;
-								vertices[3].y = (int)bounds.y2;
-								break;
-							case GuiGradientBackgroundElement::Backslash:
-								vertices[0].x = (int)bounds.x1;
-								vertices[0].y = (int)bounds.y1;
-								vertices[1].x = (int)bounds.x1;
-								vertices[1].y = (int)bounds.y2;
-								vertices[2].x = (int)bounds.x2;
-								vertices[2].y = (int)bounds.y1;
-								vertices[3].x = (int)bounds.x2;
-								vertices[3].y = (int)bounds.y2;
-								break;
-							}
-
-							triangles[0].Vertex1 = 0;
-							triangles[0].Vertex2 = 1;
-							triangles[0].Vertex3 = 2;
-							triangles[1].Vertex1 = 1;
-							triangles[1].Vertex2 = 2;
-							triangles[1].Vertex3 = 3;
-
-							vertices[0].Red = color1.r << 8;
-							vertices[0].Green = color1.g << 8;
-							vertices[0].Blue = color1.b << 8;
-							vertices[0].Alpha = color1.a << 8;
-
-							vertices[1].Red = ((color1.r + color2.r) / 2) << 8;
-							vertices[1].Green = ((color1.g + color2.g) / 2) << 8;
-							vertices[1].Blue = ((color1.b + color2.b) / 2) << 8;
-							vertices[1].Alpha = ((color1.a + color2.a) / 2) << 8;
-
-							vertices[2].Red = ((color1.r + color2.r) / 2) << 8;
-							vertices[2].Green = ((color1.g + color2.g) / 2) << 8;
-							vertices[2].Blue = ((color1.b + color2.b) / 2) << 8;
-							vertices[2].Alpha = ((color1.a + color2.a) / 2) << 8;
-
-							vertices[3].Red = color2.r << 8;
-							vertices[3].Green = color2.g << 8;
-							vertices[3].Blue = color2.b << 8;
-							vertices[3].Alpha = color2.a << 8;
-
-							renderTarget->GetDC()->GradientTriangle(vertices, sizeof(vertices) / sizeof(*vertices), triangles, sizeof(triangles) / sizeof(*triangles));
-						}
-						break;
-					}
-
-					if (targetRegion)
-					{
-						renderTarget->GetDC()->ClipRegion(oldRegion);
-					}
-				}
-			}
-
-			void GuiGradientBackgroundElementRenderer::OnElementStateChanged()
-			{
-			}
-
-/***********************************************************************
-GuiSolidLabelElementRenderer
-***********************************************************************/
-
-			void GuiInnerShadowElementRenderer::InitializeInternal()
-			{
-			}
-
-			void GuiInnerShadowElementRenderer::FinalizeInternal()
-			{
-			}
-
-			void GuiInnerShadowElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
-			{
-			}
-
-			GuiInnerShadowElementRenderer::GuiInnerShadowElementRenderer()
-			{
-			}
-
-			void GuiInnerShadowElementRenderer::Render(Rect bounds)
-			{
-			}
-
-			void GuiInnerShadowElementRenderer::OnElementStateChanged()
-			{
-			}
-
-/***********************************************************************
-GuiSolidLabelElementRenderer
-***********************************************************************/
-
-			void GuiSolidLabelElementRenderer::UpdateMinSize()
-			{
-				if(renderTarget)
-				{
-					renderTarget->GetDC()->SetFont(font);
-					SIZE size={0};
-					const WString& text=element->GetText();
-					if(element->GetWrapLine())
-					{
-						if(element->GetWrapLineHeightCalculation())
-						{
-							if(oldMaxWidth==-1 || text.Length()==0)
-							{
-								size=renderTarget->GetDC()->MeasureBuffer(L" ");
-							}
-							else
-							{
-								size=renderTarget->GetDC()->MeasureWrapLineString(text, oldMaxWidth);
-							}
-						}
-					}
-					else
-					{
-						size=text.Length()==0
-							?renderTarget->GetDC()->MeasureBuffer(L" ")
-							:renderTarget->GetDC()->MeasureString(text)
-							;
-					}
-					minSize=Size((element->GetEllipse()?0:size.cx), size.cy);
-				}
-				else
-				{
-					minSize=Size();
-				}
-			}
-
-			void GuiSolidLabelElementRenderer::InitializeInternal()
-			{
-				auto resourceManager=GetWindowsGDIResourceManager();
-				oldFont=element->GetFont();
-				font=resourceManager->CreateGdiFont(oldFont);
-			}
-
-			void GuiSolidLabelElementRenderer::FinalizeInternal()
-			{
-				auto resourceManager=GetWindowsGDIResourceManager();
-				resourceManager->DestroyGdiFont(oldFont);
-			}
-
-			void GuiSolidLabelElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
-			{
-				UpdateMinSize();
-			}
-
-			GuiSolidLabelElementRenderer::GuiSolidLabelElementRenderer()
-				:oldMaxWidth(-1)
-			{
-			}
-
-			void GuiSolidLabelElementRenderer::Render(Rect bounds)
-			{
-				Color color=element->GetColor();
-				if(color.a>0)
-				{
-					renderTarget->GetDC()->SetFont(font);
-					renderTarget->GetDC()->SetTextColor(RGB(color.r, color.g, color.b));
-
-					UINT format=DT_NOPREFIX;
-					RECT rect;
-					rect.left=(int)bounds.Left();
-					rect.top=(int)bounds.Top();
-					rect.right=(int)bounds.Right();
-					rect.bottom=(int)bounds.Bottom();
-
-					if(element->GetMultiline() || element->GetWrapLine())
-					{
-						format|=DT_EDITCONTROL;
-					}
-					else
-					{
-						format|=DT_SINGLELINE;
-						switch(element->GetVerticalAlignment())
-						{
-						case Alignment::Top:
-							format|=DT_TOP;
-							break;
-						case Alignment::Center:
-							format|=DT_VCENTER;
-							break;
-						case Alignment::Bottom:
-							format|=DT_BOTTOM;
-							break;
-						}
-					}
-
-					switch(element->GetHorizontalAlignment())
-					{
-					case Alignment::Left:
-						format|=DT_LEFT;
-						break;
-					case Alignment::Center:
-						format|=DT_CENTER;
-						break;
-					case Alignment::Right:
-						format|=DT_RIGHT;
-						break;
-					}
-
-					if(element->GetWrapLine())
-					{
-						format|=DT_WORDBREAK;
-					}
-					if(element->GetEllipse())
-					{
-						format|=DT_END_ELLIPSIS;
-					}
-					renderTarget->GetDC()->DrawString(rect, element->GetText(), format);
-					if(oldMaxWidth!=bounds.Width())
-					{
-						oldMaxWidth=bounds.Width();
-						UpdateMinSize();
-					}
-				}
-			}
-
-			void GuiSolidLabelElementRenderer::OnElementStateChanged()
-			{
-				FontProperties fontProperties=element->GetFont();
-				if(oldFont!=fontProperties)
-				{
-					auto resourceManager=GetWindowsGDIResourceManager();
-					resourceManager->DestroyGdiFont(oldFont);
-					oldFont=fontProperties;
-					font=resourceManager->CreateGdiFont(oldFont);
-				}
-				UpdateMinSize();
-			}
-
-/***********************************************************************
-GuiImageFrameElementRenderer
-***********************************************************************/
-
-			void GuiImageFrameElementRenderer::UpdateBitmap()
-			{
-				if(element->GetImage())
-				{
-					auto resourceManager=GetWindowsGDIResourceManager();
-					INativeImageFrame* frame=element->GetImage()->GetFrame(element->GetFrameIndex());
-					bitmap=resourceManager->GetBitmap(frame, element->GetEnabled());
-
-					if (element->GetStretch())
-					{
-						minSize=Size(0,0);
-					}
-					else
-					{
-						minSize=frame->GetSize();
-					}
-				}
-				else
-				{
-					bitmap=0;
-					minSize=Size(0, 0);
-				}
-			}
-
-			void GuiImageFrameElementRenderer::InitializeInternal()
-			{
-				UpdateBitmap();
-			}
-
-			void GuiImageFrameElementRenderer::FinalizeInternal()
-			{
-			}
-
-			void GuiImageFrameElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
-			{
-			}
-
-			GuiImageFrameElementRenderer::GuiImageFrameElementRenderer()
-			{
-			}
-
-			void GuiImageFrameElementRenderer::Render(Rect bounds)
-			{
-				if(bitmap)
-				{
-					WinDC* dc=renderTarget->GetDC();
-					Rect source(0, 0, minSize.x, minSize.y);
-					Rect destination;
-					if(element->GetStretch())
-					{
-						INativeImageFrame* frame=element->GetImage()->GetFrame(element->GetFrameIndex());
-						source = Rect(Point(0, 0), frame->GetSize());
-						destination=Rect(bounds.x1, bounds.y1, bounds.x2, bounds.y2);
-					}
-					else
-					{
-						vint x=0;
-						vint y=0;
-						switch(element->GetHorizontalAlignment())
-						{
-						case Alignment::Left:
-							x=bounds.Left();
-							break;
-						case Alignment::Center:
-							x=bounds.Left()+(bounds.Width()-minSize.x)/2;
-							break;
-						case Alignment::Right:
-							x=bounds.Right()-minSize.x;
-							break;
-						}
-						switch(element->GetVerticalAlignment())
-						{
-						case Alignment::Top:
-							y=bounds.Top();
-							break;
-						case Alignment::Center:
-							y=bounds.Top()+(bounds.Height()-minSize.y)/2;
-							break;
-						case Alignment::Bottom:
-							y=bounds.Bottom()-minSize.y;
-							break;
-						}
-						destination=Rect(x, y, x+minSize.x, y+minSize.y);
-					}
-					if(element->GetImage()->GetFormat()==INativeImage::Gif &&  element->GetFrameIndex()>0)
-					{
-						auto resourceManager=GetWindowsGDIResourceManager();
-						vint max=element->GetFrameIndex();
-						for(vint i=0;i<=max;i++)
-						{
-							Ptr<WinBitmap> frameBitmap=resourceManager->GetBitmap(element->GetImage()->GetFrame(i), element->GetEnabled());
-							dc->Draw(
-								destination.Left(), destination.Top(), destination.Width(), destination.Height(),
-								frameBitmap,
-								source.Left(), source.Top(), source.Width(), source.Height()
-								);
-						}
-					}
-					else
-					{
-						dc->Draw(
-							destination.Left(), destination.Top(), destination.Width(), destination.Height(),
-							bitmap,
-							source.Left(), source.Top(), source.Width(), source.Height()
-							);
-					}
-				}
-			}
-
-			void GuiImageFrameElementRenderer::OnElementStateChanged()
-			{
-				UpdateBitmap();
-			}
-
-/***********************************************************************
-GuiPolygonElementRenderer
-***********************************************************************/
-
-			void GuiPolygonElementRenderer::InitializeInternal()
-			{
-				auto resourceManager=GetWindowsGDIResourceManager();
-				pen=resourceManager->CreateGdiPen(oldPenColor);
-				brush=resourceManager->CreateGdiBrush(oldBrushColor);
-			}
-
-			void GuiPolygonElementRenderer::FinalizeInternal()
-			{
-				auto resourceManager=GetWindowsGDIResourceManager();
-				resourceManager->DestroyGdiPen(oldPenColor);
-				resourceManager->DestroyGdiBrush(oldBrushColor);
-			}
-
-			void GuiPolygonElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
-			{
-			}
-
-			GuiPolygonElementRenderer::GuiPolygonElementRenderer()
-				:points(0)
-				,pointCount(0)
-				,oldPenColor(0, 0, 0, 0)
-				,oldBrushColor(0, 0, 0, 0)
-			{
-			}
-
-			GuiPolygonElementRenderer::~GuiPolygonElementRenderer()
-			{
-				if(points) delete[] points;
-			}
-
-			void GuiPolygonElementRenderer::Render(Rect bounds)
-			{
-				if(pointCount>=3 && (oldPenColor.a || oldBrushColor.a))
-				{
-					vint offsetX=(bounds.Width()-minSize.x)/2+bounds.x1;
-					vint offsetY=(bounds.Height()-minSize.y)/2+bounds.y1;
-					for(vint i=0;i<pointCount;i++)
-					{
-						points[i].x+=(int)offsetX;
-						points[i].y+=(int)offsetY;
-					}
-					renderTarget->GetDC()->SetPen(pen);
-					renderTarget->GetDC()->SetBrush(brush);
-					renderTarget->GetDC()->PolyGon(points, pointCount);
-					for(vint i=0;i<pointCount;i++)
-					{
-						points[i].x-=(int)offsetX;
-						points[i].y-=(int)offsetY;
-					}
-				}
-			}
-
-			void GuiPolygonElementRenderer::OnElementStateChanged()
-			{
-				minSize=element->GetSize();
-				{
-					if(points)
-					{
-						delete[] points;
-						points=0;
-					}
-					pointCount=element->GetPointCount();
-					if(pointCount>0)
-					{
-						points=new POINT[pointCount];
-						for(vint i=0;i<pointCount;i++)
-						{
-							Point p=element->GetPoint(i);
-							points[i].x=(int)p.x;
-							points[i].y=(int)p.y;
-						}
-					}
-				}
-
-				auto resourceManager=GetWindowsGDIResourceManager();
-				if(oldPenColor!=element->GetBorderColor() || !pen)
-				{
-					resourceManager->DestroyGdiPen(oldPenColor);
-					oldPenColor=element->GetBorderColor();
-					pen=resourceManager->CreateGdiPen(oldPenColor);
-				}
-				if(oldBrushColor!=element->GetBackgroundColor() || !brush)
-				{
-					resourceManager->DestroyGdiPen(oldBrushColor);
-					oldBrushColor=element->GetBackgroundColor();
-					brush=resourceManager->CreateGdiBrush(oldBrushColor);
-				}
-			}
-
-/***********************************************************************
-GuiColorizedTextElementRenderer
-***********************************************************************/
-
-			void GuiColorizedTextElementRenderer::DestroyColors()
-			{
-				auto resourceManager=GetWindowsGDIResourceManager();
-				for(vint i=0;i<colors.Count();i++)
-				{
-					resourceManager->DestroyGdiBrush(colors[i].normal.background);
-					resourceManager->DestroyGdiBrush(colors[i].selectedFocused.background);
-					resourceManager->DestroyGdiBrush(colors[i].selectedUnfocused.background);
-				}
-			}
-
-			void GuiColorizedTextElementRenderer::ColorChanged()
-			{
-				auto resourceManager=GetWindowsGDIResourceManager();
-				ColorArray newColors;
-				newColors.Resize(element->GetColors().Count());
-				for(vint i=0;i<newColors.Count();i++)
-				{
-					text::ColorEntry entry=element->GetColors().Get(i);
-					ColorEntryResource newEntry;
-
-					newEntry.normal.text=entry.normal.text;
-					newEntry.normal.background=entry.normal.background;
-					newEntry.normal.backgroundBrush=resourceManager->CreateGdiBrush(newEntry.normal.background);
-					newEntry.selectedFocused.text=entry.selectedFocused.text;
-					newEntry.selectedFocused.background=entry.selectedFocused.background;
-					newEntry.selectedFocused.backgroundBrush=resourceManager->CreateGdiBrush(newEntry.selectedFocused.background);
-					newEntry.selectedUnfocused.text=entry.selectedUnfocused.text;
-					newEntry.selectedUnfocused.background=entry.selectedUnfocused.background;
-					newEntry.selectedUnfocused.backgroundBrush=resourceManager->CreateGdiBrush(newEntry.selectedUnfocused.background);
-					newColors[i]=newEntry;
-				}
-
-				DestroyColors();
-				CopyFrom(colors, newColors);
-			}
-
-			void GuiColorizedTextElementRenderer::FontChanged()
-			{
-				auto resourceManager = GetWindowsGDIResourceManager();
-				if (font)
-				{
-					element->GetLines().SetCharMeasurer(nullptr);
-					resourceManager->DestroyGdiFont(oldFont);
-					resourceManager->DestroyCharMeasurer(oldFont);
-					font = nullptr;
-				}
-				oldFont = element->GetFont();
-				font = resourceManager->CreateGdiFont(oldFont);
-				element->GetLines().SetCharMeasurer(resourceManager->CreateCharMeasurer(oldFont).Obj());
-			}
-
-			void GuiColorizedTextElementRenderer::InitializeInternal()
-			{
-				auto resourceManager=GetWindowsGDIResourceManager();
-				element->SetCallback(this);
-				oldCaretColor=element->GetCaretColor();
-				caretPen=resourceManager->CreateGdiPen(oldCaretColor);
-			}
-
-			void GuiColorizedTextElementRenderer::FinalizeInternal()
-			{
-				auto resourceManager=GetWindowsGDIResourceManager();
-				if(font)
-				{
-					resourceManager->DestroyGdiFont(oldFont);
-					resourceManager->DestroyCharMeasurer(oldFont);
-				}
-				resourceManager->DestroyGdiPen(oldCaretColor);
-				DestroyColors();
-			}
-
-			void GuiColorizedTextElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
-			{
-				element->GetLines().SetRenderTarget(newRenderTarget);
-			}
-
-			void GuiColorizedTextElementRenderer::Render(Rect bounds)
-			{
-				if (renderTarget)
-				{
-					WinDC* dc = renderTarget->GetDC();
-					dc->SetFont(font);
-
-					wchar_t passwordChar = element->GetPasswordChar();
-					Point viewPosition = element->GetViewPosition();
-					Rect viewBounds(viewPosition, bounds.GetSize());
-					vint startRow = element->GetLines().GetTextPosFromPoint(Point(viewBounds.x1, viewBounds.y1)).row;
-					vint endRow = element->GetLines().GetTextPosFromPoint(Point(viewBounds.x2, viewBounds.y2)).row;
-					TextPos selectionBegin = element->GetCaretBegin() < element->GetCaretEnd() ? element->GetCaretBegin() : element->GetCaretEnd();
-					TextPos selectionEnd = element->GetCaretBegin() > element->GetCaretEnd() ? element->GetCaretBegin() : element->GetCaretEnd();
-					bool focused = element->GetFocused();
-					Ptr<windows::WinBrush> lastBrush = 0;
-
-					for (vint row = startRow; row <= endRow; row++)
-					{
-						Rect startRect = element->GetLines().GetRectFromTextPos(TextPos(row, 0));
-						Point startPoint = startRect.LeftTop();
-						vint startColumn = element->GetLines().GetTextPosFromPoint(Point(viewBounds.x1, startPoint.y)).column;
-						vint endColumn = element->GetLines().GetTextPosFromPoint(Point(viewBounds.x2, startPoint.y)).column;
-
-						text::TextLine& line = element->GetLines().GetLine(row);
-						if (text::UTF16SPFirst(line.text[endColumn]) && endColumn + 1 < line.dataLength && text::UTF16SPSecond(line.text[startColumn + 1]))
-						{
-							endColumn++;
-						}
-
-						vint x = startColumn == 0 ? 0 : line.att[startColumn - 1].rightOffset;
-						for (vint column = startColumn; column <= endColumn; column++)
-						{
-							bool inSelection = false;
-							if (selectionBegin.row == selectionEnd.row)
-							{
-								inSelection = (row == selectionBegin.row && selectionBegin.column <= column && column < selectionEnd.column);
-							}
-							else if (row == selectionBegin.row)
-							{
-								inSelection = selectionBegin.column <= column;
-							}
-							else if (row == selectionEnd.row)
-							{
-								inSelection = column < selectionEnd.column;
-							}
-							else
-							{
-								inSelection = selectionBegin.row < row && row < selectionEnd.row;
-							}
-
-							bool crlf = column == line.dataLength;
-							vint colorIndex = crlf ? 0 : line.att[column].colorIndex;
-							if (colorIndex >= colors.Count())
-							{
-								colorIndex = 0;
-							}
-							ColorItemResource& color =
-								!inSelection ? colors[colorIndex].normal :
-								focused ? colors[colorIndex].selectedFocused :
-								colors[colorIndex].selectedUnfocused;
-							vint x2 = crlf ? x + startRect.Height() / 2 : line.att[column].rightOffset;
-							vint tx = x - viewPosition.x + bounds.x1;
-							vint ty = startPoint.y - viewPosition.y + bounds.y1;
-
-							if (color.background.a)
-							{
-								if (lastBrush != color.backgroundBrush)
-								{
-									lastBrush = color.backgroundBrush;
-									dc->SetBrush(lastBrush);
-								}
-								dc->FillRect(tx, ty, tx + (x2 - x), ty + startRect.Height());
-							}
-							if (!crlf)
-							{
-								vint count = text::UTF16SPFirst(line.text[column]) && column + 1 < line.dataLength && text::UTF16SPSecond(line.text[column + 1]) ? 2 : 1;
-								if (color.text.a)
-								{
-									dc->SetTextColor(RGB(color.text.r, color.text.g, color.text.b));
-									dc->DrawBuffer(tx, ty, (passwordChar ? &passwordChar : &line.text[column]), count);
-								}
-								if (count == 2) column++;
-							}
-							x = x2;
-						}
-					}
-
-					if (element->GetCaretVisible() && element->GetLines().IsAvailable(element->GetCaretEnd()))
-					{
-						Point caretPoint = element->GetLines().GetPointFromTextPos(element->GetCaretEnd());
-						vint height = element->GetLines().GetRowHeight();
-						dc->SetPen(caretPen);
-						dc->MoveTo(caretPoint.x - viewPosition.x + bounds.x1, caretPoint.y - viewPosition.y + bounds.y1 + 1);
-						dc->LineTo(caretPoint.x - viewPosition.x + bounds.x1, caretPoint.y + height - viewPosition.y + bounds.y1 - 1);
-						dc->MoveTo(caretPoint.x - 1 - viewPosition.x + bounds.x1, caretPoint.y - viewPosition.y + bounds.y1 + 1);
-						dc->LineTo(caretPoint.x - 1 - viewPosition.x + bounds.x1, caretPoint.y + height - viewPosition.y + bounds.y1 - 1);
-					}
-				}
-			}
-
-			void GuiColorizedTextElementRenderer::OnElementStateChanged()
-			{
-				Color caretColor=element->GetCaretColor();
-				if(oldCaretColor!=caretColor)
-				{
-					auto resourceManager=GetWindowsGDIResourceManager();
-					resourceManager->DestroyGdiPen(oldCaretColor);
-					oldCaretColor=caretColor;
-					caretPen=resourceManager->CreateGdiPen(oldCaretColor);
-				}
-			}
-
-/***********************************************************************
-GuiGDIElementRenderer
-***********************************************************************/
-
-			void GuiGDIElementRenderer::InitializeInternal()
-			{
-			}
-
-			void GuiGDIElementRenderer::FinalizeInternal()
-			{
-			}
-
-			void GuiGDIElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
-			{
-			}
-
-			GuiGDIElementRenderer::GuiGDIElementRenderer()
-			{
-			}
-
-			GuiGDIElementRenderer::~GuiGDIElementRenderer()
-			{
-			}
-			
-			void GuiGDIElementRenderer::Render(Rect bounds)
-			{
-				if(renderTarget)
-				{
-					renderTarget->PushClipper(bounds);
-					if(!renderTarget->IsClipperCoverWholeTarget())
-					{
-						WinDC* dc=renderTarget->GetDC();
-						GuiGDIElementEventArgs arguments(element, dc, bounds);
-						element->Rendering.Execute(arguments);
-					}
-					renderTarget->PopClipper();
-				}
-			}
-
-			void GuiGDIElementRenderer::OnElementStateChanged()
-			{
-			}
-		}
-	}
-}
-
-/***********************************************************************
-.\GRAPHICSELEMENT\WINDOWSGDI\GUIGRAPHICSUNISCRIBE.CPP
-***********************************************************************/
-
-#pragma comment(lib, "usp10.lib")
-
-namespace vl
-{
-	namespace presentation
-	{
-		namespace elements_windows_gdi
-		{
-			using namespace regex;
-
-/***********************************************************************
-UniscribeFragment
-***********************************************************************/
-
-			UniscribeFragment::UniscribeFragment(const WString& _text)
-				:text(_text)
-			{
-				colors.Add(UniscribeColorRange(0, text.Length()), UniscribeColor(Color(0, 0, 0), Color(0, 0, 0, 0)));
-			}
-
-			WString UniscribeFragment::GetFingerprint()
-			{
-				return fontStyle.fontFamily+L"#"
-					+itow(fontStyle.size)+L"#"
-					+(fontStyle.bold?L"B":L"N")+L"#"
-					+(fontStyle.italic?L"I":L"N")+L"#"
-					+(fontStyle.underline?L"U":L"N")+L"#"
-					+(fontStyle.strikeline?L"S":L"N")+L"#"
-					;
-			}
-
-			void UniscribeFragment::CutColors(vint start, vint length)
-			{
-				vint end=start+length;
-				for(vint i=colors.Count()-1;i>=0;i--)
-				{
-					UniscribeColorRange key=colors.Keys()[i];
-					if(key.start<end && start<key.end)
-					{
-						UniscribeColor value=colors.Values()[i];
-
-						vint s1=key.start;
-						vint s2=key.start>start?key.start:start;
-						vint s3=key.end<end?key.end:end;
-						vint s4=key.end;
-
-						colors.Remove(key);
-						if(s1<s2)
-						{
-							colors.Add(UniscribeColorRange(s1, s2), value);
-						}
-						if(s2<s3)
-						{
-							colors.Add(UniscribeColorRange(s2, s3), value);
-						}
-						if(s3<s4)
-						{
-							colors.Add(UniscribeColorRange(s3, s4), value);
-						}
-					}
-				}
-			}
-
-			void UniscribeFragment::UpdateOverlappedColors(vint start, vint length, Color UniscribeColor::* colorField, Color color)
-			{
-				vint end=start+length;
-				for(vint i=colors.Count()-1;i>=0;i--)
-				{
-					UniscribeColorRange key=colors.Keys()[i];
-					if(key.start<end && start<key.end)
-					{
-						UniscribeColor value=colors.Values()[i];
-						value.*colorField=color;
-						colors.Set(key, value);
-					}
-				}
-			}
-
-			void UniscribeFragment::DefragmentColors()
-			{
-				vint lastIndex=-1;
-				UniscribeColor lastColor;
-				for(vint i=colors.Count()-1;i>=-1;i--)
-				{
-					if(lastIndex==-1)
-					{
-						lastIndex=i;
-						if(i!=-1)
-						{
-							lastColor=colors.Values()[i];
-						}
-					}
-					else if(i==-1 || colors.Values()[i]!=lastColor)
-					{
-						if(lastIndex-i>0)
-						{
-							vint start=colors.Keys()[i+1].start;
-							vint end=colors.Keys()[lastIndex].end;
-							UniscribeColorRange key(start, end);
-
-							for(vint j=lastIndex;j>i;j--)
-							{
-								colors.Remove(colors.Keys()[j]);
-							}
-							colors.Add(key, lastColor);
-						}
-						lastIndex=i;
-						if(i!=-1)
-						{
-							lastColor=colors.Values()[i];
-						}
-					}
-				}
-			}
-
-			UniscribeColor UniscribeFragment::GetCharColor(vint charIndex)
-			{
-				vint start=0;
-				vint end=colors.Count()-1;
-				while(start<=end)
-				{
-					vint middle=(start+end)/2;
-					UniscribeColorRange key=colors.Keys()[middle];
-					if(charIndex<key.start)
-					{
-						end=middle-1;
-					}
-					else if(charIndex>=key.end)
-					{
-						start=middle+1;
-					}
-					else
-					{
-						return colors.Values()[middle];
-					}
-				}
-				return UniscribeColor();
-			}
-
-			Ptr<UniscribeFragment> UniscribeFragment::Copy(vint start, vint length)
-			{
-				vint end=start+length;
-				Ptr<UniscribeFragment> fragment=new UniscribeFragment(length==0?L"":text.Sub(start, length));
-				fragment->fontStyle=fontStyle;
-				fragment->fontObject=fontObject;
-
-				if(length!=0)
-				{
-					fragment->colors.Clear();
-					CutColors(start, length);
-					for(vint i=0;i<colors.Count();i++)
-					{
-						UniscribeColorRange key=colors.Keys()[i];
-						if(key.start<end && start<key.end)
-						{
-							UniscribeColor value=colors.Values()[i];
-							fragment->colors.Add(UniscribeColorRange(key.start-start, key.end-start), value);
-						}
-					}
-				}
-				return fragment;
-			}
-
-/***********************************************************************
-UniscribeGlyphData
-***********************************************************************/
-
-			UniscribeGlyphData::UniscribeGlyphData()
-			{
-				ClearUniscribeData(0, 0);
-			}
-
-			void UniscribeGlyphData::ClearUniscribeData(vint glyphCount, vint length)
-			{
-				glyphs.Resize(glyphCount);
-				glyphVisattrs.Resize(glyphCount);
-				glyphAdvances.Resize(glyphCount);
-				glyphOffsets.Resize(glyphCount);
-				charCluster.Resize(length);
-				memset(&runAbc, 0, sizeof(runAbc));
-				memset(&sa, 0, sizeof(sa));
-			}
-			
-			bool UniscribeGlyphData::BuildUniscribeData(WinDC* dc, SCRIPT_ITEM* scriptItem, SCRIPT_CACHE& scriptCache, const wchar_t* runText, vint length, List<vint>& breakings, List<bool>& breakingAvailabilities)
-			{
-				vint glyphCount=glyphs.Count();
-				bool resizeGlyphData=false;
-				if(glyphCount==0)
-				{
-					glyphCount=(vint)(1.5*length+16);
-					resizeGlyphData=true;
-				}
-				sa=scriptItem->a;
-				WinDC* dcParameter=0;
-				{
-					// generate shape information
-					if(resizeGlyphData)
-					{
-						glyphs.Resize(glyphCount);
-						glyphVisattrs.Resize(glyphCount);
-						charCluster.Resize(length);
-					}
-
-					while(true)
-					{
-						int availableGlyphCount=0;
-						HRESULT hr=ScriptShape(
-							(dcParameter?dcParameter->GetHandle():NULL),
-							&scriptCache,
-							runText,
-							(int)length,
-							(int)glyphCount,
-							&sa,
-							&glyphs[0],
-							&charCluster[0],
-							&glyphVisattrs[0],
-							&availableGlyphCount
-							);
-						if(hr==0)
-						{
-							glyphCount=availableGlyphCount;
-							break;
-						}
-						else if(hr==E_PENDING)
-						{
-							dcParameter=dc;
-						}
-						else if(hr==E_OUTOFMEMORY)
-						{
-							if(resizeGlyphData)
-							{
-								glyphCount+=length;
-							}
-							else
-							{
-								goto BUILD_UNISCRIBE_DATA_FAILED;
-							}
-						}
-						else if(hr==USP_E_SCRIPT_NOT_IN_FONT)
-						{
-							if(sa.eScript==SCRIPT_UNDEFINED)
-							{
-								goto BUILD_UNISCRIBE_DATA_FAILED;
-							}
-							else
-							{
-								sa.eScript=SCRIPT_UNDEFINED;
-							}
-						}
-						else
-						{
-							goto BUILD_UNISCRIBE_DATA_FAILED;
-						}
-					}
-					if(resizeGlyphData)
-					{
-						glyphs.Resize(glyphCount);
-						glyphVisattrs.Resize(glyphCount);
-					}
-				}
-
-				{
-					SCRIPT_FONTPROPERTIES fp;
-					memset(&fp, 0, sizeof(fp));
-					fp.cBytes=sizeof(fp);
-					HRESULT hr=ScriptGetFontProperties(
-							(dcParameter?dcParameter->GetHandle():NULL),
-							&scriptCache,
-							&fp
-							);
-					WORD invalidGlyph=fp.wgDefault;
-					if(hr!=S_OK)
-					{
-						invalidGlyph=0;
-					}
-
-					// generate breaking information
-					breakings.Add(0);
-					vint charIndex=0;
-					bool lastGlyphAvailable=false;
-					while(charIndex<length)
-					{
-						vint glyphIndex=charCluster[charIndex];
-						vint nextCharIndex=charIndex;
-						while(nextCharIndex<length && charCluster[nextCharIndex]==glyphIndex)
-						{
-							nextCharIndex++;
-						}
-
-						vint glyphCount=0;
-						if(nextCharIndex==length)
-						{
-							glyphCount=glyphs.Count()-glyphIndex;
-						}
-						else
-						{
-							glyphCount=charCluster[nextCharIndex]-glyphIndex;
-						}
-
-						if(scriptItem->a.fRTL)
-						{
-							glyphCount=-glyphCount;
-							glyphIndex-=glyphCount-1;
-						}
-
-						bool available=true;
-						for(vint i=0;i<glyphCount;i++)
-						{
-							if(glyphs[i+glyphIndex]==invalidGlyph)
-							{
-								available=false;
-							}
-						}
-
-						if(charIndex==0)
-						{
-							lastGlyphAvailable=available;
-							breakingAvailabilities.Add(available);
-						}
-						else if(lastGlyphAvailable!=available)
-						{
-							breakings.Add(charIndex);
-							lastGlyphAvailable=available;
-							breakingAvailabilities.Add(available);
-						}
-
-						charIndex=nextCharIndex;
-					}
-				}
-
-				if(breakings.Count()==1)
-				{
-					// generate place information
-					WinDC* dcParameter=0;
-					if(resizeGlyphData)
-					{
-						glyphAdvances.Resize(glyphCount);
-						glyphOffsets.Resize(glyphCount);
-					}
-					while(true)
-					{
-						HRESULT hr=ScriptPlace(
-							(dcParameter?dcParameter->GetHandle():NULL),
-							&scriptCache,
-							&glyphs[0],
-							(int)glyphCount,
-							&glyphVisattrs[0],
-							&sa,
-							&glyphAdvances[0],
-							&glyphOffsets[0],
-							&runAbc
-							);
-						if(hr==0)
-						{
-							break;
-						}
-						else if(hr==E_PENDING)
-						{
-							dcParameter=dc;
-						}
-						else
-						{
-							goto BUILD_UNISCRIBE_DATA_FAILED;
-						}
-					}
-				}
-
-				return true;
-	BUILD_UNISCRIBE_DATA_FAILED:
-				return false;
-			}
-
-			void UniscribeGlyphData::BuildUniscribeData(WinDC* dc, SCRIPT_ITEM* scriptItem, SCRIPT_LOGATTR* charLogattrs, const wchar_t* runText, vint length)
-			{
-				vint glyphCount=0;
-				for(vint i=0;i<length;i++)
-				{
-					if(i==0 || charLogattrs[i].fCharStop)
-					{
-						glyphCount++;
-					}
-				}
-
-				ClearUniscribeData(glyphCount, length);
-				sa=scriptItem->a;
-				memset(&glyphs[0], 0, sizeof(glyphs[0])*glyphs.Count());
-				memset(&glyphVisattrs[0], 0, sizeof(glyphVisattrs[0])*glyphVisattrs.Count());
-				memset(&glyphAdvances[0], 0, sizeof(glyphAdvances[0])*glyphAdvances.Count());
-				memset(&glyphOffsets[0], 0, sizeof(glyphOffsets[0])*glyphOffsets.Count());
-				memset(&charCluster[0], 0, sizeof(charCluster[0])*charCluster.Count());
-
-				for(vint i=0;i<glyphCount;i++)
-				{
-					glyphs[i]=(WORD)i;
-				}
-
-				if(sa.fRTL)
-				{
-					vint currentGlyphCount=0;
-					for(vint i=0;i<length;i++)
-					{
-						if(i==0 || charLogattrs[i].fCharStop)
-						{
-							currentGlyphCount++;
-						}
-						charCluster[i]=(WORD)(glyphCount-currentGlyphCount);
-					}
-				}
-				else
-				{
-					vint currentGlyphCount=0;
-					for(vint i=0;i<length;i++)
-					{
-						if(i==0 || charLogattrs[i].fCharStop)
-						{
-							currentGlyphCount++;
-						}
-						charCluster[i]=(WORD)(currentGlyphCount-1);
-					}
-				}
-
-				{
-					vint lastCharIndex=0;
-					vint lastGlyphIndex=0;
-					for(vint i=1;i<=length;i++)
-					{
-						if(i==0 || charLogattrs[i].fCharStop)
-						{
-							vint glyphLength=i-lastCharIndex;
-							const wchar_t* glyphText=sa.fRTL?runText+length-lastCharIndex-glyphLength:runText+lastCharIndex;
-							SIZE size=dc->MeasureBuffer(runText, glyphLength, -1);
-							glyphAdvances[lastGlyphIndex]=size.cx;
-							lastCharIndex=i;
-							lastGlyphIndex++;
-						}
-					}
-				}
-
-				for(vint i=0;i<glyphCount;i++)
-				{
-					runAbc.abcB+=glyphAdvances[i];
-				}
-			}
-
-/***********************************************************************
-UniscribeItem
-***********************************************************************/
-
-			UniscribeItem::UniscribeItem()
-				:startFromLine(0)
-				,length(0)
-				,itemText(0)
-			{
-			}
-
-			UniscribeItem::~UniscribeItem()
-			{
-			}
-
-			void UniscribeItem::ClearUniscribeData()
-			{
-				charLogattrs.Resize(0);
-			}
-
-			bool UniscribeItem::BuildUniscribeData()
-			{
-				// generate break information
-				charLogattrs.Resize(length);
-
-				HRESULT hr=ScriptBreak(
-					itemText,
-					(int)length,
-					&scriptItem.a,
-					&charLogattrs[0]
-					);
-				if(hr!=0)
-				{
-					goto BUILD_UNISCRIBE_DATA_FAILED;
-				}
-
-				return true;
-	BUILD_UNISCRIBE_DATA_FAILED:
-				ClearUniscribeData();
-				return false;
-			}
-
-			bool UniscribeItem::IsRightToLeft()
-			{
-				return scriptItem.a.fRTL;
-			}
-
-/***********************************************************************
-UniscribeRun
-***********************************************************************/
-
-			UniscribeRun::UniscribeRun()
-				:documentFragment(0)
-				,scriptItem(0)
-				,startFromLine(0)
-				,startFromFragment(0)
-				,length(0)
-				,runText(0)
-			{
-			}
-
-			UniscribeRun::~UniscribeRun()
-			{
-			}
-
-/***********************************************************************
-UniscribeTextRun
-***********************************************************************/
-
-			UniscribeTextRun::UniscribeTextRun()
-				:scriptCache(0)
-				,advance(0)
-				,needFontFallback(false)
-			{
-			}
-
-			UniscribeTextRun::~UniscribeTextRun()
-			{
-				ClearUniscribeData();
-			}
-
-			void UniscribeTextRun::ClearUniscribeData()
-			{
-				if(scriptCache)
-				{
-					ScriptFreeCache(&scriptCache);
-					scriptCache=0;
-				}
-				advance=0;
-				needFontFallback=false;
-				wholeGlyph.ClearUniscribeData(0, 0);
-			}
-
-			void UniscribeTextRun::SearchSingleGlyphCluster(vint charStart, vint& charLength, vint& cluster, vint& nextCluster)
-			{
-				cluster=wholeGlyph.charCluster[charStart];
-				vint nextChar=charStart;
-				while(nextChar<wholeGlyph.charCluster.Count())
-				{
-					if(wholeGlyph.charCluster[nextChar]!=cluster)
-					{
-						break;
-					}
-					nextChar++;
-				}
-				charLength=nextChar-charStart;
-				SearchGlyphCluster(charStart, charLength, cluster, nextCluster);
-			}
-
-			void UniscribeTextRun::SearchSingleChar(vint charStart, vint& charLength, vint& cluster, vint& nextCluster)
-			{
-				charLength=0;
-				vint startFromItem=charStart+startFromLine-scriptItem->startFromLine;
-				vint currentFromItem=startFromItem;
-				while(++currentFromItem<scriptItem->length)
-				{
-					if(scriptItem->charLogattrs[currentFromItem].fCharStop)
-					{
-						break;
-					}
-				}
-				charLength=currentFromItem-startFromItem;
-				SearchGlyphCluster(charStart, charLength, cluster, nextCluster);
-			}
-
-			void UniscribeTextRun::SearchGlyphCluster(vint charStart, vint charLength, vint& cluster, vint& nextCluster)
-			{
-				cluster=wholeGlyph.charCluster[charStart];
-				if(charStart+charLength>length)
-				{
-					charLength=length-charStart;
-				}
-				if(scriptItem->IsRightToLeft())
-				{
-					nextCluster
-						=charStart+charLength==length
-						?-1
-						:wholeGlyph.charCluster[charStart+charLength];
-				}
-				else
-				{
-					nextCluster
-						=charStart+charLength==length
-						?wholeGlyph.glyphs.Count()
-						:wholeGlyph.charCluster[charStart+charLength];
-				}
-			}
-
-			bool UniscribeTextRun::BuildUniscribeData(WinDC* dc, List<vint>& breakings)
-			{
-				ClearUniscribeData();
-
-				dc->SetFont(documentFragment->fontObject);
-				List<bool> breakingAvailabilities;
-				if(!wholeGlyph.BuildUniscribeData(dc, &scriptItem->scriptItem, scriptCache, runText, length, breakings, breakingAvailabilities))
-				{
-					goto BUILD_UNISCRIBE_DATA_FAILED;
-				}
-
-				if(breakings.Count()==1 && !breakingAvailabilities[0])
-				{
-					SCRIPT_LOGATTR* charLogattrs=&scriptItem->charLogattrs[0]+startFromLine-scriptItem->startFromLine;
-					wholeGlyph.BuildUniscribeData(dc, &scriptItem->scriptItem, charLogattrs, runText, length);
-					needFontFallback=true;
-				}
-				advance=wholeGlyph.runAbc.abcA+wholeGlyph.runAbc.abcB+wholeGlyph.runAbc.abcC;
-
-				return true;
-	BUILD_UNISCRIBE_DATA_FAILED:
-				ClearUniscribeData();
-				return false;
-			}
-
-			vint UniscribeTextRun::SumWidth(vint charStart, vint charLength)
-			{
-				vint cluster=0;
-				vint nextCluster=0;
-				SearchGlyphCluster(charStart, charLength, cluster, nextCluster);
-				vint width=0;
-				if(scriptItem->IsRightToLeft())
-				{
-					for(vint i=cluster;i>nextCluster;i--)
-					{
-						width+=wholeGlyph.glyphAdvances[i];
-					}
-				}
-				else
-				{
-					for(vint i=cluster;i<nextCluster;i++)
-					{
-						width+=wholeGlyph.glyphAdvances[i];
-					}
-				}
-				return width;
-			}
-
-			vint UniscribeTextRun::SumHeight()
-			{
-				return documentFragment->fontStyle.size;
-			}
-
-			vint UniscribeTextRun::SumTextHeight()
-			{
-				return SumHeight();
-			}
-
-			void UniscribeTextRun::SearchForLineBreak(vint tempStart, vint maxWidth, bool firstRun, vint& charLength, vint& charAdvances)
-			{
-				vint width=0;
-				charLength=0;
-				charAdvances=0;
-				for(vint i=tempStart;i<=length;)
-				{
-					if(i==length || scriptItem->charLogattrs[i+(startFromLine-scriptItem->startFromLine)].fSoftBreak==TRUE)
-					{
-						if(width<=maxWidth || (firstRun && charLength==0))
-						{
-							charLength=i-tempStart;
-							charAdvances=width;
-						}
-						else
-						{
-							return;
-						}
-					}
-					if(i==length) break;
-
-					vint cluster=wholeGlyph.charCluster[i];
-					vint clusterLength=1;
-					while(i+clusterLength<length)
-					{
-						if(wholeGlyph.charCluster[i+clusterLength]==cluster)
-						{
-							clusterLength++;
-						}
-						else
-						{
-							break;
-						}
-					}
-
-					if(scriptItem->IsRightToLeft())
-					{
-						vint nextCluster
-							=i+clusterLength==length
-							?-1
-							:wholeGlyph.charCluster[i+clusterLength];
-						for(vint j=cluster;j>nextCluster;j--)
-						{
-							width+=wholeGlyph.glyphAdvances[j];
-						}
-					}
-					else
-					{
-						vint nextCluster
-							=i+clusterLength==length
-							?wholeGlyph.glyphs.Count()
-							:wholeGlyph.charCluster[i+clusterLength];
-						for(vint j=cluster;j<nextCluster;j++)
-						{
-							width+=wholeGlyph.glyphAdvances[j];
-						}
-					}
-					i+=clusterLength;
-				}
-			}
-
-			void UniscribeTextRun::Render(IRendererCallback* callback, vint fragmentBoundsIndex, vint offsetX, vint offsetY, bool renderBackground)
-			{
-				auto dc = callback->GetWinDC();
-				RunFragmentBounds& fragment=fragmentBounds[fragmentBoundsIndex];
-				if(fragment.length==0) return;
-
-				vint startFromFragmentBounds=0;
-				vint accumulatedWidth=0;
-				while(startFromFragmentBounds<fragment.length)
-				{
-					vint charIndex=fragment.startFromRun+startFromFragmentBounds;
-					vint charLength=0;
-					vint cluster=0;
-					vint nextCluster=0;
-					SearchSingleGlyphCluster(charIndex, charLength, cluster, nextCluster);
-
-					vint clusterStart=0;
-					vint clusterCount=0;
-					if(scriptItem->IsRightToLeft())
-					{
-						clusterStart=nextCluster+1;
-						clusterCount=cluster-nextCluster;
-					}
-					else
-					{
-						clusterStart=cluster;
-						clusterCount=nextCluster-cluster;
-					}
-
-					vint clusterWidth=0;
-					for(vint i=0;i<clusterCount;i++)
-					{
-						clusterWidth+=wholeGlyph.glyphAdvances[i+clusterStart];
-					}
-
-					vint x=0;
-					if(scriptItem->IsRightToLeft())
-					{
-						x=fragment.bounds.x2-accumulatedWidth-clusterWidth;
-					}
-					else
-					{
-						x=fragment.bounds.x1+accumulatedWidth;
-					}
-					RECT rect;
-					rect.left=(int)(x+offsetX);
-					rect.top=(int)(fragment.bounds.Top()+offsetY);
-					rect.right=(int)(rect.left+clusterWidth);
-					rect.bottom=(int)(rect.top+fragment.bounds.Height()*1.5);
-
-					UniscribeColor color=documentFragment->GetCharColor(charIndex+startFromFragment);
-					if(renderBackground)
-					{
-						Color backgroundColor=color.backgroundColor;
-
-						if(backgroundColor.a>0)
-						{
-							Ptr<WinBrush> brush=new WinBrush(RGB(backgroundColor.r, backgroundColor.g, backgroundColor.b));
-							dc->SetBrush(brush);
-							dc->FillRect(rect);
-						}
-					}
-					else
-					{
-						Color fontColor=color.fontColor;
-						dc->SetFont(documentFragment->fontObject);
-						dc->SetTextColor(RGB(fontColor.r, fontColor.g, fontColor.b));
-
-						if(needFontFallback)
-						{
-							dc->DrawBuffer(rect.left, rect.top, runText+charIndex, charLength);
-						}
-						else
-						{
-							HRESULT hr=ScriptTextOut(
-								dc->GetHandle(),
-								&scriptCache,
-								rect.left,
-								rect.top,
-								0,
-								&rect,
-								&wholeGlyph.sa,
-								NULL,
-								0,
-								&wholeGlyph.glyphs[clusterStart],
-								(int)(clusterCount),
-								&wholeGlyph.glyphAdvances[clusterStart],
-								NULL,
-								&wholeGlyph.glyphOffsets[clusterStart]
-								);
-						}
-					}
-
-					startFromFragmentBounds+=charLength;
-					accumulatedWidth+=clusterWidth;
-				}
-			}
-
-/***********************************************************************
-UniscribeEmbeddedObjectRun
-***********************************************************************/
-
-			UniscribeEmbeddedObjectRun::UniscribeEmbeddedObjectRun()
-			{
-			}
-
-			UniscribeEmbeddedObjectRun::~UniscribeEmbeddedObjectRun()
-			{
-			}
-
-			bool UniscribeEmbeddedObjectRun::BuildUniscribeData(WinDC* dc, List<vint>& breakings)
-			{
-				breakings.Add(0);
-				return true;
-			}
-
-			vint UniscribeEmbeddedObjectRun::SumWidth(vint charStart, vint charLength)
-			{
-				return properties.size.x;
-			}
-
-			vint UniscribeEmbeddedObjectRun::SumHeight()
-			{
-				return properties.size.y;
-			}
-
-			vint UniscribeEmbeddedObjectRun::SumTextHeight()
-			{
-				return 0;
-			}
-
-			void UniscribeEmbeddedObjectRun::SearchForLineBreak(vint tempStart, vint maxWidth, bool firstRun, vint& charLength, vint& charAdvances)
-			{
-				if (firstRun || properties.size.x <= maxWidth)
-				{
-					charLength = length - tempStart;
-					charAdvances = properties.size.x;
-				}
-				else
-				{
-					charLength = 0;
-					charAdvances = 0;
-				}
-			}
-
-			void UniscribeEmbeddedObjectRun::Render(IRendererCallback* callback, vint fragmentBoundsIndex, vint offsetX, vint offsetY, bool renderBackground)
-			{
-				auto dc = callback->GetWinDC();
-				RunFragmentBounds& fragment=fragmentBounds[fragmentBoundsIndex];
-				if(renderBackground)
-				{
-					RECT rect;
-					rect.left=(int)(fragment.bounds.Left()+offsetX)-2;
-					rect.top=(int)(fragment.bounds.Top()+offsetY)-2;
-					rect.right=(int)(fragment.bounds.Right()+offsetX)+2;
-					rect.bottom=(int)(fragment.bounds.Bottom()+offsetY)+2;
-
-					Color backgroundColor=documentFragment->colors.Values()[0].backgroundColor;
-
-					if(backgroundColor.a>0)
-					{
-						Ptr<WinBrush> brush=new WinBrush(RGB(backgroundColor.r, backgroundColor.g, backgroundColor.b));
-						dc->SetBrush(brush);
-						dc->FillRect(rect);
-					}
-				}
-				else
-				{
-					if (properties.backgroundImage)
-					{
-						Rect bounds=fragment.bounds;
-						bounds.x1+=offsetX;
-						bounds.x2+=offsetX;
-						bounds.y1+=offsetY;
-						bounds.y2+=offsetY;
-						IGuiGraphicsRenderer* renderer=properties.backgroundImage->GetRenderer();
-						if(renderer)
-						{
-							renderer->Render(bounds);
-						}
-					}
-
-					if (properties.callbackId != -1)
-					{
-						if (auto paragraphCallback = callback->GetParagraphCallback())
-						{
-							auto offset = callback->GetParagraphOffset();
-							vint x = fragment.bounds.x1 + offsetX - offset.x;
-							vint y = fragment.bounds.y1 + offsetY - offset.y;
-							auto size = paragraphCallback->OnRenderInlineObject(properties.callbackId, Rect(Point(x, y), fragment.bounds.GetSize()));
-							properties.size = size;
-						}
-					}
-				}
-			}
-
-/***********************************************************************
-UniscribeVirtualLine
-***********************************************************************/
-
-			UniscribeVirtualLine::UniscribeVirtualLine()
-				:startFromLine(0)
-				,length(0)
-				,runText(0)
-				,firstRunIndex(-1)
-				,firstRunBoundsIndex(-1)
-				,lastRunIndex(-1)
-				,lastRunBoundsIndex(-1)
-			{
-			}
-
-/***********************************************************************
-UniscribeLine
-***********************************************************************/
-
-			UniscribeLine::UniscribeLine()
-				:startFromParagraph(0)
-			{
-			}
-
-			void UniscribeLine::ClearUniscribeData()
-			{
-				scriptItems.Clear();
-				scriptRuns.Clear();
-				virtualLines.Clear();
-			}
-
-			bool UniscribeLine::BuildUniscribeData(WinDC* dc)
-			{
-				lineText=L"";
-				ClearUniscribeData();
-				vint current=0;
-				List<vint> fragmentStarts;
-				for (auto fragment : documentFragments)
-				{
-					fragmentStarts.Add(current);
-					lineText+=fragment->text;
-					current+=fragment->text.Length();
-				}
-
-				if(lineText!=L"")
-				{
-					{
-						SCRIPT_DIGITSUBSTITUTE sds={0};
-						ScriptRecordDigitSubstitution(LOCALE_USER_DEFAULT, &sds);
-						SCRIPT_CONTROL sc={0};
-						SCRIPT_STATE ss={0};
-						ScriptApplyDigitSubstitution(&sds, &sc, &ss);
-
-						// itemize a line
-						Array<SCRIPT_ITEM> items(lineText.Length()+2);
-						int scriptItemCount=0;
-						HRESULT hr=ScriptItemize(
-							lineText.Buffer(),
-							(int)lineText.Length(),
-							(int)(items.Count()-1),
-							&sc,
-							&ss,
-							&items[0],
-							&scriptItemCount
-							);
-						if(hr!=0)
-						{
-							goto BUILD_UNISCRIBE_DATA_FAILED;
-						}
-
-						items.Resize(scriptItemCount+1);
-						for(vint i=0;i<scriptItemCount;i++)
-						{
-							SCRIPT_ITEM item=items[i];
-							Ptr<UniscribeItem> scriptItem=new UniscribeItem;
-							scriptItem->startFromLine=item.iCharPos;
-							scriptItem->length=items[i+1].iCharPos-item.iCharPos;
-							scriptItem->itemText=lineText.Buffer()+item.iCharPos;
-							scriptItem->scriptItem=item;
-
-							if(!scriptItem->BuildUniscribeData())
-							{
-								goto BUILD_UNISCRIBE_DATA_FAILED;
-							}
-							scriptItems.Add(scriptItem);
-						}
-					}
-					{
-						// use item and document fragment information to produce runs
-						// one item is constructed by one or more runs
-						// characters in each run contains the same style
-						vint fragmentIndex=0;
-						vint fragmentStart=0;
-						for(vint i=0;i<scriptItems.Count();i++)
-						{
-							Ptr<UniscribeItem> scriptItem=scriptItems[i];
-							vint currentStart=scriptItem->startFromLine;
-
-							while(currentStart<scriptItem->startFromLine+scriptItem->length)
-							{
-								UniscribeFragment* fragment=0;
-								vint itemRemainLength=scriptItem->length-(currentStart-scriptItem->startFromLine);
-								vint fragmentRemainLength=0;
-								while(true)
-								{
-									fragment=documentFragments[fragmentIndex].Obj();
-									fragmentRemainLength=fragment->text.Length()-(currentStart-fragmentStart);
-									if(fragmentRemainLength<=0)
-									{
-										fragmentStart+=fragment->text.Length();
-										fragmentIndex++;
-									}
-									else
-									{
-										break;
-									}
-								}
-								vint shortLength=itemRemainLength<fragmentRemainLength?itemRemainLength:fragmentRemainLength;
-								bool skip=false;
-								{
-									vint elementCurrent=0;
-									for (auto elementFragment : documentFragments)
-									{
-										vint elementLength=elementFragment->text.Length();
-										if(elementFragment->inlineObjectProperties)
-										{
-											if(elementCurrent<=currentStart && currentStart+shortLength<=elementCurrent+elementLength)
-											{
-												if(elementCurrent==currentStart)
-												{
-													auto run=MakePtr<UniscribeEmbeddedObjectRun>();
-													run->documentFragment=fragment;
-													run->scriptItem=scriptItem.Obj();
-													run->startFromLine=currentStart;
-													run->startFromFragment=currentStart-fragmentStarts[fragmentIndex];
-													run->length=elementLength;
-													run->runText=lineText.Buffer()+currentStart;
-													run->properties=elementFragment->inlineObjectProperties.Value();
-													scriptRuns.Add(run);
-												}
-												skip=true;
-												break;
-											}
-										}
-										elementCurrent+=elementLength;
-									}
-								}
-								if(!skip)
-								{
-									Ptr<UniscribeTextRun> run=new UniscribeTextRun;
-									run->documentFragment=fragment;
-									run->scriptItem=scriptItem.Obj();
-									run->startFromLine=currentStart;
-									run->startFromFragment=currentStart-fragmentStarts[fragmentIndex];
-									run->length=shortLength;
-									run->runText=lineText.Buffer()+currentStart;
-									scriptRuns.Add(run);
-								}
-								currentStart+=shortLength;
-							}
-						}
-
-						// for each run, generate shape information
-						vint runIndex=0;
-						while(runIndex<scriptRuns.Count())
-						{
-							Ptr<UniscribeRun> run=scriptRuns[runIndex];
-							List<vint> breakings;
-							if(!run->BuildUniscribeData(dc, breakings))
-							{
-								goto BUILD_UNISCRIBE_DATA_FAILED;
-							}
-							else if(breakings.Count()>1)
-							{
-								if(Ptr<UniscribeTextRun> textRun=run.Cast<UniscribeTextRun>())
-								{
-									scriptRuns.RemoveAt(runIndex);
-									for(vint i=0;i<breakings.Count();i++)
-									{
-										vint start=breakings[i];
-										vint length=i==breakings.Count()-1?textRun->length-start:breakings[i+1]-start;
-
-										Ptr<UniscribeTextRun> newRun=new UniscribeTextRun;
-										newRun->documentFragment=run->documentFragment;
-										newRun->scriptItem=run->scriptItem;
-										newRun->startFromLine=start+run->startFromLine;
-										newRun->startFromFragment=start+run->startFromFragment;
-										newRun->length=length;
-										newRun->runText=run->runText+newRun->startFromLine-run->startFromLine;
-										scriptRuns.Insert(runIndex+i, newRun);
-									}
-									continue;
-								}
-							}
-							runIndex++;
-						}
-					}
-				}
-				return true;
-	BUILD_UNISCRIBE_DATA_FAILED:
-				ClearUniscribeData();
-				return false;
-			}
-
-			void UniscribeLine::Layout(vint availableWidth, Alignment alignment, vint top, vint& totalHeight)
-			{
-				vint cx=0;
-				vint cy=top;
-				virtualLines.Clear();
-				if(scriptRuns.Count()==0)
-				{
-					// if this line doesn't contains any run, skip and render a blank line
-					vint height=(vint)(documentFragments[0]->fontStyle.size*1.5);
-					bounds=Rect(Point(cx, cy), Size(0, height));
-					cy+=height;
-				}
-				else
-				{
-					for (auto run : scriptRuns)
-					{
-						run->fragmentBounds.Clear();
-					}
-
-					// render this line into lines with auto line wrapping
-					vint startRun=0;
-					vint startRunOffset=0;
-					vint lastRun=0;
-					vint lastRunOffset=0;
-					vint currentWidth=0;
-
-					while(startRun<scriptRuns.Count())
-					{
-						vint currentWidth=0;
-						bool firstRun=true;
-						// search for a range to fit in the given width
-						for(vint i=startRun;i<scriptRuns.Count();i++)
-						{
-							vint charLength=0;
-							vint charAdvances=0;
-							UniscribeRun* run=scriptRuns[i].Obj();
-							run->SearchForLineBreak(lastRunOffset, availableWidth-currentWidth, firstRun, charLength, charAdvances);
-							firstRun=false;
-
-							if(charLength==run->length-lastRunOffset)
-							{
-								lastRun=i+1;
-								lastRunOffset=0;
-								currentWidth+=charAdvances;
-							}
-							else
-							{
-								lastRun=i;
-								lastRunOffset=lastRunOffset+charLength;
-								break;
-							}
-						}
-
-						// if the range is empty, than this should be the end of line, ignore it
-						if(startRun<lastRun || (startRun==lastRun && startRunOffset<lastRunOffset))
-						{
-							// calculate the max line height in this range;
-							vint availableLastRun=lastRun<scriptRuns.Count()-1?lastRun:scriptRuns.Count()-1;
-							vint maxHeight=0;
-							vint maxTextHeight=0;
-							for(vint i=startRun;i<=availableLastRun;i++)
-							{
-								if(i==lastRun && lastRunOffset==0)
-								{
-									break;
-								}
-								{
-									vint size=scriptRuns[i]->SumHeight();
-									if(maxHeight<size) maxHeight=size;
-								}
-								{
-									vint size=scriptRuns[i]->SumTextHeight();
-									if(maxTextHeight<size) maxTextHeight=size;
-								}
-							}
-
-							// determine the rendering order for all runs inside this range
-							Array<BYTE> levels(availableLastRun-startRun+1);
-							Array<int> runVisualToLogical(levels.Count());
-							Array<int> runLogicalToVisual(levels.Count());
-							for(vint i=startRun;i<=availableLastRun;i++)
-							{
-								levels[i-startRun]=scriptRuns[i]->scriptItem->scriptItem.a.s.uBidiLevel;
-							}
-							ScriptLayout((int)levels.Count(), &levels[0], &runVisualToLogical[0], &runLogicalToVisual[0]);
-
-							// render all runs inside this range
-							vint startRunFragmentCount=-1;
-							for(vint i=startRun;i<=availableLastRun;i++)
-							{
-								vint runIndex=runVisualToLogical[i-startRun]+startRun;
-								UniscribeRun* run=scriptRuns[runIndex].Obj();
-								vint start=runIndex==startRun?startRunOffset:0;
-								vint end=runIndex==lastRun?lastRunOffset:run->length;
-								vint length=end-start;
-
-								if(runIndex==startRun)
-								{
-									startRunFragmentCount=run->fragmentBounds.Count();
-								}
-
-								UniscribeRun::RunFragmentBounds fragmentBounds;
-								fragmentBounds.startFromRun=start;
-								fragmentBounds.length=length;
-								fragmentBounds.bounds=Rect(
-									Point(cx, cy+maxHeight-run->SumHeight()),
-									Size(run->SumWidth(start, length), run->SumHeight())
-									);
-								run->fragmentBounds.Add(fragmentBounds);
-
-								cx+=run->SumWidth(start, length);
-							}
-
-							// adjust alignment
-							vint cxOffset=0;
-							switch(alignment)
-							{
-							case Alignment::Center:
-								cxOffset=(availableWidth-cx)/2;
-								break;
-							case Alignment::Right:
-								cxOffset=availableWidth-cx;
-								break;
-							}
-
-							// shift all bounds using alignment
-							if(cxOffset!=0)
-							{
-								for(vint i=startRun;i<=availableLastRun;i++)
-								{
-									UniscribeRun* run=scriptRuns[i].Obj();
-									for(vint j=(i==startRun?startRunFragmentCount:0);j<run->fragmentBounds.Count();j++)
-									{
-										UniscribeRun::RunFragmentBounds& fragmentBounds=run->fragmentBounds[j];
-										fragmentBounds.bounds.x1+=cxOffset;
-										fragmentBounds.bounds.x2+=cxOffset;
-									}
-								}
-							}
-
-							// create a virtual line
-							{
-								Ptr<UniscribeVirtualLine> virtualLine=new UniscribeVirtualLine;
-								virtualLine->firstRunIndex=startRun;
-								virtualLine->firstRunBoundsIndex=startRunFragmentCount;
-								virtualLine->lastRunIndex=availableLastRun;
-								virtualLine->lastRunBoundsIndex=scriptRuns[availableLastRun]->fragmentBounds.Count()-1;
-
-								UniscribeRun* firstRun=scriptRuns[virtualLine->firstRunIndex].Obj();
-								UniscribeRun* lastRun=scriptRuns[virtualLine->lastRunIndex].Obj();
-								UniscribeRun::RunFragmentBounds& firstBounds=firstRun->fragmentBounds[virtualLine->firstRunBoundsIndex];
-								UniscribeRun::RunFragmentBounds& lastBounds=lastRun->fragmentBounds[virtualLine->lastRunBoundsIndex];
-								
-								virtualLine->startFromLine=firstRun->startFromLine+firstBounds.startFromRun;
-								virtualLine->length=lastRun->startFromLine+lastBounds.startFromRun+lastBounds.length-virtualLine->startFromLine;
-								virtualLine->runText=lineText.Buffer()+virtualLine->startFromLine;
-
-								bool updateBounds=false;
-								for(vint i=startRun;i<=availableLastRun;i++)
-								{
-									UniscribeRun* run=scriptRuns[i].Obj();
-									for(vint j=(i==startRun?startRunFragmentCount:0);j<run->fragmentBounds.Count();j++)
-									{
-										UniscribeRun::RunFragmentBounds& fragmentBounds=run->fragmentBounds[j];
-										if(updateBounds)
-										{
-											if(virtualLine->bounds.x1>fragmentBounds.bounds.x1) virtualLine->bounds.x1=fragmentBounds.bounds.x1;
-											if(virtualLine->bounds.x2<fragmentBounds.bounds.x2) virtualLine->bounds.x2=fragmentBounds.bounds.x2;
-											if(virtualLine->bounds.y1>fragmentBounds.bounds.y1) virtualLine->bounds.y1=fragmentBounds.bounds.y1;
-											if(virtualLine->bounds.y2<fragmentBounds.bounds.y2) virtualLine->bounds.y2=fragmentBounds.bounds.y2;
-										}
-										else
-										{
-											virtualLine->bounds=fragmentBounds.bounds;
-											updateBounds=true;
-										}
-									}
-								}
-								virtualLines.Add(virtualLine);
-							}
-
-							cx=0;
-							cy+=(vint)(maxHeight + maxTextHeight*0.5);
-						}
-
-						startRun=lastRun;
-						startRunOffset=lastRunOffset;
-					}
-
-					// calculate line bounds
-					vint minX=0;
-					vint minY=top;
-					vint maxX=0;
-					vint maxY=top;
-					for (auto run : scriptRuns)
-					{
-						for (auto fragmentBounds : run->fragmentBounds)
-						{
-							Rect bounds=fragmentBounds.bounds;
-							if(minX>bounds.Left()) minX=bounds.Left();
-							if(minY>bounds.Top()) minX=bounds.Top();
-							if(maxX<bounds.Right()) maxX=bounds.Right();
-							if(maxY<bounds.Bottom()) maxY=bounds.Bottom();
-						}
-					}
-					bounds=Rect(minX, minY, maxX, maxY);
-				}
-				totalHeight=cy;
-			}
-
-			void UniscribeLine::Render(UniscribeRun::IRendererCallback* callback, vint offsetX, vint offsetY, bool renderBackground)
-			{
-				for (auto run : scriptRuns)
-				{
-					for(vint i=0;i<run->fragmentBounds.Count();i++)
-					{
-						run->Render(callback, i, offsetX, offsetY, renderBackground);
-					}
-				}
-			}
-
-/***********************************************************************
-UniscribeParagraph
-***********************************************************************/
-
-			UniscribeParagraph::UniscribeParagraph()
-				:lastAvailableWidth(-1)
-				,paragraphAlignment(Alignment::Left)
-				,built(false)
-			{
-			}
-
-			UniscribeParagraph::~UniscribeParagraph()
-			{
-				ClearUniscribeData();
-			}
-
-/***********************************************************************
-UniscribeParagraph (Initialization)
-***********************************************************************/
-
-			void UniscribeParagraph::ClearUniscribeData()
-			{
-				for (auto fragment : documentFragments)
-				{
-					GetWindowsGDIResourceManager()->DestroyGdiFont(fragment->fontStyle);
-					fragment->fontObject=0;
-				}
-				lines.Clear();
-				lastAvailableWidth=-1;
-			}
-
-			bool UniscribeParagraph::BuildUniscribeData(WinDC* dc)
-			{
-				if(built) return false;
-
-				built=true;
-				ClearUniscribeData();
-				Dictionary<WString, Ptr<WinFont>> fonts;
-				for (auto fragment : documentFragments)
-				{
-					if(!fragment->fontObject)
-					{
-						WString fragmentFingerPrint=fragment->GetFingerprint();
-						vint index=fonts.Keys().IndexOf(fragmentFingerPrint);
-						if(index==-1)
-						{
-							fragment->fontObject=GetWindowsGDIResourceManager()->CreateGdiFont(fragment->fontStyle);
-							fonts.Add(fragmentFingerPrint, fragment->fontObject);
-						}
-						else
-						{
-							fragment->fontObject=fonts.Values().Get(index);
-						}
-					}
-				}
-				{
-					Regex regexLine(L"\r\n");
-					Ptr<UniscribeLine> line;
-					for (auto fragment : documentFragments)
-					{
-						if(fragment->inlineObjectProperties)
-						{
-							if(!line)
-							{
-								line=new UniscribeLine;
-								lines.Add(line);
-							}
-							line->documentFragments.Add(fragment);
-						}
-						else
-						{
-							RegexMatch::List textLines;
-							regexLine.Split(fragment->text, true, textLines);
-
-							for(vint i=0;i<textLines.Count();i++)
-							{
-								RegexString rs=textLines[i]->Result();
-								WString text=rs.Value();
-								if(i>0)
-								{
-									line=0;
-								}
-								if(!line)
-								{
-									line=new UniscribeLine;
-									lines.Add(line);
-								}
-
-								if(textLines.Count()==1)
-								{
-									line->documentFragments.Add(fragment);
-								}
-								else
-								{
-									Ptr<UniscribeFragment> runFragment=fragment->Copy(rs.Start(), rs.Length());
-									line->documentFragments.Add(runFragment);
-								}
-							}
-						}
-					}
-				}
-
-				for (auto line : lines)
-				{
-					line->BuildUniscribeData(dc);
-				}
-
-				vint lineStart=0;
-				for (auto line : lines)
-				{
-					line->startFromParagraph=lineStart;
-					lineStart+=line->lineText.Length()+2;
-				}
-
-				return true;
-			}
-
-			void UniscribeParagraph::Layout(vint availableWidth, Alignment alignment)
-			{
-				if(lastAvailableWidth==availableWidth && paragraphAlignment==alignment)
-				{
-					return;
-				}
-				lastAvailableWidth=availableWidth;
-				paragraphAlignment=alignment;
-
-				vint cy=0;
-				for (auto line : lines)
-				{
-					line->Layout(availableWidth, alignment, cy, cy);
-				}
-
-				// calculate paragraph bounds
-				vint minX=0;
-				vint minY=0;
-				vint maxX=0;
-				vint maxY=0;
-				for (auto line : lines)
-				{
-					Rect bounds=line->bounds;
-					if(minX>bounds.Left()) minX=bounds.Left();
-					if(minY>bounds.Top()) minX=bounds.Top();
-					if(maxX<bounds.Right()) maxX=bounds.Right();
-					if(maxY<bounds.Bottom()) maxY=bounds.Bottom();
-				}
-
-				vint offsetY=0;
-				for (auto line : lines)
-				{
-					for (auto fragment : line->documentFragments)
-					{
-						vint size=fragment->fontStyle.size/3;
-						if(size>offsetY)
-						{
-							offsetY=size;
-						}
-					}
-				}
-				bounds=Rect(minX, minY, maxX, maxY+offsetY);
-			}
-
-			void UniscribeParagraph::Render(UniscribeRun::IRendererCallback* callback, bool renderBackground)
-			{
-				auto offset = callback->GetParagraphOffset();
-				for (auto line : lines)
-				{
-					line->Render(callback, offset.x, offset.y, renderBackground);
-				}
-			}
-
-/***********************************************************************
-UniscribeParagraph (Formatting Helper)
-***********************************************************************/
-
-			void UniscribeParagraph::SearchFragment(vint start, vint length, vint& fs, vint& ss, vint& fe, vint& se)
-			{
-				fs=-1;
-				ss=-1;
-				fe=-1;
-				se=-1;
-				vint current=0;
-				for(vint i=0;i<documentFragments.Count();i++)
-				{
-					vint fragmentLength=documentFragments[i]->text.Length();
-					if(current<=start && start<current+fragmentLength)
-					{
-						fs=i;
-						ss=start-current;
-					}
-					if(current<=start+length && start+length<=current+fragmentLength)
-					{
-						fe=i;
-						se=start+length-current;
-					}
-					if(fs!=-1 && fe!=-1)
-					{
-						break;
-					}
-					current+=fragmentLength;
-				}
-			}
-
-			bool UniscribeParagraph::CutFragment(vint fs, vint ss, vint fe, vint se, vint& f1, vint& f2)
-			{
-				f1=-1;
-				f2=-1;
-				if(fs==fe)
-				{
-					Ptr<UniscribeFragment> fragment=documentFragments[fs];
-					if(fragment->inlineObjectProperties)
-					{
-						if(ss==0 && se==fragment->text.Length())
-						{
-							f1=f2=fs;
-							return true;
-						}
-						else
-						{
-							return false;
-						}
-					}
-				}
-				for(vint i=fs;i<=fe;i++)
-				{
-					if(documentFragments[i]->inlineObjectProperties)
-					{
-						return false;
-					}
-				}
-				if(fs==fe)
-				{
-					Ptr<UniscribeFragment> fragment=documentFragments[fs];
-					vint length=fragment->text.Length();
-					if(ss==0)
-					{
-						if(se==length)
-						{
-							f1=f2=fs;
-						}
-						else
-						{
-							f1=f2=fs;
-							Ptr<UniscribeFragment> leftFragment=fragment->Copy(0, se);
-							Ptr<UniscribeFragment> rightFragment=fragment->Copy(se, length-se);
-							documentFragments.RemoveAt(fs);
-							documentFragments.Insert(fs, leftFragment);
-							documentFragments.Insert(fs+1, rightFragment);
-						}
-					}
-					else
-					{
-						if(se==length)
-						{
-							f1=fs+1;
-							f2=fs+1;
-							Ptr<UniscribeFragment> leftFragment=fragment->Copy(0, ss);
-							Ptr<UniscribeFragment> rightFragment=fragment->Copy(ss, length-ss);
-							documentFragments.RemoveAt(fs);
-							documentFragments.Insert(fs, leftFragment);
-							documentFragments.Insert(fs+1, rightFragment);
-						}
-						else
-						{
-							f1=fs+1;
-							f2=fs+1;
-							Ptr<UniscribeFragment> leftFragment=fragment->Copy(0, ss);
-							Ptr<UniscribeFragment> middleFragment=fragment->Copy(ss, se-ss);
-							Ptr<UniscribeFragment> rightFragment=fragment->Copy(se, length-se);
-							documentFragments.RemoveAt(fs);
-							documentFragments.Insert(fs, leftFragment);
-							documentFragments.Insert(fs+1, middleFragment);
-							documentFragments.Insert(fs+2, rightFragment);
-						}
-					}
-				}
-				else
-				{
-					Ptr<UniscribeFragment> fragmentStart=documentFragments[fs];
-					Ptr<UniscribeFragment> fragmentEnd=documentFragments[fe];
-					if(ss==0)
-					{
-						f1=fs;
-					}
-					else
-					{
-						f1=fs+1;
-						fe++;
-						vint length=fragmentStart->text.Length();
-						Ptr<UniscribeFragment> leftFragment=fragmentStart->Copy(0, ss);
-						Ptr<UniscribeFragment> rightFragment=fragmentStart->Copy(ss, length-ss);
-						documentFragments.RemoveAt(fs);
-						documentFragments.Insert(fs, leftFragment);
-						documentFragments.Insert(fs+1, rightFragment);
-					}
-					if(se==fragmentEnd->text.Length())
-					{
-						f2=fe;
-					}
-					else
-					{
-						f2=fe;
-						fe++;
-						vint length=fragmentEnd->text.Length();
-						Ptr<UniscribeFragment> leftFragment=fragmentStart->Copy(0, se);
-						Ptr<UniscribeFragment> rightFragment=fragmentEnd->Copy(se, length-se);
-						documentFragments.RemoveAt(fe);
-						documentFragments.Insert(fe, leftFragment);
-						documentFragments.Insert(fe+1, rightFragment);
-					}
-				}
-				return true;
-			}
-
-			void UniscribeParagraph::CutFragmentColors(vint fs, vint ss, vint fe, vint se, Color UniscribeColor::* colorField, Color color)
-			{
-				for(vint f=fs;f<=fe;f++)
-				{
-					Ptr<UniscribeFragment> fragment=documentFragments[f];
-					vint start=f==fs?ss:0;
-					vint end=f==fe?se:fragment->text.Length();
-
-					fragment->CutColors(start, end-start);
-					fragment->UpdateOverlappedColors(start, end-start, colorField, color);
-					fragment->DefragmentColors();
-				}
-			}
-
-/***********************************************************************
-UniscribeParagraph (Formatting)
-***********************************************************************/
-
-			bool UniscribeParagraph::SetFont(vint start, vint length, const WString& value)
-			{
-				vint fs, ss, fe, se, f1, f2;
-				SearchFragment(start, length, fs, ss, fe, se);
-				if(CutFragment(fs, ss, fe, se, f1, f2))
-				{
-					for(vint i=f1;i<=f2;i++)
-					{
-						documentFragments[i]->fontStyle.fontFamily=value;
-					}
-					built=false;
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-
-			bool UniscribeParagraph::SetSize(vint start, vint length, vint value)
-			{
-				vint fs, ss, fe, se, f1, f2;
-				SearchFragment(start, length, fs, ss, fe, se);
-				if(CutFragment(fs, ss, fe, se, f1, f2))
-				{
-					for(vint i=f1;i<=f2;i++)
-					{
-						documentFragments[i]->fontStyle.size=value;
-					}
-					built=false;
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-
-			bool UniscribeParagraph::SetStyle(vint start, vint length, bool bold, bool italic, bool underline, bool strikeline)
-			{
-				vint fs, ss, fe, se, f1, f2;
-				SearchFragment(start, length, fs, ss, fe, se);
-				if(CutFragment(fs, ss, fe, se, f1, f2))
-				{
-					for(vint i=f1;i<=f2;i++)
-					{
-						documentFragments[i]->fontStyle.bold=bold;
-						documentFragments[i]->fontStyle.italic=italic;
-						documentFragments[i]->fontStyle.underline=underline;
-						documentFragments[i]->fontStyle.strikeline=strikeline;
-					}
-					built=false;
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-
-			bool UniscribeParagraph::SetColor(vint start, vint length, Color value)
-			{
-				vint fs, ss, fe, se;
-				SearchFragment(start, length, fs, ss, fe, se);
-				if(fs==-1 || ss==-1 || fe==-1 || se==-1) return false;
-
-				CutFragmentColors(fs, ss, fe, se, &UniscribeColor::fontColor, value);
-				return true;
-			}
-
-			bool UniscribeParagraph::SetBackgroundColor(vint start, vint length, Color value)
-			{
-				vint fs, ss, fe, se;
-				SearchFragment(start, length, fs, ss, fe, se);
-				if(fs==-1 || ss==-1 || fe==-1 || se==-1) return false;
-
-				CutFragmentColors(fs, ss, fe, se, &UniscribeColor::backgroundColor, value);
-				return true;
-			}
-
-			bool UniscribeParagraph::SetInlineObject(vint start, vint length, const IGuiGraphicsParagraph::InlineObjectProperties& properties)
-			{
-				vint fs, ss, fe, se, f1, f2;
-				SearchFragment(start, length, fs, ss, fe, se);
-				if(CutFragment(fs, ss, fe, se, f1, f2))
-				{
-					WString text;
-					for(vint i=f1;i<=f2;i++)
-					{
-						text+=documentFragments[f1]->text;
-					}
-					Ptr<UniscribeFragment> elementFragment=new UniscribeFragment(text);
-
-					for(vint i=f1;i<=f2;i++)
-					{
-						elementFragment->cachedTextFragment.Add(documentFragments[f1]);
-						documentFragments.RemoveAt(f1);
-					}
-					elementFragment->inlineObjectProperties=properties;
-					documentFragments.Insert(f1, elementFragment);
-					built=false;
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-
-			InlineObject UniscribeParagraph::ResetInlineObject(vint start, vint length)
-			{
-				vint fs, ss, fe, se;
-				SearchFragment(start, length, fs, ss, fe, se);
-				Ptr<UniscribeFragment> fragment = documentFragments[fs];
-				if(fs==fe && ss==0 && se==fragment->text.Length() && fragment->inlineObjectProperties)
-				{
-					documentFragments.RemoveAt(fs);
-					for(vint i=0;i<fragment->cachedTextFragment.Count();i++)
-					{
-						documentFragments.Insert(fs+i, fragment->cachedTextFragment[i]);
-					}
-					built=false;
-					return fragment->inlineObjectProperties;
-				}
-				return InlineObject();
-			}
-
-/***********************************************************************
-UniscribeParagraph (Caret Helper)
-***********************************************************************/
-
-			void UniscribeParagraph::GetLineIndexFromTextPos(vint textPos, vint& frontLine, vint& backLine)
-			{
-				frontLine=-1;
-				backLine=-1;
-				if(!IsValidTextPos(textPos)) return;
-
-				vint start=0;
-				vint end=lines.Count()-1;
-				while(start<=end)
-				{
-					vint middle=(start+end)/2;
-					Ptr<UniscribeLine> line=lines[middle];
-					vint lineStart=line->startFromParagraph;
-					vint lineEnd=line->startFromParagraph+line->lineText.Length();
-					if(textPos<lineStart)
-					{
-						if(textPos==lineStart-1)
-						{
-							frontLine=middle-1;
-							backLine=middle;
-							return;
-						}
-						else
-						{
-							end=middle-1;
-						}
-					}
-					else if(textPos>lineEnd)
-					{
-						if(textPos==lineEnd+1)
-						{
-							frontLine=middle;
-							backLine=middle+1;
-							return;
-						}
-						else
-						{
-							start=middle+1;
-						}
-					}
-					else
-					{
-						frontLine=middle;
-						backLine=middle;
-						return;
-					}
-				}
-			}
-
-			void UniscribeParagraph::GetVirtualLineIndexFromTextPos(vint textPos, vint lineIndex, vint& frontLine, vint& backLine)
-			{
-				frontLine=-1;
-				backLine=-1;
-				if(!IsValidTextPos(textPos)) return;
-				if(lineIndex<0 || lineIndex>=lines.Count()) return;
-
-				Ptr<UniscribeLine> line=lines[lineIndex];
-				vint start=0;
-				vint end=line->virtualLines.Count()-1;
-				while(start<=end)
-				{
-					vint middle=(start+end)/2;
-					Ptr<UniscribeVirtualLine> vline=line->virtualLines[middle];
-					vint lineStart=line->startFromParagraph+vline->startFromLine;
-					vint lineEnd=line->startFromParagraph+vline->startFromLine+vline->length;
-					if(textPos<lineStart)
-					{
-						end=middle-1;
-					}
-					else if(textPos>lineEnd)
-					{
-						start=middle+1;
-					}
-					else if(textPos==lineStart)
-					{
-						frontLine=middle==0?0:middle-1;
-						backLine=middle;
-						return;
-					}
-					else if(textPos==lineEnd)
-					{
-						frontLine=middle;
-						backLine=middle==line->virtualLines.Count()-1?middle:middle+1;
-						return;
-					}
-					else
-					{
-						frontLine=middle;
-						backLine=middle;
-						return;
-					}
-				}
-			}
-
-			void UniscribeParagraph::GetItemIndexFromTextPos(vint textPos, vint lineIndex, vint& frontItem, vint& backItem)
-			{
-				frontItem=-1;
-				backItem=-1;
-				if(!IsValidTextPos(textPos)) return;
-				if(lineIndex<0 || lineIndex>=lines.Count()) return;
-
-				Ptr<UniscribeLine> line=lines[lineIndex];
-				vint start=0;
-				vint end=line->scriptItems.Count()-1;
-				while(start<=end)
-				{
-					vint middle=(start+end)/2;
-					Ptr<UniscribeItem> item=line->scriptItems[middle];
-					vint lineStart=line->startFromParagraph+item->startFromLine;
-					vint lineEnd=line->startFromParagraph+item->startFromLine+item->length;
-					if(textPos<lineStart)
-					{
-						end=middle-1;
-					}
-					else if(textPos>lineEnd)
-					{
-						start=middle+1;
-					}
-					else if(textPos==lineStart)
-					{
-						frontItem=middle==0?0:middle-1;
-						backItem=middle;
-						return;
-					}
-					else if(textPos==lineEnd)
-					{
-						frontItem=middle;
-						backItem=middle==line->scriptItems.Count()-1?middle:middle+1;
-						return;
-					}
-					else
-					{
-						frontItem=middle;
-						backItem=middle;
-						return;
-					}
-				}
-			}
-
-			Rect UniscribeParagraph::GetCaretBoundsWithLine(vint caret, vint lineIndex, vint virtualLineIndex, bool frontSide)
-			{
-				Ptr<UniscribeLine> line=lines[lineIndex];
-				if(line->startFromParagraph<=caret && caret<=line->startFromParagraph+line->lineText.Length())
-				{
-					if(line->lineText==L"") return line->bounds;
-					Ptr<UniscribeVirtualLine> virtualLine=line->virtualLines[virtualLineIndex];
-
-					for(vint i=virtualLine->firstRunIndex;i<=virtualLine->lastRunIndex;i++)
-					{
-						Ptr<UniscribeRun> run=line->scriptRuns[i];
-						if(Ptr<UniscribeTextRun> textRun=run.Cast<UniscribeTextRun>())
-						{
-							vint firstBounds=i==virtualLine->firstRunIndex?virtualLine->firstRunBoundsIndex:0;
-							vint lastBounds=i==virtualLine->lastRunIndex?virtualLine->lastRunBoundsIndex:run->fragmentBounds.Count()-1;
-					
-							for(vint j=firstBounds;j<=lastBounds;j++)
-							{
-								UniscribeRun::RunFragmentBounds& bounds=run->fragmentBounds[j];
-								vint boundsStart=line->startFromParagraph+run->startFromLine+bounds.startFromRun;
-								if(boundsStart==caret)
-								{
-									if(!frontSide || i==virtualLine->firstRunIndex && j==virtualLine->firstRunBoundsIndex)
-									{
-										if(run->scriptItem->scriptItem.a.fRTL)
-										{
-											return Rect(bounds.bounds.x2, bounds.bounds.y1, bounds.bounds.x2, bounds.bounds.y2);
-										}
-										else
-										{
-											return Rect(bounds.bounds.x1, bounds.bounds.y1, bounds.bounds.x1, bounds.bounds.y2);
-										}
-									}
-								}
-								else if(caret==boundsStart+bounds.length)
-								{
-									if(frontSide || i==virtualLine->lastRunIndex && j==virtualLine->lastRunBoundsIndex)
-									{
-										if(run->scriptItem->scriptItem.a.fRTL)
-										{
-											return Rect(bounds.bounds.x1, bounds.bounds.y1, bounds.bounds.x1, bounds.bounds.y2);
-										}
-										else
-										{
-											return Rect(bounds.bounds.x2, bounds.bounds.y1, bounds.bounds.x2, bounds.bounds.y2);
-										}
-									}
-								}
-								else if(boundsStart<caret && caret<boundsStart+bounds.length)
-								{
-									vint accumulatedWidth=0;
-									vint lastRunChar=bounds.startFromRun;
-									for(vint i=0;i<=bounds.length;i++)
-									{
-										vint charIndex=bounds.startFromRun+i;
-										vint newLastRunChar=lastRunChar;
-										if(i>0)
-										{
-											if(i==bounds.length)
-											{
-												newLastRunChar=charIndex;
-											}
-											else
-											{
-												WORD cluster1=textRun->wholeGlyph.charCluster[charIndex-1];
-												WORD cluster2=textRun->wholeGlyph.charCluster[charIndex];
-												if(cluster1!=cluster2)
-												{
-													newLastRunChar=charIndex;
-												}
-											}
-										}
-
-										if(newLastRunChar!=lastRunChar)
-										{
-											WORD glyph1=0;
-											WORD glyph2=0;
-											if(run->scriptItem->scriptItem.a.fRTL)
-											{
-												glyph2=textRun->wholeGlyph.charCluster[lastRunChar]+1;
-												glyph1=newLastRunChar==run->length?0:textRun->wholeGlyph.charCluster[newLastRunChar]+1;
-											}
-											else
-											{
-												glyph1=textRun->wholeGlyph.charCluster[lastRunChar];
-												glyph2=newLastRunChar==run->length?(WORD)textRun->wholeGlyph.glyphs.Count():textRun->wholeGlyph.charCluster[newLastRunChar];
-											}
-
-											vint glyphWidth=0;
-											for(WORD g=glyph1;g<glyph2;g++)
-											{
-												glyphWidth+=textRun->wholeGlyph.glyphAdvances[g];
-											}
-											accumulatedWidth+=glyphWidth;
-											lastRunChar=newLastRunChar;
-
-											if(line->startFromParagraph+run->startFromLine+lastRunChar==caret)
-											{
-												vint x=0;
-												if(run->scriptItem->scriptItem.a.fRTL)
-												{
-													x=bounds.bounds.x2-accumulatedWidth;
-												}
-												else
-												{
-													x=bounds.bounds.x1+accumulatedWidth;
-												}
-												return Rect(x, bounds.bounds.y1, x, bounds.bounds.y2);
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-				return Rect();
-			}
-
-			vint UniscribeParagraph::GetCaretFromXWithTextRunBounds(vint x, vint lineIndex, vint runIndex, vint runBoundsIndex)
-			{
-				Ptr<UniscribeLine> line=lines[lineIndex];
-				if(line->lineText==L"") return line->startFromParagraph;
-				Ptr<UniscribeTextRun> run=line->scriptRuns[runIndex].Cast<UniscribeTextRun>();
-				UniscribeRun::RunFragmentBounds& bounds=run->fragmentBounds[runBoundsIndex];
-				
-				vint startFromFragmentBounds=0;
-				vint accumulatedWidth=0;
-				while(startFromFragmentBounds<bounds.length)
-				{
-					vint charIndex=bounds.startFromRun+startFromFragmentBounds;
-					vint charLength=0;
-					vint cluster=0;
-					vint nextCluster=0;
-					run->SearchSingleChar(charIndex, charLength, cluster, nextCluster);
-
-					vint clusterStart=0;
-					vint clusterCount=0;
-					if(run->scriptItem->IsRightToLeft())
-					{
-						clusterStart=nextCluster+1;
-						clusterCount=cluster-nextCluster;
-					}
-					else
-					{
-						clusterStart=cluster;
-						clusterCount=nextCluster-cluster;
-					}
-
-					vint clusterWidth=0;
-					for(vint i=0;i<clusterCount;i++)
-					{
-						clusterWidth+=run->wholeGlyph.glyphAdvances[i+clusterStart];
-					}
-
-					if(run->scriptItem->scriptItem.a.fRTL)
-					{
-						vint x2=bounds.bounds.x2-accumulatedWidth;
-						vint x1=x2-clusterWidth;
-						if(x1<=x && x<x2)
-						{
-							vint d1=x-x1;
-							vint d2=x2-x;
-							if(d1<=d2)
-							{
-								return line->startFromParagraph+run->startFromLine+charIndex+charLength;
-							}
-							else
-							{
-								return line->startFromParagraph+run->startFromLine+charIndex;
-							}
-						}
-					}
-					else
-					{
-						vint x1=bounds.bounds.x1+accumulatedWidth;
-						vint x2=x1+clusterWidth;
-						if(x1<=x && x<x2)
-						{
-							vint d1=x-x1;
-							vint d2=x2-x;
-							if(d1<=d2)
-							{
-								return line->startFromParagraph+run->startFromLine+charIndex;
-							}
-							else
-							{
-								return line->startFromParagraph+run->startFromLine+charIndex+charLength;
-							}
-						}
-					}
-
-					startFromFragmentBounds+=charLength;
-					accumulatedWidth+=clusterWidth;
-				}
-				return -1;
-			}
-
-			vint UniscribeParagraph::GetCaretFromXWithLine(vint x, vint lineIndex, vint virtualLineIndex)
-			{
-				Ptr<UniscribeLine> line=lines[lineIndex];
-				if(line->virtualLines.Count()==0) return line->startFromParagraph;
-				Ptr<UniscribeVirtualLine> virtualLine=line->virtualLines[virtualLineIndex];
-				if(x<virtualLine->bounds.x1) return line->startFromParagraph+virtualLine->startFromLine;
-				if(x>=virtualLine->bounds.x2) return line->startFromParagraph+virtualLine->startFromLine+virtualLine->length;
-
-				for(vint i=virtualLine->firstRunIndex;i<=virtualLine->lastRunIndex;i++)
-				{
-					Ptr<UniscribeRun> run=line->scriptRuns[i];
-					if(Ptr<UniscribeTextRun> textRun=run.Cast<UniscribeTextRun>())
-					{
-						vint firstBounds=i==virtualLine->firstRunIndex?virtualLine->firstRunBoundsIndex:0;
-						vint lastBounds=i==virtualLine->lastRunIndex?virtualLine->lastRunBoundsIndex:run->fragmentBounds.Count()-1;
-					
-						for(vint j=firstBounds;j<=lastBounds;j++)
-						{
-							UniscribeRun::RunFragmentBounds& bounds=run->fragmentBounds[j];
-							if(bounds.bounds.x1<=x && x<bounds.bounds.x2)
-							{
-								return GetCaretFromXWithTextRunBounds(x, lineIndex, i, j);
-							}
-						}
-					}
-					else
-					{
-						Rect bounds=run->fragmentBounds[0].bounds;
-						if(bounds.x1<=x && x<bounds.x2)
-						{
-							vint d1=x-bounds.x1;
-							vint d2=bounds.x2-x;
-							if(d1<=d2)
-							{
-								return line->startFromParagraph+run->startFromLine;
-							}
-							else
-							{
-								return line->startFromParagraph+run->startFromLine+run->length;
-							}
-						}
-					}
-				}
-				return -1;
-			}
-
-			InlineObject UniscribeParagraph::GetInlineObjectFromXWithLine(vint x, vint lineIndex, vint virtualLineIndex, vint& start, vint& length)
-			{
-				Ptr<UniscribeLine> line=lines[lineIndex];
-				if(line->virtualLines.Count()==0) return InlineObject();
-				Ptr<UniscribeVirtualLine> virtualLine=line->virtualLines[virtualLineIndex];
-				if(x<virtualLine->bounds.x1) return InlineObject();
-				if(x>=virtualLine->bounds.x2) return InlineObject();
-
-				for(vint i=virtualLine->firstRunIndex;i<=virtualLine->lastRunIndex;i++)
-				{
-					Ptr<UniscribeRun> run=line->scriptRuns[i];
-					if(auto elementRun=run.Cast<UniscribeEmbeddedObjectRun>())
-					{
-						Rect bounds=run->fragmentBounds[0].bounds;
-						if(bounds.x1<=x && x<bounds.x2)
-						{
-							start=line->startFromParagraph+elementRun->startFromLine;
-							length=elementRun->length;
-							return elementRun->properties;
-						}
-					}
-				}
-				return InlineObject();
-			}
-
-			vint UniscribeParagraph::GetLineY(vint lineIndex)
-			{
-				if(lineIndex==lines.Count())
-				{
-					return bounds.Height();
-				}
-				else
-				{
-					return lines[lineIndex]->bounds.y1;
-				}
-			}
-
-			vint UniscribeParagraph::GetVirtualLineY(vint lineIndex, vint virtualLineIndex)
-			{
-				Ptr<UniscribeLine> line=lines[lineIndex];
-				if(virtualLineIndex==line->virtualLines.Count())
-				{
-					return GetLineY(lineIndex+1);
-				}
-				else
-				{
-					return line->virtualLines[virtualLineIndex]->bounds.y1;
-				}
-			}
-
-			vint UniscribeParagraph::GetLineIndexFromY(vint y)
-			{
-				if(y<lines[0]->bounds.y1) return 0;
-				if(y>=lines[lines.Count()-1]->bounds.y2) return lines.Count()-1;
-
-				vint start=0;
-				vint end=lines.Count()-1;
-				while(start<=end)
-				{
-					vint middle=(start+end)/2;
-					vint minY=GetLineY(middle);
-					vint maxY=GetLineY(middle+1);
-					if(y<minY)
-					{
-						end=middle-1;
-					}
-					else if(y>=maxY)
-					{
-						start=middle+1;
-					}
-					else
-					{
-						return middle;
-					}
-				}
-				return -1;
-			}
-
-			vint UniscribeParagraph::GetVirtualLineIndexFromY(vint y, vint lineIndex)
-			{
-				Ptr<UniscribeLine> line=lines[lineIndex];
-				if(y<line->bounds.y1) return 0;
-				if(y>=line->bounds.y2) return line->virtualLines.Count()-1;
-
-				vint start=0;
-				vint end=line->virtualLines.Count()-1;
-				while(start<=end)
-				{
-					vint middle=(start+end)/2;
-					vint minY=GetVirtualLineY(lineIndex, middle);
-					vint maxY=GetVirtualLineY(lineIndex, middle+1);
-					if(y<minY)
-					{
-						end=middle-1;
-					}
-					else if(y>=maxY)
-					{
-						start=middle+1;
-					}
-					else
-					{
-						return middle;
-					}
-				}
-				return -1;
-			}
-
-/***********************************************************************
-UniscribeParagraph (Caret)
-***********************************************************************/
-
-			vint UniscribeParagraph::GetCaret(vint comparingCaret, IGuiGraphicsParagraph::CaretRelativePosition position, bool& preferFrontSide)
-			{
-				if(position==IGuiGraphicsParagraph::CaretFirst) return 0;
-				if(position==IGuiGraphicsParagraph::CaretLast) return paragraphText.Length();
-				if(!IsValidCaret(comparingCaret)) return -1;
-
-				if(position==IGuiGraphicsParagraph::CaretMoveLeft)
-				{
-					return comparingCaret==0?0:GetNearestCaretFromTextPos(comparingCaret-1, true);
-				}
-				if(position==IGuiGraphicsParagraph::CaretMoveRight)
-				{
-					return comparingCaret==paragraphText.Length()?paragraphText.Length():GetNearestCaretFromTextPos(comparingCaret+1, false);
-				}
-
-				vint frontLine=0;
-				vint backLine=0;
-				GetLineIndexFromTextPos(comparingCaret, frontLine, backLine);
-
-				Ptr<UniscribeLine> line=lines[frontLine];
-				if(line->virtualLines.Count()==0)
-				{
-					switch(position)
-					{
-					case IGuiGraphicsParagraph::CaretLineFirst:
-					case IGuiGraphicsParagraph::CaretLineLast:
-						return line->startFromParagraph;
-					}
-				}
-
-				vint frontVirtualLine=0;
-				vint backVirtualLine=0;
-				GetVirtualLineIndexFromTextPos(comparingCaret, frontLine, frontVirtualLine, backVirtualLine);
-				vint virtualLineIndex=preferFrontSide?frontVirtualLine:backVirtualLine;
-
-				Ptr<UniscribeVirtualLine> virtualLine=virtualLineIndex==-1?nullptr:line->virtualLines[virtualLineIndex];
-
-				switch(position)
-				{
-				case IGuiGraphicsParagraph::CaretLineFirst:
-					return line->startFromParagraph+virtualLine->startFromLine;
-				case IGuiGraphicsParagraph::CaretLineLast:
-					return line->startFromParagraph+virtualLine->startFromLine+virtualLine->length;
-				case IGuiGraphicsParagraph::CaretMoveUp:
-					{
-						if(frontLine==0 && virtualLineIndex<=0) return comparingCaret;
-						Rect bounds=GetCaretBoundsWithLine(comparingCaret, frontLine, virtualLineIndex, preferFrontSide);
-						if(bounds.Height()!=0)
-						{
-							if(virtualLineIndex<=0)
-							{
-								frontLine--;
-								virtualLineIndex=lines[frontLine]->virtualLines.Count()-1;
-							}
-							else
-							{
-								virtualLineIndex--;
-							}
-							preferFrontSide=true;
-							return GetCaretFromXWithLine(bounds.x1, frontLine, virtualLineIndex);
-						}
-					}
-					break;
-				case IGuiGraphicsParagraph::CaretMoveDown:
-					{
-						if(frontLine==lines.Count()-1 && virtualLineIndex==line->virtualLines.Count()-1) return comparingCaret;
-						Rect bounds=GetCaretBoundsWithLine(comparingCaret, frontLine, virtualLineIndex, preferFrontSide);
-						if(bounds.Height()!=0)
-						{
-							if(virtualLineIndex==line->virtualLines.Count()-1)
-							{
-								frontLine++;
-								virtualLineIndex=0;
-							}
-							else
-							{
-								virtualLineIndex++;
-							}
-							preferFrontSide=false;
-							return GetCaretFromXWithLine(bounds.x1, frontLine, virtualLineIndex);
-						}
-					}
-					break;
-				}
-				return -1;
-			}
-
-			Rect UniscribeParagraph::GetCaretBounds(vint caret, bool frontSide)
-			{
-				if(!IsValidCaret(caret)) return Rect();
-
-				vint frontLine=0;
-				vint backLine=0;
-				GetLineIndexFromTextPos(caret, frontLine, backLine);
-
-				vint frontVirtualLine=0;
-				vint backVirtualLine=0;
-				GetVirtualLineIndexFromTextPos(caret, frontLine, frontVirtualLine, backVirtualLine);
-				vint virtualLineIndex=frontSide?frontVirtualLine:backVirtualLine;
-
-				return GetCaretBoundsWithLine(caret, frontLine, virtualLineIndex, frontSide);
-			}
-
-			vint UniscribeParagraph::GetCaretFromPoint(Point point)
-			{
-				vint lineIndex=GetLineIndexFromY(point.y);
-				if(lineIndex==-1) return -1;
-
-				Ptr<UniscribeLine> line=lines[lineIndex];
-				if(line->virtualLines.Count()==0) return line->startFromParagraph;
-
-				vint virtualLineIndex=GetVirtualLineIndexFromY(point.y, lineIndex);
-				if(virtualLineIndex==-1) return -1;
-
-				return GetCaretFromXWithLine(point.x, lineIndex, virtualLineIndex);
-			}
-
-			InlineObject UniscribeParagraph::GetInlineObjectFromPoint(Point point, vint& start, vint& length)
-			{
-				start = -1;
-				length = 0;
-				vint lineIndex = GetLineIndexFromY(point.y);
-				if (lineIndex == -1) return InlineObject();
-
-				Ptr<UniscribeLine> line = lines[lineIndex];
-				if (line->virtualLines.Count() == 0) return InlineObject();
-
-				vint virtualLineIndex = GetVirtualLineIndexFromY(point.y, lineIndex);
-				if (virtualLineIndex == -1) return InlineObject();
-
-				return GetInlineObjectFromXWithLine(point.x, lineIndex, virtualLineIndex, start, length);
-			}
-
-			vint UniscribeParagraph::GetNearestCaretFromTextPos(vint textPos, bool frontSide)
-			{
-				if(!IsValidTextPos(textPos)) return -1;
-				vint frontLine=0;
-				vint backLine=0;
-				GetLineIndexFromTextPos(textPos, frontLine, backLine);
-				if(frontLine==-1 || backLine==-1) return -1;
-				if(frontLine!=backLine)
-				{
-					return frontSide?textPos-1:textPos+1;
-				}
-
-				Ptr<UniscribeLine> line=lines[frontLine];
-				if(textPos==line->startFromParagraph || textPos==line->startFromParagraph+line->lineText.Length())
-				{
-					return textPos;
-				}
-
-				vint frontItem=-1;
-				vint backItem=-1;
-				GetItemIndexFromTextPos(textPos, frontLine, frontItem, backItem);
-				if(frontItem==-1 || backItem==-1) return -1;
-				if(frontItem!=backItem) return textPos;
-				
-				Ptr<UniscribeItem> item=line->scriptItems[frontItem];
-				vint lineTextPos=textPos-line->startFromParagraph;
-				if(lineTextPos==item->startFromLine) return textPos;
-				if(lineTextPos==item->startFromLine+item->length) return textPos;
-
-				vint itemTextPos=lineTextPos-item->startFromLine;
-				if(item->charLogattrs[itemTextPos].fCharStop) return textPos;
-
-				if(frontSide)
-				{
-					for(vint i=itemTextPos-1;i>=0;i--)
-					{
-						if(item->charLogattrs[i].fCharStop) return i+line->startFromParagraph+item->startFromLine;
-					}
-					return line->startFromParagraph+item->startFromLine;
-				}
-				else
-				{
-					for(vint i=itemTextPos+1;i<item->length;i++)
-					{
-						if(item->charLogattrs[i].fCharStop) return i+line->startFromParagraph+item->startFromLine;
-					}
-					return line->startFromParagraph+item->startFromLine+item->length;
-				}
-			}
-
-			bool UniscribeParagraph::IsValidCaret(vint caret)
-			{
-				if(!IsValidTextPos(caret)) return false;
-				return GetNearestCaretFromTextPos(caret, true)==caret;
-			}
-
-			bool UniscribeParagraph::IsValidTextPos(vint textPos)
-			{
-				return 0<=textPos && textPos<=paragraphText.Length();
-			}
-		}
-	}
-}
-
-/***********************************************************************
-.\GRAPHICSELEMENT\WINDOWSGDI\GUIGRAPHICSWINDOWSGDI.CPP
-***********************************************************************/
-
-namespace vl
-{
-	namespace presentation
-	{
-		namespace elements
-		{
-
-/***********************************************************************
-GuiGDIElement
-***********************************************************************/
-
-			GuiGDIElement::GuiGDIElement()
-			{
-			}
-		}
-
-		namespace elements_windows_gdi
-		{
-			using namespace windows;
-			using namespace elements;
-			using namespace collections;
-
-/***********************************************************************
-WindowsGDIRenderTarget
-***********************************************************************/
-
-			class WindowsGDIRenderTarget : public Object, public IWindowsGDIRenderTarget
-			{
-			protected:
-				INativeWindow*				window;
-				WinDC*						dc;
-				List<Rect>					clippers;
-				vint							clipperCoverWholeTargetCounter;
-
-				void ApplyClipper()
-				{
-					if(clipperCoverWholeTargetCounter==0)
-					{
-						if(clippers.Count()==0)
-						{
-							dc->RemoveClip();
-						}
-						else
-						{
-							Rect clipper=GetClipper();
-							dc->ClipRegion(new WinRegion(clipper.Left(), clipper.Top(), clipper.Right(), clipper.Bottom(), true));
-						}
-					}
-				}
-			public:
-				WindowsGDIRenderTarget(INativeWindow* _window)
-					:window(_window)
-					,dc(0)
-					,clipperCoverWholeTargetCounter(0)
-				{
-				}
-
-				WinDC* GetDC()override
-				{
-					return dc?dc:GetWindowsGDIObjectProvider()->GetNativeWindowDC(window);
-				}
-
-				void StartRendering()override
-				{
-					dc=GetWindowsGDIObjectProvider()->GetNativeWindowDC(window);
-				}
-
-				RenderTargetFailure StopRendering()override
-				{
-					dc = 0;
-					return RenderTargetFailure::None;
-				}
-
-				void PushClipper(Rect clipper)override
-				{
-					if(clipperCoverWholeTargetCounter>0)
-					{
-						clipperCoverWholeTargetCounter++;
-					}
-					else
-					{
-						Rect previousClipper=GetClipper();
-						Rect currentClipper;
-
-						currentClipper.x1=(previousClipper.x1>clipper.x1?previousClipper.x1:clipper.x1);
-						currentClipper.y1=(previousClipper.y1>clipper.y1?previousClipper.y1:clipper.y1);
-						currentClipper.x2=(previousClipper.x2<clipper.x2?previousClipper.x2:clipper.x2);
-						currentClipper.y2=(previousClipper.y2<clipper.y2?previousClipper.y2:clipper.y2);
-
-						if(currentClipper.x1<currentClipper.x2 && currentClipper.y1<currentClipper.y2)
-						{
-							clippers.Add(currentClipper);
-						}
-						else
-						{
-							clipperCoverWholeTargetCounter++;
-						}
-					}
-					ApplyClipper();
-				}
-
-				void PopClipper()override
-				{
-					if(clippers.Count()>0)
-					{
-						if(clipperCoverWholeTargetCounter>0)
-						{
-							clipperCoverWholeTargetCounter--;
-						}
-						else
-						{
-							clippers.RemoveAt(clippers.Count()-1);
-						}
-						ApplyClipper();
-					}
-				}
-
-				Rect GetClipper()override
-				{
-					if (clippers.Count() == 0)
-					{
-						return Rect(Point(0, 0), window->Convert(window->GetClientSize()));
-					}
-					else
-					{
-						return clippers[clippers.Count() - 1];
-					}
-				}
-
-				bool IsClipperCoverWholeTarget()override
-				{
-					return clipperCoverWholeTargetCounter>0;
-				}
-			};
-
-/***********************************************************************
-CachedResourceAllocator
-***********************************************************************/
-
-			class CachedPenAllocator
-			{
-				DEFINE_CACHED_RESOURCE_ALLOCATOR(Color, Ptr<WinPen>)
-			public:
-				Ptr<WinPen> CreateInternal(Color color)
-				{
-					return new WinPen(PS_SOLID, 1, RGB(color.r, color.g, color.b));
-				}
-			};
-
-			class CachedBrushAllocator
-			{
-				DEFINE_CACHED_RESOURCE_ALLOCATOR(Color, Ptr<WinBrush>)
-			public:
-				Ptr<WinBrush> CreateInternal(Color color)
-				{
-					return color.a==0?new WinBrush:new WinBrush(RGB(color.r, color.g, color.b));
-				}
-			};
-
-			class CachedFontAllocator
-			{
-				DEFINE_CACHED_RESOURCE_ALLOCATOR(FontProperties, Ptr<WinFont>)
-			public:
-				static Ptr<WinFont> CreateGdiFont(const FontProperties& value)
-				{
-					vint size=value.size<0?value.size:-value.size;
-					return new WinFont(value.fontFamily, size, 0, 0, 0, (value.bold?FW_BOLD:FW_NORMAL), value.italic, value.underline, value.strikeline, value.antialias);
-				}
-
-				Ptr<WinFont> CreateInternal(const FontProperties& value)
-				{
-					return CreateGdiFont(value);
-				}
-			};
-
-			class CachedCharMeasurerAllocator
-			{
-				DEFINE_CACHED_RESOURCE_ALLOCATOR(FontProperties, Ptr<text::CharMeasurer>)
-
-			protected:
-				class GdiCharMeasurer : public text::CharMeasurer
-				{
-				protected:
-					Ptr<WinFont>			font;
-					vint						size;
-
-					Size MeasureInternal(text::UnicodeCodePoint codePoint, IGuiGraphicsRenderTarget* renderTarget)
-					{
-						if (renderTarget)
-						{
-							WindowsGDIRenderTarget* gdiRenderTarget = dynamic_cast<WindowsGDIRenderTarget*>(renderTarget);
-							WinDC* dc = gdiRenderTarget->GetDC();
-							dc->SetFont(font);
-
-							vint count = text::UTF16SPFirst(codePoint.characters[0]) && text::UTF16SPSecond(codePoint.characters[1]) ? 2 : 1;
-							SIZE size = dc->MeasureBuffer(codePoint.characters, count, -1);
-							return Size(size.cx, size.cy);
-						}
-						else
-						{
-							return Size(0, 0);
-						}
-					}
-
-					vint MeasureWidthInternal(text::UnicodeCodePoint codePoint, IGuiGraphicsRenderTarget* renderTarget)
-					{
-						return MeasureInternal(codePoint, renderTarget).x;
-					}
-
-					vint GetRowHeightInternal(IGuiGraphicsRenderTarget* renderTarget)
-					{
-						if(renderTarget)
-						{
-							return MeasureInternal({ L' ' }, renderTarget).y;
-						}
-						else
-						{
-							return size;
-						}
-					}
-				public:
-					GdiCharMeasurer(Ptr<WinFont> _font, vint _size)
-						:text::CharMeasurer(_size)
-						,size(_size)
-						,font(_font)
-					{
-					}
-				};
-			public:
-				Ptr<text::CharMeasurer> CreateInternal(const FontProperties& value)
-				{
-					return new GdiCharMeasurer(CachedFontAllocator::CreateGdiFont(value), value.size);
-				}
-			};
-
-/***********************************************************************
-WindowsGDIResourceManager
-***********************************************************************/
-
-			class WindowsGDIImageFrameCache : public Object, public INativeImageFrameCache
-			{
-			protected:
-				IWindowsGDIResourceManager*			resourceManager;
-				INativeImageFrame*					cachedFrame;
-				Ptr<WinBitmap>						bitmap;
-				Ptr<WinBitmap>						disabledBitmap;
-			public:
-				WindowsGDIImageFrameCache(IWindowsGDIResourceManager* _resourceManager)
-					:resourceManager(_resourceManager)
-				{
-				}
-
-				~WindowsGDIImageFrameCache()
-				{
-				}
-
-				void OnAttach(INativeImageFrame* frame)override
-				{
-					cachedFrame=frame;
-					Size size=frame->GetSize();
-					bitmap=new WinBitmap(size.x, size.y, WinBitmap::vbb32Bits, true);
-
-					IWICBitmap* wicBitmap=GetWindowsGDIObjectProvider()->GetWICBitmap(frame);
-					WICRect rect;
-					rect.X=0;
-					rect.Y=0;
-					rect.Width=(INT)size.x;
-					rect.Height=(INT)size.y;
-					wicBitmap->CopyPixels(&rect, (UINT)bitmap->GetLineBytes(), (UINT)(bitmap->GetLineBytes()*size.y), (BYTE*)bitmap->GetScanLines()[0]);
-
-					bitmap->BuildAlphaChannel(false);
-				}
-				
-				void OnDetach(INativeImageFrame* frame)override
-				{
-					resourceManager->DestroyBitmapCache(cachedFrame);
-				}
-
-				INativeImageFrame* GetFrame()
-				{
-					return cachedFrame;
-				}
-
-				Ptr<WinBitmap> GetBitmap(bool enabled)
-				{
-					if(enabled)
-					{
-						return bitmap;
-					}
-					else
-					{
-						if(!disabledBitmap)
-						{
-							vint w=bitmap->GetWidth();
-							vint h=bitmap->GetHeight();
-							disabledBitmap=new WinBitmap(w, h, WinBitmap::vbb32Bits, true);
-							for(vint y=0;y<h;y++)
-							{
-								BYTE* read=bitmap->GetScanLines()[y];
-								BYTE* write=disabledBitmap->GetScanLines()[y];
-								for(vint x=0;x<w;x++)
-								{
-									BYTE g=(read[0]+read[1]+read[2])/6+read[3]/2;
-									write[0]=g;
-									write[1]=g;
-									write[2]=g;
-									write[3]=read[3];
-									read+=4;
-									write+=4;
-								}
-							}
-							disabledBitmap->BuildAlphaChannel(false);
-						}
-						return disabledBitmap;
-					}
-				}
-			};
-
-			class WindowsGDIResourceManager : public GuiGraphicsResourceManager, public IWindowsGDIResourceManager, public INativeControllerListener
-			{
-				typedef SortedList<Ptr<WindowsGDIImageFrameCache>> ImageCacheList;
-			protected:
-				SortedList<Ptr<WindowsGDIRenderTarget>>		renderTargets;
-				Ptr<WindowsGDILayoutProvider>				layoutProvider;
-				Ptr<WinPen>									focusRectanglePen;
-				CachedPenAllocator							pens;
-				CachedBrushAllocator						brushes;
-				CachedFontAllocator							fonts;
-				CachedCharMeasurerAllocator					charMeasurers;
-				ImageCacheList								imageCaches;
-			public:
-				WindowsGDIResourceManager()
-				{
-					layoutProvider=new WindowsGDILayoutProvider;
-				}
-
-				IGuiGraphicsRenderTarget* GetRenderTarget(INativeWindow* window)override
-				{
-					return GetWindowsGDIObjectProvider()->GetBindedRenderTarget(window);
-				}
-
-				void RecreateRenderTarget(INativeWindow* window)override
-				{
-				}
-
-				void ResizeRenderTarget(INativeWindow* window)override
-				{
-				}
-
-				IGuiGraphicsLayoutProvider* GetLayoutProvider()override
-				{
-					return layoutProvider.Obj();
-				}
-
-				void NativeWindowCreated(INativeWindow* window)override
-				{
-					WindowsGDIRenderTarget* renderTarget=new WindowsGDIRenderTarget(window);
-					renderTargets.Add(renderTarget);
-					GetWindowsGDIObjectProvider()->SetBindedRenderTarget(window, renderTarget);
-				}
-
-				void NativeWindowDestroying(INativeWindow* window)override
-				{
-					WindowsGDIRenderTarget* renderTarget=dynamic_cast<WindowsGDIRenderTarget*>(GetWindowsGDIObjectProvider()->GetBindedRenderTarget(window));
-					GetWindowsGDIObjectProvider()->SetBindedRenderTarget(window, 0);
-					renderTargets.Remove(renderTarget);
-				}
-
-				Ptr<windows::WinPen> GetFocusRectanglePen()override
-				{
-					if (!focusRectanglePen)
-					{
-						DWORD styleArray[] = { 1,1 };
-						focusRectanglePen = new WinPen(PS_USERSTYLE, PS_ENDCAP_FLAT, PS_JOIN_BEVEL, 1, RGB(255, 255, 255), (DWORD)(sizeof(styleArray) / sizeof(*styleArray)), styleArray);
-					}
-					return focusRectanglePen;
-				}
-
-				Ptr<windows::WinPen> CreateGdiPen(Color color)override
-				{
-					return pens.Create(color);
-				}
-
-				void DestroyGdiPen(Color color)override
-				{
-					pens.Destroy(color);
-				}
-
-				Ptr<windows::WinBrush> CreateGdiBrush(Color color)override
-				{
-					return brushes.Create(color);
-				}
-
-				void DestroyGdiBrush(Color color)override
-				{
-					brushes.Destroy(color);
-				}
-
-				Ptr<windows::WinFont> CreateGdiFont(const FontProperties& fontProperties)override
-				{
-					return fonts.Create(fontProperties);
-				}
-
-				void DestroyGdiFont(const FontProperties& fontProperties)override
-				{
-					fonts.Destroy(fontProperties);
-				}
-
-				Ptr<elements::text::CharMeasurer> CreateCharMeasurer(const FontProperties& fontProperties)override
-				{
-					return charMeasurers.Create(fontProperties);
-				}
-
-				void DestroyCharMeasurer(const FontProperties& fontProperties)override
-				{
-					charMeasurers.Destroy(fontProperties);
-				}
-
-				Ptr<windows::WinBitmap> GetBitmap(INativeImageFrame* frame, bool enabled)override
-				{
-					Ptr<INativeImageFrameCache> cache=frame->GetCache(this);
-					if(cache)
-					{
-						return cache.Cast<WindowsGDIImageFrameCache>()->GetBitmap(enabled);
-					}
-					else
-					{
-						WindowsGDIImageFrameCache* gdiCache=new WindowsGDIImageFrameCache(this);
-						if(frame->SetCache(this, gdiCache))
-						{
-							return gdiCache->GetBitmap(enabled);
-						}
-						else
-						{
-							return 0;
-						}
-					}
-				}
-
-				void DestroyBitmapCache(INativeImageFrame* frame)override
-				{
-					WindowsGDIImageFrameCache* cache=frame->GetCache(this).Cast<WindowsGDIImageFrameCache>().Obj();
-					imageCaches.Remove(cache);
-				}
-			};
-		}
-
-		namespace elements_windows_gdi
-		{
-			IWindowsGDIResourceManager* windowsGDIResourceManager=0;
-
-			IWindowsGDIResourceManager* GetWindowsGDIResourceManager()
-			{
-				return windowsGDIResourceManager;
-			}
-
-			void SetWindowsGDIResourceManager(IWindowsGDIResourceManager* resourceManager)
-			{
-				windowsGDIResourceManager=resourceManager;
-			}
-
-/***********************************************************************
-OS Supporting
-***********************************************************************/
-
-			IWindowsGDIObjectProvider* windowsGDIObjectProvider=0;
-
-			IWindowsGDIObjectProvider* GetWindowsGDIObjectProvider()
-			{
-				return windowsGDIObjectProvider;
-			}
-
-			void SetWindowsGDIObjectProvider(IWindowsGDIObjectProvider* provider)
-			{
-				windowsGDIObjectProvider=provider;
-			}
-		}
-	}
-}
-
-/***********************************************************************
-NativeMain
-***********************************************************************/
-
-using namespace vl::presentation;
-using namespace vl::presentation::elements;
-
-void RendererMainGDI()
-{
-	elements_windows_gdi::WindowsGDIResourceManager resourceManager;
-	SetGuiGraphicsResourceManager(&resourceManager);
-	elements_windows_gdi::SetWindowsGDIResourceManager(&resourceManager);
-	GetCurrentController()->CallbackService()->InstallListener(&resourceManager);
-
-	elements_windows_gdi::GuiFocusRectangleElementRenderer::Register();
-	elements_windows_gdi::GuiSolidBorderElementRenderer::Register();
-	elements_windows_gdi::Gui3DBorderElementRenderer::Register();
-	elements_windows_gdi::Gui3DSplitterElementRenderer::Register();
-	elements_windows_gdi::GuiSolidBackgroundElementRenderer::Register();
-	elements_windows_gdi::GuiGradientBackgroundElementRenderer::Register();
-	elements_windows_gdi::GuiInnerShadowElementRenderer::Register();
-	elements_windows_gdi::GuiSolidLabelElementRenderer::Register();
-	elements_windows_gdi::GuiImageFrameElementRenderer::Register();
-	elements_windows_gdi::GuiPolygonElementRenderer::Register();
-	elements_windows_gdi::GuiColorizedTextElementRenderer::Register();
-	elements_windows_gdi::GuiGDIElementRenderer::Register();
-	elements::GuiDocumentElement::GuiDocumentElementRenderer::Register();
-
-	GuiApplicationMain();
-	elements_windows_gdi::SetWindowsGDIResourceManager(0);
-	SetGuiGraphicsResourceManager(0);
-}
-
-/***********************************************************************
-.\NATIVEWINDOW\WINDOWS\WINNATIVEDPIAWARENESS.CPP
-***********************************************************************/
-
-#pragma comment(lib, "Shcore.lib")
-
-namespace vl
-{
-	namespace presentation
-	{
-		namespace windows
-		{
-#define USE_API(NAME, API) static auto proc_##API = (decltype(&API))(GetProcAddress(GetModuleHandle(L#NAME), #API))
-
-			void InitDpiAwareness(bool dpiAware)
-			{
-				USE_API(user32, SetProcessDpiAwarenessContext);
-				USE_API(shcore, SetProcessDpiAwareness);
-
-				if(proc_SetProcessDpiAwarenessContext)
-				{
-					proc_SetProcessDpiAwarenessContext(dpiAware ? DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2:  DPI_AWARENESS_CONTEXT_UNAWARE);
-					return;
-				}
-
-				if(proc_SetProcessDpiAwareness)
-				{
-					proc_SetProcessDpiAwareness(dpiAware ? PROCESS_PER_MONITOR_DPI_AWARE : PROCESS_DPI_UNAWARE);
-					return;
-				}
-			}
-
-			void DpiAwared_GetDpiForMonitor(HMONITOR monitor, UINT* x, UINT* y)
-			{
-				USE_API(shcore, GetDpiForMonitor);
-
-				if (proc_GetDpiForMonitor)
-				{
-					if (proc_GetDpiForMonitor(monitor, MDT_DEFAULT, x, y) == S_OK)
-					{
-						return;
-					}
-				}
-				*x = 96;
-				*y = 96;
-			}
-
-			void DpiAwared_GetDpiForWindow(HWND handle, UINT* x, UINT* y)
-			{
-				USE_API(user32, GetDpiForWindow);
-
-				if (proc_GetDpiForWindow)
-				{
-					*x = *y = proc_GetDpiForWindow(handle);
-				}
-				else
-				{
-					HMONITOR monitor = MonitorFromWindow(handle, MONITOR_DEFAULTTONULL);
-					if (monitor == NULL)
-					{
-						*x = *y = 96;
-					}
-					else
-					{
-						DpiAwared_GetDpiForMonitor(monitor, x, y);
-					}
-				}
-			}
-
-			void DpiAwared_AdjustWindowRect(LPRECT rect, HWND handle, UINT dpi)
-			{
-				USE_API(user32, AdjustWindowRectExForDpi);
-
-				if (proc_AdjustWindowRectExForDpi)
-				{
-					proc_AdjustWindowRectExForDpi(rect, (DWORD)GetWindowLongPtr(handle, GWL_STYLE), FALSE, (DWORD)GetWindowLongPtr(handle, GWL_EXSTYLE), dpi);
-				}
-				else
-				{
-					AdjustWindowRect(rect, (DWORD)GetWindowLongPtr(handle, GWL_STYLE), FALSE);
-				}
-			}
-
-			int DpiAwared_GetSystemMetrics(int index, UINT dpi)
-			{
-				USE_API(user32, GetSystemMetricsForDpi);
-
-				if (proc_GetSystemMetricsForDpi)
-				{
-					return proc_GetSystemMetricsForDpi(index, dpi);
-				}
-				else
-				{
-					return GetSystemMetrics(index);
-				}
-			}
-
-#undef USE_API
-		}
-	}
-}
-
-/***********************************************************************
-.\NATIVEWINDOW\WINDOWS\WINNATIVEWINDOW.CPP
-***********************************************************************/
-#include <CommCtrl.h>
-
-#pragma comment(lib, "Imm32.lib")
-#pragma comment(lib, "Shlwapi.lib")
-#pragma comment(lib, "Comctl32.lib")
-
-namespace vl
-{
-	namespace presentation
-	{
-		namespace windows
-		{
-			using namespace collections;
-
-			LPCWSTR defaultIconResourceName = nullptr;
-
-			HICON CreateWindowDefaultIcon(vint size = 0)
-			{
-				if (!defaultIconResourceName) return NULL;
-				return (HICON)LoadImage(GetModuleHandle(NULL), defaultIconResourceName, IMAGE_ICON, (int)size, (int)size, (size ? 0 : LR_DEFAULTSIZE) | LR_SHARED);
-			}
-
-			void SetWindowDefaultIcon(UINT resourceId)
-			{
-				CHECK_ERROR(defaultIconResourceName == nullptr, L"vl::presentation::windows::SetWindowDefaultIcon(UINT)#This function can only be called once.");
-				defaultIconResourceName = MAKEINTRESOURCE(resourceId);
-			}
-
-			HWND GetHWNDFromNativeWindowHandle(INativeWindow* window)
-			{
-				if(!window) return NULL;
-				IWindowsForm* form=GetWindowsForm(window);
-				if(!form) return NULL;
-				return form->GetWindowHandle();
-			}
-
-/***********************************************************************
-WindowsClass
-***********************************************************************/
-
-			class WinClass : public Object
-			{
-			protected:
-				WString									name;
-				WNDCLASSEX								windowClass;
-				ATOM									windowAtom;
-
-			public:
-				WinClass(WString _name, bool shadow, bool ownDC, WNDPROC procedure, HINSTANCE hInstance)
-				{
-					name=_name;
-					ZeroMemory(&windowClass, sizeof(windowClass));
-					windowClass.cbSize=sizeof(windowClass);
-					windowClass.style=CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | (shadow?CS_DROPSHADOW:0) | (ownDC?CS_OWNDC:0);
-					windowClass.lpfnWndProc=procedure;
-					windowClass.cbClsExtra=0;
-					windowClass.cbWndExtra=0;
-					windowClass.hInstance=hInstance;
-					if (defaultIconResourceName)
-					{
-						windowClass.hIcon = CreateWindowDefaultIcon();
-					}
-					windowClass.hCursor=NULL;//LoadCursor(NULL,IDC_ARROW);
-					windowClass.hbrBackground=GetSysColorBrush(COLOR_BTNFACE);
-					windowClass.lpszMenuName=NULL;
-					windowClass.lpszClassName=name.Buffer();
-					windowClass.hIconSm=NULL;
-					windowAtom=RegisterClassEx(&windowClass);
-				}
-
-				bool IsAvailable()
-				{
-					return windowAtom!=0;
-				}
-
-				WString GetName()
-				{
-					return name;
-				}
-
-				ATOM GetClassAtom()
-				{
-					return windowAtom;
-				}
-			};
-
-/***********************************************************************
-WindowsForm
-***********************************************************************/
-
-			class WindowsForm : public Object, public INativeWindow, public IWindowsForm
-			{
-			protected:
-				
-				LONG_PTR InternalGetExStyle()
-				{
-					return GetWindowLongPtr(handle, GWL_EXSTYLE);
-				}
-
-				void InternalSetExStyle(LONG_PTR exStyle)
-				{
-					LONG_PTR result = SetWindowLongPtr(handle, GWL_EXSTYLE, exStyle);
-					SetWindowPos(handle, 0, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
-				}
-
-				LONG_PTR InternalGetStyle()
-				{
-					return GetWindowLongPtr(handle, GWL_STYLE);
-				}
-
-				void InternalSetStyle(LONG_PTR style)
-				{
-					SetWindowLongPtr(handle, GWL_STYLE, style);
-					SetWindowPos(handle, 0, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
-				}
-
-				LONG_PTR TurnOnStyle(LONG_PTR combination, LONG_PTR style)
-				{
-					return combination | style;
-				}
-
-				LONG_PTR TurnOffStyle(LONG_PTR combination, LONG_PTR style)
-				{
-					return combination & (~style);
-				}
-
-				bool GetExStyle(LONG_PTR exStyle)
-				{
-					return (InternalGetExStyle() & exStyle) != 0;
-				}
-
-				void SetExStyle(LONG_PTR exStyle, bool available)
-				{
-					if (available)
-					{
-						InternalSetExStyle(TurnOnStyle(InternalGetExStyle(), exStyle));
-					}
-					else
-					{
-						InternalSetExStyle(TurnOffStyle(InternalGetExStyle(), exStyle));
-					}
-				}
-
-				bool GetStyle(LONG_PTR style)
-				{
-					return (InternalGetStyle() & style) != 0;
-				}
-
-				void SetStyle(LONG_PTR style, bool available)
-				{
-					if (available)
-					{
-						InternalSetStyle(TurnOnStyle(InternalGetStyle(), style));
-					}
-					else
-					{
-						InternalSetStyle(TurnOffStyle(InternalGetStyle(), style));
-					}
-				}
-#pragma push_macro("_CONTROL")
-#if defined _CONTROL
-#undef _CONTROL
-#endif
-				NativeWindowMouseInfo ConvertMouse(WPARAM wParam, LPARAM lParam, bool wheelMessage, bool nonClient)
-				{
-					NativeWindowMouseInfo info;
-
-					info.nonClient = false;
-					if (nonClient)
-					{
-						switch (wParam)
-						{
-						case HTMINBUTTON:
-						case HTMAXBUTTON:
-						case HTCLOSE:
-							break;
-						default:
-							info.nonClient = true;
-							break;
-						}
-					}
-
-					if(wheelMessage)
-					{
-						info.wheel=GET_WHEEL_DELTA_WPARAM(wParam);
-						wParam=GET_KEYSTATE_WPARAM(wParam);
-					}
-					else
-					{
-						info.wheel=0;
-					}
-
-					if (nonClient)
-					{
-						info.ctrl = WinIsKeyPressing(VKEY::KEY_CONTROL);
-						info.shift = WinIsKeyPressing(VKEY::KEY_SHIFT);
-						info.left= WinIsKeyPressing(VKEY::KEY_LBUTTON);
-						info.middle= WinIsKeyPressing(VKEY::KEY_MBUTTON);
-						info.right = WinIsKeyPressing(VKEY::KEY_RBUTTON);
-						
-						POINTS point = MAKEPOINTS(lParam);
-						NativePoint offset = GetClientBoundsInScreen().LeftTop();
-						info.x = point.x - offset.x.value;
-						info.y = point.y - offset.y.value;
-					}
-					else
-					{
-						info.ctrl=((VKEY)wParam & VKEY::KEY_CONTROL)!=(VKEY)0;
-						info.shift=((VKEY)wParam & VKEY::KEY_SHIFT)!= (VKEY)0;
-						info.left=((VKEY)wParam & VKEY::KEY_LBUTTON)!= (VKEY)0;
-						info.middle=((VKEY)wParam & VKEY::KEY_MBUTTON)!= (VKEY)0;
-						info.right=((VKEY)wParam & VKEY::KEY_RBUTTON)!= (VKEY)0;
-
-						POINTS point = MAKEPOINTS(lParam);
-
-						if (wheelMessage)
-						{
-							NativePoint offset = GetClientBoundsInScreen().LeftTop();
-							info.x = point.x - offset.x.value;
-							info.y = point.y - offset.y.value;
-						}
-						else
-						{
-							info.x = point.x;
-							info.y = point.y;
-						}
-					}
-					return info;
-				}
-
-				NativeWindowKeyInfo ConvertKey(WPARAM wParam, LPARAM lParam)
-				{
-					NativeWindowKeyInfo info;
-					info.code=(VKEY)wParam;
-					info.ctrl=WinIsKeyPressing(VKEY::KEY_CONTROL);
-					info.shift=WinIsKeyPressing(VKEY::KEY_SHIFT);
-					info.alt=WinIsKeyPressing(VKEY::KEY_MENU);
-					info.capslock=WinIsKeyToggled(VKEY::KEY_CAPITAL);
-					info.autoRepeatKeyDown = (((vuint32_t)lParam) >> 30) % 2 == 1;
-					return info;
-				}
-
-				NativeWindowCharInfo ConvertChar(WPARAM wParam)
-				{
-					NativeWindowCharInfo info;
-					info.code=(wchar_t)wParam;
-					info.ctrl=WinIsKeyPressing(VKEY::KEY_CONTROL);
-					info.shift=WinIsKeyPressing(VKEY::KEY_SHIFT);
-					info.alt=WinIsKeyPressing(VKEY::KEY_MENU);
-					info.capslock=WinIsKeyToggled(VKEY::KEY_CAPITAL);
-					return info;
-				}
-#pragma pop_macro("_CONTROL")
-
-				void TrackMouse(bool enable)
-				{
-					TRACKMOUSEEVENT trackMouseEvent;
-					trackMouseEvent.cbSize=sizeof(trackMouseEvent);
-					trackMouseEvent.hwndTrack=handle;
-					trackMouseEvent.dwFlags=(enable?0:TME_CANCEL) | TME_HOVER | TME_LEAVE;
-					trackMouseEvent.dwHoverTime=HOVER_DEFAULT;
-					TrackMouseEvent(&trackMouseEvent);
-				}
-
-				void UpdateCompositionForContent()
-				{
-					HIMC imc = ImmGetContext(handle);
-					COMPOSITIONFORM cf;
-					cf.dwStyle = CFS_POINT;
-					cf.ptCurrentPos.x = (int)caretPoint.x.value;
-					cf.ptCurrentPos.y = (int)caretPoint.y.value;
-					ImmSetCompositionWindow(imc, &cf);
-					ImmReleaseContext(handle, imc);
-				}
-
-				bool supressClosePopups = false;
-
-				static void ClosePopupsOf(WindowsForm* owner, SortedList<WindowsForm*>& exceptions)
-				{
-					for (vint i = 0; i < owner->childWindows.Count(); i++)
-					{
-						auto popup = owner->childWindows[i];
-						if (popup->windowMode != Normal && popup->IsVisible())
-						{
-							if (!exceptions.Contains(popup))
-							{
-								popup->Hide(false);
-							}
-						}
-						ClosePopupsOf(popup, exceptions);
-					}
-				}
-
-				bool HandleMessageInternal(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& result)
-				{
-					if (!supressClosePopups)
-					{
-						bool closePopups = false;
-						WindowsForm* activatedWindow = nullptr;
-						WindowsForm* rootWindow = nullptr;
-						SortedList<WindowsForm*> exceptions;
-
-						switch (uMsg)
-						{
-						case WM_ACTIVATEAPP:
-							if (wParam == FALSE)
-							{
-								closePopups = true;
-							}
-							break;
-						case WM_ACTIVATE:
-							switch (LOWORD(wParam))
-							{
-							case WA_ACTIVE:
-							case WA_CLICKACTIVE:
-								activatedWindow = this;
-								closePopups = true;
-								break;
-							}
-							break;
-						case WM_LBUTTONDOWN:
-						case WM_MBUTTONDOWN:
-						case WM_RBUTTONDOWN:
-						case WM_NCLBUTTONDOWN:
-						case WM_NCMBUTTONDOWN:
-						case WM_NCRBUTTONDOWN:
-							activatedWindow = this;
-							closePopups = true;
-							break;
-						}
-
-						if (activatedWindow)
-						{
-							rootWindow = activatedWindow;
-							exceptions.Add(rootWindow);
-							while (auto parentWindow = rootWindow->parentWindow)
-							{
-								rootWindow = parentWindow;
-								exceptions.Add(parentWindow);
-							}
-						}
-
-						if (closePopups)
-						{
-							List<IWindowsForm*> allRootWindows;
-							GetAllCreatedWindows(allRootWindows, true);
-
-							for (vint i = 0; i < allRootWindows.Count(); i++)
-							{
-								if (auto windowsForm = dynamic_cast<WindowsForm*>(allRootWindows[i]))
-								{
-									ClosePopupsOf(windowsForm, exceptions);
-								}
-							}
-						}
-					}
-
-					bool nonClient = false;
-
-					switch(uMsg)
-					{
-					// ************************************** moving and sizing
-					case WM_MOVING:case WM_SIZING:
-						{
-							LPRECT rawBounds=(LPRECT)lParam;
-							NativeRect bounds(rawBounds->left, rawBounds->top, rawBounds->right, rawBounds->bottom);
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->Moving(bounds, false, (uMsg == WM_SIZING));
-							}
-							if(		rawBounds->left!=bounds.Left().value
-								||	rawBounds->top!=bounds.Top().value
-								||	rawBounds->right!=bounds.Right().value
-								||	rawBounds->bottom!=bounds.Bottom().value)
-							{
-								rawBounds->left=(int)bounds.Left().value;
-								rawBounds->top=(int)bounds.Top().value;
-								rawBounds->right=(int)bounds.Right().value;
-								rawBounds->bottom=(int)bounds.Bottom().value;
-								result=TRUE;
-							}
-						}
-						break;
-					case WM_MOVE:case WM_SIZE:
-						{
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->Moved();
-							}
-						}
-						break;
-					case WM_DPICHANGED:
-						{
-							dpiX = LOWORD(wParam);
-							dpiY = HIWORD(wParam);
-							UpdateDpiAwaredFields(false);
-							auto newRect = (RECT*)lParam;
-							MoveWindow(handle, newRect->left, newRect->top, (newRect->right - newRect->left), (newRect->bottom - newRect->top), FALSE);
-							for (vint i = 0; i < listeners.Count(); i++)
-							{
-								listeners[i]->DpiChanged();
-							}
-						}
-						break;
-					// ************************************** state
-					case WM_ENABLE:
-						{
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								if(wParam==TRUE)
-								{
-									listeners[i]->Enabled();
-								}
-								else
-								{
-									listeners[i]->Disabled();
-								}
-							}
-						}
-						break;
-					case WM_SETFOCUS:
-						{
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->GotFocus();
-							}
-						}
-						break;
-					case WM_KILLFOCUS:
-						{
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->LostFocus();
-							}
-						}
-						break;
-					case WM_MOUSEACTIVATE:
-						if (!enabledActivate)
-						{
-							result = MA_NOACTIVATE;
-							return true;
-						}
-						break;
-					case WM_ACTIVATE:
-						{
-							for (vint i = 0; i < listeners.Count(); i++)
-							{
-								if (wParam == WA_ACTIVE || wParam == WA_CLICKACTIVE)
-								{
-									listeners[i]->Activated();
-								}
-								else
-								{
-									listeners[i]->Deactivated();
-								}
-							}
-						}
-						break;
-					case WM_SHOWWINDOW:
-						if (lParam == 0)
-						{
-							if (wParam == TRUE)
-							{
-								for (vint i = 0; i < listeners.Count(); i++)
-								{
-									listeners[i]->Opened();
-								}
-							}
-							else
-							{
-								for (vint i = 0; i < listeners.Count(); i++)
-								{
-									listeners[i]->Closed();
-								}
-							}
-						}
-						break;
-					case WM_CLOSE:
-						{
-							bool cancel=false;
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->Closing(cancel);
-							}
-							return cancel;
-						}
-						break;
-					// ************************************** mouse
-					case WM_NCLBUTTONDOWN:
-						if (!customFrameMode) break;
-						nonClient = true;
-					case WM_LBUTTONDOWN:
-						{
-							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->LeftButtonDown(info);
-							}
-						}
-						break;
-					case WM_NCLBUTTONUP:
-						if (!customFrameMode) break;
-						nonClient = true;
-					case WM_LBUTTONUP:
-						{
-							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->LeftButtonUp(info);
-							}
-						}
-						break;
-					case WM_NCLBUTTONDBLCLK:
-						if (!customFrameMode) break;
-						nonClient = true;
-					case WM_LBUTTONDBLCLK:
-						{
-							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->LeftButtonDoubleClick(info);
-							}
-						}
-						break;
-					case WM_NCRBUTTONDOWN:
-						if (!customFrameMode) break;
-						nonClient = true;
-					case WM_RBUTTONDOWN:
-						{
-							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->RightButtonDown(info);
-							}
-						}
-						break;
-					case WM_NCRBUTTONUP:
-						if (!customFrameMode) break;
-						nonClient = true;
-					case WM_RBUTTONUP:
-						{
-							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->RightButtonUp(info);
-							}
-						}
-						break;
-					case WM_NCRBUTTONDBLCLK:
-						if (!customFrameMode) break;
-						nonClient = true;
-					case WM_RBUTTONDBLCLK:
-						{
-							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->RightButtonDoubleClick(info);
-							}
-						}
-						break;
-					case WM_NCMBUTTONDOWN:
-						if (!customFrameMode) break;
-						nonClient = true;
-					case WM_MBUTTONDOWN:
-						{
-							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->MiddleButtonDown(info);
-							}
-						}
-						break;
-					case WM_NCMBUTTONUP:
-						if (!customFrameMode) break;
-						nonClient = true;
-					case WM_MBUTTONUP:
-						{
-							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->MiddleButtonUp(info);
-							}
-						}
-						break;
-					case WM_NCMBUTTONDBLCLK:
-						if (!customFrameMode) break;
-						nonClient = true;
-					case WM_MBUTTONDBLCLK:
-						{
-							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->MiddleButtonDoubleClick(info);
-							}
-						}
-						break;
-					case WM_NCMOUSEMOVE:
-						if (!customFrameMode) break;
-						nonClient = true;
-					case WM_MOUSEMOVE:
-						{
-							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, false, nonClient);
-							if(info.x!=mouseLastX || info.y!=mouseLastY)
-							{
-								if(!mouseHoving)
-								{
-									mouseHoving=true;
-									for(vint i=0;i<listeners.Count();i++)
-									{
-										listeners[i]->MouseEntered();
-									}
-									TrackMouse(true);
-								}
-								for(vint i=0;i<listeners.Count();i++)
-								{
-									listeners[i]->MouseMoving(info);
-								}
-							}
-						}
-						break;
-					// ************************************** wheel
-					case WM_MOUSEHWHEEL:
-						{
-							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, true, false);
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->HorizontalWheel(info);
-							}
-						}
-						break;
-					case WM_MOUSEWHEEL:
-						{
-							NativeWindowMouseInfo info=ConvertMouse(wParam, lParam, true, false);
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->VerticalWheel(info);
-							}
-						}
-						break;
-					// ************************************** mouse state
-					case WM_NCMOUSELEAVE:
-						nonClient = true;
-					case WM_MOUSELEAVE:
-						if (customFrameMode == nonClient)
-						{
-							mouseLastX=-1;
-							mouseLastY=-1;
-							mouseHoving=false;
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->MouseLeaved();
-							}
-						}
-						break;
-					case WM_NCMOUSEHOVER:
-					case WM_MOUSEHOVER:
-						{
-							TrackMouse(true);
-						}
-						break;
-					// ************************************** key
-					case WM_KEYUP:
-						{
-							NativeWindowKeyInfo info=ConvertKey(wParam, lParam);
-							info.autoRepeatKeyDown = false;
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->KeyUp(info);
-							}
-						}
-						break;
-					case WM_KEYDOWN:
-						{
-							NativeWindowKeyInfo info=ConvertKey(wParam, lParam);
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->KeyDown(info);
-							}
-						}
-						break;
-					case WM_SYSKEYUP:
-						{
-							NativeWindowKeyInfo info=ConvertKey(wParam, lParam);
-							info.autoRepeatKeyDown = false;
-							if (supressingAlt && !info.ctrl && !info.shift && info.code == VKEY::KEY_MENU)
-							{
-								supressingAlt = false;
-								break;
-							}
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->SysKeyUp(info);
-							}
-						}
-						break;
-					case WM_SYSKEYDOWN:
-						{
-							NativeWindowKeyInfo info=ConvertKey(wParam, lParam);
-							if (supressingAlt && !info.ctrl && !info.shift && info.code == VKEY::KEY_MENU)
-							{
-								break;
-							}
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->SysKeyDown(info);
-							}
-						}
-						break;
-					case WM_CHAR:
-						{
-							NativeWindowCharInfo info=ConvertChar(wParam);
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->Char(info);
-							}
-						}
-						break;
-					// ************************************** painting
-					case WM_PAINT:
-						{
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								listeners[i]->Paint();
-							}
-						}
-						break;
-					case WM_ERASEBKGND:
-						result = 0;
-						return true;
-					case WM_NCPAINT:
-					case WM_SYNCPAINT:
-						if(customFrameMode)
-						{
-							result=0;
-							return true;
-						}
-						break;
-					// ************************************** IME
-					case WM_IME_SETCONTEXT:
-						if(wParam==TRUE)
-						{
-							HIMC imc = ImmGetContext(handle);
-							ImmAssociateContext(hwnd, imc);
-							ImmReleaseContext(handle, imc);
-						}
-						break;
-					case WM_IME_STARTCOMPOSITION:
-						UpdateCompositionForContent();
-						break;
-					// ************************************** hit test
-					case WM_NCHITTEST:
-						{
-							POINTS location=MAKEPOINTS(lParam);
-							NativePoint windowLocation=GetBounds().LeftTop();
-							location.x-=(SHORT)windowLocation.x.value;
-							location.y-=(SHORT)windowLocation.y.value;
-							for(vint i=0;i<listeners.Count();i++)
-							{
-								switch(listeners[i]->HitTest(NativePoint(location.x, location.y)))
-								{
-								case INativeWindowListener::BorderNoSizing:
-									result=HTBORDER;
-									return true;
-								case INativeWindowListener::BorderLeft:
-									result=HTLEFT;
-									return true;
-								case INativeWindowListener::BorderRight:
-									result=HTRIGHT;
-									return true;
-								case INativeWindowListener::BorderTop:
-									result=HTTOP;
-									return true;
-								case INativeWindowListener::BorderBottom:
-									result=HTBOTTOM;
-									return true;
-								case INativeWindowListener::BorderLeftTop:
-									result=HTTOPLEFT;
-									return true;
-								case INativeWindowListener::BorderRightTop:
-									result=HTTOPRIGHT;
-									return true;
-								case INativeWindowListener::BorderLeftBottom:
-									result=HTBOTTOMLEFT;
-									return true;
-								case INativeWindowListener::BorderRightBottom:
-									result=HTBOTTOMRIGHT;
-									return true;
-								case INativeWindowListener::Title:
-									result=HTCAPTION;
-									return true;
-								case INativeWindowListener::ButtonMinimum:
-									result=HTMINBUTTON;
-									return true;
-								case INativeWindowListener::ButtonMaximum:
-									result=HTMAXBUTTON;
-									return true;
-								case INativeWindowListener::ButtonClose:
-									result=HTCLOSE;
-									return true;
-								case INativeWindowListener::Client:
-									result=HTCLIENT;
-									return true;
-								case INativeWindowListener::Icon:
-									result=HTSYSMENU;
-									return true;
-								}
-							}
-						}
-						break;
-					// ************************************** MISC
-					case WM_SETCURSOR:
-						{
-							DWORD hitTestResult=LOWORD(lParam);
-							if(hitTestResult==HTCLIENT)
-							{
-								HCURSOR cursorHandle=cursor->GetCursorHandle();
-								if(GetCursor()!=cursorHandle)
-								{
-									SetCursor(cursorHandle);
-								}
-								result=TRUE;
-								return true;
-							}
-						}
-						break;
-					case WM_NCCALCSIZE:
-						if((BOOL)wParam && customFrameMode)
-						{
-							result=0;
-							return true;
-						}
-						break;
-					case WM_NCACTIVATE:
-						if(customFrameMode)
-						{
-							if(wParam==TRUE)
-							{
-								result=FALSE;
-							}
-							else
-							{
-								result=TRUE;
-							}
-							return true;
-						}
-						break;
-					}
-
-					// handling custom frame
-					if (customFrameMode)
-					{
-						switch (uMsg)
-						{
-						case WM_NCLBUTTONDOWN:
-							switch (wParam)
-							{
-							case HTMINBUTTON:
-							case HTMAXBUTTON:
-							case HTCLOSE:
-								result = 0;
-								return true;
-							}
-							break;
-						case WM_LBUTTONUP:
-							{
-								POINTS location = MAKEPOINTS(lParam);
-								for(vint i=0;i<listeners.Count();i++)
-								{
-									switch(listeners[i]->HitTest(NativePoint(location.x, location.y)))
-									{
-									case INativeWindowListener::ButtonMinimum:
-										ShowMinimized();
-										return false;
-									case INativeWindowListener::ButtonMaximum:
-										if (GetSizeState() == INativeWindow::Maximized)
-										{
-											ShowRestored();
-										}
-										else
-										{
-											ShowMaximized();
-										}
-										return false;
-									case INativeWindowListener::ButtonClose:
-										Hide(true);
-										return false;
-									}
-								}
-							}
-							break;
-						}
-					}
-					return false;
-				}
-			protected:
-				HWND								handle;
-				WString								title;
-				WindowsCursor*						cursor = nullptr;
-				NativePoint							caretPoint;
-				WindowsForm*						parentWindow = nullptr;
-				List<WindowsForm*>					childWindows;
-				WindowMode							windowMode;
-				List<INativeWindowListener*>		listeners;
-				vint								mouseLastX = -1;
-				vint								mouseLastY = -1;
-				bool								mouseHoving = false;
-				Interface*							graphicsHandler = nullptr;
-				bool								customFrameMode = false;
-				bool								enabledActivate = true;
-				List<Ptr<INativeMessageHandler>>	messageHandlers;
-				bool								supressingAlt = false;
-				Ptr<bool>							flagDisposed = new bool(false);
-				NativeMargin						customFramePadding;
-				Ptr<GuiImageData>					defaultIcon;
-				Ptr<GuiImageData>					replacementIcon;
-				HICON								replacementHIcon = NULL;
-				UINT								dpiX = 0;
-				UINT								dpiY = 0;
-
-				void UpdateDpiAwaredFields(bool refreshDpiXY)
-				{
-					if (refreshDpiXY)
-					{
-						DpiAwared_GetDpiForWindow(handle, &dpiX, &dpiY);
-					}
-					auto padding = (vint)(DpiAwared_GetSystemMetrics(SM_CXSIZEFRAME, dpiX) + DpiAwared_GetSystemMetrics(SM_CXPADDEDBORDER, dpiX));
-					customFramePadding = NativeMargin(padding, padding, padding, padding);
-				}
-			public:
-				WindowsForm(HWND parent, WString className, HINSTANCE hInstance, INativeWindow::WindowMode _windowMode)
-					:windowMode(_windowMode)
-				{
-					{
-						DWORD exStyle = WS_EX_APPWINDOW | WS_EX_CONTROLPARENT;
-						DWORD style = WS_BORDER | WS_CAPTION | WS_SIZEBOX | WS_SYSMENU | WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_MAXIMIZEBOX | WS_MINIMIZEBOX;
-						handle = CreateWindowEx(exStyle, className.Buffer(), L"", style, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, parent, NULL, hInstance, NULL);
-					}
-					if (windowMode == INativeWindow::Normal)
-					{
-						// use WS_POPUP in CreateWindowEx, because CW_USERDEFAULT is interpreted as 0, unlike WS_OVERLAPPED
-						// if this is not a popup window, replace WS_POPUP with WS_OVERLAPPED
-						auto style = InternalGetStyle();
-						style = TurnOnStyle(style, WS_OVERLAPPED);
-						style = TurnOffStyle(style, WS_POPUP);
-						InternalSetStyle(style);
-					}
-					UpdateDpiAwaredFields(true);
-				}
-
-				~WindowsForm()
-				{
-					if (parentWindow)
-					{
-						parentWindow->childWindows.Remove(this);
-					}
-					for (vint i = childWindows.Count() - 1; i >= 0; i--)
-					{
-						childWindows[i]->SetParent(parentWindow);
-					}
-
-					*flagDisposed.Obj() = true;
-					List<INativeWindowListener*> copiedListeners;
-					CopyFrom(copiedListeners, listeners);
-					for (vint i = 0; i < copiedListeners.Count(); i++)
-					{
-						INativeWindowListener* listener = copiedListeners[i];
-						if (listeners.Contains(listener))
-						{
-							listener->Destroyed();
-						}
-					}
-					DestroyWindow(handle);
-				}
-
-				void InvokeDestroying()
-				{
-					for(vint i=0;i<listeners.Count();i++)
-					{
-						listeners[i]->Destroying();
-					}
-				}
-
-				bool HandleMessage(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& result)
-				{
-#define CHECK_DISPOSED if (*flag.Obj()) return skip
-					auto flag = flagDisposed;
-					bool skip = false;
-					{
-						for (auto handler : messageHandlers)
-						{
-							handler->BeforeHandle(hwnd, uMsg, wParam, lParam, skip);
-							CHECK_DISPOSED;
-						}
-						if (skip)
-						{
-							return true;
-						}
-					}
-					skip = HandleMessageInternal(hwnd, uMsg, wParam, lParam, result);
-					CHECK_DISPOSED;
-					if (GetWindowsFormFromHandle(hwnd))
-					{
-						for (auto handler : messageHandlers)
-						{
-							handler->AfterHandle(hwnd, uMsg, wParam, lParam, skip, result);
-							CHECK_DISPOSED;
-						}
-					}
-					return skip;
-#undef CHECK_DISPOSED
-				}
-
-				HWND GetWindowHandle()override
-				{
-					return handle;
-				}
-
-				Interface* GetGraphicsHandler()override
-				{
-					return graphicsHandler;
-				}
-
-				void SetGraphicsHandler(Interface* handler)override
-				{
-					graphicsHandler=handler;
-				}
-
-				bool InstallMessageHandler(Ptr<INativeMessageHandler> handler)override
-				{
-					if (messageHandlers.Contains(handler.Obj()))
-					{
-						return false;
-					}
-					messageHandlers.Add(handler);
-					return true;
-				}
-
-				bool UninstallMessageHandler(Ptr<INativeMessageHandler> handler)override
-				{
-					vint index = messageHandlers.IndexOf(handler.Obj());
-					if (index == -1)return false;
-					messageHandlers.RemoveAt(handler);
-					return true;
-				}
-
-				Point Convert(NativePoint value)override
-				{
-					return Point((vint)value.x.value * 96 / dpiX, (vint)value.y.value * 96 / dpiY);
-				}
-
-				NativePoint Convert(Point value)override
-				{
-					return NativePoint(value.x * dpiX / 96, value.y * dpiY / 96);
-				}
-
-				Size Convert(NativeSize value)override
-				{
-					return Size((vint)value.x.value * 96 / dpiX, (vint)value.y.value * 96 / dpiY);
-				}
-
-				NativeSize Convert(Size value)override
-				{
-					return NativeSize(value.x * dpiX / 96, value.y * dpiY / 96);
-				}
-
-				Margin Convert(NativeMargin value)override
-				{
-					return Margin(
-						(vint)value.left.value * 96 / dpiX,
-						(vint)value.top.value * 96 / dpiY,
-						(vint)value.right.value * 96 / dpiX,
-						(vint)value.bottom.value * 96 / dpiY
-					);
-				}
-
-				NativeMargin Convert(Margin value)override
-				{
-					return NativeMargin(
-						(vint)value.left * dpiX / 96,
-						(vint)value.top * dpiY / 96,
-						(vint)value.right * dpiX / 96,
-						(vint)value.bottom * dpiY / 96
-					);
-				}
-
-				NativeRect GetBounds()override
-				{
-					RECT rect;
-					GetWindowRect(handle, &rect);
-					return NativeRect(rect.left, rect.top, rect.right, rect.bottom);
-				}
-
-				void SetBounds(const NativeRect& bounds)override
-				{
-					NativeRect newBounds=bounds;
-					for(vint i=0;i<listeners.Count();i++)
-					{
-						listeners[i]->Moving(newBounds, true, false);
-					}
-					MoveWindow(handle, (int)newBounds.Left().value, (int)newBounds.Top().value, (int)newBounds.Width().value, (int)newBounds.Height().value, FALSE);
-				}
-
-				NativeSize GetClientSize()override
-				{
-					return GetClientBoundsInScreen().GetSize();
-				}
-
-				void SetClientSize(NativeSize size)override
-				{
-					RECT required={0,0,(int)size.x.value,(int)size.y.value };
-					RECT bounds;
-					GetWindowRect(handle, &bounds);
-					DpiAwared_AdjustWindowRect(&required, handle, dpiX);
-					SetBounds(NativeRect(NativePoint(bounds.left, bounds.top), NativeSize(required.right-required.left, required.bottom-required.top)));
-				}
-
-				NativeRect GetClientBoundsInScreen()override
-				{
-					if(customFrameMode)
-					{
-						return GetBounds();
-					}
-					else
-					{
-						RECT required={0,0,0,0};
-						RECT bounds;
-						GetWindowRect(handle, &bounds);
-						DpiAwared_AdjustWindowRect(&required, handle, dpiX);
-						return NativeRect(
-							NativePoint(
-								(bounds.left-required.left),
-								(bounds.top-required.top)
-								),
-							NativeSize(
-								(bounds.right-bounds.left)-(required.right-required.left),
-								(bounds.bottom-bounds.top)-(required.bottom-required.top)
-								)
-							);
-					}
-				}
-
-				WString GetTitle()override
-				{
-					return title;
-				}
-
-				void SetTitle(WString _title)override
-				{
-					title=_title;
-					SetWindowText(handle, title.Buffer());
-				}
-
-				INativeCursor* GetWindowCursor()override
-				{
-					return cursor;
-				}
-
-				void SetWindowCursor(INativeCursor* _cursor)override
-				{
-					WindowsCursor* newCursor=dynamic_cast<WindowsCursor*>(_cursor);
-					if(newCursor && cursor!=newCursor)
-					{
-						cursor=newCursor;
-						if(mouseHoving && IsVisible())
-						{
-							SetCursor(cursor->GetCursorHandle());
-						}
-					}
-				}
-				
-				NativePoint GetCaretPoint()override
-				{
-					return caretPoint;
-				}
-
-				void SetCaretPoint(NativePoint point)override
-				{
-					caretPoint=point;
-					UpdateCompositionForContent();
-				}
-
-				INativeWindow* GetParent()override
-				{
-					return parentWindow;
-				}
-
-				void SetParent(INativeWindow* parent)override
-				{
-					if (parentWindow)
-					{
-						parentWindow->childWindows.Remove(this);
-					}
-
-					if ((parentWindow = dynamic_cast<WindowsForm*>(parent)))
-					{
-						parentWindow->childWindows.Add(this);
-						// ::SetParent(handle, parentWindow->handle);
-						SetWindowLongPtr(handle, GWLP_HWNDPARENT, (LONG_PTR)parentWindow->handle);
-					}
-					else
-					{
-						// ::SetParent(handle, NULL);
-						SetWindowLongPtr(handle, GWLP_HWNDPARENT, NULL);
-					}
-				}
-
-				WindowMode GetWindowMode()override
-				{
-					return windowMode;
-				}
-
-				void EnableCustomFrameMode()override
-				{
-					customFrameMode=true;
-				}
-
-				void DisableCustomFrameMode()override
-				{
-					customFrameMode=false;
-				}
-
-				bool IsCustomFrameModeEnabled()override
-				{
-					return customFrameMode;
-				}
-
-				NativeMargin GetCustomFramePadding()override
-				{
-					if (GetSizeBox() || GetTitleBar())
-					{
-						return customFramePadding;
-					}
-					else
-					{
-						return NativeMargin(0, 0, 0, 0);
-					}
-				}
-
-				Ptr<GuiImageData> GetIcon()override
-				{
-					if (replacementIcon && replacementIcon->GetImage())
-					{
-						return replacementIcon;
-					}
-					else
-					{
-						if (!defaultIcon)
-						{
-							auto icon = CreateWindowDefaultIcon(16);
-							if (icon == NULL)
-							{
-								icon = (HICON)LoadImage(NULL, IDI_APPLICATION, IMAGE_ICON, 16, 16, LR_SHARED);
-							}
-							if (icon != NULL)
-							{
-								defaultIcon = new GuiImageData(CreateImageFromHICON(icon), 0);
-							}
-						}
-						return defaultIcon;
-					}
-				}
-
-				static double GetSizeScore(vint size)
-				{
-					if (size > 32)
-					{
-						return 32.0 / size;
-					}
-					else if (size < 32)
-					{
-						return size / 32.0 - 1;
-					}
-					else
-					{
-						return 1.0;
-					}
-				}
-
-				static vint GetBppFromFormat(const WICPixelFormatGUID& format)
-				{
-					if (format == GUID_WICPixelFormat1bppIndexed)	return 1;
-					if (format == GUID_WICPixelFormat2bppIndexed)	return 2;
-					if (format == GUID_WICPixelFormat4bppIndexed)	return 4;
-					if (format == GUID_WICPixelFormat8bppIndexed)	return 8;
-					if (format == GUID_WICPixelFormatBlackWhite)	return 1;
-					if (format == GUID_WICPixelFormat2bppGray)		return 2;
-					if (format == GUID_WICPixelFormat4bppGray)		return 4;
-					if (format == GUID_WICPixelFormat8bppGray)		return 8;
-					if (format == GUID_WICPixelFormat8bppAlpha)		return 8;
-					if (format == GUID_WICPixelFormat16bppBGR555)	return 16;
-					if (format == GUID_WICPixelFormat16bppBGR565)	return 16;
-					if (format == GUID_WICPixelFormat16bppBGRA5551)	return 16;
-					if (format == GUID_WICPixelFormat16bppGray)		return 16;
-					if (format == GUID_WICPixelFormat24bppBGR)		return 24;
-					if (format == GUID_WICPixelFormat24bppRGB)		return 24;
-					if (format == GUID_WICPixelFormat32bppBGR)		return 32;
-					if (format == GUID_WICPixelFormat32bppBGRA)		return 32;
-					if (format == GUID_WICPixelFormat32bppPBGRA)	return 32;
-					return -1;
-				}
-
-				void SetIcon(Ptr<GuiImageData> icon)override
-				{
-					replacementIcon = icon;
-					HICON newReplacementHIcon = NULL;
-					if (replacementIcon && replacementIcon->GetImage())
-					{
-						stream::MemoryStream memoryStream;
-
-						replacementIcon->GetImage()->SaveToStream(memoryStream, INativeImage::Icon);
-						if (memoryStream.Size() > 0)
-						{
-							newReplacementHIcon = CreateIconFromResource((PBYTE)memoryStream.GetInternalBuffer(), (DWORD)memoryStream.Size(), TRUE, 0x00030000);
-							if (newReplacementHIcon != NULL)
-							{
-								goto SKIP;
-							}
-						}
-
-						INativeImageFrame* selectedFrame = nullptr;
-						for (vint i = 0; i < replacementIcon->GetImage()->GetFrameCount(); i++)
-						{
-							auto frame = replacementIcon->GetImage()->GetFrame(i);
-							auto size = frame->GetSize();
-							if (size.x == size.y)
-							{
-								auto bitmap = GetWICBitmap(frame);
-								WICPixelFormatGUID format;
-								HRESULT hr = bitmap->GetPixelFormat(&format);
-								if (hr != S_OK) continue;
-
-								if (!selectedFrame)
-								{
-									selectedFrame = frame;
-								}
-								else
-								{
-									auto score = GetSizeScore(size.x);
-									auto scoreSelected = GetSizeScore(selectedFrame->GetSize().x);
-									if (score > scoreSelected)
-									{
-										selectedFrame = frame;
-									}
-									else if (score == scoreSelected)
-									{
-										WICPixelFormatGUID selectedFormat;
-										auto selectedBitmap = GetWICBitmap(selectedFrame);
-										hr = selectedBitmap->GetPixelFormat(&selectedFormat);
-
-										auto bpp = GetBppFromFormat(format);
-										auto bppSelected = GetBppFromFormat(selectedFormat);
-										if (bpp > bppSelected)
-										{
-											selectedFrame = frame;
-										}
-									}
-								}
-							}
-						}
-
-						if (selectedFrame)
-						{
-							bool succeeded = false;
-							WindowsBitmapImage newBitmap(replacementIcon->GetImage()->GetImageService(), GetWICBitmap(selectedFrame), replacementIcon->GetImage()->GetFormat());
-							newBitmap.SaveToStream(memoryStream, INativeImage::Bmp);
-							if (memoryStream.Size() > 0)
-							{
-								auto pBuffer = (char*)memoryStream.GetInternalBuffer();
-								tagBITMAPFILEHEADER bfh = *(tagBITMAPFILEHEADER*)pBuffer;
-								tagBITMAPINFOHEADER bih = *(tagBITMAPINFOHEADER*)(pBuffer + sizeof(tagBITMAPFILEHEADER));
-								RGBQUAD rgb = *(RGBQUAD*)(pBuffer + sizeof(tagBITMAPFILEHEADER) + sizeof(tagBITMAPINFOHEADER));
-
-								BITMAPINFO bi;
-								bi.bmiColors[0] = rgb;
-								bi.bmiHeader = bih;
-
-								char* pPixels = (pBuffer + bfh.bfOffBits);
-								char* ppvBits;
-								auto hBitmap = CreateDIBSection(NULL, &bi, DIB_RGB_COLORS, (void**)&ppvBits, NULL, 0);
-								if (hBitmap != NULL)
-								{
-									SetDIBits(NULL, hBitmap, 0, bih.biHeight, pPixels, &bi, DIB_RGB_COLORS);
-									auto himl = ImageList_Create(32, 32, ILC_COLOR32, 1, 1);
-									if (himl != NULL)
-									{
-										int addResult = ImageList_Add(himl, hBitmap, NULL);
-										newReplacementHIcon = ImageList_GetIcon(himl, 0, ILD_NORMAL);
-										ImageList_Destroy(himl);
-									}
-									DeleteObject(hBitmap);
-								}
-							}
-						}
-					}
-
-				SKIP:
-					{
-						HICON hAppIcon = newReplacementHIcon;
-						if (hAppIcon == NULL) hAppIcon = CreateWindowDefaultIcon();
-						if (hAppIcon == NULL) hAppIcon = (HICON)LoadImage(NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_DEFAULTSIZE | LR_SHARED);
-						bool isVisible = IsVisible();
-						if (isVisible) SendMessage(handle, WM_SETREDRAW, (WPARAM)FALSE, NULL);
-						SendMessage(handle, WM_SETICON, ICON_BIG, (LPARAM)hAppIcon);
-						SendMessage(handle, WM_SETICON, ICON_SMALL, (LPARAM)hAppIcon);
-						if (isVisible) SendMessage(handle, WM_SETREDRAW, (WPARAM)TRUE, NULL);
-
-						if (this == GetCurrentController()->WindowService()->GetMainWindow())
-						{
-							SendMessage(GetWindow(handle, GW_OWNER), WM_SETICON, ICON_BIG, (LPARAM)hAppIcon);
-							SendMessage(GetWindow(handle, GW_OWNER), WM_SETICON, ICON_SMALL, (LPARAM)hAppIcon);
-						}
-					}
-
-					if (replacementHIcon != NULL)
-					{
-						DestroyIcon(replacementHIcon);
-					}
-					replacementHIcon = newReplacementHIcon;
-				}
-
-				WindowSizeState GetSizeState()override
-				{
-					if(IsIconic(handle))
-					{
-						return INativeWindow::Minimized;
-					}
-					else if(IsZoomed(handle))
-					{
-						return INativeWindow::Maximized;
-					}
-					else
-					{
-						return INativeWindow::Restored;
-					}
-				}
-
-				void Show()override
-				{
-					ShowWindow(handle, SW_SHOWNORMAL);
-				}
-
-				void ShowDeactivated()override
-				{
-					ShowWindow(handle, SW_SHOWNOACTIVATE);
-					SetWindowPos(handle,HWND_TOP,0,0,0,0,SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE);
-				}
-
-				void ShowRestored()override
-				{
-					ShowWindow(handle, SW_RESTORE);
-				}
-
-				void ShowMaximized()override
-				{
-					ShowWindow(handle, SW_SHOWMAXIMIZED);
-				}
-
-				void ShowMinimized()override
-				{
-					ShowWindow(handle, SW_SHOWMINIMIZED);
-				}
-
-				void Hide(bool closeWindow)override
-				{
-					if (closeWindow)
-					{
-						PostMessage(handle, WM_CLOSE, NULL, NULL);
-					}
-					else
-					{
-						ShowWindow(handle, SW_HIDE);
-					}
-				}
-
-				bool IsVisible()override
-				{
-					return IsWindowVisible(handle)!=0;
-				}
-
-				void Enable()override
-				{
-					EnableWindow(handle, TRUE);
-				}
-
-				void Disable()override
-				{
-					EnableWindow(handle, FALSE);
-				}
-
-				bool IsEnabled()override
-				{
-					return IsWindowEnabled(handle)!=0;
-				}
-
-				void SetFocus()override
-				{
-					::SetFocus(handle);
-				}
-
-				bool IsFocused()override
-				{
-					return GetFocus()==handle;
-				}
-
-				void SetActivate()override
-				{
-					SetActiveWindow(handle);
-				}
-
-				bool IsActivated()override
-				{
-					return GetActiveWindow()==handle;
-				}
-
-				void ShowInTaskBar()override
-				{
-					SetExStyle(WS_EX_APPWINDOW, true);
-				}
-
-				void HideInTaskBar()override
-				{
-					SetExStyle(WS_EX_APPWINDOW, false);
-				}
-
-				bool IsAppearedInTaskBar()override
-				{
-					return GetExStyle(WS_EX_APPWINDOW);
-				}
-
-				void EnableActivate()override
-				{
-					enabledActivate = true;
-					SetExStyle(WS_EX_NOACTIVATE, false);
-				}
-
-				void DisableActivate()override
-				{
-					enabledActivate = false;
-					SetExStyle(WS_EX_NOACTIVATE, true);
-				}
-
-				bool IsEnabledActivate()override
-				{
-					return enabledActivate;
-				}
-
-				bool RequireCapture()override
-				{
-					SetCapture(handle);
-					return true;
-				}
-
-				bool ReleaseCapture()override
-				{
-					::ReleaseCapture();
-					return true;
-				}
-
-				bool IsCapturing()override
-				{
-					return GetCapture()==handle;
-				}
-
-				bool GetMaximizedBox()override
-				{
-					return GetStyle(WS_MAXIMIZEBOX);
-				}
-
-				void SetMaximizedBox(bool visible)override
-				{
-					SetStyle(WS_MAXIMIZEBOX, visible);
-				}
-
-				bool GetMinimizedBox()override
-				{
-					return GetStyle(WS_MINIMIZEBOX);
-				}
-
-				void SetMinimizedBox(bool visible)override
-				{
-					SetStyle(WS_MINIMIZEBOX, visible);
-				}
-
-				bool GetBorder()override
-				{
-					return GetStyle(WS_BORDER);
-				}
-
-				void SetBorder(bool visible)override
-				{
-					SetStyle(WS_BORDER, visible);
-				}
-
-				bool GetSizeBox()override
-				{
-					return GetStyle(WS_SIZEBOX);
-				}
-
-				void SetSizeBox(bool visible)override
-				{
-					SetStyle(WS_SIZEBOX, visible);
-				}
-
-				bool GetIconVisible()override
-				{
-					return GetStyle(WS_SYSMENU);
-				}
-
-				void SetIconVisible(bool visible)override
-				{
-					SetStyle(WS_SYSMENU, visible);
-				}
-
-				bool GetTitleBar()override
-				{
-					return GetStyle(WS_CAPTION);
-				}
-
-				void SetTitleBar(bool visible)override
-				{
-					SetStyle(WS_CAPTION, visible);
-				}
-
-				bool GetTopMost()override
-				{
-					return GetExStyle(WS_EX_TOPMOST);
-				}
-
-				void SetTopMost(bool topmost)override
-				{
-					SetWindowPos(handle, (topmost ? HWND_TOPMOST : HWND_NOTOPMOST), 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE | SWP_FRAMECHANGED);
-				}
-
-				void SupressAlt()override
-				{
-					if (!supressingAlt)
-					{
-						supressingAlt = true;
-						PostMessage(handle, WM_SYSKEYDOWN, VK_MENU, 0);
-						PostMessage(handle, WM_SYSKEYUP, VK_MENU, 0);
-					}
-				}
-
-				bool InstallListener(INativeWindowListener* listener)override
-				{
-					if(listeners.Contains(listener))
-					{
-						return false;
-					}
-					else
-					{
-						listeners.Add(listener);
-						return true;
-					}
-				}
-
-				bool UninstallListener(INativeWindowListener* listener)override
-				{
-					if(listeners.Contains(listener))
-					{
-						listeners.Remove(listener);
-						return true;
-					}
-					else
-					{
-						return false;
-					}
-				}
-
-				void RedrawContent()override
-				{
-					if(graphicsHandler)
-					{
-						SendMessage(this->handle, WM_PAINT, NULL, NULL);
-					}
-				}
-			};
-
-/***********************************************************************
-WindowsController
-***********************************************************************/
-
-			LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-			LRESULT CALLBACK GodProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
-			class WindowsController : public Object, public virtual INativeController, public virtual INativeWindowService
-			{
-			protected:
-				WinClass							windowClass;
-				WinClass							godClass;
-				HINSTANCE							hInstance;
-				HWND								godWindow;
-				Dictionary<HWND, WindowsForm*>		windows;
-				INativeWindow*						mainWindow;
-				HWND								mainWindowHandle;
-
-				WindowsCallbackService				callbackService;
-				WindowsResourceService				resourceService;
-				WindowsAsyncService					asyncService;
-				WindowsClipboardService				clipboardService;
-				WindowsImageService					imageService;
-				WindowsScreenService				screenService;
-				WindowsInputService					inputService;
-				WindowsDialogService				dialogService;
-
-			public:
-				WindowsController(HINSTANCE _hInstance)
-					:hInstance(_hInstance)
-					,windowClass(L"VczhWindow", false, false, WndProc, _hInstance)
-					,godClass(L"GodWindow", false, false, GodProc, _hInstance)
-					,mainWindow(0)
-					,mainWindowHandle(0)
-					,screenService(&GetHWNDFromNativeWindowHandle)
-					,dialogService(&GetHWNDFromNativeWindowHandle)
-				{
-					godWindow=CreateWindowEx(WS_EX_CONTROLPARENT, godClass.GetName().Buffer(), L"GodWindow", WS_OVERLAPPEDWINDOW, 0, 0, 0, 0, NULL, NULL, hInstance, NULL);
-					clipboardService.SetOwnerHandle(godWindow);
-					inputService.SetOwnerHandle(godWindow);
-				}
-
-				~WindowsController()
-				{
-					inputService.StopTimer();
-					clipboardService.SetOwnerHandle(NULL);
-					DestroyWindow(godWindow);
-				}
-
-				WindowsForm* GetWindowsFormFromHandle(HWND hwnd)
-				{
-					vint index = windows.Keys().IndexOf(hwnd);
-					if (index == -1)return 0;
-					return windows.Values()[index];
-				}
-
-				void GetAllCreatedWindows(collections::List<IWindowsForm*>& createdWindows, bool rootWindowOnly)
-				{
-					if (rootWindowOnly)
-					{
-						for (auto window : windows.Values())
-						{
-							if (window->GetWindowMode() == INativeWindow::Normal)
-							{
-								createdWindows.Add(window);
-							}
-						}
-					}
-					else
-					{
-						CopyFrom(createdWindows, windows.Values());
-					}
-				}
-
-				bool HandleMessage(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& result)
-				{
-					bool skipDefaultProcedure=false;
-					{
-						vint index = windows.Keys().IndexOf(hwnd);
-						if (index != -1)
-						{
-							WindowsForm* window = windows.Values().Get(index);
-							skipDefaultProcedure = window->HandleMessage(hwnd, uMsg, wParam, lParam, result);
-							switch (uMsg)
-							{
-							case WM_CLOSE:
-								if (!skipDefaultProcedure)
-								{
-									ShowWindow(window->GetWindowHandle(), SW_HIDE);
-									if (window != mainWindow)
-									{
-										skipDefaultProcedure = true;
-									}
-								}
-								break;
-							case WM_DESTROY:
-								DestroyNativeWindow(window);
-								break;
-							}
-						}
-					}
-					{
-						if (hwnd == mainWindowHandle && uMsg == WM_DESTROY)
-						{
-							for (auto window : windows.Values())
-							{
-								if (window->IsVisible())
-								{
-									window->Hide(true);
-								}
-							}
-							List<WindowsForm*> normalWindows;
-							CopyFrom(
-								normalWindows,
-								From(windows.Values())
-									.Where([](WindowsForm* window)
-									{
-										return window->GetWindowMode() == INativeWindow::Normal;
-									})
-								);
-							for (auto window : normalWindows)
-							{
-								DestroyNativeWindow(window);
-							}
-							for (vint i = windows.Count() - 1; i >= 0; i--)
-							{
-								auto window = windows.Values()[i];
-								DestroyNativeWindow(window);
-							}
-							
-							PostQuitMessage(0);
-						}
-					}
-					return skipDefaultProcedure;
-				}
-
-				//=======================================================================
-
-				INativeWindow* CreateNativeWindow(INativeWindow::WindowMode windowMode)override
-				{
-					WindowsForm* window=new WindowsForm(godWindow, windowClass.GetName(), hInstance, windowMode);
-					windows.Add(window->GetWindowHandle(), window);
-					callbackService.InvokeNativeWindowCreated(window);
-					window->SetWindowCursor(resourceService.GetDefaultSystemCursor());
-					return window;
-				}
-
-				void DestroyNativeWindow(INativeWindow* window)override
-				{
-					WindowsForm* windowsForm=dynamic_cast<WindowsForm*>(window);
-					windowsForm->InvokeDestroying();
-					if(windowsForm!=0 && windows.Keys().Contains(windowsForm->GetWindowHandle()))
-					{
-						callbackService.InvokeNativeWindowDestroyed(window);
-						windows.Remove(windowsForm->GetWindowHandle());
-						delete windowsForm;
-					}
-				}
-
-				INativeWindow* GetMainWindow()override
-				{
-					return mainWindow;
-				}
-
-				void Run(INativeWindow* window)override
-				{
-					mainWindow=window;
-					mainWindowHandle=GetWindowsForm(window)->GetWindowHandle();
-					mainWindow->Show();
-					MSG message;
-					while(GetMessage(&message, NULL, 0, 0))
-					{
-						TranslateMessage(&message);
-						DispatchMessage(&message);
-						asyncService.ExecuteAsyncTasks();
-					}
-				}
-
-				INativeWindow* GetWindow(NativePoint location)override
-				{
-					POINT p;
-					p.x=(int)location.x.value;
-					p.y=(int)location.y.value;
-					HWND handle=WindowFromPoint(p);
-					vint index=windows.Keys().IndexOf(handle);
-					if(index==-1)
-					{
-						return 0;
-					}
-					else
-					{
-						return windows.Values().Get(index);
-					}
-				}
-
-				//=======================================================================
-
-				INativeCallbackService* CallbackService()
-				{
-					return &callbackService;
-				}
-
-				INativeResourceService* ResourceService()
-				{
-					return &resourceService;
-				}
-				
-				INativeAsyncService* AsyncService()
-				{
-					return &asyncService;
-				}
-
-				INativeClipboardService* ClipboardService()
-				{
-					return &clipboardService;
-				}
-
-				INativeImageService* ImageService()
-				{
-					return &imageService;
-				}
-
-				INativeScreenService* ScreenService()
-				{
-					return &screenService;
-				}
-
-				INativeWindowService* WindowService()
-				{
-					return this;
-				}
-
-				INativeInputService* InputService()
-				{
-					return &inputService;
-				}
-
-				INativeDialogService* DialogService()
-				{
-					return &dialogService;
-				}
-
-				WString GetExecutablePath()
-				{
-					Array<wchar_t> buffer(65536);
-					GetModuleFileName(NULL, &buffer[0], (DWORD)buffer.Count());
-					return &buffer[0];
-				}
-
-				//=======================================================================
-
-				void InvokeGlobalTimer()
-				{
-					callbackService.InvokeGlobalTimer();
-				}
-
-				void InvokeClipboardUpdated()
-				{
-					callbackService.InvokeClipboardUpdated();
-				}
-			};
-
-/***********************************************************************
-Windows Procedure
-***********************************************************************/
-
-			LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-			{
-				WindowsController* controller=dynamic_cast<WindowsController*>(GetCurrentController());
-				if(controller)
-				{
-					LRESULT result=0;
-					if(controller->HandleMessage(hwnd, uMsg, wParam, lParam, result))
-					{
-						return result;
-					}
-				}
-				return DefWindowProc(hwnd, uMsg, wParam, lParam);
-			}
-
-			LRESULT CALLBACK GodProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-			{
-				WindowsController* controller=dynamic_cast<WindowsController*>(GetCurrentController());
-				if(controller)
-				{
-					switch(uMsg)
-					{
-					case WM_TIMER:
-						controller->InvokeGlobalTimer();
-						break;
-					case WM_CLIPBOARDUPDATE:
-						controller->InvokeClipboardUpdated();
-						break;
-					}
-				}
-				return DefWindowProc(hwnd, uMsg, wParam, lParam);
-			}
-
-/***********************************************************************
-Windows Platform Native Controller
-***********************************************************************/
-
-			INativeController* CreateWindowsNativeController(HINSTANCE hInstance)
-			{
-				return new WindowsController(hInstance);
-			}
-
-			IWindowsForm* GetWindowsFormFromHandle(HWND hwnd)
-			{
-				auto controller = dynamic_cast<WindowsController*>(GetCurrentController());
-				if (controller)
-				{
-					return controller->GetWindowsFormFromHandle(hwnd);
-				}
-				return nullptr;
-			}
-
-			IWindowsForm* GetWindowsForm(INativeWindow* window)
-			{
-				return dynamic_cast<WindowsForm*>(window);
-			}
-
-			void GetAllCreatedWindows(collections::List<IWindowsForm*>& windows, bool rootWindowOnly)
-			{
-				auto controller = dynamic_cast<WindowsController*>(GetCurrentController());
-				if (controller)
-				{
-					controller->GetAllCreatedWindows(windows, rootWindowOnly);
-				}
-			}
-
-			void DestroyWindowsNativeController(INativeController* controller)
-			{
-				delete controller;
-			}
-
-			void EnableCrossKernelCrashing()
-			{
-				/*
-				"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options"
-					DWORD DisableUserModeCallbackFilter = 1
-
-				"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\TestCppCodegen.exe"
-					DWORD DisableUserModeCallbackFilter = 1
-				*/
-				typedef BOOL (WINAPI *tGetPolicy)(LPDWORD lpFlags); 
-				typedef BOOL (WINAPI *tSetPolicy)(DWORD dwFlags); 
-				const DWORD EXCEPTION_SWALLOWING = 0x1;
- 
-				HMODULE kernel32 = LoadLibrary(L"kernel32.dll"); 
-				tGetPolicy pGetPolicy = (tGetPolicy)GetProcAddress(kernel32, "GetProcessUserModeExceptionPolicy"); 
-				tSetPolicy pSetPolicy = (tSetPolicy)GetProcAddress(kernel32, "SetProcessUserModeExceptionPolicy"); 
-				if (pGetPolicy && pSetPolicy) 
-				{ 
-					DWORD dwFlags; 
-					if (pGetPolicy(&dwFlags)) 
-					{ 
-						// Turn off the filter 
-						pSetPolicy(dwFlags & ~EXCEPTION_SWALLOWING);
-					} 
-				} 
-			}
-		}
-	}
-}
-
-/***********************************************************************
-.\NATIVEWINDOW\WINDOWS\DIRECT2D\WINDIRECT2DAPPLICATION.CPP
-***********************************************************************/
-
-#pragma comment(lib, "d2d1.lib")
-#pragma comment(lib, "dxguid.lib")
-#pragma comment(lib, "dwrite.lib")
-#pragma comment(lib, "d3d11.lib")
-
-namespace vl
-{
-	namespace presentation
-	{
-		using namespace elements;
-
-		namespace windows
-		{
-			using namespace vl::collections;
-
-/***********************************************************************
-WindowListener
-***********************************************************************/
-
-			class Direct2DWindowsNativeWindowListener : public Object, public INativeWindowListener
-			{
-			protected:
-				ID2D1Factory*					d2dFactory;
-				INativeWindow*					window;
-				bool							rendering = false;
-				bool							movedWhileRendering = false;
-
-				virtual void					RebuildCanvas(NativeSize size) = 0;
-			public:
-				Direct2DWindowsNativeWindowListener(INativeWindow* _window, ID2D1Factory* _d2dFactory)
-					:window(_window)
-					,d2dFactory(_d2dFactory)
-				{
-				}
-
-				void Moved()override
-				{
-					if (rendering)
-					{
-						movedWhileRendering = true;
-					}
-					else
-					{
-						ResizeRenderTarget();
-					}
-				}
-
-				void ResizeRenderTarget()
-				{
-					RebuildCanvas(window->GetClientSize());
-				}
-
-				void StartRendering()
-				{
-					rendering = true;
-				}
-
-				void StopRendering()
-				{
-					rendering = false;
-				}
-
-				bool RetrieveAndResetMovedWhileRendering()
-				{
-					bool result = movedWhileRendering;
-					movedWhileRendering = false;
-					return result;
-				}
-
-				virtual ID2D1RenderTarget*		GetDirect2DRenderTarget() = 0;
-				virtual void					RecreateRenderTarget() = 0;
-				virtual bool					PresentRenderTarget() = 0;
-			};
-
-/***********************************************************************
-WindowListener 1.0
-***********************************************************************/
-
-			class Direct2DWindowsNativeWindowListener_1_0 : public Direct2DWindowsNativeWindowListener
-			{
-			protected:
-				ComPtr<ID2D1HwndRenderTarget>	d2dRenderTarget;
-				NativeSize						previousSize;
-
-				void RebuildCanvas(NativeSize size)override
-				{
-					if (size.x <= 1) size.x = 1;
-					if (size.y <= 1) size.y = 1;
-					if (!d2dRenderTarget)
-					{
-						ID2D1HwndRenderTarget* renderTarget = 0;
-						IWindowsForm* form = GetWindowsForm(window);
-						D2D1_RENDER_TARGET_PROPERTIES tp = D2D1::RenderTargetProperties();
-						{
-							UINT dpiX = 0;
-							UINT dpiY = 0;
-							DpiAwared_GetDpiForWindow(form->GetWindowHandle(), &dpiX, &dpiY);
-							tp.dpiX = (FLOAT)dpiX;
-							tp.dpiY = (FLOAT)dpiY;
-						}
-						HRESULT hr = d2dFactory->CreateHwndRenderTarget(
-							tp,
-							D2D1::HwndRenderTargetProperties(
-								form->GetWindowHandle(),
-								D2D1::SizeU((int)size.x.value, (int)size.y.value)
-							),
-							&renderTarget
-						);
-						if (!FAILED(hr))
-						{
-							d2dRenderTarget = renderTarget;
-							d2dRenderTarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE);
-						}
-					}
-					else if (previousSize != size)
-					{
-						d2dRenderTarget->Resize(D2D1::SizeU((int)size.x.value, (int)size.y.value));
-					}
-					previousSize = size;
-				}
-			public:
-				Direct2DWindowsNativeWindowListener_1_0(INativeWindow* _window, ID2D1Factory* _d2dFactory)
-					:Direct2DWindowsNativeWindowListener(_window, _d2dFactory)
-				{
-				}
-
-				ID2D1RenderTarget* GetDirect2DRenderTarget()override
-				{
-					if(!d2dRenderTarget) Moved();
-					return d2dRenderTarget.Obj();
-				}
-
-				void RecreateRenderTarget()override
-				{
-					if (d2dRenderTarget)
-					{
-						d2dRenderTarget = 0;
-					}
-				}
-
-				bool PresentRenderTarget()override
-				{
-					return true;
-				}
-			};
-
-/***********************************************************************
-WindowListener 1.1
-***********************************************************************/
-
-			class Direct2DWindowsNativeWindowListener_1_1 : public Direct2DWindowsNativeWindowListener
-			{
-			protected:
-				ComPtr<ID2D1Factory1>			d2dFactory1;
-				ID3D11Device*					d3d11Device;
-				ComPtr<IDXGIDevice>				dxgiDevice;
-				ComPtr<IDXGISwapChain1>			dxgiSwapChain;
-				ComPtr<ID2D1DeviceContext>		d2dDeviceContext;
-				NativeSize						previousSize;
-
-				ComPtr<IDXGIDevice> GetDXGIDevice()
-				{
-					IDXGIDevice* device = nullptr;
-					HRESULT hr = d3d11Device->QueryInterface(&device);
-					if (!SUCCEEDED(hr)) return 0;
-					return device;
-				}
-
-				ComPtr<IDXGISwapChain1> CreateSwapChain(IDXGIDevice* dxgiDevice)
-				{
-					ComPtr<IDXGIAdapter> dxgiAdapter;
-					{
-						IDXGIAdapter* adapter = nullptr;
-						HRESULT hr = dxgiDevice->GetAdapter(&adapter);
-						if (!SUCCEEDED(hr)) return 0;
-						dxgiAdapter = adapter;
-					}
-
-					ComPtr<IDXGIFactory2> dxgiFactory;
-					{
-						IDXGIFactory2* factory = nullptr;
-						HRESULT hr = dxgiAdapter->GetParent(__uuidof(IDXGIFactory2), (void**)&factory);
-						if (!SUCCEEDED(hr)) return 0;
-						dxgiFactory = factory;
-					}
-
-					IWindowsForm* form = GetWindowsForm(window);
-					ComPtr<IDXGISwapChain1> dxgiSwapChain;
-					{
-						DXGI_SWAP_CHAIN_DESC1 props = {};
-						props.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-						props.SampleDesc.Count = 1;
-						props.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-						props.BufferCount = 2;
-
-						IDXGISwapChain1* swapChain = nullptr;
-						HRESULT hr = dxgiFactory->CreateSwapChainForHwnd(d3d11Device, form->GetWindowHandle(), &props, nullptr, nullptr, &swapChain);
-						if (!SUCCEEDED(hr)) return 0;
-						dxgiSwapChain = swapChain;
-					}
-
-					return dxgiSwapChain;
-				}
-
-				ComPtr<ID2D1DeviceContext> CreateDeviceContext(IDXGIDevice* dxgiDevice)
-				{
-					ComPtr<ID2D1Device> d2d1Device;
-					{
-						ID2D1Device* device = nullptr;
-						HRESULT hr = d2dFactory1->CreateDevice(dxgiDevice, &device);
-						if (!SUCCEEDED(hr)) return 0;
-						d2d1Device = device;
-					}
-
-					ComPtr<ID2D1DeviceContext> d2dDeviceContext;
-					{
-						ID2D1DeviceContext* deviceContext = nullptr;
-						HRESULT hr = d2d1Device->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, &deviceContext);
-						if (!SUCCEEDED(hr)) return 0;
-						d2dDeviceContext = deviceContext;
-					}
-
-					return d2dDeviceContext;
-				}
-
-				ComPtr<ID2D1Bitmap1> CreateBitmap(IDXGISwapChain1* swapChain, ID2D1DeviceContext* deviceContext)
-				{
-					ComPtr<IDXGISurface> dxgiSurface;
-					{
-						IDXGISurface* surface = nullptr;
-						HRESULT hr = swapChain->GetBuffer(0, __uuidof(IDXGISurface), (void**)&surface);
-						if (!SUCCEEDED(hr))return 0;
-						dxgiSurface = surface;
-					}
-
-					ComPtr<ID2D1Bitmap1> d2dBitmap;
-					{
-						auto props = D2D1::BitmapProperties1(D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW, D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_IGNORE));
-
-						ID2D1Bitmap1* bitmap = nullptr;
-						HRESULT hr = deviceContext->CreateBitmapFromDxgiSurface(dxgiSurface.Obj(), props, &bitmap);
-						if (!SUCCEEDED(hr)) return 0;
-						d2dBitmap = bitmap;
-					}
-
-					return d2dBitmap;
-				}
-
-				void RebuildCanvas(NativeSize size)override
-				{
-					if (size.x <= 1) size.x = 1;
-					if (size.y <= 1) size.y = 1;
-
-					if(!d2dDeviceContext)
-					{
-						if (!dxgiDevice)
-						{
-							dxgiDevice = GetDXGIDevice();
-						}
-
-						if (!dxgiSwapChain)
-						{
-							dxgiSwapChain = CreateSwapChain(dxgiDevice.Obj());
-						}
-
-						d2dDeviceContext = CreateDeviceContext(dxgiDevice.Obj());
-						auto d2dBitmap = CreateBitmap(dxgiSwapChain.Obj(), d2dDeviceContext.Obj());
-						d2dDeviceContext->SetTarget(d2dBitmap.Obj());
-						IWindowsForm* form = GetWindowsForm(window);
-						{
-							UINT dpiX = 0;
-							UINT dpiY = 0;
-							DpiAwared_GetDpiForWindow(form->GetWindowHandle(), &dpiX, &dpiY);
-							d2dDeviceContext->SetDpi((FLOAT)dpiX, (FLOAT)dpiY);
-						}
-					}
-					else if(previousSize!=size)
-					{
-						d2dDeviceContext->SetTarget(nullptr);
-						HRESULT hr = dxgiSwapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
-						if (SUCCEEDED(hr))
-						{
-							auto d2dBitmap = CreateBitmap(dxgiSwapChain.Obj(), d2dDeviceContext.Obj());
-							d2dDeviceContext->SetTarget(d2dBitmap.Obj());
-						}
-					}
-					previousSize=size;
-				}
-			public:
-				Direct2DWindowsNativeWindowListener_1_1(INativeWindow* _window, ComPtr<ID2D1Factory1> _d2dFactory1, ID3D11Device* _d3d11Device)
-					:Direct2DWindowsNativeWindowListener(_window, _d2dFactory1.Obj())
-					,d2dFactory1(_d2dFactory1)
-					,d3d11Device(_d3d11Device)
-				{
-				}
-
-				ID2D1RenderTarget* GetDirect2DRenderTarget()override
-				{
-					if(!d2dDeviceContext) Moved();
-					return d2dDeviceContext.Obj();
-				}
-
-				void RecreateRenderTarget()override
-				{
-					if (d2dDeviceContext)
-					{
-						d2dDeviceContext = 0;
-						dxgiSwapChain = 0;
-					}
-				}
-
-				bool PresentRenderTarget()override
-				{
-					if (d2dDeviceContext)
-					{
-						if (dxgiSwapChain)
-						{
-							DXGI_PRESENT_PARAMETERS parameters = {0};
-							HRESULT hr = dxgiSwapChain->Present1(1, 0, &parameters);
-							return hr == S_OK || hr == DXGI_STATUS_OCCLUDED;
-						}
-					}
-					return false;
-				}
-			};
-
-/***********************************************************************
-ControllerListener
-***********************************************************************/
-
-			class Direct2DWindowsNativeControllerListener : public Object, public INativeControllerListener
-			{
-			public:
-				Dictionary<INativeWindow*, Ptr<Direct2DWindowsNativeWindowListener>>		nativeWindowListeners;
-				ComPtr<ID2D1Factory>														d2dFactory;
-				ComPtr<IDWriteFactory>														dwrite;
-				ComPtr<ID3D11Device>														d3d11Device;
-
-				Direct2DWindowsNativeControllerListener()
-				{
-					{
-						D2D1_FACTORY_OPTIONS fo = {};
-						#ifdef _DEBUG
-						fo.debugLevel = D2D1_DEBUG_LEVEL_INFORMATION;
-						#endif
-
-						ID2D1Factory* factory=0;
-						HRESULT hr=D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, fo, &factory);
-						if(!FAILED(hr))
-						{
-							d2dFactory=factory;
-						}
-					}
-					{
-						IDWriteFactory* factory=0;
-						HRESULT hr=DWriteCreateFactory(DWRITE_FACTORY_TYPE_ISOLATED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown**>(&factory));
-						if(!FAILED(hr))
-						{
-							dwrite=factory;
-						}
-					}
-				}
-
-				~Direct2DWindowsNativeControllerListener()
-				{
-					for (vint i = 0; i < nativeWindowListeners.Count(); i++)
-					{
-						auto window = nativeWindowListeners.Keys()[i];
-						auto listener = nativeWindowListeners.Values()[i];
-						window->UninstallListener(listener.Obj());
-					}
-				}
-
-				ComPtr<ID3D11Device> CreateD3D11Device(D3D_DRIVER_TYPE driverType)
-				{
-					UINT flags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
-					#ifdef _DEBUG
-					flags |= D3D11_CREATE_DEVICE_DEBUG;
-					#endif
-
-					D3D_FEATURE_LEVEL featureLevels[] =
-					{
-						D3D_FEATURE_LEVEL_11_1,
-						D3D_FEATURE_LEVEL_11_0,
-						D3D_FEATURE_LEVEL_10_1,
-						D3D_FEATURE_LEVEL_10_0,
-						D3D_FEATURE_LEVEL_9_3,
-						D3D_FEATURE_LEVEL_9_2,
-						D3D_FEATURE_LEVEL_9_1
-					};
-
-
-					ID3D11Device* device = nullptr;
-					HRESULT hr = D3D11CreateDevice(
-						nullptr,
-						driverType,
-						nullptr,
-						flags,
-						featureLevels,
-						sizeof(featureLevels) / sizeof(*featureLevels),
-						D3D11_SDK_VERSION,
-						&device,
-						nullptr,
-						nullptr);
-					if (SUCCEEDED(hr))
-					{
-						return device;
-					}
-					else if (device)
-					{
-						device->Release();
-					}
-					return 0;
-				}
-
-				void NativeWindowCreated(INativeWindow* window)
-				{
-					ComPtr<ID2D1Factory1> d2dfactory1;
-					{
-						ID2D1Factory1* factory = nullptr;
-						HRESULT hr = windows::GetDirect2DFactory()->QueryInterface(&factory);
-						if (SUCCEEDED(hr))
-						{
-							d2dfactory1 = factory;
-						}
-					}
-
-					Ptr<Direct2DWindowsNativeWindowListener> listener;
-					if (d2dfactory1)
-					{
-						if (!d3d11Device)
-						{
-							d3d11Device = CreateD3D11Device(D3D_DRIVER_TYPE_HARDWARE);
-							if (!d3d11Device)
-							{
-								d3d11Device = CreateD3D11Device(D3D_DRIVER_TYPE_WARP);
-							}
-						}
-#if _DEBUG
-						CHECK_ERROR(d3d11Device,
-							L"Direct2DWindowsNativeControllerListener::NativeWindowCreated(INativeWindow*)#"
-							L"Failed to create Direct3D 11 Device. "
-							L"If you are running in Debug mode on Windows 10, please ensure the optional feature [Graphics Tools] is correctly installed. "
-							L"This error will be skipped in Release mode and GacUI will fallback to use Direct2D 1.0, but you still need to check your Windows SDK Installation."
-							);
-#endif
-					}
-
-					if (d2dfactory1 && d3d11Device)
-					{
-						listener = new Direct2DWindowsNativeWindowListener_1_1(window, d2dfactory1, d3d11Device.Obj());
-					}
-					else
-					{
-						listener = new Direct2DWindowsNativeWindowListener_1_0(window, d2dFactory.Obj());
-					}
-					window->InstallListener(listener.Obj());
-					nativeWindowListeners.Add(window, listener);
-				}
-
-				void NativeWindowDestroying(INativeWindow* window)
-				{
-					Ptr<Direct2DWindowsNativeWindowListener> listener=nativeWindowListeners[window];
-					nativeWindowListeners.Remove(window);
-					window->UninstallListener(listener.Obj());
-				}
-			};
-
-			Direct2DWindowsNativeControllerListener* direct2DListener=0;
-
-			ID2D1Factory* GetDirect2DFactory()
-			{
-				return direct2DListener->d2dFactory.Obj();
-			}
-
-			IDWriteFactory* GetDirectWriteFactory()
-			{
-				return direct2DListener->dwrite.Obj();
-			}
-
-			ID3D11Device* GetD3D11Device()
-			{
-				return direct2DListener->d3d11Device.Obj();
-			}
-		}
-
-		namespace elements_windows_d2d
-		{
-/***********************************************************************
-OS Supporting
-***********************************************************************/
-
-			class WinDirect2DApplicationDirect2DObjectProvider : public IWindowsDirect2DObjectProvider
-			{
-			protected:
-
-				windows::Direct2DWindowsNativeWindowListener* GetNativeWindowListener(INativeWindow* window)
-				{
-					vint index = windows::direct2DListener->nativeWindowListeners.Keys().IndexOf(window);
-					return index == -1
-						? nullptr
-						: windows::direct2DListener->nativeWindowListeners.Values().Get(index).Obj();
-				}
-
-			public:
-				void RecreateRenderTarget(INativeWindow* window)override
-				{
-					if (auto listener = GetNativeWindowListener(window))
-					{
-						return listener->RecreateRenderTarget();
-					}
-				}
-
-				void ResizeRenderTarget(INativeWindow* window)override
-				{
-					if (auto listener = GetNativeWindowListener(window))
-					{
-						return listener->ResizeRenderTarget();
-					}
-				}
-
-				ID2D1RenderTarget* GetNativeWindowDirect2DRenderTarget(INativeWindow* window)override
-				{
-					if (auto listener = GetNativeWindowListener(window))
-					{
-						return listener->GetDirect2DRenderTarget();
-					}
-					return nullptr;
-				}
-
-				void StartRendering(INativeWindow* window)override
-				{
-					if (auto listener = GetNativeWindowListener(window))
-					{
-						listener->StartRendering();
-						if (auto renderTarget = listener->GetDirect2DRenderTarget())
-						{
-							renderTarget->BeginDraw();
-							renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
-						}
-					}
-				}
-
-				RenderTargetFailure StopRenderingAndPresent(INativeWindow* window)override
-				{
-					if (auto listener = GetNativeWindowListener(window))
-					{
-						listener->StopRendering();
-						bool moved = listener->RetrieveAndResetMovedWhileRendering();
-
-						if (auto renderTarget = listener->GetDirect2DRenderTarget())
-						{
-							HRESULT hr = renderTarget->EndDraw();
-							if (hr == S_OK)
-							{
-								if (moved)
-								{
-									return RenderTargetFailure::ResizeWhileRendering;
-								}
-								else if (listener->PresentRenderTarget())
-								{
-									return RenderTargetFailure::None;
-								}
-							}
-						}
-					}
-					return RenderTargetFailure::LostDevice;
-				}
-
-				ID2D1Factory* GetDirect2DFactory()override
-				{
-					return vl::presentation::windows::GetDirect2DFactory();
-				}
-
-				IDWriteFactory* GetDirectWriteFactory()override
-				{
-					return vl::presentation::windows::GetDirectWriteFactory();
-				}
-
-				IWindowsDirect2DRenderTarget* GetBindedRenderTarget(INativeWindow* window)override
-				{
-					auto windowsForm = vl::presentation::windows::GetWindowsForm(window);
-					auto graphicsHandler = windowsForm->GetGraphicsHandler();
-					return dynamic_cast<IWindowsDirect2DRenderTarget*>(graphicsHandler);
-				}
-
-				void SetBindedRenderTarget(INativeWindow* window, IWindowsDirect2DRenderTarget* renderTarget)override
-				{
-					vl::presentation::windows::GetWindowsForm(window)->SetGraphicsHandler(renderTarget);
-				}
-
-				IWICImagingFactory* GetWICImagingFactory()override
-				{
-					return vl::presentation::windows::GetWICImagingFactory();
-				}
-
-				IWICBitmap* GetWICBitmap(INativeImageFrame* frame)override
-				{
-					return vl::presentation::windows::GetWICBitmap(frame);
-				}
-			};
-		}
-	}
-}
-
-using namespace vl;
-using namespace vl::presentation;
-using namespace vl::presentation::windows;
-using namespace vl::presentation::elements_windows_d2d;
-
-int WinMainDirect2D(HINSTANCE hInstance, void(*RendererMain)())
-{
-	EnableCrossKernelCrashing();
-	// create controller
-	INativeController* controller=CreateWindowsNativeController(hInstance);
-	SetCurrentController(controller);
-	{
-		// install listener
-		Direct2DWindowsNativeControllerListener listener;
-		controller->CallbackService()->InstallListener(&listener);
-		direct2DListener=&listener;
-		// main
-		RendererMain();
-		// uninstall listener
-		direct2DListener=0;
-		controller->CallbackService()->UninstallListener(&listener);
-	}
-	// destroy controller
-	DestroyWindowsNativeController(controller);
-	return 0;
-}
-
-int SetupWindowsDirect2DRenderer()
-{
-	InitDpiAwareness(true);
-	CoInitializeEx(NULL, COINIT_MULTITHREADED);
-	HINSTANCE hInstance=(HINSTANCE)GetModuleHandle(NULL);
-	WinDirect2DApplicationDirect2DObjectProvider objectProvider;
-	SetWindowsDirect2DObjectProvider(&objectProvider);
-	return WinMainDirect2D(hInstance, &RendererMainDirect2D);
-}
-
-/***********************************************************************
-.\NATIVEWINDOW\WINDOWS\GDI\WINGDI.CPP
+.\GDI\WINGDI.CPP
 ***********************************************************************/
 
 #pragma comment(lib, "Msimg32.lib")
@@ -11711,12 +7328,12 @@ IWinResourceService
 
 		WinBrush::Ptr CreateDefaultBrush()
 		{
-			return new WinBrush(RGB(255, 255, 255));
+			return Ptr(new WinBrush(RGB(255, 255, 255)));
 		}
 
 		WinPen::Ptr CreateDefaultPen()
 		{
-			return new WinPen(PS_SOLID, 0, RGB(0, 0, 0));
+			return Ptr(new WinPen(PS_SOLID, 0, RGB(0, 0, 0)));
 		}
 
 		WinFont::Ptr CreateDefaultFont()
@@ -11729,7 +7346,7 @@ IWinResourceService
 				NonClientMetrics.cbSize=sizeof(NONCLIENTMETRICS)-sizeof(NonClientMetrics.iPaddedBorderWidth);
 				SystemParametersInfo(SPI_GETNONCLIENTMETRICS, NonClientMetrics.cbSize, &NonClientMetrics, 0);
 			}
-			return new WinFont(&NonClientMetrics.lfMessageFont);
+			return Ptr(new WinFont(&NonClientMetrics.lfMessageFont));
 		}
 
 		class DefaultResourceService : public Object, public IWinResourceService
@@ -12190,7 +7807,7 @@ WinDC
 
 		WinRegion::Ptr WinDC::RegionFromPath()
 		{
-			return new WinRegion(::PathToRegion(FHandle));
+			return Ptr(new WinRegion(::PathToRegion(FHandle)));
 		}
 	
 		/*------------------------------------------------------------------------------*/
@@ -12244,7 +7861,7 @@ WinDC
 		{
 			HRGN Handle=CreateRectRgn(0, 0, 1, 1);
 			GetClipRgn(FHandle, Handle);
-			return new WinRegion(Handle);
+			return Ptr(new WinRegion(Handle));
 		}
 
 		RECT WinDC::GetClipBoundRect()
@@ -12724,7 +8341,7 @@ WinImageDC
 
 
 /***********************************************************************
-.\NATIVEWINDOW\WINDOWS\GDI\WINGDIAPPLICATION.CPP
+.\GDI\WINGDIAPPLICATION.CPP
 ***********************************************************************/
 
 namespace vl
@@ -12780,7 +8397,7 @@ namespace vl
 					}
 					if (!buffer)
 					{
-						buffer = new WinBitmap(size.x.value, size.y.value, WinBitmap::vbb32Bits, true);
+						buffer = Ptr(new WinBitmap(size.x.value, size.y.value, WinBitmap::vbb32Bits, true));
 						buffer->GetWinDC()->SetBackTransparent(true);
 					}
 				}
@@ -12804,8 +8421,7 @@ namespace vl
 					if (needPaintAfterResize)
 					{
 						needPaintAfterResize = false;
-						auto callbackService = GetCurrentController()->CallbackService();
-						dynamic_cast<WindowsCallbackService*>(callbackService)->InvokeGlobalTimer();
+						GetWindowsNativeController()->CallbackService()->Invoker()->InvokeGlobalTimer();
 					}
 					IWindowsForm* form=GetWindowsForm(window);
 					WinControlDC controlDC(form->GetWindowHandle());
@@ -12836,20 +8452,20 @@ namespace vl
 
 				void NativeWindowCreated(INativeWindow* window)
 				{
-					Ptr<GdiWindowsNativeWindowListener> listener=new GdiWindowsNativeWindowListener(window);
+					auto listener=Ptr(new GdiWindowsNativeWindowListener(window));
 					window->InstallListener(listener.Obj());
 					nativeWindowListeners.Add(window, listener);
 				}
 
 				void NativeWindowDestroying(INativeWindow* window)
 				{
-					Ptr<GdiWindowsNativeWindowListener> listener=nativeWindowListeners[window];
+					auto listener=nativeWindowListeners[window];
 					nativeWindowListeners.Remove(window);
 					window->UninstallListener(listener.Obj());
 				}
 			};
 
-			GdiWindowsNativeControllerListener* gdiListener=0;
+			GdiWindowsNativeControllerListener* gdiListener = nullptr;
 
 			WinDC* GetNativeWindowDC(INativeWindow* window)
 			{
@@ -12926,328 +8542,4454 @@ using namespace vl::presentation;
 using namespace vl::presentation::windows;
 using namespace vl::presentation::elements_windows_gdi;
 
-int WinMainGDI(HINSTANCE hInstance, void(*RendererMain)())
+int SetupWindowsGDIRendererInternal(bool hosted)
 {
+	InitDpiAwareness(false);
+	CoInitializeEx(NULL, COINIT_MULTITHREADED);
+	HINSTANCE hInstance = (HINSTANCE)GetModuleHandle(NULL);
+	WinGDIApplicationGDIObjectProvider objectProvider;
+	SetWindowsGDIObjectProvider(&objectProvider);
 	EnableCrossKernelCrashing();
+
 	// create controller
-	INativeController* controller=CreateWindowsNativeController(hInstance);
-	SetCurrentController(controller);
+	GuiHostedController* hostedController = nullptr;
+	StartWindowsNativeController(hInstance);
+	auto nativeController = GetWindowsNativeController();
+	if (hosted) hostedController = new GuiHostedController(nativeController);
+	SetNativeController(hostedController ? hostedController : nativeController);
+
 	{
 		// install listener
 		GdiWindowsNativeControllerListener listener;
-		controller->CallbackService()->InstallListener(&listener);
-		gdiListener=&listener;
+		nativeController->CallbackService()->InstallListener(&listener);
+		gdiListener = &listener;
 		// main
-		RendererMain();
+		RendererMainGDI(hostedController);
 		// uninstall listener
-		gdiListener=0;
-		controller->CallbackService()->UninstallListener(&listener);
+		gdiListener = nullptr;
+		nativeController->CallbackService()->UninstallListener(&listener);
 	}
+
 	// destroy controller
-	DestroyWindowsNativeController(controller);
+	SetNativeController(nullptr);
+	if (hostedController) delete hostedController;
+	StopWindowsNativeController();
 	return 0;
 }
 
 int SetupWindowsGDIRenderer()
 {
-	InitDpiAwareness(false);
-	CoInitializeEx(NULL, COINIT_MULTITHREADED);
-	HINSTANCE hInstance=(HINSTANCE)GetModuleHandle(NULL);
-	WinGDIApplicationGDIObjectProvider objectProvider;
-	SetWindowsGDIObjectProvider(&objectProvider);
-	return WinMainGDI(hInstance, &RendererMainGDI);
+	return SetupWindowsGDIRendererInternal(false);
+}
+
+int SetupHostedWindowsGDIRenderer()
+{
+	return SetupWindowsGDIRendererInternal(true);
 }
 
 /***********************************************************************
-.\NATIVEWINDOW\WINDOWS\SERVICESIMPL\WINDOWSASYNCSERVICE.CPP
+.\GDI\RENDERERS\GUIGRAPHICSLAYOUTPROVIDERWINDOWSGDI.CPP
 ***********************************************************************/
 
 namespace vl
 {
 	namespace presentation
 	{
-		namespace windows
+		namespace elements_windows_gdi
 		{
+			using namespace elements;
 			using namespace collections;
+			using namespace windows;
 
 /***********************************************************************
-WindowsAsyncService::TaskItem
+WindowsGDIParagraph
 ***********************************************************************/
 
-			WindowsAsyncService::TaskItem::TaskItem()
-				:semaphore(0)
+			class WindowsGDIParagraph : public Object, public IGuiGraphicsParagraph, protected UniscribeRun::IRendererCallback
 			{
-			}
+			protected:
+				IGuiGraphicsLayoutProvider*			provider;
+				Ptr<UniscribeParagraph>				paragraph;
+				WString								text;
+				IWindowsGDIRenderTarget*			renderTarget;
 
-			WindowsAsyncService::TaskItem::TaskItem(Semaphore* _semaphore, const Func<void()>& _proc)
-				:semaphore(_semaphore)
-				,proc(_proc)
-			{
-			}
+				vint								caret;
+				Color								caretColor;
+				bool								caretFrontSide;
+				Ptr<WinPen>							caretPen;
 
-			WindowsAsyncService::TaskItem::~TaskItem()
-			{
-			}
+				WinDC*								paragraphDC;
+				Point								paragraphOffset;
+				IGuiGraphicsParagraphCallback*		paragraphCallback;
 
-/***********************************************************************
-WindowsAsyncService::DelayItem
-***********************************************************************/
-
-			WindowsAsyncService::DelayItem::DelayItem(WindowsAsyncService* _service, const Func<void()>& _proc, bool _executeInMainThread, vint milliseconds)
-				:service(_service)
-				,proc(_proc)
-				,status(INativeDelay::Pending)
-				,executeTime(DateTime::LocalTime().Forward(milliseconds))
-				,executeInMainThread(_executeInMainThread)
-			{
-			}
-
-			WindowsAsyncService::DelayItem::~DelayItem()
-			{
-			}
-
-			INativeDelay::ExecuteStatus WindowsAsyncService::DelayItem::GetStatus()
-			{
-				return status;
-			}
-
-			bool WindowsAsyncService::DelayItem::Delay(vint milliseconds)
-			{
-				SPIN_LOCK(service->taskListLock)
+				void PrepareUniscribeData()
 				{
-					if(status==INativeDelay::Pending)
+					if(paragraph->BuildUniscribeData(renderTarget->GetDC()))
 					{
-						executeTime=DateTime::LocalTime().Forward(milliseconds);
-						return true;
-					}
-				}
-				return false;
-			}
-
-			bool WindowsAsyncService::DelayItem::Cancel()
-			{
-				SPIN_LOCK(service->taskListLock)
-				{
-					if(status==INativeDelay::Pending)
-					{
-						if(service->delayItems.Remove(this))
-						{
-							status=INativeDelay::Canceled;
-							return true;
-						}
-					}
-				}
-				return false;
-			}
-
-/***********************************************************************
-WindowsAsyncService
-***********************************************************************/
-
-			WindowsAsyncService::WindowsAsyncService()
-				:mainThreadId(Thread::GetCurrentThreadId())
-			{
-			}
-
-			WindowsAsyncService::~WindowsAsyncService()
-			{
-			}
-
-			void WindowsAsyncService::ExecuteAsyncTasks()
-			{
-				DateTime now=DateTime::LocalTime();
-				Array<TaskItem> items;
-				List<Ptr<DelayItem>> executableDelayItems;
-
-				SPIN_LOCK(taskListLock)
-				{
-					CopyFrom(items, taskItems);
-					taskItems.RemoveRange(0, items.Count());
-					for(vint i=delayItems.Count()-1;i>=0;i--)
-					{
-						Ptr<DelayItem> item=delayItems[i];
-						if(now.filetime>=item->executeTime.filetime)
-						{
-							item->status=INativeDelay::Executing;
-							executableDelayItems.Add(item);
-							delayItems.RemoveAt(i);
-						}
+						vint width=paragraph->lastAvailableWidth==-1?65536:paragraph->lastAvailableWidth;
+						paragraph->Layout(width, paragraph->paragraphAlignment);
 					}
 				}
 
-				for (auto item : items)
+				WinDC* GetWinDC()
 				{
-					item.proc();
-					if(item.semaphore)
-					{
-						item.semaphore->Release();
-					}
+					return paragraphDC;
 				}
-				for (auto item : executableDelayItems)
+
+				Point GetParagraphOffset()
 				{
-					if(item->executeInMainThread)
+					return paragraphOffset;
+				}
+
+				IGuiGraphicsParagraphCallback* GetParagraphCallback()
+				{
+					return paragraphCallback;
+				}
+			public:
+				WindowsGDIParagraph(IGuiGraphicsLayoutProvider* _provider, const WString& _text, IGuiGraphicsRenderTarget* _renderTarget, IGuiGraphicsParagraphCallback* _paragraphCallback)
+					:provider(_provider)
+					,text(_text)
+					,renderTarget(dynamic_cast<IWindowsGDIRenderTarget*>(_renderTarget))
+					,caret(-1)
+					,caretFrontSide(false)
+					,paragraphDC(nullptr)
+					,paragraphCallback(_paragraphCallback)
+				{
+					paragraph=Ptr(new UniscribeParagraph);
+					paragraph->paragraphText=text;
+
+					auto fragment=Ptr(new UniscribeFragment(_text));
+					fragment->fontStyle=GetWindowsNativeController()->ResourceService()->GetDefaultFont();
+					paragraph->documentFragments.Add(fragment);
+				}
+
+				~WindowsGDIParagraph()
+				{
+					CloseCaret();
+				}
+
+				IGuiGraphicsLayoutProvider* GetProvider()override
+				{
+					return provider;
+				}
+
+				IGuiGraphicsRenderTarget* GetRenderTarget()override
+				{
+					return renderTarget;
+				}
+
+				bool GetWrapLine()override
+				{
+					return true;
+				}
+
+				void SetWrapLine(bool value)override
+				{
+				}
+
+				vint GetMaxWidth()override
+				{
+					return paragraph->lastAvailableWidth;
+				}
+
+				void SetMaxWidth(vint value)override
+				{
+					paragraph->BuildUniscribeData(renderTarget->GetDC());
+					paragraph->Layout(value, paragraph->paragraphAlignment);
+				}
+
+				Alignment GetParagraphAlignment()override
+				{
+					return paragraph->paragraphAlignment;
+				}
+
+				void SetParagraphAlignment(Alignment value)override
+				{
+					paragraph->BuildUniscribeData(renderTarget->GetDC());
+					paragraph->Layout(paragraph->lastAvailableWidth, value);
+				}
+
+				bool SetFont(vint start, vint length, const WString& value)override
+				{
+					if(length==0) return true;
+					if(0<=start && start<text.Length() && length>=0 && 0<=start+length && start+length<=text.Length())
 					{
-						item->proc();
-						item->status=INativeDelay::Executed;
+						return paragraph->SetFont(start, length, value);
 					}
 					else
 					{
-						InvokeAsync([=]()
-						{
-							item->proc();
-							item->status=INativeDelay::Executed;
-						});
+						return false;
 					}
 				}
-			}
 
-			bool WindowsAsyncService::IsInMainThread(INativeWindow* window)
-			{
-				return Thread::GetCurrentThreadId()==mainThreadId;
-			}
-
-			void WindowsAsyncService::InvokeAsync(const Func<void()>& proc)
-			{
-				ThreadPoolLite::Queue(proc);
-			}
-
-			void WindowsAsyncService::InvokeInMainThread(INativeWindow* window, const Func<void()>& proc)
-			{
-				SPIN_LOCK(taskListLock)
+				bool SetSize(vint start, vint length, vint value)override
 				{
-					TaskItem item(0, proc);
-					taskItems.Add(item);
-				}
-			}
-
-			bool WindowsAsyncService::InvokeInMainThreadAndWait(INativeWindow* window, const Func<void()>& proc, vint milliseconds)
-			{
-				Semaphore semaphore;
-				semaphore.Create(0, 1);
-
-				SPIN_LOCK(taskListLock)
-				{
-					TaskItem item(&semaphore, proc);
-					taskItems.Add(item);
+					if(length==0) return true;
+					if(0<=start && start<text.Length() && length>=0 && 0<=start+length && start+length<=text.Length())
+					{
+						return paragraph->SetSize(start, length, value);
+					}
+					else
+					{
+						return false;
+					}
 				}
 
-				if(milliseconds<0)
+				bool SetStyle(vint start, vint length, TextStyle value)override
 				{
-					return semaphore.Wait();
+					if(length==0) return true;
+					if(0<=start && start<text.Length() && length>=0 && 0<=start+length && start+length<=text.Length())
+					{
+						return paragraph->SetStyle(start, length, (value&Bold)!=0, (value&Italic)!=0, (value&Underline)!=0, (value&Strikeline)!=0);
+					}
+					else
+					{
+						return false;
+					}
 				}
-				else
-				{
-					return semaphore.WaitForTime(milliseconds);
-				}
-			}
 
-			Ptr<INativeDelay> WindowsAsyncService::DelayExecute(const Func<void()>& proc, vint milliseconds)
-			{
-				Ptr<DelayItem> delay;
-				SPIN_LOCK(taskListLock)
+				bool SetColor(vint start, vint length, Color value)override
 				{
-					delay=new DelayItem(this, proc, false, milliseconds);
-					delayItems.Add(delay);
+					if(length==0) return true;
+					if(0<=start && start<text.Length() && length>=0 && 0<=start+length && start+length<=text.Length())
+					{
+						return paragraph->SetColor(start, length, value);
+					}
+					else
+					{
+						return false;
+					}
 				}
-				return delay;
-			}
 
-			Ptr<INativeDelay> WindowsAsyncService::DelayExecuteInMainThread(const Func<void()>& proc, vint milliseconds)
-			{
-				Ptr<DelayItem> delay;
-				SPIN_LOCK(taskListLock)
+				bool SetBackgroundColor(vint start, vint length, Color value)override
 				{
-					delay=new DelayItem(this, proc, true, milliseconds);
-					delayItems.Add(delay);
+					if(length==0) return true;
+					if(0<=start && start<text.Length() && length>=0 && 0<=start+length && start+length<=text.Length())
+					{
+						return paragraph->SetBackgroundColor(start, length, value);
+					}
+					else
+					{
+						return false;
+					}
 				}
-				return delay;
+
+				bool SetInlineObject(vint start, vint length, const InlineObjectProperties& properties)override
+				{
+					if(length==0) return true;
+					if(0<=start && start<text.Length() && length>=0 && 0<=start+length && start+length<=text.Length())
+					{
+						if(paragraph->SetInlineObject(start, length, properties))
+						{
+							if (properties.backgroundImage)
+							{
+								IGuiGraphicsRenderer* renderer=properties.backgroundImage->GetRenderer();
+								if(renderer)
+								{
+									renderer->SetRenderTarget(renderTarget);
+								}
+							}
+							return true;
+						}
+					}
+					return false;
+				}
+
+				bool ResetInlineObject(vint start, vint length)override
+				{
+					if(length==0) return true;
+					if(0<=start && start<text.Length() && length>=0 && 0<=start+length && start+length<=text.Length())
+					{
+						if (auto inlineObject = paragraph->ResetInlineObject(start, length))
+						{
+							if (auto element = inlineObject.Value().backgroundImage)
+							{
+								auto renderer=element->GetRenderer();
+								if(renderer)
+								{
+									renderer->SetRenderTarget(0);
+								}
+							}
+							return true;
+						}
+					}
+					return false;
+				}
+
+				vint GetHeight()override
+				{
+					PrepareUniscribeData();
+					return paragraph->bounds.Height();
+				}
+
+				bool OpenCaret(vint _caret, Color _color, bool _frontSide)override
+				{
+					if(!IsValidCaret(_caret)) return false;
+					if(caret!=-1) CloseCaret();
+					caret=_caret;
+					caretColor=_color;
+					caretFrontSide=_frontSide;
+					caretPen=GetWindowsGDIResourceManager()->CreateGdiPen(caretColor);
+					return true;
+				}
+
+				bool CloseCaret()override
+				{
+					if(caret==-1) return false;
+					caret=-1;
+					GetWindowsGDIResourceManager()->DestroyGdiPen(caretColor);
+					caretPen=0;
+					return true;
+				}
+
+				void Render(Rect bounds)override
+				{
+					PrepareUniscribeData();
+
+					paragraphDC = renderTarget->GetDC();
+					paragraphOffset = bounds.LeftTop();
+					paragraph->Render(this, true);
+					paragraph->Render(this, false);
+					paragraphDC = 0;
+
+					if(caret!=-1)
+					{
+						Rect caretBounds=GetCaretBounds(caret, caretFrontSide);
+						vint x=caretBounds.x1+bounds.x1;
+						vint y1=caretBounds.y1+bounds.y1;
+						vint y2=y1+(vint)(caretBounds.Height()*1.5);
+
+						WinDC* dc=renderTarget->GetDC();
+						dc->SetPen(caretPen);
+						dc->MoveTo(x-1, y1);
+						dc->LineTo(x-1, y2);
+						dc->MoveTo(x, y1);
+						dc->LineTo(x, y2);
+					}
+				}
+
+				vint GetCaret(vint comparingCaret, CaretRelativePosition position, bool& preferFrontSide)override
+				{
+					PrepareUniscribeData();
+					return paragraph->GetCaret(comparingCaret, position, preferFrontSide);
+				}
+
+				Rect GetCaretBounds(vint caret, bool frontSide)override
+				{
+					PrepareUniscribeData();
+					return paragraph->GetCaretBounds(caret, frontSide);
+				}
+
+				vint GetCaretFromPoint(Point point)override
+				{
+					PrepareUniscribeData();
+					return paragraph->GetCaretFromPoint(point);
+				}
+
+				Nullable<InlineObjectProperties> GetInlineObjectFromPoint(Point point, vint& start, vint& length)override
+				{
+					PrepareUniscribeData();
+					return paragraph->GetInlineObjectFromPoint(point, start, length);
+				}
+
+				vint GetNearestCaretFromTextPos(vint textPos, bool frontSide)override
+				{
+					PrepareUniscribeData();
+					return paragraph->GetNearestCaretFromTextPos(textPos, frontSide);
+				}
+
+				bool IsValidCaret(vint caret)override
+				{
+					PrepareUniscribeData();
+					return paragraph->IsValidCaret(caret);
+				}
+
+				bool IsValidTextPos(vint textPos)override
+				{
+					PrepareUniscribeData();
+					return paragraph->IsValidTextPos(textPos);
+				}
+			};
+
+/***********************************************************************
+WindowsGDILayoutProvider
+***********************************************************************/
+
+			Ptr<IGuiGraphicsParagraph> WindowsGDILayoutProvider::CreateParagraph(const WString& text, IGuiGraphicsRenderTarget* renderTarget, elements::IGuiGraphicsParagraphCallback* callback)
+			{
+				return Ptr(new WindowsGDIParagraph(this, text, renderTarget, callback));
 			}
 		}
 	}
 }
 
 /***********************************************************************
-.\NATIVEWINDOW\WINDOWS\SERVICESIMPL\WINDOWSCALLBACKSERVICE.CPP
+.\GDI\RENDERERS\GUIGRAPHICSRENDERERSWINDOWSGDI.CPP
 ***********************************************************************/
 
 namespace vl
 {
 	namespace presentation
 	{
-		namespace windows
+		namespace elements_windows_gdi
 		{
+			using namespace windows;
+			using namespace collections;
 
 /***********************************************************************
-WindowsCallbackService
+GuiSolidBorderElementRenderer
 ***********************************************************************/
 
-			WindowsCallbackService::WindowsCallbackService()
+			void GuiFocusRectangleElementRenderer::InitializeInternal()
+			{
+				auto resourceManager = GetWindowsGDIResourceManager();
+				pen = resourceManager->GetFocusRectanglePen();
+				brush = resourceManager->CreateGdiBrush(Color(0, 0, 0, 0));
+			}
+
+			void GuiFocusRectangleElementRenderer::FinalizeInternal()
 			{
 			}
 
-			bool WindowsCallbackService::InstallListener(INativeControllerListener* listener)
+			void GuiFocusRectangleElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
 			{
-				if(listeners.Contains(listener))
+			}
+
+			void GuiFocusRectangleElementRenderer::Render(Rect bounds)
+			{
+				int originRop2 = renderTarget->GetDC()->SetRasterOperation(R2_XORPEN);
+				renderTarget->GetDC()->SetPen(pen);
+				renderTarget->GetDC()->SetBrush(brush);
+				renderTarget->GetDC()->Rectangle(bounds.Left(), bounds.Top(), bounds.Right() - 1, bounds.Bottom() - 1);
+				renderTarget->GetDC()->SetRasterOperation(originRop2);
+			}
+
+			void GuiFocusRectangleElementRenderer::OnElementStateChanged()
+			{
+			}
+
+/***********************************************************************
+GuiSolidBorderElementRenderer
+***********************************************************************/
+
+			void GuiSolidBorderElementRenderer::InitializeInternal()
+			{
+				auto resourceManager=GetWindowsGDIResourceManager();
+				oldColor=element->GetColor();
+				pen=resourceManager->CreateGdiPen(oldColor);
+				brush=resourceManager->CreateGdiBrush(Color(0, 0, 0, 0));
+			}
+
+			void GuiSolidBorderElementRenderer::FinalizeInternal()
+			{
+				auto resourceManager=GetWindowsGDIResourceManager();
+				resourceManager->DestroyGdiPen(oldColor);
+				resourceManager->DestroyGdiBrush(Color(0, 0, 0, 0));
+			}
+
+			void GuiSolidBorderElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
+			{
+			}
+
+			void GuiSolidBorderElementRenderer::Render(Rect bounds)
+			{
+				if(oldColor.a>0)
 				{
-					return false;
+					renderTarget->GetDC()->SetBrush(brush);
+					renderTarget->GetDC()->SetPen(pen);
+					auto shape = element->GetShape();
+
+					switch(shape.shapeType)
+					{
+					case ElementShapeType::Rectangle:
+						renderTarget->GetDC()->Rectangle(bounds.Left(), bounds.Top(), bounds.Right()-1, bounds.Bottom()-1);
+						break;
+					case ElementShapeType::Ellipse:
+						renderTarget->GetDC()->Ellipse(bounds.Left(), bounds.Top(), bounds.Right()-1, bounds.Bottom()-1);
+						break;
+					case ElementShapeType::RoundRect:
+						renderTarget->GetDC()->RoundRect(bounds.Left(), bounds.Top(), bounds.Right() - 1, bounds.Bottom() - 1, shape.radiusX * 2, shape.radiusY * 2);
+						break;
+					}
+				}
+			}
+
+			void GuiSolidBorderElementRenderer::OnElementStateChanged()
+			{
+				Color color=element->GetColor();
+				if(oldColor!=color)
+				{
+					auto resourceManager=GetWindowsGDIResourceManager();
+					resourceManager->DestroyGdiPen(oldColor);
+					oldColor=color;
+					pen=resourceManager->CreateGdiPen(oldColor);
+				}
+			}
+
+/***********************************************************************
+Gui3DBorderElementRenderer
+***********************************************************************/
+
+			void Gui3DBorderElementRenderer::InitializeInternal()
+			{
+				auto resourceManager=GetWindowsGDIResourceManager();
+				oldColor1=element->GetColor1();
+				oldColor2=element->GetColor2();
+				pen1=resourceManager->CreateGdiPen(oldColor1);
+				pen2=resourceManager->CreateGdiPen(oldColor2);
+			}
+
+			void Gui3DBorderElementRenderer::FinalizeInternal()
+			{
+				auto resourceManager=GetWindowsGDIResourceManager();
+				resourceManager->DestroyGdiPen(oldColor1);
+				resourceManager->DestroyGdiPen(oldColor2);
+			}
+
+			void Gui3DBorderElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
+			{
+			}
+
+			void Gui3DBorderElementRenderer::Render(Rect bounds)
+			{
+				if(oldColor1.a>0)
+				{
+					renderTarget->GetDC()->SetPen(pen1);
+					renderTarget->GetDC()->MoveTo(bounds.x1, bounds.y1);
+					renderTarget->GetDC()->LineTo(bounds.x2, bounds.y1);
+					renderTarget->GetDC()->MoveTo(bounds.x1, bounds.y1);
+					renderTarget->GetDC()->LineTo(bounds.x1, bounds.y2);
+				}
+				if(oldColor2.a>0)
+				{
+					renderTarget->GetDC()->SetPen(pen2);
+					renderTarget->GetDC()->MoveTo(bounds.x2-1, bounds.y2-1);
+					renderTarget->GetDC()->LineTo(bounds.x1, bounds.y2-1);
+					renderTarget->GetDC()->MoveTo(bounds.x2-1, bounds.y2-1);
+					renderTarget->GetDC()->LineTo(bounds.x2-1, bounds.y1);
+				}
+			}
+
+			void Gui3DBorderElementRenderer::OnElementStateChanged()
+			{
+				Color color1=element->GetColor1();
+				if(oldColor1!=color1)
+				{
+					auto resourceManager=GetWindowsGDIResourceManager();
+					resourceManager->DestroyGdiPen(oldColor1);
+					oldColor1=color1;
+					pen1=resourceManager->CreateGdiPen(oldColor1);
+				}
+
+				Color color2=element->GetColor2();
+				if(oldColor2!=color2)
+				{
+					auto resourceManager=GetWindowsGDIResourceManager();
+					resourceManager->DestroyGdiPen(oldColor2);
+					oldColor2=color2;
+					pen2=resourceManager->CreateGdiPen(oldColor2);
+				}
+			}
+
+/***********************************************************************
+Gui3DSplitterElementRenderer
+***********************************************************************/
+
+			void Gui3DSplitterElementRenderer::InitializeInternal()
+			{
+				auto resourceManager=GetWindowsGDIResourceManager();
+				oldColor1=element->GetColor1();
+				oldColor2=element->GetColor2();
+				pen1=resourceManager->CreateGdiPen(oldColor1);
+				pen2=resourceManager->CreateGdiPen(oldColor2);
+			}
+
+			void Gui3DSplitterElementRenderer::FinalizeInternal()
+			{
+				auto resourceManager=GetWindowsGDIResourceManager();
+				resourceManager->DestroyGdiPen(oldColor1);
+				resourceManager->DestroyGdiPen(oldColor2);
+			}
+
+			void Gui3DSplitterElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
+			{
+			}
+
+			void Gui3DSplitterElementRenderer::Render(Rect bounds)
+			{
+				Point p11, p12, p21, p22;
+				switch(element->GetDirection())
+				{
+				case Gui3DSplitterElement::Horizontal:
+					{
+						vint y=bounds.y1+bounds.Height()/2-1;
+						p11=Point(bounds.x1, y);
+						p12=Point(bounds.x2, y);
+						p21=Point(bounds.x1, y+1);
+						p22=Point(bounds.x2, y+1);
+					}
+					break;
+				case Gui3DSplitterElement::Vertical:
+					{
+						vint x=bounds.x1+bounds.Width()/2-1;
+						p11=Point(x, bounds.y1);
+						p12=Point(x, bounds.y2);
+						p21=Point(x+1, bounds.y1);
+						p22=Point(x+1, bounds.y2);
+					}
+					break;
+				}
+				if(oldColor1.a>0)
+				{
+					renderTarget->GetDC()->SetPen(pen1);
+					renderTarget->GetDC()->MoveTo(p11.x, p11.y);
+					renderTarget->GetDC()->LineTo(p12.x, p12.y);
+				}
+				if(oldColor2.a>0)
+				{
+					renderTarget->GetDC()->SetPen(pen2);
+					renderTarget->GetDC()->MoveTo(p21.x, p21.y);
+					renderTarget->GetDC()->LineTo(p22.x, p22.y);
+				}
+			}
+
+			void Gui3DSplitterElementRenderer::OnElementStateChanged()
+			{
+				Color color1=element->GetColor1();
+				if(oldColor1!=color1)
+				{
+					auto resourceManager=GetWindowsGDIResourceManager();
+					resourceManager->DestroyGdiPen(oldColor1);
+					oldColor1=color1;
+					pen1=resourceManager->CreateGdiPen(oldColor1);
+				}
+
+				Color color2=element->GetColor2();
+				if(oldColor2!=color2)
+				{
+					auto resourceManager=GetWindowsGDIResourceManager();
+					resourceManager->DestroyGdiPen(oldColor2);
+					oldColor2=color2;
+					pen2=resourceManager->CreateGdiPen(oldColor2);
+				}
+			}
+
+/***********************************************************************
+GuiSolidBackgroundElementRenderer
+***********************************************************************/
+
+			void GuiSolidBackgroundElementRenderer::InitializeInternal()
+			{
+				auto resourceManager=GetWindowsGDIResourceManager();
+				oldColor=element->GetColor();
+				pen=resourceManager->CreateGdiPen(oldColor);
+				brush=resourceManager->CreateGdiBrush(oldColor);
+			}
+
+			void GuiSolidBackgroundElementRenderer::FinalizeInternal()
+			{
+				auto resourceManager=GetWindowsGDIResourceManager();
+				resourceManager->DestroyGdiPen(oldColor);
+				resourceManager->DestroyGdiBrush(oldColor);
+			}
+
+			void GuiSolidBackgroundElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
+			{
+			}
+
+			void GuiSolidBackgroundElementRenderer::Render(Rect bounds)
+			{
+				if(oldColor.a>0)
+				{
+					renderTarget->GetDC()->SetPen(pen);
+					renderTarget->GetDC()->SetBrush(brush);
+					auto shape = element->GetShape();
+
+					switch(shape.shapeType)
+					{
+					case ElementShapeType::Rectangle:
+						renderTarget->GetDC()->FillRect(bounds.Left(), bounds.Top(), bounds.Right(), bounds.Bottom());
+						break;
+					case ElementShapeType::Ellipse:
+						renderTarget->GetDC()->Ellipse(bounds.Left(), bounds.Top(), bounds.Right()-1, bounds.Bottom()-1);
+						break;
+					case ElementShapeType::RoundRect:
+						renderTarget->GetDC()->RoundRect(bounds.Left(), bounds.Top(), bounds.Right() - 1, bounds.Bottom() - 1, shape.radiusX * 2, shape.radiusY * 2);
+						break;
+					}
+				}
+			}
+
+			void GuiSolidBackgroundElementRenderer::OnElementStateChanged()
+			{
+				Color color=element->GetColor();
+				if(oldColor!=color)
+				{
+					auto resourceManager=GetWindowsGDIResourceManager();
+					resourceManager->DestroyGdiPen(oldColor);
+					resourceManager->DestroyGdiBrush(oldColor);
+					oldColor=color;
+					pen=resourceManager->CreateGdiPen(oldColor);
+					brush=resourceManager->CreateGdiBrush(oldColor);
+				}
+			}
+
+/***********************************************************************
+GuiGradientBackgroundElementRenderer
+***********************************************************************/
+
+			void GuiGradientBackgroundElementRenderer::InitializeInternal()
+			{
+			}
+
+			void GuiGradientBackgroundElementRenderer::FinalizeInternal()
+			{
+			}
+
+			void GuiGradientBackgroundElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
+			{
+			}
+
+			void GuiGradientBackgroundElementRenderer::Render(Rect bounds)
+			{
+				Color color1 = element->GetColor1();
+				Color color2 = element->GetColor2();
+				if (color1.a > 0 || color2.a > 0)
+				{
+					Ptr<WinRegion> targetRegion, oldRegion, newRegion;
+					auto shape = element->GetShape();
+					switch (shape.shapeType)
+					{
+					case ElementShapeType::Ellipse:
+						targetRegion = Ptr(new WinRegion(bounds.x1, bounds.y1, bounds.x2 + 1, bounds.y2 + 1, false));
+						break;
+					case ElementShapeType::RoundRect:
+						targetRegion = Ptr(new WinRegion(bounds.x1, bounds.y1, bounds.x2 + 1, bounds.y2 + 1, shape.radiusX * 2, shape.radiusY * 2));
+						break;
+					}
+
+					if (targetRegion)
+					{
+						oldRegion = renderTarget->GetDC()->GetClipRegion();
+						newRegion = Ptr(new WinRegion(oldRegion, targetRegion, RGN_AND));
+						renderTarget->GetDC()->ClipRegion(newRegion);
+					}
+
+					switch (element->GetDirection())
+					{
+					case GuiGradientBackgroundElement::Horizontal:
+					case GuiGradientBackgroundElement::Vertical:
+						{
+							TRIVERTEX vertices[2];
+							GRADIENT_RECT rectangles[1];
+
+							vertices[0].x = (int)bounds.x1;
+							vertices[0].y = (int)bounds.y1;
+							vertices[1].x = (int)bounds.x2;
+							vertices[1].y = (int)bounds.y2;
+
+							rectangles[0].UpperLeft = 0;
+							rectangles[0].LowerRight = 1;
+
+							vertices[0].Red = color1.r << 8;
+							vertices[0].Green = color1.g << 8;
+							vertices[0].Blue = color1.b << 8;
+							vertices[0].Alpha = color1.a << 8;
+
+							vertices[1].Red = color2.r << 8;
+							vertices[1].Green = color2.g << 8;
+							vertices[1].Blue = color2.b << 8;
+							vertices[1].Alpha = color2.a << 8;
+
+							switch (element->GetDirection())
+							{
+							case GuiGradientBackgroundElement::Horizontal:
+								renderTarget->GetDC()->GradientRectH(vertices, sizeof(vertices) / sizeof(*vertices), rectangles, sizeof(rectangles) / sizeof(*rectangles));
+								break;
+							case GuiGradientBackgroundElement::Vertical:
+								renderTarget->GetDC()->GradientRectV(vertices, sizeof(vertices) / sizeof(*vertices), rectangles, sizeof(rectangles) / sizeof(*rectangles));
+								break;
+							}
+						}
+						break;
+					case GuiGradientBackgroundElement::Slash:
+					case GuiGradientBackgroundElement::Backslash:
+						{
+							TRIVERTEX vertices[4];
+							GRADIENT_TRIANGLE triangles[2];
+
+							switch (element->GetDirection())
+							{
+							case GuiGradientBackgroundElement::Slash:
+								vertices[0].x = (int)bounds.x2;
+								vertices[0].y = (int)bounds.y1;
+								vertices[1].x = (int)bounds.x1;
+								vertices[1].y = (int)bounds.y1;
+								vertices[2].x = (int)bounds.x2;
+								vertices[2].y = (int)bounds.y2;
+								vertices[3].x = (int)bounds.x1;
+								vertices[3].y = (int)bounds.y2;
+								break;
+							case GuiGradientBackgroundElement::Backslash:
+								vertices[0].x = (int)bounds.x1;
+								vertices[0].y = (int)bounds.y1;
+								vertices[1].x = (int)bounds.x1;
+								vertices[1].y = (int)bounds.y2;
+								vertices[2].x = (int)bounds.x2;
+								vertices[2].y = (int)bounds.y1;
+								vertices[3].x = (int)bounds.x2;
+								vertices[3].y = (int)bounds.y2;
+								break;
+							}
+
+							triangles[0].Vertex1 = 0;
+							triangles[0].Vertex2 = 1;
+							triangles[0].Vertex3 = 2;
+							triangles[1].Vertex1 = 1;
+							triangles[1].Vertex2 = 2;
+							triangles[1].Vertex3 = 3;
+
+							vertices[0].Red = color1.r << 8;
+							vertices[0].Green = color1.g << 8;
+							vertices[0].Blue = color1.b << 8;
+							vertices[0].Alpha = color1.a << 8;
+
+							vertices[1].Red = ((color1.r + color2.r) / 2) << 8;
+							vertices[1].Green = ((color1.g + color2.g) / 2) << 8;
+							vertices[1].Blue = ((color1.b + color2.b) / 2) << 8;
+							vertices[1].Alpha = ((color1.a + color2.a) / 2) << 8;
+
+							vertices[2].Red = ((color1.r + color2.r) / 2) << 8;
+							vertices[2].Green = ((color1.g + color2.g) / 2) << 8;
+							vertices[2].Blue = ((color1.b + color2.b) / 2) << 8;
+							vertices[2].Alpha = ((color1.a + color2.a) / 2) << 8;
+
+							vertices[3].Red = color2.r << 8;
+							vertices[3].Green = color2.g << 8;
+							vertices[3].Blue = color2.b << 8;
+							vertices[3].Alpha = color2.a << 8;
+
+							renderTarget->GetDC()->GradientTriangle(vertices, sizeof(vertices) / sizeof(*vertices), triangles, sizeof(triangles) / sizeof(*triangles));
+						}
+						break;
+					}
+
+					if (targetRegion)
+					{
+						renderTarget->GetDC()->ClipRegion(oldRegion);
+					}
+				}
+			}
+
+			void GuiGradientBackgroundElementRenderer::OnElementStateChanged()
+			{
+			}
+
+/***********************************************************************
+GuiSolidLabelElementRenderer
+***********************************************************************/
+
+			void GuiInnerShadowElementRenderer::InitializeInternal()
+			{
+			}
+
+			void GuiInnerShadowElementRenderer::FinalizeInternal()
+			{
+			}
+
+			void GuiInnerShadowElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
+			{
+			}
+
+			GuiInnerShadowElementRenderer::GuiInnerShadowElementRenderer()
+			{
+			}
+
+			void GuiInnerShadowElementRenderer::Render(Rect bounds)
+			{
+			}
+
+			void GuiInnerShadowElementRenderer::OnElementStateChanged()
+			{
+			}
+
+/***********************************************************************
+GuiSolidLabelElementRenderer
+***********************************************************************/
+
+			void GuiSolidLabelElementRenderer::UpdateMinSize()
+			{
+				if(renderTarget)
+				{
+					renderTarget->GetDC()->SetFont(font);
+					SIZE size={0};
+					const WString& text=element->GetText();
+					if(element->GetWrapLine())
+					{
+						if(element->GetWrapLineHeightCalculation())
+						{
+							if(oldMaxWidth==-1 || text.Length()==0)
+							{
+								size=renderTarget->GetDC()->MeasureBuffer(L" ");
+							}
+							else
+							{
+								size=renderTarget->GetDC()->MeasureWrapLineString(text, oldMaxWidth);
+							}
+						}
+					}
+					else
+					{
+						size=text.Length()==0
+							?renderTarget->GetDC()->MeasureBuffer(L" ")
+							:renderTarget->GetDC()->MeasureString(text)
+							;
+					}
+					minSize=Size((element->GetEllipse()?0:size.cx), size.cy);
 				}
 				else
 				{
-					listeners.Add(listener);
-					return true;
+					minSize=Size();
 				}
 			}
 
-			bool WindowsCallbackService::UninstallListener(INativeControllerListener* listener)
+			void GuiSolidLabelElementRenderer::InitializeInternal()
 			{
-				if(listeners.Contains(listener))
+				auto resourceManager=GetWindowsGDIResourceManager();
+				oldFont=element->GetFont();
+				font=resourceManager->CreateGdiFont(oldFont);
+			}
+
+			void GuiSolidLabelElementRenderer::FinalizeInternal()
+			{
+				auto resourceManager=GetWindowsGDIResourceManager();
+				resourceManager->DestroyGdiFont(oldFont);
+			}
+
+			void GuiSolidLabelElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
+			{
+				UpdateMinSize();
+			}
+
+			GuiSolidLabelElementRenderer::GuiSolidLabelElementRenderer()
+				:oldMaxWidth(-1)
+			{
+			}
+
+			void GuiSolidLabelElementRenderer::Render(Rect bounds)
+			{
+				Color color=element->GetColor();
+				if(color.a>0)
 				{
-					listeners.Remove(listener);
-					return true;
+					renderTarget->GetDC()->SetFont(font);
+					renderTarget->GetDC()->SetTextColor(RGB(color.r, color.g, color.b));
+
+					UINT format=DT_NOPREFIX;
+					RECT rect;
+					rect.left=(int)bounds.Left();
+					rect.top=(int)bounds.Top();
+					rect.right=(int)bounds.Right();
+					rect.bottom=(int)bounds.Bottom();
+
+					if(element->GetMultiline() || element->GetWrapLine())
+					{
+						format|=DT_EDITCONTROL;
+					}
+					else
+					{
+						format|=DT_SINGLELINE;
+						switch(element->GetVerticalAlignment())
+						{
+						case Alignment::Top:
+							format|=DT_TOP;
+							break;
+						case Alignment::Center:
+							format|=DT_VCENTER;
+							break;
+						case Alignment::Bottom:
+							format|=DT_BOTTOM;
+							break;
+						}
+					}
+
+					switch(element->GetHorizontalAlignment())
+					{
+					case Alignment::Left:
+						format|=DT_LEFT;
+						break;
+					case Alignment::Center:
+						format|=DT_CENTER;
+						break;
+					case Alignment::Right:
+						format|=DT_RIGHT;
+						break;
+					}
+
+					if(element->GetWrapLine())
+					{
+						format|=DT_WORDBREAK;
+					}
+					if(element->GetEllipse())
+					{
+						format|=DT_END_ELLIPSIS;
+					}
+					renderTarget->GetDC()->DrawString(rect, element->GetText(), format);
+					if(oldMaxWidth!=bounds.Width())
+					{
+						oldMaxWidth=bounds.Width();
+						UpdateMinSize();
+					}
+				}
+			}
+
+			void GuiSolidLabelElementRenderer::OnElementStateChanged()
+			{
+				FontProperties fontProperties=element->GetFont();
+				if(oldFont!=fontProperties)
+				{
+					auto resourceManager=GetWindowsGDIResourceManager();
+					resourceManager->DestroyGdiFont(oldFont);
+					oldFont=fontProperties;
+					font=resourceManager->CreateGdiFont(oldFont);
+				}
+				UpdateMinSize();
+			}
+
+/***********************************************************************
+GuiImageFrameElementRenderer
+***********************************************************************/
+
+			void GuiImageFrameElementRenderer::UpdateBitmap()
+			{
+				if(element->GetImage())
+				{
+					auto resourceManager=GetWindowsGDIResourceManager();
+					INativeImageFrame* frame=element->GetImage()->GetFrame(element->GetFrameIndex());
+					bitmap=resourceManager->GetBitmap(frame, element->GetEnabled());
+
+					if (element->GetStretch())
+					{
+						minSize=Size(0,0);
+					}
+					else
+					{
+						minSize=frame->GetSize();
+					}
 				}
 				else
 				{
-					return false;
+					bitmap=0;
+					minSize=Size(0, 0);
 				}
 			}
 
-			void WindowsCallbackService::InvokeGlobalTimer()
+			void GuiImageFrameElementRenderer::InitializeInternal()
 			{
-				for(vint i=0;i<listeners.Count();i++)
+				UpdateBitmap();
+			}
+
+			void GuiImageFrameElementRenderer::FinalizeInternal()
+			{
+			}
+
+			void GuiImageFrameElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
+			{
+			}
+
+			GuiImageFrameElementRenderer::GuiImageFrameElementRenderer()
+			{
+			}
+
+			void GuiImageFrameElementRenderer::Render(Rect bounds)
+			{
+				if(bitmap)
 				{
-					listeners[i]->GlobalTimer();
+					WinDC* dc=renderTarget->GetDC();
+					Rect source(0, 0, minSize.x, minSize.y);
+					Rect destination;
+					if(element->GetStretch())
+					{
+						INativeImageFrame* frame=element->GetImage()->GetFrame(element->GetFrameIndex());
+						source = Rect(Point(0, 0), frame->GetSize());
+						destination=Rect(bounds.x1, bounds.y1, bounds.x2, bounds.y2);
+					}
+					else
+					{
+						vint x=0;
+						vint y=0;
+						switch(element->GetHorizontalAlignment())
+						{
+						case Alignment::Left:
+							x=bounds.Left();
+							break;
+						case Alignment::Center:
+							x=bounds.Left()+(bounds.Width()-minSize.x)/2;
+							break;
+						case Alignment::Right:
+							x=bounds.Right()-minSize.x;
+							break;
+						}
+						switch(element->GetVerticalAlignment())
+						{
+						case Alignment::Top:
+							y=bounds.Top();
+							break;
+						case Alignment::Center:
+							y=bounds.Top()+(bounds.Height()-minSize.y)/2;
+							break;
+						case Alignment::Bottom:
+							y=bounds.Bottom()-minSize.y;
+							break;
+						}
+						destination=Rect(x, y, x+minSize.x, y+minSize.y);
+					}
+					if(element->GetImage()->GetFormat()==INativeImage::Gif &&  element->GetFrameIndex()>0)
+					{
+						auto resourceManager=GetWindowsGDIResourceManager();
+						vint max=element->GetFrameIndex();
+						for(vint i=0;i<=max;i++)
+						{
+							Ptr<WinBitmap> frameBitmap=resourceManager->GetBitmap(element->GetImage()->GetFrame(i), element->GetEnabled());
+							dc->Draw(
+								destination.Left(), destination.Top(), destination.Width(), destination.Height(),
+								frameBitmap,
+								source.Left(), source.Top(), source.Width(), source.Height()
+								);
+						}
+					}
+					else
+					{
+						dc->Draw(
+							destination.Left(), destination.Top(), destination.Width(), destination.Height(),
+							bitmap,
+							source.Left(), source.Top(), source.Width(), source.Height()
+							);
+					}
 				}
 			}
 
-			void WindowsCallbackService::InvokeClipboardUpdated()
+			void GuiImageFrameElementRenderer::OnElementStateChanged()
 			{
-				for(vint i=0;i<listeners.Count();i++)
+				UpdateBitmap();
+			}
+
+/***********************************************************************
+GuiPolygonElementRenderer
+***********************************************************************/
+
+			void GuiPolygonElementRenderer::InitializeInternal()
+			{
+				auto resourceManager=GetWindowsGDIResourceManager();
+				pen=resourceManager->CreateGdiPen(oldPenColor);
+				brush=resourceManager->CreateGdiBrush(oldBrushColor);
+			}
+
+			void GuiPolygonElementRenderer::FinalizeInternal()
+			{
+				auto resourceManager=GetWindowsGDIResourceManager();
+				resourceManager->DestroyGdiPen(oldPenColor);
+				resourceManager->DestroyGdiBrush(oldBrushColor);
+			}
+
+			void GuiPolygonElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
+			{
+			}
+
+			GuiPolygonElementRenderer::GuiPolygonElementRenderer()
+				:points(0)
+				,pointCount(0)
+				,oldPenColor(0, 0, 0, 0)
+				,oldBrushColor(0, 0, 0, 0)
+			{
+			}
+
+			GuiPolygonElementRenderer::~GuiPolygonElementRenderer()
+			{
+				if(points) delete[] points;
+			}
+
+			void GuiPolygonElementRenderer::Render(Rect bounds)
+			{
+				if(pointCount>=3 && (oldPenColor.a || oldBrushColor.a))
 				{
-					listeners[i]->ClipboardUpdated();
+					vint offsetX=(bounds.Width()-minSize.x)/2+bounds.x1;
+					vint offsetY=(bounds.Height()-minSize.y)/2+bounds.y1;
+					for(vint i=0;i<pointCount;i++)
+					{
+						points[i].x+=(int)offsetX;
+						points[i].y+=(int)offsetY;
+					}
+					renderTarget->GetDC()->SetPen(pen);
+					renderTarget->GetDC()->SetBrush(brush);
+					renderTarget->GetDC()->PolyGon(points, pointCount);
+					for(vint i=0;i<pointCount;i++)
+					{
+						points[i].x-=(int)offsetX;
+						points[i].y-=(int)offsetY;
+					}
 				}
 			}
 
-			void WindowsCallbackService::InvokeNativeWindowCreated(INativeWindow* window)
+			void GuiPolygonElementRenderer::OnElementStateChanged()
 			{
-				for(vint i=0;i<listeners.Count();i++)
+				minSize=element->GetSize();
 				{
-					listeners[i]->NativeWindowCreated(window);
+					if(points)
+					{
+						delete[] points;
+						points=0;
+					}
+					pointCount=element->GetPointCount();
+					if(pointCount>0)
+					{
+						points=new POINT[pointCount];
+						for(vint i=0;i<pointCount;i++)
+						{
+							Point p=element->GetPoint(i);
+							points[i].x=(int)p.x;
+							points[i].y=(int)p.y;
+						}
+					}
+				}
+
+				auto resourceManager=GetWindowsGDIResourceManager();
+				if(oldPenColor!=element->GetBorderColor() || !pen)
+				{
+					resourceManager->DestroyGdiPen(oldPenColor);
+					oldPenColor=element->GetBorderColor();
+					pen=resourceManager->CreateGdiPen(oldPenColor);
+				}
+				if(oldBrushColor!=element->GetBackgroundColor() || !brush)
+				{
+					resourceManager->DestroyGdiPen(oldBrushColor);
+					oldBrushColor=element->GetBackgroundColor();
+					brush=resourceManager->CreateGdiBrush(oldBrushColor);
 				}
 			}
 
-			void WindowsCallbackService::InvokeNativeWindowDestroyed(INativeWindow* window)
+/***********************************************************************
+GuiColorizedTextElementRenderer
+***********************************************************************/
+
+			void GuiColorizedTextElementRenderer::DestroyColors()
 			{
-				for(vint i=0;i<listeners.Count();i++)
+				auto resourceManager=GetWindowsGDIResourceManager();
+				for(vint i=0;i<colors.Count();i++)
 				{
-					listeners[i]->NativeWindowDestroying(window);
+					resourceManager->DestroyGdiBrush(colors[i].normal.background);
+					resourceManager->DestroyGdiBrush(colors[i].selectedFocused.background);
+					resourceManager->DestroyGdiBrush(colors[i].selectedUnfocused.background);
 				}
+			}
+
+			void GuiColorizedTextElementRenderer::ColorChanged()
+			{
+				auto resourceManager=GetWindowsGDIResourceManager();
+				ColorArray newColors;
+				newColors.Resize(element->GetColors().Count());
+				for(vint i=0;i<newColors.Count();i++)
+				{
+					text::ColorEntry entry=element->GetColors().Get(i);
+					ColorEntryResource newEntry;
+
+					newEntry.normal.text=entry.normal.text;
+					newEntry.normal.background=entry.normal.background;
+					newEntry.normal.backgroundBrush=resourceManager->CreateGdiBrush(newEntry.normal.background);
+					newEntry.selectedFocused.text=entry.selectedFocused.text;
+					newEntry.selectedFocused.background=entry.selectedFocused.background;
+					newEntry.selectedFocused.backgroundBrush=resourceManager->CreateGdiBrush(newEntry.selectedFocused.background);
+					newEntry.selectedUnfocused.text=entry.selectedUnfocused.text;
+					newEntry.selectedUnfocused.background=entry.selectedUnfocused.background;
+					newEntry.selectedUnfocused.backgroundBrush=resourceManager->CreateGdiBrush(newEntry.selectedUnfocused.background);
+					newColors[i]=newEntry;
+				}
+
+				DestroyColors();
+				CopyFrom(colors, newColors);
+			}
+
+			void GuiColorizedTextElementRenderer::FontChanged()
+			{
+				auto resourceManager = GetWindowsGDIResourceManager();
+				if (font)
+				{
+					element->GetLines().SetCharMeasurer(nullptr);
+					resourceManager->DestroyGdiFont(oldFont);
+					resourceManager->DestroyCharMeasurer(oldFont);
+					font = nullptr;
+				}
+				oldFont = element->GetFont();
+				font = resourceManager->CreateGdiFont(oldFont);
+				element->GetLines().SetCharMeasurer(resourceManager->CreateCharMeasurer(oldFont).Obj());
+			}
+
+			void GuiColorizedTextElementRenderer::InitializeInternal()
+			{
+				auto resourceManager=GetWindowsGDIResourceManager();
+				element->SetCallback(this);
+				oldCaretColor=element->GetCaretColor();
+				caretPen=resourceManager->CreateGdiPen(oldCaretColor);
+			}
+
+			void GuiColorizedTextElementRenderer::FinalizeInternal()
+			{
+				auto resourceManager=GetWindowsGDIResourceManager();
+				if(font)
+				{
+					resourceManager->DestroyGdiFont(oldFont);
+					resourceManager->DestroyCharMeasurer(oldFont);
+				}
+				resourceManager->DestroyGdiPen(oldCaretColor);
+				DestroyColors();
+			}
+
+			void GuiColorizedTextElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
+			{
+				element->GetLines().SetRenderTarget(newRenderTarget);
+			}
+
+			void GuiColorizedTextElementRenderer::Render(Rect bounds)
+			{
+				if (renderTarget)
+				{
+					WinDC* dc = renderTarget->GetDC();
+					dc->SetFont(font);
+
+					wchar_t passwordChar = element->GetPasswordChar();
+					Point viewPosition = element->GetViewPosition();
+					Rect viewBounds(viewPosition, bounds.GetSize());
+					vint startRow = element->GetLines().GetTextPosFromPoint(Point(viewBounds.x1, viewBounds.y1)).row;
+					vint endRow = element->GetLines().GetTextPosFromPoint(Point(viewBounds.x2, viewBounds.y2)).row;
+					TextPos selectionBegin = element->GetCaretBegin() < element->GetCaretEnd() ? element->GetCaretBegin() : element->GetCaretEnd();
+					TextPos selectionEnd = element->GetCaretBegin() > element->GetCaretEnd() ? element->GetCaretBegin() : element->GetCaretEnd();
+					bool focused = element->GetFocused();
+					Ptr<windows::WinBrush> lastBrush = 0;
+
+					for (vint row = startRow; row <= endRow; row++)
+					{
+						Rect startRect = element->GetLines().GetRectFromTextPos(TextPos(row, 0));
+						Point startPoint = startRect.LeftTop();
+						vint startColumn = element->GetLines().GetTextPosFromPoint(Point(viewBounds.x1, startPoint.y)).column;
+						vint endColumn = element->GetLines().GetTextPosFromPoint(Point(viewBounds.x2, startPoint.y)).column;
+
+						text::TextLine& line = element->GetLines().GetLine(row);
+						if (text::UTF16SPFirst(line.text[endColumn]) && endColumn + 1 < line.dataLength && text::UTF16SPSecond(line.text[startColumn + 1]))
+						{
+							endColumn++;
+						}
+
+						vint x = startColumn == 0 ? 0 : line.att[startColumn - 1].rightOffset;
+						for (vint column = startColumn; column <= endColumn; column++)
+						{
+							bool inSelection = false;
+							if (selectionBegin.row == selectionEnd.row)
+							{
+								inSelection = (row == selectionBegin.row && selectionBegin.column <= column && column < selectionEnd.column);
+							}
+							else if (row == selectionBegin.row)
+							{
+								inSelection = selectionBegin.column <= column;
+							}
+							else if (row == selectionEnd.row)
+							{
+								inSelection = column < selectionEnd.column;
+							}
+							else
+							{
+								inSelection = selectionBegin.row < row && row < selectionEnd.row;
+							}
+
+							bool crlf = column == line.dataLength;
+							vint colorIndex = crlf ? 0 : line.att[column].colorIndex;
+							if (colorIndex >= colors.Count())
+							{
+								colorIndex = 0;
+							}
+							ColorItemResource& color =
+								!inSelection ? colors[colorIndex].normal :
+								focused ? colors[colorIndex].selectedFocused :
+								colors[colorIndex].selectedUnfocused;
+							vint x2 = crlf ? x + startRect.Height() / 2 : line.att[column].rightOffset;
+							vint tx = x - viewPosition.x + bounds.x1;
+							vint ty = startPoint.y - viewPosition.y + bounds.y1;
+
+							if (color.background.a)
+							{
+								if (lastBrush != color.backgroundBrush)
+								{
+									lastBrush = color.backgroundBrush;
+									dc->SetBrush(lastBrush);
+								}
+								dc->FillRect(tx, ty, tx + (x2 - x), ty + startRect.Height());
+							}
+							if (!crlf)
+							{
+								vint count = text::UTF16SPFirst(line.text[column]) && column + 1 < line.dataLength && text::UTF16SPSecond(line.text[column + 1]) ? 2 : 1;
+								if (color.text.a)
+								{
+									dc->SetTextColor(RGB(color.text.r, color.text.g, color.text.b));
+									dc->DrawBuffer(tx, ty, (passwordChar ? &passwordChar : &line.text[column]), count);
+								}
+								if (count == 2) column++;
+							}
+							x = x2;
+						}
+					}
+
+					if (element->GetCaretVisible() && element->GetLines().IsAvailable(element->GetCaretEnd()))
+					{
+						Point caretPoint = element->GetLines().GetPointFromTextPos(element->GetCaretEnd());
+						vint height = element->GetLines().GetRowHeight();
+						dc->SetPen(caretPen);
+						dc->MoveTo(caretPoint.x - viewPosition.x + bounds.x1, caretPoint.y - viewPosition.y + bounds.y1 + 1);
+						dc->LineTo(caretPoint.x - viewPosition.x + bounds.x1, caretPoint.y + height - viewPosition.y + bounds.y1 - 1);
+						dc->MoveTo(caretPoint.x - 1 - viewPosition.x + bounds.x1, caretPoint.y - viewPosition.y + bounds.y1 + 1);
+						dc->LineTo(caretPoint.x - 1 - viewPosition.x + bounds.x1, caretPoint.y + height - viewPosition.y + bounds.y1 - 1);
+					}
+				}
+			}
+
+			void GuiColorizedTextElementRenderer::OnElementStateChanged()
+			{
+				Color caretColor=element->GetCaretColor();
+				if(oldCaretColor!=caretColor)
+				{
+					auto resourceManager=GetWindowsGDIResourceManager();
+					resourceManager->DestroyGdiPen(oldCaretColor);
+					oldCaretColor=caretColor;
+					caretPen=resourceManager->CreateGdiPen(oldCaretColor);
+				}
+			}
+
+/***********************************************************************
+GuiGDIElementRenderer
+***********************************************************************/
+
+			void GuiGDIElementRenderer::InitializeInternal()
+			{
+			}
+
+			void GuiGDIElementRenderer::FinalizeInternal()
+			{
+			}
+
+			void GuiGDIElementRenderer::RenderTargetChangedInternal(IWindowsGDIRenderTarget* oldRenderTarget, IWindowsGDIRenderTarget* newRenderTarget)
+			{
+			}
+
+			GuiGDIElementRenderer::GuiGDIElementRenderer()
+			{
+			}
+
+			GuiGDIElementRenderer::~GuiGDIElementRenderer()
+			{
+			}
+			
+			void GuiGDIElementRenderer::Render(Rect bounds)
+			{
+				if(renderTarget)
+				{
+					renderTarget->PushClipper(bounds);
+					if(!renderTarget->IsClipperCoverWholeTarget())
+					{
+						WinDC* dc=renderTarget->GetDC();
+						GuiGDIElementEventArgs arguments(element, dc, bounds);
+						element->Rendering.Execute(arguments);
+					}
+					renderTarget->PopClipper();
+				}
+			}
+
+			void GuiGDIElementRenderer::OnElementStateChanged()
+			{
 			}
 		}
 	}
 }
 
 /***********************************************************************
-.\NATIVEWINDOW\WINDOWS\SERVICESIMPL\WINDOWSCLIPBOARDSERVICE.CPP
+.\GDI\RENDERERS\GUIGRAPHICSUNISCRIBE.CPP
+***********************************************************************/
+
+#pragma comment(lib, "usp10.lib")
+
+namespace vl
+{
+	namespace presentation
+	{
+		namespace elements_windows_gdi
+		{
+			using namespace regex;
+
+/***********************************************************************
+UniscribeFragment
+***********************************************************************/
+
+			UniscribeFragment::UniscribeFragment(const WString& _text)
+				:text(_text)
+			{
+				colors.Add(UniscribeColorRange(0, text.Length()), UniscribeColor(Color(0, 0, 0), Color(0, 0, 0, 0)));
+			}
+
+			WString UniscribeFragment::GetFingerprint()
+			{
+				return fontStyle.fontFamily+L"#"
+					+itow(fontStyle.size)+L"#"
+					+(fontStyle.bold?L"B":L"N")+L"#"
+					+(fontStyle.italic?L"I":L"N")+L"#"
+					+(fontStyle.underline?L"U":L"N")+L"#"
+					+(fontStyle.strikeline?L"S":L"N")+L"#"
+					;
+			}
+
+			void UniscribeFragment::CutColors(vint start, vint length)
+			{
+				vint end=start+length;
+				for(vint i=colors.Count()-1;i>=0;i--)
+				{
+					UniscribeColorRange key=colors.Keys()[i];
+					if(key.start<end && start<key.end)
+					{
+						UniscribeColor value=colors.Values()[i];
+
+						vint s1=key.start;
+						vint s2=key.start>start?key.start:start;
+						vint s3=key.end<end?key.end:end;
+						vint s4=key.end;
+
+						colors.Remove(key);
+						if(s1<s2)
+						{
+							colors.Add(UniscribeColorRange(s1, s2), value);
+						}
+						if(s2<s3)
+						{
+							colors.Add(UniscribeColorRange(s2, s3), value);
+						}
+						if(s3<s4)
+						{
+							colors.Add(UniscribeColorRange(s3, s4), value);
+						}
+					}
+				}
+			}
+
+			void UniscribeFragment::UpdateOverlappedColors(vint start, vint length, Color UniscribeColor::* colorField, Color color)
+			{
+				vint end=start+length;
+				for(vint i=colors.Count()-1;i>=0;i--)
+				{
+					UniscribeColorRange key=colors.Keys()[i];
+					if(key.start<end && start<key.end)
+					{
+						UniscribeColor value=colors.Values()[i];
+						value.*colorField=color;
+						colors.Set(key, value);
+					}
+				}
+			}
+
+			void UniscribeFragment::DefragmentColors()
+			{
+				vint lastIndex=-1;
+				UniscribeColor lastColor;
+				for(vint i=colors.Count()-1;i>=-1;i--)
+				{
+					if(lastIndex==-1)
+					{
+						lastIndex=i;
+						if(i!=-1)
+						{
+							lastColor=colors.Values()[i];
+						}
+					}
+					else if(i==-1 || colors.Values()[i]!=lastColor)
+					{
+						if(lastIndex-i>0)
+						{
+							vint start=colors.Keys()[i+1].start;
+							vint end=colors.Keys()[lastIndex].end;
+							UniscribeColorRange key(start, end);
+
+							for(vint j=lastIndex;j>i;j--)
+							{
+								colors.Remove(colors.Keys()[j]);
+							}
+							colors.Add(key, lastColor);
+						}
+						lastIndex=i;
+						if(i!=-1)
+						{
+							lastColor=colors.Values()[i];
+						}
+					}
+				}
+			}
+
+			UniscribeColor UniscribeFragment::GetCharColor(vint charIndex)
+			{
+				vint start=0;
+				vint end=colors.Count()-1;
+				while(start<=end)
+				{
+					vint middle=(start+end)/2;
+					UniscribeColorRange key=colors.Keys()[middle];
+					if(charIndex<key.start)
+					{
+						end=middle-1;
+					}
+					else if(charIndex>=key.end)
+					{
+						start=middle+1;
+					}
+					else
+					{
+						return colors.Values()[middle];
+					}
+				}
+				return UniscribeColor();
+			}
+
+			Ptr<UniscribeFragment> UniscribeFragment::Copy(vint start, vint length)
+			{
+				vint end=start+length;
+				auto fragment=Ptr(new UniscribeFragment(length==0?L"":text.Sub(start, length)));
+				fragment->fontStyle=fontStyle;
+				fragment->fontObject=fontObject;
+
+				if(length!=0)
+				{
+					fragment->colors.Clear();
+					CutColors(start, length);
+					for(vint i=0;i<colors.Count();i++)
+					{
+						UniscribeColorRange key=colors.Keys()[i];
+						if(key.start<end && start<key.end)
+						{
+							UniscribeColor value=colors.Values()[i];
+							fragment->colors.Add(UniscribeColorRange(key.start-start, key.end-start), value);
+						}
+					}
+				}
+				return fragment;
+			}
+
+/***********************************************************************
+UniscribeGlyphData
+***********************************************************************/
+
+			UniscribeGlyphData::UniscribeGlyphData()
+			{
+				ClearUniscribeData(0, 0);
+			}
+
+			void UniscribeGlyphData::ClearUniscribeData(vint glyphCount, vint length)
+			{
+				glyphs.Resize(glyphCount);
+				glyphVisattrs.Resize(glyphCount);
+				glyphAdvances.Resize(glyphCount);
+				glyphOffsets.Resize(glyphCount);
+				charCluster.Resize(length);
+				memset(&runAbc, 0, sizeof(runAbc));
+				memset(&sa, 0, sizeof(sa));
+			}
+			
+			bool UniscribeGlyphData::BuildUniscribeData(WinDC* dc, SCRIPT_ITEM* scriptItem, SCRIPT_CACHE& scriptCache, const wchar_t* runText, vint length, List<vint>& breakings, List<bool>& breakingAvailabilities)
+			{
+				vint glyphCount=glyphs.Count();
+				bool resizeGlyphData=false;
+				if(glyphCount==0)
+				{
+					glyphCount=(vint)(1.5*length+16);
+					resizeGlyphData=true;
+				}
+				sa=scriptItem->a;
+				WinDC* dcParameter=0;
+				{
+					// generate shape information
+					if(resizeGlyphData)
+					{
+						glyphs.Resize(glyphCount);
+						glyphVisattrs.Resize(glyphCount);
+						charCluster.Resize(length);
+					}
+
+					while(true)
+					{
+						int availableGlyphCount=0;
+						HRESULT hr=ScriptShape(
+							(dcParameter?dcParameter->GetHandle():NULL),
+							&scriptCache,
+							runText,
+							(int)length,
+							(int)glyphCount,
+							&sa,
+							&glyphs[0],
+							&charCluster[0],
+							&glyphVisattrs[0],
+							&availableGlyphCount
+							);
+						if(hr==0)
+						{
+							glyphCount=availableGlyphCount;
+							break;
+						}
+						else if(hr==E_PENDING)
+						{
+							dcParameter=dc;
+						}
+						else if(hr==E_OUTOFMEMORY)
+						{
+							if(resizeGlyphData)
+							{
+								glyphCount+=length;
+							}
+							else
+							{
+								goto BUILD_UNISCRIBE_DATA_FAILED;
+							}
+						}
+						else if(hr==USP_E_SCRIPT_NOT_IN_FONT)
+						{
+							if(sa.eScript==SCRIPT_UNDEFINED)
+							{
+								goto BUILD_UNISCRIBE_DATA_FAILED;
+							}
+							else
+							{
+								sa.eScript=SCRIPT_UNDEFINED;
+							}
+						}
+						else
+						{
+							goto BUILD_UNISCRIBE_DATA_FAILED;
+						}
+					}
+					if(resizeGlyphData)
+					{
+						glyphs.Resize(glyphCount);
+						glyphVisattrs.Resize(glyphCount);
+					}
+				}
+
+				{
+					SCRIPT_FONTPROPERTIES fp;
+					memset(&fp, 0, sizeof(fp));
+					fp.cBytes=sizeof(fp);
+					HRESULT hr=ScriptGetFontProperties(
+							(dcParameter?dcParameter->GetHandle():NULL),
+							&scriptCache,
+							&fp
+							);
+					WORD invalidGlyph=fp.wgDefault;
+					if(hr!=S_OK)
+					{
+						invalidGlyph=0;
+					}
+
+					// generate breaking information
+					breakings.Add(0);
+					vint charIndex=0;
+					bool lastGlyphAvailable=false;
+					while(charIndex<length)
+					{
+						vint glyphIndex=charCluster[charIndex];
+						vint nextCharIndex=charIndex;
+						while(nextCharIndex<length && charCluster[nextCharIndex]==glyphIndex)
+						{
+							nextCharIndex++;
+						}
+
+						vint glyphCount=0;
+						if(nextCharIndex==length)
+						{
+							glyphCount=glyphs.Count()-glyphIndex;
+						}
+						else
+						{
+							glyphCount=charCluster[nextCharIndex]-glyphIndex;
+						}
+
+						if(scriptItem->a.fRTL)
+						{
+							glyphCount=-glyphCount;
+							glyphIndex-=glyphCount-1;
+						}
+
+						bool available=true;
+						for(vint i=0;i<glyphCount;i++)
+						{
+							if(glyphs[i+glyphIndex]==invalidGlyph)
+							{
+								available=false;
+							}
+						}
+
+						if(charIndex==0)
+						{
+							lastGlyphAvailable=available;
+							breakingAvailabilities.Add(available);
+						}
+						else if(lastGlyphAvailable!=available)
+						{
+							breakings.Add(charIndex);
+							lastGlyphAvailable=available;
+							breakingAvailabilities.Add(available);
+						}
+
+						charIndex=nextCharIndex;
+					}
+				}
+
+				if(breakings.Count()==1)
+				{
+					// generate place information
+					WinDC* dcParameter=0;
+					if(resizeGlyphData)
+					{
+						glyphAdvances.Resize(glyphCount);
+						glyphOffsets.Resize(glyphCount);
+					}
+					while(true)
+					{
+						HRESULT hr=ScriptPlace(
+							(dcParameter?dcParameter->GetHandle():NULL),
+							&scriptCache,
+							&glyphs[0],
+							(int)glyphCount,
+							&glyphVisattrs[0],
+							&sa,
+							&glyphAdvances[0],
+							&glyphOffsets[0],
+							&runAbc
+							);
+						if(hr==0)
+						{
+							break;
+						}
+						else if(hr==E_PENDING)
+						{
+							dcParameter=dc;
+						}
+						else
+						{
+							goto BUILD_UNISCRIBE_DATA_FAILED;
+						}
+					}
+				}
+
+				return true;
+	BUILD_UNISCRIBE_DATA_FAILED:
+				return false;
+			}
+
+			void UniscribeGlyphData::BuildUniscribeData(WinDC* dc, SCRIPT_ITEM* scriptItem, SCRIPT_LOGATTR* charLogattrs, const wchar_t* runText, vint length)
+			{
+				vint glyphCount=0;
+				for(vint i=0;i<length;i++)
+				{
+					if(i==0 || charLogattrs[i].fCharStop)
+					{
+						glyphCount++;
+					}
+				}
+
+				ClearUniscribeData(glyphCount, length);
+				sa=scriptItem->a;
+				memset(&glyphs[0], 0, sizeof(glyphs[0])*glyphs.Count());
+				memset(&glyphVisattrs[0], 0, sizeof(glyphVisattrs[0])*glyphVisattrs.Count());
+				memset(&glyphAdvances[0], 0, sizeof(glyphAdvances[0])*glyphAdvances.Count());
+				memset(&glyphOffsets[0], 0, sizeof(glyphOffsets[0])*glyphOffsets.Count());
+				memset(&charCluster[0], 0, sizeof(charCluster[0])*charCluster.Count());
+
+				for(vint i=0;i<glyphCount;i++)
+				{
+					glyphs[i]=(WORD)i;
+				}
+
+				if(sa.fRTL)
+				{
+					vint currentGlyphCount=0;
+					for(vint i=0;i<length;i++)
+					{
+						if(i==0 || charLogattrs[i].fCharStop)
+						{
+							currentGlyphCount++;
+						}
+						charCluster[i]=(WORD)(glyphCount-currentGlyphCount);
+					}
+				}
+				else
+				{
+					vint currentGlyphCount=0;
+					for(vint i=0;i<length;i++)
+					{
+						if(i==0 || charLogattrs[i].fCharStop)
+						{
+							currentGlyphCount++;
+						}
+						charCluster[i]=(WORD)(currentGlyphCount-1);
+					}
+				}
+
+				{
+					vint lastCharIndex=0;
+					vint lastGlyphIndex=0;
+					for(vint i=1;i<=length;i++)
+					{
+						if(i==0 || charLogattrs[i].fCharStop)
+						{
+							vint glyphLength=i-lastCharIndex;
+							const wchar_t* glyphText=sa.fRTL?runText+length-lastCharIndex-glyphLength:runText+lastCharIndex;
+							SIZE size=dc->MeasureBuffer(runText, glyphLength, -1);
+							glyphAdvances[lastGlyphIndex]=size.cx;
+							lastCharIndex=i;
+							lastGlyphIndex++;
+						}
+					}
+				}
+
+				for(vint i=0;i<glyphCount;i++)
+				{
+					runAbc.abcB+=glyphAdvances[i];
+				}
+			}
+
+/***********************************************************************
+UniscribeItem
+***********************************************************************/
+
+			UniscribeItem::UniscribeItem()
+				:startFromLine(0)
+				,length(0)
+				,itemText(0)
+			{
+			}
+
+			UniscribeItem::~UniscribeItem()
+			{
+			}
+
+			void UniscribeItem::ClearUniscribeData()
+			{
+				charLogattrs.Resize(0);
+			}
+
+			bool UniscribeItem::BuildUniscribeData()
+			{
+				// generate break information
+				charLogattrs.Resize(length);
+
+				HRESULT hr=ScriptBreak(
+					itemText,
+					(int)length,
+					&scriptItem.a,
+					&charLogattrs[0]
+					);
+				if(hr!=0)
+				{
+					goto BUILD_UNISCRIBE_DATA_FAILED;
+				}
+
+				return true;
+	BUILD_UNISCRIBE_DATA_FAILED:
+				ClearUniscribeData();
+				return false;
+			}
+
+			bool UniscribeItem::IsRightToLeft()
+			{
+				return scriptItem.a.fRTL;
+			}
+
+/***********************************************************************
+UniscribeRun
+***********************************************************************/
+
+			UniscribeRun::UniscribeRun()
+				:documentFragment(0)
+				,scriptItem(0)
+				,startFromLine(0)
+				,startFromFragment(0)
+				,length(0)
+				,runText(0)
+			{
+			}
+
+			UniscribeRun::~UniscribeRun()
+			{
+			}
+
+/***********************************************************************
+UniscribeTextRun
+***********************************************************************/
+
+			UniscribeTextRun::UniscribeTextRun()
+				:scriptCache(0)
+				,advance(0)
+				,needFontFallback(false)
+			{
+			}
+
+			UniscribeTextRun::~UniscribeTextRun()
+			{
+				ClearUniscribeData();
+			}
+
+			void UniscribeTextRun::ClearUniscribeData()
+			{
+				if(scriptCache)
+				{
+					ScriptFreeCache(&scriptCache);
+					scriptCache=0;
+				}
+				advance=0;
+				needFontFallback=false;
+				wholeGlyph.ClearUniscribeData(0, 0);
+			}
+
+			void UniscribeTextRun::SearchSingleGlyphCluster(vint charStart, vint& charLength, vint& cluster, vint& nextCluster)
+			{
+				cluster=wholeGlyph.charCluster[charStart];
+				vint nextChar=charStart;
+				while(nextChar<wholeGlyph.charCluster.Count())
+				{
+					if(wholeGlyph.charCluster[nextChar]!=cluster)
+					{
+						break;
+					}
+					nextChar++;
+				}
+				charLength=nextChar-charStart;
+				SearchGlyphCluster(charStart, charLength, cluster, nextCluster);
+			}
+
+			void UniscribeTextRun::SearchSingleChar(vint charStart, vint& charLength, vint& cluster, vint& nextCluster)
+			{
+				charLength=0;
+				vint startFromItem=charStart+startFromLine-scriptItem->startFromLine;
+				vint currentFromItem=startFromItem;
+				while(++currentFromItem<scriptItem->length)
+				{
+					if(scriptItem->charLogattrs[currentFromItem].fCharStop)
+					{
+						break;
+					}
+				}
+				charLength=currentFromItem-startFromItem;
+				SearchGlyphCluster(charStart, charLength, cluster, nextCluster);
+			}
+
+			void UniscribeTextRun::SearchGlyphCluster(vint charStart, vint charLength, vint& cluster, vint& nextCluster)
+			{
+				cluster=wholeGlyph.charCluster[charStart];
+				if(charStart+charLength>length)
+				{
+					charLength=length-charStart;
+				}
+				if(scriptItem->IsRightToLeft())
+				{
+					nextCluster
+						=charStart+charLength==length
+						?-1
+						:wholeGlyph.charCluster[charStart+charLength];
+				}
+				else
+				{
+					nextCluster
+						=charStart+charLength==length
+						?wholeGlyph.glyphs.Count()
+						:wholeGlyph.charCluster[charStart+charLength];
+				}
+			}
+
+			bool UniscribeTextRun::BuildUniscribeData(WinDC* dc, List<vint>& breakings)
+			{
+				ClearUniscribeData();
+
+				dc->SetFont(documentFragment->fontObject);
+				List<bool> breakingAvailabilities;
+				if(!wholeGlyph.BuildUniscribeData(dc, &scriptItem->scriptItem, scriptCache, runText, length, breakings, breakingAvailabilities))
+				{
+					goto BUILD_UNISCRIBE_DATA_FAILED;
+				}
+
+				if(breakings.Count()==1 && !breakingAvailabilities[0])
+				{
+					SCRIPT_LOGATTR* charLogattrs=&scriptItem->charLogattrs[0]+startFromLine-scriptItem->startFromLine;
+					wholeGlyph.BuildUniscribeData(dc, &scriptItem->scriptItem, charLogattrs, runText, length);
+					needFontFallback=true;
+				}
+				advance=wholeGlyph.runAbc.abcA+wholeGlyph.runAbc.abcB+wholeGlyph.runAbc.abcC;
+
+				return true;
+	BUILD_UNISCRIBE_DATA_FAILED:
+				ClearUniscribeData();
+				return false;
+			}
+
+			vint UniscribeTextRun::SumWidth(vint charStart, vint charLength)
+			{
+				vint cluster=0;
+				vint nextCluster=0;
+				SearchGlyphCluster(charStart, charLength, cluster, nextCluster);
+				vint width=0;
+				if(scriptItem->IsRightToLeft())
+				{
+					for(vint i=cluster;i>nextCluster;i--)
+					{
+						width+=wholeGlyph.glyphAdvances[i];
+					}
+				}
+				else
+				{
+					for(vint i=cluster;i<nextCluster;i++)
+					{
+						width+=wholeGlyph.glyphAdvances[i];
+					}
+				}
+				return width;
+			}
+
+			vint UniscribeTextRun::SumHeight()
+			{
+				return documentFragment->fontStyle.size;
+			}
+
+			vint UniscribeTextRun::SumTextHeight()
+			{
+				return SumHeight();
+			}
+
+			void UniscribeTextRun::SearchForLineBreak(vint tempStart, vint maxWidth, bool firstRun, vint& charLength, vint& charAdvances)
+			{
+				vint width=0;
+				charLength=0;
+				charAdvances=0;
+				for(vint i=tempStart;i<=length;)
+				{
+					if(i==length || scriptItem->charLogattrs[i+(startFromLine-scriptItem->startFromLine)].fSoftBreak==TRUE)
+					{
+						if(width<=maxWidth || (firstRun && charLength==0))
+						{
+							charLength=i-tempStart;
+							charAdvances=width;
+						}
+						else
+						{
+							return;
+						}
+					}
+					if(i==length) break;
+
+					vint cluster=wholeGlyph.charCluster[i];
+					vint clusterLength=1;
+					while(i+clusterLength<length)
+					{
+						if(wholeGlyph.charCluster[i+clusterLength]==cluster)
+						{
+							clusterLength++;
+						}
+						else
+						{
+							break;
+						}
+					}
+
+					if(scriptItem->IsRightToLeft())
+					{
+						vint nextCluster
+							=i+clusterLength==length
+							?-1
+							:wholeGlyph.charCluster[i+clusterLength];
+						for(vint j=cluster;j>nextCluster;j--)
+						{
+							width+=wholeGlyph.glyphAdvances[j];
+						}
+					}
+					else
+					{
+						vint nextCluster
+							=i+clusterLength==length
+							?wholeGlyph.glyphs.Count()
+							:wholeGlyph.charCluster[i+clusterLength];
+						for(vint j=cluster;j<nextCluster;j++)
+						{
+							width+=wholeGlyph.glyphAdvances[j];
+						}
+					}
+					i+=clusterLength;
+				}
+			}
+
+			void UniscribeTextRun::Render(IRendererCallback* callback, vint fragmentBoundsIndex, vint offsetX, vint offsetY, bool renderBackground)
+			{
+				auto dc = callback->GetWinDC();
+				RunFragmentBounds& fragment=fragmentBounds[fragmentBoundsIndex];
+				if(fragment.length==0) return;
+
+				vint startFromFragmentBounds=0;
+				vint accumulatedWidth=0;
+				while(startFromFragmentBounds<fragment.length)
+				{
+					vint charIndex=fragment.startFromRun+startFromFragmentBounds;
+					vint charLength=0;
+					vint cluster=0;
+					vint nextCluster=0;
+					SearchSingleGlyphCluster(charIndex, charLength, cluster, nextCluster);
+
+					vint clusterStart=0;
+					vint clusterCount=0;
+					if(scriptItem->IsRightToLeft())
+					{
+						clusterStart=nextCluster+1;
+						clusterCount=cluster-nextCluster;
+					}
+					else
+					{
+						clusterStart=cluster;
+						clusterCount=nextCluster-cluster;
+					}
+
+					vint clusterWidth=0;
+					for(vint i=0;i<clusterCount;i++)
+					{
+						clusterWidth+=wholeGlyph.glyphAdvances[i+clusterStart];
+					}
+
+					vint x=0;
+					if(scriptItem->IsRightToLeft())
+					{
+						x=fragment.bounds.x2-accumulatedWidth-clusterWidth;
+					}
+					else
+					{
+						x=fragment.bounds.x1+accumulatedWidth;
+					}
+					RECT rect;
+					rect.left=(int)(x+offsetX);
+					rect.top=(int)(fragment.bounds.Top()+offsetY);
+					rect.right=(int)(rect.left+clusterWidth);
+					rect.bottom=(int)(rect.top+fragment.bounds.Height()*1.5);
+
+					UniscribeColor color=documentFragment->GetCharColor(charIndex+startFromFragment);
+					if(renderBackground)
+					{
+						Color backgroundColor=color.backgroundColor;
+
+						if(backgroundColor.a>0)
+						{
+							auto brush=Ptr(new WinBrush(RGB(backgroundColor.r, backgroundColor.g, backgroundColor.b)));
+							dc->SetBrush(brush);
+							dc->FillRect(rect);
+						}
+					}
+					else
+					{
+						Color fontColor=color.fontColor;
+						dc->SetFont(documentFragment->fontObject);
+						dc->SetTextColor(RGB(fontColor.r, fontColor.g, fontColor.b));
+
+						if(needFontFallback)
+						{
+							dc->DrawBuffer(rect.left, rect.top, runText+charIndex, charLength);
+						}
+						else
+						{
+							HRESULT hr=ScriptTextOut(
+								dc->GetHandle(),
+								&scriptCache,
+								rect.left,
+								rect.top,
+								0,
+								&rect,
+								&wholeGlyph.sa,
+								NULL,
+								0,
+								&wholeGlyph.glyphs[clusterStart],
+								(int)(clusterCount),
+								&wholeGlyph.glyphAdvances[clusterStart],
+								NULL,
+								&wholeGlyph.glyphOffsets[clusterStart]
+								);
+						}
+					}
+
+					startFromFragmentBounds+=charLength;
+					accumulatedWidth+=clusterWidth;
+				}
+			}
+
+/***********************************************************************
+UniscribeEmbeddedObjectRun
+***********************************************************************/
+
+			UniscribeEmbeddedObjectRun::UniscribeEmbeddedObjectRun()
+			{
+			}
+
+			UniscribeEmbeddedObjectRun::~UniscribeEmbeddedObjectRun()
+			{
+			}
+
+			bool UniscribeEmbeddedObjectRun::BuildUniscribeData(WinDC* dc, List<vint>& breakings)
+			{
+				breakings.Add(0);
+				return true;
+			}
+
+			vint UniscribeEmbeddedObjectRun::SumWidth(vint charStart, vint charLength)
+			{
+				return properties.size.x;
+			}
+
+			vint UniscribeEmbeddedObjectRun::SumHeight()
+			{
+				return properties.size.y;
+			}
+
+			vint UniscribeEmbeddedObjectRun::SumTextHeight()
+			{
+				return 0;
+			}
+
+			void UniscribeEmbeddedObjectRun::SearchForLineBreak(vint tempStart, vint maxWidth, bool firstRun, vint& charLength, vint& charAdvances)
+			{
+				if (firstRun || properties.size.x <= maxWidth)
+				{
+					charLength = length - tempStart;
+					charAdvances = properties.size.x;
+				}
+				else
+				{
+					charLength = 0;
+					charAdvances = 0;
+				}
+			}
+
+			void UniscribeEmbeddedObjectRun::Render(IRendererCallback* callback, vint fragmentBoundsIndex, vint offsetX, vint offsetY, bool renderBackground)
+			{
+				auto dc = callback->GetWinDC();
+				RunFragmentBounds& fragment=fragmentBounds[fragmentBoundsIndex];
+				if(renderBackground)
+				{
+					RECT rect;
+					rect.left=(int)(fragment.bounds.Left()+offsetX)-2;
+					rect.top=(int)(fragment.bounds.Top()+offsetY)-2;
+					rect.right=(int)(fragment.bounds.Right()+offsetX)+2;
+					rect.bottom=(int)(fragment.bounds.Bottom()+offsetY)+2;
+
+					Color backgroundColor=documentFragment->colors.Values()[0].backgroundColor;
+
+					if(backgroundColor.a>0)
+					{
+						auto brush=Ptr(new WinBrush(RGB(backgroundColor.r, backgroundColor.g, backgroundColor.b)));
+						dc->SetBrush(brush);
+						dc->FillRect(rect);
+					}
+				}
+				else
+				{
+					if (properties.backgroundImage)
+					{
+						Rect bounds=fragment.bounds;
+						bounds.x1+=offsetX;
+						bounds.x2+=offsetX;
+						bounds.y1+=offsetY;
+						bounds.y2+=offsetY;
+						IGuiGraphicsRenderer* renderer=properties.backgroundImage->GetRenderer();
+						if(renderer)
+						{
+							renderer->Render(bounds);
+						}
+					}
+
+					if (properties.callbackId != -1)
+					{
+						if (auto paragraphCallback = callback->GetParagraphCallback())
+						{
+							auto offset = callback->GetParagraphOffset();
+							vint x = fragment.bounds.x1 + offsetX - offset.x;
+							vint y = fragment.bounds.y1 + offsetY - offset.y;
+							auto size = paragraphCallback->OnRenderInlineObject(properties.callbackId, Rect(Point(x, y), fragment.bounds.GetSize()));
+							properties.size = size;
+						}
+					}
+				}
+			}
+
+/***********************************************************************
+UniscribeVirtualLine
+***********************************************************************/
+
+			UniscribeVirtualLine::UniscribeVirtualLine()
+				:startFromLine(0)
+				,length(0)
+				,runText(0)
+				,firstRunIndex(-1)
+				,firstRunBoundsIndex(-1)
+				,lastRunIndex(-1)
+				,lastRunBoundsIndex(-1)
+			{
+			}
+
+/***********************************************************************
+UniscribeLine
+***********************************************************************/
+
+			UniscribeLine::UniscribeLine()
+				:startFromParagraph(0)
+			{
+			}
+
+			void UniscribeLine::ClearUniscribeData()
+			{
+				scriptItems.Clear();
+				scriptRuns.Clear();
+				virtualLines.Clear();
+			}
+
+			bool UniscribeLine::BuildUniscribeData(WinDC* dc)
+			{
+				lineText=L"";
+				ClearUniscribeData();
+				vint current=0;
+				List<vint> fragmentStarts;
+				for (auto fragment : documentFragments)
+				{
+					fragmentStarts.Add(current);
+					lineText+=fragment->text;
+					current+=fragment->text.Length();
+				}
+
+				if(lineText!=L"")
+				{
+					{
+						SCRIPT_DIGITSUBSTITUTE sds={0};
+						ScriptRecordDigitSubstitution(LOCALE_USER_DEFAULT, &sds);
+						SCRIPT_CONTROL sc={0};
+						SCRIPT_STATE ss={0};
+						ScriptApplyDigitSubstitution(&sds, &sc, &ss);
+
+						// itemize a line
+						Array<SCRIPT_ITEM> items(lineText.Length()+2);
+						int scriptItemCount=0;
+						HRESULT hr=ScriptItemize(
+							lineText.Buffer(),
+							(int)lineText.Length(),
+							(int)(items.Count()-1),
+							&sc,
+							&ss,
+							&items[0],
+							&scriptItemCount
+							);
+						if(hr!=0)
+						{
+							goto BUILD_UNISCRIBE_DATA_FAILED;
+						}
+
+						items.Resize(scriptItemCount+1);
+						for(vint i=0;i<scriptItemCount;i++)
+						{
+							SCRIPT_ITEM item=items[i];
+							auto scriptItem = Ptr(new UniscribeItem);
+							scriptItem->startFromLine=item.iCharPos;
+							scriptItem->length=items[i+1].iCharPos-item.iCharPos;
+							scriptItem->itemText=lineText.Buffer()+item.iCharPos;
+							scriptItem->scriptItem=item;
+
+							if(!scriptItem->BuildUniscribeData())
+							{
+								goto BUILD_UNISCRIBE_DATA_FAILED;
+							}
+							scriptItems.Add(scriptItem);
+						}
+					}
+					{
+						// use item and document fragment information to produce runs
+						// one item is constructed by one or more runs
+						// characters in each run contains the same style
+						vint fragmentIndex=0;
+						vint fragmentStart=0;
+						for(vint i=0;i<scriptItems.Count();i++)
+						{
+							Ptr<UniscribeItem> scriptItem=scriptItems[i];
+							vint currentStart=scriptItem->startFromLine;
+
+							while(currentStart<scriptItem->startFromLine+scriptItem->length)
+							{
+								UniscribeFragment* fragment=0;
+								vint itemRemainLength=scriptItem->length-(currentStart-scriptItem->startFromLine);
+								vint fragmentRemainLength=0;
+								while(true)
+								{
+									fragment=documentFragments[fragmentIndex].Obj();
+									fragmentRemainLength=fragment->text.Length()-(currentStart-fragmentStart);
+									if(fragmentRemainLength<=0)
+									{
+										fragmentStart+=fragment->text.Length();
+										fragmentIndex++;
+									}
+									else
+									{
+										break;
+									}
+								}
+								vint shortLength=itemRemainLength<fragmentRemainLength?itemRemainLength:fragmentRemainLength;
+								bool skip=false;
+								{
+									vint elementCurrent=0;
+									for (auto elementFragment : documentFragments)
+									{
+										vint elementLength=elementFragment->text.Length();
+										if(elementFragment->inlineObjectProperties)
+										{
+											if(elementCurrent<=currentStart && currentStart+shortLength<=elementCurrent+elementLength)
+											{
+												if(elementCurrent==currentStart)
+												{
+													auto run=Ptr(new UniscribeEmbeddedObjectRun);
+													run->documentFragment=fragment;
+													run->scriptItem=scriptItem.Obj();
+													run->startFromLine=currentStart;
+													run->startFromFragment=currentStart-fragmentStarts[fragmentIndex];
+													run->length=elementLength;
+													run->runText=lineText.Buffer()+currentStart;
+													run->properties=elementFragment->inlineObjectProperties.Value();
+													scriptRuns.Add(run);
+												}
+												skip=true;
+												break;
+											}
+										}
+										elementCurrent+=elementLength;
+									}
+								}
+								if(!skip)
+								{
+									auto run = Ptr(new UniscribeTextRun);
+									run->documentFragment=fragment;
+									run->scriptItem=scriptItem.Obj();
+									run->startFromLine=currentStart;
+									run->startFromFragment=currentStart-fragmentStarts[fragmentIndex];
+									run->length=shortLength;
+									run->runText=lineText.Buffer()+currentStart;
+									scriptRuns.Add(run);
+								}
+								currentStart+=shortLength;
+							}
+						}
+
+						// for each run, generate shape information
+						vint runIndex=0;
+						while(runIndex<scriptRuns.Count())
+						{
+							Ptr<UniscribeRun> run=scriptRuns[runIndex];
+							List<vint> breakings;
+							if(!run->BuildUniscribeData(dc, breakings))
+							{
+								goto BUILD_UNISCRIBE_DATA_FAILED;
+							}
+							else if(breakings.Count()>1)
+							{
+								if(Ptr<UniscribeTextRun> textRun=run.Cast<UniscribeTextRun>())
+								{
+									scriptRuns.RemoveAt(runIndex);
+									for(vint i=0;i<breakings.Count();i++)
+									{
+										vint start=breakings[i];
+										vint length=i==breakings.Count()-1?textRun->length-start:breakings[i+1]-start;
+
+										auto newRun = Ptr(new UniscribeTextRun);
+										newRun->documentFragment=run->documentFragment;
+										newRun->scriptItem=run->scriptItem;
+										newRun->startFromLine=start+run->startFromLine;
+										newRun->startFromFragment=start+run->startFromFragment;
+										newRun->length=length;
+										newRun->runText=run->runText+newRun->startFromLine-run->startFromLine;
+										scriptRuns.Insert(runIndex+i, newRun);
+									}
+									continue;
+								}
+							}
+							runIndex++;
+						}
+					}
+				}
+				return true;
+	BUILD_UNISCRIBE_DATA_FAILED:
+				ClearUniscribeData();
+				return false;
+			}
+
+			void UniscribeLine::Layout(vint availableWidth, Alignment alignment, vint top, vint& totalHeight)
+			{
+				vint cx=0;
+				vint cy=top;
+				virtualLines.Clear();
+				if(scriptRuns.Count()==0)
+				{
+					// if this line doesn't contains any run, skip and render a blank line
+					vint height=(vint)(documentFragments[0]->fontStyle.size*1.5);
+					bounds=Rect(Point(cx, cy), Size(0, height));
+					cy+=height;
+				}
+				else
+				{
+					for (auto run : scriptRuns)
+					{
+						run->fragmentBounds.Clear();
+					}
+
+					// render this line into lines with auto line wrapping
+					vint startRun=0;
+					vint startRunOffset=0;
+					vint lastRun=0;
+					vint lastRunOffset=0;
+					vint currentWidth=0;
+
+					while(startRun<scriptRuns.Count())
+					{
+						vint currentWidth=0;
+						bool firstRun=true;
+						// search for a range to fit in the given width
+						for(vint i=startRun;i<scriptRuns.Count();i++)
+						{
+							vint charLength=0;
+							vint charAdvances=0;
+							UniscribeRun* run=scriptRuns[i].Obj();
+							run->SearchForLineBreak(lastRunOffset, availableWidth-currentWidth, firstRun, charLength, charAdvances);
+							firstRun=false;
+
+							if(charLength==run->length-lastRunOffset)
+							{
+								lastRun=i+1;
+								lastRunOffset=0;
+								currentWidth+=charAdvances;
+							}
+							else
+							{
+								lastRun=i;
+								lastRunOffset=lastRunOffset+charLength;
+								break;
+							}
+						}
+
+						// if the range is empty, than this should be the end of line, ignore it
+						if(startRun<lastRun || (startRun==lastRun && startRunOffset<lastRunOffset))
+						{
+							// calculate the max line height in this range;
+							vint availableLastRun=lastRun<scriptRuns.Count()-1?lastRun:scriptRuns.Count()-1;
+							vint maxHeight=0;
+							vint maxTextHeight=0;
+							for(vint i=startRun;i<=availableLastRun;i++)
+							{
+								if(i==lastRun && lastRunOffset==0)
+								{
+									break;
+								}
+								{
+									vint size=scriptRuns[i]->SumHeight();
+									if(maxHeight<size) maxHeight=size;
+								}
+								{
+									vint size=scriptRuns[i]->SumTextHeight();
+									if(maxTextHeight<size) maxTextHeight=size;
+								}
+							}
+
+							// determine the rendering order for all runs inside this range
+							Array<BYTE> levels(availableLastRun-startRun+1);
+							Array<int> runVisualToLogical(levels.Count());
+							Array<int> runLogicalToVisual(levels.Count());
+							for(vint i=startRun;i<=availableLastRun;i++)
+							{
+								levels[i-startRun]=scriptRuns[i]->scriptItem->scriptItem.a.s.uBidiLevel;
+							}
+							ScriptLayout((int)levels.Count(), &levels[0], &runVisualToLogical[0], &runLogicalToVisual[0]);
+
+							// render all runs inside this range
+							vint startRunFragmentCount=-1;
+							for(vint i=startRun;i<=availableLastRun;i++)
+							{
+								vint runIndex=runVisualToLogical[i-startRun]+startRun;
+								UniscribeRun* run=scriptRuns[runIndex].Obj();
+								vint start=runIndex==startRun?startRunOffset:0;
+								vint end=runIndex==lastRun?lastRunOffset:run->length;
+								vint length=end-start;
+
+								if(runIndex==startRun)
+								{
+									startRunFragmentCount=run->fragmentBounds.Count();
+								}
+
+								UniscribeRun::RunFragmentBounds fragmentBounds;
+								fragmentBounds.startFromRun=start;
+								fragmentBounds.length=length;
+								fragmentBounds.bounds=Rect(
+									Point(cx, cy+maxHeight-run->SumHeight()),
+									Size(run->SumWidth(start, length), run->SumHeight())
+									);
+								run->fragmentBounds.Add(fragmentBounds);
+
+								cx+=run->SumWidth(start, length);
+							}
+
+							// adjust alignment
+							vint cxOffset=0;
+							switch(alignment)
+							{
+							case Alignment::Center:
+								cxOffset=(availableWidth-cx)/2;
+								break;
+							case Alignment::Right:
+								cxOffset=availableWidth-cx;
+								break;
+							}
+
+							// shift all bounds using alignment
+							if(cxOffset!=0)
+							{
+								for(vint i=startRun;i<=availableLastRun;i++)
+								{
+									UniscribeRun* run=scriptRuns[i].Obj();
+									for(vint j=(i==startRun?startRunFragmentCount:0);j<run->fragmentBounds.Count();j++)
+									{
+										UniscribeRun::RunFragmentBounds& fragmentBounds=run->fragmentBounds[j];
+										fragmentBounds.bounds.x1+=cxOffset;
+										fragmentBounds.bounds.x2+=cxOffset;
+									}
+								}
+							}
+
+							// create a virtual line
+							{
+								auto virtualLine = Ptr(new UniscribeVirtualLine);
+								virtualLine->firstRunIndex=startRun;
+								virtualLine->firstRunBoundsIndex=startRunFragmentCount;
+								virtualLine->lastRunIndex=availableLastRun;
+								virtualLine->lastRunBoundsIndex=scriptRuns[availableLastRun]->fragmentBounds.Count()-1;
+
+								UniscribeRun* firstRun=scriptRuns[virtualLine->firstRunIndex].Obj();
+								UniscribeRun* lastRun=scriptRuns[virtualLine->lastRunIndex].Obj();
+								UniscribeRun::RunFragmentBounds& firstBounds=firstRun->fragmentBounds[virtualLine->firstRunBoundsIndex];
+								UniscribeRun::RunFragmentBounds& lastBounds=lastRun->fragmentBounds[virtualLine->lastRunBoundsIndex];
+								
+								virtualLine->startFromLine=firstRun->startFromLine+firstBounds.startFromRun;
+								virtualLine->length=lastRun->startFromLine+lastBounds.startFromRun+lastBounds.length-virtualLine->startFromLine;
+								virtualLine->runText=lineText.Buffer()+virtualLine->startFromLine;
+
+								bool updateBounds=false;
+								for(vint i=startRun;i<=availableLastRun;i++)
+								{
+									UniscribeRun* run=scriptRuns[i].Obj();
+									for(vint j=(i==startRun?startRunFragmentCount:0);j<run->fragmentBounds.Count();j++)
+									{
+										UniscribeRun::RunFragmentBounds& fragmentBounds=run->fragmentBounds[j];
+										if(updateBounds)
+										{
+											if(virtualLine->bounds.x1>fragmentBounds.bounds.x1) virtualLine->bounds.x1=fragmentBounds.bounds.x1;
+											if(virtualLine->bounds.x2<fragmentBounds.bounds.x2) virtualLine->bounds.x2=fragmentBounds.bounds.x2;
+											if(virtualLine->bounds.y1>fragmentBounds.bounds.y1) virtualLine->bounds.y1=fragmentBounds.bounds.y1;
+											if(virtualLine->bounds.y2<fragmentBounds.bounds.y2) virtualLine->bounds.y2=fragmentBounds.bounds.y2;
+										}
+										else
+										{
+											virtualLine->bounds=fragmentBounds.bounds;
+											updateBounds=true;
+										}
+									}
+								}
+								virtualLines.Add(virtualLine);
+							}
+
+							cx=0;
+							cy+=(vint)(maxHeight + maxTextHeight*0.5);
+						}
+
+						startRun=lastRun;
+						startRunOffset=lastRunOffset;
+					}
+
+					// calculate line bounds
+					vint minX=0;
+					vint minY=top;
+					vint maxX=0;
+					vint maxY=top;
+					for (auto run : scriptRuns)
+					{
+						for (auto fragmentBounds : run->fragmentBounds)
+						{
+							Rect bounds=fragmentBounds.bounds;
+							if(minX>bounds.Left()) minX=bounds.Left();
+							if(minY>bounds.Top()) minX=bounds.Top();
+							if(maxX<bounds.Right()) maxX=bounds.Right();
+							if(maxY<bounds.Bottom()) maxY=bounds.Bottom();
+						}
+					}
+					bounds=Rect(minX, minY, maxX, maxY);
+				}
+				totalHeight=cy;
+			}
+
+			void UniscribeLine::Render(UniscribeRun::IRendererCallback* callback, vint offsetX, vint offsetY, bool renderBackground)
+			{
+				for (auto run : scriptRuns)
+				{
+					for(vint i=0;i<run->fragmentBounds.Count();i++)
+					{
+						run->Render(callback, i, offsetX, offsetY, renderBackground);
+					}
+				}
+			}
+
+/***********************************************************************
+UniscribeParagraph
+***********************************************************************/
+
+			UniscribeParagraph::UniscribeParagraph()
+				:lastAvailableWidth(-1)
+				,paragraphAlignment(Alignment::Left)
+				,built(false)
+			{
+			}
+
+			UniscribeParagraph::~UniscribeParagraph()
+			{
+				ClearUniscribeData();
+			}
+
+/***********************************************************************
+UniscribeParagraph (Initialization)
+***********************************************************************/
+
+			void UniscribeParagraph::ClearUniscribeData()
+			{
+				for (auto fragment : documentFragments)
+				{
+					GetWindowsGDIResourceManager()->DestroyGdiFont(fragment->fontStyle);
+					fragment->fontObject=0;
+				}
+				lines.Clear();
+				lastAvailableWidth=-1;
+			}
+
+			bool UniscribeParagraph::BuildUniscribeData(WinDC* dc)
+			{
+				if(built) return false;
+
+				built=true;
+				ClearUniscribeData();
+				Dictionary<WString, Ptr<WinFont>> fonts;
+				for (auto fragment : documentFragments)
+				{
+					if(!fragment->fontObject)
+					{
+						WString fragmentFingerPrint=fragment->GetFingerprint();
+						vint index=fonts.Keys().IndexOf(fragmentFingerPrint);
+						if(index==-1)
+						{
+							fragment->fontObject=GetWindowsGDIResourceManager()->CreateGdiFont(fragment->fontStyle);
+							fonts.Add(fragmentFingerPrint, fragment->fontObject);
+						}
+						else
+						{
+							fragment->fontObject=fonts.Values().Get(index);
+						}
+					}
+				}
+				{
+					Regex regexLine(L"\r\n");
+					Ptr<UniscribeLine> line;
+					for (auto fragment : documentFragments)
+					{
+						if(fragment->inlineObjectProperties)
+						{
+							if(!line)
+							{
+								line=Ptr(new UniscribeLine);
+								lines.Add(line);
+							}
+							line->documentFragments.Add(fragment);
+						}
+						else
+						{
+							RegexMatch::List textLines;
+							regexLine.Split(fragment->text, true, textLines);
+
+							for(vint i=0;i<textLines.Count();i++)
+							{
+								RegexString rs=textLines[i]->Result();
+								WString text=rs.Value();
+								if(i>0)
+								{
+									line=0;
+								}
+								if(!line)
+								{
+									line=Ptr(new UniscribeLine);
+									lines.Add(line);
+								}
+
+								if(textLines.Count()==1)
+								{
+									line->documentFragments.Add(fragment);
+								}
+								else
+								{
+									Ptr<UniscribeFragment> runFragment=fragment->Copy(rs.Start(), rs.Length());
+									line->documentFragments.Add(runFragment);
+								}
+							}
+						}
+					}
+				}
+
+				for (auto line : lines)
+				{
+					line->BuildUniscribeData(dc);
+				}
+
+				vint lineStart=0;
+				for (auto line : lines)
+				{
+					line->startFromParagraph=lineStart;
+					lineStart+=line->lineText.Length()+2;
+				}
+
+				return true;
+			}
+
+			void UniscribeParagraph::Layout(vint availableWidth, Alignment alignment)
+			{
+				if(lastAvailableWidth==availableWidth && paragraphAlignment==alignment)
+				{
+					return;
+				}
+				lastAvailableWidth=availableWidth;
+				paragraphAlignment=alignment;
+
+				vint cy=0;
+				for (auto line : lines)
+				{
+					line->Layout(availableWidth, alignment, cy, cy);
+				}
+
+				// calculate paragraph bounds
+				vint minX=0;
+				vint minY=0;
+				vint maxX=0;
+				vint maxY=0;
+				for (auto line : lines)
+				{
+					Rect bounds=line->bounds;
+					if(minX>bounds.Left()) minX=bounds.Left();
+					if(minY>bounds.Top()) minX=bounds.Top();
+					if(maxX<bounds.Right()) maxX=bounds.Right();
+					if(maxY<bounds.Bottom()) maxY=bounds.Bottom();
+				}
+
+				vint offsetY=0;
+				for (auto line : lines)
+				{
+					for (auto fragment : line->documentFragments)
+					{
+						vint size=fragment->fontStyle.size/3;
+						if(size>offsetY)
+						{
+							offsetY=size;
+						}
+					}
+				}
+				bounds=Rect(minX, minY, maxX, maxY+offsetY);
+			}
+
+			void UniscribeParagraph::Render(UniscribeRun::IRendererCallback* callback, bool renderBackground)
+			{
+				auto offset = callback->GetParagraphOffset();
+				for (auto line : lines)
+				{
+					line->Render(callback, offset.x, offset.y, renderBackground);
+				}
+			}
+
+/***********************************************************************
+UniscribeParagraph (Formatting Helper)
+***********************************************************************/
+
+			void UniscribeParagraph::SearchFragment(vint start, vint length, vint& fs, vint& ss, vint& fe, vint& se)
+			{
+				fs=-1;
+				ss=-1;
+				fe=-1;
+				se=-1;
+				vint current=0;
+				for(vint i=0;i<documentFragments.Count();i++)
+				{
+					vint fragmentLength=documentFragments[i]->text.Length();
+					if(current<=start && start<current+fragmentLength)
+					{
+						fs=i;
+						ss=start-current;
+					}
+					if(current<=start+length && start+length<=current+fragmentLength)
+					{
+						fe=i;
+						se=start+length-current;
+					}
+					if(fs!=-1 && fe!=-1)
+					{
+						break;
+					}
+					current+=fragmentLength;
+				}
+			}
+
+			bool UniscribeParagraph::CutFragment(vint fs, vint ss, vint fe, vint se, vint& f1, vint& f2)
+			{
+				f1=-1;
+				f2=-1;
+				if(fs==fe)
+				{
+					Ptr<UniscribeFragment> fragment=documentFragments[fs];
+					if(fragment->inlineObjectProperties)
+					{
+						if(ss==0 && se==fragment->text.Length())
+						{
+							f1=f2=fs;
+							return true;
+						}
+						else
+						{
+							return false;
+						}
+					}
+				}
+				for(vint i=fs;i<=fe;i++)
+				{
+					if(documentFragments[i]->inlineObjectProperties)
+					{
+						return false;
+					}
+				}
+				if(fs==fe)
+				{
+					Ptr<UniscribeFragment> fragment=documentFragments[fs];
+					vint length=fragment->text.Length();
+					if(ss==0)
+					{
+						if(se==length)
+						{
+							f1=f2=fs;
+						}
+						else
+						{
+							f1=f2=fs;
+							Ptr<UniscribeFragment> leftFragment=fragment->Copy(0, se);
+							Ptr<UniscribeFragment> rightFragment=fragment->Copy(se, length-se);
+							documentFragments.RemoveAt(fs);
+							documentFragments.Insert(fs, leftFragment);
+							documentFragments.Insert(fs+1, rightFragment);
+						}
+					}
+					else
+					{
+						if(se==length)
+						{
+							f1=fs+1;
+							f2=fs+1;
+							Ptr<UniscribeFragment> leftFragment=fragment->Copy(0, ss);
+							Ptr<UniscribeFragment> rightFragment=fragment->Copy(ss, length-ss);
+							documentFragments.RemoveAt(fs);
+							documentFragments.Insert(fs, leftFragment);
+							documentFragments.Insert(fs+1, rightFragment);
+						}
+						else
+						{
+							f1=fs+1;
+							f2=fs+1;
+							Ptr<UniscribeFragment> leftFragment=fragment->Copy(0, ss);
+							Ptr<UniscribeFragment> middleFragment=fragment->Copy(ss, se-ss);
+							Ptr<UniscribeFragment> rightFragment=fragment->Copy(se, length-se);
+							documentFragments.RemoveAt(fs);
+							documentFragments.Insert(fs, leftFragment);
+							documentFragments.Insert(fs+1, middleFragment);
+							documentFragments.Insert(fs+2, rightFragment);
+						}
+					}
+				}
+				else
+				{
+					Ptr<UniscribeFragment> fragmentStart=documentFragments[fs];
+					Ptr<UniscribeFragment> fragmentEnd=documentFragments[fe];
+					if(ss==0)
+					{
+						f1=fs;
+					}
+					else
+					{
+						f1=fs+1;
+						fe++;
+						vint length=fragmentStart->text.Length();
+						Ptr<UniscribeFragment> leftFragment=fragmentStart->Copy(0, ss);
+						Ptr<UniscribeFragment> rightFragment=fragmentStart->Copy(ss, length-ss);
+						documentFragments.RemoveAt(fs);
+						documentFragments.Insert(fs, leftFragment);
+						documentFragments.Insert(fs+1, rightFragment);
+					}
+					if(se==fragmentEnd->text.Length())
+					{
+						f2=fe;
+					}
+					else
+					{
+						f2=fe;
+						fe++;
+						vint length=fragmentEnd->text.Length();
+						Ptr<UniscribeFragment> leftFragment=fragmentStart->Copy(0, se);
+						Ptr<UniscribeFragment> rightFragment=fragmentEnd->Copy(se, length-se);
+						documentFragments.RemoveAt(fe);
+						documentFragments.Insert(fe, leftFragment);
+						documentFragments.Insert(fe+1, rightFragment);
+					}
+				}
+				return true;
+			}
+
+			void UniscribeParagraph::CutFragmentColors(vint fs, vint ss, vint fe, vint se, Color UniscribeColor::* colorField, Color color)
+			{
+				for(vint f=fs;f<=fe;f++)
+				{
+					Ptr<UniscribeFragment> fragment=documentFragments[f];
+					vint start=f==fs?ss:0;
+					vint end=f==fe?se:fragment->text.Length();
+
+					fragment->CutColors(start, end-start);
+					fragment->UpdateOverlappedColors(start, end-start, colorField, color);
+					fragment->DefragmentColors();
+				}
+			}
+
+/***********************************************************************
+UniscribeParagraph (Formatting)
+***********************************************************************/
+
+			bool UniscribeParagraph::SetFont(vint start, vint length, const WString& value)
+			{
+				vint fs, ss, fe, se, f1, f2;
+				SearchFragment(start, length, fs, ss, fe, se);
+				if(CutFragment(fs, ss, fe, se, f1, f2))
+				{
+					for(vint i=f1;i<=f2;i++)
+					{
+						documentFragments[i]->fontStyle.fontFamily=value;
+					}
+					built=false;
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+
+			bool UniscribeParagraph::SetSize(vint start, vint length, vint value)
+			{
+				vint fs, ss, fe, se, f1, f2;
+				SearchFragment(start, length, fs, ss, fe, se);
+				if(CutFragment(fs, ss, fe, se, f1, f2))
+				{
+					for(vint i=f1;i<=f2;i++)
+					{
+						documentFragments[i]->fontStyle.size=value;
+					}
+					built=false;
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+
+			bool UniscribeParagraph::SetStyle(vint start, vint length, bool bold, bool italic, bool underline, bool strikeline)
+			{
+				vint fs, ss, fe, se, f1, f2;
+				SearchFragment(start, length, fs, ss, fe, se);
+				if(CutFragment(fs, ss, fe, se, f1, f2))
+				{
+					for(vint i=f1;i<=f2;i++)
+					{
+						documentFragments[i]->fontStyle.bold=bold;
+						documentFragments[i]->fontStyle.italic=italic;
+						documentFragments[i]->fontStyle.underline=underline;
+						documentFragments[i]->fontStyle.strikeline=strikeline;
+					}
+					built=false;
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+
+			bool UniscribeParagraph::SetColor(vint start, vint length, Color value)
+			{
+				vint fs, ss, fe, se;
+				SearchFragment(start, length, fs, ss, fe, se);
+				if(fs==-1 || ss==-1 || fe==-1 || se==-1) return false;
+
+				CutFragmentColors(fs, ss, fe, se, &UniscribeColor::fontColor, value);
+				return true;
+			}
+
+			bool UniscribeParagraph::SetBackgroundColor(vint start, vint length, Color value)
+			{
+				vint fs, ss, fe, se;
+				SearchFragment(start, length, fs, ss, fe, se);
+				if(fs==-1 || ss==-1 || fe==-1 || se==-1) return false;
+
+				CutFragmentColors(fs, ss, fe, se, &UniscribeColor::backgroundColor, value);
+				return true;
+			}
+
+			bool UniscribeParagraph::SetInlineObject(vint start, vint length, const IGuiGraphicsParagraph::InlineObjectProperties& properties)
+			{
+				vint fs, ss, fe, se, f1, f2;
+				SearchFragment(start, length, fs, ss, fe, se);
+				if(CutFragment(fs, ss, fe, se, f1, f2))
+				{
+					WString text;
+					for(vint i=f1;i<=f2;i++)
+					{
+						text+=documentFragments[f1]->text;
+					}
+					auto elementFragment=Ptr(new UniscribeFragment(text));
+
+					for(vint i=f1;i<=f2;i++)
+					{
+						elementFragment->cachedTextFragment.Add(documentFragments[f1]);
+						documentFragments.RemoveAt(f1);
+					}
+					elementFragment->inlineObjectProperties=properties;
+					documentFragments.Insert(f1, elementFragment);
+					built=false;
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+
+			InlineObject UniscribeParagraph::ResetInlineObject(vint start, vint length)
+			{
+				vint fs, ss, fe, se;
+				SearchFragment(start, length, fs, ss, fe, se);
+				Ptr<UniscribeFragment> fragment = documentFragments[fs];
+				if(fs==fe && ss==0 && se==fragment->text.Length() && fragment->inlineObjectProperties)
+				{
+					documentFragments.RemoveAt(fs);
+					for(vint i=0;i<fragment->cachedTextFragment.Count();i++)
+					{
+						documentFragments.Insert(fs+i, fragment->cachedTextFragment[i]);
+					}
+					built=false;
+					return fragment->inlineObjectProperties;
+				}
+				return InlineObject();
+			}
+
+/***********************************************************************
+UniscribeParagraph (Caret Helper)
+***********************************************************************/
+
+			void UniscribeParagraph::GetLineIndexFromTextPos(vint textPos, vint& frontLine, vint& backLine)
+			{
+				frontLine=-1;
+				backLine=-1;
+				if(!IsValidTextPos(textPos)) return;
+
+				vint start=0;
+				vint end=lines.Count()-1;
+				while(start<=end)
+				{
+					vint middle=(start+end)/2;
+					Ptr<UniscribeLine> line=lines[middle];
+					vint lineStart=line->startFromParagraph;
+					vint lineEnd=line->startFromParagraph+line->lineText.Length();
+					if(textPos<lineStart)
+					{
+						if(textPos==lineStart-1)
+						{
+							frontLine=middle-1;
+							backLine=middle;
+							return;
+						}
+						else
+						{
+							end=middle-1;
+						}
+					}
+					else if(textPos>lineEnd)
+					{
+						if(textPos==lineEnd+1)
+						{
+							frontLine=middle;
+							backLine=middle+1;
+							return;
+						}
+						else
+						{
+							start=middle+1;
+						}
+					}
+					else
+					{
+						frontLine=middle;
+						backLine=middle;
+						return;
+					}
+				}
+			}
+
+			void UniscribeParagraph::GetVirtualLineIndexFromTextPos(vint textPos, vint lineIndex, vint& frontLine, vint& backLine)
+			{
+				frontLine=-1;
+				backLine=-1;
+				if(!IsValidTextPos(textPos)) return;
+				if(lineIndex<0 || lineIndex>=lines.Count()) return;
+
+				Ptr<UniscribeLine> line=lines[lineIndex];
+				vint start=0;
+				vint end=line->virtualLines.Count()-1;
+				while(start<=end)
+				{
+					vint middle=(start+end)/2;
+					Ptr<UniscribeVirtualLine> vline=line->virtualLines[middle];
+					vint lineStart=line->startFromParagraph+vline->startFromLine;
+					vint lineEnd=line->startFromParagraph+vline->startFromLine+vline->length;
+					if(textPos<lineStart)
+					{
+						end=middle-1;
+					}
+					else if(textPos>lineEnd)
+					{
+						start=middle+1;
+					}
+					else if(textPos==lineStart)
+					{
+						frontLine=middle==0?0:middle-1;
+						backLine=middle;
+						return;
+					}
+					else if(textPos==lineEnd)
+					{
+						frontLine=middle;
+						backLine=middle==line->virtualLines.Count()-1?middle:middle+1;
+						return;
+					}
+					else
+					{
+						frontLine=middle;
+						backLine=middle;
+						return;
+					}
+				}
+			}
+
+			void UniscribeParagraph::GetItemIndexFromTextPos(vint textPos, vint lineIndex, vint& frontItem, vint& backItem)
+			{
+				frontItem=-1;
+				backItem=-1;
+				if(!IsValidTextPos(textPos)) return;
+				if(lineIndex<0 || lineIndex>=lines.Count()) return;
+
+				Ptr<UniscribeLine> line=lines[lineIndex];
+				vint start=0;
+				vint end=line->scriptItems.Count()-1;
+				while(start<=end)
+				{
+					vint middle=(start+end)/2;
+					Ptr<UniscribeItem> item=line->scriptItems[middle];
+					vint lineStart=line->startFromParagraph+item->startFromLine;
+					vint lineEnd=line->startFromParagraph+item->startFromLine+item->length;
+					if(textPos<lineStart)
+					{
+						end=middle-1;
+					}
+					else if(textPos>lineEnd)
+					{
+						start=middle+1;
+					}
+					else if(textPos==lineStart)
+					{
+						frontItem=middle==0?0:middle-1;
+						backItem=middle;
+						return;
+					}
+					else if(textPos==lineEnd)
+					{
+						frontItem=middle;
+						backItem=middle==line->scriptItems.Count()-1?middle:middle+1;
+						return;
+					}
+					else
+					{
+						frontItem=middle;
+						backItem=middle;
+						return;
+					}
+				}
+			}
+
+			Rect UniscribeParagraph::GetCaretBoundsWithLine(vint caret, vint lineIndex, vint virtualLineIndex, bool frontSide)
+			{
+				Ptr<UniscribeLine> line=lines[lineIndex];
+				if(line->startFromParagraph<=caret && caret<=line->startFromParagraph+line->lineText.Length())
+				{
+					if(line->lineText==L"") return line->bounds;
+					Ptr<UniscribeVirtualLine> virtualLine=line->virtualLines[virtualLineIndex];
+
+					for(vint i=virtualLine->firstRunIndex;i<=virtualLine->lastRunIndex;i++)
+					{
+						Ptr<UniscribeRun> run=line->scriptRuns[i];
+						if(Ptr<UniscribeTextRun> textRun=run.Cast<UniscribeTextRun>())
+						{
+							vint firstBounds=i==virtualLine->firstRunIndex?virtualLine->firstRunBoundsIndex:0;
+							vint lastBounds=i==virtualLine->lastRunIndex?virtualLine->lastRunBoundsIndex:run->fragmentBounds.Count()-1;
+					
+							for(vint j=firstBounds;j<=lastBounds;j++)
+							{
+								UniscribeRun::RunFragmentBounds& bounds=run->fragmentBounds[j];
+								vint boundsStart=line->startFromParagraph+run->startFromLine+bounds.startFromRun;
+								if(boundsStart==caret)
+								{
+									if(!frontSide || i==virtualLine->firstRunIndex && j==virtualLine->firstRunBoundsIndex)
+									{
+										if(run->scriptItem->scriptItem.a.fRTL)
+										{
+											return Rect(bounds.bounds.x2, bounds.bounds.y1, bounds.bounds.x2, bounds.bounds.y2);
+										}
+										else
+										{
+											return Rect(bounds.bounds.x1, bounds.bounds.y1, bounds.bounds.x1, bounds.bounds.y2);
+										}
+									}
+								}
+								else if(caret==boundsStart+bounds.length)
+								{
+									if(frontSide || i==virtualLine->lastRunIndex && j==virtualLine->lastRunBoundsIndex)
+									{
+										if(run->scriptItem->scriptItem.a.fRTL)
+										{
+											return Rect(bounds.bounds.x1, bounds.bounds.y1, bounds.bounds.x1, bounds.bounds.y2);
+										}
+										else
+										{
+											return Rect(bounds.bounds.x2, bounds.bounds.y1, bounds.bounds.x2, bounds.bounds.y2);
+										}
+									}
+								}
+								else if(boundsStart<caret && caret<boundsStart+bounds.length)
+								{
+									vint accumulatedWidth=0;
+									vint lastRunChar=bounds.startFromRun;
+									for(vint i=0;i<=bounds.length;i++)
+									{
+										vint charIndex=bounds.startFromRun+i;
+										vint newLastRunChar=lastRunChar;
+										if(i>0)
+										{
+											if(i==bounds.length)
+											{
+												newLastRunChar=charIndex;
+											}
+											else
+											{
+												WORD cluster1=textRun->wholeGlyph.charCluster[charIndex-1];
+												WORD cluster2=textRun->wholeGlyph.charCluster[charIndex];
+												if(cluster1!=cluster2)
+												{
+													newLastRunChar=charIndex;
+												}
+											}
+										}
+
+										if(newLastRunChar!=lastRunChar)
+										{
+											WORD glyph1=0;
+											WORD glyph2=0;
+											if(run->scriptItem->scriptItem.a.fRTL)
+											{
+												glyph2=textRun->wholeGlyph.charCluster[lastRunChar]+1;
+												glyph1=newLastRunChar==run->length?0:textRun->wholeGlyph.charCluster[newLastRunChar]+1;
+											}
+											else
+											{
+												glyph1=textRun->wholeGlyph.charCluster[lastRunChar];
+												glyph2=newLastRunChar==run->length?(WORD)textRun->wholeGlyph.glyphs.Count():textRun->wholeGlyph.charCluster[newLastRunChar];
+											}
+
+											vint glyphWidth=0;
+											for(WORD g=glyph1;g<glyph2;g++)
+											{
+												glyphWidth+=textRun->wholeGlyph.glyphAdvances[g];
+											}
+											accumulatedWidth+=glyphWidth;
+											lastRunChar=newLastRunChar;
+
+											if(line->startFromParagraph+run->startFromLine+lastRunChar==caret)
+											{
+												vint x=0;
+												if(run->scriptItem->scriptItem.a.fRTL)
+												{
+													x=bounds.bounds.x2-accumulatedWidth;
+												}
+												else
+												{
+													x=bounds.bounds.x1+accumulatedWidth;
+												}
+												return Rect(x, bounds.bounds.y1, x, bounds.bounds.y2);
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				return Rect();
+			}
+
+			vint UniscribeParagraph::GetCaretFromXWithTextRunBounds(vint x, vint lineIndex, vint runIndex, vint runBoundsIndex)
+			{
+				Ptr<UniscribeLine> line=lines[lineIndex];
+				if(line->lineText==L"") return line->startFromParagraph;
+				Ptr<UniscribeTextRun> run=line->scriptRuns[runIndex].Cast<UniscribeTextRun>();
+				UniscribeRun::RunFragmentBounds& bounds=run->fragmentBounds[runBoundsIndex];
+				
+				vint startFromFragmentBounds=0;
+				vint accumulatedWidth=0;
+				while(startFromFragmentBounds<bounds.length)
+				{
+					vint charIndex=bounds.startFromRun+startFromFragmentBounds;
+					vint charLength=0;
+					vint cluster=0;
+					vint nextCluster=0;
+					run->SearchSingleChar(charIndex, charLength, cluster, nextCluster);
+
+					vint clusterStart=0;
+					vint clusterCount=0;
+					if(run->scriptItem->IsRightToLeft())
+					{
+						clusterStart=nextCluster+1;
+						clusterCount=cluster-nextCluster;
+					}
+					else
+					{
+						clusterStart=cluster;
+						clusterCount=nextCluster-cluster;
+					}
+
+					vint clusterWidth=0;
+					for(vint i=0;i<clusterCount;i++)
+					{
+						clusterWidth+=run->wholeGlyph.glyphAdvances[i+clusterStart];
+					}
+
+					if(run->scriptItem->scriptItem.a.fRTL)
+					{
+						vint x2=bounds.bounds.x2-accumulatedWidth;
+						vint x1=x2-clusterWidth;
+						if(x1<=x && x<x2)
+						{
+							vint d1=x-x1;
+							vint d2=x2-x;
+							if(d1<=d2)
+							{
+								return line->startFromParagraph+run->startFromLine+charIndex+charLength;
+							}
+							else
+							{
+								return line->startFromParagraph+run->startFromLine+charIndex;
+							}
+						}
+					}
+					else
+					{
+						vint x1=bounds.bounds.x1+accumulatedWidth;
+						vint x2=x1+clusterWidth;
+						if(x1<=x && x<x2)
+						{
+							vint d1=x-x1;
+							vint d2=x2-x;
+							if(d1<=d2)
+							{
+								return line->startFromParagraph+run->startFromLine+charIndex;
+							}
+							else
+							{
+								return line->startFromParagraph+run->startFromLine+charIndex+charLength;
+							}
+						}
+					}
+
+					startFromFragmentBounds+=charLength;
+					accumulatedWidth+=clusterWidth;
+				}
+				return -1;
+			}
+
+			vint UniscribeParagraph::GetCaretFromXWithLine(vint x, vint lineIndex, vint virtualLineIndex)
+			{
+				Ptr<UniscribeLine> line=lines[lineIndex];
+				if(line->virtualLines.Count()==0) return line->startFromParagraph;
+				Ptr<UniscribeVirtualLine> virtualLine=line->virtualLines[virtualLineIndex];
+				if(x<virtualLine->bounds.x1) return line->startFromParagraph+virtualLine->startFromLine;
+				if(x>=virtualLine->bounds.x2) return line->startFromParagraph+virtualLine->startFromLine+virtualLine->length;
+
+				for(vint i=virtualLine->firstRunIndex;i<=virtualLine->lastRunIndex;i++)
+				{
+					Ptr<UniscribeRun> run=line->scriptRuns[i];
+					if(Ptr<UniscribeTextRun> textRun=run.Cast<UniscribeTextRun>())
+					{
+						vint firstBounds=i==virtualLine->firstRunIndex?virtualLine->firstRunBoundsIndex:0;
+						vint lastBounds=i==virtualLine->lastRunIndex?virtualLine->lastRunBoundsIndex:run->fragmentBounds.Count()-1;
+					
+						for(vint j=firstBounds;j<=lastBounds;j++)
+						{
+							UniscribeRun::RunFragmentBounds& bounds=run->fragmentBounds[j];
+							if(bounds.bounds.x1<=x && x<bounds.bounds.x2)
+							{
+								return GetCaretFromXWithTextRunBounds(x, lineIndex, i, j);
+							}
+						}
+					}
+					else
+					{
+						Rect bounds=run->fragmentBounds[0].bounds;
+						if(bounds.x1<=x && x<bounds.x2)
+						{
+							vint d1=x-bounds.x1;
+							vint d2=bounds.x2-x;
+							if(d1<=d2)
+							{
+								return line->startFromParagraph+run->startFromLine;
+							}
+							else
+							{
+								return line->startFromParagraph+run->startFromLine+run->length;
+							}
+						}
+					}
+				}
+				return -1;
+			}
+
+			InlineObject UniscribeParagraph::GetInlineObjectFromXWithLine(vint x, vint lineIndex, vint virtualLineIndex, vint& start, vint& length)
+			{
+				Ptr<UniscribeLine> line=lines[lineIndex];
+				if(line->virtualLines.Count()==0) return InlineObject();
+				Ptr<UniscribeVirtualLine> virtualLine=line->virtualLines[virtualLineIndex];
+				if(x<virtualLine->bounds.x1) return InlineObject();
+				if(x>=virtualLine->bounds.x2) return InlineObject();
+
+				for(vint i=virtualLine->firstRunIndex;i<=virtualLine->lastRunIndex;i++)
+				{
+					Ptr<UniscribeRun> run=line->scriptRuns[i];
+					if(auto elementRun=run.Cast<UniscribeEmbeddedObjectRun>())
+					{
+						Rect bounds=run->fragmentBounds[0].bounds;
+						if(bounds.x1<=x && x<bounds.x2)
+						{
+							start=line->startFromParagraph+elementRun->startFromLine;
+							length=elementRun->length;
+							return elementRun->properties;
+						}
+					}
+				}
+				return InlineObject();
+			}
+
+			vint UniscribeParagraph::GetLineY(vint lineIndex)
+			{
+				if(lineIndex==lines.Count())
+				{
+					return bounds.Height();
+				}
+				else
+				{
+					return lines[lineIndex]->bounds.y1;
+				}
+			}
+
+			vint UniscribeParagraph::GetVirtualLineY(vint lineIndex, vint virtualLineIndex)
+			{
+				Ptr<UniscribeLine> line=lines[lineIndex];
+				if(virtualLineIndex==line->virtualLines.Count())
+				{
+					return GetLineY(lineIndex+1);
+				}
+				else
+				{
+					return line->virtualLines[virtualLineIndex]->bounds.y1;
+				}
+			}
+
+			vint UniscribeParagraph::GetLineIndexFromY(vint y)
+			{
+				if(y<lines[0]->bounds.y1) return 0;
+				if(y>=lines[lines.Count()-1]->bounds.y2) return lines.Count()-1;
+
+				vint start=0;
+				vint end=lines.Count()-1;
+				while(start<=end)
+				{
+					vint middle=(start+end)/2;
+					vint minY=GetLineY(middle);
+					vint maxY=GetLineY(middle+1);
+					if(y<minY)
+					{
+						end=middle-1;
+					}
+					else if(y>=maxY)
+					{
+						start=middle+1;
+					}
+					else
+					{
+						return middle;
+					}
+				}
+				return -1;
+			}
+
+			vint UniscribeParagraph::GetVirtualLineIndexFromY(vint y, vint lineIndex)
+			{
+				Ptr<UniscribeLine> line=lines[lineIndex];
+				if(y<line->bounds.y1) return 0;
+				if(y>=line->bounds.y2) return line->virtualLines.Count()-1;
+
+				vint start=0;
+				vint end=line->virtualLines.Count()-1;
+				while(start<=end)
+				{
+					vint middle=(start+end)/2;
+					vint minY=GetVirtualLineY(lineIndex, middle);
+					vint maxY=GetVirtualLineY(lineIndex, middle+1);
+					if(y<minY)
+					{
+						end=middle-1;
+					}
+					else if(y>=maxY)
+					{
+						start=middle+1;
+					}
+					else
+					{
+						return middle;
+					}
+				}
+				return -1;
+			}
+
+/***********************************************************************
+UniscribeParagraph (Caret)
+***********************************************************************/
+
+			vint UniscribeParagraph::GetCaret(vint comparingCaret, IGuiGraphicsParagraph::CaretRelativePosition position, bool& preferFrontSide)
+			{
+				if(position==IGuiGraphicsParagraph::CaretFirst) return 0;
+				if(position==IGuiGraphicsParagraph::CaretLast) return paragraphText.Length();
+				if(!IsValidCaret(comparingCaret)) return -1;
+
+				if(position==IGuiGraphicsParagraph::CaretMoveLeft)
+				{
+					return comparingCaret==0?0:GetNearestCaretFromTextPos(comparingCaret-1, true);
+				}
+				if(position==IGuiGraphicsParagraph::CaretMoveRight)
+				{
+					return comparingCaret==paragraphText.Length()?paragraphText.Length():GetNearestCaretFromTextPos(comparingCaret+1, false);
+				}
+
+				vint frontLine=0;
+				vint backLine=0;
+				GetLineIndexFromTextPos(comparingCaret, frontLine, backLine);
+
+				Ptr<UniscribeLine> line=lines[frontLine];
+				if(line->virtualLines.Count()==0)
+				{
+					switch(position)
+					{
+					case IGuiGraphicsParagraph::CaretLineFirst:
+					case IGuiGraphicsParagraph::CaretLineLast:
+						return line->startFromParagraph;
+					}
+				}
+
+				vint frontVirtualLine=0;
+				vint backVirtualLine=0;
+				GetVirtualLineIndexFromTextPos(comparingCaret, frontLine, frontVirtualLine, backVirtualLine);
+				vint virtualLineIndex=preferFrontSide?frontVirtualLine:backVirtualLine;
+
+				Ptr<UniscribeVirtualLine> virtualLine=virtualLineIndex==-1?nullptr:line->virtualLines[virtualLineIndex];
+
+				switch(position)
+				{
+				case IGuiGraphicsParagraph::CaretLineFirst:
+					return line->startFromParagraph+virtualLine->startFromLine;
+				case IGuiGraphicsParagraph::CaretLineLast:
+					return line->startFromParagraph+virtualLine->startFromLine+virtualLine->length;
+				case IGuiGraphicsParagraph::CaretMoveUp:
+					{
+						if(frontLine==0 && virtualLineIndex<=0) return comparingCaret;
+						Rect bounds=GetCaretBoundsWithLine(comparingCaret, frontLine, virtualLineIndex, preferFrontSide);
+						if(bounds.Height()!=0)
+						{
+							if(virtualLineIndex<=0)
+							{
+								frontLine--;
+								virtualLineIndex=lines[frontLine]->virtualLines.Count()-1;
+							}
+							else
+							{
+								virtualLineIndex--;
+							}
+							preferFrontSide=true;
+							return GetCaretFromXWithLine(bounds.x1, frontLine, virtualLineIndex);
+						}
+					}
+					break;
+				case IGuiGraphicsParagraph::CaretMoveDown:
+					{
+						if(frontLine==lines.Count()-1 && virtualLineIndex==line->virtualLines.Count()-1) return comparingCaret;
+						Rect bounds=GetCaretBoundsWithLine(comparingCaret, frontLine, virtualLineIndex, preferFrontSide);
+						if(bounds.Height()!=0)
+						{
+							if(virtualLineIndex==line->virtualLines.Count()-1)
+							{
+								frontLine++;
+								virtualLineIndex=0;
+							}
+							else
+							{
+								virtualLineIndex++;
+							}
+							preferFrontSide=false;
+							return GetCaretFromXWithLine(bounds.x1, frontLine, virtualLineIndex);
+						}
+					}
+					break;
+				}
+				return -1;
+			}
+
+			Rect UniscribeParagraph::GetCaretBounds(vint caret, bool frontSide)
+			{
+				if(!IsValidCaret(caret)) return Rect();
+
+				vint frontLine=0;
+				vint backLine=0;
+				GetLineIndexFromTextPos(caret, frontLine, backLine);
+
+				vint frontVirtualLine=0;
+				vint backVirtualLine=0;
+				GetVirtualLineIndexFromTextPos(caret, frontLine, frontVirtualLine, backVirtualLine);
+				vint virtualLineIndex=frontSide?frontVirtualLine:backVirtualLine;
+
+				return GetCaretBoundsWithLine(caret, frontLine, virtualLineIndex, frontSide);
+			}
+
+			vint UniscribeParagraph::GetCaretFromPoint(Point point)
+			{
+				vint lineIndex=GetLineIndexFromY(point.y);
+				if(lineIndex==-1) return -1;
+
+				Ptr<UniscribeLine> line=lines[lineIndex];
+				if(line->virtualLines.Count()==0) return line->startFromParagraph;
+
+				vint virtualLineIndex=GetVirtualLineIndexFromY(point.y, lineIndex);
+				if(virtualLineIndex==-1) return -1;
+
+				return GetCaretFromXWithLine(point.x, lineIndex, virtualLineIndex);
+			}
+
+			InlineObject UniscribeParagraph::GetInlineObjectFromPoint(Point point, vint& start, vint& length)
+			{
+				start = -1;
+				length = 0;
+				vint lineIndex = GetLineIndexFromY(point.y);
+				if (lineIndex == -1) return InlineObject();
+
+				Ptr<UniscribeLine> line = lines[lineIndex];
+				if (line->virtualLines.Count() == 0) return InlineObject();
+
+				vint virtualLineIndex = GetVirtualLineIndexFromY(point.y, lineIndex);
+				if (virtualLineIndex == -1) return InlineObject();
+
+				return GetInlineObjectFromXWithLine(point.x, lineIndex, virtualLineIndex, start, length);
+			}
+
+			vint UniscribeParagraph::GetNearestCaretFromTextPos(vint textPos, bool frontSide)
+			{
+				if(!IsValidTextPos(textPos)) return -1;
+				vint frontLine=0;
+				vint backLine=0;
+				GetLineIndexFromTextPos(textPos, frontLine, backLine);
+				if(frontLine==-1 || backLine==-1) return -1;
+				if(frontLine!=backLine)
+				{
+					return frontSide?textPos-1:textPos+1;
+				}
+
+				Ptr<UniscribeLine> line=lines[frontLine];
+				if(textPos==line->startFromParagraph || textPos==line->startFromParagraph+line->lineText.Length())
+				{
+					return textPos;
+				}
+
+				vint frontItem=-1;
+				vint backItem=-1;
+				GetItemIndexFromTextPos(textPos, frontLine, frontItem, backItem);
+				if(frontItem==-1 || backItem==-1) return -1;
+				if(frontItem!=backItem) return textPos;
+				
+				Ptr<UniscribeItem> item=line->scriptItems[frontItem];
+				vint lineTextPos=textPos-line->startFromParagraph;
+				if(lineTextPos==item->startFromLine) return textPos;
+				if(lineTextPos==item->startFromLine+item->length) return textPos;
+
+				vint itemTextPos=lineTextPos-item->startFromLine;
+				if(item->charLogattrs[itemTextPos].fCharStop) return textPos;
+
+				if(frontSide)
+				{
+					for(vint i=itemTextPos-1;i>=0;i--)
+					{
+						if(item->charLogattrs[i].fCharStop) return i+line->startFromParagraph+item->startFromLine;
+					}
+					return line->startFromParagraph+item->startFromLine;
+				}
+				else
+				{
+					for(vint i=itemTextPos+1;i<item->length;i++)
+					{
+						if(item->charLogattrs[i].fCharStop) return i+line->startFromParagraph+item->startFromLine;
+					}
+					return line->startFromParagraph+item->startFromLine+item->length;
+				}
+			}
+
+			bool UniscribeParagraph::IsValidCaret(vint caret)
+			{
+				if(!IsValidTextPos(caret)) return false;
+				return GetNearestCaretFromTextPos(caret, true)==caret;
+			}
+
+			bool UniscribeParagraph::IsValidTextPos(vint textPos)
+			{
+				return 0<=textPos && textPos<=paragraphText.Length();
+			}
+		}
+	}
+}
+
+/***********************************************************************
+.\GDI\RENDERERS\GUIGRAPHICSWINDOWSGDI.CPP
+***********************************************************************/
+
+namespace vl
+{
+	namespace presentation
+	{
+		namespace elements
+		{
+
+/***********************************************************************
+GuiGDIElement
+***********************************************************************/
+
+			GuiGDIElement::GuiGDIElement()
+			{
+			}
+		}
+
+		namespace elements_windows_gdi
+		{
+			using namespace windows;
+			using namespace elements;
+			using namespace collections;
+
+/***********************************************************************
+WindowsGDIRenderTarget
+***********************************************************************/
+
+			class WindowsGDIRenderTarget : public IWindowsGDIRenderTarget
+			{
+			protected:
+				INativeWindow*				window = nullptr;
+				WinDC*						dc = nullptr;
+				List<Rect>					clippers;
+				vint						clipperCoverWholeTargetCounter = 0;
+				bool						hostedRendering = false;
+				bool						rendering = false;
+
+				void ApplyClipper(Rect validArea, bool clipperExists)
+				{
+					if (clipperExists)
+					{
+						dc->ClipRegion(Ptr(new WinRegion(validArea.Left(), validArea.Top(), validArea.Right(), validArea.Bottom(), true)));
+					}
+					else
+					{
+						dc->RemoveClip();
+					}
+				}
+
+				void StartRenderingOnNativeWindow() override
+				{
+					dc = GetWindowsGDIObjectProvider()->GetNativeWindowDC(window);
+				}
+
+				RenderTargetFailure StopRenderingOnNativeWindow() override
+				{
+					dc = nullptr;
+					return RenderTargetFailure::None;
+				}
+
+				Size GetCanvasSize() override
+				{
+					return window->Convert(window->GetClientSize());
+				}
+
+				void AfterPushedClipper(Rect clipper, Rect validArea) override
+				{
+					ApplyClipper(validArea, true);
+				}
+
+				void AfterPushedClipperAndBecameInvalid(Rect clipper) override
+				{
+				}
+
+				void AfterPoppedClipperAndBecameValid(Rect validArea, bool clipperExists) override
+				{
+					ApplyClipper(validArea, clipperExists);
+				}
+
+				void AfterPoppedClipper(Rect validArea, bool clipperExists) override
+				{
+					ApplyClipper(validArea, clipperExists);
+				}
+			public:
+				WindowsGDIRenderTarget(INativeWindow* _window)
+					: window(_window)
+				{
+				}
+
+				WinDC* GetDC()override
+				{
+					return dc ? dc : GetWindowsGDIObjectProvider()->GetNativeWindowDC(window);
+				}
+			};
+
+/***********************************************************************
+CachedResourceAllocator
+***********************************************************************/
+
+			class CachedPenAllocator
+			{
+				DEFINE_CACHED_RESOURCE_ALLOCATOR(Color, Ptr<WinPen>)
+			public:
+				Ptr<WinPen> CreateInternal(Color color)
+				{
+					return Ptr(new WinPen(PS_SOLID, 1, RGB(color.r, color.g, color.b)));
+				}
+			};
+
+			class CachedBrushAllocator
+			{
+				DEFINE_CACHED_RESOURCE_ALLOCATOR(Color, Ptr<WinBrush>)
+			public:
+				Ptr<WinBrush> CreateInternal(Color color)
+				{
+					return color.a == 0 ? Ptr(new WinBrush) : Ptr(new WinBrush(RGB(color.r, color.g, color.b)));
+				}
+			};
+
+			class CachedFontAllocator
+			{
+				DEFINE_CACHED_RESOURCE_ALLOCATOR(FontProperties, Ptr<WinFont>)
+			public:
+				static Ptr<WinFont> CreateGdiFont(const FontProperties& value)
+				{
+					vint size = value.size < 0 ? value.size : -value.size;
+					return Ptr(new WinFont(value.fontFamily, size, 0, 0, 0, (value.bold ? FW_BOLD : FW_NORMAL), value.italic, value.underline, value.strikeline, value.antialias));
+				}
+
+				Ptr<WinFont> CreateInternal(const FontProperties& value)
+				{
+					return CreateGdiFont(value);
+				}
+			};
+
+			class CachedCharMeasurerAllocator
+			{
+				DEFINE_CACHED_RESOURCE_ALLOCATOR(FontProperties, Ptr<text::CharMeasurer>)
+
+			protected:
+				class GdiCharMeasurer : public text::CharMeasurer
+				{
+				protected:
+					Ptr<WinFont>			font;
+					vint					size;
+
+					Size MeasureInternal(text::UnicodeCodePoint codePoint, IGuiGraphicsRenderTarget* renderTarget)
+					{
+						if (renderTarget)
+						{
+							WindowsGDIRenderTarget* gdiRenderTarget = dynamic_cast<WindowsGDIRenderTarget*>(renderTarget);
+							WinDC* dc = gdiRenderTarget->GetDC();
+							dc->SetFont(font);
+
+							vint count = text::UTF16SPFirst(codePoint.characters[0]) && text::UTF16SPSecond(codePoint.characters[1]) ? 2 : 1;
+							SIZE size = dc->MeasureBuffer(codePoint.characters, count, -1);
+							return Size(size.cx, size.cy);
+						}
+						else
+						{
+							return Size(0, 0);
+						}
+					}
+
+					vint MeasureWidthInternal(text::UnicodeCodePoint codePoint, IGuiGraphicsRenderTarget* renderTarget)
+					{
+						return MeasureInternal(codePoint, renderTarget).x;
+					}
+
+					vint GetRowHeightInternal(IGuiGraphicsRenderTarget* renderTarget)
+					{
+						if (renderTarget)
+						{
+							return MeasureInternal({ L' ' }, renderTarget).y;
+						}
+						else
+						{
+							return size;
+						}
+					}
+				public:
+					GdiCharMeasurer(Ptr<WinFont> _font, vint _size)
+						: text::CharMeasurer(_size)
+						, size(_size)
+						, font(_font)
+					{
+					}
+				};
+			public:
+				Ptr<text::CharMeasurer> CreateInternal(const FontProperties& value)
+				{
+					return Ptr(new GdiCharMeasurer(CachedFontAllocator::CreateGdiFont(value), value.size));
+				}
+			};
+
+/***********************************************************************
+WindowsGDIResourceManager
+***********************************************************************/
+
+			class WindowsGDIImageFrameCache : public Object, public INativeImageFrameCache
+			{
+			protected:
+				IWindowsGDIResourceManager* resourceManager = nullptr;
+				INativeImageFrame* cachedFrame = nullptr;
+				Ptr<WinBitmap>						bitmap;
+				Ptr<WinBitmap>						disabledBitmap;
+			public:
+				WindowsGDIImageFrameCache(IWindowsGDIResourceManager* _resourceManager)
+					:resourceManager(_resourceManager)
+				{
+				}
+
+				~WindowsGDIImageFrameCache()
+				{
+				}
+
+				void OnAttach(INativeImageFrame* frame)override
+				{
+					cachedFrame = frame;
+					Size size = frame->GetSize();
+					bitmap = Ptr(new WinBitmap(size.x, size.y, WinBitmap::vbb32Bits, true));
+
+					IWICBitmap* wicBitmap = GetWindowsGDIObjectProvider()->GetWICBitmap(frame);
+					WICRect rect;
+					rect.X = 0;
+					rect.Y = 0;
+					rect.Width = (INT)size.x;
+					rect.Height = (INT)size.y;
+					wicBitmap->CopyPixels(&rect, (UINT)bitmap->GetLineBytes(), (UINT)(bitmap->GetLineBytes() * size.y), (BYTE*)bitmap->GetScanLines()[0]);
+
+					bitmap->BuildAlphaChannel(false);
+				}
+
+				void OnDetach(INativeImageFrame* frame)override
+				{
+					resourceManager->DestroyBitmapCache(cachedFrame);
+				}
+
+				INativeImageFrame* GetFrame()
+				{
+					return cachedFrame;
+				}
+
+				Ptr<WinBitmap> GetBitmap(bool enabled)
+				{
+					if (enabled)
+					{
+						return bitmap;
+					}
+					else
+					{
+						if (!disabledBitmap)
+						{
+							vint w = bitmap->GetWidth();
+							vint h = bitmap->GetHeight();
+							disabledBitmap = Ptr(new WinBitmap(w, h, WinBitmap::vbb32Bits, true));
+							for (vint y = 0; y < h; y++)
+							{
+								BYTE* read = bitmap->GetScanLines()[y];
+								BYTE* write = disabledBitmap->GetScanLines()[y];
+								for (vint x = 0; x < w; x++)
+								{
+									BYTE g = (read[0] + read[1] + read[2]) / 6 + read[3] / 2;
+									write[0] = g;
+									write[1] = g;
+									write[2] = g;
+									write[3] = read[3];
+									read += 4;
+									write += 4;
+								}
+							}
+							disabledBitmap->BuildAlphaChannel(false);
+						}
+						return disabledBitmap;
+					}
+				}
+			};
+
+			class WindowsGDIResourceManager : public GuiGraphicsResourceManager, public IWindowsGDIResourceManager, public INativeControllerListener
+			{
+				typedef SortedList<Ptr<WindowsGDIImageFrameCache>> ImageCacheList;
+			protected:
+				SortedList<Ptr<WindowsGDIRenderTarget>>		renderTargets;
+				Ptr<WindowsGDILayoutProvider>				layoutProvider;
+				Ptr<WinPen>									focusRectanglePen;
+				CachedPenAllocator							pens;
+				CachedBrushAllocator						brushes;
+				CachedFontAllocator							fonts;
+				CachedCharMeasurerAllocator					charMeasurers;
+				ImageCacheList								imageCaches;
+			public:
+				WindowsGDIResourceManager()
+				{
+					layoutProvider = Ptr(new WindowsGDILayoutProvider);
+				}
+
+				IGuiGraphicsRenderTarget* GetRenderTarget(INativeWindow* window)override
+				{
+					return GetWindowsGDIObjectProvider()->GetBindedRenderTarget(window);
+				}
+
+				void RecreateRenderTarget(INativeWindow* window)override
+				{
+				}
+
+				void ResizeRenderTarget(INativeWindow* window)override
+				{
+				}
+
+				IGuiGraphicsLayoutProvider* GetLayoutProvider()override
+				{
+					return layoutProvider.Obj();
+				}
+
+				void NativeWindowCreated(INativeWindow* window)override
+				{
+					auto renderTarget = Ptr(new WindowsGDIRenderTarget(window));
+					renderTargets.Add(renderTarget);
+					GetWindowsGDIObjectProvider()->SetBindedRenderTarget(window, renderTarget.Obj());
+				}
+
+				void NativeWindowDestroying(INativeWindow* window)override
+				{
+					WindowsGDIRenderTarget* renderTarget = dynamic_cast<WindowsGDIRenderTarget*>(GetWindowsGDIObjectProvider()->GetBindedRenderTarget(window));
+					GetWindowsGDIObjectProvider()->SetBindedRenderTarget(window, 0);
+					renderTargets.Remove(renderTarget);
+				}
+
+				Ptr<windows::WinPen> GetFocusRectanglePen()override
+				{
+					if (!focusRectanglePen)
+					{
+						DWORD styleArray[] = { 1,1 };
+						focusRectanglePen = Ptr(new WinPen(PS_USERSTYLE, PS_ENDCAP_FLAT, PS_JOIN_BEVEL, 1, RGB(255, 255, 255), (DWORD)(sizeof(styleArray) / sizeof(*styleArray)), styleArray));
+					}
+					return focusRectanglePen;
+				}
+
+				Ptr<windows::WinPen> CreateGdiPen(Color color)override
+				{
+					return pens.Create(color);
+				}
+
+				void DestroyGdiPen(Color color)override
+				{
+					pens.Destroy(color);
+				}
+
+				Ptr<windows::WinBrush> CreateGdiBrush(Color color)override
+				{
+					return brushes.Create(color);
+				}
+
+				void DestroyGdiBrush(Color color)override
+				{
+					brushes.Destroy(color);
+				}
+
+				Ptr<windows::WinFont> CreateGdiFont(const FontProperties& fontProperties)override
+				{
+					return fonts.Create(fontProperties);
+				}
+
+				void DestroyGdiFont(const FontProperties& fontProperties)override
+				{
+					fonts.Destroy(fontProperties);
+				}
+
+				Ptr<elements::text::CharMeasurer> CreateCharMeasurer(const FontProperties& fontProperties)override
+				{
+					return charMeasurers.Create(fontProperties);
+				}
+
+				void DestroyCharMeasurer(const FontProperties& fontProperties)override
+				{
+					charMeasurers.Destroy(fontProperties);
+				}
+
+				Ptr<windows::WinBitmap> GetBitmap(INativeImageFrame* frame, bool enabled)override
+				{
+					Ptr<INativeImageFrameCache> cache = frame->GetCache(this);
+					if (cache)
+					{
+						return cache.Cast<WindowsGDIImageFrameCache>()->GetBitmap(enabled);
+					}
+					else
+					{
+						auto gdiCache = Ptr(new WindowsGDIImageFrameCache(this));
+						if (frame->SetCache(this, gdiCache))
+						{
+							return gdiCache->GetBitmap(enabled);
+						}
+						else
+						{
+							return 0;
+						}
+					}
+				}
+
+				void DestroyBitmapCache(INativeImageFrame* frame)override
+				{
+					WindowsGDIImageFrameCache* cache = frame->GetCache(this).Cast<WindowsGDIImageFrameCache>().Obj();
+					imageCaches.Remove(cache);
+				}
+			};
+		}
+
+		namespace elements_windows_gdi
+		{
+			IWindowsGDIResourceManager* windowsGDIResourceManager = nullptr;
+
+			IWindowsGDIResourceManager* GetWindowsGDIResourceManager()
+			{
+				return windowsGDIResourceManager;
+			}
+
+			void SetWindowsGDIResourceManager(IWindowsGDIResourceManager* resourceManager)
+			{
+				windowsGDIResourceManager = resourceManager;
+			}
+
+/***********************************************************************
+OS Supporting
+***********************************************************************/
+
+			IWindowsGDIObjectProvider* windowsGDIObjectProvider = nullptr;
+
+			IWindowsGDIObjectProvider* GetWindowsGDIObjectProvider()
+			{
+				return windowsGDIObjectProvider;
+			}
+
+			void SetWindowsGDIObjectProvider(IWindowsGDIObjectProvider* provider)
+			{
+				windowsGDIObjectProvider = provider;
+			}
+		}
+	}
+}
+
+/***********************************************************************
+NativeMain
+***********************************************************************/
+
+using namespace vl::presentation;
+using namespace vl::presentation::elements;
+
+extern void GuiApplicationMain();
+
+void RendererMainGDI(GuiHostedController* hostedController)
+{
+	elements_windows_gdi::WindowsGDIResourceManager resourceManager;
+	elements_windows_gdi::SetWindowsGDIResourceManager(&resourceManager);
+	windows::GetWindowsNativeController()->CallbackService()->InstallListener(&resourceManager);
+
+	auto hostedResourceManager = hostedController ? new GuiHostedGraphicsResourceManager(hostedController, &resourceManager) : nullptr;
+	SetGuiGraphicsResourceManager(
+		hostedResourceManager
+		? hostedResourceManager
+		: static_cast<IGuiGraphicsResourceManager*>(&resourceManager)
+		);
+
+	{
+		elements_windows_gdi::GuiFocusRectangleElementRenderer::Register();
+		elements_windows_gdi::GuiSolidBorderElementRenderer::Register();
+		elements_windows_gdi::Gui3DBorderElementRenderer::Register();
+		elements_windows_gdi::Gui3DSplitterElementRenderer::Register();
+		elements_windows_gdi::GuiSolidBackgroundElementRenderer::Register();
+		elements_windows_gdi::GuiGradientBackgroundElementRenderer::Register();
+		elements_windows_gdi::GuiInnerShadowElementRenderer::Register();
+		elements_windows_gdi::GuiSolidLabelElementRenderer::Register();
+		elements_windows_gdi::GuiImageFrameElementRenderer::Register();
+		elements_windows_gdi::GuiPolygonElementRenderer::Register();
+		elements_windows_gdi::GuiColorizedTextElementRenderer::Register();
+		elements_windows_gdi::GuiGDIElementRenderer::Register();
+		elements::GuiDocumentElement::GuiDocumentElementRenderer::Register();
+
+		if (hostedController) hostedController->Initialize();
+		GuiApplicationMain();
+		if (hostedController) hostedController->Finalize();
+	}
+
+	SetGuiGraphicsResourceManager(nullptr);
+	if (hostedResourceManager) delete hostedResourceManager;
+
+	windows::GetWindowsNativeController()->CallbackService()->UninstallListener(&resourceManager);
+	elements_windows_gdi::SetWindowsGDIResourceManager(nullptr);
+}
+
+/***********************************************************************
+.\SERVICESIMPL\WINDOWSCLIPBOARDSERVICE.CPP
 ***********************************************************************/
 
 namespace vl
@@ -13456,7 +13198,7 @@ WindowsClipboardWriter
 						UINT width = 0;
 						UINT height = 0;
 						wicBitmap->GetSize(&width, &height);
-						auto bitmap = MakePtr<WinBitmap>((vint)width, (vint)height, WinBitmap::vbb32Bits, true);
+						auto bitmap = Ptr(new WinBitmap((vint)width, (vint)height, WinBitmap::vbb32Bits, true));
 
 						WICRect rect;
 						rect.X = 0;
@@ -13502,15 +13244,15 @@ WindowsClipboardService
 			{
 				if (!reader)
 				{
-					if (!::OpenClipboard(ownerHandle)) return new WindowsFakeClipboardReader;
+					if (!::OpenClipboard(ownerHandle)) return Ptr(new WindowsFakeClipboardReader);
 					reader = new WindowsClipboardReader(this);
 				}
-				return reader;
+				return Ptr(reader);
 			}
 
 			Ptr<INativeClipboardWriter> WindowsClipboardService::WriteClipboard()
 			{
-				return new WindowsClipboardWriter(this);
+				return Ptr(new WindowsClipboardWriter(this));
 			}
 
 			void WindowsClipboardService::SetOwnerHandle(HWND handle)
@@ -13531,7 +13273,7 @@ WindowsClipboardService
 }
 
 /***********************************************************************
-.\NATIVEWINDOW\WINDOWS\SERVICESIMPL\WINDOWSDIALOGSERVICE.CPP
+.\SERVICESIMPL\WINDOWSDIALOGSERVICE.CPP
 ***********************************************************************/
 #include <Vfw.h>
 
@@ -13808,7 +13550,7 @@ WindowsDialogService
 }
 
 /***********************************************************************
-.\NATIVEWINDOW\WINDOWS\SERVICESIMPL\WINDOWSIMAGESERVICE.CPP
+.\SERVICESIMPL\WINDOWSIMAGESERVICE.CPP
 ***********************************************************************/
 #include <Shlwapi.h>
 
@@ -13937,7 +13679,7 @@ WindowsImageFrame
 				UINT width = 0;
 				UINT height = 0;
 				frameBitmap->GetSize(&width, &height);
-				auto bitmap = MakePtr<WinBitmap>((vint)width, (vint)height, WinBitmap::vbb32Bits, true);
+				auto bitmap = Ptr(new WinBitmap((vint)width, (vint)height, WinBitmap::vbb32Bits, true));
 
 				WICRect rect;
 				rect.X = 0;
@@ -14025,7 +13767,7 @@ WindowsImage
 						HRESULT hr=bitmapDecoder->GetFrame((int)index, &frameDecode);
 						if(SUCCEEDED(hr))
 						{
-							frame=new WindowsImageFrame(this, frameDecode);
+							frame=Ptr(new WindowsImageFrame(this, frameDecode));
 							frameDecode->Release();
 						}
 					}
@@ -14263,7 +14005,7 @@ WindowsBitmapImage
 				:imageService(_imageService)
 				,formatType(_formatType)
 			{
-				frame = new WindowsImageFrame(this, sourceBitmap);
+				frame = Ptr(new WindowsImageFrame(this, sourceBitmap));
 			}
 
 			WindowsBitmapImage::~WindowsBitmapImage()
@@ -14379,11 +14121,11 @@ WindowsImageService
 					&bitmapDecoder);
 				if(SUCCEEDED(hr))
 				{
-					return new WindowsImage(this, bitmapDecoder);
+					return Ptr(new WindowsImage(this, bitmapDecoder));
 				}
 				else
 				{
-					return 0;
+					return nullptr;
 				}
 			}
 
@@ -14397,7 +14139,7 @@ WindowsImageService
 					HRESULT hr=imagingFactory->CreateDecoderFromStream(stream, NULL, WICDecodeMetadataCacheOnDemand, &bitmapDecoder);
 					if(SUCCEEDED(hr))
 					{
-						result=new WindowsImage(this, bitmapDecoder);
+						result=Ptr(new WindowsImage(this, bitmapDecoder));
 					}
 					stream->Release();
 				}
@@ -14426,7 +14168,7 @@ WindowsImageService
 				HRESULT hr=imagingFactory->CreateBitmapFromHBITMAP(handle, NULL, WICBitmapUseAlpha, &bitmap);
 				if(SUCCEEDED(hr))
 				{
-					Ptr<INativeImage> image=new WindowsBitmapImage(this, bitmap, INativeImage::Bmp);
+					auto image=Ptr(new WindowsBitmapImage(this, bitmap, INativeImage::Bmp));
 					bitmap->Release();
 					return image;
 				}
@@ -14442,7 +14184,7 @@ WindowsImageService
 				HRESULT hr=imagingFactory->CreateBitmapFromHICON(handle, &bitmap);
 				if(SUCCEEDED(hr))
 				{
-					Ptr<INativeImage> image=new WindowsBitmapImage(this, bitmap, INativeImage::Icon);
+					auto image=Ptr(new WindowsBitmapImage(this, bitmap, INativeImage::Icon));
 					bitmap->Release();
 					return image;
 				}
@@ -14461,9 +14203,14 @@ WindowsImageService
 Helper Functions
 ***********************************************************************/
 
+			WindowsImageService* GetWindowsImageService()
+			{
+				return  dynamic_cast<WindowsImageService*>(GetWindowsNativeController()->ImageService());
+			}
+
 			IWICImagingFactory* GetWICImagingFactory()
 			{
-				return dynamic_cast<WindowsImageService*>(GetCurrentController()->ImageService())->GetImagingFactory();
+				return GetWindowsImageService()->GetImagingFactory();
 			}
 
 			IWICBitmap* GetWICBitmap(INativeImageFrame* frame)
@@ -14473,19 +14220,19 @@ Helper Functions
 
 			Ptr<INativeImage> CreateImageFromHBITMAP(HBITMAP handle)
 			{
-				return dynamic_cast<WindowsImageService*>(GetCurrentController()->ImageService())->CreateImageFromHBITMAP(handle);
+				return GetWindowsImageService()->CreateImageFromHBITMAP(handle);
 			}
 
 			Ptr<INativeImage> CreateImageFromHICON(HICON handle)
 			{
-				return dynamic_cast<WindowsImageService*>(GetCurrentController()->ImageService())->CreateImageFromHICON(handle);
+				return GetWindowsImageService()->CreateImageFromHICON(handle);
 			}
 		}
 	}
 }
 
 /***********************************************************************
-.\NATIVEWINDOW\WINDOWS\SERVICESIMPL\WINDOWSINPUTSERVICE.CPP
+.\SERVICESIMPL\WINDOWSINPUTSERVICE.CPP
 ***********************************************************************/
 
 namespace vl
@@ -14615,12 +14362,31 @@ WindowsInputService
 				vint index = keys.Keys().IndexOf(name);
 				return index == -1 ? VKEY::KEY_UNKNOWN : keys.Values()[index];
 			}
+
+			vint WindowsInputService::RegisterGlobalShortcutKey(bool ctrl, bool shift, bool alt, VKEY key)
+			{
+				UINT modifier = 0;
+				if (ctrl) modifier |= MOD_CONTROL;
+				if (shift) modifier |= MOD_SHIFT;
+				if (alt) modifier |= MOD_ALT;
+
+				vint id = ++usedHotKeys;
+				BOOL result = RegisterHotKey(ownerHandle, (int)id, modifier, (UINT)key);
+				if (result == 0) return (vint)NativeGlobalShortcutKeyResult::Occupied;
+				return id;
+			}
+
+			bool WindowsInputService::UnregisterGlobalShortcutKey(vint id)
+			{ 
+				BOOL result = UnregisterHotKey(ownerHandle, (int)id);
+				return result != 0;
+			}
 		}
 	}
 }
 
 /***********************************************************************
-.\NATIVEWINDOW\WINDOWS\SERVICESIMPL\WINDOWSRESOURCESERVICE.CPP
+.\SERVICESIMPL\WINDOWSRESOURCESERVICE.CPP
 ***********************************************************************/
 
 namespace vl
@@ -14635,58 +14401,58 @@ WindowsCursor
 ***********************************************************************/
 
 			WindowsCursor::WindowsCursor(HCURSOR _handle)
-				:handle(_handle)
-				,isSystemCursor(false)
-				,systemCursorType(INativeCursor::Arrow)
+				: handle(_handle)
+				, isSystemCursor(false)
+				, systemCursorType(INativeCursor::Arrow)
 			{
 			}
 
 			WindowsCursor::WindowsCursor(SystemCursorType type)
 				:handle(NULL)
-				,isSystemCursor(true)
-				,systemCursorType(type)
+				, isSystemCursor(true)
+				, systemCursorType(type)
 			{
-				LPWSTR id=NULL;
-				switch(type)
+				LPWSTR id = NULL;
+				switch (type)
 				{
 				case SmallWaiting:
-					id=IDC_APPSTARTING;
+					id = IDC_APPSTARTING;
 					break;
 				case LargeWaiting:
-					id=IDC_WAIT;
+					id = IDC_WAIT;
 					break;
 				case Arrow:
-					id=IDC_ARROW;
+					id = IDC_ARROW;
 					break;
 				case Cross:
-					id=IDC_CROSS;
+					id = IDC_CROSS;
 					break;
 				case Hand:
-					id=IDC_HAND;
+					id = IDC_HAND;
 					break;
 				case Help:
-					id=IDC_HELP;
+					id = IDC_HELP;
 					break;
 				case IBeam:
-					id=IDC_IBEAM;
+					id = IDC_IBEAM;
 					break;
 				case SizeAll:
-					id=IDC_SIZEALL;
+					id = IDC_SIZEALL;
 					break;
 				case SizeNESW:
-					id=IDC_SIZENESW;
+					id = IDC_SIZENESW;
 					break;
 				case SizeNS:
-					id=IDC_SIZENS;
+					id = IDC_SIZENS;
 					break;
 				case SizeNWSE:
-					id=IDC_SIZENWSE;
+					id = IDC_SIZENWSE;
 					break;
 				case SizeWE:
-					id=IDC_SIZEWE;
+					id = IDC_SIZEWE;
 					break;
 				}
-				handle=(HCURSOR)LoadImage(NULL, id, IMAGE_CURSOR, 0, 0, LR_DEFAULTSIZE|LR_SHARED);
+				handle = (HCURSOR)LoadImage(NULL, id, IMAGE_CURSOR, 0, 0, LR_DEFAULTSIZE | LR_SHARED);
 			}
 				
 			bool WindowsCursor::IsSystemCursor()
@@ -14712,33 +14478,33 @@ WindowsResourceService
 			{
 				{
 					systemCursors.Resize(INativeCursor::SystemCursorCount);
-					for(vint i=0;i<systemCursors.Count();i++)
+					for (vint i = 0; i < systemCursors.Count(); i++)
 					{
-						systemCursors[i]=new WindowsCursor((INativeCursor::SystemCursorType)i);
+						systemCursors[i] = Ptr(new WindowsCursor((INativeCursor::SystemCursorType)i));
 					}
 				}
 				{
 					NONCLIENTMETRICS metrics;
-					metrics.cbSize=sizeof(NONCLIENTMETRICS);
+					metrics.cbSize = sizeof(NONCLIENTMETRICS);
 					SystemParametersInfo(SPI_GETNONCLIENTMETRICS, metrics.cbSize, &metrics, 0);
-					if(!*metrics.lfMessageFont.lfFaceName)
+					if (!*metrics.lfMessageFont.lfFaceName)
 					{
-						metrics.cbSize=sizeof(NONCLIENTMETRICS)-sizeof(metrics.iPaddedBorderWidth);
+						metrics.cbSize = sizeof(NONCLIENTMETRICS) - sizeof(metrics.iPaddedBorderWidth);
 						SystemParametersInfo(SPI_GETNONCLIENTMETRICS, metrics.cbSize, &metrics, 0);
 					}
-					defaultFont.fontFamily=metrics.lfMessageFont.lfFaceName;
-					defaultFont.size=metrics.lfMessageFont.lfHeight;
-					if(defaultFont.size<0)
+					defaultFont.fontFamily = metrics.lfMessageFont.lfFaceName;
+					defaultFont.size = metrics.lfMessageFont.lfHeight;
+					if (defaultFont.size < 0)
 					{
-						defaultFont.size=-defaultFont.size;
+						defaultFont.size = -defaultFont.size;
 					}
 				}
 			}
 
 			INativeCursor* WindowsResourceService::GetSystemCursor(INativeCursor::SystemCursorType type)
 			{
-				vint index=(vint)type;
-				if(0<=index && index<systemCursors.Count())
+				vint index = (vint)type;
+				if (0 <= index && index < systemCursors.Count())
 				{
 					return systemCursors[index].Obj();
 				}
@@ -14760,14 +14526,28 @@ WindowsResourceService
 
 			void WindowsResourceService::SetDefaultFont(const FontProperties& value)
 			{
-				defaultFont=value;
+				defaultFont = value;
+			}
+
+			void WindowsResourceService::EnumerateFonts(collections::List<WString>& fonts)
+			{
+				auto proc = [](const LOGFONTW* lpelf, const TEXTMETRICW* lpntm, DWORD fontType, LPARAM lParam) -> int
+				{
+					auto&& fonts = *(collections::List<WString>*)lParam;
+					fonts.Add(lpelf->lfFaceName);
+					return 1;
+				};
+
+				HDC refHdc = GetDC(NULL);
+				EnumFontFamilies(refHdc, NULL, proc, (LPARAM)&fonts);
+				ReleaseDC(NULL, refHdc);
 			}
 		}
 	}
 }
 
 /***********************************************************************
-.\NATIVEWINDOW\WINDOWS\SERVICESIMPL\WINDOWSSCREENSERVICE.CPP
+.\SERVICESIMPL\WINDOWSSCREENSERVICE.CPP
 ***********************************************************************/
 
 namespace vl
@@ -14850,7 +14630,7 @@ WindowsScreenService
 				MonitorEnumProcData* data=(MonitorEnumProcData*)dwData;
 				if(data->currentScreen==data->screenService->screens.Count())
 				{
-					data->screenService->screens.Add(new WindowsScreen());
+					data->screenService->screens.Add(Ptr(new WindowsScreen));
 				}
 				data->screenService->screens[data->currentScreen]->monitor=hMonitor;
 				data->currentScreen++;

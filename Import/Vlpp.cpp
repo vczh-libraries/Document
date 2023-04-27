@@ -129,72 +129,61 @@ namespace vl
 {
 	using namespace collections;
 
-	class GlobalStorageManager
-	{
-	public:
-		Ptr<Dictionary<WString, GlobalStorage*>> storages;
+/***********************************************************************
+Helper Functions
+***********************************************************************/
 
-		GlobalStorageManager()
+	GlobalStorageDescriptor* firstGlobalStorageDescriptor = nullptr;
+	GlobalStorageDescriptor** lastGlobalStorageDescriptor = &firstGlobalStorageDescriptor;
+
+	void RegisterStorageDescriptor(GlobalStorageDescriptor* globalStorageDescriptor)
+	{
+		*lastGlobalStorageDescriptor = globalStorageDescriptor;
+		lastGlobalStorageDescriptor = &globalStorageDescriptor->next;
+	}
+
+	void FinalizeGlobalStorage()
+	{
+		auto current = firstGlobalStorageDescriptor;
+		while (current)
 		{
+			current->globalStorage->EnsureFinalized();
+			current = current->next;
 		}
-	};
-
-	GlobalStorageManager& GetGlobalStorageManager()
-	{
-		static GlobalStorageManager globalStorageManager;
-		return globalStorageManager;
 	}
 
 /***********************************************************************
 GlobalStorage
 ***********************************************************************/
 
-	GlobalStorage::GlobalStorage(const wchar_t* key)
+	GlobalStorage::GlobalStorage()
 	{
-		InitializeGlobalStorage();
-		GetGlobalStorageManager().storages->Add(key, this);
 	}
 
 	GlobalStorage::~GlobalStorage()
 	{
 	}
 
-	bool GlobalStorage::Cleared()
+	bool GlobalStorage::IsInitialized()
 	{
-		return cleared;
+		return initialized;
 	}
 
-/***********************************************************************
-Helper Functions
-***********************************************************************/
-
-	GlobalStorage* GetGlobalStorage(const wchar_t* key)
+	void GlobalStorage::EnsureInitialized()
 	{
-		return GetGlobalStorage(WString::Unmanaged(key));
-	}
-
-	GlobalStorage* GetGlobalStorage(const WString& key)
-	{
-		return GetGlobalStorageManager().storages->Get(key);
-	}
-
-	void InitializeGlobalStorage()
-	{
-		if (!GetGlobalStorageManager().storages)
+		if (!initialized)
 		{
-			GetGlobalStorageManager().storages = new Dictionary<WString, GlobalStorage*>;
+			initialized = true;
+			InitializeResource();
 		}
 	}
 
-	void FinalizeGlobalStorage()
+	void GlobalStorage::EnsureFinalized()
 	{
-		if (GetGlobalStorageManager().storages)
+		if (initialized)
 		{
-			for (vint i = 0; i < GetGlobalStorageManager().storages->Count(); i++)
-			{
-				GetGlobalStorageManager().storages->Values().Get(i)->ClearResource();
-			}
-			GetGlobalStorageManager().storages = nullptr;
+			initialized = false;
+			FinalizeResource();
 		}
 	}
 }
@@ -1217,12 +1206,6 @@ UnitTest
 
 		namespace execution_impl
 		{
-			struct UnitTestLink
-			{
-				const char*					fileName;
-				UnitTestFileProc			testProc = nullptr;
-				UnitTestLink*				next = nullptr;
-			};
 			UnitTestLink*					testHead = nullptr;
 			UnitTestLink**					testTail = &testHead;
 
@@ -1383,10 +1366,6 @@ UnitTest
 			}
 
 			{
-				auto current = testHead;
-				testHead = nullptr;
-				testTail = nullptr;
-
 				UnitTestContext context;
 				testContext = &context;
 				totalFiles = 0;
@@ -1403,18 +1382,17 @@ UnitTest
 					PrintMessage(L"Failures are not suppressed.", MessageKind::Info);
 				}
 
+				auto current = testHead;
 				while (current)
 				{
 					context.failed = false;
-					PrintMessage(atow(current->fileName), MessageKind::File);
+					PrintMessage(atow(AString::Unmanaged(current->fileName)), MessageKind::File);
 					context.indentation = L"    ";
 					ExecuteAndSuppressFailure(current->testProc);
 					if (!testContext->failed) passedFiles++;
 					totalFiles++;
 					context.indentation = L"";
-					auto temp = current;
 					current = current->next;
-					delete temp;
 				}
 
 				bool passed = totalFiles == passedFiles;
@@ -1464,11 +1442,8 @@ UnitTest
 			}
 		}
 
-		void UnitTest::RegisterTestFile(const char* fileName, UnitTestFileProc testProc)
+		void UnitTest::RegisterTestFile(UnitTestLink* link)
 		{
-			auto link = new UnitTestLink;
-			link->fileName = fileName;
-			link->testProc = testProc;
 			*testTail = link;
 			testTail = &link->next;
 		}

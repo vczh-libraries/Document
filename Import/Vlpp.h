@@ -22,7 +22,7 @@ Licensed under https://github.com/vczh-libraries/License
 #define new VCZH_CHECK_MEMORY_LEAKS_NEW
 #endif
 
-#if defined _WIN64 || __x86_64 || __LP64__
+#if defined _WIN64 || defined __x86_64 || defined __LP64__ || defined __aarch64__ || defined _M_ARM64
 #define VCZH_64
 #endif
 
@@ -33,6 +33,10 @@ Licensed under https://github.com/vczh-libraries/License
 #if defined(__APPLE__)
 #define VCZH_APPLE
 #endif
+#endif
+
+#if defined __arm__ || defined __aarch64__ || defined _M_ARM || defined _M_ARM64
+#define VCZH_ARM
 #endif
 
 #if defined VCZH_MSVC
@@ -49,10 +53,14 @@ static_assert(sizeof(wchar_t) == sizeof(char32_t), "wchar_t is not UTF-32.");
 static_assert(false, "wchar_t configuration is not right.");
 #endif
 
-#if defined VCZH_MSVC
+#if defined VCZH_ARM
+#elif defined VCZH_MSVC
 #include <intrin.h>
 #elif defined VCZH_GCC
 #include <x86intrin.h>
+#endif
+
+#if defined VCZH_GCC
 #include <stdint.h>
 #include <stddef.h>
 #include <wchar.h>
@@ -79,6 +87,8 @@ static_assert(false, "wchar_t configuration is not right.");
 
 #include <type_traits>
 #include <utility>
+#include <compare>
+#include <new>
 
 #define L_(x) L__(x)
 #define L__(x) L ## x
@@ -148,6 +158,9 @@ x86 and x64 Compatbility
 #if defined VCZH_MSVC
 #define INCRC(x)	(_InterlockedIncrement64(x))
 #define DECRC(x)	(_InterlockedDecrement64(x))
+#elif defined VCZH_ARM
+#define INCRC(x)	(__atomic_add_fetch(x, 1, __ATOMIC_SEQ_CST))
+#define DECRC(x)	(__atomic_sub_fetch(x, 1, __ATOMIC_SEQ_CST))
 #elif defined VCZH_GCC
 #define INCRC(x)	(__sync_add_and_fetch(x, 1))
 #define DECRC(x)	(__sync_sub_and_fetch(x, 1))
@@ -164,6 +177,9 @@ x86 and x64 Compatbility
 #if defined VCZH_MSVC
 #define INCRC(x)	(_InterlockedIncrement((volatile long*)(x)))
 #define DECRC(x)	(_InterlockedDecrement((volatile long*)(x)))
+#elif defined VCZH_ARM
+#define INCRC(x)	(__atomic_add_fetch(x, 1, __ATOMIC_SEQ_CST))
+#define DECRC(x)	(__atomic_sub_fetch(x, 1, __ATOMIC_SEQ_CST))
 #elif defined VCZH_GCC
 #define INCRC(x)	(__sync_add_and_fetch(x, 1))
 #define DECRC(x)	(__sync_sub_and_fetch(x, 1))
@@ -202,6 +218,24 @@ Basic Types
 	{
 	};
 
+	template<vint Index, typename TTuple>
+	struct TypeTupleItemRetriver;
+
+	template<vint Index, typename T, typename ...TArgs>
+	struct TypeTupleItemRetriver<Index, TypeTuple<T, TArgs...>>
+	{
+		using Type = typename TypeTupleItemRetriver<Index - 1, TypeTuple<TArgs...>>::Type;
+	};
+
+	template<typename T, typename ...TArgs>
+	struct TypeTupleItemRetriver<0, TypeTuple<T, TArgs...>>
+	{
+		using Type = T;
+	};
+
+	template<vint Index, typename TTuple>
+	using TypeTupleElement = typename TypeTupleItemRetriver<Index, TTuple>::Type;
+
 	/// <summary>
 	/// Base type of all classes.
 	/// This type has a virtual destructor, making all derived classes destructors virtual.
@@ -211,174 +245,6 @@ Basic Types
 	{
 	public:
 		virtual ~Object() = default;
-	};
-
-	/// <summary>Type for representing nullable data.</summary>
-	/// <typeparam name="T">Type of the data, typically it is a value type, or [T:vl.Ptr`1] could be used here.</typeparam>
-	template<typename T>
-	class Nullable
-	{
-	private:
-		T*					object = nullptr;
-	public:
-		/// <summary>Create a null value.</summary>
-		Nullable() = default;
-
-		/// <summary>Create a non-null value by copying data.</summary>
-		/// <param name="value">The data to copy.</param>
-		Nullable(const T& value)
-			:object(new T(value))
-		{
-		}
-
-		/// <summary>Create a non-null value by moving data.</summary>
-		/// <param name="value">The data to move.</param>
-		Nullable(T&& value)
-			:object(new T(std::move(value)))
-		{
-		}
-
-		/// <summary>Create a nullable value by copying from another nullable value.</summary>
-		/// <param name="nullable">The nullable value to copy.</param>
-		Nullable(const Nullable<T>& nullable)
-			:object(nullable.object ? new T(*nullable.object) : nullptr)
-		{
-		}
-
-		/// <summary>Create a nullable value by moving from another nullable value.</summary>
-		/// <param name="nullable">The nullable value to move.</param>
-		Nullable(Nullable<T>&& nullable)
-			:object(nullable.object)
-		{
-			nullable.object = nullptr;
-		}
-
-		~Nullable()
-		{
-			if (object) delete object;
-		}
-
-		/// <summary>Replace the data inside this nullable value by copying from data.</summary>
-		/// <returns>The nullable value itself.</returns>
-		/// <param name="value">The data to copy.</param>
-		Nullable<T>& operator=(const T& value)
-		{
-			if (object) delete object;
-			object = new T(value);
-			return *this;
-		}
-
-		/// <summary>Replace the data inside this nullable value by copying from another nullable value.</summary>
-		/// <returns>The nullable value itself.</returns>
-		/// <param name="nullable">The nullable value to copy.</param>
-		Nullable<T>& operator=(const Nullable<T>& nullable)
-		{
-			if (this != &nullable)
-			{
-				if (object) delete object;
-				if (nullable.object)
-				{
-					object = new T(*nullable.object);
-				}
-				else
-				{
-					object = nullptr;
-				}
-			}
-			return *this;
-		}
-
-		/// <summary>Replace the data inside this nullable value by moving from another nullable value.</summary>
-		/// <returns>The nullable value itself.</returns>
-		/// <param name="nullable">The nullable value to move.</param>
-		Nullable<T>& operator=(Nullable<T>&& nullable)
-		{
-			if (this != &nullable)
-			{
-				if (object) delete object;
-				object = nullable.object;
-				nullable.object = nullptr;
-			}
-			return *this;
-		}
-
-		/// <summary>Comparing two nullable values.</summary>
-		/// <returns>Returns true when these nullable values are all null, or the data inside them equals.</returns>
-		/// <param name="a">The first nullable value to compare.</param>
-		/// <param name="b">The second nullable value to compare.</param>
-		static bool Equals(const Nullable<T>& a, const Nullable<T>& b)
-		{
-			if (!a.object && !b.object) return true;
-			if (a.object && b.object) return *a.object == *b.object;
-			return false;
-		}
-
-		/// <summary>Comparing two nullable values.</summary>
-		/// <returns>
-		/// Returns a positive value when the first value is greater than the second value.
-		/// Returns a negative value when the first value is lesser than the second value.
-		/// Returns zero when the two values equal.
-		/// When one is null and another one is not, the non-null one is greater.
-		/// </returns>
-		/// <param name="a">The first nullable value to compare.</param>
-		/// <param name="b">The second nullable value to compare.</param>
-		static vint Compare(const Nullable<T>& a, const Nullable<T>& b)
-		{
-			if (a.object && b.object)
-			{
-				if (*a.object > *b.object) return 1;
-				if (*a.object < *b.object) return -1;
-				return 0;
-			}
-			if (a.object) return 1;
-			if (b.object) return -1;
-			return 0;
-		}
-
-		bool operator==(const Nullable<T>& nullable)const
-		{
-			return Equals(*this, nullable);
-		}
-
-		bool operator!=(const Nullable<T>& nullable)const
-		{
-			return !Equals(*this, nullable);
-		}
-
-		bool operator<(const Nullable<T>& nullable)const
-		{
-			return Compare(*this, nullable) < 0;
-		}
-
-		bool operator<=(const Nullable<T>& nullable)const
-		{
-			return Compare(*this, nullable) <= 0;
-		}
-
-		bool operator>(const Nullable<T>& nullable)const
-		{
-			return Compare(*this, nullable) > 0;
-		}
-
-		bool operator>=(const Nullable<T>& nullable)const
-		{
-			return Compare(*this, nullable) >= 0;
-		}
-
-		/// <summary>Test if this nullable value is non-null.</summary>
-		/// <returns>Returns true if it is non-null.</returns>
-		operator bool()const
-		{
-			return object != nullptr;
-		}
-
-		/// <summary>Return the data inside this nullable value</summary>
-		/// <returns>The data inside this nullable value. It crashes when it is null.</returns>
-		const T& Value()const
-		{
-			if (!object) throw Error(L"Nullable<T>::Value()#Cannot unbox from null.");
-			return *object;
-		}
 	};
 
 	template<typename T, size_t minSize>
@@ -433,287 +299,6 @@ Interface
 
 #endif
 
-
-/***********************************************************************
-.\COLLECTIONS\PAIR.H
-***********************************************************************/
-/***********************************************************************
-Author: Zihan Chen (vczh)
-Licensed under https://github.com/vczh-libraries/License
-***********************************************************************/
-
-#ifndef VCZH_COLLECTIONS_PAIR
-#define VCZH_COLLECTIONS_PAIR
-
-
-namespace vl
-{
-	namespace collections
-	{
-		template<typename K, typename V>
-		class Pair;
-
-		/// <summary>A type representing a pair of key and value.</summary>
-		/// <typeparam name="K">Type of the key.</typeparam>
-		/// <typeparam name="V">Type of the value.</typeparam>
-		template<typename K, typename V>
-		class Pair
-		{
-		public:
-			/// <summary>The key.</summary>
-			K				key;
-			/// <summary>The value.</summary>
-			V				value;
-
-			Pair() = default;
-
-			template<typename TKey, typename TValue>
-			Pair(TKey&& _key, TValue&& _value)
-				: key(std::forward<TKey&&>(_key))
-				, value(std::forward<TValue&&>(_value))
-			{
-			}
-
-			Pair(const K& _key, const V& _value)
-				: key(_key)
-				, value(_value)
-			{
-			}
-
-			Pair(const K& _key, V&& _value)
-				: key(_key)
-				, value(std::move(_value))
-			{
-			}
-
-			Pair(K&& _key, const V& _value)
-				: key(std::move(_key))
-				, value(_value)
-			{
-			}
-
-			Pair(K&& _key, V&& _value)
-				: key(std::move(_key))
-				, value(std::move(_value))
-			{
-			}
-
-			Pair(const Pair<const K&, const V&>& pair)
-				: key(pair.key)
-				, value(pair.value)
-			{
-			}
-
-			Pair(const Pair<K, V>& pair)
-				: key(pair.key)
-				, value(pair.value)
-			{
-			}
-
-			Pair(Pair<K, V>&& pair)
-				: key(std::move(pair.key))
-				, value(std::move(pair.value))
-			{
-			}
-
-			Pair<K, V>& operator=(const Pair<K, V>& pair)
-			{
-				key = pair.key;
-				value = pair.value;
-				return *this;
-			}
-
-			Pair<K, V>& operator=(Pair<K, V>&& pair)
-			{
-				key = std::move(pair.key);
-				value = std::move(pair.value);
-				return *this;
-			}
-
-			template<typename K2, typename V2>
-			auto CompareTo(const Pair<K2, V2>& pair) const -> std::enable_if_t<
-				std::is_same_v<std::remove_cvref_t<K>, std::remove_cvref_t<K2>> &&
-				std::is_same_v<std::remove_cvref_t<V>, std::remove_cvref_t<V2>>,
-				vint>
-			{
-				if (key < pair.key)
-				{
-					return -1;
-				}
-				else if (key > pair.key)
-				{
-					return 1;
-				}
-				else if (value < pair.value)
-				{
-					return -1;
-				}
-				else if (value > pair.value)
-				{
-					return 1;
-				}
-				else
-				{
-					return 0;
-				}
-			}
-
-			template<typename TPair>
-			bool operator==(TPair&& pair)const
-			{
-				return CompareTo(std::forward<TPair&&>(pair)) == 0;
-			}
-
-			template<typename TPair>
-			bool operator!=(TPair&& pair)const
-			{
-				return CompareTo(std::forward<TPair&&>(pair)) != 0;
-			}
-
-			template<typename TPair>
-			bool operator<(TPair&& pair)const
-			{
-				return CompareTo(std::forward<TPair&&>(pair)) < 0;
-			}
-
-			template<typename TPair>
-			bool operator<=(TPair&& pair)const
-			{
-				return CompareTo(std::forward<TPair&&>(pair)) <= 0;
-			}
-
-			template<typename TPair>
-			bool operator>(TPair&& pair)const
-			{
-				return CompareTo(std::forward<TPair&&>(pair)) > 0;
-			}
-
-			template<typename TPair>
-			bool operator>=(TPair&& pair)const
-			{
-				return CompareTo(std::forward<TPair&&>(pair)) >= 0;
-			}
-		};
-
-		template<typename K, typename V>
-		class Pair<const K&, const V&>
-		{
-		public:
-			const K&		key;
-			const V&		value;
-
-#if defined(__clang__)
-#pragma clang dignostic push
-#pragma clang diagnostic ignored "-Wnull-dereference"
-#elif defined(__GNUC__)
-#pragma GCC dignostic push
-#pragma GCC diagnostic ignored "-Wnull-dereference"
-#endif
-			Pair()
-				: key(*(const K*)nullptr)
-				, value(*(const V*)nullptr)
-			{
-			}
-#if defined(__clang__)
-#pragma clang dignostic pop
-#elif defined(__GNUC__)
-#pragma GCC dignostic popd
-#endif
-
-			Pair(const K& _key, const V& _value)
-				: key(_key)
-				, value(_value)
-			{
-			}
-
-			Pair(const Pair<const K&, const V&>& pair)
-				: key(pair.key)
-				, value(pair.value)
-			{
-			}
-
-			Pair<const K&, const V&>& operator=(const Pair<const K&, const V&>& pair)
-			{
-
-#ifdef VCZH_CHECK_MEMORY_LEAKS_NEW
-#undef new
-#endif
-				this->~Pair<const K&, const V&>();
-				new(this) Pair<const K&, const V&>(pair);
-				return *this;
-#ifdef VCZH_CHECK_MEMORY_LEAKS_NEW
-#define new VCZH_CHECK_MEMORY_LEAKS_NEW
-#endif
-			}
-
-			template<typename K2, typename V2>
-			auto CompareTo(const Pair<K2, V2>& pair) const -> std::enable_if_t<
-				std::is_same_v<std::remove_cvref_t<K>, std::remove_cvref_t<K2>>&&
-				std::is_same_v<std::remove_cvref_t<V>, std::remove_cvref_t<V2>>,
-				vint>
-			{
-				if (key < pair.key)
-				{
-					return -1;
-				}
-				else if (key > pair.key)
-				{
-					return 1;
-				}
-				else if (value < pair.value)
-				{
-					return -1;
-				}
-				else if (value > pair.value)
-				{
-					return 1;
-				}
-				else
-				{
-					return 0;
-				}
-			}
-
-			template<typename TPair>
-			bool operator==(TPair&& pair)const
-			{
-				return CompareTo(std::forward<TPair&&>(pair)) == 0;
-			}
-
-			template<typename TPair>
-			bool operator!=(TPair&& pair)const
-			{
-				return CompareTo(std::forward<TPair&&>(pair)) != 0;
-			}
-
-			template<typename TPair>
-			bool operator<(TPair&& pair)const
-			{
-				return CompareTo(std::forward<TPair&&>(pair)) < 0;
-			}
-
-			template<typename TPair>
-			bool operator<=(TPair&& pair)const
-			{
-				return CompareTo(std::forward<TPair&&>(pair)) <= 0;
-			}
-
-			template<typename TPair>
-			bool operator>(TPair&& pair)const
-			{
-				return CompareTo(std::forward<TPair&&>(pair)) > 0;
-			}
-
-			template<typename TPair>
-			bool operator>=(TPair&& pair)const
-			{
-				return CompareTo(std::forward<TPair&&>(pair)) >= 0;
-			}
-		};
-	}
-}
-
-#endif
 
 /***********************************************************************
 .\PRIMITIVES\DATETIME.H
@@ -813,17 +398,258 @@ Date and Time
 		/// <param name="milliseconds">The delta in milliseconds.</param>
 		DateTime			Backward(vuint64_t milliseconds);
 
-		bool operator==(const DateTime& value)const { return filetime == value.filetime; }
-		bool operator!=(const DateTime& value)const { return filetime != value.filetime; }
-		bool operator<(const DateTime& value)const { return filetime < value.filetime; }
-		bool operator<=(const DateTime& value)const { return filetime <= value.filetime; }
-		bool operator>(const DateTime& value)const { return filetime > value.filetime; }
-		bool operator>=(const DateTime& value)const { return filetime >= value.filetime; }
+		std::strong_ordering operator<=>(const DateTime& value) const
+		{
+			return filetime <=> value.filetime;
+		}
+
+		bool operator==(const DateTime& value) const
+		{
+			return operator<=>(value) == 0;
+		}
 	};
 }
 
 #endif
 
+
+/***********************************************************************
+.\PRIMITIVES\NULLABLE.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_NULLABLE
+#define VCZH_NULLABLE
+
+
+#ifdef VCZH_CHECK_MEMORY_LEAKS_NEW
+#undef new
+#endif
+
+namespace vl
+{
+	/// <summary>Type for representing nullable data.</summary>
+	/// <typeparam name="T">Type of the data, typically it is a value type, or [T:vl.Ptr`1] could be used here.</typeparam>
+	template<typename T>
+	class Nullable
+	{
+	private:
+		union
+		{
+			char buffer[sizeof(T)];
+			T object;
+		};
+		bool								initialized = false;
+
+	public:
+		static const Nullable<T>			Empty;
+
+		/// <summary>Create a null value.</summary>
+		Nullable()
+		{
+		}
+
+		/// <summary>Create a non-null value by copying data.</summary>
+		/// <param name="value">The data to copy.</param>
+		Nullable(const T& value)
+			: initialized(true)
+		{
+			new (&object)T(value);
+		}
+
+		/// <summary>Create a non-null value by moving data.</summary>
+		/// <param name="value">The data to move.</param>
+		Nullable(T&& value)
+			: initialized(true)
+		{
+			new (&object)T(std::move(value));
+		}
+
+		/// <summary>Create a nullable value by copying from another nullable value.</summary>
+		/// <param name="nullable">The nullable value to copy.</param>
+		Nullable(const Nullable<T>& nullable)
+			: initialized(nullable.initialized)
+		{
+			if (nullable.initialized)
+			{
+				new (&object)T(nullable.object);
+			}
+		}
+
+		/// <summary>Create a nullable value by moving from another nullable value.</summary>
+		/// <param name="nullable">The nullable value to move.</param>
+		Nullable(Nullable<T>&& nullable)
+			: initialized(nullable.initialized)
+		{
+			if (nullable.initialized)
+			{
+				new (&object)T(std::move(nullable.object));
+				nullable.Reset();
+			}
+		}
+
+		~Nullable()
+		{
+			Reset();
+		}
+
+		/// <summary>
+		/// Remove the contained data.
+		/// </summary>
+		void Reset()
+		{
+			if (initialized)
+			{
+				object.~T();
+				initialized = false;
+			}
+		}
+
+		/// <summary>Replace the data inside this nullable value by copying from data.</summary>
+		/// <returns>The nullable value itself.</returns>
+		/// <param name="value">The data to copy.</param>
+		Nullable<T>& operator=(const T& value)
+		{
+			if constexpr (std::is_copy_assignable_v<T>)
+			{
+				if (initialized)
+				{
+					object = value;
+					return *this;
+				}
+			}
+
+			Reset();
+			new (&object)T(value);
+			initialized = true;
+			return *this;
+		}
+
+		/// <summary>Replace the data inside this nullable value by moving from data.</summary>
+		/// <returns>The nullable value itself.</returns>
+		/// <param name="value">The data to copy.</param>
+		Nullable<T>& operator=(T&& value)
+		{
+			if constexpr (std::is_move_assignable_v<T>)
+			{
+				if (initialized)
+				{
+					object = std::move(value);
+					return *this;
+				}
+			}
+
+			Reset();
+			new (&object)T(std::move(value));
+			initialized = true;
+			return *this;
+		}
+
+		/// <summary>Replace the data inside this nullable value by copying from another nullable value.</summary>
+		/// <returns>The nullable value itself.</returns>
+		/// <param name="nullable">The nullable value to copy.</param>
+		Nullable<T>& operator=(const Nullable<T>& nullable)
+		{
+			if (!nullable.initialized)
+			{
+				Reset();
+			}
+			else
+			{
+				if constexpr (std::is_copy_assignable_v<T>)
+				{
+					if (initialized)
+					{
+						object = nullable.object;
+						return *this;
+					}
+				}
+
+				Reset();
+				new (&object)T(nullable.object);
+				initialized = true;
+			}
+			return *this;
+		}
+
+		/// <summary>Replace the data inside this nullable value by moving from another nullable value.</summary>
+		/// <returns>The nullable value itself.</returns>
+		/// <param name="nullable">The nullable value to move.</param>
+		Nullable<T>& operator=(Nullable<T>&& nullable)
+		{
+			if (!nullable.initialized)
+			{
+				Reset();
+			}
+			else
+			{
+				if constexpr (std::is_move_assignable_v<T>)
+				{
+					if (initialized)
+					{
+						object = std::move(nullable.object);
+						nullable.Reset();
+						return *this;
+					}
+				}
+
+				Reset();
+				new (&object)T(std::move(nullable.object));
+				nullable.Reset();
+				initialized = true;
+			}
+			return *this;
+		}
+
+		/// <summary>Comparing two nullable values.</summary>
+		/// <returns>
+		/// Returns std::strong_ordering indicating the order of the two values.
+		/// When one is null and another one is not, the non-null one is greater.
+		/// </returns>
+		/// <param name="a">The first nullable value to compare.</param>
+		/// <param name="b">The second nullable value to compare.</param>
+		std::strong_ordering operator<=>(const Nullable<T>& b)const
+		{
+			if (initialized && b.initialized) return object <=> b.object;
+			if (initialized) return std::strong_ordering::greater;
+			if (b.initialized) return std::strong_ordering::less;
+			return std::strong_ordering::equal;
+		}
+
+		bool operator==(const Nullable<T>& b)const
+		{
+			if (initialized && b.initialized) return object == b.object;
+			return initialized == b.initialized;
+		}
+
+		/// <summary>Test if this nullable value is non-null.</summary>
+		/// <returns>Returns true if it is non-null.</returns>
+		operator bool()const
+		{
+			return initialized;
+		}
+
+		/// <summary>Return the data inside this nullable value</summary>
+		/// <returns>The data inside this nullable value. It crashes when it is null.</returns>
+		const T& Value()const
+		{
+			CHECK_ERROR(initialized, L"vl::Nullable<T>::Value()#Cannot unbox from an empty nullable value.");
+			return object;
+		}
+	};
+
+	template<typename T>
+	const Nullable<T> Nullable<T>::Empty;
+}
+
+#ifdef VCZH_CHECK_MEMORY_LEAKS_NEW
+#define new VCZH_CHECK_MEMORY_LEAKS_NEW
+#endif
+
+#endif
 
 /***********************************************************************
 .\PRIMITIVES\POINTER.H
@@ -956,9 +782,12 @@ Ptr
 		/// <summary>Create a null pointer.</summary>
 		Ptr() = default;
 
+		/// <summary>Create a null pointer.</summary>
+		Ptr(std::nullptr_t) {};
+
 		/// <summary>Convert a pointer to an object to a shared pointer.</summary>
 		/// <param name="pointer">The pointer to the object.</param>
-		Ptr(T* pointer)
+		explicit Ptr(T* pointer)
 		{
 			if (pointer)
 			{
@@ -995,8 +824,8 @@ Ptr
 		/// <summary>Cast a shared pointer implicitly by copying another shared pointer.</summary>
 		/// <typeparam name="C">The type of the object before casting.</typeparam>
 		/// <param name="pointer">The shared pointer to cast.</param>
-		template<typename C, typename=std::enable_if_t<std::is_convertible_v<C*, T*>>>
-		Ptr(const Ptr<C>& pointer)
+		template<typename C>
+		Ptr(const Ptr<C>& pointer) requires (std::is_convertible_v<C*, T*>)
 		{
 			if (auto converted = pointer.Obj())
 			{
@@ -1011,8 +840,8 @@ Ptr
 		/// <summary>Cast a shared pointer implicitly by moving another shared pointer.</summary>
 		/// <typeparam name="C">The type of the object before casting.</typeparam>
 		/// <param name="pointer">The shared pointer to cast.</param>
-		template<typename C, typename = std::enable_if_t<std::is_convertible_v<C*, T*>>>
-		Ptr(Ptr<C>&& pointer)
+		template<typename C>
+		Ptr(Ptr<C>&& pointer) requires (std::is_convertible_v<C*, T*>)
 		{
 			if (auto converted = pointer.Obj())
 			{
@@ -1051,24 +880,13 @@ Ptr
 			return Ptr<C>((converted ? counter : 0), converted, originalReference, originalDestructor);
 		}
 
-		/// <summary>Replace the object inside this shared pointer.</summary>
+		/// <summary>Replace by nullptr.</summary>
 		/// <returns>The shared pointer itself.</returns>
-		/// <param name="pointer">The pointer to the new object.</param>
-		Ptr<T>& operator=(T* pointer)
+		/// <param name="pointer">The nullptr.</param>
+		Ptr<T>& operator=(std::nullptr_t)
 		{
 			Dec();
-			if (pointer)
-			{
-				counter = ReferenceCounterOperator<T>::CreateCounter(pointer);
-				reference = pointer;
-				originalReference = pointer;
-				originalDestructor = &ReferenceCounterOperator<T>::DeleteReference;
-				Inc();
-			}
-			else
-			{
-				SetEmptyNoIncDec();
-			}
+			SetEmptyNoIncDec();
 			return *this;
 		}
 
@@ -1106,71 +924,31 @@ Ptr
 			return *this;
 		}
 
-		bool operator==(const T* pointer)const
+		std::strong_ordering operator<=>(const T* pointer)const
 		{
-			return reference == pointer;
+			return reference <=> pointer;
 		}
 
-		bool operator!=(const T* pointer)const
+		std::strong_ordering operator<=>(const Ptr<T>& pointer)const
 		{
-			return reference != pointer;
+			return reference <=> pointer.reference;
 		}
 
-		bool operator>(const T* pointer)const
+		bool operator==(const T* value) const
 		{
-			return reference > pointer;
+			return operator<=>(value) == 0;
 		}
 
-		bool operator>=(const T* pointer)const
+		bool operator==(const Ptr<T>& value) const
 		{
-			return reference >= pointer;
-		}
-
-		bool operator<(const T* pointer)const
-		{
-			return reference < pointer;
-		}
-
-		bool operator<=(const T* pointer)const
-		{
-			return reference <= pointer;
-		}
-
-		bool operator==(const Ptr<T>& pointer)const
-		{
-			return reference == pointer.reference;
-		}
-
-		bool operator!=(const Ptr<T>& pointer)const
-		{
-			return reference != pointer.reference;
-		}
-
-		bool operator>(const Ptr<T>& pointer)const
-		{
-			return reference > pointer.reference;
-		}
-
-		bool operator>=(const Ptr<T>& pointer)const
-		{
-			return reference >= pointer.reference;
-		}
-
-		bool operator<(const Ptr<T>& pointer)const
-		{
-			return reference < pointer.reference;
-		}
-
-		bool operator<=(const Ptr<T>& pointer)const
-		{
-			return reference <= pointer.reference;
+			return operator<=>(value) == 0;
 		}
 
 		/// <summary>Test if it is an empty shared pointer.</summary>
 		/// <returns>Returns true if it is non-null.</returns>
 		operator bool()const
 		{
-			return reference != 0;
+			return reference != nullptr;
 		}
 
 		/// <summary>Get the pointer to the contained object.</summary>
@@ -1188,6 +966,9 @@ Ptr
 		}
 	};
 
+	template<typename C>
+	Ptr(C*) -> Ptr<C>;
+
 /***********************************************************************
 ComPtr
 ***********************************************************************/
@@ -1196,12 +977,18 @@ ComPtr
 	class ComPtr
 	{
 	protected:
-		volatile vint*		counter;
-		T*					reference;
+		volatile vint* counter = nullptr;
+		T* reference = nullptr;
+
+		void SetEmpty()
+		{
+			counter = nullptr;
+			reference = nullptr;
+		}
 
 		void Inc()
 		{
-			if(counter)
+			if (counter)
 			{
 				INCRC(counter);
 			}
@@ -1209,14 +996,13 @@ ComPtr
 
 		void Dec()
 		{
-			if(counter)
+			if (counter)
 			{
-				if(DECRC(counter)==0)
+				if (DECRC(counter) == 0)
 				{
 					delete counter;
 					reference->Release();
-					counter=0;
-					reference=0;
+					SetEmpty();
 				}
 			}
 		}
@@ -1228,46 +1014,40 @@ ComPtr
 
 		ComPtr(volatile vint* _counter, T* _reference)
 			:counter(_counter)
-			,reference(_reference)
+			, reference(_reference)
 		{
 			Inc();
 		}
 	public:
 
-		ComPtr()
-		{
-			counter=0;
-			reference=0;
-		}
+		ComPtr() = default;
+		ComPtr(std::nullptr_t) {}
 
 		ComPtr(T* pointer)
 		{
-			if(pointer)
+			if (pointer)
 			{
-				counter=new volatile vint(1);
-				reference=pointer;
+				counter = new volatile vint(1);
+				reference = pointer;
 			}
 			else
 			{
-				counter=0;
-				reference=0;
+				SetEmpty();
 			}
 		}
 
 		ComPtr(const ComPtr<T>& pointer)
 		{
-			counter=pointer.counter;
-			reference=pointer.reference;
+			counter = pointer.counter;
+			reference = pointer.reference;
 			Inc();
 		}
 
 		ComPtr(ComPtr<T>&& pointer)
 		{
-			counter=pointer.counter;
-			reference=pointer.reference;
-			
-			pointer.counter=0;
-			pointer.reference=0;
+			counter = pointer.counter;
+			reference = pointer.reference;
+			pointer.SetEmpty();
 		}
 
 		~ComPtr()
@@ -1275,29 +1055,35 @@ ComPtr
 			Dec();
 		}
 
+		ComPtr<T>& operator=(std::nullptr_t)
+		{
+			Dec();
+			SetEmpty();
+			return *this;
+		}
+
 		ComPtr<T>& operator=(T* pointer)
 		{
 			Dec();
-			if(pointer)
+			if (pointer)
 			{
-				counter=new vint(1);
-				reference=pointer;
+				counter = new vint(1);
+				reference = pointer;
 			}
 			else
 			{
-				counter=0;
-				reference=0;
+				SetEmpty();
 			}
 			return *this;
 		}
 
 		ComPtr<T>& operator=(const ComPtr<T>& pointer)
 		{
-			if(this!=&pointer)
+			if (this != &pointer)
 			{
 				Dec();
-				counter=pointer.counter;
-				reference=pointer.reference;
+				counter = pointer.counter;
+				reference = pointer.reference;
 				Inc();
 			}
 			return *this;
@@ -1305,81 +1091,39 @@ ComPtr
 
 		ComPtr<T>& operator=(ComPtr<T>&& pointer)
 		{
-			if(this!=&pointer)
+			if (this != &pointer)
 			{
 				Dec();
-				counter=pointer.counter;
-				reference=pointer.reference;
-				
-				pointer.counter=0;
-				pointer.reference=0;
+				counter = pointer.counter;
+				reference = pointer.reference;
+				pointer.SetEmpty();
 			}
 			return *this;
 		}
 
-		bool operator==(const T* pointer)const
+		std::strong_ordering operator<=>(const T* pointer)const
 		{
-			return reference==pointer;
+			return reference <=> pointer;
 		}
 
-		bool operator!=(const T* pointer)const
+		std::strong_ordering operator<=>(const ComPtr<T>& pointer)const
 		{
-			return reference!=pointer;
+			return reference <=> pointer.reference;
 		}
 
-		bool operator>(const T* pointer)const
+		bool operator==(const T* value) const
 		{
-			return reference>pointer;
+			return operator<=>(value) == 0;
 		}
 
-		bool operator>=(const T* pointer)const
+		bool operator==(const ComPtr<T>& value) const
 		{
-			return reference>=pointer;
-		}
-
-		bool operator<(const T* pointer)const
-		{
-			return reference<pointer;
-		}
-
-		bool operator<=(const T* pointer)const
-		{
-			return reference<=pointer;
-		}
-
-		bool operator==(const ComPtr<T>& pointer)const
-		{
-			return reference==pointer.reference;
-		}
-
-		bool operator!=(const ComPtr<T>& pointer)const
-		{
-			return reference!=pointer.reference;
-		}
-
-		bool operator>(const ComPtr<T>& pointer)const
-		{
-			return reference>pointer.reference;
-		}
-
-		bool operator>=(const ComPtr<T>& pointer)const
-		{
-			return reference>=pointer.reference;
-		}
-
-		bool operator<(const ComPtr<T>& pointer)const
-		{
-			return reference<pointer.reference;
-		}
-
-		bool operator<=(const ComPtr<T>& pointer)const
-		{
-			return reference<=pointer.reference;
+			return operator<=>(value) == 0;
 		}
 
 		operator bool()const
 		{
-			return reference!=0;
+			return reference != nullptr;
 		}
 
 		T* Obj()const
@@ -1393,11 +1137,8 @@ ComPtr
 		}
 	};
 
-	template<typename T, typename ...TArgs>
-	Ptr<T> MakePtr(TArgs ...args)
-	{
-		return new T(args...);
-	}
+	template<typename C>
+	ComPtr(C*) ->ComPtr<C>;
 
 /***********************************************************************
 Traits
@@ -1424,6 +1165,631 @@ Traits
 			return key.Obj();
 		}
 	};
+}
+
+#endif
+
+/***********************************************************************
+.\PRIMITIVES\FUNCTION.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_FUNCTION
+#define VCZH_FUNCTION
+#include <memory.h>
+namespace vl
+{
+	template<typename T>
+	class Func;
+ 
+/***********************************************************************
+vl::Func<R(TArgs...)>
+***********************************************************************/
+
+	namespace internal_invokers
+	{
+		template<typename R, typename ...TArgs>
+		class Invoker : public Object
+		{
+		public:
+			virtual R Invoke(TArgs&& ...args) = 0;
+		};
+
+		//------------------------------------------------------
+		
+		template<typename R, typename ...TArgs>
+		class StaticInvoker : public Invoker<R, TArgs...>
+		{
+		protected:
+			R(*function)(TArgs ...args);
+
+		public:
+			StaticInvoker(R(*_function)(TArgs...))
+				:function(_function)
+			{
+			}
+
+			R Invoke(TArgs&& ...args)override
+			{
+				return function(std::forward<TArgs>(args)...);
+			}
+		};
+
+		//------------------------------------------------------
+		
+		template<typename C, typename R, typename ...TArgs>
+		class MemberInvoker : public Invoker<R, TArgs...>
+		{
+		protected:
+			C*							sender;
+			R(C::*function)(TArgs ...args);
+
+		public:
+			MemberInvoker(C* _sender, R(C::*_function)(TArgs ...args))
+				:sender(_sender)
+				,function(_function)
+			{
+			}
+
+			R Invoke(TArgs&& ...args)override
+			{
+				return (sender->*function)(std::forward<TArgs>(args)...);
+			}
+		};
+
+		//------------------------------------------------------
+
+		template<typename C, typename R, typename ...TArgs>
+		class ObjectInvoker : public Invoker<R, TArgs...>
+		{
+		protected:
+			C							function;
+
+		public:
+			ObjectInvoker(const C& _function)
+				:function(_function)
+			{
+			}
+
+			ObjectInvoker(C&& _function)
+				:function(std::move(_function))
+			{
+			}
+
+			R Invoke(TArgs&& ...args)override
+			{
+				return function(std::forward<TArgs>(args)...);
+			}
+		};
+
+		//------------------------------------------------------
+
+		template<typename C, typename ...TArgs>
+		class ObjectInvoker<C, void, TArgs...> : public Invoker<void, TArgs...>
+		{
+		protected:
+			C							function;
+
+		public:
+			ObjectInvoker(const C& _function)
+				:function(_function)
+			{
+			}
+
+			ObjectInvoker(C&& _function)
+				:function(std::move(_function))
+			{
+			}
+
+			void Invoke(TArgs&& ...args)override
+			{
+				function(std::forward<TArgs>(args)...);
+			}
+		};
+	}
+
+	/// <summary>A type for functors.</summary>
+	/// <typeparam name="R">The return type.</typeparam>
+	/// <typeparam name="TArgs">Types of parameters.</typeparam>
+	template<typename R, typename ...TArgs>
+	class Func<R(TArgs...)> : public Object
+	{
+	protected:
+		Ptr<internal_invokers::Invoker<R, TArgs...>>		invoker;
+
+		template<typename R2, typename ...TArgs2>
+		static bool IsEmptyFunc(const Func<R2(TArgs2...)>& function)
+		{
+			return !function;
+		}
+
+		template<typename R2, typename ...TArgs2>
+		static bool IsEmptyFunc(Func<R2(TArgs2...)>& function)
+		{
+			return !function;
+		}
+
+		template<typename C>
+		static bool IsEmptyFunc(C&&)
+		{
+			return false;
+		}
+	public:
+		typedef R FunctionType(TArgs...);
+		typedef R ResultType;
+
+		/// <summary>Create a null functor.</summary>
+		Func() = default;
+
+		/// <summary>Copy a functor.</summary>
+		/// <param name="function">The functor to copy.</param>
+		Func(const Func<R(TArgs...)>& function) = default;
+
+		/// <summary>Move a functor.</summary>
+		/// <param name="function">The functor to move.</param>
+		Func(Func<R(TArgs...)>&& function) = default;
+
+		/// <summary>Create a functor from a function pointer.</summary>
+		/// <param name="function">The function pointer.</param>
+		Func(R(*function)(TArgs...))
+		{
+			invoker = Ptr(new internal_invokers::StaticInvoker<R, TArgs...>(function));
+		}
+
+		/// <summary>Create a functor from a method.</summary>
+		/// <typeparam name="C">Type of the class that this method belongs to.</typeparam>
+		/// <param name="sender">The object that this method belongs to.</param>
+		/// <param name="function">The method pointer.</param>
+		template<typename C>
+		Func(C* sender, R(C::*function)(TArgs...))
+		{
+			invoker = Ptr(new internal_invokers::MemberInvoker<C, R, TArgs...>(sender, function));
+		}
+
+		/// <summary>Create a functor from another compatible functor.</summary>
+		/// <typeparam name="C">Type of the functor to copy.</typeparam>
+		/// <param name="function">The functor to copy. It could be a lambda expression, or any types that has operator() members.</param>
+		template<typename C>
+		Func(C&& function)
+			requires (
+				std::is_invocable_v<C, TArgs...>
+			) && (
+				std::is_same_v<void, R> ||
+				std::is_convertible_v<decltype(std::declval<C>()(std::declval<TArgs>()...)), R>
+			)
+		{
+			if (!IsEmptyFunc(function))
+			{
+				invoker = Ptr(new internal_invokers::ObjectInvoker<std::remove_cvref_t<C>, R, TArgs...>(std::forward<C&&>(function)));
+			}
+		}
+
+		/// <summary>Create a functor from another compatible functor.</summary>
+		/// <typeparam name="C">Type of the functor to copy.</typeparam>
+		/// <param name="function">The functor to copy. It could be a lambda expression, or any types that has operator() members.</param>
+		template<typename C>
+		Func(C* function)
+			requires (
+				std::is_invocable_v<C*, TArgs...>
+			) && (
+				std::is_same_v<void, R> ||
+				std::is_convertible_v<decltype(std::declval<C*>()(std::declval<TArgs>()...)), R>
+			)
+		{
+			if (!IsEmptyFunc(function))
+			{
+				invoker = Ptr(new internal_invokers::ObjectInvoker<C*, R, TArgs...>(function));
+			}
+		}
+
+		/// <summary>Invoke the function.</summary>
+		/// <returns>Returns the function result. It crashes when the functor is null.</returns>
+		/// <param name="args">Arguments to invoke the function.</param>
+		R operator()(TArgs ...args)const
+		{
+			return invoker->Invoke(std::forward<TArgs>(args)...);
+		}
+
+		Func<R(TArgs...)>& operator=(const Func<R(TArgs...)>& function)
+		{
+			invoker = function.invoker;
+			return *this;
+		}
+
+		Func<R(TArgs...)>& operator=(const Func<R(TArgs...)>&& function)
+		{
+			invoker = std::move(function.invoker);
+			return *this;
+		}
+
+		bool operator==(const Func<R(TArgs...)>& function)const
+		{
+			return invoker == function.invoker;
+		}
+
+		bool operator!=(const Func<R(TArgs...)>& function)const
+		{
+			return invoker != function.invoker;
+		}
+
+		/// <summary>Test is the functor is non-null.</summary>
+		/// <returns>Returns true if the functor is non-null.</returns>
+		operator bool()const
+		{
+			return invoker;
+		}
+	};
+ 
+/***********************************************************************
+vl::function_lambda::LambdaRetriveType<R(TArgs...)>
+***********************************************************************/
+ 
+	namespace function_lambda
+	{
+		template<typename T>
+		struct LambdaRetriveType
+		{
+		};
+
+		template<typename TObject, typename R, typename ...TArgs>
+		struct LambdaRetriveType<R(__thiscall TObject::*)(TArgs...)const>
+		{
+			typedef R(FunctionType)(TArgs...);
+			typedef R ResultType;
+			typedef TypeTuple<TArgs...> ParameterTypes;
+		};
+
+		template<typename TObject, typename R, typename ...TArgs>
+		struct LambdaRetriveType<R(__thiscall TObject::*)(TArgs...)>
+		{
+			typedef R(FunctionType)(TArgs...);
+			typedef R ResultType;
+			typedef TypeTuple<TArgs...> ParameterTypes;
+		};
+
+#define LAMBDA vl::function_lambda::Lambda
+	}
+
+	template<typename C>
+	Func(C&&) -> Func<typename function_lambda::LambdaRetriveType<decltype(&C::operator())>::FunctionType>;
+
+	template<typename R, typename... TArgs>
+	Func(R(*)(TArgs...)) -> Func<R(TArgs...)>;
+
+	template<typename C, typename R, typename... TArgs>
+	Func(C*, R(C::*)(TArgs...)) -> Func<R(TArgs...)>;
+}
+#endif
+
+/***********************************************************************
+.\PRIMITIVES\TUPLE.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+#ifndef VCZH_TUPLE
+#define VCZH_TUPLE
+
+
+namespace vl
+{
+	namespace tuple_internal
+	{
+		template<vint I, typename T>
+		struct TupleElement
+		{
+			T						element;
+
+			TupleElement() = default;
+
+			template<typename U>
+			TupleElement(U&& _element)
+				:element(std::forward<U&&>(_element))
+			{
+			}
+		};
+
+		template<typename T, typename U>
+		struct TupleElementComparison
+		{
+			const T&				t;
+			const U&				u;
+
+			TupleElementComparison(const T& _t, const U& _u)
+				: t(_t)
+				, u(_u)
+			{
+			}
+
+			friend std::strong_ordering operator*(std::strong_ordering order, const TupleElementComparison<T, U>& t)
+			{
+				if (order != 0) return order;
+				return t.t <=> t.u;
+			}
+		};
+
+		struct TupleCtorElementsTag {};
+		struct TupleCtorTupleTag {};
+
+		template<typename Is, typename ...TArgs>
+		struct TupleBase;
+
+		template<std::size_t ...Is, typename ...TArgs> requires(sizeof...(Is) == sizeof...(TArgs))
+		struct TupleBase<std::index_sequence<Is...>, TArgs...>
+			: TupleElement<Is, TArgs>...
+		{
+		private:
+			using TSelf = TupleBase<std::index_sequence<Is...>, TArgs...>;
+
+			template<typename ...UArgs> requires(sizeof...(TArgs) == sizeof...(UArgs))
+				using TCompatible = TupleBase<std::index_sequence<Is...>, UArgs...>;
+
+		public:
+			TupleBase() = default;
+
+			template<typename ...UArgs>
+			TupleBase(TupleCtorElementsTag, UArgs&& ...xs)
+				: TupleElement<Is, TArgs>(std::forward<UArgs&&>(xs)) ...
+			{
+			}
+
+			template<typename ...UArgs>
+			TupleBase(TupleCtorTupleTag, const TCompatible<UArgs...>& t)
+				: TupleElement<Is, TArgs>(static_cast<const TupleElement<Is, UArgs>&>(t).element) ...
+			{
+			}
+
+			template<typename ...UArgs>
+			TupleBase(TupleCtorTupleTag, TCompatible<UArgs...>&& t)
+				: TupleElement<Is, TArgs>(std::move(static_cast<TupleElement<Is, UArgs>&>(t).element)) ...
+			{
+			}
+
+			template<typename ...UArgs>
+			void AssignCopy(const TCompatible<UArgs...>& t)
+			{
+				((
+					static_cast<TupleElement<Is, TArgs>*>(this)->element =
+					static_cast<const TupleElement<Is, UArgs>&>(t).element
+				), ...);
+			}
+
+			template<typename ...UArgs>
+			void AssignMove(TCompatible<UArgs...>&& t)
+			{
+				((
+					static_cast<TupleElement<Is, TArgs>*>(this)->element =
+					std::move(static_cast<TupleElement<Is, UArgs>&&>(t).element)
+				), ...);
+			}
+
+			template<typename ...UArgs>
+			bool AreEqual(const TCompatible<UArgs...>& t) const
+			{
+				return (true && ... && (
+					static_cast<const TupleElement<Is, TArgs>*>(this)->element ==
+					static_cast<const TupleElement<Is, UArgs>&>(t).element
+					));
+			}
+
+			template<typename ...UArgs>
+			std::strong_ordering Compare(const TCompatible<UArgs...>& t) const
+			{
+				return (std::strong_ordering::equal * ... * (TupleElementComparison<TArgs, UArgs>(
+					static_cast<const TupleElement<Is, TArgs>*>(this)->element,
+					static_cast<const TupleElement<Is, UArgs>&>(t).element
+					)));
+			}
+		};
+	}
+
+	template<typename ...TArgs>
+	class Tuple : private tuple_internal::TupleBase<std::make_index_sequence<sizeof...(TArgs)>, TArgs...>
+	{
+		template<typename ...UArgs>
+		friend class Tuple;
+
+		using TSelf = Tuple<TArgs...>;
+		using TBase = tuple_internal::TupleBase<std::make_index_sequence<sizeof...(TArgs)>, TArgs...>;
+
+		template<typename ...UArgs> requires(sizeof...(TArgs) == sizeof...(UArgs))
+		using TCompatible = Tuple<UArgs...>;
+
+		template<typename ...UArgs> requires(sizeof...(TArgs) == sizeof...(UArgs))
+		using TCompatibleBase = tuple_internal::TupleBase<std::make_index_sequence<sizeof...(TArgs)>, UArgs...>;
+
+	public:
+		Tuple() = default;
+
+		template<typename ...UArgs>
+		Tuple(UArgs&& ...xs) requires(sizeof...(TArgs) == sizeof...(UArgs))
+			: TBase(
+				tuple_internal::TupleCtorElementsTag{},
+				std::forward<UArgs&&>(xs)...
+			)
+		{
+		}
+
+		template<typename ...UArgs>
+		Tuple(const TCompatible<UArgs...>& t) requires(sizeof...(TArgs) == sizeof...(UArgs))
+			: TBase(
+				tuple_internal::TupleCtorTupleTag{},
+				static_cast<const TCompatibleBase<UArgs...>&>(t)
+			)
+		{
+		}
+
+		template<typename ...UArgs>
+		Tuple(TCompatible<UArgs...>&& t) requires(sizeof...(TArgs) == sizeof...(UArgs))
+			: TBase(
+				tuple_internal::TupleCtorTupleTag{},
+				static_cast<TCompatibleBase<UArgs...>&&>(t)
+			)
+		{
+		}
+
+		template<typename ...UArgs>
+		TSelf& operator=(const TCompatible<UArgs...>& t)
+		{
+			AssignCopy(t);
+			return *this;
+		}
+
+		template<typename ...UArgs>
+		TSelf& operator=(TCompatible<UArgs...>&& t)
+		{
+			AssignMove(std::move(t));
+			return *this;
+		}
+
+		template<typename ...UArgs>
+		std::strong_ordering operator<=>(const TCompatible<UArgs...>& t)const
+		{
+			return this->Compare(t);
+		}
+
+		template<typename ...UArgs>
+		bool operator==(const TCompatible<UArgs...>& t)const
+		{
+			return this->AreEqual(t);
+		}
+
+		template<vint Index>
+		TypeTupleElement<Index, TypeTuple<TArgs...>>& get()
+		{
+			return static_cast<tuple_internal::TupleElement<Index, TypeTupleElement<Index, TypeTuple<TArgs...>>>*>(this)->element;
+		}
+
+		template<vint Index>
+		const TypeTupleElement<Index, TypeTuple<TArgs...>>& get()const
+		{
+			return static_cast<const tuple_internal::TupleElement<Index, TypeTupleElement<Index, TypeTuple<TArgs...>>>*>(this)->element;
+		}
+	};
+
+	template<typename T>
+	struct TupleElementCtad { using Type = std::remove_cvref_t<T>; };
+
+	template<typename T, vint I>
+	struct TupleElementCtad<T(&)[I]> { using Type = T*; };
+
+	template<typename ...TArgs>
+	Tuple(TArgs&&...) -> Tuple<typename TupleElementCtad<TArgs>::Type...>;
+
+	template<vint Index, typename ...TArgs>
+	TypeTupleElement<Index, TypeTuple<TArgs...>>& get(Tuple<TArgs...>& t)
+	{
+		return t.template get<Index>();
+	}
+	
+	template<vint Index, typename ...TArgs>
+	const TypeTupleElement<Index, TypeTuple<TArgs...>>& get(const Tuple<TArgs...>& t)
+	{
+		return t.template get<Index>();
+	}
+}
+
+namespace std
+{
+	template<typename ...TArgs>
+	struct tuple_size<vl::Tuple<TArgs...>> : integral_constant<size_t, sizeof...(TArgs)> {};
+
+	template<size_t Index, typename ...TArgs>
+	struct tuple_element<Index, vl::Tuple<TArgs...>>
+	{
+		using type = vl::TypeTupleElement<Index, vl::TypeTuple<TArgs...>>;
+	};
+}
+
+#endif
+
+/***********************************************************************
+.\COLLECTIONS\PAIR.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_COLLECTIONS_PAIR
+#define VCZH_COLLECTIONS_PAIR
+
+
+namespace vl
+{
+	namespace collections
+	{
+		template<typename K, typename V>
+		class Pair;
+
+		/// <summary>A type representing a pair of key and value.</summary>
+		/// <typeparam name="K">Type of the key.</typeparam>
+		/// <typeparam name="V">Type of the value.</typeparam>
+		template<typename K, typename V>
+		class Pair
+		{
+		public:
+			/// <summary>The key.</summary>
+			K				key;
+			/// <summary>The value.</summary>
+			V				value;
+
+			Pair() = default;
+			Pair(const Pair<K, V>&) = default;
+			Pair(Pair<K, V>&&) = default;
+
+			template<typename TKey, typename TValue>
+			Pair(TKey&& _key, TValue&& _value)
+				requires(std::is_constructible_v<K, TKey&&> && std::is_constructible_v<V, TValue&&>)
+				: key(std::forward<TKey&&>(_key))
+				, value(std::forward<TValue&&>(_value))
+			{
+			}
+
+			template<typename TKey, typename TValue>
+			Pair(const Pair<TKey, TValue>& p)
+				requires(std::is_constructible_v<K, const TKey&> && std::is_constructible_v<K, const TKey&>)
+				: key(p.key)
+				, value(p.value)
+			{
+			}
+
+			template<typename TKey, typename TValue>
+			Pair(Pair<TKey, TValue>&& p)
+				requires(std::is_constructible_v<K, TKey&&> && std::is_constructible_v<K, TKey&&>)
+				: key(std::move(p.key))
+				, value(std::move(p.value))
+			{
+			}
+
+			Pair<K, V>& operator=(const Pair<K, V>&) = default;
+			Pair<K, V>& operator=(Pair<K, V>&&) = default;
+
+			template<typename TKey, typename TValue>
+			std::strong_ordering operator<=>(const Pair<TKey, TValue>& p) const
+				requires(std::three_way_comparable_with<const K, const TKey, std::strong_ordering> && std::three_way_comparable_with<const V, const TValue, std::strong_ordering>)
+			{
+				std::strong_ordering
+				result = key <=> p.key; if (result != 0) return result;
+				result = value <=> p.value; if (result != 0) return result;
+				return std::strong_ordering::equal;
+			}
+
+			template<typename TKey, typename TValue>
+			bool operator==(const Pair<TKey, TValue>& p) const
+				requires(std::equality_comparable_with<const K, const TKey>&& std::equality_comparable_with<const V, const TValue>)
+			{
+				return key == p.key && value == p.value;
+			}
+		};
+
+		template<typename K, typename V>
+		Pair(K&&, V&&) -> Pair<typename TupleElementCtad<K>::Type, typename TupleElementCtad<V>::Type>;
+	}
 }
 
 #endif
@@ -1674,8 +2040,6 @@ Licensed under https://github.com/vczh-libraries/License
 #ifdef VCZH_CHECK_MEMORY_LEAKS_NEW
 #undef new
 #endif
-
-#include <new>
 
 namespace vl
 {
@@ -1969,10 +2333,10 @@ Array
 
 		/// <summary>Array: linear container with fixed size in runtime. All elements are contiguous in memory.</summary>
 		/// <typeparam name="T">Type of elements.</typeparam>
-		/// <typeparam name="K">Type of the key type of elements. It is recommended to use the default value.</typeparam>
-		template<typename T, typename K = typename KeyType<T>::Type>
+		template<typename T>
 		class Array : public ArrayBase<T>
 		{
+			using K = typename KeyType<T>::Type;
 		public:
 			/// <summary>Create an array.</summary>
 			/// <param name="size">The size of the array.</param>
@@ -2009,8 +2373,8 @@ Array
 				}
 			}
 
-			Array(const Array<T, K>&) = delete;
-			Array(Array<T, K>&& _move)
+			Array(const Array<T>&) = delete;
+			Array(Array<T>&& _move)
 			{
 				this->buffer = _move.buffer;
 				this->count = _move.count;
@@ -2018,8 +2382,8 @@ Array
 				_move.count = 0;
 			}
 
-			Array<T, K>& operator=(const Array<T, K>&) = delete;
-			Array<T, K>& operator=(Array<T, K>&& _move)
+			Array<T>& operator=(const Array<T>&) = delete;
+			Array<T>& operator=(Array<T>&& _move)
 			{
 				if (this->buffer)
 				{
@@ -2057,21 +2421,25 @@ Array
 			}
 
 			/// <summary>Replace an element in the specified position.</summary>
-			/// <typeparam name="TItem">The type of the new value.</typeparam>
-			/// <returns>Returns true if this operation succeeded. It will crash when the index is out of range</returns>
+			/// <returns>Returns true. It will crash when the index is out of range</returns>
 			/// <param name="index">The position of the element to replace.</param>
 			/// <param name="item">The new value to replace.</param>
-			template<typename TItem>
-			bool Set(vint index, TItem&& item)
+			bool Set(vint index, const T& item)
 			{
-				CHECK_ERROR(index >= 0 && index < this->count, L"Array<T, K>::Set(vint)#Argument index not in range.");
-				this->buffer[index] = std::forward<TItem&&>(item);
+				CHECK_ERROR(index >= 0 && index < this->count, L"Array<T>::Set(vint)#Argument index not in range.");
+				this->buffer[index] = item;
 				return true;
 			}
 
+			/// <summary>Replace an element in the specified position.</summary>
+			/// <returns>Returns true. It will crash when the index is out of range</returns>
+			/// <param name="index">The position of the element to replace.</param>
+			/// <param name="item">The new value to replace.</param>
 			bool Set(vint index, T&& item)
 			{
-				return Set<T>(index, std::move(item));
+				CHECK_ERROR(index >= 0 && index < this->count, L"Array<T>::Set(vint)#Argument index not in range.");
+				this->buffer[index] = std::move(item);
+				return true;
 			}
 
 			using ArrayBase<T>::operator[];
@@ -2081,7 +2449,7 @@ Array
 			/// <param name="index">The index of the element.</param>
 			T& operator[](vint index)
 			{
-				CHECK_ERROR(index >= 0 && index < this->count, L"Array<T, K>::operator[](vint)#Argument index not in range.");
+				CHECK_ERROR(index >= 0 && index < this->count, L"Array<T>::operator[](vint)#Argument index not in range.");
 				return this->buffer[index];
 			}
 
@@ -2115,10 +2483,10 @@ ListBase
 
 		/// <summary>Base type for all list containers.</summary>
 		/// <typeparam name="T">Type of elements.</typeparam>
-		/// <typeparam name="K">Type of the key type of elements. It is recommended to use the default value.</typeparam>
-		template<typename T, typename K = typename KeyType<T>::Type>
+		template<typename T>
 		class ListBase abstract : public ArrayBase<T>
 		{
+			using K = typename KeyType<T>::Type;
 		protected:
 			vint					capacity = 0;
 
@@ -2133,8 +2501,8 @@ ListBase
 				}
 			}
 
-			ListBase(const ListBase<T, K>&) = delete;
-			ListBase(ListBase<T, K>&& _move)
+			ListBase(const ListBase<T>&) = delete;
+			ListBase(ListBase<T>&& _move)
 			{
 				this->buffer = _move.buffer;
 				this->count = _move.count;
@@ -2144,8 +2512,8 @@ ListBase
 				_move.capacity = 0;
 			}
 
-			ListBase<T, K>& operator=(const ListBase<T, K>&) = delete;
-			ListBase<T, K>& operator=(ListBase<T, K>&& _move)
+			ListBase<T>& operator=(const ListBase<T>&) = delete;
+			ListBase<T>& operator=(ListBase<T>&& _move)
 			{
 				if (this->buffer)
 				{
@@ -2167,7 +2535,7 @@ ListBase
 			bool RemoveAt(vint index)
 			{
 				vint previousCount = this->count;
-				CHECK_ERROR(index >= 0 && index < this->count, L"ListBase<T, K>::RemoveAt(vint)#Argument index not in range.");
+				CHECK_ERROR(index >= 0 && index < this->count, L"ListBase<T>::RemoveAt(vint)#Argument index not in range.");
 				memory_management::CallMoveAssignmentsOverlapped(&this->buffer[index], &this->buffer[index + 1], this->count - index - 1);
 				this->count--;
 				memory_management::ReleaseUnnecessaryBuffer(this->buffer, this->capacity, previousCount, this->count);
@@ -2181,7 +2549,7 @@ ListBase
 			bool RemoveRange(vint index, vint _count)
 			{
 				vint previousCount = this->count;
-				CHECK_ERROR(index >= 0 && index <= this->count, L"ListBase<T, K>::RemoveRange(vint, vint)#Argument index not in range.");
+				CHECK_ERROR(index >= 0 && index <= this->count, L"ListBase<T>::RemoveRange(vint, vint)#Argument index not in range.");
 				CHECK_ERROR(index + _count >= 0 && index + _count <= this->count, L"ListBase<T,K>::RemoveRange(vint, vint)#Argument _count not in range.");
 				memory_management::CallMoveAssignmentsOverlapped(&this->buffer[index], &this->buffer[index + _count], this->count - index - _count);
 				this->count -= _count;
@@ -2209,15 +2577,15 @@ List
 
 		/// <summary>List: linear container with dynamic size in runtime for unordered values. All elements are contiguous in memory.</summary>
 		/// <typeparam name="T">Type of elements.</typeparam>
-		/// <typeparam name="K">Type of the key type of elements. It is recommended to use the default value.</typeparam>
-		template<typename T, typename K = typename KeyType<T>::Type>
-		class List : public ListBase<T, K>
+		template<typename T>
+		class List : public ListBase<T>
 		{
+			using K = typename KeyType<T>::Type;
 		public:
 			/// <summary>Create an empty list.</summary>
 			List() = default;
-			List(List<T, K>&& container) : ListBase<T, K>(std::move(container)) {}
-			List<T, K>& operator=(List<T, K>&& _move) = default;
+			List(List<T>&& container) : ListBase<T>(std::move(container)) {}
+			List<T>& operator=(List<T>&& _move) = default;
 
 			/// <summary>Test does the list contain a value or not.</summary>
 			/// <returns>Returns true if the list contains the specified value.</returns>
@@ -2243,18 +2611,19 @@ List
 			}
 
 			/// <summary>Append a value at the end of the list.</summary>
-			/// <typeparam name="TItem">The type of the new value.</typeparam>
 			/// <returns>The index of the added item.</returns>
 			/// <param name="item">The value to add.</param>
-			template<typename TItem>
-			vint Add(TItem&& item)
+			vint Add(const T& item)
 			{
-				return Insert(this->count, std::forward<TItem&&>(item));
+				return Insert(this->count, item);
 			}
 
+			/// <summary>Append a value at the end of the list.</summary>
+			/// <returns>The index of the added item.</returns>
+			/// <param name="item">The value to add.</param>
 			vint Add(T&& item)
 			{
-				return Add<T>(std::move(item));
+				return Insert(this->count, std::move(item));
 			}
 
 			/// <summary>Insert a value at the specified position.</summary>
@@ -2263,7 +2632,7 @@ List
 			/// <param name="item">The value to add.</param>
 			vint Insert(vint index, const T& item)
 			{
-				CHECK_ERROR(index >= 0 && index <= this->count, L"List<T, K>::Insert(vint, const T&)#Argument index not in range.");
+				CHECK_ERROR(index >= 0 && index <= this->count, L"List<T>::Insert(vint, const T&)#Argument index not in range.");
 				memory_management::InsertUninitializedItems(this->buffer, this->capacity, this->count, index, 1);
 				memory_management::CallCopyCtors(&this->buffer[index], &item, 1);
 				return index;
@@ -2275,7 +2644,7 @@ List
 			/// <param name="item">The value to add.</param>
 			vint Insert(vint index, T&& item)
 			{
-				CHECK_ERROR(index >= 0 && index <= this->count, L"List<T, K>::Insert(vint, const T&)#Argument index not in range.");
+				CHECK_ERROR(index >= 0 && index <= this->count, L"List<T>::Insert(vint, const T&)#Argument index not in range.");
 				memory_management::InsertUninitializedItems(this->buffer, this->capacity, this->count, index, 1);
 				memory_management::CallMoveCtors(&this->buffer[index], &item, 1);
 				return index;
@@ -2299,31 +2668,35 @@ List
 			}
 
 			/// <summary>Replace an element in the specified position.</summary>
-			/// <typeparam name="TItem">The type of the new value.</typeparam>
-			/// <returns>Returns true if this operation succeeded. It will crash when the index is out of range</returns>
+			/// <returns>Returns true. It will crash when the index is out of range</returns>
 			/// <param name="index">The position of the element to replace.</param>
 			/// <param name="item">The new value to replace.</param>
-			template<typename TItem>
-			bool Set(vint index, TItem&& item)
+			bool Set(vint index, const T& item)
 			{
-				CHECK_ERROR(index >= 0 && index < this->count, L"List<T, K>::Set(vint)#Argument index not in range.");
-				this->buffer[index] = std::forward<TItem&&>(item);
+				CHECK_ERROR(index >= 0 && index < this->count, L"Array<T>::Set(vint)#Argument index not in range.");
+				this->buffer[index] = item;
 				return true;
 			}
 
+			/// <summary>Replace an element in the specified position.</summary>
+			/// <returns>Returns true. It will crash when the index is out of range</returns>
+			/// <param name="index">The position of the element to replace.</param>
+			/// <param name="item">The new value to replace.</param>
 			bool Set(vint index, T&& item)
 			{
-				return Set<T>(index, std::move(item));
+				CHECK_ERROR(index >= 0 && index < this->count, L"Array<T>::Set(vint)#Argument index not in range.");
+				this->buffer[index] = std::move(item);
+				return true;
 			}
 
-			using ListBase<T, K>::operator[];
+			using ListBase<T>::operator[];
 
 			/// <summary>Get the reference to the specified element.</summary>
 			/// <returns>The reference to the specified element. It will crash when the index is out of range.</returns>
 			/// <param name="index">The index of the element.</param>
 			T& operator[](vint index)
 			{
-				CHECK_ERROR(index >= 0 && index < this->count, L"List<T, K>::operator[](vint)#Argument index not in range.");
+				CHECK_ERROR(index >= 0 && index < this->count, L"List<T>::operator[](vint)#Argument index not in range.");
 				return this->buffer[index];
 			}
 		};
@@ -2334,10 +2707,10 @@ SortedList
 
 		/// <summary>SortedList: linear container with dynamic size in runtime for ordered values. All elements are kept in order, and are contiguous in memory.</summary>
 		/// <typeparam name="T">Type of elements.</typeparam>
-		/// <typeparam name="K">Type of the key type of elements. It is recommended to use the default value.</typeparam>
-		template<typename T, typename K = typename KeyType<T>::Type>
-		class SortedList : public ListBase<T, K>
+		template<typename T>
+		class SortedList : public ListBase<T>
 		{
+			using K = typename KeyType<T>::Type;
 		protected:
 
 			/// <summary>Get the position of an element in this list by performing binary search.</summary>
@@ -2390,14 +2763,45 @@ SortedList
 				memory_management::CallMoveCtors(&this->buffer[index], &item, 1);
 				return index;
 			}
+
+			template<typename TItem>
+			vint AddInternal(TItem&& item)
+			{
+				if (ArrayBase<T>::count == 0)
+				{
+					return Insert(0, std::forward<TItem&&>(item));
+				}
+				else
+				{
+					vint outputIndex = -1;
+					if constexpr (std::is_same_v<std::remove_cvref_t<T>, std::remove_cvref_t<K>>)
+					{
+						IndexOfInternal<K>(item, outputIndex);
+					}
+					else if constexpr (std::is_same_v<std::remove_cvref_t<TItem>, std::remove_cvref_t<K>>)
+					{
+						IndexOfInternal<K>(item, outputIndex);
+					}
+					else
+					{
+						IndexOfInternal<K>(KeyType<T>::GetKeyValue(item), outputIndex);
+					}
+					CHECK_ERROR(outputIndex >= 0 && outputIndex < this->count, L"SortedList<T>::Add(const T&)#Internal error, index not in range.");
+					if (this->buffer[outputIndex] < item)
+					{
+						outputIndex++;
+					}
+					return Insert(outputIndex, std::forward<TItem&&>(item));
+				}
+			}
 		public:
 			/// <summary>Create an empty list.</summary>
 			SortedList() = default;
-			SortedList(SortedList<T, K>&& container) : ListBase<T, K>(std::move(container)) {}
-			SortedList<T, K>& operator=(SortedList<T, K> && _move) = default;
+			SortedList(SortedList<T>&& container) : ListBase<T>(std::move(container)) {}
+			SortedList<T>& operator=(SortedList<T> && _move) = default;
 
-			SortedList(const SortedList<T, K>&xs)
-				: ListBase<T, K>(std::move(const_cast<ListBase<T, K>&>(static_cast<const ListBase<T, K>&>(xs))))
+			SortedList(const SortedList<T>&xs)
+				: ListBase<T>(std::move(const_cast<ListBase<T>&>(static_cast<const ListBase<T>&>(xs))))
 			{
 			}
 
@@ -2419,43 +2823,19 @@ SortedList
 			}
 
 			/// <summary>Add a value at the correct position, all elements will be kept in order.</summary>
-			/// <typeparam name="TItem">The type of the new value.</typeparam>
 			/// <returns>The index of the added item.</returns>
 			/// <param name="item">The value to add.</param>
-			template<typename TItem>
-			vint Add(TItem&& item)
+			vint Add(const T& item)
 			{
-				if (ArrayBase<T>::count == 0)
-				{
-					return Insert(0, std::forward<TItem&&>(item));
-				}
-				else
-				{
-					vint outputIndex = -1;
-					if constexpr (std::is_same_v<std::remove_cvref_t<T>, std::remove_cvref_t<K>>)
-					{
-						IndexOfInternal<K>(item, outputIndex);
-					}
-					else if constexpr (std::is_same_v<std::remove_cvref_t<TItem>, std::remove_cvref_t<K>>)
-					{
-						IndexOfInternal<K>(item, outputIndex);
-					}
-					else
-					{
-						IndexOfInternal<K>(KeyType<T>::GetKeyValue(item), outputIndex);
-					}
-					CHECK_ERROR(outputIndex >= 0 && outputIndex < this->count, L"SortedList<T, K>::Add(const T&)#Internal error, index not in range.");
-					if (this->buffer[outputIndex] < item)
-					{
-						outputIndex++;
-					}
-					return Insert(outputIndex, std::forward<TItem&&>(item));
-				}
+				return AddInternal(item);
 			}
 
+			/// <summary>Add a value at the correct position, all elements will be kept in order.</summary>
+			/// <returns>The index of the added item.</returns>
+			/// <param name="item">The value to add.</param>
 			vint Add(T&& item)
 			{
-				return Add<T>(std::move(item));
+				return AddInternal(std::move(item));
 			}
 
 			/// <summary>Remove an element from the list. If multiple elements equal to the specified value, only the first one will be removed</summary>
@@ -2606,22 +2986,22 @@ Random Access
 
 		namespace randomaccess_internal
 		{
-			template<typename T, typename K>
-			struct RandomAccessable<Array<T, K>>
+			template<typename T>
+			struct RandomAccessable<Array<T>>
 			{
 				static const bool							CanRead = true;
 				static const bool							CanResize = true;
 			};
 
-			template<typename T, typename K>
-			struct RandomAccessable<List<T, K>>
+			template<typename T>
+			struct RandomAccessable<List<T>>
 			{
 				static const bool							CanRead = true;
 				static const bool							CanResize = false;
 			};
 
-			template<typename T, typename K>
-			struct RandomAccessable<SortedList<T, K>>
+			template<typename T>
+			struct RandomAccessable<SortedList<T>>
 			{
 				static const bool							CanRead = true;
 				static const bool							CanResize = false;
@@ -2656,27 +3036,22 @@ namespace vl
 		/// <summary>Dictionary: one to one map container.</summary>
 		/// <typeparam name="KT">Type of keys.</typeparam>
 		/// <typeparam name="VT">Type of values.</typeparam>
-		/// <typeparam name="KK">Type of the key type of keys. It is recommended to use the default value.</typeparam>
-		/// <typeparam name="VK">Type of the key type of values. It is recommended to use the default value.</typeparam>
-		template<
-			typename KT,
-			typename VT,
-			typename KK=typename KeyType<KT>::Type, 
-			typename VK=typename KeyType<VT>::Type
-		>
+		template<typename KT, typename VT>
 		class Dictionary : public EnumerableBase<Pair<const KT&, const VT&>>
 		{
+			using KK = typename KeyType<KT>::Type;
+			using VK = typename KeyType<VT>::Type;
 			using KVPair = Pair<const KT&, const VT&>;
 		public:
-			typedef SortedList<KT, KK>			KeyContainer;
-			typedef List<VT, VK>				ValueContainer;
+			typedef SortedList<KT>					KeyContainer;
+			typedef List<VT>						ValueContainer;
 		protected:
 			class Enumerator : public Object, public virtual IEnumerator<KVPair>
 			{
 			private:
-				const Dictionary<KT, VT, KK, VK>*	container;
+				const Dictionary<KT, VT>*			container;
 				vint								index;
-				KVPair								current;
+				Nullable<KVPair>					current;
 
 				void UpdateCurrent()
 				{
@@ -2686,7 +3061,7 @@ namespace vl
 					}
 				}
 			public:
-				Enumerator(const Dictionary<KT, VT, KK, VK>* _container, vint _index=-1)
+				Enumerator(const Dictionary<KT, VT>* _container, vint _index=-1)
 				{
 					container=_container;
 					index=_index;
@@ -2699,7 +3074,7 @@ namespace vl
 
 				const KVPair& Current()const override
 				{
-					return current;
+					return current.Value();
 				}
 
 				vint Index()const override
@@ -2728,20 +3103,54 @@ namespace vl
 
 			KeyContainer						keys;
 			ValueContainer						values;
+
+			template<typename TKeyItem, typename TValueItem>
+			bool SetInternal(TKeyItem&& key, TValueItem&& value)
+			{
+				using TKeyAccept = memory_management::AcceptType<KT, TKeyItem&&>;
+				using TKeyForward = memory_management::ForwardType<KT, TKeyItem&&>;
+				TKeyAccept keyAccept = memory_management::RefOrConvert<KT>(std::forward<TKeyItem&&>(key));
+
+				vint index = keys.IndexOf(KeyType<KT>::GetKeyValue(keyAccept));
+				if (index == -1)
+				{
+					index = keys.Add(std::forward<TKeyForward>(keyAccept));
+					values.Insert(index, std::forward<TValueItem&&>(value));
+				}
+				else
+				{
+					values[index] = std::forward<TValueItem&&>(value);
+				}
+				return true;
+			}
+
+			template<typename TKeyItem, typename TValueItem>
+			bool AddInternal(TKeyItem&& key, TValueItem&& value)
+			{
+				using TKeyAccept = memory_management::AcceptType<KT, TKeyItem&&>;
+				using TKeyForward = memory_management::ForwardType<KT, TKeyItem&&>;
+				TKeyAccept keyAccept = memory_management::RefOrConvert<KT>(std::forward<TKeyItem&&>(key));
+
+				CHECK_ERROR(!keys.Contains(KeyType<KT>::GetKeyValue(keyAccept)), L"Dictionary<KT, KK, ValueContainer, VT, VK>::Add(const KT&, const VT&)#Key already exists.");
+				vint index = keys.Add(std::forward<TKeyForward>(keyAccept));
+				values.Insert(index, std::forward<TValueItem&&>(value));
+
+				return true;
+			}
 		public:
 			/// <summary>Create an empty dictionary.</summary>
 			Dictionary() = default;
 			~Dictionary() = default;
 
-			Dictionary(const Dictionary<KT, VT, KK, VK>&) = delete;
-			Dictionary(Dictionary<KT, VT, KK, VK>&& _move)
+			Dictionary(const Dictionary<KT, VT>&) = delete;
+			Dictionary(Dictionary<KT, VT>&& _move)
 				: keys(std::move(_move.keys))
 				, values(std::move(_move.values))
 			{
 			}
 
-			Dictionary<KT, VT, KK, VK>& operator=(const Dictionary<KT, VT, KK, VK>&) = delete;
-			Dictionary<KT, VT, KK, VK>& operator=(Dictionary<KT, VT, KK, VK> && _move)
+			Dictionary<KT, VT>& operator=(const Dictionary<KT, VT>&) = delete;
+			Dictionary<KT, VT>& operator=(Dictionary<KT, VT> && _move)
 			{
 				keys = std::move(_move.keys);
 				values = std::move(_move.values);
@@ -2791,76 +3200,62 @@ namespace vl
 			}
 			
 			/// <summary>Replace the value associated to a specified key.</summary>
-			/// <typeparam name="TKeyItem">The type of the new key.</typeparam>
-			/// <typeparam name="TValueItem">The type of the new value.</typeparam>
 			/// <returns>Returns true if the value is replaced.</returns>
 			/// <param name="key">The key to find. If the key does not exist, it will be added to the dictionary.</param>
 			/// <param name="value">The associated value to replace.</param>
-			template<typename TKeyItem, typename TValueItem>
-			bool Set(TKeyItem&& key, TValueItem&& value)
-			{
-				using TKeyAccept = memory_management::AcceptType<KT, TKeyItem&&>;
-				using TKeyForward = memory_management::ForwardType<KT, TKeyItem&&>;
-				TKeyAccept keyAccept = memory_management::RefOrConvert<KT>(std::forward<TKeyItem&&>(key));
+			bool Set(const KT& key, const VT& value) { return SetInternal<const KT&, const VT&>(key, value); }
 
-				vint index = keys.IndexOf(KeyType<KT>::GetKeyValue(keyAccept));
-				if (index == -1)
-				{
-					index = keys.Add(std::forward<TKeyForward>(keyAccept));
-					values.Insert(index, std::forward<TValueItem&&>(value));
-				}
-				else
-				{
-					values[index] = std::forward<TValueItem&&>(value);
-				}
-				return true;
-			}
+			/// <summary>Replace the value associated to a specified key.</summary>
+			/// <returns>Returns true if the value is replaced.</returns>
+			/// <param name="key">The key to find. If the key does not exist, it will be added to the dictionary.</param>
+			/// <param name="value">The associated value to replace.</param>
+			bool Set(const KT& key, VT&& value) { return SetInternal<const KT&, VT&&>(key, std::move(value)); }
 
-			bool Set(const KT& key, const VT& value) { return Set<const KT&, const VT&>(key, value); }
-			bool Set(const KT& key, VT&& value) { return Set<const KT&, VT>(key, std::move(value)); }
-			bool Set(KT&& key, const VT& value) { return Set<KT, const VT&>(std::move(key), value); }
-			bool Set(KT&& key, VT&& value) { return Set<KT, VT>(std::move(key), std::move(value)); }
+			/// <summary>Replace the value associated to a specified key.</summary>
+			/// <returns>Returns true if the value is replaced.</returns>
+			/// <param name="key">The key to find. If the key does not exist, it will be added to the dictionary.</param>
+			/// <param name="value">The associated value to replace.</param>
+			bool Set(KT&& key, const VT& value) { return SetInternal<KT&&, const VT&>(std::move(key), value); }
+
+			/// <summary>Replace the value associated to a specified key.</summary>
+			/// <returns>Returns true if the value is replaced.</returns>
+			/// <param name="key">The key to find. If the key does not exist, it will be added to the dictionary.</param>
+			/// <param name="value">The associated value to replace.</param>
+			bool Set(KT&& key, VT&& value) { return SetInternal<KT, VT>(std::move(key), std::move(value)); }
 
 			/// <summary>Add a key with an associated value.</summary>
 			/// <returns>Returns true if the pair is added. If will crash if the key exists.</returns>
 			/// <param name="value">The pair of key and value.</param>
-			bool Add(const Pair<KT, VT>& value)
-			{
-				return Add(value.key, value.value);
-			}
+			bool Add(const Pair<KT, VT>& value) { return AddInternal<const KT&, const VT&>(value.key, value.value); }
 
 			/// <summary>Add a key with an associated value.</summary>
 			/// <returns>Returns true if the pair is added. If will crash if the key exists.</returns>
 			/// <param name="value">The pair of key and value.</param>
-			bool Add(Pair<KT, VT>&& value)
-			{
-				return Add(std::move(value.key), std::move(value.value));
-			}
+			bool Add(Pair<KT, VT>&& value) { return AddInternal<KT&&, VT&&>(std::move(value.key), std::move(value.value)); }
 
 			/// <summary>Add a key with an associated value.</summary>
-			/// <typeparam name="TKeyItem">The type of the new key.</typeparam>
-			/// <typeparam name="TValueItem">The type of the new value.</typeparam>
 			/// <returns>Returns true if the pair is added. If will crash if the key exists.</returns>
 			/// <param name="key">The key to add.</param>
 			/// <param name="value">The value to add.</param>
-			template<typename TKeyItem, typename TValueItem>
-			bool Add(TKeyItem&& key, TValueItem&& value)
-			{
-				using TKeyAccept = memory_management::AcceptType<KT, TKeyItem&&>;
-				using TKeyForward = memory_management::ForwardType<KT, TKeyItem&&>;
-				TKeyAccept keyAccept = memory_management::RefOrConvert<KT>(std::forward<TKeyItem&&>(key));
+			bool Add(const KT& key, const VT& value) { return AddInternal<const KT&, const VT&>(key, value); }
 
-				CHECK_ERROR(!keys.Contains(KeyType<KT>::GetKeyValue(keyAccept)), L"Dictionary<KT, KK, ValueContainer, VT, VK>::Add(const KT&, const VT&)#Key already exists.");
-				vint index = keys.Add(std::forward<TKeyForward>(keyAccept));
-				values.Insert(index, std::forward<TValueItem&&>(value));
+			/// <summary>Add a key with an associated value.</summary>
+			/// <returns>Returns true if the pair is added. If will crash if the key exists.</returns>
+			/// <param name="key">The key to add.</param>
+			/// <param name="value">The value to add.</param>
+			bool Add(const KT& key, VT&& value) { return AddInternal<const KT&, VT&&>(key, std::move(value)); }
 
-				return true;
-			}
+			/// <summary>Add a key with an associated value.</summary>
+			/// <returns>Returns true if the pair is added. If will crash if the key exists.</returns>
+			/// <param name="key">The key to add.</param>
+			/// <param name="value">The value to add.</param>
+			bool Add(KT&& key, const VT& value) { return AddInternal<KT&&, const VT&>(std::move(key), value); }
 
-			bool Add(const KT& key, const VT& value) { return Add<const KT&, const VT&>(key, value); }
-			bool Add(const KT& key, VT&& value) { return Add<const KT&, VT>(key, std::move(value)); }
-			bool Add(KT&& key, const VT& value) { return Add<KT, const VT&>(std::move(key), value); }
-			bool Add(KT&& key, VT&& value) { return Add<KT, VT>(std::move(key), std::move(value)); }
+			/// <summary>Add a key with an associated value.</summary>
+			/// <returns>Returns true if the pair is added. If will crash if the key exists.</returns>
+			/// <param name="key">The key to add.</param>
+			/// <param name="value">The value to add.</param>
+			bool Add(KT&& key, VT&& value) { return AddInternal<KT&&, VT&&>(std::move(key), std::move(value)); }
 
 			/// <summary>Remove a key with the associated value.</summary>
 			/// <returns>Returns true if the key and the value is removed.</returns>
@@ -2893,28 +3288,23 @@ namespace vl
 		/// <summary>Group: one to many map container.</summary>
 		/// <typeparam name="KT">Type of keys.</typeparam>
 		/// <typeparam name="VT">Type of values.</typeparam>
-		/// <typeparam name="KK">Type of the key type of keys. It is recommended to use the default value.</typeparam>
-		/// <typeparam name="VK">Type of the key type of values. It is recommended to use the default value.</typeparam>
-		template<
-			typename KT,
-			typename VT,
-			typename KK=typename KeyType<KT>::Type,
-			typename VK=typename KeyType<VT>::Type
-		>
+		template<typename KT, typename VT>
 		class Group : public EnumerableBase<Pair<const KT&, const VT&>>
 		{
+			using KK = typename KeyType<KT>::Type;
+			using VK = typename KeyType<VT>::Type;
 			using KVPair = Pair<const KT&, const VT&>;
 		public:
-			typedef SortedList<KT, KK>		KeyContainer;
-			typedef List<VT, VK>			ValueContainer;
+			typedef SortedList<KT>					KeyContainer;
+			typedef List<VT>						ValueContainer;
 		protected:
 			class Enumerator : public Object, public virtual IEnumerator<KVPair>
 			{
 			private:
-				const Group<KT, VT, KK, VK>*		container;
+				const Group<KT, VT>*				container;
 				vint								keyIndex;
 				vint								valueIndex;
-				KVPair								current;
+				Nullable<KVPair>					current;
 
 				void UpdateCurrent()
 				{
@@ -2928,7 +3318,7 @@ namespace vl
 					}
 				}
 			public:
-				Enumerator(const Group<KT, VT, KK, VK>* _container, vint _keyIndex=-1, vint _valueIndex=-1)
+				Enumerator(const Group<KT, VT>* _container, vint _keyIndex=-1, vint _valueIndex=-1)
 				{
 					container=_container;
 					keyIndex=_keyIndex;
@@ -2942,7 +3332,7 @@ namespace vl
 
 				const KVPair& Current()const override
 				{
-					return current;
+					return current.Value();
 				}
 
 				vint Index()const override
@@ -3001,6 +3391,28 @@ namespace vl
 
 			KeyContainer					keys;
 			List<ValueContainer*>			values;
+
+			template<typename TKeyItem, typename TValueItem>
+			bool AddInternal(TKeyItem&& key, TValueItem&& value)
+			{
+				using TKeyAccept = memory_management::AcceptType<KT, TKeyItem&&>;
+				using TKeyForward = memory_management::ForwardType<KT, TKeyItem&&>;
+				TKeyAccept keyAccept = memory_management::RefOrConvert<KT>(std::forward<TKeyItem&&>(key));
+
+				ValueContainer* target = nullptr;
+				vint index = keys.IndexOf(KeyType<KT>::GetKeyValue(keyAccept));
+				if (index == -1)
+				{
+					target = new ValueContainer;
+					values.Insert(keys.Add(std::forward<TKeyForward>(keyAccept)), target);
+				}
+				else
+				{
+					target = values[index];
+				}
+				target->Add(std::forward<TValueItem&&>(value));
+				return true;
+			}
 		public:
 			/// <summary>Create an empty group.</summary>
 			Group() = default;
@@ -3010,15 +3422,15 @@ namespace vl
 				Clear();
 			}
 
-			Group(const Group<KT, VT, KK, VK>&) = delete;
-			Group(Group<KT, VT, KK, VK>&& _move)
+			Group(const Group<KT, VT>&) = delete;
+			Group(Group<KT, VT>&& _move)
 				: keys(std::move(_move.keys))
 				, values(std::move(_move.values))
 			{
 			}
 
-			Group<KT, VT, KK, VK>& operator=(const Group<KT, VT, KK, VK>&) = delete;
-			Group<KT, VT, KK, VK>& operator=(Group<KT, VT, KK, VK> && _move)
+			Group<KT, VT>& operator=(const Group<KT, VT>&) = delete;
+			Group<KT, VT>& operator=(Group<KT, VT> && _move)
 			{
 				Clear();
 				keys = std::move(_move.keys);
@@ -3101,10 +3513,7 @@ namespace vl
 			/// </summary>
 			/// <returns>Returns true if the pair is added.</returns>
 			/// <param name="value">The pair of key and value to add.</param>
-			bool Add(const Pair<KT, VT>& value)
-			{
-				return Add(value.key, value.value);
-			}
+			bool Add(const Pair<KT, VT>& value) { return AddInternal<const KT&, const VT&>(value.key, value.value); }
 
 			/// <summary>
 			/// Add a key with an associated value.
@@ -3113,47 +3522,47 @@ namespace vl
 			/// </summary>
 			/// <returns>Returns true if the pair is added.</returns>
 			/// <param name="value">The pair of key and value to add.</param>
-			bool Add(Pair<KT, VT>&& value)
-			{
-				return Add(std::move(value.key), std::move(value.value));
-			}
+			bool Add(Pair<KT, VT>&& value) { return AddInternal<KT&&, VT&&>(std::move(value.key), std::move(value.value)); }
 
 			/// <summary>
 			/// Add a key with an associated value.
 			/// If the key already exists, the value will be associated to the key with other values.
 			/// If this value has already been associated to the key, it will still be duplicated.
 			/// </summary>
-			/// <typeparam name="TKeyItem">The type of the new key.</typeparam>
-			/// <typeparam name="TValueItem">The type of the new value.</typeparam>
 			/// <returns>Returns true if the key and the value are added.</returns>
 			/// <param name="key">The key to add.</param>
 			/// <param name="value">The value to add.</param>
-			template<typename TKeyItem, typename TValueItem>
-			bool Add(TKeyItem&& key, TValueItem&& value)
-			{
-				using TKeyAccept = memory_management::AcceptType<KT, TKeyItem&&>;
-				using TKeyForward = memory_management::ForwardType<KT, TKeyItem&&>;
-				TKeyAccept keyAccept = memory_management::RefOrConvert<KT>(std::forward<TKeyItem&&>(key));
+			bool Add(const KT& key, const VT& value) { return AddInternal<const KT&, const VT&>(key, value); }
 
-				ValueContainer* target = nullptr;
-				vint index = keys.IndexOf(KeyType<KT>::GetKeyValue(keyAccept));
-				if (index == -1)
-				{
-					target = new ValueContainer;
-					values.Insert(keys.Add(std::forward<TKeyForward>(keyAccept)), target);
-				}
-				else
-				{
-					target = values[index];
-				}
-				target->Add(std::forward<TValueItem&&>(value));
-				return true;
-			}
+			/// <summary>
+			/// Add a key with an associated value.
+			/// If the key already exists, the value will be associated to the key with other values.
+			/// If this value has already been associated to the key, it will still be duplicated.
+			/// </summary>
+			/// <returns>Returns true if the key and the value are added.</returns>
+			/// <param name="key">The key to add.</param>
+			/// <param name="value">The value to add.</param>
+			bool Add(const KT& key, VT&& value) { return AddInternal<const KT&, VT&&>(key, std::move(value)); }
 
-			bool Add(const KT& key, const VT& value) { return Add<const KT&, const VT&>(key, value); }
-			bool Add(const KT& key, VT&& value) { return Add<const KT&, VT>(key, std::move(value)); }
-			bool Add(KT&& key, const VT& value) { return Add<KT, const VT&>(std::move(key), value); }
-			bool Add(KT&& key, VT&& value) { return Add<KT, VT>(std::move(key), std::move(value)); }
+			/// <summary>
+			/// Add a key with an associated value.
+			/// If the key already exists, the value will be associated to the key with other values.
+			/// If this value has already been associated to the key, it will still be duplicated.
+			/// </summary>
+			/// <returns>Returns true if the key and the value are added.</returns>
+			/// <param name="key">The key to add.</param>
+			/// <param name="value">The value to add.</param>
+			bool Add(KT&& key, const VT& value) { return AddInternal<KT&&, const VT&>(std::move(key), value); }
+
+			/// <summary>
+			/// Add a key with an associated value.
+			/// If the key already exists, the value will be associated to the key with other values.
+			/// If this value has already been associated to the key, it will still be duplicated.
+			/// </summary>
+			/// <returns>Returns true if the key and the value are added.</returns>
+			/// <param name="key">The key to add.</param>
+			/// <param name="value">The value to add.</param>
+			bool Add(KT&& key, VT&& value) { return AddInternal<KT&&, VT&&>(std::move(key), std::move(value)); }
 			
 			/// <summary>Remove a key with all associated values.</summary>
 			/// <returns>Returns true if the key and all associated values are removed.</returns>
@@ -3164,7 +3573,7 @@ namespace vl
 				if(index!=-1)
 				{
 					keys.RemoveAt(index);
-					List<VT, VK>* target=values[index];
+					auto target=values[index];
 					values.RemoveAt(index);
 					delete target;
 					return true;
@@ -3188,7 +3597,7 @@ namespace vl
 				vint index=keys.IndexOf(key);
 				if(index!=-1)
 				{
-					List<VT, VK>* target=values[index];
+					auto target=values[index];
 					target->Remove(value);
 					if(target->Count()==0)
 					{
@@ -3347,32 +3756,32 @@ Random Access
 ***********************************************************************/
 		namespace randomaccess_internal
 		{
-			template<typename KT, typename VT, typename KK, typename VK>
-			struct RandomAccessable<Dictionary<KT, VT, KK, VK>>
+			template<typename KT, typename VT>
+			struct RandomAccessable<Dictionary<KT, VT>>
 			{
 				static const bool							CanRead = true;
 				static const bool							CanResize = false;
 			};
 		
-			template<typename KT, typename VT, typename KK, typename VK>
-			struct RandomAccess<Dictionary<KT, VT, KK, VK>>
+			template<typename KT, typename VT>
+			struct RandomAccess<Dictionary<KT, VT>>
 			{
-				static vint GetCount(const Dictionary<KT, VT, KK, VK>& t)
+				static vint GetCount(const Dictionary<KT, VT>& t)
 				{
 					return t.Count();
 				}
 
-				static Pair<KT, VT> GetValue(const Dictionary<KT, VT, KK, VK>& t, vint index)
+				static Pair<KT, VT> GetValue(const Dictionary<KT, VT>& t, vint index)
 				{
 					return Pair<KT, VT>(t.Keys().Get(index), t.Values().Get(index));
 				}
 
-				static void AppendValue(Dictionary<KT, VT, KK, VK>& t, const Pair<KT, VT>& value)
+				static void AppendValue(Dictionary<KT, VT>& t, const Pair<KT, VT>& value)
 				{
 					t.Set(value.key, value.value);
 				}
 
-				static void AppendValue(Dictionary<KT, VT, KK, VK>& t, const Pair<const KT&, const VT&>& value)
+				static void AppendValue(Dictionary<KT, VT>& t, const Pair<const KT&, const VT&>& value)
 				{
 					t.Set(value.key, value.value);
 				}
@@ -3454,7 +3863,7 @@ Copy Functions for Containers
 					Ptr<IEnumerator<typename Ss::ElementType>> enumerator;
 					vint copyCount=0;
 
-					enumerator=ss.CreateEnumerator();
+					enumerator = Ptr(ss.CreateEnumerator());
 					while(enumerator->Next())
 					{
 						copyCount++;
@@ -3464,7 +3873,7 @@ Copy Functions for Containers
 					vint resizeCount=index+copyCount;
 					RandomAccess<Ds>::SetCount(ds, resizeCount);
 
-					enumerator=ss.CreateEnumerator();
+					enumerator = Ptr(ss.CreateEnumerator());
 					while(enumerator->Next())
 					{
 						RandomAccess<Ds>::SetValue(ds, index++, enumerator->Current());
@@ -3481,7 +3890,7 @@ Copy Functions for Containers
 					{
 						ds.Clear();
 					}
-					Ptr<IEnumerator<typename Ss::ElementType>> enumerator = ss.CreateEnumerator();
+					auto enumerator = Ptr(ss.CreateEnumerator());
 					while (enumerator->Next())
 					{
 						RandomAccess<Ds>::AppendValue(ds, enumerator->Current());
@@ -3756,30 +4165,24 @@ CompareEnumerable
 		/// In other cases, the results represents the comparison result of the first pair of inequal values in enumerables.
 		/// </remarks>
 		template<typename T, typename U>
-		vint CompareEnumerable(const IEnumerable<T>& a, const IEnumerable<U>& b)
+		std::strong_ordering CompareEnumerable(const IEnumerable<T>& a, const IEnumerable<U>& b)
 		{
-			Ptr<IEnumerator<T>> ator = a.CreateEnumerator();
-			Ptr<IEnumerator<U>> btor = b.CreateEnumerator();
+			auto ator = Ptr(a.CreateEnumerator());
+			auto btor = Ptr(b.CreateEnumerator());
 			while (true)
 			{
 				bool a = ator->Next();
 				bool b = btor->Next();
-				if (a && !b) return 1;
-				if (!a&&b) return -1;
+				if (a && !b) return std::strong_ordering::greater;
+				if (!a&&b) return std::strong_ordering::less;
 				if (!a && !b) break;
 
 				const T& ac = ator->Current();
 				const U& bc = btor->Current();
-				if (ac < bc)
-				{
-					return -1;
-				}
-				else if (ac > bc)
-				{
-					return 1;
-				}
+				std::strong_ordering ordering = ac <=> bc;
+				if (ordering != 0) return ordering;
 			}
-			return 0;
+			return std::strong_ordering::equal;
 		}
 
 		template<typename T>
@@ -3965,9 +4368,24 @@ Range-Based For-Loop Iterator
 				return iterator->Current();
 			}
 
-			bool operator==(RangeBasedForLoopEnding) const
+			bool operator==(const RangeBasedForLoopEnding&) const
 			{
 				return iterator == nullptr;
+			}
+
+			bool operator!=(const RangeBasedForLoopEnding&) const
+			{
+				return iterator != nullptr;
+			}
+
+			friend bool operator==(const RangeBasedForLoopEnding&, const RangeBasedForLoopIterator<T>& iterator)
+			{
+				return iterator.iterator == nullptr;
+			}
+
+			friend bool operator!=(const RangeBasedForLoopEnding&, const RangeBasedForLoopIterator<T>& iterator)
+			{
+				return iterator.iterator != nullptr;
 			}
 		};
 
@@ -3990,17 +4408,6 @@ Range-Based For-Loop Iterator with Index
 		template<typename T>
 		struct RangeBasedForLoopIteratorWithIndex
 		{
-			struct Tuple
-			{
-				const T&			value;
-				vint				index;
-
-				Tuple(const T& _value, vint _index)
-					: value(_value)
-					, index(_index)
-				{
-				}
-			};
 		private:
 			IEnumerator<T>*			iterator;
 			vint					index;
@@ -4028,14 +4435,29 @@ Range-Based For-Loop Iterator with Index
 				index++;
 			}
 
-			Tuple operator*() const
+			Tuple<const T&, vint> operator*() const
 			{
 				return { iterator->Current(),index };
 			}
 
-			bool operator==(RangeBasedForLoopEnding) const
+			bool operator==(const RangeBasedForLoopEnding&) const
 			{
 				return iterator == nullptr;
+			}
+
+			bool operator!=(const RangeBasedForLoopEnding&) const
+			{
+				return iterator != nullptr;
+			}
+
+			friend bool operator==(const RangeBasedForLoopEnding&, const RangeBasedForLoopIteratorWithIndex<T>& iterator)
+			{
+				return iterator.iterator == nullptr;
+			}
+
+			friend bool operator!=(const RangeBasedForLoopEnding&, const RangeBasedForLoopIteratorWithIndex<T>& iterator)
+			{
+				return iterator.iterator != nullptr;
 			}
 		};
 
@@ -4151,6 +4573,85 @@ Pairwise
 			bool Evaluated()const override
 			{
 				return enumerator1->Evaluated() && enumerator2->Evaluated();
+			}
+		};
+	}
+}
+
+#endif
+
+/***********************************************************************
+.\COLLECTIONS\OPERATIONSELECT.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_COLLECTIONS_OPERATIONSELECT
+#define VCZH_COLLECTIONS_OPERATIONSELECT
+
+
+namespace vl
+{
+	namespace collections
+	{
+
+/***********************************************************************
+Select
+***********************************************************************/
+
+		template<typename T, typename K>
+		class SelectEnumerator : public virtual IEnumerator<K>
+		{
+		protected:
+			IEnumerator<T>*		enumerator;
+			Func<K(T)>			selector;
+			Nullable<K>			current;
+		public:
+			SelectEnumerator(IEnumerator<T>* _enumerator, const Func<K(T)>& _selector, Nullable<K> _current = {})
+				:enumerator(_enumerator)
+				,selector(_selector)
+				,current(_current)
+			{
+			}
+
+			~SelectEnumerator()
+			{
+				delete enumerator;
+			}
+
+			IEnumerator<K>* Clone()const override
+			{
+				return new SelectEnumerator(enumerator->Clone(), selector, current);
+			}
+
+			const K& Current()const override
+			{
+				return current.Value();
+			}
+
+			vint Index()const override
+			{
+				return enumerator->Index();
+			}
+
+			bool Next()override
+			{
+				if (enumerator->Next())
+				{
+					current = selector(enumerator->Current());
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+
+			void Reset()override
+			{
+				enumerator->Reset();
 			}
 		};
 	}
@@ -4683,6 +5184,86 @@ Intersect/Except
 #endif
 
 /***********************************************************************
+.\COLLECTIONS\OPERATIONWHERE.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_COLLECTIONS_OPERATIONWHERE
+#define VCZH_COLLECTIONS_OPERATIONWHERE
+
+
+namespace vl
+{
+	namespace collections
+	{
+/***********************************************************************
+Where
+***********************************************************************/
+
+		template<typename T>
+		class WhereEnumerator : public virtual IEnumerator<T>
+		{
+		protected:
+			IEnumerator<T>*			enumerator;
+			Func<bool(T)>			selector;
+			vint					index;
+
+		public:
+			WhereEnumerator(IEnumerator<T>* _enumerator, const Func<bool(T)>& _selector, vint _index=-1)
+				:enumerator(_enumerator)
+				,selector(_selector)
+				,index(_index)
+			{
+			}
+
+			~WhereEnumerator()
+			{
+				delete enumerator;
+			}
+
+			IEnumerator<T>* Clone()const override
+			{
+				return new WhereEnumerator(enumerator->Clone(), selector, index);
+			}
+
+			const T& Current()const override
+			{
+				return enumerator->Current();
+			}
+
+			vint Index()const override
+			{
+				return index;
+			}
+
+			bool Next()override
+			{
+				while(enumerator->Next())
+				{
+					if(selector(enumerator->Current()))
+					{
+						index++;
+						return true;
+					}
+				}
+				return false;
+			}
+
+			void Reset()override
+			{
+				enumerator->Reset();
+				index=-1;
+			}
+		};
+	}
+}
+
+#endif
+
+/***********************************************************************
 .\COLLECTIONS\PARTIALORDERING.H
 ***********************************************************************/
 /***********************************************************************
@@ -5171,537 +5752,6 @@ Partial Ordering
 
 
 /***********************************************************************
-.\PRIMITIVES\FUNCTION.H
-***********************************************************************/
-/***********************************************************************
-Author: Zihan Chen (vczh)
-Licensed under https://github.com/vczh-libraries/License
-***********************************************************************/
-
-#ifndef VCZH_FUNCTION
-#define VCZH_FUNCTION
-#include <memory.h>
-namespace vl
-{
-	template<typename T>
-	class Func;
- 
-/***********************************************************************
-vl::Func<R(TArgs...)>
-***********************************************************************/
-
-	namespace internal_invokers
-	{
-		template<typename R, typename ...TArgs>
-		class Invoker : public Object
-		{
-		public:
-			virtual R Invoke(TArgs&& ...args) = 0;
-		};
-
-		//------------------------------------------------------
-		
-		template<typename R, typename ...TArgs>
-		class StaticInvoker : public Invoker<R, TArgs...>
-		{
-		protected:
-			R(*function)(TArgs ...args);
-
-		public:
-			StaticInvoker(R(*_function)(TArgs...))
-				:function(_function)
-			{
-			}
-
-			R Invoke(TArgs&& ...args)override
-			{
-				return function(std::forward<TArgs>(args)...);
-			}
-		};
-
-		//------------------------------------------------------
-		
-		template<typename C, typename R, typename ...TArgs>
-		class MemberInvoker : public Invoker<R, TArgs...>
-		{
-		protected:
-			C*							sender;
-			R(C::*function)(TArgs ...args);
-
-		public:
-			MemberInvoker(C* _sender, R(C::*_function)(TArgs ...args))
-				:sender(_sender)
-				,function(_function)
-			{
-			}
-
-			R Invoke(TArgs&& ...args)override
-			{
-				return (sender->*function)(std::forward<TArgs>(args)...);
-			}
-		};
-
-		//------------------------------------------------------
-
-		template<typename C, typename R, typename ...TArgs>
-		class ObjectInvoker : public Invoker<R, TArgs...>
-		{
-		protected:
-			C							function;
-
-		public:
-			ObjectInvoker(const C& _function)
-				:function(_function)
-			{
-			}
-
-			ObjectInvoker(C&& _function)
-				:function(std::move(_function))
-			{
-			}
-
-			R Invoke(TArgs&& ...args)override
-			{
-				return function(std::forward<TArgs>(args)...);
-			}
-		};
-
-		//------------------------------------------------------
-
-		template<typename C, typename ...TArgs>
-		class ObjectInvoker<C, void, TArgs...> : public Invoker<void, TArgs...>
-		{
-		protected:
-			C							function;
-
-		public:
-			ObjectInvoker(const C& _function)
-				:function(_function)
-			{
-			}
-
-			ObjectInvoker(C&& _function)
-				:function(std::move(_function))
-			{
-			}
-
-			void Invoke(TArgs&& ...args)override
-			{
-				function(std::forward<TArgs>(args)...);
-			}
-		};
-	}
-
-	/// <summary>A type for functors.</summary>
-	/// <typeparam name="R">The return type.</typeparam>
-	/// <typeparam name="TArgs">Types of parameters.</typeparam>
-	template<typename R, typename ...TArgs>
-	class Func<R(TArgs...)> : public Object
-	{
-	protected:
-		Ptr<internal_invokers::Invoker<R, TArgs...>>		invoker;
-
-		template<typename R2, typename ...TArgs2>
-		static bool IsEmptyFunc(const Func<R2(TArgs2...)>& function)
-		{
-			return !function;
-		}
-
-		template<typename R2, typename ...TArgs2>
-		static bool IsEmptyFunc(Func<R2(TArgs2...)>& function)
-		{
-			return !function;
-		}
-
-		template<typename C>
-		static bool IsEmptyFunc(C&&)
-		{
-			return false;
-		}
-	public:
-		typedef R FunctionType(TArgs...);
-		typedef R ResultType;
-
-		/// <summary>Create a null functor.</summary>
-		Func() = default;
-
-		/// <summary>Copy a functor.</summary>
-		/// <param name="function">The functor to copy.</param>
-		Func(const Func<R(TArgs...)>& function) = default;
-
-		/// <summary>Move a functor.</summary>
-		/// <param name="function">The functor to move.</param>
-		Func(Func<R(TArgs...)>&& function) = default;
-
-		/// <summary>Create a functor from a function pointer.</summary>
-		/// <param name="function">The function pointer.</param>
-		Func(R(*function)(TArgs...))
-		{
-			invoker = new internal_invokers::StaticInvoker<R, TArgs...>(function);
-		}
-
-		/// <summary>Create a functor from a method.</summary>
-		/// <typeparam name="C">Type of the class that this method belongs to.</typeparam>
-		/// <param name="sender">The object that this method belongs to.</param>
-		/// <param name="function">The method pointer.</param>
-		template<typename C>
-		Func(C* sender, R(C::*function)(TArgs...))
-		{
-			invoker = new internal_invokers::MemberInvoker<C, R, TArgs...>(sender, function);
-		}
-
-		/// <summary>Create a functor from another compatible functor.</summary>
-		/// <typeparam name="C">Type of the functor to copy.</typeparam>
-		/// <param name="function">The functor to copy. It could be a lambda expression, or any types that has operator() members.</param>
-		template<typename C, typename=std::enable_if_t<
-			std::is_same_v<void, R> ||
-			std::is_convertible_v<decltype(std::declval<C>()(std::declval<TArgs>()...)), R>
-			>>
-		Func(C&& function)
-		{
-			if (!IsEmptyFunc(function))
-			{
-				invoker = new internal_invokers::ObjectInvoker<std::remove_cvref_t<C>, R, TArgs...>(std::forward<C&&>(function));
-			}
-		}
-
-		/// <summary>Invoke the function.</summary>
-		/// <returns>Returns the function result. It crashes when the functor is null.</returns>
-		/// <param name="args">Arguments to invoke the function.</param>
-		R operator()(TArgs ...args)const
-		{
-			return invoker->Invoke(std::forward<TArgs>(args)...);
-		}
-
-		Func<R(TArgs...)>& operator=(const Func<R(TArgs...)>& function)
-		{
-			invoker = function.invoker;
-			return *this;
-		}
-
-		Func<R(TArgs...)>& operator=(const Func<R(TArgs...)>&& function)
-		{
-			invoker = std::move(function.invoker);
-			return *this;
-		}
-
-		bool operator==(const Func<R(TArgs...)>& function)const
-		{
-			return invoker == function.invoker;
-		}
-
-		bool operator!=(const Func<R(TArgs...)>& function)const
-		{
-			return invoker != function.invoker;
-		}
-
-		/// <summary>Test is the functor is non-null.</summary>
-		/// <returns>Returns true if the functor is non-null.</returns>
-		operator bool()const
-		{
-			return invoker;
-		}
-	};
- 
-/***********************************************************************
-vl::function_lambda::LambdaRetriveType<R(TArgs...)>
-***********************************************************************/
- 
-	namespace function_lambda
-	{
-		template<typename T>
-		struct LambdaRetriveType
-		{
-		};
-
-		template<typename TObject, typename R, typename ...TArgs>
-		struct LambdaRetriveType<R(__thiscall TObject::*)(TArgs...)const>
-		{
-			typedef Func<R(TArgs...)> Type;
-			typedef R(FunctionType)(TArgs...);
-			typedef R ResultType;
-			typedef TypeTuple<TArgs...> ParameterTypes;
-		};
-
-		template<typename TObject, typename R, typename ...TArgs>
-		struct LambdaRetriveType<R(__thiscall TObject::*)(TArgs...)>
-		{
-			typedef Func<R(TArgs...)> Type;
-			typedef R(FunctionType)(TArgs...);
-			typedef R ResultType;
-			typedef TypeTuple<TArgs...> ParameterTypes;
-		};
-
-		/// <summary>Create a functor in [T:vl.Func`1] from another functor, with all type arguments autotimatically inferred. The "LAMBDA" macro is recommended for the same purpose for writing compact code.</summary>
-		/// <typeparam name="T">Type of the functor to copy.</typeparam>
-		/// <returns>A copied functor in [T:vl.Func`1].</returns>
-		/// <param name="functionObject">The functor to copy.</param>
-		template<typename T>
-		typename LambdaRetriveType<decltype(&T::operator())>::Type Lambda(T functionObject)
-		{
-			return functionObject;
-		}
-
-#define LAMBDA vl::function_lambda::Lambda
-	}
- 
-/***********************************************************************
-vl::function_binding::Binding<R(TArgs...)>
-***********************************************************************/
-
-	namespace function_binding
-	{
-		template<typename T>
-		struct Binding
-		{
-		};
-		 
-		template<typename T>
-		struct CR{typedef const T& Type;};
-		template<typename T>
-		struct CR<T&>{typedef T& Type;};
-		template<typename T>
-		struct CR<const T>{typedef const T& Type;};
-		template<typename T>
-		struct CR<const T&>{typedef const T& Type;};
- 
-		template<typename R, typename T0, typename ...TArgs>
-		struct Binding<R(T0, TArgs...)>
-		{
-			typedef R FunctionType(T0, TArgs...);
-			typedef R CurriedType(TArgs...);
-			typedef T0 FirstParameterType;
-
-			class Binder : public Object
-			{
-			protected:
-				Func<FunctionType>				target;
-				T0								firstArgument;
-			public:
-				Binder(const Func<FunctionType>& _target, T0 _firstArgument)
-					:target(_target)
-					,firstArgument(std::forward<T0>(_firstArgument))
-				{
-				}
-
-				R operator()(TArgs ...args)const
-				{
-					return target(firstArgument, args...);
-				}
-			};
-
-			class Currier : public Object
-			{
-			protected:
-				Func<FunctionType>		target;
-			public:
-				Currier(const Func<FunctionType>& _target)
-					:target(_target)
-				{
-				}
-
-				Func<CurriedType> operator()(T0 firstArgument)const
-				{
-					return Binder(target, firstArgument);
-				}
-			};
-		}; 
-	}
- 
-	/// <summary>
-	/// Currize a function pointer.
-	/// Currizing means to create a new functor whose argument is the first argument of the original function.
-	/// Calling this functor will return another functor whose arguments are all remaining arguments of the original function.
-	/// Calling the returned function will call the original function.
-	/// </summary>
-	/// <typeparam name="T">Type of the function pointer.</typeparam>
-	/// <returns>The currized functor.</returns>
-	/// <param name="function">The function pointer to currize.</param>
-	template<typename T>
-	Func<Func<typename function_binding::Binding<T>::CurriedType>(typename function_binding::Binding<T>::FirstParameterType)>
-	Curry(T* function)
-	{
-		return typename function_binding::Binding<T>::Currier(function);
-	}
-
-	/// <summary>
-	/// Currize a functor in [T:vl.Func`1].
-	/// Currizing means to create a new functor whose argument is the first argument of the original function.
-	/// Calling this functor will return another functor whose arguments are all remaining arguments of the original function.
-	/// Calling the returned function will call the original function.
-	/// </summary>
-	/// <typeparam name="T">Type of the functor.</typeparam>
-	/// <returns>The currized functor.</returns>
-	/// <param name="function">The functor to currize.</param>
-	template<typename T>
-	Func<Func<typename function_binding::Binding<T>::CurriedType>(typename function_binding::Binding<T>::FirstParameterType)>
-	Curry(const Func<T>& function)
-	{
-		return typename function_binding::Binding<T>::Currier(function);
-	}
-}
-#endif
-
-/***********************************************************************
-.\COLLECTIONS\OPERATIONSELECT.H
-***********************************************************************/
-/***********************************************************************
-Author: Zihan Chen (vczh)
-Licensed under https://github.com/vczh-libraries/License
-***********************************************************************/
-
-#ifndef VCZH_COLLECTIONS_OPERATIONSELECT
-#define VCZH_COLLECTIONS_OPERATIONSELECT
-
-
-namespace vl
-{
-	namespace collections
-	{
-
-/***********************************************************************
-Select
-***********************************************************************/
-
-		template<typename T, typename K>
-		class SelectEnumerator : public virtual IEnumerator<K>
-		{
-		protected:
-			IEnumerator<T>*		enumerator;
-			Func<K(T)>			selector;
-			Nullable<K>			current;
-		public:
-			SelectEnumerator(IEnumerator<T>* _enumerator, const Func<K(T)>& _selector, Nullable<K> _current = {})
-				:enumerator(_enumerator)
-				,selector(_selector)
-				,current(_current)
-			{
-			}
-
-			~SelectEnumerator()
-			{
-				delete enumerator;
-			}
-
-			IEnumerator<K>* Clone()const override
-			{
-				return new SelectEnumerator(enumerator->Clone(), selector, current);
-			}
-
-			const K& Current()const override
-			{
-				return current.Value();
-			}
-
-			vint Index()const override
-			{
-				return enumerator->Index();
-			}
-
-			bool Next()override
-			{
-				if (enumerator->Next())
-				{
-					current = selector(enumerator->Current());
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-
-			void Reset()override
-			{
-				enumerator->Reset();
-			}
-		};
-	}
-}
-
-#endif
-
-/***********************************************************************
-.\COLLECTIONS\OPERATIONWHERE.H
-***********************************************************************/
-/***********************************************************************
-Author: Zihan Chen (vczh)
-Licensed under https://github.com/vczh-libraries/License
-***********************************************************************/
-
-#ifndef VCZH_COLLECTIONS_OPERATIONWHERE
-#define VCZH_COLLECTIONS_OPERATIONWHERE
-
-
-namespace vl
-{
-	namespace collections
-	{
-/***********************************************************************
-Where
-***********************************************************************/
-
-		template<typename T>
-		class WhereEnumerator : public virtual IEnumerator<T>
-		{
-		protected:
-			IEnumerator<T>*			enumerator;
-			Func<bool(T)>			selector;
-			vint					index;
-
-		public:
-			WhereEnumerator(IEnumerator<T>* _enumerator, const Func<bool(T)>& _selector, vint _index=-1)
-				:enumerator(_enumerator)
-				,selector(_selector)
-				,index(_index)
-			{
-			}
-
-			~WhereEnumerator()
-			{
-				delete enumerator;
-			}
-
-			IEnumerator<T>* Clone()const override
-			{
-				return new WhereEnumerator(enumerator->Clone(), selector, index);
-			}
-
-			const T& Current()const override
-			{
-				return enumerator->Current();
-			}
-
-			vint Index()const override
-			{
-				return index;
-			}
-
-			bool Next()override
-			{
-				while(enumerator->Next())
-				{
-					if(selector(enumerator->Current()))
-					{
-						index++;
-						return true;
-					}
-				}
-				return false;
-			}
-
-			void Reset()override
-			{
-				enumerator->Reset();
-				index=-1;
-			}
-		};
-	}
-}
-
-#endif
-
-/***********************************************************************
 .\PRIMITIVES\EVENT.H
 ***********************************************************************/
 /***********************************************************************
@@ -5757,7 +5807,7 @@ namespace vl
 		/// <param name="function">The callback.</param>
 		Ptr<EventHandler> Add(const Func<void(TArgs...)>& function)
 		{
-			Ptr<EventHandlerImpl> handler = new EventHandlerImpl(function);
+			auto handler = Ptr(new EventHandlerImpl(function));
 			handlers.Add(handler);
 			return handler;
 		}
@@ -5797,476 +5847,18 @@ namespace vl
  
 		/// <summary>Invoke all callbacks in the event.</summary>
 		/// <param name="args">Arguments to invoke all callbacks.</param>
-		void operator()(TArgs ...args)const
+		template<typename... TArgs2>
+		void operator()(TArgs2&& ...args)const
 		{
 			for(vint i = 0; i < handlers.Count(); i++)
 			{
-				handlers[i]->function(args...);
+				handlers[i]->function(std::forward<TArgs2&&>(args)...);
 			}
 		}
 	};
 }
 #endif
 
-
-/***********************************************************************
-.\PRIMITIVES\LAZY.H
-***********************************************************************/
-/***********************************************************************
-Author: Zihan Chen (vczh)
-Licensed under https://github.com/vczh-libraries/License
-***********************************************************************/
-
-#ifndef VCZH_LAZY
-#define VCZH_LAZY
-
-
-namespace vl
-{
-	/// <summary>A type representing a lazy evaluation.</summary>
-	/// <typeparam name="T">The type of the evaluation result.</typeparam>
-	template<typename T>
-	class Lazy : public Object
-	{
-	protected:
-		class Internal
-		{
-		public:
-			Func<T()>			evaluator;
-			T					value;
-			bool				evaluated;
-		};
-
-		Ptr<Internal>			internalValue;
-	public:
-		/// <summary>Create an empty evaluation.</summary>
-		Lazy() = default;
-
-		/// <summary>Create an evaluation using a function, which produces the evaluation result.</summary>
-		/// <param name="evaluator">The function.</param>
-		Lazy(const Func<T()>& evaluator)
-		{
-			internalValue=new Internal;
-			internalValue->evaluated=false;
-			internalValue->evaluator=evaluator;
-		}
-
-		/// <summary>Create an evaluation with the immediate result.</summary>
-		/// <param name="value">The result.</param>0
-		Lazy(const T& value)
-		{
-			internalValue=new Internal;
-			internalValue->evaluated=true;
-			internalValue->value=value;
-		}
-
-		/// <summary>Create an evaluation by copying another one.</summary>
-		/// <param name="lazy">The evaluation to copy.</param>
-		Lazy(const Lazy<T>& lazy) = default;
-
-		/// <summary>Create an evaluation by moving another one.</summary>
-		/// <param name="lazy">The evaluation to move.</param>
-		Lazy(Lazy<T>&& lazy) = default;
-
-		Lazy<T>& operator=(const Func<T()>& evaluator)
-		{
-			internalValue=new Internal;
-			internalValue->evaluated=false;
-			internalValue->evaluator=evaluator;
-			return *this;
-		}
-
-		Lazy<T>& operator=(const T& value)
-		{
-			internalValue=new Internal;
-			internalValue->evaluated=true;
-			internalValue->value=value;
-			return *this;
-		}
-
-		Lazy<T>& operator=(const Lazy<T>& lazy)
-		{
-			internalValue=lazy.internalValue;
-			return *this;
-		}
-
-		/// <summary>Get the evaluation result. If the evaluation has not been performed, it will run the evaluation function and cache the result.</summary>
-		/// <returns>The evaluation result.</returns>
-		const T& Value()const
-		{
-			if(!internalValue->evaluated)
-			{
-				internalValue->evaluated=true;
-				internalValue->value=internalValue->evaluator();
-				internalValue->evaluator=Func<T()>();
-			}
-			return internalValue->value;
-		}
-
-		/// <summary>Test if it has already been evaluated or not.</summary>
-		/// <returns>Returns true if it has already been evaluated.</returns>
-		bool IsEvaluated()const
-		{
-			return internalValue->evaluated;
-		}
-
-		/// <summary>Test if it is an empty evaluation or not.</summary>
-		/// <returns>Returns true if it is not empty.</returns>
-		operator bool()const
-		{
-			return internalValue;
-		}
-	};
-}
-
-#endif
-
-
-/***********************************************************************
-.\PRIMITIVES\TUPLE.H
-***********************************************************************/
-/***********************************************************************
-Author: Zihan Chen (vczh)
-Licensed under https://github.com/vczh-libraries/License
-	
-This file is generated by: Vczh Functional Macro
-***********************************************************************/
-#ifndef VCZH_TUPLE
-#define VCZH_TUPLE
-
-
-namespace vl
-{
-	class TupleNullItem
-	{
-	};
-	template<typename T0 = TupleNullItem,typename T1 = TupleNullItem,typename T2 = TupleNullItem,typename T3 = TupleNullItem,typename T4 = TupleNullItem,typename T5 = TupleNullItem,typename T6 = TupleNullItem,typename T7 = TupleNullItem,typename T8 = TupleNullItem,typename T9 = TupleNullItem,typename T10 = TupleNullItem>
-	class Tuple
-	{
-	};
- 
-/***********************************************************************
-vl::Tuple<T0>
-***********************************************************************/
-	template<typename T0>
-	class Tuple<T0> : public Object
-	{
-	public:
-		T0 f0;
- 
-		Tuple()
-		{
-		}
- 
-		Tuple(T0 p0)
-			:f0(p0)
-		{
-		}
- 
-		static int Compare(const Tuple<T0>& a, const Tuple<T0>& b)
-		{
-			if (a.f0 < b.f0) return -1; else if (a.f0 > b.f0) return 1;
-			return 0;
-		}
- 
-		bool operator==(const Tuple<T0>& value)const{ return Compare(*this, value) == 0; }
-		bool operator!=(const Tuple<T0>& value)const{ return Compare(*this, value) != 0; }
-		bool operator< (const Tuple<T0>& value)const{ return Compare(*this, value) < 0; }
-		bool operator<=(const Tuple<T0>& value)const{ return Compare(*this, value) <= 0; }
-		bool operator> (const Tuple<T0>& value)const{ return Compare(*this, value) > 0; }
-		bool operator>=(const Tuple<T0>& value)const{ return Compare(*this, value) >= 0; }
-	};
-  
-/***********************************************************************
-vl::Tuple<T0,T1>
-***********************************************************************/
-	template<typename T0,typename T1>
-	class Tuple<T0,T1> : public Object
-	{
-	public:
-		T0 f0;T1 f1;
- 
-		Tuple()
-		{
-		}
- 
-		Tuple(T0 p0,T1 p1)
-			:f0(p0),f1(p1)
-		{
-		}
- 
-		static int Compare(const Tuple<T0,T1>& a, const Tuple<T0,T1>& b)
-		{
-			if (a.f0 < b.f0) return -1; else if (a.f0 > b.f0) return 1;if (a.f1 < b.f1) return -1; else if (a.f1 > b.f1) return 1;
-			return 0;
-		}
- 
-		bool operator==(const Tuple<T0,T1>& value)const{ return Compare(*this, value) == 0; }
-		bool operator!=(const Tuple<T0,T1>& value)const{ return Compare(*this, value) != 0; }
-		bool operator< (const Tuple<T0,T1>& value)const{ return Compare(*this, value) < 0; }
-		bool operator<=(const Tuple<T0,T1>& value)const{ return Compare(*this, value) <= 0; }
-		bool operator> (const Tuple<T0,T1>& value)const{ return Compare(*this, value) > 0; }
-		bool operator>=(const Tuple<T0,T1>& value)const{ return Compare(*this, value) >= 0; }
-	};
-  
-/***********************************************************************
-vl::Tuple<T0,T1,T2>
-***********************************************************************/
-	template<typename T0,typename T1,typename T2>
-	class Tuple<T0,T1,T2> : public Object
-	{
-	public:
-		T0 f0;T1 f1;T2 f2;
- 
-		Tuple()
-		{
-		}
- 
-		Tuple(T0 p0,T1 p1,T2 p2)
-			:f0(p0),f1(p1),f2(p2)
-		{
-		}
- 
-		static int Compare(const Tuple<T0,T1,T2>& a, const Tuple<T0,T1,T2>& b)
-		{
-			if (a.f0 < b.f0) return -1; else if (a.f0 > b.f0) return 1;if (a.f1 < b.f1) return -1; else if (a.f1 > b.f1) return 1;if (a.f2 < b.f2) return -1; else if (a.f2 > b.f2) return 1;
-			return 0;
-		}
- 
-		bool operator==(const Tuple<T0,T1,T2>& value)const{ return Compare(*this, value) == 0; }
-		bool operator!=(const Tuple<T0,T1,T2>& value)const{ return Compare(*this, value) != 0; }
-		bool operator< (const Tuple<T0,T1,T2>& value)const{ return Compare(*this, value) < 0; }
-		bool operator<=(const Tuple<T0,T1,T2>& value)const{ return Compare(*this, value) <= 0; }
-		bool operator> (const Tuple<T0,T1,T2>& value)const{ return Compare(*this, value) > 0; }
-		bool operator>=(const Tuple<T0,T1,T2>& value)const{ return Compare(*this, value) >= 0; }
-	};
-  
-/***********************************************************************
-vl::Tuple<T0,T1,T2,T3>
-***********************************************************************/
-	template<typename T0,typename T1,typename T2,typename T3>
-	class Tuple<T0,T1,T2,T3> : public Object
-	{
-	public:
-		T0 f0;T1 f1;T2 f2;T3 f3;
- 
-		Tuple()
-		{
-		}
- 
-		Tuple(T0 p0,T1 p1,T2 p2,T3 p3)
-			:f0(p0),f1(p1),f2(p2),f3(p3)
-		{
-		}
- 
-		static int Compare(const Tuple<T0,T1,T2,T3>& a, const Tuple<T0,T1,T2,T3>& b)
-		{
-			if (a.f0 < b.f0) return -1; else if (a.f0 > b.f0) return 1;if (a.f1 < b.f1) return -1; else if (a.f1 > b.f1) return 1;if (a.f2 < b.f2) return -1; else if (a.f2 > b.f2) return 1;if (a.f3 < b.f3) return -1; else if (a.f3 > b.f3) return 1;
-			return 0;
-		}
- 
-		bool operator==(const Tuple<T0,T1,T2,T3>& value)const{ return Compare(*this, value) == 0; }
-		bool operator!=(const Tuple<T0,T1,T2,T3>& value)const{ return Compare(*this, value) != 0; }
-		bool operator< (const Tuple<T0,T1,T2,T3>& value)const{ return Compare(*this, value) < 0; }
-		bool operator<=(const Tuple<T0,T1,T2,T3>& value)const{ return Compare(*this, value) <= 0; }
-		bool operator> (const Tuple<T0,T1,T2,T3>& value)const{ return Compare(*this, value) > 0; }
-		bool operator>=(const Tuple<T0,T1,T2,T3>& value)const{ return Compare(*this, value) >= 0; }
-	};
-  
-/***********************************************************************
-vl::Tuple<T0,T1,T2,T3,T4>
-***********************************************************************/
-	template<typename T0,typename T1,typename T2,typename T3,typename T4>
-	class Tuple<T0,T1,T2,T3,T4> : public Object
-	{
-	public:
-		T0 f0;T1 f1;T2 f2;T3 f3;T4 f4;
- 
-		Tuple()
-		{
-		}
- 
-		Tuple(T0 p0,T1 p1,T2 p2,T3 p3,T4 p4)
-			:f0(p0),f1(p1),f2(p2),f3(p3),f4(p4)
-		{
-		}
- 
-		static int Compare(const Tuple<T0,T1,T2,T3,T4>& a, const Tuple<T0,T1,T2,T3,T4>& b)
-		{
-			if (a.f0 < b.f0) return -1; else if (a.f0 > b.f0) return 1;if (a.f1 < b.f1) return -1; else if (a.f1 > b.f1) return 1;if (a.f2 < b.f2) return -1; else if (a.f2 > b.f2) return 1;if (a.f3 < b.f3) return -1; else if (a.f3 > b.f3) return 1;if (a.f4 < b.f4) return -1; else if (a.f4 > b.f4) return 1;
-			return 0;
-		}
- 
-		bool operator==(const Tuple<T0,T1,T2,T3,T4>& value)const{ return Compare(*this, value) == 0; }
-		bool operator!=(const Tuple<T0,T1,T2,T3,T4>& value)const{ return Compare(*this, value) != 0; }
-		bool operator< (const Tuple<T0,T1,T2,T3,T4>& value)const{ return Compare(*this, value) < 0; }
-		bool operator<=(const Tuple<T0,T1,T2,T3,T4>& value)const{ return Compare(*this, value) <= 0; }
-		bool operator> (const Tuple<T0,T1,T2,T3,T4>& value)const{ return Compare(*this, value) > 0; }
-		bool operator>=(const Tuple<T0,T1,T2,T3,T4>& value)const{ return Compare(*this, value) >= 0; }
-	};
-  
-/***********************************************************************
-vl::Tuple<T0,T1,T2,T3,T4,T5>
-***********************************************************************/
-	template<typename T0,typename T1,typename T2,typename T3,typename T4,typename T5>
-	class Tuple<T0,T1,T2,T3,T4,T5> : public Object
-	{
-	public:
-		T0 f0;T1 f1;T2 f2;T3 f3;T4 f4;T5 f5;
- 
-		Tuple()
-		{
-		}
- 
-		Tuple(T0 p0,T1 p1,T2 p2,T3 p3,T4 p4,T5 p5)
-			:f0(p0),f1(p1),f2(p2),f3(p3),f4(p4),f5(p5)
-		{
-		}
- 
-		static int Compare(const Tuple<T0,T1,T2,T3,T4,T5>& a, const Tuple<T0,T1,T2,T3,T4,T5>& b)
-		{
-			if (a.f0 < b.f0) return -1; else if (a.f0 > b.f0) return 1;if (a.f1 < b.f1) return -1; else if (a.f1 > b.f1) return 1;if (a.f2 < b.f2) return -1; else if (a.f2 > b.f2) return 1;if (a.f3 < b.f3) return -1; else if (a.f3 > b.f3) return 1;if (a.f4 < b.f4) return -1; else if (a.f4 > b.f4) return 1;if (a.f5 < b.f5) return -1; else if (a.f5 > b.f5) return 1;
-			return 0;
-		}
- 
-		bool operator==(const Tuple<T0,T1,T2,T3,T4,T5>& value)const{ return Compare(*this, value) == 0; }
-		bool operator!=(const Tuple<T0,T1,T2,T3,T4,T5>& value)const{ return Compare(*this, value) != 0; }
-		bool operator< (const Tuple<T0,T1,T2,T3,T4,T5>& value)const{ return Compare(*this, value) < 0; }
-		bool operator<=(const Tuple<T0,T1,T2,T3,T4,T5>& value)const{ return Compare(*this, value) <= 0; }
-		bool operator> (const Tuple<T0,T1,T2,T3,T4,T5>& value)const{ return Compare(*this, value) > 0; }
-		bool operator>=(const Tuple<T0,T1,T2,T3,T4,T5>& value)const{ return Compare(*this, value) >= 0; }
-	};
-  
-/***********************************************************************
-vl::Tuple<T0,T1,T2,T3,T4,T5,T6>
-***********************************************************************/
-	template<typename T0,typename T1,typename T2,typename T3,typename T4,typename T5,typename T6>
-	class Tuple<T0,T1,T2,T3,T4,T5,T6> : public Object
-	{
-	public:
-		T0 f0;T1 f1;T2 f2;T3 f3;T4 f4;T5 f5;T6 f6;
- 
-		Tuple()
-		{
-		}
- 
-		Tuple(T0 p0,T1 p1,T2 p2,T3 p3,T4 p4,T5 p5,T6 p6)
-			:f0(p0),f1(p1),f2(p2),f3(p3),f4(p4),f5(p5),f6(p6)
-		{
-		}
- 
-		static int Compare(const Tuple<T0,T1,T2,T3,T4,T5,T6>& a, const Tuple<T0,T1,T2,T3,T4,T5,T6>& b)
-		{
-			if (a.f0 < b.f0) return -1; else if (a.f0 > b.f0) return 1;if (a.f1 < b.f1) return -1; else if (a.f1 > b.f1) return 1;if (a.f2 < b.f2) return -1; else if (a.f2 > b.f2) return 1;if (a.f3 < b.f3) return -1; else if (a.f3 > b.f3) return 1;if (a.f4 < b.f4) return -1; else if (a.f4 > b.f4) return 1;if (a.f5 < b.f5) return -1; else if (a.f5 > b.f5) return 1;if (a.f6 < b.f6) return -1; else if (a.f6 > b.f6) return 1;
-			return 0;
-		}
- 
-		bool operator==(const Tuple<T0,T1,T2,T3,T4,T5,T6>& value)const{ return Compare(*this, value) == 0; }
-		bool operator!=(const Tuple<T0,T1,T2,T3,T4,T5,T6>& value)const{ return Compare(*this, value) != 0; }
-		bool operator< (const Tuple<T0,T1,T2,T3,T4,T5,T6>& value)const{ return Compare(*this, value) < 0; }
-		bool operator<=(const Tuple<T0,T1,T2,T3,T4,T5,T6>& value)const{ return Compare(*this, value) <= 0; }
-		bool operator> (const Tuple<T0,T1,T2,T3,T4,T5,T6>& value)const{ return Compare(*this, value) > 0; }
-		bool operator>=(const Tuple<T0,T1,T2,T3,T4,T5,T6>& value)const{ return Compare(*this, value) >= 0; }
-	};
-  
-/***********************************************************************
-vl::Tuple<T0,T1,T2,T3,T4,T5,T6,T7>
-***********************************************************************/
-	template<typename T0,typename T1,typename T2,typename T3,typename T4,typename T5,typename T6,typename T7>
-	class Tuple<T0,T1,T2,T3,T4,T5,T6,T7> : public Object
-	{
-	public:
-		T0 f0;T1 f1;T2 f2;T3 f3;T4 f4;T5 f5;T6 f6;T7 f7;
- 
-		Tuple()
-		{
-		}
- 
-		Tuple(T0 p0,T1 p1,T2 p2,T3 p3,T4 p4,T5 p5,T6 p6,T7 p7)
-			:f0(p0),f1(p1),f2(p2),f3(p3),f4(p4),f5(p5),f6(p6),f7(p7)
-		{
-		}
- 
-		static int Compare(const Tuple<T0,T1,T2,T3,T4,T5,T6,T7>& a, const Tuple<T0,T1,T2,T3,T4,T5,T6,T7>& b)
-		{
-			if (a.f0 < b.f0) return -1; else if (a.f0 > b.f0) return 1;if (a.f1 < b.f1) return -1; else if (a.f1 > b.f1) return 1;if (a.f2 < b.f2) return -1; else if (a.f2 > b.f2) return 1;if (a.f3 < b.f3) return -1; else if (a.f3 > b.f3) return 1;if (a.f4 < b.f4) return -1; else if (a.f4 > b.f4) return 1;if (a.f5 < b.f5) return -1; else if (a.f5 > b.f5) return 1;if (a.f6 < b.f6) return -1; else if (a.f6 > b.f6) return 1;if (a.f7 < b.f7) return -1; else if (a.f7 > b.f7) return 1;
-			return 0;
-		}
- 
-		bool operator==(const Tuple<T0,T1,T2,T3,T4,T5,T6,T7>& value)const{ return Compare(*this, value) == 0; }
-		bool operator!=(const Tuple<T0,T1,T2,T3,T4,T5,T6,T7>& value)const{ return Compare(*this, value) != 0; }
-		bool operator< (const Tuple<T0,T1,T2,T3,T4,T5,T6,T7>& value)const{ return Compare(*this, value) < 0; }
-		bool operator<=(const Tuple<T0,T1,T2,T3,T4,T5,T6,T7>& value)const{ return Compare(*this, value) <= 0; }
-		bool operator> (const Tuple<T0,T1,T2,T3,T4,T5,T6,T7>& value)const{ return Compare(*this, value) > 0; }
-		bool operator>=(const Tuple<T0,T1,T2,T3,T4,T5,T6,T7>& value)const{ return Compare(*this, value) >= 0; }
-	};
-  
-/***********************************************************************
-vl::Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8>
-***********************************************************************/
-	template<typename T0,typename T1,typename T2,typename T3,typename T4,typename T5,typename T6,typename T7,typename T8>
-	class Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8> : public Object
-	{
-	public:
-		T0 f0;T1 f1;T2 f2;T3 f3;T4 f4;T5 f5;T6 f6;T7 f7;T8 f8;
- 
-		Tuple()
-		{
-		}
- 
-		Tuple(T0 p0,T1 p1,T2 p2,T3 p3,T4 p4,T5 p5,T6 p6,T7 p7,T8 p8)
-			:f0(p0),f1(p1),f2(p2),f3(p3),f4(p4),f5(p5),f6(p6),f7(p7),f8(p8)
-		{
-		}
- 
-		static int Compare(const Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8>& a, const Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8>& b)
-		{
-			if (a.f0 < b.f0) return -1; else if (a.f0 > b.f0) return 1;if (a.f1 < b.f1) return -1; else if (a.f1 > b.f1) return 1;if (a.f2 < b.f2) return -1; else if (a.f2 > b.f2) return 1;if (a.f3 < b.f3) return -1; else if (a.f3 > b.f3) return 1;if (a.f4 < b.f4) return -1; else if (a.f4 > b.f4) return 1;if (a.f5 < b.f5) return -1; else if (a.f5 > b.f5) return 1;if (a.f6 < b.f6) return -1; else if (a.f6 > b.f6) return 1;if (a.f7 < b.f7) return -1; else if (a.f7 > b.f7) return 1;if (a.f8 < b.f8) return -1; else if (a.f8 > b.f8) return 1;
-			return 0;
-		}
- 
-		bool operator==(const Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8>& value)const{ return Compare(*this, value) == 0; }
-		bool operator!=(const Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8>& value)const{ return Compare(*this, value) != 0; }
-		bool operator< (const Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8>& value)const{ return Compare(*this, value) < 0; }
-		bool operator<=(const Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8>& value)const{ return Compare(*this, value) <= 0; }
-		bool operator> (const Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8>& value)const{ return Compare(*this, value) > 0; }
-		bool operator>=(const Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8>& value)const{ return Compare(*this, value) >= 0; }
-	};
-  
-/***********************************************************************
-vl::Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8,T9>
-***********************************************************************/
-	template<typename T0,typename T1,typename T2,typename T3,typename T4,typename T5,typename T6,typename T7,typename T8,typename T9>
-	class Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8,T9> : public Object
-	{
-	public:
-		T0 f0;T1 f1;T2 f2;T3 f3;T4 f4;T5 f5;T6 f6;T7 f7;T8 f8;T9 f9;
- 
-		Tuple()
-		{
-		}
- 
-		Tuple(T0 p0,T1 p1,T2 p2,T3 p3,T4 p4,T5 p5,T6 p6,T7 p7,T8 p8,T9 p9)
-			:f0(p0),f1(p1),f2(p2),f3(p3),f4(p4),f5(p5),f6(p6),f7(p7),f8(p8),f9(p9)
-		{
-		}
- 
-		static int Compare(const Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8,T9>& a, const Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8,T9>& b)
-		{
-			if (a.f0 < b.f0) return -1; else if (a.f0 > b.f0) return 1;if (a.f1 < b.f1) return -1; else if (a.f1 > b.f1) return 1;if (a.f2 < b.f2) return -1; else if (a.f2 > b.f2) return 1;if (a.f3 < b.f3) return -1; else if (a.f3 > b.f3) return 1;if (a.f4 < b.f4) return -1; else if (a.f4 > b.f4) return 1;if (a.f5 < b.f5) return -1; else if (a.f5 > b.f5) return 1;if (a.f6 < b.f6) return -1; else if (a.f6 > b.f6) return 1;if (a.f7 < b.f7) return -1; else if (a.f7 > b.f7) return 1;if (a.f8 < b.f8) return -1; else if (a.f8 > b.f8) return 1;if (a.f9 < b.f9) return -1; else if (a.f9 > b.f9) return 1;
-			return 0;
-		}
- 
-		bool operator==(const Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8,T9>& value)const{ return Compare(*this, value) == 0; }
-		bool operator!=(const Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8,T9>& value)const{ return Compare(*this, value) != 0; }
-		bool operator< (const Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8,T9>& value)const{ return Compare(*this, value) < 0; }
-		bool operator<=(const Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8,T9>& value)const{ return Compare(*this, value) <= 0; }
-		bool operator> (const Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8,T9>& value)const{ return Compare(*this, value) > 0; }
-		bool operator>=(const Tuple<T0,T1,T2,T3,T4,T5,T6,T7,T8,T9>& value)const{ return Compare(*this, value) >= 0; }
-	};
- 
-}
-#endif
 
 /***********************************************************************
 .\STRINGS\STRING.H
@@ -6308,53 +5900,46 @@ namespace vl
 			return result;
 		}
 
-		static vint64_t Compare(const T* bufA, const ObjectString<T>& strB)
+	public:
+		std::strong_ordering operator<=>(const ObjectString<T>& str)const
 		{
-			const T* bufB = strB.buffer + strB.start;
-			const T* bufAOld = bufA;
-			vint length = strB.length;
-			while (true)
+			const T* bufA = buffer + start;
+			const T* bufB = str.buffer + str.start;
+			if (bufA != bufB)
 			{
-				if (*bufA && length)
+				vint minLength = length < str.length ? length : str.length;
+				while (minLength--)
 				{
-					length--;
-					vint64_t diff = (vint64_t)(*bufA++) - (vint64_t)(*bufB++);
-					if (diff != 0)
-					{
-						return diff;
-					}
-				}
-				else if (*bufA)
-				{
-					return CalculateLength(bufA);
-				}
-				else if (length)
-				{
-					return -length;
-				}
-				else
-				{
-					return 0;
-				}
-			};
+					auto diff = *bufA++ <=> *bufB++;
+					if (diff != 0) return diff;
+				};
+			}
+			return length <=> str.length;
 		}
 
-	public:
-
-		static vint64_t Compare(const ObjectString<T>& strA, const ObjectString<T>& strB)
+		std::strong_ordering operator<=>(const T* str)const
 		{
-			const T* bufA = strA.buffer + strA.start;
-			const T* bufB = strB.buffer + strB.start;
-			vint length = strA.length < strB.length ? strA.length : strB.length;
-			while (length--)
-			{
-				vint64_t diff = (vint64_t)(*bufA++) - (vint64_t)(*bufB++);
-				if (diff != 0)
-				{
-					return diff;
-				}
-			};
-			return strA.length - strB.length;
+			return operator<=>(ObjectString<T>::Unmanaged(str));
+		}
+
+		friend std::strong_ordering operator<=>(const T* left, const ObjectString<T>& right)
+		{
+			return ObjectString<T>::Unmanaged(left) <=> right;
+		}
+
+		bool operator==(const ObjectString<T>& str)const
+		{
+			return operator<=>(str) == 0;
+		}
+
+		bool operator==(T* str)const
+		{
+			return operator<=>(str) == 0;
+		}
+
+		friend bool operator==(const T* left, const ObjectString<T>& right)
+		{
+			return (left <=> right) == 0;
 		}
 
 	private:
@@ -6410,7 +5995,7 @@ namespace vl
 			return std::move(str);
 		}
 	public:
-		static ObjectString<T>	Empty;
+		static const ObjectString<T>		Empty;
 
 		/// <summary>Create an empty string.</summary>
 		ObjectString() = default;
@@ -6629,64 +6214,9 @@ namespace vl
 			return ReplaceUnsafe(string, length, 0);
 		}
 
-		bool operator==(const ObjectString<T>& string)const
+		friend ObjectString<T> operator+(const T* left, const ObjectString<T>& right)
 		{
-			return Compare(*this, string)==0;
-		}
-
-		bool operator!=(const ObjectString<T>& string)const
-		{
-			return Compare(*this, string)!=0;
-		}
-
-		bool operator>(const ObjectString<T>& string)const
-		{
-			return Compare(*this, string)>0;
-		}
-
-		bool operator>=(const ObjectString<T>& string)const
-		{
-			return Compare(*this, string)>=0;
-		}
-
-		bool operator<(const ObjectString<T>& string)const
-		{
-			return Compare(*this, string)<0;
-		}
-
-		bool operator<=(const ObjectString<T>& string)const
-		{
-			return Compare(*this, string)<=0;
-		}
-
-		bool operator==(const T* buffer)const
-		{
-			return Compare(buffer, *this)==0;
-		}
-
-		bool operator!=(const T* buffer)const
-		{
-			return Compare(buffer, *this)!=0;
-		}
-
-		bool operator>(const T* buffer)const
-		{
-			return Compare(buffer, *this)<0;
-		}
-
-		bool operator>=(const T* buffer)const
-		{
-			return Compare(buffer, *this)<=0;
-		}
-
-		bool operator<(const T* buffer)const
-		{
-			return Compare(buffer, *this)>0;
-		}
-
-		bool operator<=(const T* buffer)const
-		{
-			return Compare(buffer, *this)>=0;
+			return ObjectString<T>::Unmanaged(left) + right;
 		}
 
 		/// <summary>Get a code point in the specified position.</summary>
@@ -6803,45 +6333,10 @@ namespace vl
 			CHECK_ERROR(index>=0 && index<=length, L"ObjectString<T>::Insert(vint)#Argument count not in range.");
 			return ReplaceUnsafe(string, index, 0);
 		}
-
-		friend bool operator<(const T* left, const ObjectString<T>& right)
-		{
-			return Compare(left, right)<0;
-		}
-
-		friend bool operator<=(const T* left, const ObjectString<T>& right)
-		{
-			return Compare(left, right)<=0;
-		}
-
-		friend bool operator>(const T* left, const ObjectString<T>& right)
-		{
-			return Compare(left, right)>0;
-		}
-
-		friend bool operator>=(const T* left, const ObjectString<T>& right)
-		{
-			return Compare(left, right)>=0;
-		}
-
-		friend bool operator==(const T* left, const ObjectString<T>& right)
-		{
-			return Compare(left, right)==0;
-		}
-
-		friend bool operator!=(const T* left, const ObjectString<T>& right)
-		{
-			return Compare(left, right)!=0;
-		}
-
-		friend ObjectString<T> operator+(const T* left, const ObjectString<T>& right)
-		{
-			return ObjectString<T>::Unmanaged(left)+right;
-		}
 	};
 
 	template<typename T>
-	ObjectString<T> ObjectString<T>::Empty=ObjectString<T>();
+	const ObjectString<T> ObjectString<T>::Empty = ObjectString<T>();
 	template<typename T>
 	const T ObjectString<T>::zero=0;
 
@@ -7104,7 +6599,9 @@ Functions:
 	[T]			.Where(T->bool) => [T]
 	[Ptr<T>]	.Cast<K>() => [Ptr<K>]
 	[Ptr<T>]	.FindType<K>() => [Ptr<K>]
-	[T]			.OrderBy(T->T->int) => [T]
+	[T]			.OrderBy(T->T->std::strong_order) => [T]
+	[T]			.OrderByKey(T->U) => [T]
+	[T]			.OrderBySelf() => [T]
 
 	[T]			.Aggregate(T->T->T) => T
 	[T]			.Aggregate(T->T->T, T) => T
@@ -7164,45 +6661,101 @@ Quick Sort
 		/// <param name="items">Pointer to element array to sort.</param>
 		/// <param name="length">The number of elements to sort.</param>
 		/// <param name="orderer">
-		/// The comparar for two elements.
-		/// Both arguments are elements to compare.
-		/// Returns a positive number when the first argument is greater.
-		/// Returns a negative number when the second argument is greater.
-		/// Returns zero when two arguments equal.
+		/// The comparar for two elements returning std::string_ordering.
 		/// </param>
 		template<typename T, typename F>
-		void SortLambda(T* items, vint length, F orderer)
+		void SortLambda(T* items, vint length, F&& orderer)
 		{
-			if (length == 0) return;
-			vint pivot = 0;
-			vint left = 0;
-			vint right = 0;
-			bool flag = false;
-
-			while (left + right + 1 != length)
+			while (true)
 			{
-				vint& mine = (flag ? left : right);
-				vint& theirs = (flag ? right : left);
-				vint candidate = (flag ? left : length - right - 1);
-				vint factor = (flag ? -1 : 1);
+				if (length == 0) return;
+				vint pivot = 0;
+				vint left = 0;
+				vint right = 0;
 
-				if (orderer(items[pivot], items[candidate]) * factor <= 0)
 				{
-					mine++;
+					bool flag = false;
+					while (left + right + 1 != length)
+					{
+						vint& mine = (flag ? left : right);
+						vint& theirs = (flag ? right : left);
+						vint candidate = (flag ? left : length - right - 1);
+						vint factor = (flag ? -1 : 1);
+
+						if (
+							std::strong_ordering ordering = orderer(items[pivot], items[candidate]);
+							(factor == 1 && ordering <= 0) || (factor == -1 && ordering >= 0)
+							)
+						{
+							mine++;
+						}
+						else
+						{
+							theirs++;
+							T temp = items[pivot];
+							items[pivot] = items[candidate];
+							items[candidate] = temp;
+							pivot = candidate;
+							flag = !flag;
+						}
+					}
+				}
+
+				{
+					vint reading = left - 1;
+					vint writing = reading;
+					while (reading >= 0)
+					{
+						if (
+							std::strong_ordering ordering = orderer(items[pivot], items[reading]);
+							ordering == 0
+							)
+						{
+							if (reading != writing)
+							{
+								T temp = items[reading];
+								items[reading] = items[writing];
+								items[writing] = temp;
+							}
+							writing--;
+						}
+						reading--;
+					}
+					left = writing + 1;
+				}
+
+				{
+					vint reading = length - right;
+					vint writing = reading;
+					while (reading < length)
+					{
+						if (orderer(items[pivot], items[reading]) == 0)
+						{
+							if (reading != writing)
+							{
+								T temp = items[reading];
+								items[reading] = items[writing];
+								items[writing] = temp;
+							}
+							writing++;
+						}
+						reading++;
+					}
+					right = length - writing;
+				}
+
+				if (left < right)
+				{
+					SortLambda(items, left, orderer);
+					items += length - right;
+					length = right;
 				}
 				else
 				{
-					theirs++;
-					T temp = items[pivot];
-					items[pivot] = items[candidate];
-					items[candidate] = temp;
-					pivot = candidate;
-					flag = !flag;
+					SortLambda(items + length - right, right, orderer);
+					length = left;
 				}
 			}
-
-			SortLambda(items, left, orderer);
-			SortLambda(items + left + 1, right, orderer);
 		}
 
 		/// <summary>Quick sort.</summary>
@@ -7210,16 +6763,22 @@ Quick Sort
 		/// <param name="items">Pointer to element array to sort.</param>
 		/// <param name="length">The number of elements to sort.</param>
 		/// <param name="orderer">
-		/// The comparar for two elements.
-		/// Both arguments are elements to compare.
-		/// Returns a positive number when the first argument is greater.
-		/// Returns a negative number when the second argument is greater.
-		/// Returns zero when two arguments equal.
+		/// The comparar for two elements returning std::string_ordering.
 		/// </param>
-		template<typename T>
-		void Sort(T* items, vint length, const Func<vint64_t(T, T)>& orderer)
+		template<typename T, typename F>
+		void Sort(T* items, vint length, F&& orderer)
 		{
-			SortLambda<T, Func<vint64_t(T, T)>>(items, length, orderer);
+			SortLambda(items, length, orderer);
+		}
+
+		/// <summary>Quick sort.</summary>
+		/// <typeparam name="T">Type of elements.</typeparam>
+		/// <param name="items">Pointer to element array to sort.</param>
+		/// <param name="length">The number of elements to sort.</param>
+		template<typename T>
+		void Sort(T* items, vint length)
+		{
+			SortLambda(items, length, [](const T& a, const T& b) { return a <=> b; });
 		}
 
 /***********************************************************************
@@ -7287,7 +6846,7 @@ LazyList
 				lazyList.enumeratorPrototype = nullptr;
 			}
 			
-			/// <summary>Create a lazy list from a container. It is very useful to <see cref="MakePtr`2"/> a container as an intermediate result and then put in a lazy list.</summary>
+			/// <summary>Create a lazy list from a container. It is very useful to <see cref="Ptr`1"/> a container as an intermediate result and then put in a lazy list.</summary>
 			/// <typeparam name="TContainer">Type of the container.</typeparam>
 			/// <param name="container">The container.</param>
 			template<typename TContainer>
@@ -7336,7 +6895,7 @@ LazyList
 			/// }
 			/// ]]></example>
 			template<typename F>
-			auto Select(F f) const -> LazyList<decltype(f(std::declval<TInput>()))>
+			auto Select(F&& f) const -> LazyList<decltype(f(std::declval<TInput>()))>
 			{
 				return new SelectEnumerator<T, decltype(f(std::declval<TInput>()))>(xs(), f);
 			}
@@ -7354,7 +6913,7 @@ LazyList
 			/// }
 			/// ]]></example>
 			template<typename F>
-			LazyList<T> Where(F f)const
+			LazyList<T> Where(F&& f)const
 			{
 				return new WhereEnumerator<T>(xs(), f);
 			}
@@ -7392,28 +6951,79 @@ LazyList
 			/// <typeparam name="F">Type of the comparer.</typeparam>
 			/// <returns>The created lazy list.</returns>
 			/// <param name="f">
-			/// The comparar for two elements.
-			/// Both arguments are elements to compare.
-			/// Returns a positive number when the first argument is greater.
-			/// Returns a negative number when the second argument is greater.
-			/// Returns zero when two arguments equal.
+			/// The comparar for two elements returning std::string_ordering.
 			/// </param>
 			/// <example><![CDATA[
 			/// int main()
 			/// {
 			///     vint xs[] = {1, 2, 3, 4, 5};
-			///     auto ys = From(xs).OrderBy([](vint x, vint y){ return x - y; });
+			///     auto ys = From(xs).OrderBy([](vint x, vint y){ return x <=> y; });
 			///     for (auto y : ys) Console::Write(itow(y) + L" ");
 			/// }
 			/// ]]></example>
 			template<typename F>
-			LazyList<T> OrderBy(F f)const
+			LazyList<T> OrderBy(F&& f)const
 			{
-				Ptr<List<T>> sorted = new List<T>;
+				auto sorted = Ptr(new List<T>);
 				CopyFrom(*sorted.Obj(), *this);
 				if (sorted->Count() > 0)
 				{
-					SortLambda<T, F>(&sorted->operator[](0), sorted->Count(), f);
+					SortLambda(
+						&sorted->operator[](0), sorted->Count(),
+						f
+					);
+				}
+				return sorted;
+			}
+
+			/// <summary>Create a new lazy list with all elements sorted.</summary>
+			/// <returns>The created lazy list.</returns>
+			/// <param name="f">
+			/// The key retriver function. Comparing of two element a and b are defined as f(a)<=>f(b).
+			/// </param>
+			/// <example><![CDATA[
+			/// int main()
+			/// {
+			///     vint xs[] = {1, 2, 3, 4, 5};
+			///     auto ys = From(xs).OrderByKey([](vint a){ return -a; });
+			///     for (auto y : ys) Console::Write(itow(y) + L" ");
+			/// }
+			/// ]]></example>
+			template<typename F>
+			LazyList<T> OrderByKey(F&& f)const
+			{
+				auto sorted = Ptr(new List<T>);
+				CopyFrom(*sorted.Obj(), *this);
+				if (sorted->Count() > 0)
+				{
+					SortLambda(
+						&sorted->operator[](0), sorted->Count(),
+						[f](const T& a, const T& b) { return f(a) <=> f(b); }
+					);
+				}
+				return sorted;
+			}
+
+			/// <summary>Create a new lazy list with all elements sorted.</summary>
+			/// <returns>The created lazy list.</returns>
+			/// <example><![CDATA[
+			/// int main()
+			/// {
+			///     vint xs[] = {1, 2, 3, 4, 5};
+			///     auto ys = From(xs).OrderBySelf();
+			///     for (auto y : ys) Console::Write(itow(y) + L" ");
+			/// }
+			/// ]]></example>
+			LazyList<T> OrderBySelf()const
+			{
+				auto sorted = Ptr(new List<T>);
+				CopyFrom(*sorted.Obj(), *this);
+				if (sorted->Count() > 0)
+				{
+					SortLambda(
+						&sorted->operator[](0), sorted->Count(),
+						[](const T& a, const T& b) { return a <=> b; }
+					);
 				}
 				return sorted;
 			}
@@ -7439,9 +7049,9 @@ LazyList
 			/// }
 			/// ]]></example>
 			template<typename F>
-			T Aggregate(F f)const
+			T Aggregate(F&& f)const
 			{
-				Ptr<IEnumerator<T>> enumerator = CreateEnumerator();
+				auto enumerator = Ptr(CreateEnumerator());
 				if (!enumerator->Next())
 				{
 					throw Error(L"LazyList<T>::Aggregate(F)#Aggregate failed to calculate from an empty container.");
@@ -7474,7 +7084,7 @@ LazyList
 			/// }
 			/// ]]></example>
 			template<typename I, typename F>
-			I Aggregate(I init, F f)const
+			I Aggregate(I init, F&& f)const
 			{
 				for (auto& t : *this)
 				{
@@ -7496,7 +7106,7 @@ LazyList
 			/// }
 			/// ]]></example>
 			template<typename F>
-			bool All(F f)const
+			bool All(F&& f)const
 			{
 				return Select(f).Aggregate(true, [](bool a, bool b) { return a && b; });
 			}
@@ -7514,7 +7124,7 @@ LazyList
 			/// }
 			/// ]]></example>
 			template<typename F>
-			bool Any(F f)const
+			bool Any(F&& f)const
 			{
 				return Select(f).Aggregate(false, [](bool a, bool b) { return a || b; });
 			}
@@ -7553,7 +7163,7 @@ LazyList
 			/// <returns>The first value.</returns>
 			T First()const
 			{
-				Ptr<IEnumerator<T>> enumerator = CreateEnumerator();
+				auto enumerator = Ptr(CreateEnumerator());
 				if (!enumerator->Next())
 				{
 					throw Error(L"LazyList<T>::First(F)#First failed to calculate from an empty container.");
@@ -7566,7 +7176,7 @@ LazyList
 			/// <param name="defaultValue">The argument to return if the lazy list is empty.</param>
 			T First(T defaultValue)const
 			{
-				Ptr<IEnumerator<T>> enumerator = CreateEnumerator();
+				auto enumerator = Ptr(CreateEnumerator());
 				if (!enumerator->Next())
 				{
 					return defaultValue;
@@ -7578,7 +7188,7 @@ LazyList
 			/// <returns>The last value.</returns>
 			T Last()const
 			{
-				Ptr<IEnumerator<T>> enumerator = CreateEnumerator();
+				auto enumerator = Ptr(CreateEnumerator());
 				if (!enumerator->Next())
 				{
 					throw Error(L"LazyList<T>::Last(F)#Last failed to calculate from an empty container.");
@@ -7599,7 +7209,7 @@ LazyList
 			/// <param name="defaultValue">The argument to return if the lazy list is empty.</param>
 			T Last(T defaultValue)const
 			{
-				Ptr<IEnumerator<T>> enumerator = CreateEnumerator();
+				auto enumerator = Ptr(CreateEnumerator());
 				while (enumerator->Next())
 				{
 					defaultValue = enumerator->Current();
@@ -7612,7 +7222,7 @@ LazyList
 			vint Count()const
 			{
 				vint result = 0;
-				Ptr<IEnumerator<T>> enumerator = CreateEnumerator();
+				auto enumerator = Ptr(CreateEnumerator());
 				while (enumerator->Next())
 				{
 					result++;
@@ -7624,7 +7234,7 @@ LazyList
 			/// <returns>Returns true if the lazy list is empty.</returns>
 			bool IsEmpty()const
 			{
-				Ptr<IEnumerator<T>> enumerator = CreateEnumerator();
+				auto enumerator = Ptr(CreateEnumerator());
 				return !enumerator->Next();
 			}
 
@@ -7825,7 +7435,7 @@ LazyList
 				}
 				else
 				{
-					Ptr<List<T>> xs = new List<T>;
+					auto xs = Ptr(new List<T>);
 					CopyFrom(*xs.Obj(), *this);
 					return xs;
 				}
@@ -7852,7 +7462,7 @@ LazyList
 			/// }
 			/// ]]></example>
 			template<typename F>
-			auto SelectMany(F f)const -> LazyList<typename decltype(f(std::declval<TInput>()))::ElementType>
+			auto SelectMany(F&& f)const -> LazyList<typename decltype(f(std::declval<TInput>()))::ElementType>
 			{
 				using  U = typename decltype(f(std::declval<TInput>()))::ElementType;
 				return Select(f).Aggregate(LazyList<U>(), [](const LazyList<U>& a, const IEnumerable<U>& b)->LazyList<U> {return a.Concat(b); });
@@ -7882,7 +7492,7 @@ LazyList
 			/// }
 			/// ]]></example>
 			template<typename F>
-			auto GroupBy(F f)const -> LazyList<Pair<decltype(f(std::declval<TInput>())), LazyList<T>>>
+			auto GroupBy(F&& f)const -> LazyList<Pair<decltype(f(std::declval<TInput>())), LazyList<T>>>
 			{
 				using K = decltype(f(std::declval<TInput>()));
 				auto self = *this;
@@ -8133,55 +7743,70 @@ namespace vl
 	class GlobalStorage : public Object
 	{
 	private:
-		bool					cleared = false;
+		bool						initialized = false;
+
+	protected:
+		virtual void				InitializeResource() = 0;
+		virtual void				FinalizeResource() = 0;
+
 	public:
 		NOT_COPYABLE(GlobalStorage);
-		GlobalStorage(const wchar_t* key);
+		GlobalStorage();
 		~GlobalStorage();
 
-		bool					Cleared();
-		virtual void			ClearResource() = 0;
+		bool						IsInitialized();
+		void						EnsureInitialized();
+		void						EnsureFinalized();
 	};
 
-	extern GlobalStorage* GetGlobalStorage(const wchar_t* key);
-	extern GlobalStorage* GetGlobalStorage(const WString& key);
+	struct GlobalStorageDescriptor
+	{
+		GlobalStorage*				globalStorage = nullptr;
+		GlobalStorageDescriptor*	next = nullptr;
+	};
 
-	extern void InitializeGlobalStorage();
+	extern void RegisterStorageDescriptor(GlobalStorageDescriptor* globalStorageDescriptor);
+
 	/// <summary>Free all memories used by global storages.</summary>
 	extern void FinalizeGlobalStorage();
 }
 
-#define BEGIN_GLOBAL_STORAGE_CLASS(NAME)		\
-	class NAME : public vl::GlobalStorage		\
-	{											\
-	public:										\
-		NAME()									\
-			:vl::GlobalStorage(L ## #NAME)		\
-		{										\
-			InitializeClearResource();			\
-		}										\
-		~NAME()									\
-		{										\
-			if(!Cleared())ClearResource();		\
-		}										\
+#define BEGIN_GLOBAL_STORAGE_CLASS(NAME)				\
+	class NAME											\
+		: public vl::GlobalStorage						\
+		, private vl::GlobalStorageDescriptor			\
+	{													\
+	public:												\
+		NAME()											\
+		{												\
+			globalStorage = this;						\
+			vl::RegisterStorageDescriptor(this);		\
+		}												\
+		~NAME()											\
+		{												\
+			EnsureFinalized();							\
+		}												\
 
-#define INITIALIZE_GLOBAL_STORAGE_CLASS			\
-		void InitializeClearResource()			\
-		{										\
+#define INITIALIZE_GLOBAL_STORAGE_CLASS					\
+	protected:											\
+		void InitializeResource()						\
+		{												\
 
-#define FINALIZE_GLOBAL_STORAGE_CLASS			\
-		}										\
-		void ClearResource()					\
-		{										\
+#define FINALIZE_GLOBAL_STORAGE_CLASS					\
+		}												\
+	protected:											\
+		void FinalizeResource()							\
+		{												\
 
-#define END_GLOBAL_STORAGE_CLASS(NAME)			\
-		}										\
-	};											\
-	NAME& Get##NAME()							\
-	{											\
-		static NAME __global_storage_##NAME;	\
-		return __global_storage_##NAME;			\
-	}											\
+#define END_GLOBAL_STORAGE_CLASS(NAME)					\
+		}												\
+	};													\
+	NAME& Get##NAME()									\
+	{													\
+		static NAME __global_storage_##NAME;			\
+		 __global_storage_##NAME.EnsureInitialized();	\
+		return __global_storage_##NAME;					\
+	}													\
 
 #define EXTERN_GLOBAL_STORAGE_CLASS(NAME)\
 	class NAME;\
@@ -8595,6 +8220,13 @@ namespace vl
 	namespace unittest
 	{
 		using UnitTestFileProc = void(*)();
+		
+		struct UnitTestLink
+		{
+			const char*					fileName = nullptr;
+			UnitTestFileProc			testProc = nullptr;
+			UnitTestLink*				next = nullptr;
+		};
 
 		/// <summary>
 		/// <p>Unit test framework.</p>
@@ -8708,17 +8340,22 @@ namespace vl
 			/// <param name="argv">Accept the second argument of the main function.</param>
 			static int RunAndDisposeTests(int argc, char* argv[]);
 
-			static void RegisterTestFile(const char* fileName, UnitTestFileProc testProc);
+			static void RegisterTestFile(UnitTestLink* link);
 			static void RunCategoryOrCase(const WString& description, bool isCategory, Func<void()>&& callback);
 			static void EnsureLegalToAssert();
 		};
 
 		class UnitTestFile
 		{
+		protected:
+			UnitTestLink				link;
+
 		public:
 			UnitTestFile(const char* fileName, UnitTestFileProc testProc)
 			{
-				UnitTest::RegisterTestFile(fileName, testProc);
+				link.fileName = fileName;
+				link.testProc = testProc;
+				UnitTest::RegisterTestFile(&link);
 			}
 		};
 
