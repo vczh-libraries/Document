@@ -121,7 +121,7 @@ void AddSymbolToResolve(Ptr<Resolving>& resolving, ITsys* thisItem, Symbol* chil
 {
 	if (!resolving)
 	{
-		resolving = new Resolving;
+		resolving = Ptr(new Resolving);
 	}
 
 	ResolvedItem ritem(thisItem, childSymbol);
@@ -135,7 +135,7 @@ void AddResolvedItemsToResolve(Ptr<Resolving>& resolving, List<ResolvedItem>& ri
 {
 	if (!resolving)
 	{
-		resolving = new Resolving;
+		resolving = Ptr(new Resolving);
 	}
 
 	for (vint i = 0; i < ritems.Count(); i++)

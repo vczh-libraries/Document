@@ -239,6 +239,11 @@ namespace symbol_component
 		{
 			return CompareEnumerable(*a.parentDeclTypeAndParams.Obj(), *b.parentDeclTypeAndParams.Obj());
 		}
+
+		friend bool operator==(const SG_Cache& a, const SG_Cache& b)
+		{
+			return (a <=> b) == 0;
+		}
 	};
 }
 

@@ -138,16 +138,7 @@ struct TsysFunc
 	TsysFunc() = default;
 	TsysFunc(TsysCallingConvention _callingConvention, bool _ellipsis) :callingConvention(_callingConvention), ellipsis(_ellipsis) {}
 
-	static vint Compare(const TsysFunc& a, const TsysFunc& b)
-	{
-		if (a.callingConvention < b.callingConvention) return -1;
-		if (a.callingConvention > b.callingConvention) return 1;
-		if (a.ellipsis < b.ellipsis) return -1;
-		if (a.ellipsis > b.ellipsis) return 1;
-		if (a.genericSource < b.genericSource) return -1;
-		if (a.genericSource > b.genericSource) return 1;
-		return 0;
-	}
+	std::strong_ordering operator<=>(const TsysFunc&) const = default;
 };
 
 struct TsysInit
@@ -190,18 +181,7 @@ struct TsysGenericFunction
 		return *this;
 	}
 
-	static vint Compare(const TsysGenericFunction& a, const TsysGenericFunction& b)
-	{
-		if (a.declSymbol < b.declSymbol) return -1;
-		if (a.declSymbol > b.declSymbol) return 1;
-		if (a.parentDeclType < b.parentDeclType) return -1;
-		if (a.parentDeclType > b.parentDeclType) return 1;
-		if (a.filledArguments < b.filledArguments) return -1;
-		if (a.filledArguments > b.filledArguments) return 1;
-		if (a.spec < b.spec) return -1;
-		if (a.spec > b.spec) return 1;
-		return 0;
-	}
+	std::strong_ordering operator<=>(const TsysGenericFunction&) const = default;
 };
 
 struct TsysGenericArg

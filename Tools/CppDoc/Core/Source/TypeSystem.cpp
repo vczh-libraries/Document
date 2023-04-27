@@ -21,27 +21,13 @@ struct WithParams
 	TType*					itsys;
 	TData					data;
 
-	static vint Compare(const WithParams<TType, TData>& a, const WithParams<TType, TData>& b)
+	friend std::strong_ordering operator<=>(const WithParams<TType, TData>& a, const WithParams<TType, TData>& b)
 	{
-		vint result = TData::Compare(a.data, b.data);
+		auto result = a.data <=> b.data;
 		if (result != 0) return result;
 		return CompareEnumerable(*a.params, *b.params);
 	}
 };
-#define OPERATOR_COMPARE(OP)\
-	template<typename TType, typename TData>\
-	bool operator OP(const WithParams<TType, TData>& a, const WithParams<TType, TData>& b)\
-	{\
-		return WithParams<TType, TData>::Compare(a, b) OP 0;\
-	}\
-
-OPERATOR_COMPARE(>)
-OPERATOR_COMPARE(>=)
-OPERATOR_COMPARE(<)
-OPERATOR_COMPARE(<=)
-OPERATOR_COMPARE(==)
-OPERATOR_COMPARE(!=)
-#undef OPERATOR_COMPARE
 
 template<typename TType, typename TData>
 using WithParamsList = SortedList<WithParams<TType, TData>>;
@@ -701,7 +687,7 @@ public:
 						parentTaContext = parentDeclType->GetDeclInstant().taContext;
 					}
 
-					auto taContext = MakePtr<TemplateArgumentContext>(decl, spec->arguments.Count());
+					auto taContext = Ptr(new TemplateArgumentContext(decl, spec->arguments.Count()));
 					taContext->parent = parentTaContext.Obj();
 					for (auto [param, index] : indexed(*params))
 					{
@@ -751,7 +737,7 @@ public:
 
 Ptr<ITsysAlloc> ITsysAlloc::Create()
 {
-	return new TsysAlloc;
+	return Ptr(new TsysAlloc);
 }
 
 /***********************************************************************

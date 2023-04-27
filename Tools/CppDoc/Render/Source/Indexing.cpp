@@ -15,19 +15,6 @@ IndexToken IndexToken::GetToken(CppName& name)
 }
 
 /***********************************************************************
-DeclOrArg
-***********************************************************************/
-
-vint DeclOrArg::Compare(const DeclOrArg& a, const DeclOrArg& b)
-{
-	if (a.decl < b.decl) return -1;
-	if (a.decl > b.decl) return 1;
-	if (a.symbol < b.symbol) return -1;
-	if (a.symbol > b.symbol) return 1;
-	return 0;
-}
-
-/***********************************************************************
 IndexRecorder
 ***********************************************************************/
 

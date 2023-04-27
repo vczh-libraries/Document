@@ -712,7 +712,7 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> base
 		CppName cppName;
 		if (ParseDeclaratorName(pa, cppName, targetType, pdc, cursor))
 		{
-			declarator = new Declarator;
+			declarator = Ptr(new Declarator);
 			declarator->type = targetType;
 			declarator->ellipsis = ellipsis;
 			declarator->name = cppName;
@@ -727,7 +727,7 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> base
 		if (!declarator)
 		{
 			// anonymous declarator with a bit field must be a variable
-			declarator = new Declarator;
+			declarator = Ptr(new Declarator);
 			declarator->type = targetType;
 			declarator->ellipsis = ellipsis;
 			declarator->name.name = L"<anonymous>" + itow(pa.tsys->AllocateAnonymousCounter());
@@ -777,7 +777,7 @@ Ptr<Declarator> ParseSingleDeclarator(const ParsingArguments& pa, Ptr<Type> base
 READY_FOR_ARRAY_OR_FUNCTION:
 	if (!declarator)
 	{
-		declarator = new Declarator;
+		declarator = Ptr(new Declarator);
 		declarator->type = targetType;
 		declarator->ellipsis = ellipsis;
 	}

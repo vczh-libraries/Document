@@ -63,9 +63,7 @@ struct DeclOrArg
 	{
 	}
 
-	static vint										Compare(const DeclOrArg& a, const DeclOrArg& b);
-
-	DEFINE_COMPLETE_COMPARISON_OPERATOR(DeclOrArg)
+	std::strong_ordering operator<=>(const DeclOrArg&) const = default;
 };
 
 struct IndexedDeclOrArg : DeclOrArg
