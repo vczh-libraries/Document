@@ -30,10 +30,7 @@
     <ClCompile Include="Source\Collecting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GenerateFileIndex.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GenerateSymbolIndex.cpp">
+    <ClCompile Include="Source\GenerateSymbolGroup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\DisplayNameInHtml.cpp">
