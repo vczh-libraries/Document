@@ -60,7 +60,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 		}
 
 		// ... ;
-		auto decl = MakePtr<ForwardClassDeclaration>();
+		auto decl = Ptr(new ForwardClassDeclaration);
 		decl->templateScope = specSymbol.Obj();
 		decl->templateSpec = spec;
 		decl->specializationSpec = specializationSpec;
@@ -88,7 +88,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 	else
 	{
 		// ... [: { [public|protected|private] TYPE , ...} ]
-		auto decl = MakePtr<ClassDeclaration>();
+		auto decl = Ptr(new ClassDeclaration);
 		decl->templateSpec = spec;
 		decl->specializationSpec = specializationSpec;
 		decl->classType = classType;
@@ -223,7 +223,7 @@ Ptr<ClassDeclaration> ParseDeclaration_Class_NotConsumeSemicolon(const ParsingAr
 				throw StopParsingException(cursor);
 			}
 
-			auto nestedDecl = MakePtr<NestedAnonymousClassDeclaration>();
+			auto nestedDecl = Ptr(new NestedAnonymousClassDeclaration);
 			nestedDecl->classType = classType;
 			output[declIndex] = nestedDecl;
 

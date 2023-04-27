@@ -834,7 +834,7 @@ TsysPSRecord* ITsys_Decl::GetPSRecord()
 	{
 		if (data->IsPSPrimary_NF())
 		{
-			psRecord = MakePtr<TsysPSRecord>();
+			psRecord = Ptr(new TsysPSRecord);
 		}
 	}
 
@@ -879,11 +879,11 @@ TsysPSRecord* ITsys_DeclInstant::GetPSRecord()
 	{
 		if (data.declSymbol->IsPSPrimary_NF())
 		{
-			psRecord = MakePtr<TsysPSRecord>();
+			psRecord = Ptr(new TsysPSRecord);
 		}
 		else if (data.declSymbol->GetPSPrimary_NF())
 		{
-			psRecord = MakePtr<TsysPSRecord>();
+			psRecord = Ptr(new TsysPSRecord);
 			psRecord->version = TsysPSRecord::PSInstanceVersionUnevaluated;
 		}
 	}
@@ -895,7 +895,7 @@ void ITsys_DeclInstant::MakePSRecordPrimaryThis()
 {
 	if (!psRecord)
 	{
-		psRecord = MakePtr<TsysPSRecord>();
+		psRecord = Ptr(new TsysPSRecord);
 	}
 	psRecord->version = TsysPSRecord::PSPrimaryThisVersion;
 	psRecord->evaluatedTypes.Clear();

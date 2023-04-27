@@ -156,7 +156,7 @@ namespace partial_specification_ordering
 				auto targ = tspec->arguments[i];
 				auto pattern = GetTemplateArgumentKey(targ);
 				auto patternSymbol = TemplateArgumentPatternToSymbol(pattern);
-				auto result = MakePtr<MatchPSResult>();
+				auto result = Ptr(new MatchPSResult);
 				matchingResult.Add(patternSymbol, result);
 
 				vint smin = i;

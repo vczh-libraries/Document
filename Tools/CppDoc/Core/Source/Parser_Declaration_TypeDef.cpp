@@ -14,7 +14,7 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 		// typedef class{} ...;
 		auto classDecl = ParseDeclaration_Class_NotConsumeSemicolon(pa, nullptr, nullptr, true, cursor, output);
 
-		createdType = MakePtr<IdType>();
+		createdType = Ptr(new IdType);
 		createdType->name = classDecl->name;
 		Resolving::AddSymbol(pa, createdType->resolving, classDecl->symbol);
 		ParseNonMemberDeclarator(pa, pda_Typedefs(), createdType, cursor, declarators);
@@ -24,7 +24,7 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 		// typedef enum{} ...;
 		auto enumDecl = ParseDeclaration_Enum_NotConsumeSemicolon(pa, true, cursor, output);
 
-		createdType = MakePtr<IdType>();
+		createdType = Ptr(new IdType);
 		createdType->name = enumDecl->name;
 		Resolving::AddSymbol(pa, createdType->resolving, enumDecl->symbol);
 		ParseNonMemberDeclarator(pa, pda_Typedefs(), createdType, cursor, declarators);
@@ -42,7 +42,7 @@ void ParseDeclaration_Typedef(const ParsingArguments& pa, Ptr<CppTokenCursor>& c
 		{
 			continue;
 		}
-		auto decl = MakePtr<TypeAliasDeclaration>();
+		auto decl = Ptr(new TypeAliasDeclaration);
 		decl->name = declarators[i]->name;
 		decl->type = declarators[i]->type;
 		output.Add(decl);

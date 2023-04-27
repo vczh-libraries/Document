@@ -218,7 +218,7 @@ namespace partial_specification_ordering
 					vint index = matchingResult.Keys().IndexOf(variadicSymbol);
 					if (index == -1)
 					{
-						result = MakePtr<MatchPSResult>();
+						result = Ptr(new MatchPSResult);
 						matchingResult.Add(variadicSymbol, result);
 					}
 					else
@@ -301,7 +301,7 @@ namespace partial_specification_ordering
 		{
 			if (pointerType->reference == CppReferenceType::Ptr)
 			{
-				auto arrayType = MakePtr<ArrayType>();
+				auto arrayType = Ptr(new ArrayType);
 				arrayType->type = pointerType->type;
 				return arrayType;
 			}

@@ -122,7 +122,7 @@ void EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl)
 				}
 				if (!item->type)
 				{
-					item->field = MakePtr<IdExpr>();
+					item->field = Ptr(new IdExpr);
 					if (!ParseCppName(item->field->name, delayParse->begin))
 					{
 						throw StopParsingException(delayParse->begin);
@@ -218,7 +218,7 @@ void EnsureFunctionBodyParsed(FunctionDeclaration* funcDecl)
 
 void PredefineType(Ptr<Program> program, const ParsingArguments& pa, const wchar_t* name, bool isForwardDeclaration, CppClassType classType, symbol_component::SymbolKind symbolKind)
 {
-	auto decl = isForwardDeclaration ? MakePtr<ForwardClassDeclaration>() : (Ptr<ForwardClassDeclaration>)MakePtr<ClassDeclaration>();
+	auto decl = isForwardDeclaration ? Ptr(new ForwardClassDeclaration) : (Ptr<ForwardClassDeclaration>)Ptr(new ClassDeclaration);
 	decl->classType = classType;
 	decl->name.name = name;
 	program->decls.Insert(program->createdForwardDeclByCStyleTypeReference++, decl);
@@ -256,7 +256,7 @@ bool ParseTypeOrExpr(const ParsingArguments& pa, const ParsingExprArguments& pea
 
 Ptr<Program> ParseProgram(ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 {
-	auto program = MakePtr<Program>();
+	auto program = Ptr(new Program);
 	pa.program = program;
 
 	// these types will be used before it is defined

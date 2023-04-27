@@ -5,7 +5,7 @@
 
 void ParseDeclaration_UsingNamespace(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
-	auto decl = MakePtr<UsingNamespaceDeclaration>();
+	auto decl = Ptr(new UsingNamespaceDeclaration);
 	decl->ns = ParseType(pa, cursor);
 	output.Add(decl);
 	RequireToken(cursor, CppTokens::SEMICOLON);
@@ -53,7 +53,7 @@ bool ParseDeclaration_UsingAlias(const ParsingArguments& pa, Ptr<Symbol> specSym
 
 	auto newPa = specSymbol ? pa.WithScope(specSymbol.Obj()) : pa;
 
-	auto decl = MakePtr<TypeAliasDeclaration>();
+	auto decl = Ptr(new TypeAliasDeclaration);
 	decl->templateSpec = spec;
 	decl->name = cppName;
 	decl->type = ParseType(newPa, cursor);
@@ -76,7 +76,7 @@ bool ParseDeclaration_UsingAlias(const ParsingArguments& pa, Ptr<Symbol> specSym
 
 void ParseDeclaration_UsingMember(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
-	auto decl = MakePtr<UsingSymbolDeclaration>();
+	auto decl = Ptr(new UsingSymbolDeclaration);
 	ParseTypeOrExpr(pa, pea_Full(), cursor, decl->type, decl->expr);
 	RequireToken(cursor, CppTokens::SEMICOLON);
 	output.Add(decl);

@@ -76,7 +76,7 @@ void ResolveSymbolResult::Merge(Ptr<Resolving>& to, Ptr<Resolving> from)
 
 	if (!to)
 	{
-		to = MakePtr<Resolving>();
+		to = Ptr(new Resolving);
 	}
 
 	for (vint i = 0; i < from->items.Count(); i++)

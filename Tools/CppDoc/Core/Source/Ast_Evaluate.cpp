@@ -161,18 +161,18 @@ public:
 						{
 							// *begin(container)
 
-							auto placeholderExpr = MakePtr<PlaceholderExpr>();
+							auto placeholderExpr = Ptr(new PlaceholderExpr);
 							placeholderExpr->types = &types;
 
-							auto beginExpr = MakePtr<IdExpr>();
+							auto beginExpr = Ptr(new IdExpr);
 							beginExpr->name.name = L"begin";
 							beginExpr->name.type = CppNameType::Normal;
 
-							auto callExpr = MakePtr<FuncAccessExpr>();
+							auto callExpr = Ptr(new FuncAccessExpr);
 							callExpr->expr = beginExpr;
 							callExpr->arguments.Add({ placeholderExpr,false });
 
-							auto derefExpr = MakePtr<PrefixUnaryExpr>();
+							auto derefExpr = Ptr(new PrefixUnaryExpr);
 							derefExpr->op = CppPrefixUnaryOp::Dereference;
 							derefExpr->opName.name = L"*";
 							derefExpr->opName.type = CppNameType::Operator;
@@ -183,22 +183,22 @@ public:
 						{
 							// *container.begin()
 
-							auto placeholderExpr = MakePtr<PlaceholderExpr>();
+							auto placeholderExpr = Ptr(new PlaceholderExpr);
 							placeholderExpr->types = &types;
 
-							auto beginExpr = MakePtr<IdExpr>();
+							auto beginExpr = Ptr(new IdExpr);
 							beginExpr->name.name = L"begin";
 							beginExpr->name.type = CppNameType::Normal;
 
-							auto fieldExpr = MakePtr<FieldAccessExpr>();
+							auto fieldExpr = Ptr(new FieldAccessExpr);
 							fieldExpr->expr = placeholderExpr;
 							fieldExpr->name = beginExpr;
 							fieldExpr->type = CppFieldAccessType::Dot;
 
-							auto callExpr = MakePtr<FuncAccessExpr>();
+							auto callExpr = Ptr(new FuncAccessExpr);
 							callExpr->expr = fieldExpr;
 
-							auto derefExpr = MakePtr<PrefixUnaryExpr>();
+							auto derefExpr = Ptr(new PrefixUnaryExpr);
 							derefExpr->op = CppPrefixUnaryOp::Dereference;
 							derefExpr->opName.name = L"*";
 							derefExpr->opName.type = CppNameType::Operator;

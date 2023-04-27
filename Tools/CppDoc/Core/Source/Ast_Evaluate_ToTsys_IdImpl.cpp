@@ -287,7 +287,7 @@ namespace symbol_totsys_impl
 					visited.Add(ritem);
 					if (!resolving)
 					{
-						resolving = MakePtr<Resolving>();
+						resolving = Ptr(new Resolving);
 					}
 					resolving->items.Add(ritem);
 				}

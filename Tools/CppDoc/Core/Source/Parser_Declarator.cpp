@@ -236,7 +236,7 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 		// * __ptr32 DECLARATOR
 		// * __ptr64 DECLARATOR
 		TestToken(cursor, CppTokens::__PTR32) || TestToken(cursor, CppTokens::__PTR64);
-		auto type = MakePtr<ReferenceType>();
+		auto type = Ptr(new ReferenceType);
 		type->reference = CppReferenceType::Ptr;
 		type->type = baselineType;
 		return ParseTypeBeforeDeclarator(pa, type, pdc, cursor);
@@ -244,7 +244,7 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 	else if (TestToken(cursor, CppTokens::AND, CppTokens::AND))
 	{
 		// && DECLARATOR
-		auto type = MakePtr<ReferenceType>();
+		auto type = Ptr(new ReferenceType);
 		type->reference = CppReferenceType::RRef;
 		type->type = baselineType;
 		return ParseTypeBeforeDeclarator(pa, type, pdc, cursor);
@@ -252,7 +252,7 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 	else if (TestToken(cursor, CppTokens::AND))
 	{
 		// & DECLARATOR
-		auto type = MakePtr<ReferenceType>();
+		auto type = Ptr(new ReferenceType);
 		type->reference = CppReferenceType::LRef;
 		type->type = baselineType;
 		return ParseTypeBeforeDeclarator(pa, type, pdc, cursor);
@@ -265,7 +265,7 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 		// the targetType variable for calling ParseSingleDeclarator_Array or ParseSingleDeclarator_Function
 		// may become not part in the final type chain of the declarator
 		// DecorateType and ArrayType will be adjusted at the end
-		auto type = MakePtr<DecorateType>();
+		auto type = Ptr(new DecorateType);
 		type->isConst = true;
 		type->type = baselineType;
 		return ParseTypeBeforeDeclarator(pa, type, pdc, cursor);
@@ -273,7 +273,7 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 	else if (TestToken(cursor, CppTokens::VOLATILE))
 	{
 		// volatile DECLARATOR
-		auto type = MakePtr<DecorateType>();
+		auto type = Ptr(new DecorateType);
 		type->isVolatile = true;
 		type->type = baselineType;
 		return ParseTypeBeforeDeclarator(pa, type, pdc, cursor);
@@ -296,7 +296,7 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 				else
 				{
 					// __stdcall DECLARATOR
-					auto type = MakePtr<CallingConventionType>();
+					auto type = Ptr(new CallingConventionType);
 					type->callingConvention = callingConvention;
 					type->type = baselineType;
 					return ParseTypeBeforeDeclarator(pa, type, pdc, cursor);
@@ -322,7 +322,7 @@ Ptr<Type> ParseTypeBeforeDeclarator(const ParsingArguments& pa, Ptr<Type> baseli
 		if (classType)
 		{
 			// CLASS:: DECLARATOR
-			auto type = MakePtr<MemberType>();
+			auto type = Ptr(new MemberType);
 			type->classType = classType;
 			type->type = baselineType;
 
@@ -374,14 +374,14 @@ bool ParseSingleDeclarator_Array(const ParsingArguments& pa, Ptr<Declarator> dec
 			{
 				if (index || !forParameter)
 				{
-					auto type = MakePtr<ArrayType>();
+					auto type = Ptr(new ArrayType);
 					type->type = typeToReplace;
 					type->expr = index;
 					return type;
 				}
 				else
 				{
-					auto type = MakePtr<ReferenceType>();
+					auto type = Ptr(new ReferenceType);
 					type->reference = CppReferenceType::Ptr;
 					type->type = typeToReplace;
 					return type;
@@ -464,11 +464,11 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 				throw StopParsingException(cursor);
 			}
 
-			type = MakePtr<FunctionType>();
+			type = Ptr(new FunctionType);
 			type->scopeSymbolToReuse = declarator->scopeSymbolToReuse;
 			type->returnType = declarator->type;
 
-			auto ccType = MakePtr<CallingConventionType>();
+			auto ccType = Ptr(new CallingConventionType);
 			ccType->callingConvention = callingConvention;
 			ccType->type = type;
 			declarator->type = ccType;
@@ -482,7 +482,7 @@ bool ParseSingleDeclarator_Function(const ParsingArguments& pa, Ptr<Declarator> 
 				targetType,
 				[declarator](Ptr<Type> typeToReplace)->Ptr<Type>
 				{
-					auto type = MakePtr<FunctionType>();
+					auto type = Ptr(new FunctionType);
 					type->scopeSymbolToReuse = declarator->scopeSymbolToReuse;
 					type->returnType = typeToReplace;
 					return AdjustReturnTypeWithMemberAndCC(type);
@@ -830,7 +830,7 @@ Ptr<Initializer> ParseInitializer(const ParsingArguments& pa, Ptr<CppTokenCursor
 	// = EXPRESSION
 	// { { EXPRESSION , ...} }
 	// ( { EXPRESSSION , ...} )
-	auto initializer = MakePtr<Initializer>();
+	auto initializer = Ptr(new Initializer);
 
 	if (TestToken(cursor, CppTokens::EQ))
 	{
@@ -906,7 +906,7 @@ void ParseDeclaratorWithInitializer(const ParsingArguments& pa, Ptr<Type> typeRe
 				{
 					auto type = ParseLongType(pa, cursor);
 					RequireToken(cursor, CppTokens::COLON, CppTokens::COLON);
-					typeOpMemberType = MakePtr<MemberType>();
+					typeOpMemberType = Ptr(new MemberType);
 					typeOpMemberType->classType = type;
 				}
 				catch (const StopParsingException&)
@@ -1120,7 +1120,7 @@ Ptr<Type> ParseType(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 
 Ptr<FunctionType> ParseFunctionType(const ParsingArguments& pa, Ptr<Type> returnType, Ptr<CppTokenCursor>& cursor)
 {
-	auto declarator = MakePtr<Declarator>();
+	auto declarator = Ptr(new Declarator);
 	declarator->type = returnType;
 	ParseSingleDeclarator_Function(pa, declarator, returnType, false, false, cursor);
 	return declarator->type.Cast<FunctionType>();

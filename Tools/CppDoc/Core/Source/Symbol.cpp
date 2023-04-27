@@ -14,7 +14,7 @@ Evaluation
 
 	void Evaluation::Allocate()
 	{
-		mainTypeList = MakePtr<TypeTsysList>();
+		mainTypeList = Ptr(new TypeTsysList);
 	}
 
 	void Evaluation::AllocateExtra(vint count)
@@ -22,7 +22,7 @@ Evaluation
 		extraTypeLists.Clear();
 		for (vint i = 0; i < count; i++)
 		{
-			extraTypeLists.Add(MakePtr<TypeTsysList>());
+			extraTypeLists.Add(Ptr(new TypeTsysList));
 		}
 	}
 

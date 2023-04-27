@@ -71,7 +71,7 @@ void ParseDeclaration_Variable(
 			throw StopParsingException(cursor);
 		}
 
-		auto decl = MakePtr<ForwardVariableDeclaration>();
+		auto decl = Ptr(new ForwardVariableDeclaration);
 		decl->templateScope = specSymbol.Obj();
 		FILL_VARIABLE;
 		output.Add(decl);
@@ -85,7 +85,7 @@ void ParseDeclaration_Variable(
 	else
 	{
 		// it is a variable declaration
-		auto decl = MakePtr<VariableDeclaration>();
+		auto decl = Ptr(new VariableDeclaration);
 		decl->templateScope = specSymbol.Obj();
 		CopyFrom(decl->classSpecs, classSpecs);
 		FILL_VARIABLE;

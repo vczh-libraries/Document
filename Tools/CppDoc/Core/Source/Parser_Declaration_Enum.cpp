@@ -40,7 +40,7 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 		}
 
 		// ... ;
-		auto decl = MakePtr<ForwardEnumDeclaration>();
+		auto decl = Ptr(new ForwardEnumDeclaration);
 		decl->enumClass = enumClass;
 		decl->name = cppName;
 		decl->baseType = baseType;
@@ -55,7 +55,7 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 	else
 	{
 		// ... { { IDENTIFIER [= EXPRESSION] ,... } };
-		auto decl = MakePtr<EnumDeclaration>();
+		auto decl = Ptr(new EnumDeclaration);
 		decl->enumClass = enumClass;
 		decl->name = cppName;
 		decl->baseType = baseType;
@@ -71,7 +71,7 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 		while (!TestToken(cursor, CppTokens::RBRACE))
 		{
 			while (SkipSpecifiers(cursor));
-			auto enumItem = MakePtr<EnumItemDeclaration>();
+			auto enumItem = Ptr(new EnumItemDeclaration);
 			if (TestToken(cursor, CppTokens::ID, false) ||
 				TestToken(cursor, CppTokens::INT, false) ||
 				TestToken(cursor, CppTokens::HEX, false) ||
@@ -97,17 +97,17 @@ Ptr<EnumDeclaration> ParseDeclaration_Enum_NotConsumeSemicolon(const ParsingArgu
 
 			if (!enumClass)
 			{
-				auto exprEnumItem = MakePtr<ChildExpr>();
+				auto exprEnumItem = Ptr(new ChildExpr);
 				{
-					auto typeEnum = MakePtr<IdType>();
+					auto typeEnum = Ptr(new IdType);
 					typeEnum->cStyleTypeReference = true;
 					typeEnum->name = decl->name;
-					typeEnum->resolving = MakePtr<Resolving>();
+					typeEnum->resolving = Ptr(new Resolving);
 					typeEnum->resolving->items.Add({ nullptr,contextSymbol });
 
 					exprEnumItem->classType = typeEnum;
 					exprEnumItem->name = enumItem->name;
-					exprEnumItem->resolving = MakePtr<Resolving>();
+					exprEnumItem->resolving = Ptr(new Resolving);
 					exprEnumItem->resolving->items.Add({ nullptr,enumItemSymbol });
 				}
 

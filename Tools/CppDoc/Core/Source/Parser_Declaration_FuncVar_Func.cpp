@@ -140,7 +140,7 @@ void DelayParseFunctionStatement(
 	Ptr<CppTokenCursor>& cursor
 )
 {
-	decl->delayParse = MakePtr<DelayParse>();
+	decl->delayParse = Ptr(new DelayParse);
 	decl->delayParse->pa = pa;
 	cursor->Clone(decl->delayParse->reader, decl->delayParse->begin);
 
@@ -202,7 +202,7 @@ void ParseDeclaration_Function(
 	// check for constraints of partial specialization
 	if (declarator->specializationSpec)
 	{
-		if (!functionSpec) functionSpec = MakePtr<TemplateSpec>();
+		if (!functionSpec) functionSpec = Ptr(new TemplateSpec);
 		if (functionSpec->arguments.Count() != 0) throw StopParsingException(cursor);
 	}
 	ValidateForRootTemplateSpec(functionSpec, cursor, declarator->specializationSpec, true);
@@ -211,7 +211,7 @@ void ParseDeclaration_Function(
 	if (hasStat)
 	{
 		// if there is a statement, then it is a function declaration
-		auto decl = MakePtr<FunctionDeclaration>();
+		auto decl = Ptr(new FunctionDeclaration);
 		decl->templateSpec = functionSpec;
 		decl->specializationSpec = declarator->specializationSpec;
 		CopyFrom(decl->classSpecs, classSpecs);
@@ -278,7 +278,7 @@ void ParseDeclaration_Function(
 			throw StopParsingException(cursor);
 		}
 
-		auto decl = MakePtr<ForwardFunctionDeclaration>();
+		auto decl = Ptr(new ForwardFunctionDeclaration);
 		decl->templateSpec = functionSpec;
 		decl->specializationSpec = declarator->specializationSpec;
 		FILL_FUNCTION;

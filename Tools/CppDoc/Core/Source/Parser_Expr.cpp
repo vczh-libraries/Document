@@ -101,7 +101,7 @@ Ptr<IdExpr> ParseIdExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 				// so "(" has to be right after this name
 				throw StopParsingException(cursor);
 			}
-			auto expr = MakePtr<IdExpr>();
+			auto expr = Ptr(new IdExpr);
 			expr->name = cppName;
 			expr->resolving = rsr.values;
 			if (pa.recorder && expr->resolving)
@@ -186,7 +186,7 @@ Ptr<Category_Id_Child_Generic_Expr> TryParseGenericExpr(const ParsingArguments& 
 		VariadicList<GenericArgument> genericArguments;
 		if (PrepareArgumentsForGenericExpr(pa, genericArguments, allowGenericPresence, allowGenericAbsence, cursor))
 		{
-			auto genericExpr = MakePtr<GenericExpr>();
+			auto genericExpr = Ptr(new GenericExpr);
 			genericExpr->expr = expr;
 			CopyFrom(genericExpr->arguments, genericArguments);
 			return genericExpr;
@@ -253,7 +253,7 @@ Ptr<Category_Id_Child_Generic_Expr> TryParseGenericExpr(const ParsingArguments& 
 			if (makeExpr)
 			{
 				// if we decide to make a ChildExpr, return it
-				auto childExpr = MakePtr<ChildExpr>();
+				auto childExpr = Ptr(new ChildExpr);
 				childExpr->classType = type;
 				childExpr->name = cppName;
 				childExpr->resolving = rsr.values;
@@ -265,7 +265,7 @@ Ptr<Category_Id_Child_Generic_Expr> TryParseGenericExpr(const ParsingArguments& 
 
 				if (hasGenericPart)
 				{
-					auto genericExpr = MakePtr<GenericExpr>();
+					auto genericExpr = Ptr(new GenericExpr);
 					genericExpr->expr = childExpr;
 					CopyFrom(genericExpr->arguments, genericArguments);
 					return genericExpr;
@@ -278,13 +278,13 @@ Ptr<Category_Id_Child_Generic_Expr> TryParseGenericExpr(const ParsingArguments& 
 			else
 			{
 				// if we decide to make a ChildType, continue until we get a ChildExpr
-				auto childType = MakePtr<ChildType>();
+				auto childType = Ptr(new ChildType);
 				childType->classType = type;
 				childType->name = cppName;
 
 				if (hasGenericPart)
 				{
-					auto genericType = MakePtr<GenericType>();
+					auto genericType = Ptr(new GenericType);
 					genericType->type = childType;
 					CopyFrom(genericType->arguments, genericArguments);
 					type = genericType;
@@ -317,7 +317,7 @@ Ptr<Type> AppendArrayTypeForCtor(const ParsingArguments& pa, Ptr<Type> type, Ptr
 
 	for (vint i = sizeExprs.Count() - 1; i >= 0; i--)
 	{
-		auto arrayType = MakePtr<ArrayType>();
+		auto arrayType = Ptr(new ArrayType);
 		arrayType->type = type;
 		arrayType->expr = sizeExprs[i];
 		type = arrayType;
@@ -356,9 +356,9 @@ Ptr<Expr> ParseNameOrCtorAccessExpr(const ParsingArguments& pa, Ptr<CppTokenCurs
 				auto closeToken = (CppTokens)cursor->token.token == CppTokens::LPARENTHESIS ? CppTokens::RPARENTHESIS : CppTokens::RBRACE;
 				SkipToken(cursor);
 
-				auto expr = MakePtr<CtorAccessExpr>();
+				auto expr = Ptr(new CtorAccessExpr);
 				expr->type = type;
-				expr->initializer = MakePtr<Initializer>();
+				expr->initializer = Ptr(new Initializer);
 				expr->initializer->initializerType = closeToken == CppTokens::RPARENTHESIS ? CppInitializerType::Constructor : CppInitializerType::Universal;
 
 				if (!TestToken(cursor, closeToken))
@@ -394,7 +394,7 @@ GIVE_UP_CHILD_SYMBOL:
 	if (TestToken(cursor, CppTokens::COLON, CppTokens::COLON, false))
 	{
 		// if we see ::, it has to be a ChildExpr of a global scope
-		return TryParseGenericExpr(pa, MakePtr<RootType>(), cursor);
+		return TryParseGenericExpr(pa, Ptr(new RootType), cursor);
 	}
 	else
 	{
@@ -433,7 +433,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 		case CppTokens::CHAR:
 			{
 				// literal
-				auto literal = MakePtr<LiteralExpr>();
+				auto literal = Ptr(new LiteralExpr);
 				literal->tokens.Add(cursor->token);
 				SkipToken(cursor);
 				return literal;
@@ -442,7 +442,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 		case CppTokens::STRING:
 			{
 				// string literla, could be multiple tokens
-				auto literal = MakePtr<LiteralExpr>();
+				auto literal = Ptr(new LiteralExpr);
 				while (
 					cursor && (
 						(CppTokens)cursor->token.token == CppTokens::MACRO_LPREFIX ||
@@ -459,7 +459,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 			{
 				// this
 				SkipToken(cursor);
-				return MakePtr<ThisExpr>();
+				return Ptr(new ThisExpr);
 			}
 		case CppTokens::EXPR_NULLPTR:
 		case CppTokens::EXPR___NULLPTR:
@@ -467,13 +467,13 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 				// nullptr
 				// __nullptr
 				SkipToken(cursor);
-				return MakePtr<NullptrExpr>();
+				return Ptr(new NullptrExpr);
 			}
 		case CppTokens::LPARENTHESIS:
 			{
 				// (a)
 				SkipToken(cursor);
-				auto expr = MakePtr<ParenthesisExpr>();
+				auto expr = Ptr(new ParenthesisExpr);
 				expr->expr = ParseExpr(pa, pea_Full(), cursor);
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
 				return expr;
@@ -482,7 +482,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 			{
 				// {EXPR, ...}
 				SkipToken(cursor);
-				auto expr = MakePtr<UniversalInitializerExpr>();
+				auto expr = Ptr(new UniversalInitializerExpr);
 				while (!TestToken(cursor, CppTokens::RBRACE))
 				{
 					auto argument = ParseExpr(pa, pea_Argument(), cursor);
@@ -506,7 +506,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 		case CppTokens::EXPR_SAFE_CAST:
 			{
 				// *_cast<TYPE>(EXPR)
-				auto expr = MakePtr<CastExpr>();
+				auto expr = Ptr(new CastExpr);
 				expr->castType = CppCastType::SafeCast;
 				switch ((CppTokens)cursor->token.token)
 				{
@@ -529,7 +529,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 			{
 				// typeid(EXPR)
 				SkipToken(cursor);
-				auto expr = MakePtr<TypeidExpr>();
+				auto expr = Ptr(new TypeidExpr);
 				RequireToken(cursor, CppTokens::LPARENTHESIS);
 				ParseTypeOrExpr(pa, pea_Full(), cursor, expr->type, expr->expr);
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
@@ -539,7 +539,7 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 			{
 				// lambda expression
 				SkipToken(cursor);
-				auto expr = MakePtr<LambdaExpr>();
+				auto expr = Ptr(new LambdaExpr);
 				auto newPa = pa.WithScope(pa.scopeSymbol->CreateExprSymbol_NFb(expr));
 
 				if (!TestToken(cursor, CppTokens::RBRACKET))
@@ -600,11 +600,11 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 								{
 									// [name = expr]
 									auto varExpr = ParseExpr(newPa, pea_Argument(), cursor);
-									auto varDecl = MakePtr<VariableDeclaration>();
+									auto varDecl = Ptr(new VariableDeclaration);
 									varDecl->name = cppName;
-									varDecl->type = MakePtr<PrimitiveType>();
+									varDecl->type = Ptr(new PrimitiveType);
 									varDecl->needResolveTypeFromInitializer = true;
-									varDecl->initializer = MakePtr<Initializer>();
+									varDecl->initializer = Ptr(new Initializer);
 									varDecl->initializer->initializerType = CppInitializerType::Equal;
 									varDecl->initializer->arguments.Add({ varExpr,false });
 									expr->varDecls.Add(varDecl);
@@ -635,15 +635,15 @@ Ptr<Expr> ParsePrimitiveExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 
 				if (TestToken(cursor, CppTokens::LPARENTHESIS, false))
 				{
-					expr->type = ParseFunctionType(newPa, MakePtr<PrimitiveType>(), cursor);
+					expr->type = ParseFunctionType(newPa, Ptr(new PrimitiveType), cursor);
 
 					// remove cyclic referencing
 					expr->type->scopeSymbolToReuse = nullptr;
 				}
 				else
 				{
-					auto funcType = MakePtr<FunctionType>();
-					funcType->returnType = MakePtr<PrimitiveType>();
+					auto funcType = Ptr(new FunctionType);
+					funcType->returnType = Ptr(new PrimitiveType);
 					expr->type = funcType;
 				}
 				
@@ -683,7 +683,7 @@ void ParseFieldAccessNameExpr(const ParsingArguments& pa, Ptr<FieldAccessExpr> f
 	cursor = oldCursor;
 
 	bool templateKeyword = TestToken(cursor, CppTokens::DECL_TEMPLATE);
-	auto idExpr = MakePtr<IdExpr>();
+	auto idExpr = Ptr(new IdExpr);
 	if (!ParseCppName(idExpr->name, cursor, false) && !ParseCppName(idExpr->name, cursor, true))
 	{
 		throw StopParsingException(cursor);
@@ -705,7 +705,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 	if (TestToken(cursor, CppTokens::NOEXCEPT, false))
 	{
 		// noexcept
-		auto idExpr = MakePtr<IdExpr>();
+		auto idExpr = Ptr(new IdExpr);
 		idExpr->name.type = CppNameType::Normal;
 		idExpr->name.name = L"noexcept";
 		idExpr->name.tokenCount = 1;
@@ -724,7 +724,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 		if (!TestToken(cursor, CppTokens::DOT, CppTokens::MUL, false) && !TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT, false) && TestToken(cursor, CppTokens::DOT))
 		{
 			// a . b
-			auto newExpr = MakePtr<FieldAccessExpr>();
+			auto newExpr = Ptr(new FieldAccessExpr);
 			newExpr->type = CppFieldAccessType::Dot;
 			newExpr->expr = expr;
 			ParseFieldAccessNameExpr(pa, newExpr, cursor);
@@ -733,7 +733,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 		else if (!TestToken(cursor, CppTokens::SUB, CppTokens::GT, CppTokens::MUL, false) && TestToken(cursor, CppTokens::SUB, CppTokens::GT, false))
 		{
 			// a -> b
-			auto newExpr = MakePtr<FieldAccessExpr>();
+			auto newExpr = Ptr(new FieldAccessExpr);
 			{
 				newExpr->opName.type = CppNameType::Operator;
 				newExpr->opName.name = L"->";
@@ -751,7 +751,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 		else if (TestToken(cursor, CppTokens::LBRACKET, false))
 		{
 			// a [b]
-			auto newExpr = MakePtr<ArrayAccessExpr>();
+			auto newExpr = Ptr(new ArrayAccessExpr);
 			{
 				newExpr->opName.type = CppNameType::Operator;
 				newExpr->opName.name = L"[]";
@@ -775,7 +775,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 					if (idExpr->name.name == L"alignof" || idExpr->name.name == L"__alignof")
 					{
 						// alignof (EXPR, ...)
-						auto sizeType = MakePtr<PrimitiveType>();
+						auto sizeType = Ptr(new PrimitiveType);
 						sizeType->prefix = CppPrimitivePrefix::_unsigned;
 						sizeType->primitive = CppPrimitiveType::_int;
 						returnType = sizeType;
@@ -783,8 +783,8 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 					else if (idExpr->name.name == L"__uuidof")
 					{
 						// alignof (EXPR, ...)
-						auto rootType = MakePtr<RootType>();
-						auto childType = MakePtr<ChildType>();
+						auto rootType = Ptr(new RootType);
+						auto childType = Ptr(new ChildType);
 						childType->classType = rootType;
 						childType->name.name = L"GUID";
 						childType->name.type = CppNameType::Normal;
@@ -793,7 +793,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 					else if (idExpr->name.name == L"noexcept")
 					{
 						// noexcept (EXPR, ...)
-						auto boolType = MakePtr<PrimitiveType>();
+						auto boolType = Ptr(new PrimitiveType);
 						boolType->prefix = CppPrimitivePrefix::_none;
 						boolType->primitive = CppPrimitiveType::_bool;
 						returnType = boolType;
@@ -802,7 +802,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 					{
 						// __is_* (EXPR, ...)
 						// __has_* (EXPR, ...)
-						auto boolType = MakePtr<PrimitiveType>();
+						auto boolType = Ptr(new PrimitiveType);
 						boolType->prefix = CppPrimitivePrefix::_none;
 						boolType->primitive = CppPrimitiveType::_bool;
 						returnType = boolType;
@@ -810,7 +810,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 
 					if (returnType)
 					{
-						auto builtinExpr = MakePtr<BuiltinFuncAccessExpr>();
+						auto builtinExpr = Ptr(new BuiltinFuncAccessExpr);
 						builtinExpr->name = idExpr;
 						builtinExpr->returnType = returnType;
 
@@ -824,7 +824,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 			}
 			{
 				// a (EXPR, ...)
-				auto newExpr = MakePtr<FuncAccessExpr>();
+				auto newExpr = Ptr(new FuncAccessExpr);
 				{
 					newExpr->opName.type = CppNameType::Operator;
 					newExpr->opName.name = L"()";
@@ -855,7 +855,7 @@ Ptr<Expr> ParsePostfixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 		{
 			// a++
 			// a--
-			auto newExpr = MakePtr<PostfixUnaryExpr>();
+			auto newExpr = Ptr(new PostfixUnaryExpr);
 			FillOperatorAndSkip(newExpr->opName, cursor, 2);
 			FillOperator(newExpr->opName, newExpr->op);
 			newExpr->operand = expr;
@@ -878,7 +878,7 @@ Ptr<Expr> ParseNewExpr(const ParsingArguments& pa, bool globalOperator, Ptr<CppT
 	// new TYPE(EXPR, ...)
 	// new TYPE[EXPR][EXPR]...
 	// :: new (EXPR, ...) TYPE(EXPR, ...)
-	auto newExpr = MakePtr<NewExpr>();
+	auto newExpr = Ptr(new NewExpr);
 	newExpr->globalOperator = globalOperator;
 	if (TestToken(cursor, CppTokens::LPARENTHESIS))
 	{
@@ -907,7 +907,7 @@ Ptr<Expr> ParseNewExpr(const ParsingArguments& pa, bool globalOperator, Ptr<CppT
 		auto closeToken = (CppTokens)cursor->token.token == CppTokens::LPARENTHESIS ? CppTokens::RPARENTHESIS : CppTokens::RBRACE;
 		SkipToken(cursor);
 
-		newExpr->initializer = MakePtr<Initializer>();
+		newExpr->initializer = Ptr(new Initializer);
 		newExpr->initializer->initializerType = closeToken == CppTokens::RPARENTHESIS ? CppInitializerType::Constructor : CppInitializerType::Universal;
 
 		if (!TestToken(cursor, closeToken))
@@ -937,7 +937,7 @@ Ptr<Expr> ParseDeleteExpr(const ParsingArguments& pa, bool globalOperator, Ptr<C
 {
 	// delete
 	// :: delete []
-	auto newExpr = MakePtr<DeleteExpr>();
+	auto newExpr = Ptr(new DeleteExpr);
 	newExpr->globalOperator = globalOperator;
 	if ((newExpr->arrayDelete = TestToken(cursor, CppTokens::LBRACKET)))
 	{
@@ -953,7 +953,7 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 	{
 		// sizeof(EXPR)
 		// sizeof TYPE
-		auto newExpr = MakePtr<SizeofExpr>();
+		auto newExpr = Ptr(new SizeofExpr);
 		newExpr->ellipsis = TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT);
 		auto oldCursor = cursor;
 		try
@@ -975,7 +975,7 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 	{
 		// ++ a
 		// -- a
-		auto newExpr = MakePtr<PrefixUnaryExpr>();
+		auto newExpr = Ptr(new PrefixUnaryExpr);
 		FillOperatorAndSkip(newExpr->opName, cursor, 2);
 		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->operand = ParsePrefixUnaryExpr(pa, cursor);
@@ -995,7 +995,7 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 		// -a
 		// &a
 		// *a
-		auto newExpr = MakePtr<PrefixUnaryExpr>();
+		auto newExpr = Ptr(new PrefixUnaryExpr);
 		FillOperatorAndSkip(newExpr->opName, cursor, 1);
 		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->operand = ParsePrefixUnaryExpr(pa, cursor);
@@ -1043,7 +1043,7 @@ Ptr<Expr> ParsePrefixUnaryExpr(const ParsingArguments& pa, Ptr<CppTokenCursor>& 
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
 				auto expr = ParsePrefixUnaryExpr(pa, cursor);
 
-				auto newExpr = MakePtr<CastExpr>();
+				auto newExpr = Ptr(new CastExpr);
 				newExpr->castType = CppCastType::CCast;
 				newExpr->type = type;
 				newExpr->expr = expr;
@@ -1200,7 +1200,7 @@ Ptr<Expr> ParseBinaryExpr(const ParsingArguments& pa, const ParsingExprArguments
 			}
 		}
 
-		auto newExpr = MakePtr<BinaryExpr>();
+		auto newExpr = Ptr(new BinaryExpr);
 		newExpr->opName = opName;
 		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->precedence = precedence;
@@ -1227,7 +1227,7 @@ Ptr<Expr> ParseAssignIfExpr(const ParsingArguments& pa, const ParsingExprArgumen
 	if (TestToken(cursor, CppTokens::QUESTIONMARK))
 	{
 		// a ? b : c
-		auto newExpr = MakePtr<IfExpr>();
+		auto newExpr = Ptr(new IfExpr);
 		newExpr->condition = expr;
 		newExpr->left = ParseExpr(pa, pea_Full(), cursor);
 		RequireToken(cursor, CppTokens::COLON);
@@ -1237,7 +1237,7 @@ Ptr<Expr> ParseAssignIfExpr(const ParsingArguments& pa, const ParsingExprArgumen
 	else if (TestToken(cursor, CppTokens::EQ, false))
 	{
 		// a = b
-		auto newExpr = MakePtr<BinaryExpr>();
+		auto newExpr = Ptr(new BinaryExpr);
 		FillOperatorAndSkip(newExpr->opName, cursor, 1);
 		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->precedence = 16;
@@ -1256,7 +1256,7 @@ Ptr<Expr> ParseAssignIfExpr(const ParsingArguments& pa, const ParsingExprArgumen
 		TestToken(cursor, CppTokens::XOR, CppTokens::EQ, false))
 	{
 		// a X= b
-		auto newExpr = MakePtr<BinaryExpr>();
+		auto newExpr = Ptr(new BinaryExpr);
 		FillOperatorAndSkip(newExpr->opName, cursor, 2);
 		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->precedence = 16;
@@ -1269,7 +1269,7 @@ Ptr<Expr> ParseAssignIfExpr(const ParsingArguments& pa, const ParsingExprArgumen
 		TestToken(cursor, CppTokens::GT, CppTokens::GT, CppTokens::EQ, false))
 	{
 		// a XX= b
-		auto newExpr = MakePtr<BinaryExpr>();
+		auto newExpr = Ptr(new BinaryExpr);
 		FillOperatorAndSkip(newExpr->opName, cursor, 3);
 		FillOperator(newExpr->opName, newExpr->op);
 		newExpr->precedence = 16;
@@ -1293,7 +1293,7 @@ Ptr<Expr> ParseThrowExpr(const ParsingArguments& pa, const ParsingExprArguments&
 	{
 		// throw
 		// throw EXPR
-		auto newExpr = MakePtr<ThrowExpr>();
+		auto newExpr = Ptr(new ThrowExpr);
 		if (!TestToken(cursor, CppTokens::SEMICOLON, false))
 		{
 			newExpr->expr = ParseAssignIfExpr(pa, pea, cursor);
@@ -1317,7 +1317,7 @@ Ptr<Expr> ParseExpr(const ParsingArguments& pa, const ParsingExprArguments& pea,
 	{
 		if (TestToken(cursor, CppTokens::COMMA, false))
 		{
-			auto newExpr = MakePtr<BinaryExpr>();
+			auto newExpr = Ptr(new BinaryExpr);
 			FillOperatorAndSkip(newExpr->opName, cursor, 1);
 			FillOperator(newExpr->opName, newExpr->op);
 			newExpr->precedence = 18;

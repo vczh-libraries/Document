@@ -17,7 +17,7 @@ void ParseTemplateSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, 
 	{
 		specSymbol = pa.root->CreateSymbol(pa.scopeSymbol);
 	}
-	spec = MakePtr<TemplateSpec>();
+	spec = Ptr(new TemplateSpec);
 	auto newPa = pa.WithScope(specSymbol.Obj());
 
 	while (!TestToken(cursor, CppTokens::GT))
@@ -254,7 +254,7 @@ void ParseSpecializationSpec(const ParsingArguments& pa, Ptr<CppTokenCursor>& cu
 	if (TestToken(cursor, CppTokens::LT))
 	{
 		// <{ TYPE/EXPR ...} >
-		spec = MakePtr<SpecializationSpec>();
+		spec = Ptr(new SpecializationSpec);
 		ParseGenericArgumentsSkippedLT(pa, cursor, spec->arguments, CppTokens::GT, false);
 	}
 }
@@ -278,7 +278,7 @@ void ParseGenericArgumentsSkippedLT(const ParsingArguments& pa, Ptr<CppTokenCurs
 			{
 				if (ctorExpr->initializer->initializerType == CppInitializerType::Constructor && ctorExpr->initializer->arguments.Count() == 0)
 				{
-					auto funcType = MakePtr<FunctionType>();
+					auto funcType = Ptr(new FunctionType);
 					funcType->returnType = ctorExpr->type;
 
 					argument.type = funcType;

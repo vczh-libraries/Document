@@ -44,7 +44,7 @@ void ParseDeclaration_Namespace(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 	{
 		// namespace { DECLARATION ...}
 		// create an anonymous namespace
-		auto decl = MakePtr<NamespaceDeclaration>();
+		auto decl = Ptr(new NamespaceDeclaration);
 		decl->name.name = GenerateAnonymousNamespaceName(pa);
 		decl->name.type = CppNameType::Normal;
 
@@ -72,7 +72,7 @@ void ParseDeclaration_Namespace(const ParsingArguments& pa, Ptr<CppTokenCursor>&
 		while (cursor)
 		{
 			// create AST
-			auto decl = MakePtr<NamespaceDeclaration>();
+			auto decl = Ptr(new NamespaceDeclaration);
 			if (!topDecl)
 			{
 				topDecl = decl;

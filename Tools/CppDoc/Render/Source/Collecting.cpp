@@ -371,7 +371,7 @@ void GenerateHtmlLine(
 				}
 
 				// make a new document
-				documentRecord = MakePtr<DocumentRecord>();
+				documentRecord = Ptr(new DocumentRecord);
 				lastTokenIsDocument = true;
 			}
 			documentRecord->comments.Add(cursor->token);
@@ -736,7 +736,7 @@ Ptr<GlobalLinesRecord> Collect(
 )
 {
 	// read Mapping.bin
-	auto global = MakePtr<GlobalLinesRecord>();
+	auto global = Ptr(new GlobalLinesRecord);
 	Dictionary<WString, FilePath> filePathCache;
 	Array<TokenSkipping> skipping;
 	ReadMappingFile(pathMapping, skipping);
@@ -814,7 +814,7 @@ Ptr<GlobalLinesRecord> Collect(
 					vint fileIndex = global->fileLines.Keys().IndexOf(currentFilePath);
 					if (fileIndex == -1)
 					{
-						auto flr = MakePtr<FileLinesRecord>();
+						auto flr = Ptr(new FileLinesRecord);
 						flr->filePath = currentFilePath;
 
 						// set the name of the generated HTML file

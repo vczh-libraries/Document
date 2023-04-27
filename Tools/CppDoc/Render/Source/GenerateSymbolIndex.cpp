@@ -218,7 +218,7 @@ Ptr<SymbolGroup> GenerateSymbolIndexForFileGroup(
 		}
 	}
 
-	auto symbolGroup = MakePtr<SymbolGroup>();
+	auto symbolGroup = Ptr(new SymbolGroup);
 	symbolGroup->symbol = context;
 	
 	if (generateChildSymbols && context->kind != symbol_component::SymbolKind::Root)
@@ -257,7 +257,7 @@ Ptr<SymbolGroup> GenerateSymbolIndexForFileGroup(
 	{
 		if (primary == context)
 		{
-			auto psGroup = MakePtr<SymbolGroup>();
+			auto psGroup = Ptr(new SymbolGroup);
 			psGroup->kind = SymbolGroupKind::Text;
 			psGroup->name = L"Partial Specializations";
 
@@ -282,7 +282,7 @@ Ptr<SymbolGroup> GenerateSymbolIndexForFileGroup(
 				}
 				else
 				{
-					auto psGroup = MakePtr<SymbolGroup>();
+					auto psGroup = Ptr(new SymbolGroup);
 					psGroup->kind = SymbolGroupKind::SymbolAndText;
 					psGroup->name = L"(Partial Specializations)";
 					psGroup->symbol = primary;
@@ -506,7 +506,7 @@ Ptr<SymbolGroup> GenerateSymbolIndex(
 	IProgressReporter* progressReporter
 )
 {
-	auto rootGroup = MakePtr<SymbolGroup>();
+	auto rootGroup = Ptr(new SymbolGroup);
 	vint fragmentCount = 0;
 	{
 		rootGroup->kind = SymbolGroupKind::Root;

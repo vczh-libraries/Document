@@ -71,7 +71,7 @@ ParseVariablesFollowedByDecl_NotConsumeSemicolon
 
 void ParseVariablesFollowedByDecl_NotConsumeSemicolon(const ParsingArguments& pa, Ptr<Declaration> decl, Ptr<CppTokenCursor>& cursor, List<Ptr<Declaration>>& output)
 {
-	auto type = MakePtr<IdType>();
+	auto type = Ptr(new IdType);
 	type->name = decl->name;
 	Resolving::AddSymbol(pa, type->resolving, decl->symbol);
 
@@ -102,7 +102,7 @@ void ParseDeclaration_StaticAssert(const ParsingArguments& pa, Ptr<CppTokenCurso
 	RequireToken(cursor, CppTokens::STATIC_ASSERT);
 	RequireToken(cursor, CppTokens::LPARENTHESIS);
 
-	auto decl = MakePtr<StaticAssertDeclaration>();
+	auto decl = Ptr(new StaticAssertDeclaration);
 	output.Add(decl);
 
 	if (!TestToken(cursor, CppTokens::RPARENTHESIS))
@@ -236,7 +236,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 
 		if (TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
 		{
-			auto decl = MakePtr<FriendClassDeclaration>();
+			auto decl = Ptr(new FriendClassDeclaration);
 			decl->templateSpec = EnsureNoMultipleTemplateSpec(specs, cursor);
 
 			switch ((CppTokens)cursor->token.token)
@@ -266,7 +266,7 @@ void ParseDeclaration(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor, L
 			auto oldCursor = cursor;
 			try
 			{
-				auto decl = MakePtr<FriendClassDeclaration>();
+				auto decl = Ptr(new FriendClassDeclaration);
 				EnsureNoTemplateSpec(specs, cursor);
 
 				decl->usedClass = ParseType(pa, cursor);
@@ -339,7 +339,7 @@ void BuildVariables(List<Ptr<Declarator>>& declarators, List<Ptr<VariableDeclara
 	{
 		auto declarator = declarators[i];
 
-		auto varDecl = MakePtr<VariableDeclaration>();
+		auto varDecl = Ptr(new VariableDeclaration);
 		varDecl->templateScope = declarator->scopeSymbolToReuse.Obj();
 		varDecl->type = declarator->type;
 		varDecl->name = declarator->name;

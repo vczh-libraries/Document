@@ -63,7 +63,7 @@ void FixEnumDocumentRecord(
 							xmlEnumItem->name.value = L"enumitem";
 							xmlEnumItem->closingName.value = L"enumitem";
 
-							auto attr = MakePtr<XmlAttribute>();
+							auto attr = Ptr(new XmlAttribute);
 							attr->name.value = L"name";
 							attr->value.value = symbolEnumItem->name;
 							xmlEnumItem->attributes.Add(attr);
@@ -259,11 +259,11 @@ Ptr<XmlElement> BuildHyperlink(
 	Symbol* symbol
 )
 {
-	auto xmlSymbol = MakePtr<XmlElement>();
+	auto xmlSymbol = Ptr(new XmlElement);
 	xmlSymbol->name.value = L"symbol";
 
 	{
-		auto attr = MakePtr<XmlAttribute>();
+		auto attr = Ptr(new XmlAttribute);
 		attr->name.value = L"name";
 		attr->value.value = BuildHyperlinkName(symbol, false);
 		xmlSymbol->attributes.Add(attr);
@@ -273,7 +273,7 @@ Ptr<XmlElement> BuildHyperlink(
 	vint index = global->declComments.Keys().IndexOf(symbol);
 	if (index != -1)
 	{
-		auto attr = MakePtr<XmlAttribute>();
+		auto attr = Ptr(new XmlAttribute);
 		attr->name.value = L"docId";
 		attr->value.value = GetSymbolId(symbol);
 		xmlSymbol->attributes.Add(attr);
@@ -302,13 +302,13 @@ Ptr<XmlElement> BuildHyperlink(
 	}
 
 	{
-		auto attr = MakePtr<XmlAttribute>();
+		auto attr = Ptr(new XmlAttribute);
 		attr->name.value = L"declFile";
 		attr->value.value = global->fileLines[global->declToFiles[{decl, nullptr}]]->htmlFileName;
 		xmlSymbol->attributes.Add(attr);
 	}
 	{
-		auto attr = MakePtr<XmlAttribute>();
+		auto attr = Ptr(new XmlAttribute);
 		attr->name.value = L"declId";
 		attr->value.value = GetDeclId({ decl,nullptr });
 		xmlSymbol->attributes.Add(attr);
@@ -374,7 +374,7 @@ Ptr<XmlElement> ResolveHyperLink(
 			}
 			else
 			{
-				auto idType = MakePtr<IdType>();
+				auto idType = Ptr(new IdType);
 				idType->resolving = rar.types;
 				rar = ResolveChildSymbol(result.pa, idType, cppName);
 			}
@@ -518,7 +518,7 @@ Ptr<XmlElement> ResolveHyperLink(
 		}
 		else
 		{
-			auto xmlSymbols = MakePtr<XmlElement>();
+			auto xmlSymbols = Ptr(new XmlElement);
 			xmlSymbols->name.value = L"symbols";
 			for (vint j = 0; j < rar.values->items.Count(); j++)
 			{
@@ -539,7 +539,7 @@ Ptr<XmlElement> ResolveHyperLink(
 			return BuildHyperlink(global, result, rar.types->items[0].symbol);
 		}
 
-		auto xmlSymbols = MakePtr<XmlElement>();
+		auto xmlSymbols = Ptr(new XmlElement);
 		xmlSymbols->name.value = L"symbols";
 		if (rar.values)
 		{
@@ -605,13 +605,13 @@ vint ProcessDocumentRecordHyperLinksInternal(
 		}
 		else if (isCData)
 		{
-			auto node = MakePtr<XmlCData>();
+			auto node = Ptr(new XmlCData);
 			node->content.value = match->Result().Value();
 			subNodes.Add(node);
 		}
 		else
 		{
-			auto node = MakePtr<XmlText>();
+			auto node = Ptr(new XmlText);
 			node->content.value = match->Result().Value();
 			subNodes.Add(node);
 		}
@@ -739,13 +739,13 @@ Ptr<XmlDocument> ValidateAndFixDocumentRecord(
 		ProcessDocumentRecordHyperLinks(global, result, symbol, documentRecord->decl, xmlDocument, xmlText);
 
 		{
-			auto att = MakePtr<XmlAttribute>();
+			auto att = Ptr(new XmlAttribute);
 			att->name.value = L"symbolId";
 			att->value.value = symbol->uniqueId;
 			xmlDocument->rootElement->attributes.Add(att);
 		}
 		{
-			auto att = MakePtr<XmlAttribute>();
+			auto att = Ptr(new XmlAttribute);
 			att->name.value = L"accessor";
 			xmlDocument->rootElement->attributes.Add(att);
 
@@ -788,7 +788,7 @@ Ptr<XmlDocument> ValidateAndFixDocumentRecord(
 			}
 		}
 		{
-			auto att = MakePtr<XmlAttribute>();
+			auto att = Ptr(new XmlAttribute);
 			att->name.value = L"category";
 			xmlDocument->rootElement->attributes.Add(att);
 
@@ -817,7 +817,7 @@ Ptr<XmlDocument> ValidateAndFixDocumentRecord(
 			}
 		}
 		{
-			auto att = MakePtr<XmlAttribute>();
+			auto att = Ptr(new XmlAttribute);
 			att->name.value = L"name";
 			att->value.value = symbol->name;
 			xmlDocument->rootElement->attributes.Add(att);
@@ -825,13 +825,13 @@ Ptr<XmlDocument> ValidateAndFixDocumentRecord(
 		{
 			auto decl = symbol->GetAnyForwardDecl<Declaration>();
 			{
-				auto attr = MakePtr<XmlAttribute>();
+				auto attr = Ptr(new XmlAttribute);
 				attr->name.value = L"declFile";
 				attr->value.value = global->fileLines[global->declToFiles[{decl, nullptr}]]->htmlFileName;
 				xmlDocument->rootElement->attributes.Add(attr);
 			}
 			{
-				auto attr = MakePtr<XmlAttribute>();
+				auto attr = Ptr(new XmlAttribute);
 				attr->name.value = L"declId";
 				attr->value.value = GetDeclId({ decl,nullptr });
 				xmlDocument->rootElement->attributes.Add(attr);
@@ -840,10 +840,10 @@ Ptr<XmlDocument> ValidateAndFixDocumentRecord(
 
 		SortedList<Symbol*> seeAlsos, baseTypes;
 		{
-			auto cdata = MakePtr<XmlCData>();
+			auto cdata = Ptr(new XmlCData);
 			cdata->content.value = GetSymbolDisplayNameInSignature(symbol, seeAlsos, baseTypes);
 
-			auto xmlSignature = MakePtr<XmlElement>();
+			auto xmlSignature = Ptr(new XmlElement);
 			xmlSignature->name.value = L"signature";
 			xmlSignature->subNodes.Add(cdata);
 
@@ -851,7 +851,7 @@ Ptr<XmlDocument> ValidateAndFixDocumentRecord(
 		}
 		if (seeAlsos.Count() > 0)
 		{
-			auto xmlSeeAlsos = MakePtr<XmlElement>();
+			auto xmlSeeAlsos = Ptr(new XmlElement);
 			xmlSeeAlsos->name.value = L"seealsos";
 			CopyFrom(
 				xmlSeeAlsos->subNodes,
@@ -864,7 +864,7 @@ Ptr<XmlDocument> ValidateAndFixDocumentRecord(
 		}
 		if (baseTypes.Count() > 0)
 		{
-			auto xmlBaseTypes = MakePtr<XmlElement>();
+			auto xmlBaseTypes = Ptr(new XmlElement);
 			xmlBaseTypes->name.value = L"basetypes";
 			CopyFrom(
 				xmlBaseTypes->subNodes,
@@ -900,17 +900,17 @@ void ExtractExamples(
 	{
 		auto outputAttr = XmlGetAttribute(xmlElement, L"output");
 		vint index = examples.Add(xmlElement);
-		xmlElement = MakePtr<XmlElement>();
+		xmlElement = Ptr(new XmlElement);
 		xmlElement->name.value = L"example";
 		{
-			auto attr = MakePtr<XmlAttribute>();
+			auto attr = Ptr(new XmlAttribute);
 			attr->name.value = L"index";
 			attr->value.value = itow(index);
 			xmlElement->attributes.Add(attr);
 		}
 		if (outputAttr)
 		{
-			auto attr = MakePtr<XmlAttribute>();
+			auto attr = Ptr(new XmlAttribute);
 			attr->name.value = L"output";
 			attr->value.value = outputAttr->value.value;
 			xmlElement->attributes.Add(attr);
@@ -1062,10 +1062,10 @@ void WriteSymbolGroupInReferenceIndex(
 
 	auto xmlText = GenerateToStream([&group](StreamWriter& textWriter)
 	{
-		auto xmlElement = MakePtr<XmlElement>();
+		auto xmlElement = Ptr(new XmlElement);
 		xmlElement->name.value = L"document";
 		{
-			auto attr = MakePtr<XmlAttribute>();
+			auto attr = Ptr(new XmlAttribute);
 			attr->name.value = L"name";
 			xmlElement->attributes.Add(attr);
 
@@ -1084,14 +1084,14 @@ void WriteSymbolGroupInReferenceIndex(
 		}
 		if (group->assignedDocument)
 		{
-			auto attr = MakePtr<XmlAttribute>();
+			auto attr = Ptr(new XmlAttribute);
 			attr->name.value = L"docId";
 			attr->value.value = group->symbol->uniqueId;
 			xmlElement->attributes.Add(attr);
 		}
 		if (group->assignedDocument)
 		{
-			auto attr = MakePtr<XmlAttribute>();
+			auto attr = Ptr(new XmlAttribute);
 			attr->name.value = L"file";
 			attr->value.value = group->uniqueId;
 			xmlElement->attributes.Add(attr);

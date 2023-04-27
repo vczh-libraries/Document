@@ -119,7 +119,7 @@ namespace symbol_type_resolving
 			Array<Ptr<TypeTsysList>> baseTsys(classDecl->baseTypes.Count());
 			for (vint i = 0; i < classDecl->baseTypes.Count(); i++)
 			{
-				auto tsysList = MakePtr<TypeTsysList>();
+				auto tsysList = Ptr(new TypeTsysList);
 				baseTsys[i] = tsysList;
 				bool isVta = false;
 				TypeToTsysInternal(eval.declPa, classDecl->baseTypes[i].item.f1, *tsysList.Obj(), isVta);
@@ -308,11 +308,11 @@ namespace symbol_type_resolving
 			auto cd = classType->GetDecl()->GetAnyForwardDecl<ForwardClassDeclaration>().Obj();
 			auto psPa = GetPaInsideClass(invokerPa, classType);
 
-			auto genericType = MakePtr<GenericType>();
+			auto genericType = Ptr(new GenericType);
 			{
 				CopyFrom(genericType->arguments, cd->specializationSpec->arguments);
 
-				auto idType = MakePtr<IdType>();
+				auto idType = Ptr(new IdType);
 				idType->cStyleTypeReference = true;
 				idType->name = cd->name;
 				idType->resolving = ResolveSymbolInContext(psPa, idType->name, idType->cStyleTypeReference).types;

@@ -18,7 +18,7 @@ void Compile(
 	auto cursor = reader.GetFirstToken();
 
 	result.pa = {
-		MakePtr<RootSymbol>(),
+		Ptr(new RootSymbol),
 		ITsysAlloc::Create(),
 		new IndexRecorder(result, progressReporter, result.input.Length())
 	};

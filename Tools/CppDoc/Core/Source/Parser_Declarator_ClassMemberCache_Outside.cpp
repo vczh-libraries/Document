@@ -350,7 +350,7 @@ GOT_NEXT_CLASS:
 	}
 	else
 	{
-		cache->containerClassSpecs.Insert(0, MakePtr<TemplateSpec>());
+		cache->containerClassSpecs.Insert(0, Ptr(new TemplateSpec));
 	}
 	return nextClass;
 }

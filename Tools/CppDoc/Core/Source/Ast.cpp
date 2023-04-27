@@ -66,7 +66,7 @@ void Resolving::AddSymbol(const ParsingArguments& pa, Ptr<Resolving>& resolving,
 {
 	if (!resolving)
 	{
-		resolving = MakePtr<Resolving>();
+		resolving = Ptr(new Resolving);
 	}
 
 	auto parent = symbol->GetParentScope();

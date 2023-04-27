@@ -319,7 +319,7 @@ Ptr<Type> RemoveArrayType(Ptr<Type> type, Ptr<Expr>& dim)
 		auto result = RemoveArrayType(dt->type, dim);
 		if (!result) return nullptr;
 
-		auto newType = MakePtr<DecorateType>();
+		auto newType = Ptr(new DecorateType);
 		newType->isConst = dt->isConst;
 		newType->isVolatile = dt->isVolatile;
 		newType->type = result;
@@ -358,7 +358,7 @@ Ptr<Type> RemoveCVType(Ptr<Type> type, bool& isConst, bool& isVolatile)
 		}
 		else
 		{
-			auto newType = MakePtr<ArrayType>();
+			auto newType = Ptr(new ArrayType);
 			newType->type = removed;
 			newType->expr = at->expr;
 			return newType;
@@ -398,7 +398,7 @@ Ptr<Type>& AddCVTypeInternal(Ptr<Type>& type, bool isConst, bool isVolatile)
 		}
 		else
 		{
-			auto newType = MakePtr<ArrayType>();
+			auto newType = Ptr(new ArrayType);
 			newType->expr = at->expr;
 			newType->type = element;
 			
@@ -408,7 +408,7 @@ Ptr<Type>& AddCVTypeInternal(Ptr<Type>& type, bool isConst, bool isVolatile)
 	}
 	else if (isConst || isVolatile)
 	{
-		auto newType = MakePtr<DecorateType>();
+		auto newType = Ptr(new DecorateType);
 		newType->isConst = isConst;
 		newType->isVolatile = isVolatile;
 		newType->type = type;

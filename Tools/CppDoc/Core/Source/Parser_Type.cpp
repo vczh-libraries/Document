@@ -59,7 +59,7 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 	auto idKind = cursor ? (CppTokens)cursor->token.token : CppTokens::ID;
 
 	// check if this is a c style type reference, e.g. struct something
-	auto type = MakePtr<IdType>();
+	auto type = Ptr(new IdType);
 	if (TestToken(cursor, CppTokens::DECL_ENUM, false) || TestToken(cursor, CppTokens::DECL_CLASS, false) || TestToken(cursor, CppTokens::DECL_STRUCT, false) || TestToken(cursor, CppTokens::DECL_UNION, false))
 	{
 		type->cStyleTypeReference = true;
@@ -148,14 +148,14 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 				case CppTokens::DECL_ENUM:
 					{
 						symbolKind = symbol_component::SymbolKind::Enum;
-						auto decl = MakePtr<ForwardEnumDeclaration>();
+						auto decl = Ptr(new ForwardEnumDeclaration);
 						forwardDecl = decl;
 					}
 					break;
 				case CppTokens::DECL_CLASS:
 					{
 						symbolKind = symbol_component::SymbolKind::Class;
-						auto decl = MakePtr<ForwardClassDeclaration>();
+						auto decl = Ptr(new ForwardClassDeclaration);
 						decl->classType = CppClassType::Class;
 						forwardDecl = decl;
 					}
@@ -163,7 +163,7 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 				case CppTokens::DECL_STRUCT:
 					{
 						symbolKind = symbol_component::SymbolKind::Struct;
-						auto decl = MakePtr<ForwardClassDeclaration>();
+						auto decl = Ptr(new ForwardClassDeclaration);
 						decl->classType = CppClassType::Struct;
 						forwardDecl = decl;
 					}
@@ -171,7 +171,7 @@ Ptr<IdType> ParseIdType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 				case CppTokens::DECL_UNION:
 					{
 						symbolKind = symbol_component::SymbolKind::Union;
-						auto decl = MakePtr<ForwardClassDeclaration>();
+						auto decl = Ptr(new ForwardClassDeclaration);
 						decl->classType = CppClassType::Union;
 						forwardDecl = decl;
 					}
@@ -224,7 +224,7 @@ Ptr<ChildType> TryParseChildType(const ParsingArguments& pa, Ptr<Category_Id_Chi
 		auto resolving = ResolveChildSymbol(pa, classType, cppName).types;
 		if (resolving || typenameKind != ShortTypeTypenameKind::No)
 		{
-			auto type = MakePtr<ChildType>();
+			auto type = Ptr(new ChildType);
 			type->classType = classType;
 			switch (typenameKind)
 			{
@@ -259,7 +259,7 @@ Ptr< Category_Id_Child_Generic_Root_Type> TryParseGenericType(const ParsingArgum
 	if (TestToken(cursor, CppTokens::LT))
 	{
 		// TYPE< { TYPE/EXPR ...} >
-		auto type = MakePtr<GenericType>();
+		auto type = Ptr(new GenericType);
 		type->type = classType;
 		ParseGenericArgumentsSkippedLT(pa, cursor, type->arguments, CppTokens::GT);
 		return type;
@@ -282,7 +282,7 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 		// :: NAME
 		// :: NAME <...>
 		bool templateKeyword = false;
-		if (auto type = TryParseChildType(pa, MakePtr<RootType>(), ShortTypeTypenameKind::No, templateKeyword, cursor))
+		if (auto type = TryParseChildType(pa, Ptr(new RootType), ShortTypeTypenameKind::No, templateKeyword, cursor))
 		{
 			typeResult = TryParseGenericType(pa, type, cursor);
 		}
@@ -315,7 +315,7 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 				ParseExpr(pa, pea_GenericArgument(), cursor);
 				RequireToken(cursor, CppTokens::GT);
 
-				auto genericType = MakePtr<GenericType>();
+				auto genericType = Ptr(new GenericType);
 				genericType->type = sequenceType;
 
 				VariadicItem<GenericArgument> argument;
@@ -333,7 +333,7 @@ Ptr<Type> ParseNameType(const ParsingArguments& pa, ShortTypeTypenameKind typena
 				ParseType(pa, cursor);
 				RequireToken(cursor, CppTokens::RPARENTHESIS);
 
-				auto intType = MakePtr<PrimitiveType>();
+				auto intType = Ptr(new PrimitiveType);
 				intType->prefix = CppPrimitivePrefix::_none;
 				intType->primitive = CppPrimitiveType::_int;
 				return intType;
@@ -392,7 +392,7 @@ Ptr<Type> ParseShortType(const ParsingArguments& pa, ShortTypeTypenameKind typen
 	{
 		// decltype(EXPRESSION)
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
-		auto type = MakePtr<DeclType>();
+		auto type = Ptr(new DeclType);
 		if (!TestToken(cursor, CppTokens::TYPE_AUTO))
 		{
 			type->expr = ParseExpr(pa, pea_Full(), cursor);

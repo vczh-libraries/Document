@@ -25,7 +25,7 @@ void ParseDeclaration_ValueAlias(
 
 	ValidateForRootTemplateSpec(varSpec, cursor, declarator->specializationSpec, false);
 
-	auto decl = MakePtr<ValueAliasDeclaration>();
+	auto decl = Ptr(new ValueAliasDeclaration);
 	decl->templateSpec = varSpec;
 	decl->specializationSpec = declarator->specializationSpec;
 	decl->name = declarator->name;

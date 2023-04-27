@@ -271,32 +271,32 @@ bool IsSpecialMemberBlockedByDefinition(const ParsingArguments& pa, ClassDeclara
 
 Ptr<VariableDeclaration> GenerateCopyParameter(const ParsingArguments& pa, Symbol* classSymbol)
 {
-	auto idType = MakePtr<IdType>();
+	auto idType = Ptr(new IdType);
 	idType->name.name = classSymbol->name;
 	idType->name.type = CppNameType::Normal;
 	Resolving::AddSymbol(pa, idType->resolving, classSymbol);
 
-	auto decoratedType = MakePtr<DecorateType>();
+	auto decoratedType = Ptr(new DecorateType);
 	decoratedType->type = idType;
 	decoratedType->isConst = true;
 
-	auto refType = MakePtr<ReferenceType>();
+	auto refType = Ptr(new ReferenceType);
 	refType->type = decoratedType;
 	refType->reference = CppReferenceType::LRef;
 
-	auto parameter = MakePtr<VariableDeclaration>();
+	auto parameter = Ptr(new VariableDeclaration);
 	parameter->type = refType;
 	return parameter;
 }
 
 Ptr<Type> GenerateRefType(const ParsingArguments& pa, Symbol* classSymbol, CppReferenceType ref)
 {
-	auto idType = MakePtr<IdType>();
+	auto idType = Ptr(new IdType);
 	idType->name.name = classSymbol->name;
 	idType->name.type = CppNameType::Normal;
 	Resolving::AddSymbol(pa, idType->resolving, classSymbol);
 
-	auto refType = MakePtr<ReferenceType>();
+	auto refType = Ptr(new ReferenceType);
 	refType->type = idType;
 	refType->reference = ref;
 	return refType;
@@ -304,19 +304,19 @@ Ptr<Type> GenerateRefType(const ParsingArguments& pa, Symbol* classSymbol, CppRe
 
 Ptr<VariableDeclaration> GenerateMoveParameter(const ParsingArguments& pa, Symbol* classSymbol)
 {
-	auto parameter = MakePtr<VariableDeclaration>();
+	auto parameter = Ptr(new VariableDeclaration);
 	parameter->type = GenerateRefType(pa, classSymbol, CppReferenceType::RRef);
 	return parameter;
 }
 
 Ptr<ForwardFunctionDeclaration> GenerateCtor(Symbol* classSymbol, bool deleted, Ptr<VariableDeclaration> parameter)
 {
-	auto decl = MakePtr<ForwardFunctionDeclaration>();
+	auto decl = Ptr(new ForwardFunctionDeclaration);
 	decl->name.name = L"$__ctor";
 	decl->name.type = CppNameType::Constructor;
 	decl->methodType = CppMethodType::Constructor;
 	{
-		auto funcType = MakePtr<FunctionType>();
+		auto funcType = Ptr(new FunctionType);
 		decl->type = funcType;
 		if (parameter)
 		{
@@ -330,12 +330,12 @@ Ptr<ForwardFunctionDeclaration> GenerateCtor(Symbol* classSymbol, bool deleted, 
 
 Ptr<ForwardFunctionDeclaration> GenerateAssignOp(const ParsingArguments& pa, Symbol* classSymbol, bool deleted, Ptr<VariableDeclaration> parameter)
 {
-	auto decl = MakePtr<ForwardFunctionDeclaration>();
+	auto decl = Ptr(new ForwardFunctionDeclaration);
 	decl->name.name = L"operator =";
 	decl->name.type = CppNameType::Operator;
 	decl->methodType = CppMethodType::Function;
 	{
-		auto funcType = MakePtr<FunctionType>();
+		auto funcType = Ptr(new FunctionType);
 		decl->type = funcType;
 		
 		funcType->returnType = GenerateRefType(pa, classSymbol, CppReferenceType::LRef);
@@ -467,11 +467,11 @@ void GenerateMembers(const ParsingArguments& pa, Symbol* classSymbol)
 					deleted = false;
 				}
 
-				auto decl = MakePtr<ForwardFunctionDeclaration>();
+				auto decl = Ptr(new ForwardFunctionDeclaration);
 				decl->name.name = L"~" + classSymbol->name;
 				decl->name.type = CppNameType::Destructor;
 				decl->methodType = CppMethodType::Destructor;
-				decl->type = MakePtr<FunctionType>();
+				decl->type = Ptr(new FunctionType);
 				if (!deleted) decl->decoratorDefault = true;
 				if (deleted) decl->decoratorDelete = true;
 

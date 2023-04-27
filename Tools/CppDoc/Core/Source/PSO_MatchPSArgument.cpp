@@ -70,7 +70,7 @@ namespace partial_specification_ordering
 			vint index = output.Keys().IndexOf(patternSymbol);
 			if (index == -1)
 			{
-				auto result = MakePtr<MatchPSResult>();
+				auto result = Ptr(new MatchPSResult);
 				result->source.Add(nullptr);
 				output.Add(patternSymbol, result);
 				return true;
@@ -228,7 +228,7 @@ namespace partial_specification_ordering
 				{
 				case symbol_component::SymbolKind::GenericTypeArgument:
 					{
-						auto result = MakePtr<MatchPSResult>();
+						auto result = Ptr(new MatchPSResult);
 						result->source.Add(childType);
 						if (AssignToArgument(patternSymbol, result, forParameter))
 						{

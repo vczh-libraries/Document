@@ -40,17 +40,17 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		// skip assembly code
 		RequireToken(cursor, CppTokens::LBRACE);
 		while (!TestToken(cursor, CppTokens::RBRACE)) SkipToken(cursor);
-		return MakePtr<EmptyStat>();
+		return Ptr(new EmptyStat);
 	}
 	else if (TestToken(cursor, CppTokens::SEMICOLON))
 	{
 		// ;
-		return MakePtr<EmptyStat>();
+		return Ptr(new EmptyStat);
 	}
 	else if (TestToken(cursor, CppTokens::LBRACE))
 	{
 		// { { STATEMENT ...} }
-		auto stat = MakePtr<BlockStat>();
+		auto stat = Ptr(new BlockStat);
 		auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(stat));
 		while (!TestToken(cursor, CppTokens::RBRACE))
 		{
@@ -62,14 +62,14 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	{
 		// default: STATEMENT
 		RequireToken(cursor, CppTokens::COLON);
-		auto stat = MakePtr<DefaultStat>();
+		auto stat = Ptr(new DefaultStat);
 		stat->stat = ParseStat(pa, cursor);
 		return stat;
 	}
 	else if (TestToken(cursor, CppTokens::STAT_CASE))
 	{
 		// case EXPRESSION: STATEMENT
-		auto stat = MakePtr<CaseStat>();
+		auto stat = Ptr(new CaseStat);
 		stat->expr = ParseExpr(pa, pea_Argument(), cursor);
 		RequireToken(cursor, CppTokens::COLON);
 		stat->stat = ParseStat(pa, cursor);
@@ -78,7 +78,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	else if (TestToken(cursor, CppTokens::STAT_GOTO))
 	{
 		// goto IDENTIFIER;
-		auto stat = MakePtr<GotoStat>();
+		auto stat = Ptr(new GotoStat);
 		if (TestToken(cursor, CppTokens::ID, false) ||
 			TestToken(cursor, CppTokens::INT, false) ||
 			TestToken(cursor, CppTokens::HEX, false) ||
@@ -97,19 +97,19 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	{
 		// break;
 		RequireToken(cursor, CppTokens::SEMICOLON);
-		return MakePtr<BreakStat>();
+		return Ptr(new BreakStat);
 	}
 	else if (TestToken(cursor, CppTokens::STAT_CONTINUE))
 	{
 		// continue;
 		RequireToken(cursor, CppTokens::SEMICOLON);
-		return MakePtr<ContinueStat>();
+		return Ptr(new ContinueStat);
 	}
 	else if (TestToken(cursor, CppTokens::STAT_WHILE))
 	{
 		// while (EXPRESSION) STATEMENT
 		// while (VARIABLE-DECLARATION-WITH-INITIALIZER) STATEMENT
-		auto stat = MakePtr<WhileStat>();
+		auto stat = Ptr(new WhileStat);
 		auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(stat));
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		ParseVariableOrExpression(newPa, cursor, stat);
@@ -120,7 +120,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	else if (TestToken(cursor, CppTokens::STAT_DO))
 	{
 		// do STATEMENT while (EXPRESSION);
-		auto stat = MakePtr<DoWhileStat>();
+		auto stat = Ptr(new DoWhileStat);
 		stat->stat = ParseStat(pa, cursor);
 		RequireToken(cursor, CppTokens::STAT_WHILE);
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
@@ -151,7 +151,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 				}
 			}
 
-			auto stat = MakePtr<ForEachStat>();
+			auto stat = Ptr(new ForEachStat);
 			auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(stat));
 			stat->varDecl = BuildVariableAndSymbol(newPa, declarator, cursor);
 			stat->expr = ParseExpr(newPa, pea_Full(), cursor);
@@ -159,7 +159,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			if (stat->varDecl->needResolveTypeFromInitializer)
 			{
 				// infer the variable first, so that the type is clear when parsing any IdExpr that use this variable
-				stat->stat = MakePtr<EmptyStat>();
+				stat->stat = Ptr(new EmptyStat);
 				EvaluateStat(pa, stat, false, nullptr);
 			}
 
@@ -171,7 +171,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		{
 			// for ([VARIABLE-DECLARATION-S]; [EXPRESSION]; [EXPRESSION]) STATEMENT
 			// for ([EXPRESSION]; [EXPRESSION]; [EXPRESSION]) STATEMENT
-			auto stat = MakePtr<ForStat>();
+			auto stat = Ptr(new ForStat);
 			auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(stat));
 			if (!TestToken(cursor, CppTokens::SEMICOLON))
 			{
@@ -217,7 +217,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	{
 		// if ([VARIABLE-DECLARATION-S;] EXPRESSION) STATEMENT [else STATEMENT]
 		// if ([VARIABLE-DECLARATION-S;] VARIABLE-DECLARATION-WITH-INITIALIZER) STATEMENT [else STATEMENT]
-		auto stat = MakePtr<IfElseStat>();
+		auto stat = Ptr(new IfElseStat);
 		auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(stat));
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		{
@@ -249,7 +249,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	{
 		// switch (EXPRESSION) STATEMENT
 		// switch (VARIABLE-DECLARATION-WITH-INITIALIZER) STATEMENT
-		auto stat = MakePtr<SwitchStat>();
+		auto stat = Ptr(new SwitchStat);
 		auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(stat));
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		ParseVariableOrExpression(newPa, cursor, stat);
@@ -261,7 +261,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	{
 		// try STATEMENT catch(...) STATEMENT
 		// try STATEMENT catch(VARIABLE-DECLARATION) STATEMENT
-		auto stat = MakePtr<TryCatchStat>();
+		auto stat = Ptr(new TryCatchStat);
 		stat->tryStat = ParseStat(pa, cursor);
 
 		while (TestToken(cursor, CppTokens::STAT_CATCH))
@@ -269,7 +269,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			TryCatchStat::CatchStat catchStat;
 			RequireToken(cursor, CppTokens::LPARENTHESIS);
 
-			catchStat.scopeStat = MakePtr<EmptyStat>();
+			catchStat.scopeStat = Ptr(new EmptyStat);
 			auto newPa = pa.WithScope(pa.scopeSymbol->CreateStatSymbol_NFb(catchStat.scopeStat));
 
 			if (!TestToken(cursor, CppTokens::DOT, CppTokens::DOT, CppTokens::DOT))
@@ -286,7 +286,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	else if (TestToken(cursor, CppTokens::STAT_RETURN))
 	{
 		// return [EXPRESSION];
-		auto stat = MakePtr<ReturnStat>();
+		auto stat = Ptr(new ReturnStat);
 		if (!TestToken(cursor, CppTokens::SEMICOLON))
 		{
 			stat->expr = ParseExpr(pa, pea_Full(), cursor);
@@ -301,14 +301,14 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		auto tryStat = ParseStat(pa, cursor);
 		if (TestToken(cursor, CppTokens::STAT___FINALLY))
 		{
-			auto stat = MakePtr<__Try__FinallyStat>();
+			auto stat = Ptr(new __Try__FinallyStat);
 			stat->tryStat = tryStat;
 			stat->finallyStat = ParseStat(pa, cursor);
 			return stat;
 		}
 		else if (TestToken(cursor, CppTokens::STAT___EXCEPT))
 		{
-			auto stat = MakePtr<__Try__ExceptStat>();
+			auto stat = Ptr(new __Try__ExceptStat);
 			stat->tryStat = tryStat;
 			RequireToken(cursor, CppTokens::LPARENTHESIS);
 			stat->expr = ParseExpr(pa, pea_Full(), cursor);
@@ -325,12 +325,12 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	{
 		// __leave;
 		RequireToken(cursor, CppTokens::SEMICOLON);
-		return MakePtr<__LeaveStat>();
+		return Ptr(new __LeaveStat);
 	}
 	else if (TestToken(cursor, CppTokens::STAT___IF_EXISTS))
 	{
 		// __if_exists (EXPRESSION) STATEMENT
-		auto stat = MakePtr<__IfExistsStat>();
+		auto stat = Ptr(new __IfExistsStat);
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		stat->expr = ParseExpr(pa, pea_Full(), cursor);
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
@@ -340,7 +340,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 	else if (TestToken(cursor, CppTokens::STAT___IF_NOT_EXISTS))
 	{
 		// __if_not_exists (EXPRESSION) STATEMENT
-		auto stat = MakePtr<__IfNotExistsStat>();
+		auto stat = Ptr(new __IfNotExistsStat);
 		RequireToken(cursor, CppTokens::LPARENTHESIS);
 		stat->expr = ParseExpr(pa, pea_Full(), cursor);
 		RequireToken(cursor, CppTokens::RPARENTHESIS);
@@ -367,7 +367,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 
 			if (isLabel)
 			{
-				auto stat = MakePtr<LabelStat>();
+				auto stat = Ptr(new LabelStat);
 				stat->name.name = WString::CopyFrom(cursor->token.reading, cursor->token.length);
 				stat->name.tokenCount = 1;
 				stat->name.nameTokens[0] = cursor->token;
@@ -385,7 +385,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 			{
 				auto expr = ParseExpr(pa, pea_Full(), cursor);
 				RequireToken(cursor, CppTokens::SEMICOLON);
-				auto stat = MakePtr<ExprStat>();
+				auto stat = Ptr(new ExprStat);
 				stat->expr = expr;
 
 				// the expression could be too long and make the destructor stackoverflow
@@ -402,7 +402,7 @@ Ptr<Stat> ParseStat(const ParsingArguments& pa, Ptr<CppTokenCursor>& cursor)
 		}
 		{
 			// DECLARATION
-			auto stat = MakePtr<DeclStat>();
+			auto stat = Ptr(new DeclStat);
 			ParseDeclaration(pa, cursor, stat->decls);
 			return stat;
 		}
