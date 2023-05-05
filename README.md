@@ -2,10 +2,10 @@
 
 ## Code Index Demos
 
-- [Calculator](https://vczh-libraries.github.io/CodeIndexDemo/Calculator/FileIndex.html)
-- [TypePrinter](https://vczh-libraries.github.io/CodeIndexDemo/TypePrinter/FileIndex.html)
-- [STL](https://vczh-libraries.github.io/CodeIndexDemo/STL/FileIndex.html)
-- [Gaclib](https://vczh-libraries.github.io/CodeIndexDemo/Gaclib/FileIndex.html)
+- [Calculator](https://github.com/vczh-libraries/Document/tree/release-1.0/Tools/Demos/Calculator)
+- [TypePrinter](https://github.com/vczh-libraries/Document/tree/release-1.0/Tools/Demos/TypePrinter)
+- [STL](https://github.com/vczh-libraries/Document/tree/release-1.0/Tools/Demos/STL)
+- [Gaclib](https://github.com/vczh-libraries/Document/tree/release-1.0/Tools/Demos/Gaclib)
 
 ## Goal
 
