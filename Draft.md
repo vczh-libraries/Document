@@ -1,6 +1,6 @@
 # Rewriting
 
-- ps1 copy Source and Release/Includes
+- ps1 copy Source and Release/IncludeOnly
 - ps1 call msbuild to create .i for all .h and .cpp
 - Generate mapping before and after preprocessing, only keep contents of the current file
 - Generate .html fot each file, including clickable include and row number
