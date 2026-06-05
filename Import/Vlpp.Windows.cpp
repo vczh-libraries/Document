@@ -12,6 +12,7 @@ Author: Zihan Chen (vczh)
 Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/
 
+#define _WINSOCKAPI_
 #include <Windows.h>
 
 #ifndef VCZH_MSVC

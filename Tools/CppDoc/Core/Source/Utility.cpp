@@ -1,4 +1,5 @@
 #include "Utility.h"
+#define _WINSOCKAPI_
 #include <Windows.h>
 
 wchar_t* ReadBigFile(const FilePath& filePath)
