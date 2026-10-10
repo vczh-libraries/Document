@@ -5,137 +5,6 @@ DEVELOPER: Zihan Chen(vczh)
 #include "Vlpp.h"
 
 /***********************************************************************
-.\HTTPUTILITY.H
-***********************************************************************/
-/***********************************************************************
-Author: Zihan Chen (vczh)
-Licensed under https://github.com/vczh-libraries/License
-***********************************************************************/
-
-#ifndef VCZH_HTTPUTILITY
-#define VCZH_HTTPUTILITY
-
-
-#ifdef VCZH_MSVC
-
-namespace vl
-{
-
-/***********************************************************************
-HTTP Utility
-***********************************************************************/
-
-	/// <summary>An http requiest.</summary>
-	class HttpRequest
-	{
-		typedef collections::Array<char>					BodyBuffer;
-		typedef collections::List<WString>					StringList;
-		typedef collections::Dictionary<WString, WString>	HeaderMap;
-	public:
-		/// <summary>Name of the server, like "gaclib.net".</summary>
-		WString				server;
-		/// <summary>Port of the server, like 80.</summary>
-		vint				port = 0;
-		/// <summary>Query of the request, like "/index.html".</summary>
-		WString				query;
-		/// <summary>Set to true if the request uses SSL, or https.</summary>
-		bool				secure = false;
-		/// <summary>User name to authorize. Set to empty if authorization is not needed.</summary>
-		WString				username;
-		/// <summary>Password to authorize. Set to empty if authorization is not needed.</summary>
-		WString				password;
-		/// <summary>HTTP method, like "GET", "POST", "PUT", "DELETE", etc.</summary>
-		WString				method;
-		/// <summary>Cookie. Set to empty if cookie is not needed.</summary>
-		WString				cookie;
-		/// <summary>Request body. This is a byte array.</summary>
-		BodyBuffer			body;
-		/// <summary>Content type, like "text/xml".</summary>
-		WString				contentType;
-		/// <summary>Accept type list, elements like "text/xml".</summary>
-		StringList			acceptTypes;
-		/// <summary>A dictionary to contain extra headers.</summary>
-		HeaderMap			extraHeaders;
-
-		/// <summary>Create an empty request.</summary>
-		HttpRequest() = default;
-
-		/// <summary>Set <see cref="server"/>, <see cref="port"/>, <see cref="query"/> and <see cref="secure"/> fields for you using an URL.</summary>
-		/// <returns>Returns true if this operation succeeded.</returns>
-		/// <param name="inputQuery">The URL.</param>
-		bool				SetHost(const WString& inputQuery);
-
-		/// <summary>Fill the text body in UTF-8.</summary>
-		/// <param name="bodyString">The text to fill.</param>
-		void				SetBodyUtf8(const WString& bodyString);
-	};
-	
-	/// <summary>A type representing an http response.</summary>
-	class HttpResponse
-	{
-		typedef collections::Array<char>		BodyBuffer;
-	public:
-		/// <summary>Status code, like 200.</summary>
-		vint				statusCode = 0;
-		/// <summary>Response body. This is a byte array.</summary>
-		BodyBuffer			body;
-		/// <summary>Returned cookie from the server.</summary>
-		WString				cookie;
-
-		HttpResponse() = default;
-
-		/// <summary>Get the text body, encoding is assumed to be UTF-8.</summary>
-		/// <returns>The response body as text.</returns>
-		WString				GetBodyUtf8();
-	};
-
-	/// <summary>Send an http request and receive a response.</summary>
-	/// <returns>Returns true if this operation succeeded, even when the server returns 404.</returns>
-	/// <param name="request">The request to send.</param>
-	/// <param name="response">Returns the response.</param>
-	/// <remarks>
-	/// <p>
-	/// This function will block the calling thread until the respons is returned.
-	/// </p>
-	/// <p>
-	/// This function is only available in Windows.
-	/// </p>
-	/// </remarks>
-	/// <example><![CDATA[
-	/// int main()
-	/// {
-	///     HttpRequest request;
-	///     HttpResponse response;
-	///     request.SetHost(L"http://www.msftncsi.com/ncsi.txt");
-	///     HttpQuery(request, response);
-	///     Console::WriteLine(L"Status:" + itow(response.statusCode));
-	///     Console::WriteLine(L"Body:" + response.GetBodyUtf8());
-	/// }
-	/// ]]></example>
-	extern bool				HttpQuery(const HttpRequest& request, HttpResponse& response);
-
-	/// <summary>Encode a text as part of the url. This function can be used to create arguments in an URL.</summary>
-	/// <returns>The encoded text.</returns>
-	/// <param name="query">The text to encode.</param>
-	/// <remarks>
-	/// <p>
-	/// When a character is not a digit or a letter,
-	/// it is first encoded to UTF-8,
-	/// then each byte is written as "%" with two hex digits.
-	/// </p>
-	/// <p>
-	/// This function is only available in Windows.
-	/// </p>
-	///</remarks>
-	extern WString			UrlEncodeQuery(const WString& query);
-}
-
-#endif
-
-#endif
-
-
-/***********************************************************************
 .\LOCALE.H
 ***********************************************************************/
 /***********************************************************************
@@ -149,6 +18,10 @@ Licensed under https://github.com/vczh-libraries/License
 
 namespace vl
 {
+/***********************************************************************
+Locale
+***********************************************************************/
+
 	/// <summary>Locale awared operations. Macro "INVLOC" is a shortcut to get a invariant locale.</summary>
 	/// <remarks>
 	/// <p>
@@ -275,7 +148,7 @@ namespace vl
 		/// <param name="month">Month, begins from 1 as January.</param>
 		WString						GetLongMonthName(vint month)const;
 		
-#ifdef VCZH_MSVC
+#if defined VCZH_MSVC
 		/// <summary>Convert characters to the full width.</summary>
 		/// <returns>The converted string.</returns>
 		/// <param name="str">The string to convert.</param>
@@ -315,7 +188,7 @@ namespace vl
 		/// <param name="str">The string to convert.</param>
 		WString						ToLinguisticUpper(const WString& str)const;
 
-#ifdef VCZH_MSVC
+#if defined VCZH_MSVC
 		/// <summary>Convert characters to Simplified Chinese.</summary>
 		/// <returns>The converted string.</returns>
 		/// <param name="str">The string to convert.</param>
@@ -340,7 +213,7 @@ namespace vl
 			None=0,
 			/// <summary>Ignore case using the file system rule.</summary>
 			IgnoreCase=1,
-#ifdef VCZH_MSVC
+#if defined VCZH_MSVC
 			/// <summary>Ignore case using the linguistic rule. This value is only available in Windows.</summary>
 			IgnoreCaseLinguistic=2,
 			/// <summary>Ignore the difference between between hiragana and katakana characters. This value is only available in Windows.</summary>
@@ -405,6 +278,95 @@ namespace vl
 	};
 
 #define INVLOC vl::Locale::Invariant()
+
+/***********************************************************************
+ILocaleImpl
+***********************************************************************/
+
+	/// <summary>Platform-specific locale implementation interface.</summary>
+	class ILocaleImpl : public virtual feature_injection::IFeatureImpl
+	{
+	public:
+		virtual Locale							Invariant() const = 0;
+		virtual Locale							SystemDefault() const = 0;
+		virtual Locale							UserDefault() const = 0;
+		virtual void							Enumerate(collections::List<Locale>& locales) const = 0;
+
+		virtual void							GetShortDateFormats(const WString& localeName, collections::List<WString>& formats) const = 0;
+		virtual void							GetLongDateFormats(const WString& localeName, collections::List<WString>& formats) const = 0;
+		virtual void							GetYearMonthDateFormats(const WString& localeName, collections::List<WString>& formats) const = 0;
+		virtual void							GetLongTimeFormats(const WString& localeName, collections::List<WString>& formats) const = 0;
+		virtual void							GetShortTimeFormats(const WString& localeName, collections::List<WString>& formats) const = 0;
+
+		virtual WString							FormatDate(const WString& localeName, const WString& format, DateTime date) const = 0;
+		virtual WString							FormatTime(const WString& localeName, const WString& format, DateTime time) const = 0;
+		virtual WString							FormatNumber(const WString& localeName, const WString& number) const = 0;
+		virtual WString							FormatCurrency(const WString& localeName, const WString& currency) const = 0;
+
+		virtual WString							GetShortDayOfWeekName(const WString& localeName, vint dayOfWeek) const = 0;
+		virtual WString							GetLongDayOfWeekName(const WString& localeName, vint dayOfWeek) const = 0;
+		virtual WString							GetShortMonthName(const WString& localeName, vint month) const = 0;
+		virtual WString							GetLongMonthName(const WString& localeName, vint month) const = 0;
+
+		virtual WString							ToLower(const WString& localeName, const WString& str) const = 0;
+		virtual WString							ToUpper(const WString& localeName, const WString& str) const = 0;
+		virtual WString							ToLinguisticLower(const WString& localeName, const WString& str) const = 0;
+		virtual WString							ToLinguisticUpper(const WString& localeName, const WString& str) const = 0;
+
+		virtual vint							Compare(const WString& localeName, const WString& s1, const WString& s2, Locale::Normalization normalization) const = 0;
+		virtual vint							CompareOrdinal(const WString& s1, const WString& s2) const = 0;
+		virtual vint							CompareOrdinalIgnoreCase(const WString& s1, const WString& s2) const = 0;
+		virtual collections::Pair<vint, vint>	FindFirst(const WString& localeName, const WString& text, const WString& find, Locale::Normalization normalization) const = 0;
+		virtual collections::Pair<vint, vint>	FindLast(const WString& localeName, const WString& text, const WString& find, Locale::Normalization normalization) const = 0;
+		virtual bool							StartsWith(const WString& localeName, const WString& text, const WString& find, Locale::Normalization normalization) const = 0;
+		virtual bool							EndsWith(const WString& localeName, const WString& text, const WString& find, Locale::Normalization normalization) const = 0;
+	};
+	
+	extern void									InjectLocaleImpl(ILocaleImpl* impl);
+	extern void									EjectLocaleImpl(ILocaleImpl* impl);
+
+/***********************************************************************
+EnUsLocaleImpl
+***********************************************************************/
+
+	/// <summary>A platform independent implementation that only supports en-US.</summary>
+	class EnUsLocaleImpl : public feature_injection::FeatureImpl<ILocaleImpl>
+	{
+	public:
+		Locale									Invariant() const override;
+		Locale									SystemDefault() const override;
+		Locale									UserDefault() const override;
+		void									Enumerate(collections::List<Locale>& locales) const override;
+
+		void									GetShortDateFormats(const WString& localeName, collections::List<WString>& formats) const override;
+		void									GetLongDateFormats(const WString& localeName, collections::List<WString>& formats) const override;
+		void									GetYearMonthDateFormats(const WString& localeName, collections::List<WString>& formats) const override;
+		void									GetLongTimeFormats(const WString& localeName, collections::List<WString>& formats) const override;
+		void									GetShortTimeFormats(const WString& localeName, collections::List<WString>& formats) const override;
+
+		WString									FormatDate(const WString& localeName, const WString& format, DateTime date) const override;
+		WString									FormatTime(const WString& localeName, const WString& format, DateTime time) const override;
+		WString									FormatNumber(const WString& localeName, const WString& number) const override;
+		WString									FormatCurrency(const WString& localeName, const WString& currency) const override;
+
+		WString									GetShortDayOfWeekName(const WString& localeName, vint dayOfWeek) const override;
+		WString									GetLongDayOfWeekName(const WString& localeName, vint dayOfWeek) const override;
+		WString									GetShortMonthName(const WString& localeName, vint month) const override;
+		WString									GetLongMonthName(const WString& localeName, vint month) const override;
+
+		WString									ToLower(const WString& localeName, const WString& str) const override;
+		WString									ToUpper(const WString& localeName, const WString& str) const override;
+		WString									ToLinguisticLower(const WString& localeName, const WString& str) const override;
+		WString									ToLinguisticUpper(const WString& localeName, const WString& str) const override;
+
+		vint									Compare(const WString& localeName, const WString& s1, const WString& s2, Locale::Normalization normalization) const override;
+		vint									CompareOrdinal(const WString& s1, const WString& s2) const override;
+		vint									CompareOrdinalIgnoreCase(const WString& s1, const WString& s2) const override;
+		collections::Pair<vint, vint>			FindFirst(const WString& localeName, const WString& text, const WString& find, Locale::Normalization normalization) const override;
+		collections::Pair<vint, vint>			FindLast(const WString& localeName, const WString& text, const WString& find, Locale::Normalization normalization) const override;
+		bool									StartsWith(const WString& localeName, const WString& text, const WString& find, Locale::Normalization normalization) const override;
+		bool									EndsWith(const WString& localeName, const WString& text, const WString& find, Locale::Normalization normalization) const override;
+	};
 }
 
 #endif
@@ -493,7 +455,7 @@ Kernel Mode Objects
 		/// <param name="abandoned">Returns true if the waiting is canceled by an abandoned object. An abandoned object is caused by it's owner thread existing without releasing it.</param>
 		/// <remarks>This function is only available in Windows.</remarks>
 		static vint									WaitAnyForTime(WaitableObject** objects, vint count, vint ms, bool* abandoned);
-#elif defined VCZH_GCC
+#elif defined VCZH_GCC || defined VCZH_WASM
 		virtual bool								Wait() = 0;
 #endif
 	};
@@ -549,7 +511,7 @@ Kernel Mode Objects
 		/// <summary>Start the thread.</summary>
 		/// <returns>Returns true if this operation succeeded.</returns>
 		bool										Start();
-#if defined VCZH_GCC
+#if defined VCZH_GCC || defined VCZH_WASM
 		bool										Wait();
 #endif
 		/// <summary>Stop the thread.</summary>
@@ -558,7 +520,7 @@ Kernel Mode Objects
 		/// <summary>Get the state of the thread.</summary>
 		/// <returns>The state of the thread.</returns>
 		ThreadState									GetState();
-#ifdef VCZH_MSVC
+#if defined VCZH_MSVC
 		void										SetCPU(vint index);
 #endif
 	};
@@ -589,7 +551,7 @@ Kernel Mode Objects
 		/// </summary>
 		/// <returns>Returns true if this operation succeeded.</returns>
 		bool										Release();
-#ifdef VCZH_GCC
+#if defined VCZH_GCC || defined VCZH_WASM
 		bool										Wait();
 #endif
 	};
@@ -622,7 +584,7 @@ Kernel Mode Objects
 		/// <returns>Returns true if this operation succeeded.</returns>
 		/// <param name="count">The amout to release.</param>
 		vint										Release(vint count);
-#ifdef VCZH_GCC
+#if defined VCZH_GCC || defined VCZH_WASM
 		bool										Wait();
 #endif
 	};
@@ -658,8 +620,12 @@ Kernel Mode Objects
 		/// <summary>Unsignal the event.</summary>
 		/// <returns>Returns true if this operation succeeded.</returns>
 		bool										Unsignal();
-#ifdef VCZH_GCC
+#if defined VCZH_GCC || defined VCZH_WASM
 		bool										Wait();
+		/// <summary>Wait for this event to signal for a period of time.</summary>
+		/// <returns>Returns true if the event is signaled. Returns false if this operation failed, including time out.</returns>
+		/// <param name="ms">Time in milliseconds.</param>
+		bool										WaitForTime(vint ms);
 #endif
 	};
 
@@ -693,7 +659,7 @@ Thread Pool
 			Queue(Func<void()>(proc));
 		}
 
-#ifdef VCZH_GCC
+#if defined VCZH_GCC || defined VCZH_WASM
 		static bool									Stop(bool discardPendingTasks);
 #endif
 	};
@@ -826,13 +792,12 @@ Kernel Mode Objects in Process
 		/// <returns>Returns true if this operation succeeded.</returns>
 		/// <param name="cs">The critical section.</param>
 		bool										SleepWith(CriticalSection& cs);
-#ifdef VCZH_MSVC
 		/// <summary>Bind a conditional variable with a owned critical section and release it for a period of time. When the function returns, the condition variable is activated or it is time out, and the current thread owned the critical section again.</summary>
 		/// <returns>Returns true if this operation succeeded.</returns>
 		/// <param name="cs">The critical section.</param>
 		/// <param name="ms">Time in milliseconds.</param>
-		/// <remarks>This function is only available in Windows.</remarks>
 		bool										SleepWithForTime(CriticalSection& cs, vint ms);
+#if defined VCZH_MSVC
 		/// <summary>Bind a conditional variable with a owned reader lock and release it. When the function returns, the condition variable is activated, and the current thread owned the reader lock again.</summary>
 		/// <returns>Returns true if this operation succeeded.</returns>
 		/// <param name="lock">The reader lock.</param>
@@ -865,8 +830,6 @@ Kernel Mode Objects in Process
 /***********************************************************************
 User Mode Objects
 ***********************************************************************/
-
-	typedef long LockedInt;
 	
 	/// <summary>
 	/// Spin lock. It is similar to mutex, but it does not occupy resource in the system.
@@ -881,12 +844,12 @@ User Mode Objects
 	class SpinLock : public Object
 	{
 	protected:
-		volatile LockedInt							token;
+		atomic_vint									token = 0;
 	public:
 		NOT_COPYABLE(SpinLock);
 		/// <summary>Create a spin lock.</summary>
-		SpinLock();
-		~SpinLock();
+		SpinLock() = default;
+		~SpinLock() = default;
 		
 		/// <summary>Try enter a spin lock. This function will return immediately.</summary>
 		/// <returns>Returns true if the current thread owned the spin lock.</returns>
@@ -1148,7 +1111,3375 @@ RepeatingTaskExecutor
 			}
 		}
 	};
+
+/***********************************************************************
+TaskQueue
+***********************************************************************/
+
+	/// <summary>A single-threaded blocking task queue.</summary>
+	class TaskQueue : public Object
+	{
+	private:
+		SpinLock								lockTasks;
+		Semaphore								semaphoreTasks;
+		collections::List<Func<void()>>			tasks;
+		bool									exitTaskQueued = false;
+
+	public:
+		TaskQueue();
+		~TaskQueue();
+
+		/// <summary>Queue a task to be executed by <see cref="RunTaskQueue"/>.</summary>
+		/// <param name="task">The task to execute.</param>
+		void									QueueTask(Func<void()> task);
+		/// <summary>Request <see cref="RunTaskQueue"/> to return after all queued tasks are executed.</summary>
+		void									QueueExitTask();
+		/// <summary>Run queued tasks in the current thread until <see cref="QueueExitTask"/> is called.</summary>
+		void									RunTaskQueue();
+	};
 }
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\CHANNEL.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+  IChannel<T>
+
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_CHANNEL
+#define VCZH_INTERPROCESS_CHANNEL
+
+
+namespace vl::inter_process
+{
+	constexpr const wchar_t* ErrorChannel = L"!Error";
+	constexpr const wchar_t* SystemChannel = L"!System";
+
+/***********************************************************************
+IGuiRemoteProtocolChannel<T>
+***********************************************************************/
+
+	/// <summary>
+	/// Callbacks for channel events.
+	/// </summary>
+	/// <typeparam name="TPackage">The type of the package.</typeparam>
+	template<typename TPackage>
+	class IChannelReader : public virtual Interface
+	{
+	public:
+		/// <summary>
+		/// Called when the channel receives a message.
+		/// </summary>
+		/// <param name="senderClientId">The sender client id.</param>
+		/// <param name="package">The message.</param>
+		virtual void							OnRead(vint senderClientId, const TPackage& package) = 0;
+	};
+
+	/// <summary>
+	/// Represents a channel.
+	/// One server to client connection can host multiple channels, but each channel might only cover part of clients.
+	/// Channels are distinguished by their names.
+	/// Channel name cannot contain "!", channel name starting with "!" is reserved for system channels.
+	/// There will be no system channel representations, the channel name is used as a symbol between the server and clients for system events.
+	/// </summary>
+	/// <typeparam name="TPackage">The type of the package.</typeparam>
+	template<typename TPackage>
+	class IChannel : public virtual Interface
+	{
+	public:
+		/// <summary>
+		/// Get the channel name.
+		/// </summary>
+		/// <returns>The name of the channel.</returns>
+		virtual const WString&					GetChannelName() = 0;
+
+		/// <summary>
+		/// Get the installed reader.
+		/// </summary>
+		/// <returns>The installed reader.</returns>
+		virtual IChannelReader<TPackage>*		GetReader() = 0;
+
+		/// <summary>
+		/// Install a reader.
+		/// If multiple text messages are received before installing the reader, all messages will be pushed to the reader right away.
+		/// This function can only be called once to install a reader, and no uninstallation is supported.
+		/// </summary>
+		/// <param name="receiver">The reader to install.</param>
+		virtual void							Initialize(IChannelReader<TPackage>* receiver) = 0;
+
+		/// <summary>
+		/// Queue a message to send to a client using the same channel.
+		/// If the remote client doesn't have this channel, the message will be discarded.
+		/// </summary>
+		/// <param name="receiverClientId">The receiver client id.</param>
+		/// <param name="package">The message to send.</param>
+		virtual void							SendToClient(vint receiverClientId, const TPackage& package) = 0;
+
+		/// <summary>
+		/// Queue a message to broadcast to all other clients using the same channel.
+		/// If the remote client doesn't have this channel, the message will be discarded.
+		/// </summary>
+		/// <param name="package">The message to broadcast.</param>
+		virtual void							BroadcastFromClient(const TPackage& package) = 0;
+
+		/// <summary>
+		/// Queue a message to broadcast to all other clients using the same channel.
+		/// If the remote client doesn't have this channel, the message will be discarded.
+		/// </summary>
+		/// <param name="package">The message to broadcast.</param>
+		/// <param name="blockedReceivers">The receiver client ids blocked from this broadcast.</param>
+		virtual void							BroadcastFromClient(const TPackage& package, const collections::List<vint>& blockedReceivers) = 0;
+
+		/// <summary>
+		/// Send all queued messages.
+		/// </summary>
+		/// <param name="disconnected">Indicates whether the client is disconnected.</param>
+		virtual void							BatchWrite(bool& disconnected) = 0;
+	};
+
+/***********************************************************************
+IChannelClient
+***********************************************************************/
+
+	enum class ClientStatus
+	{
+		Ready,				// Created, ready to call WaitForServer.
+		WaitingForServer,	// WaitForServer is called, blocked.
+		Connected,			// Connection established.
+		Disconnected,		// Connection lost.
+	};
+
+	enum class WaitForClientResult
+	{
+		Accept,
+		Reject,
+	};
+
+	/// <summary>
+	/// Represents a client.
+	/// </summary>
+	/// <typeparam name="TPackage">The type of the package.</typeparam>
+	template<typename TPackage>
+	class IChannelClient : public virtual Interface
+	{
+	public:
+		using ChannelMap = collections::Dictionary<WString, IChannel<TPackage>*>;
+		using ChannelNameList = typename ChannelMap::KeyContainer;
+
+		/// <summary>
+		/// Called when the connection is established.
+		/// This function will be implemented by the user, the default implementation will be empty.
+		/// </summary>
+		/// <param name="clientId">The client id.</param>
+		virtual void						OnConnected(vint clientId) = 0;
+
+		/// <summary>
+		/// Called when the connection is disconnected.
+		/// This function will be implemented by the user, the default implementation will be empty.
+		/// </summary>
+		virtual void						OnDisconnected() = 0;
+
+		/// <summary>
+		/// Called when a fetal error occurs.
+		/// When any fetal error is broadcasted from server side, all clients is supposed to receive such error if possible, and the server will shut down.
+		/// This function will be implemented by the user, the default implementation will be empty.
+		/// </summary>
+		/// <param name="errorMessage">The error message.</param>
+		virtual void						OnReadError(const WString& errorMessage) = 0;
+
+		/// <summary>
+		/// Called when a local error occurs.
+		/// This function will be implemented by the user, the default implementation will be empty.
+		/// </summary>
+		/// <param name="errorMessage">The error message.</param>
+		/// <param name="fatal">Indicates whether the error is not recoverable. The client will automatically stop after a fatal error.</param>
+		virtual void						OnLocalError(const WString& errorMessage, bool fatal) = 0;
+
+		/// <summary>
+		/// Called when available connection names are required.
+		/// This function will be implemented by the user, the default implementation will be empty.
+		/// </summary>
+		/// <returns>All connection names.</returns>
+		virtual const ChannelNameList&		OnGetChannelNames() = 0;
+
+		/// <summary>
+		/// Get all channels.
+		/// The returned map should be empty before the connection is established.
+		/// Channel objects will be created by the client implementation.
+		/// </summary>
+		/// <returns>All connections.</returns>
+		virtual const ChannelMap&			GetChannels() = 0;
+
+		/// <summary>
+		/// Get the client id.
+		/// It should return -1 before the connection is established.
+		/// The client id will be assigned by the server.
+		/// </summary>
+		/// <returns>The client id.</returns>
+		virtual vint						GetClientId() = 0;
+
+		/// <summary>
+		/// Block until the connection to the server is established.
+		/// Calling it more than once, after disconnecting or on a local client returns immediately.
+		/// </summary>
+		virtual void						WaitForServer() = 0;
+
+		/// <summary>
+		/// Returns the status of the client.
+		/// </summary>
+		/// <returns>The status of the client.</returns>
+		virtual ClientStatus				GetStatus() = 0;
+
+		/// <summary>
+		/// Raise a fatal error.
+		/// </summary>
+		/// <param name="errorMessage">The fatal error.</param>
+		virtual void						BroadcastError(const WString& errorMessage) = 0;
+	};
+
+/***********************************************************************
+IChannelServer
+***********************************************************************/
+
+	/// <summary>
+	/// Represents a server.
+	/// </summary>
+	/// <typeparam name="TPackage">The type of the package.</typeparam>
+	template<typename TPackage>
+	class IChannelServer : public virtual Interface
+	{
+	public:
+		using ClientChannelMap = collections::Group<vint, WString>;
+		using ClientIdList = typename ClientChannelMap::KeyContainer;
+
+		/// <summary>
+		/// Called when any client connects to the server.
+		/// The server begins listening to client connections after <see cref="Start"/> is called.
+		/// No callback happens before <see cref="Start"/> or after <see cref="Stop"/> is called.
+		/// This function will be implemented by the user, the default implementation will return true.
+		/// </summary>
+		/// <param name="clientId">The client id.</param>
+		/// <param name="availableChannels">The available channels.</param>
+		/// <param name="localClient">The local client. It is null for network clients.</param>
+		/// <returns>Returns "Reject" to disconnect the client immediatelly.</returns>
+		virtual WaitForClientResult			OnClientConnected(vint clientId, const typename IChannelClient<TPackage>::ChannelNameList& availableChannels, Ptr<IChannelClient<TPackage>> localClient) = 0;
+
+		/// <summary>
+		/// Start the server.
+		/// </summary>
+		virtual void						Start() = 0;
+
+		/// <summary>
+		/// Called when any client disconnects from the server.
+		/// This function will be implemented by the user, the default implementation will be empty.
+		/// </summary>
+		/// <param name="clientId">The client id.</param>
+		virtual void						OnClientDisconnected(vint clientId) = 0;
+
+		/// <summary>
+		/// Connect a local client to the server.
+		/// Connections between such client to the server will be local and established immediately, no network transmission is involved.
+		/// </summary>
+		/// <param name="localClient">The local client.</param>
+		/// <returns>Returns the assigned client id, or -1 if the connection is already established, no matter local or remote.</returns>
+		virtual vint						ConnectLocalClient(Ptr<IChannelClient<TPackage>> localClient) = 0;
+
+		/// <summary>
+		/// Test if a client id is local.
+		/// </summary>
+		/// <param name="clientId">The client id.</param>
+		/// <returns>Returns true if the client id is local, false otherwise.</returns>
+		virtual bool						IsLocalClient(vint clientId) = 0;
+
+		/// <summary>
+		/// Disconnect a client.
+		/// </summary>
+		/// <param name="clientId">The client id.</param>
+		/// <returns>Returns true if the client is successfully disconnected, false otherwise.</returns>
+		virtual bool						DisconnectClient(vint clientId) = 0;
+
+		/// <summary>
+		/// Get all client ids.
+		/// </summary>
+		/// <returns>All client ids.</returns>
+		virtual const ClientIdList&			GetClientIds() = 0;
+
+		/// <summary>
+		/// Get all client channels.
+		/// Channel objects will be created by the server implementation.
+		/// </summary>
+		/// <returns>Returns a map from client id to available channels.</returns>
+		virtual const ClientChannelMap&		GetClientChannels() = 0;
+
+		/// <summary>
+		/// Raise a fatal error.
+		/// </summary>
+		/// <param name="errorMessage">The fatal error.</param>
+		virtual void						BroadcastError(const WString& errorMessage) = 0;
+
+		/// <summary>
+		/// Stop the server.
+		/// </summary>
+		virtual void						Stop() = 0;
+
+		/// <summary>
+		/// Test if the server has stopped.
+		/// A stopped server could be caused by either calling <see cref="Stop"/> or the underlying mechanism failing.
+		/// </summary>
+		/// <returns>Returns true if the server has stopped, false otherwise.</returns>
+		virtual bool						IsStopped() = 0;
+	};
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\CHANNELSERIALIZER.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+  IChannel<T>
+
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_CHANNELSERIALIZER
+#define VCZH_INTERPROCESS_CHANNELSERIALIZER
+
+
+namespace vl::inter_process
+{
+
+/***********************************************************************
+Serialization, it requires a serialization contract that defines as below
+
+struct
+{
+	using SourceType = ...;
+	using DestType = ...;
+	using ContextType = ... (use std::nullptr_t if no context is needed);
+
+	static void Serialize(const ContextType&, const SourceType& source, DestType& dest)
+	{
+		// Convert from source to dest with the context.
+	}
+
+	static void Deserialize(const ContextType&, const DestType& dest, SourceType& source)
+	{
+		// Convert from dest to source with the context.
+	}
+};
+***********************************************************************/
+
+	template<typename TFrom, typename TTo>
+	class ChannelTransformerBase
+		: public Object
+		, public virtual IChannel<TTo>
+		, protected virtual IChannelReader<TFrom>
+	{
+	protected:
+		IChannel<TTo>*						channel = nullptr;
+		IChannelReader<TFrom>*				reader = nullptr;
+	public:
+		ChannelTransformerBase(IChannel<TTo>* _channel)
+			: channel(_channel)
+		{
+		}
+
+		const WString& GetChannelName() override
+		{
+			return channel->GetChannelName();
+		}
+
+		IChannelReader<TTo>* GetReader() override
+		{
+			return reader;
+		}
+
+		void Initialize(IChannelReader<TFrom>* _reader) override
+		{
+			reader = _reader;
+			channel->Initialize(this);
+		}
+
+		void BatchWrite(bool& disconnected) override
+		{
+			channel->BatchWrite(disconnected);
+		}
+	};
+
+	template<typename TSerialization>
+	class ChannelSerializer
+		: public ChannelTransformerBase<typename TSerialization::SourceType, typename TSerialization::DestType>
+	{
+	protected:
+		typename TSerialization::ContextType					context;
+
+		void OnRead(vint senderClientId, const typename TSerialization::DestType& package) override
+		{
+			typename TSerialization::SourceType deserialized;
+			TSerialization::Deserialize(context, package, deserialized);
+			this->reader->OnRead(senderClientId, deserialized);
+		}
+
+	public:
+		ChannelSerializer(IChannel<typename TSerialization::DestType>* _channel, const typename TSerialization::ContextType& _context = {})
+			: ChannelTransformerBase<typename TSerialization::SourceType, typename TSerialization::DestType>(_channel)
+			, context(_context)
+		{
+		}
+
+		void SendToClient(vint receiverClientId, const typename TSerialization::SourceType& package) override
+		{
+			typename TSerialization::DestType serialized;
+			TSerialization::Serialize(context, package, serialized);
+			this->channel->SendToClient(receiverClientId, serialized);
+		}
+
+		void BroadcastFromClient(const typename TSerialization::SourceType& package) override
+		{
+			collections::List<vint> blockedReceivers;
+			BroadcastFromClient(package, blockedReceivers);
+		}
+
+		void BroadcastFromClient(const typename TSerialization::SourceType& package, const collections::List<vint>& blockedReceivers) override
+		{
+			typename TSerialization::DestType serialized;
+			TSerialization::Serialize(context, package, serialized);
+			this->channel->BroadcastFromClient(serialized, blockedReceivers);
+		}
+	};
+
+/***********************************************************************
+String Transformation
+***********************************************************************/
+
+	template<typename TFrom, typename TTo>
+	struct UtfStringSerializer
+	{
+		using SourceType = ObjectString<TFrom>;
+		using DestType = ObjectString<TTo>;
+		using ContextType = std::nullptr_t;
+
+		static void Serialize(const ContextType&, const SourceType& source, DestType& dest)
+		{
+			ConvertUtfString(source, dest);
+		}
+
+		static void Deserialize(const ContextType&, const DestType& dest, SourceType& source)
+		{
+			ConvertUtfString(dest, source);
+		}
+	};
+
+	template<typename TFrom, typename TTo>
+	using UtfStringChannelSerializer = ChannelSerializer<UtfStringSerializer<TFrom, TTo>>;
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\NETWORKPROTOCOL.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_NETWORKPROTOCOL
+#define VCZH_INTERPROCESS_NETWORKPROTOCOL
+
+
+namespace vl::inter_process
+{
+/***********************************************************************
+INetworkProtocolServer
+***********************************************************************/
+
+	class INetworkProtocolConnection;
+
+	/// <summary>
+	/// Callbacks for network protocol events.
+	/// Functions could be run in any thread, implementation should be thread-safe.
+	/// </summary>
+	class INetworkProtocolCallback : public virtual Interface
+	{
+	public:
+		/// <summary>
+		/// Called when a text message is received from the other side of the connection.
+		/// </summary>
+		/// <param name="str">The text message.</param>
+		virtual void							OnReadString(const WString& str) = 0;
+
+		/// <summary>
+		/// Called when an error message is received from the other side of the connection.
+		/// </summary>
+		/// <param name="error">The error message.</param>
+		virtual void							OnReadError(const WString&) {}
+
+		/// <summary>
+		/// Called when a local transport error occurs.
+		/// </summary>
+		/// <param name="error">The error message.</param>
+		/// <param name="fatal">Indicates whether the connection should be disconnected after this callback.</param>
+		/// <returns>Returns true to promote a nonfatal error to fatal. A fatal error cannot be demoted.</returns>
+		virtual bool							OnLocalError(const WString&, bool) { return false; }
+
+		/// <summary>
+		/// Called when the connection becomes available.
+		/// This function might not be called if <see cref="INetworkProtocolConnection::InstallCallback"/> is called after the connection is already established.
+		/// </summary>
+		virtual void							OnConnected() {}
+
+		/// <summary>
+		/// Called when the connection is lost.
+		/// </summary>
+		virtual void							OnDisconnected() {}
+
+		/// <summary>
+		/// Called when the callback is installed to a connection.
+		/// </summary>
+		/// <param name="connection"></param>
+		virtual void							OnInstalled(INetworkProtocolConnection* connection) = 0;
+	};
+
+	/// <summary>
+	/// Represents a network connection, exchanging messages between the server and one client.
+	/// After the connection is lost, it won't reconnect, if the server supports reconnection, a new connection object will be created.
+	/// One connection object can be obtained from the client.
+	/// Multiple connection objects can be obtained from the server.
+	/// </summary>
+	class INetworkProtocolConnection : public virtual Interface
+	{
+	public:
+		/// <summary>
+		/// Install the callback to the connection.
+		/// Uninstall by passing nullptr.
+		/// Only one callback can be installed at a time.
+		/// </summary>
+		/// <param name="callback">The callback object.</param>
+		virtual void							InstallCallback(INetworkProtocolCallback* callback) = 0;
+
+		/// <summary>
+		/// Start receiving messages asynchronously until the connection is lost.
+		/// Some implementation may start receiving messages immediately after the connection is established.
+		/// So there is no guarantee that messages should not arrive before calling this function.
+		/// </summary>
+		virtual void							BeginReadingLoopUnsafe() = 0;
+
+		/// <summary>
+		/// Send a text message to the other side of the connection.
+		/// </summary>
+		/// <param name="str">The text message to send.</param>
+		virtual void							SendString(const WString& str) = 0;
+
+		/// <summary>
+		/// Stop the connection.
+		/// </summary>
+		virtual void							Stop() = 0;
+	};
+
+	/// <summary>
+	/// Represents a client.
+	/// </summary>
+	class INetworkProtocolClient : public virtual Interface
+	{
+	public:
+		/// <summary>
+		/// Obtain the connection to the server.
+		/// An valid object will always be returned, but before <see cref="WaitForServer"/>  finishing, using the connection is undefined behavior.
+		/// </summary>
+		/// <returns>The connection to the server.</returns>
+		virtual INetworkProtocolConnection*		GetConnection() = 0;
+
+		/// <summary>
+		/// Block until the connection to the server is established.
+		/// </summary>
+		virtual void							WaitForServer() = 0;
+
+		/// <summary>
+		/// Returns the status of the client.
+		/// </summary>
+		/// <returns>The status of the client.</returns>
+		virtual ClientStatus					GetStatus() = 0;
+	};
+
+	/// <summary>
+	/// Represents a server.
+	/// </summary>
+	class INetworkProtocolServer : public virtual Interface
+	{
+	public:
+		/// <summary>
+		/// Called when a client connects to the server.
+		/// The server begins listening to client connections after <see cref="Start"/> is called.
+		/// No callback happens before <see cref="Start"/> or after <see cref="Stop"/> is called.
+		/// </summary>
+		/// <param name="connection">A connection object representing the client.</param>
+		/// <returns>Returns "Reject" to disconnect the client immediatelly.</returns>
+		virtual WaitForClientResult				OnClientConnected(Ptr<INetworkProtocolConnection> connection) = 0;
+
+		/// <summary>
+		/// Start the server.
+		/// </summary>
+		virtual void							Start() = 0;
+
+		/// <summary>
+		/// Stop the server.
+		/// </summary>
+		virtual void							Stop() = 0;
+
+		/// <summary>
+		/// Test if the server has stopped.
+		/// A stopped server could be caused by either calling <see cref="Stop"/> or the underlying mechanism failing.
+		/// </summary>
+		/// <returns>Returns true if the server has stopped, false otherwise.</returns>
+		virtual bool							IsStopped() = 0;
+	};
+
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\ASYNCSOCKET\ASYNCSOCKET.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+  IAsyncSocket(Server|Client)
+
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_ASYNCSOCKET
+#define VCZH_INTERPROCESS_ASYNCSOCKET
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+#include <concepts>
+#include <type_traits>
+#include <utility>
+
+namespace vl::inter_process::async_tcp_socket
+{
+	/// <summary>A retained buffer for one asynchronous write.</summary>
+	class AsyncSocketBuffer : public Object
+	{
+	public:
+		collections::Array<vuint8_t>			data;
+	};
+
+	class IAsyncSocketConnection;
+
+	/// <summary>Callbacks for an asynchronous byte-stream connection.</summary>
+	class IAsyncSocketCallback : public virtual Interface
+	{
+	public:
+		/// <summary>Called with one positive borrowed read block.</summary>
+		virtual void							OnRead(const vuint8_t* buffer, vint size) = 0;
+		/// <summary>Called after the complete retained write buffer has been sent.</summary>
+		virtual void							OnWriteCompleted(Ptr<AsyncSocketBuffer> buffer);
+		/// <summary>Called when an asynchronous operation fails.</summary>
+		virtual void							OnError(const WString& error, bool fatal);
+		/// <summary>Called for the client connection after it is established.</summary>
+		virtual void							OnConnected();
+		/// <summary>Called exactly once when the connection stops.</summary>
+		virtual void							OnDisconnected();
+		/// <summary>Called synchronously when this callback is installed.</summary>
+		virtual void							OnInstalled(IAsyncSocketConnection* connection) = 0;
+	};
+
+	/// <summary>An ordered, full-duplex asynchronous byte stream.</summary>
+	class IAsyncSocketConnection : public virtual Interface
+	{
+	public:
+		virtual void							InstallCallback(IAsyncSocketCallback* callback) = 0;
+		virtual void							BeginReadingLoopUnsafe() = 0;
+		virtual void							WriteAsync(Ptr<AsyncSocketBuffer> buffer) = 0;
+		virtual void							Stop() = 0;
+	};
+
+	/// <summary>An asynchronous TCP client for the local machine.</summary>
+	class IAsyncSocketClient : public virtual Interface
+	{
+	public:
+		/// <summary>Returns the immutable loopback port selected during construction.</summary>
+		virtual vint							GetPort() = 0;
+		/// <summary>Creates a fresh independent client with the same transport configuration and endpoint.</summary>
+		/// <remarks>The returned client must be distinct, report the same port, and have <see cref="ClientStatus::Ready"/> status. This operation remains available while the source client is active or stopped.</remarks>
+		virtual Ptr<IAsyncSocketClient>			CreateSameEndpointClient() = 0;
+		virtual IAsyncSocketConnection*			GetConnection() = 0;
+		virtual void							WaitForServer() = 0;
+		virtual ClientStatus					GetStatus() = 0;
+	};
+
+	enum class AsyncSocketServerStartFailure
+	{
+		AddressInUse,
+		Other,
+	};
+
+	class AsyncSocketServerStartException : public Exception
+	{
+	private:
+		AsyncSocketServerStartFailure		failure;
+
+	public:
+		AsyncSocketServerStartException(AsyncSocketServerStartFailure _failure, const WString& message);
+
+		AsyncSocketServerStartFailure		GetFailure()const;
+	};
+
+	/// <summary>Callbacks for accepting asynchronous TCP connections.</summary>
+	class IAsyncSocketServerCallback : public virtual Interface
+	{
+	public:
+		virtual WaitForClientResult			OnClientConnected(Ptr<IAsyncSocketConnection> connection) = 0;
+		/// <summary>Called exactly once when a started listener stops unexpectedly.</summary>
+		virtual void							OnServerStopped();
+	};
+
+	/// <summary>An asynchronous TCP server for the local machine.</summary>
+	class IAsyncSocketServer : public virtual Interface
+	{
+	public:
+		/// <summary>Returns the immutable loopback port selected during construction.</summary>
+		virtual vint							GetPort() = 0;
+		virtual void							Start(IAsyncSocketServerCallback* callback) = 0;
+		virtual void							Stop() = 0;
+		virtual bool							IsStopped() = 0;
+	};
+
+	// This policy is intentionally platform-neutral. Each failed attempt creates
+	// a fresh native socket and is followed by an asynchronous millisecond delay.
+	constexpr vint AsyncSocketClientRetryCount = 50;
+	constexpr vint AsyncSocketClientRetryDelay = 100;
+
+	extern Ptr<IAsyncSocketServer>			CreateDefaultAsyncSocketServer(vint port);
+	extern Ptr<IAsyncSocketClient>			CreateDefaultAsyncSocketClient(vint port);
+
+/***********************************************************************
+NetworkProtocolConnection
+***********************************************************************/
+
+	class NetworkProtocolCallbackDomain : public Object
+	{
+	public:
+		struct CallbackFrame;
+
+	private:
+		static thread_local CallbackFrame*	currentCallbackFrame;
+		CriticalSection					lockState;
+		ConditionVariable				cvState;
+		vint							activeCallbacks = 0;
+
+	public:
+		struct CallbackFrame
+		{
+			Ptr<NetworkProtocolCallbackDomain>	domain;
+			CallbackFrame*					previous = nullptr;
+
+			CallbackFrame(Ptr<NetworkProtocolCallbackDomain> _domain);
+			~CallbackFrame();
+		};
+
+		vint							CurrentCallbackDepth();
+		void							WaitForCallbacks(vint callbackDepth);
+	};
+
+	class NetworkProtocolConnectionLifecycle : public Object
+	{
+	public:
+		IAsyncSocketConnection*				socketConnection = nullptr;
+		Ptr<NetworkProtocolCallbackDomain>	callbackDomain;
+		Ptr<Object>						retainedAdapter;
+
+		CriticalSection					lockState;
+		ConditionVariable				cvState;
+		INetworkProtocolCallback*			callback = nullptr;
+		bool							callbackInstalling = false;
+		vint							activeCallbacks = 0;
+		vint							activeSocketCallbacks = 0;
+		vint							activeSocketCalls = 0;
+		bool							stopStarted = false;
+		bool							stopFinished = false;
+		bool							terminal = false;
+		bool							disconnectedNotified = false;
+		bool							disconnectDelivering = false;
+		bool							disconnectFinished = false;
+		collections::List<Ptr<AsyncSocketBuffer>>
+										queuedWrites;
+		bool							writePending = false;
+		bool							drainWrites = false;
+
+		CriticalSection					lockParser;
+		vuint8_t						lengthBytes[sizeof(vint32_t)] = {};
+		vint							lengthBytesReceived = 0;
+		vint32_t						expectedCharacters = -1;
+		collections::Array<wchar_t>		characterBuffer;
+		vint							characterBytesReceived = 0;
+		bool							parserFailed = false;
+
+		void							TakeRetainedAdapterIfDrained(Ptr<Object>& releasing);
+	};
+
+	/// <summary>Adapts an asynchronous byte stream to framed network-protocol strings.</summary>
+	class NetworkProtocolConnection
+		: public Object
+		, public virtual INetworkProtocolConnection
+		, public virtual IAsyncSocketCallback
+	{
+	private:
+		using Lifecycle = NetworkProtocolConnectionLifecycle;
+		static constexpr vint				WriteDrainTimeout = 1000;
+
+		struct CallbackFrame;
+		struct SocketCallbackFrame;
+		static thread_local CallbackFrame*	currentCallbackFrame;
+		static thread_local SocketCallbackFrame*
+										currentSocketCallbackFrame;
+
+		struct CallbackFrame
+		{
+			Ptr<Lifecycle>					state;
+			CallbackFrame*					previous = nullptr;
+			NetworkProtocolCallbackDomain::CallbackFrame
+										domainFrame;
+
+			CallbackFrame(Ptr<Lifecycle> _state);
+			~CallbackFrame();
+		};
+
+		struct SocketCallbackFrame
+		{
+			Ptr<Lifecycle>					state;
+			SocketCallbackFrame*				previous = nullptr;
+
+			SocketCallbackFrame(Ptr<Lifecycle> _state);
+			~SocketCallbackFrame();
+		};
+
+		Ptr<Lifecycle>					lifecycle;
+
+		static vint						CurrentCallbackDepth(Ptr<Lifecycle> state);
+		static vint						CurrentSocketCallbackDepth(Ptr<Lifecycle> state);
+		static void						FinishSocketCall(Ptr<Lifecycle> state);
+
+		template<typename TCallback>
+		static void						InvokeProtocolCallback(Ptr<Lifecycle> state, bool allowTerminal, TCallback&& invoke);
+
+		static void						SubmitWrite(Ptr<Lifecycle> state, IAsyncSocketConnection* connection, Ptr<AsyncSocketBuffer> buffer);
+		static void						NotifyProtocolDisconnected(Ptr<Lifecycle> state);
+		static void						DetachSocketCallback(Ptr<Lifecycle> state, IAsyncSocketConnection* connection);
+		static void						StopConnection(Ptr<Lifecycle> state, Ptr<Object> retainedAdapter = nullptr);
+		static void						ReportFatalError(Ptr<Lifecycle> state, const WString& error);
+
+		template<typename TAsyncSocketServer>
+		friend class NetworkProtocolServer;
+
+		template<typename TAsyncSocketClient>
+		friend class NetworkProtocolClient;
+
+		void							StopWithRetainedAdapter(Ptr<NetworkProtocolConnection> retainedAdapter);
+
+	public:
+		explicit NetworkProtocolConnection(IAsyncSocketConnection* connection, Ptr<NetworkProtocolCallbackDomain> callbackDomain = nullptr);
+		~NetworkProtocolConnection();
+
+		void							InstallCallback(INetworkProtocolCallback* value) override;
+		void							BeginReadingLoopUnsafe() override;
+		void							SendString(const WString& str) override;
+		void							Stop() override;
+		void							OnRead(const vuint8_t* buffer, vint size) override;
+		void							OnWriteCompleted(Ptr<AsyncSocketBuffer> buffer) override;
+		void							OnError(const WString& error, bool fatal) override;
+		void							OnConnected() override;
+		void							OnDisconnected() override;
+		void							OnInstalled(IAsyncSocketConnection* connection) override;
+	};
+
+/***********************************************************************
+NetworkProtocolServer
+***********************************************************************/
+
+	template<typename TAsyncSocketServer>
+	class NetworkProtocolServer
+		: public Object
+		, public virtual INetworkProtocolServer
+	{
+		static_assert(std::derived_from<TAsyncSocketServer, IAsyncSocketServer>);
+		static_assert(!std::is_final_v<TAsyncSocketServer>);
+
+	private:
+		class Lifecycle : public Object
+		{
+		public:
+			NetworkProtocolServer*				owner = nullptr;
+			Ptr<NetworkProtocolCallbackDomain>	callbackDomain = Ptr(new NetworkProtocolCallbackDomain);
+			CriticalSection					lockState;
+			ConditionVariable				cvState;
+			collections::List<Ptr<NetworkProtocolConnection>>
+										connections;
+			bool							stopStarted = false;
+			bool							stopFinished = false;
+			bool							nativeStopCalling = false;
+
+			Lifecycle(NetworkProtocolServer* _owner)
+				: owner(_owner)
+			{
+			}
+		};
+
+		class SocketServerBridge
+			: public TAsyncSocketServer
+			, public virtual IAsyncSocketServerCallback
+		{
+		private:
+			Ptr<Lifecycle>					lifecycle;
+			CriticalSection					lockSelf;
+			Ptr<SocketServerBridge>			selfReference;
+
+		public:
+			template<typename... TArgs>
+			SocketServerBridge(Ptr<Lifecycle> _lifecycle, TArgs&&... args)
+				: TAsyncSocketServer(std::forward<TArgs>(args)...)
+				, lifecycle(_lifecycle)
+			{
+			}
+
+			void InitializeSelf(Ptr<SocketServerBridge> self)
+			{
+				CS_LOCK(lockSelf)
+				{
+					selfReference = self;
+				}
+			}
+
+			void ReleaseSelfReference()
+			{
+				CS_LOCK(lockSelf)
+				{
+					selfReference = nullptr;
+				}
+			}
+
+			WaitForClientResult OnClientConnected(Ptr<IAsyncSocketConnection> connection) override
+			{
+				Ptr<SocketServerBridge> self;
+				CS_LOCK(lockSelf)
+				{
+					self = selfReference;
+				}
+				auto state = lifecycle;
+				NetworkProtocolServer* owner = nullptr;
+				CS_LOCK(state->lockState)
+				{
+					owner = state->owner;
+				}
+				return owner ? owner->OnSocketClientConnected(connection) : WaitForClientResult::Reject;
+			}
+		};
+
+		Ptr<Lifecycle>					lifecycle;
+		Ptr<SocketServerBridge>			asyncSocketServer;
+
+		static void StopConnections(Ptr<Lifecycle> state, bool retainAdapters = false)
+		{
+			collections::List<Ptr<NetworkProtocolConnection>> stoppingConnections;
+			CS_LOCK(state->lockState)
+			{
+				for (auto connection : state->connections)
+				{
+					stoppingConnections.Add(connection);
+				}
+			}
+			for (auto connection : stoppingConnections)
+			{
+				if (retainAdapters)
+				{
+					connection->StopWithRetainedAdapter(connection);
+				}
+				else
+				{
+					connection->Stop();
+				}
+			}
+		}
+
+		static void QueueDeferredStop(Ptr<Lifecycle> state, Ptr<SocketServerBridge> nativeServer)
+		{
+			ThreadPoolLite::QueueLambda([state, nativeServer]()
+			{
+				state->lockState.Enter();
+				while (!state->stopFinished || state->nativeStopCalling)
+				{
+					state->cvState.SleepWith(state->lockState);
+				}
+				state->nativeStopCalling = true;
+				state->lockState.Leave();
+
+				try
+				{
+					nativeServer->Stop();
+					StopConnections(state);
+					state->callbackDomain->WaitForCallbacks(0);
+				}
+				catch (...)
+				{
+				}
+
+				CS_LOCK(state->lockState)
+				{
+					state->nativeStopCalling = false;
+					state->cvState.WakeAllPendings();
+				}
+				nativeServer->ReleaseSelfReference();
+			});
+		}
+
+		WaitForClientResult OnSocketClientConnected(Ptr<IAsyncSocketConnection> connection)
+		{
+			auto state = lifecycle;
+			NetworkProtocolCallbackDomain::CallbackFrame callbackFrame(state->callbackDomain);
+			bool acceptCallback = false;
+			CS_LOCK(state->lockState)
+			{
+				acceptCallback = !state->stopStarted;
+			}
+			if (!acceptCallback)
+			{
+				return WaitForClientResult::Reject;
+			}
+
+			auto protocolConnection = Ptr(new NetworkProtocolConnection(connection.Obj(), state->callbackDomain));
+			CS_LOCK(state->lockState)
+			{
+				state->connections.Add(protocolConnection);
+				acceptCallback = !state->stopStarted;
+			}
+			return acceptCallback ? OnClientConnected(protocolConnection) : WaitForClientResult::Reject;
+		}
+
+	public:
+		template<typename... TArgs>
+		NetworkProtocolServer(TArgs&&... args)
+			: lifecycle(Ptr(new Lifecycle(this)))
+			, asyncSocketServer(new SocketServerBridge(lifecycle, std::forward<TArgs>(args)...))
+		{
+			asyncSocketServer->InitializeSelf(asyncSocketServer);
+		}
+
+		~NetworkProtocolServer()
+		{
+			Stop();
+			auto state = lifecycle;
+			StopConnections(state, true);
+			CS_LOCK(state->lockState)
+			{
+				state->owner = nullptr;
+				state->connections.Clear();
+			}
+		}
+
+		virtual WaitForClientResult OnClientConnected(Ptr<INetworkProtocolConnection>) override
+		{
+			return WaitForClientResult::Accept;
+		}
+
+		void Start() override
+		{
+			asyncSocketServer->Start(asyncSocketServer.Obj());
+		}
+
+		void Stop() override
+		{
+			auto state = lifecycle;
+			auto nativeServer = asyncSocketServer;
+			auto callbackDepth = state->callbackDomain->CurrentCallbackDepth();
+			bool firstStop = false;
+			bool nestedFollower = false;
+			bool deferFinalization = false;
+			state->lockState.Enter();
+			if (!state->stopStarted)
+			{
+				state->stopStarted = true;
+				state->nativeStopCalling = true;
+				firstStop = true;
+			}
+			else if (callbackDepth > 0)
+			{
+				nestedFollower = true;
+			}
+			else
+			{
+				while (!state->stopFinished || state->nativeStopCalling)
+				{
+					state->cvState.SleepWith(state->lockState);
+				}
+				state->nativeStopCalling = true;
+			}
+			state->lockState.Leave();
+			if (nestedFollower)
+			{
+				StopConnections(state);
+				return;
+			}
+
+			try
+			{
+				nativeServer->Stop();
+				StopConnections(state);
+				state->callbackDomain->WaitForCallbacks(firstStop ? callbackDepth : 0);
+				deferFinalization = firstStop && callbackDepth > 0;
+				if (!deferFinalization)
+				{
+					nativeServer->ReleaseSelfReference();
+				}
+			}
+			catch (...)
+			{
+				if (!firstStop || callbackDepth == 0)
+				{
+					nativeServer->ReleaseSelfReference();
+				}
+				CS_LOCK(state->lockState)
+				{
+					state->nativeStopCalling = false;
+					if (firstStop)
+					{
+						state->stopFinished = true;
+					}
+					state->cvState.WakeAllPendings();
+				}
+				throw;
+			}
+
+			CS_LOCK(state->lockState)
+			{
+				state->nativeStopCalling = false;
+				if (firstStop)
+				{
+					state->stopFinished = true;
+				}
+				state->cvState.WakeAllPendings();
+			}
+			if (deferFinalization)
+			{
+				QueueDeferredStop(state, nativeServer);
+			}
+		}
+
+		bool IsStopped() override
+		{
+			return asyncSocketServer->IsStopped();
+		}
+	};
+
+/***********************************************************************
+NetworkProtocolClient
+***********************************************************************/
+
+	template<typename TAsyncSocketClient>
+	class NetworkProtocolClient
+		: public Object
+		, public virtual INetworkProtocolClient
+	{
+		static_assert(std::derived_from<TAsyncSocketClient, IAsyncSocketClient>);
+
+	private:
+		Ptr<TAsyncSocketClient>				asyncSocketClient;
+		Ptr<NetworkProtocolConnection>		connection;
+
+		static void QueueDeferredRelease(Ptr<TAsyncSocketClient> nativeClient)
+		{
+			ThreadPoolLite::QueueLambda([nativeClient]()
+			{
+				nativeClient->GetConnection()->Stop();
+			});
+		}
+
+	public:
+		template<typename... TArgs>
+		NetworkProtocolClient(TArgs&&... args)
+			: asyncSocketClient(new TAsyncSocketClient(std::forward<TArgs>(args)...))
+			, connection(new NetworkProtocolConnection(asyncSocketClient->GetConnection()))
+		{
+		}
+
+		~NetworkProtocolClient()
+		{
+			auto state = connection->lifecycle;
+			auto deferFinalization =
+				NetworkProtocolConnection::CurrentCallbackDepth(state) > 0 ||
+				NetworkProtocolConnection::CurrentSocketCallbackDepth(state) > 0;
+			auto nativeClient = asyncSocketClient;
+			connection->StopWithRetainedAdapter(connection);
+			if (deferFinalization)
+			{
+				QueueDeferredRelease(nativeClient);
+			}
+		}
+
+		INetworkProtocolConnection* GetConnection() override
+		{
+			return connection.Obj();
+		}
+
+		void WaitForServer() override
+		{
+			asyncSocketClient->WaitForServer();
+		}
+
+		ClientStatus GetStatus() override
+		{
+			return asyncSocketClient->GetStatus();
+		}
+	};
+}
+
+#endif
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\CHANNELIMPLS\CHANNELIMPL.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_CHANNELIMPLS_CHANNELIMPL
+#define VCZH_INTERPROCESS_CHANNELIMPLS_CHANNELIMPL
+
+
+namespace vl::inter_process
+{
+/***********************************************************************
+NetworkProtocolChannel
+***********************************************************************/
+
+	template<typename TPackage, typename TSerialization>
+	class NetworkProtocolChannel : public Object, public virtual IChannel<TPackage>
+	{
+		static_assert(std::is_same_v<typename TSerialization::SourceType, collections::List<TPackage>>);
+		static_assert(std::is_same_v<typename TSerialization::DestType, WString>);
+	protected:
+		using PackageList = typename TSerialization::SourceType;
+		using ClientIdList = collections::List<vint>;
+		using ChannelMap = collections::Dictionary<WString, IChannel<TPackage>*>;
+		using ChannelNameList = typename ChannelMap::KeyContainer;
+
+		struct UnreadPackage
+		{
+			vint								senderClientId = -1;
+			TPackage							package;
+		};
+
+		struct QueuedPackage
+		{
+			Nullable<vint>						receiverClientId;
+			ClientIdList						blockedReceivers;
+			TPackage							package;
+		};
+
+		WString									channelName;
+
+		// covers reader and unreadPackages
+		SpinLock								lockUnreadPackages;
+		IChannelReader<TPackage>*				reader = nullptr;
+		collections::List<UnreadPackage>		unreadPackages;
+
+		// covers queuedPackages
+		SpinLock								lockQueuedPackages;
+		collections::List<QueuedPackage>		queuedPackages;
+
+		virtual void ValidatePackage(Nullable<vint> receiverClientId, const ClientIdList& blockedReceivers) = 0;
+		virtual bool WriteBatch(Nullable<vint> receiverClientId, const ClientIdList& blockedReceivers, const PackageList& batch) = 0;
+
+	public:
+		NetworkProtocolChannel(const WString& _channelName)
+			: channelName(_channelName)
+		{
+		}
+
+		static void ValidateChannelName(const WString& channelName)
+		{
+			CHECK_ERROR(channelName.Length() > 0, L"Channel name should not be empty.");
+			CHECK_ERROR(wcschr(channelName.Buffer(), L'!') == nullptr, L"Channel name should not contain !.");
+		}
+
+		static WString JoinChannelNames(const ChannelNameList& channelNames)
+		{
+			WString joinedNames;
+			for (auto&& channelName : channelNames)
+			{
+				if (joinedNames.Length() > 0)
+				{
+					joinedNames += L"!";
+				}
+				joinedNames += channelName;
+			}
+			return joinedNames;
+		}
+
+		static void SplitChannelNames(const WString& joinedNames, ChannelMap& availableChannels)
+		{
+			const wchar_t* reading = joinedNames.Buffer();
+			while (true)
+			{
+				auto delimiter = wcschr(reading, L'!');
+				auto channelName =
+					delimiter
+					? WString::CopyFrom(reading, (vint)(delimiter - reading))
+					: WString::CopyFrom(reading, (vint)wcslen(reading));
+				if (channelName.Length() > 0)
+				{
+					ValidateChannelName(channelName);
+					availableChannels.Add(channelName, nullptr);
+				}
+
+				if (!delimiter)
+				{
+					break;
+				}
+				reading = delimiter + 1;
+			}
+		}
+
+		const WString& GetChannelName() override
+		{
+			return channelName;
+		}
+
+		IChannelReader<TPackage>* GetReader() override
+		{
+			return reader;
+		}
+
+		void Initialize(IChannelReader<TPackage>* _reader) override
+		{
+			CHECK_ERROR(_reader, L"NetworkProtocolChannel::Initialize needs a valid reader.");
+			SPIN_LOCK(lockUnreadPackages)
+			{
+				CHECK_ERROR(!reader, L"NetworkProtocolChannel::Initialize cannot be called more than once.");
+				reader = _reader;
+				for (auto&& package : unreadPackages)
+				{
+					reader->OnRead(package.senderClientId, package.package);
+				}
+				unreadPackages.Clear();
+			}
+		}
+
+		void SendToClient(vint receiverClientId, const TPackage& package) override
+		{
+			ClientIdList blockedReceivers;
+			ValidatePackage(receiverClientId, blockedReceivers);
+			QueuePackage(receiverClientId, blockedReceivers, package);
+		}
+
+		void BroadcastFromClient(const TPackage& package) override
+		{
+			ClientIdList blockedReceivers;
+			BroadcastFromClient(package, blockedReceivers);
+		}
+
+		void BroadcastFromClient(const TPackage& package, const ClientIdList& blockedReceivers) override
+		{
+			ValidatePackage({}, blockedReceivers);
+			QueuePackage({}, blockedReceivers, package);
+		}
+
+		void BatchWrite(bool& disconnected) override
+		{
+			collections::List<QueuedPackage> packages;
+			SPIN_LOCK(lockQueuedPackages)
+			{
+				packages = std::move(queuedPackages);
+			}
+
+			while (packages.Count() > 0)
+			{
+				PackageList batch;
+				auto receiverClientId = packages[0].receiverClientId;
+				ClientIdList blockedReceivers = std::move(packages[0].blockedReceivers);
+				batch.Add(packages[0].package);
+				packages.RemoveAt(0);
+				for (vint i = 0; i < packages.Count();)
+				{
+					auto&& package = packages[i];
+					if (package.receiverClientId == receiverClientId && ClientIdsEqual(package.blockedReceivers, blockedReceivers))
+					{
+						batch.Add(package.package);
+						packages.RemoveAt(i);
+					}
+					else
+					{
+						i++;
+					}
+				}
+
+				if (WriteBatch(receiverClientId, blockedReceivers, batch))
+				{
+					disconnected = true;
+					return;
+				}
+			}
+		}
+
+		void ReadBatch(vint senderClientId, const PackageList& batch)
+		{
+			SPIN_LOCK(lockUnreadPackages)
+			{
+				if (!reader)
+				{
+					for (auto&& package : batch)
+					{
+						UnreadPackage unreadPackage;
+						unreadPackage.senderClientId = senderClientId;
+						unreadPackage.package = package;
+						unreadPackages.Add(unreadPackage);
+					}
+					return;
+				}
+			}
+			for (auto&& package : batch)
+			{
+				reader->OnRead(senderClientId, package);
+			}
+		}
+
+	protected:
+		static bool ClientIdsEqual(const ClientIdList& a, const ClientIdList& b)
+		{
+			if (a.Count() != b.Count())
+			{
+				return false;
+			}
+			for (vint i = 0; i < a.Count(); i++)
+			{
+				if (a[i] != b[i])
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
+		void QueuePackage(Nullable<vint> receiverClientId, const ClientIdList& blockedReceivers, const TPackage& package)
+		{
+			SPIN_LOCK(lockQueuedPackages)
+			{
+				QueuedPackage queuedPackage;
+				queuedPackage.receiverClientId = receiverClientId;
+				for (auto blockedReceiver : blockedReceivers)
+				{
+					queuedPackage.blockedReceivers.Add(blockedReceiver);
+				}
+				queuedPackage.package = package;
+				queuedPackages.Add(std::move(queuedPackage));
+			}
+		}
+	};
+
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\CHANNELIMPLS\CHANNELPACKAGE.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_CHANNELIMPLS_CHANNELPACKAGE
+#define VCZH_INTERPROCESS_CHANNELIMPLS_CHANNELPACKAGE
+
+
+namespace vl::inter_process
+{
+	struct NetworkPackage
+	{
+		using ClientIdList = collections::List<vint>;
+
+		Nullable<vint>				clientId;
+		Nullable<ClientIdList>		extraClientIds;
+		WString						channelName;
+		WString						messageBody;
+
+		static NetworkPackage Create(Nullable<vint> _clientId, const WString& _channelName, const WString& _messageBody);
+		static NetworkPackage Create(Nullable<vint> _clientId, const ClientIdList& _extraClientIds, const WString& _channelName, const WString& _messageBody);
+		static WString ToString(const NetworkPackage& package);
+		static void Parse(const WString& str, NetworkPackage& package);
+	};
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\CHANNELIMPLS\CHANNELCLIENTBASEIMPL.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_CHANNELIMPLS_CHANNELCLIENTBASEIMPL
+#define VCZH_INTERPROCESS_CHANNELIMPLS_CHANNELCLIENTBASEIMPL
+
+
+namespace vl::inter_process
+{
+/***********************************************************************
+NetworkProtocolChannelClientBase
+***********************************************************************/
+
+	template<typename TPackage, typename TSerialization>
+	class NetworkProtocolChannelClientBase : public Object, public virtual IChannelClient<TPackage>
+	{
+	protected:
+		using BaseChannel = NetworkProtocolChannel<TPackage, TSerialization>;
+		using PackageList = typename TSerialization::SourceType;
+		using ChannelMap = typename IChannelClient<TPackage>::ChannelMap;
+		using ChannelNameList = typename IChannelClient<TPackage>::ChannelNameList;
+
+	private:
+		class Channel : public NetworkProtocolChannel<TPackage, TSerialization>
+		{
+			using Base = NetworkProtocolChannel<TPackage, TSerialization>;
+			using ClientIdList = typename Base::ClientIdList;
+
+		private:
+			NetworkProtocolChannelClientBase*				client = nullptr;
+
+			void ValidatePackage(Nullable<vint> receiverClientId, const ClientIdList& blockedReceivers) override
+			{
+				auto currentClientId = client->GetClientId();
+				CHECK_ERROR(currentClientId != -1, L"NetworkProtocolChannelClient::Channel needs to be connected before sending.");
+				if (receiverClientId)
+				{
+					CHECK_ERROR(receiverClientId.Value() > 0, L"NetworkProtocolChannelClient::Channel needs a valid receiverClientId.");
+					CHECK_ERROR(blockedReceivers.Count() == 0, L"NetworkProtocolChannelClient::Channel cannot block receivers when sending to a specified client.");
+				}
+				for (auto blockedReceiver : blockedReceivers)
+				{
+					CHECK_ERROR(blockedReceiver > 0 && blockedReceiver != currentClientId, L"NetworkProtocolChannelClient::Channel needs valid blockedReceivers.");
+				}
+			}
+
+			bool WriteBatch(Nullable<vint> receiverClientId, const ClientIdList& blockedReceivers, const PackageList& batch) override
+			{
+				return client->SendBatch(receiverClientId, blockedReceivers, this->channelName, batch);
+			}
+
+		public:
+			Channel(NetworkProtocolChannelClientBase* _client, const WString& _channelName)
+				: Base(_channelName)
+				, client(_client)
+			{
+			}
+		};
+
+	protected:
+		typename TSerialization::ContextType						context;
+
+		// covers status, connectedNotified and clientId
+		SpinLock													lockStatus;
+		ClientStatus												status = ClientStatus::Ready;
+		bool														connectedNotified = false;
+		vint														clientId = -1;
+
+	private:
+		ChannelMap													channels;
+		collections::Dictionary<WString, Ptr<Channel>>				ownedChannels;
+
+	protected:
+		Channel* FindChannel(const WString& channelName)
+		{
+			vint index = ownedChannels.Keys().IndexOf(channelName);
+			return index == -1 ? nullptr : ownedChannels.Values()[index].Obj();
+		}
+
+		void SetStatus(ClientStatus newStatus)
+		{
+			SPIN_LOCK(lockStatus)
+			{
+				status = newStatus;
+			}
+		}
+
+		void SetConnected(vint assignedClientId)
+		{
+			SPIN_LOCK(lockStatus)
+			{
+				clientId = assignedClientId;
+				status = ClientStatus::Connected;
+			}
+		}
+
+		bool TrySetConnected(vint assignedClientId)
+		{
+			bool connected = false;
+			SPIN_LOCK(lockStatus)
+			{
+				if (status == ClientStatus::Ready || status == ClientStatus::WaitingForServer)
+				{
+					clientId = assignedClientId;
+					status = ClientStatus::Connected;
+					connected = true;
+				}
+			}
+			return connected;
+		}
+
+		virtual bool SendBatch(Nullable<vint> receiverClientId, const NetworkPackage::ClientIdList& blockedReceivers, const WString& channelName, const PackageList& batch) = 0;
+
+		void ReceiveBatch(const WString& channelName, vint senderClientId, const WString& messageBody)
+		{
+			auto channel = FindChannel(channelName);
+			if (channel)
+			{
+				PackageList batch;
+				TSerialization::Deserialize(context, messageBody, batch);
+				channel->ReadBatch(senderClientId, batch);
+			}
+		}
+
+		virtual void NotifyDisconnected()
+		{
+			bool shouldNotify = false;
+			SPIN_LOCK(lockStatus)
+			{
+				if (status != ClientStatus::Disconnected)
+				{
+					status = ClientStatus::Disconnected;
+					shouldNotify = true;
+				}
+			}
+			if (shouldNotify)
+			{
+				OnDisconnected();
+			}
+		}
+
+		void NotifyConnected()
+		{
+			bool shouldNotify = false;
+			vint connectedClientId = -1;
+			SPIN_LOCK(lockStatus)
+			{
+				if (status == ClientStatus::Connected && !connectedNotified)
+				{
+					connectedNotified = true;
+					connectedClientId = clientId;
+					shouldNotify = true;
+				}
+			}
+			if (shouldNotify)
+			{
+				OnConnected(connectedClientId);
+			}
+		}
+
+	public:
+		void OnConnected(vint clientId) override
+		{
+			// default implementation does nothing
+		}
+
+		void OnDisconnected() override
+		{
+			// default implementation does nothing
+		}
+
+		void OnReadError(const WString& errorMessage) override
+		{
+			// default implementation does nothing
+		}
+
+		void OnLocalError(const WString& errorMessage, bool fatal) override
+		{
+			// default implementation does nothing
+		}
+
+	protected:
+		NetworkProtocolChannelClientBase(const typename TSerialization::ContextType& _context = {})
+			: context(_context)
+		{
+		}
+
+	private:
+		IChannel<TPackage>* CreateChannel(const WString& channelName)
+		{
+			BaseChannel::ValidateChannelName(channelName);
+			vint index = channels.Keys().IndexOf(channelName);
+			if (index != -1)
+			{
+				return channels.Values()[index];
+			}
+
+			auto channel = Ptr(new Channel(this, channelName));
+			ownedChannels.Add(channelName, channel);
+			channels.Add(channelName, channel.Obj());
+			return channel.Obj();
+		}
+
+	protected:
+		void EnsureChannels(const ChannelNameList& channelNames)
+		{
+			for (auto&& channelName : channelNames)
+			{
+				CreateChannel(channelName);
+			}
+		}
+
+	public:
+		const ChannelNameList& OnGetChannelNames() override
+		{
+			return channels.Keys();
+		}
+
+		const ChannelMap& GetChannels() override
+		{
+			EnsureChannels(OnGetChannelNames());
+			return channels;
+		}
+
+		vint GetClientId() override
+		{
+			vint result = -1;
+			SPIN_LOCK(lockStatus)
+			{
+				result = clientId;
+			}
+			return result;
+		}
+
+		ClientStatus GetStatus() override
+		{
+			ClientStatus result = ClientStatus::Disconnected;
+			SPIN_LOCK(lockStatus)
+			{
+				result = status;
+			}
+			return result;
+		}
+	};
+
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\CHANNELIMPLS\CHANNELCLIENTIMPL.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_CHANNELIMPLS_CHANNELCLIENTIMPL
+#define VCZH_INTERPROCESS_CHANNELIMPLS_CHANNELCLIENTIMPL
+
+
+namespace vl::inter_process
+{
+/***********************************************************************
+NetworkProtocolChannelClient
+***********************************************************************/
+
+	template<typename TPackage, typename TSerialization>
+	class NetworkProtocolChannelClient : public NetworkProtocolChannelClientBase<TPackage, TSerialization>
+	{
+	protected:
+		using Base = NetworkProtocolChannelClientBase<TPackage, TSerialization>;
+		using BaseChannel = typename Base::BaseChannel;
+		using PackageList = typename TSerialization::SourceType;
+
+		class Callback : public Object, public virtual INetworkProtocolCallback
+		{
+		private:
+			NetworkProtocolChannelClient*					client = nullptr;
+
+		public:
+			Callback(NetworkProtocolChannelClient* _client)
+				: client(_client)
+			{
+			}
+
+			void OnReadString(const WString& str) override
+			{
+				client->OnReadString(str);
+			}
+
+			void OnReadError(const WString& error) override
+			{
+				client->OnReadError(error);
+				client->NotifyDisconnected();
+			}
+
+			bool OnLocalError(const WString& error, bool fatal) override
+			{
+				fatal = fatal || client->GetClientId() > 0;
+				client->OnLocalError(error, fatal);
+				if (fatal)
+				{
+					client->NotifyDisconnected();
+				}
+				return fatal;
+			}
+
+			void OnConnected() override
+			{
+			}
+
+			void OnDisconnected() override
+			{
+				client->NotifyDisconnected();
+			}
+
+			void OnInstalled(INetworkProtocolConnection*) override
+			{
+			}
+		};
+
+	private:
+		EventObject													eventWaitForServer;
+		Ptr<Callback>												callback;
+		Ptr<INetworkProtocolClient>									npClient;
+		SpinLock													lockQueuedPackagesBeforeConnected;
+		collections::List<NetworkPackage>							queuedPackagesBeforeConnected;
+
+	protected:
+		bool SendBatch(Nullable<vint> receiverClientId, const NetworkPackage::ClientIdList& blockedReceivers, const WString& channelName, const PackageList& batch) override
+		{
+			if (this->GetStatus() != ClientStatus::Connected)
+			{
+				return true;
+			}
+
+			CHECK_ERROR(npClient, L"NetworkProtocolChannelClient::SendBatch needs an established network connection.");
+			WString messageBody;
+			TSerialization::Serialize(this->context, batch, messageBody);
+			npClient->GetConnection()->SendString(NetworkPackage::ToString(NetworkPackage::Create(std::move(receiverClientId), blockedReceivers, channelName, messageBody)));
+			return false;
+		}
+
+	private:
+		void OnReadChannelPackage(const NetworkPackage& package)
+		{
+			if (this->FindChannel(package.channelName))
+			{
+				CHECK_ERROR(package.clientId, L"NetworkProtocolChannelClient received a channel message without senderClientId.");
+				auto senderClientId = package.clientId.Value();
+				CHECK_ERROR(senderClientId > 0, L"NetworkProtocolChannelClient received an invalid senderClientId.");
+				this->ReceiveBatch(package.channelName, senderClientId, package.messageBody);
+			}
+		}
+
+		void OnReadString(const WString& str)
+		{
+			NetworkPackage package;
+			NetworkPackage::Parse(str, package);
+			if (package.channelName == ErrorChannel)
+			{
+				this->OnReadError(package.messageBody);
+				NotifyDisconnected();
+				return;
+			}
+			else if (package.channelName == WString::Empty)
+			{
+				CHECK_ERROR(package.clientId, L"NetworkProtocolChannelClient received an invalid connection response.");
+				CHECK_ERROR(package.clientId.Value() > 0, L"NetworkProtocolChannelClient received an invalid client id.");
+				this->SetConnected(package.clientId.Value());
+				this->NotifyConnected();
+				eventWaitForServer.Signal();
+				collections::List<NetworkPackage> packages;
+				SPIN_LOCK(lockQueuedPackagesBeforeConnected)
+				{
+					packages = std::move(queuedPackagesBeforeConnected);
+				}
+				for (auto&& queuedPackage : packages)
+				{
+					OnReadChannelPackage(queuedPackage);
+				}
+				return;
+			}
+
+			if (this->GetStatus() != ClientStatus::Connected)
+			{
+				SPIN_LOCK(lockQueuedPackagesBeforeConnected)
+				{
+					if (this->GetStatus() != ClientStatus::Connected)
+					{
+						queuedPackagesBeforeConnected.Add(std::move(package));
+						return;
+					}
+				}
+			}
+			OnReadChannelPackage(package);
+		}
+
+	protected:
+		void NotifyDisconnected() override
+		{
+			eventWaitForServer.Signal();
+			Base::NotifyDisconnected();
+		}
+
+	protected:
+		NetworkProtocolChannelClient(const typename TSerialization::ContextType& _context = {})
+			: Base(_context)
+		{
+			CHECK_ERROR(eventWaitForServer.CreateManualUnsignal(false), L"NetworkProtocolChannelClient initialization failed on eventWaitForServer.");
+		}
+
+	public:
+		NetworkProtocolChannelClient(
+			Ptr<INetworkProtocolClient> _npClient,
+			const typename TSerialization::ContextType& _context = {}
+		)
+			: Base(_context)
+		{
+			CHECK_ERROR(eventWaitForServer.CreateManualUnsignal(false), L"NetworkProtocolChannelClient initialization failed on eventWaitForServer.");
+			CHECK_ERROR(_npClient, L"NetworkProtocolChannelClient needs a valid INetworkProtocolClient.");
+			callback = Ptr(new Callback(this));
+			npClient = _npClient;
+			npClient->GetConnection()->InstallCallback(callback.Obj());
+		}
+
+		~NetworkProtocolChannelClient()
+		{
+			if (npClient && this->GetStatus() != ClientStatus::Disconnected)
+			{
+				npClient->GetConnection()->Stop();
+			}
+			npClient->GetConnection()->InstallCallback(nullptr);
+		}
+
+		void WaitForServer() override
+		{
+			auto currentStatus = this->GetStatus();
+			if (currentStatus == ClientStatus::Connected || currentStatus == ClientStatus::Disconnected)
+			{
+				this->NotifyConnected();
+				return;
+			}
+			if (currentStatus == ClientStatus::WaitingForServer)
+			{
+				eventWaitForServer.Wait();
+				this->NotifyConnected();
+				return;
+			}
+			CHECK_ERROR(currentStatus == ClientStatus::Ready, L"NetworkProtocolChannelClient::WaitForServer found an unexpected client status.");
+
+			this->SetStatus(ClientStatus::WaitingForServer);
+			npClient->WaitForServer();
+			if (npClient->GetStatus() != ClientStatus::Connected)
+			{
+				NotifyDisconnected();
+				return;
+			}
+
+			auto&& channelNames = this->OnGetChannelNames();
+			this->EnsureChannels(channelNames);
+			npClient->GetConnection()->SendString(NetworkPackage::ToString(NetworkPackage::Create({}, WString::Empty, BaseChannel::JoinChannelNames(channelNames))));
+			npClient->GetConnection()->BeginReadingLoopUnsafe();
+			eventWaitForServer.Wait();
+			this->NotifyConnected();
+		}
+
+		void BroadcastError(const WString& errorMessage) override
+		{
+			CHECK_ERROR(npClient, L"NetworkProtocolChannelClient::BroadcastError needs an established connection.");
+			npClient->GetConnection()->SendString(NetworkPackage::ToString(NetworkPackage::Create({}, WString::Unmanaged(ErrorChannel), errorMessage)));
+			NotifyDisconnected();
+		}
+	};
+
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\CHANNELIMPLS\LOCALCHANNELCLIENTIMPL.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_CHANNELIMPLS_LOCALCHANNELCLIENTIMPL
+#define VCZH_INTERPROCESS_CHANNELIMPLS_LOCALCHANNELCLIENTIMPL
+
+
+namespace vl::inter_process
+{
+/***********************************************************************
+NetworkProtocolLocalChannelClient
+***********************************************************************/
+
+	template<typename TPackage, typename TSerialization>
+	class INetworkProtocolLocalChannelServer : public virtual Interface
+	{
+	protected:
+		using PackageList = typename TSerialization::SourceType;
+
+	public:
+		virtual bool SendFromLocalClient(Nullable<vint> receiverClientId, const NetworkPackage::ClientIdList& blockedReceivers, vint senderClientId, const WString& channelName, const PackageList& batch) = 0;
+		virtual void BroadcastError(const WString& errorMessage) = 0;
+	};
+
+	template<typename TPackage, typename TSerialization, typename TServerBase>
+	class NetworkProtocolChannelServer;
+
+	template<typename TPackage, typename TSerialization>
+	class NetworkProtocolLocalChannelClient : public NetworkProtocolChannelClientBase<TPackage, TSerialization>
+	{
+		template<typename, typename, typename>
+		friend class NetworkProtocolChannelServer;
+
+	private:
+		using Base = NetworkProtocolChannelClientBase<TPackage, TSerialization>;
+		using PackageList = typename TSerialization::SourceType;
+
+		INetworkProtocolLocalChannelServer<TPackage, TSerialization>*	localServer = nullptr;
+
+		bool ConnectLocalServer(INetworkProtocolLocalChannelServer<TPackage, TSerialization>* server, vint assignedClientId)
+		{
+			CHECK_ERROR(server, L"NetworkProtocolLocalChannelClient::ConnectLocalServer needs a valid server.");
+			localServer = server;
+
+			bool connected = this->TrySetConnected(assignedClientId);
+			if (!connected)
+			{
+				localServer = nullptr;
+			}
+			return connected;
+		}
+
+		void NotifyLocalConnected()
+		{
+			this->NotifyConnected();
+		}
+
+	protected:
+		bool SendBatch(Nullable<vint> receiverClientId, const NetworkPackage::ClientIdList& blockedReceivers, const WString& channelName, const PackageList& batch) override
+		{
+			if (this->GetStatus() != ClientStatus::Connected)
+			{
+				return true;
+			}
+
+			if (localServer)
+			{
+				return localServer->SendFromLocalClient(receiverClientId, blockedReceivers, this->GetClientId(), channelName, batch);
+			}
+			return true;
+		}
+
+		void NotifyDisconnected() override
+		{
+			localServer = nullptr;
+			Base::NotifyDisconnected();
+		}
+
+	public:
+		NetworkProtocolLocalChannelClient(const typename TSerialization::ContextType& _context = {})
+			: Base(_context)
+		{
+		}
+
+		void WaitForServer() override
+		{
+		}
+
+		void BroadcastError(const WString& errorMessage) override
+		{
+			if (localServer)
+			{
+				localServer->BroadcastError(errorMessage);
+				return;
+			}
+			this->OnLocalError(errorMessage, true);
+			this->NotifyDisconnected();
+		}
+	};
+
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\CHANNELIMPLS\CHANNELSERVERIMPL.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_CHANNELIMPLS_CHANNELSERVERIMPL
+#define VCZH_INTERPROCESS_CHANNELIMPLS_CHANNELSERVERIMPL
+
+#include <exception>
+
+namespace vl::inter_process
+{
+/***********************************************************************
+NetworkProtocolChannelServer
+***********************************************************************/
+
+	template<typename TPackage, typename TSerialization, typename TServerBase>
+	class NetworkProtocolChannelServer
+		: public TServerBase
+		, public virtual IChannelServer<TPackage>
+		, public virtual INetworkProtocolLocalChannelServer<TPackage, TSerialization>
+	{
+		friend class NetworkProtocolLocalChannelClient<TPackage, TSerialization>;
+
+	private:
+		using BaseChannel = NetworkProtocolChannel<TPackage, TSerialization>;
+		using PackageList = typename TSerialization::SourceType;
+		using ChannelMap = typename IChannelClient<TPackage>::ChannelMap;
+		using ChannelNameList = typename IChannelClient<TPackage>::ChannelNameList;
+		using ClientChannelMap = typename IChannelServer<TPackage>::ClientChannelMap;
+		using ClientIdList = typename IChannelServer<TPackage>::ClientIdList;
+		using LocalChannelClient = NetworkProtocolLocalChannelClient<TPackage, TSerialization>;
+
+		class Connection : public Object, public virtual INetworkProtocolCallback
+		{
+		private:
+			NetworkProtocolChannelServer*					server = nullptr;
+
+		public:
+			Ptr<INetworkProtocolConnection>					connection;
+			vint											clientId = -1;
+			bool											accepted = false;
+			bool											readyForBroadcast = false;
+
+			Connection(NetworkProtocolChannelServer* _server)
+				: server(_server)
+			{
+			}
+
+			void OnReadString(const WString& str) override
+			{
+				server->OnNetworkReadString(this, str);
+			}
+
+			void OnReadError(const WString& error) override
+			{
+				server->OnNetworkReadError(error);
+			}
+
+			bool OnLocalError(const WString& error, bool fatal) override
+			{
+				// Before admission, let the raw transport apply its retry policy.
+				// Afterwards, a failed delivery makes the channel unreliable.
+				return fatal || accepted;
+			}
+
+			void OnConnected() override
+			{
+			}
+
+			void OnDisconnected() override
+			{
+				server->OnNetworkDisconnected(this);
+			}
+
+			void OnInstalled(INetworkProtocolConnection* _connection) override
+			{
+				CHECK_ERROR(connection.Obj() == _connection, L"NetworkProtocolChannelServer was installed on an unexpected connection.");
+			}
+		};
+
+		class StopBarrierGuard
+		{
+		private:
+			inline static thread_local StopBarrierGuard*		currentStopBarrierGuard = nullptr;
+			NetworkProtocolChannelServer*					server = nullptr;
+			StopBarrierGuard*								previousStopBarrierGuard = nullptr;
+			bool											deferStopCompletion = false;
+
+		public:
+			StopBarrierGuard(NetworkProtocolChannelServer* _server, bool _deferStopCompletion = false)
+				: server(_server)
+				, previousStopBarrierGuard(currentStopBarrierGuard)
+				, deferStopCompletion(_deferStopCompletion)
+			{
+				currentStopBarrierGuard = this;
+			}
+
+			~StopBarrierGuard() noexcept
+			{
+				currentStopBarrierGuard = previousStopBarrierGuard;
+				server->EndStopBarrier(deferStopCompletion);
+			}
+
+			static bool IsActiveFor(NetworkProtocolChannelServer* server)
+			{
+				for (auto guard = currentStopBarrierGuard; guard; guard = guard->previousStopBarrierGuard)
+				{
+					if (guard->server == server)
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+		};
+
+		class StopCompletionGuard
+		{
+		private:
+			inline static thread_local StopCompletionGuard*	currentStopCompletionGuard = nullptr;
+			NetworkProtocolChannelServer*					server = nullptr;
+			StopCompletionGuard*							previousStopCompletionGuard = nullptr;
+
+		public:
+			StopCompletionGuard(NetworkProtocolChannelServer* _server)
+				: server(_server)
+				, previousStopCompletionGuard(currentStopCompletionGuard)
+			{
+				currentStopCompletionGuard = this;
+			}
+
+			~StopCompletionGuard() noexcept
+			{
+				currentStopCompletionGuard = previousStopCompletionGuard;
+			}
+
+			static bool IsActiveFor(NetworkProtocolChannelServer* server)
+			{
+				for (auto guard = currentStopCompletionGuard; guard; guard = guard->previousStopCompletionGuard)
+				{
+					if (guard->server == server)
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+		};
+
+		typename TSerialization::ContextType							context;
+		// covers connections (including readyForBroadcast), localClients, localClientsAwaitingConnected, pendingConnections, clientChannels, nextClientId, activeStopBarriers, stopCompletionThread, started, broadcastingError, broadcastingErrorMessage, stopAfterBarriersDrained, stopCompleting, stopException and stopped
+		SpinLock														lockConnections;
+		collections::Dictionary<vint, Ptr<Connection>>					connections;
+		collections::Dictionary<vint, Ptr<LocalChannelClient>>			localClients;
+		collections::List<vint>											localClientsAwaitingConnected;
+		collections::List<Ptr<Connection>>								pendingConnections;
+		ClientChannelMap												clientChannels;
+		vint															nextClientId = 1;
+		vint															activeStopBarriers = 0;
+		EventObject														eventStopCompleted;
+		EventObject														eventStopCompletionThreadJoined;
+		Thread*															stopCompletionThread = nullptr;
+		bool															started = false;
+		bool															broadcastingError = false;
+		WString															broadcastingErrorMessage;
+		bool															stopAfterBarriersDrained = false;
+		bool															stopCompleting = false;
+		std::exception_ptr												stopException;
+		bool															stopped = false;
+
+		void InitializeBarriers()
+		{
+			CHECK_ERROR(eventStopCompleted.CreateManualUnsignal(true), L"NetworkProtocolChannelServer failed to create the stop completion event.");
+			CHECK_ERROR(eventStopCompletionThreadJoined.CreateManualUnsignal(true), L"NetworkProtocolChannelServer failed to create the stop completion-thread event.");
+		}
+
+		void BeginStopBarrierUnsafe()
+		{
+			activeStopBarriers++;
+		}
+
+		static void CompleteStopThreadProc(Thread*, void* argument)
+		{
+			auto server = static_cast<NetworkProtocolChannelServer*>(argument);
+			server->CompleteStop();
+		}
+
+		void EndStopBarrier(bool deferStopCompletion) noexcept
+		{
+			bool completeStop = false;
+			{
+				SPIN_LOCK(lockConnections)
+				{
+					if (activeStopBarriers > 0)
+					{
+						activeStopBarriers--;
+						if (activeStopBarriers == 0)
+						{
+							if (stopAfterBarriersDrained && !stopCompleting)
+							{
+								stopAfterBarriersDrained = false;
+								stopCompleting = true;
+								completeStop = true;
+							}
+						}
+					}
+				}
+			}
+			if (completeStop)
+			{
+				if (!deferStopCompletion)
+				{
+					CompleteStop();
+				}
+				else
+				{
+					SPIN_LOCK(lockConnections)
+						{
+							if (!eventStopCompletionThreadJoined.Unsignal())
+							{
+								std::terminate();
+							}
+							stopCompletionThread = Thread::CreateAndStart(&CompleteStopThreadProc, this, false);
+							if (!stopCompletionThread)
+							{
+								// Completing on this raw callback stack can deadlock a transport
+								// that drains callbacks in Stop, so scheduling failure is unrecoverable.
+								std::terminate();
+							}
+						}
+				}
+			}
+		}
+
+		void JoinStopCompletionThread()
+		{
+			Thread* joiningThread = nullptr;
+			{
+				SPIN_LOCK(lockConnections)
+					{
+						joiningThread = stopCompletionThread;
+						stopCompletionThread = nullptr;
+					}
+			}
+			if (joiningThread)
+			{
+				CHECK_ERROR(joiningThread->Wait(), L"NetworkProtocolChannelServer failed to join the stop completion thread.");
+				delete joiningThread;
+				CHECK_ERROR(eventStopCompletionThreadJoined.Signal(), L"NetworkProtocolChannelServer failed to signal the stop completion-thread event.");
+			}
+			else
+			{
+				CHECK_ERROR(eventStopCompletionThreadJoined.Wait(), L"NetworkProtocolChannelServer failed to wait for the stop completion thread.");
+			}
+		}
+
+		bool TryBeginNetworkProtocolCallback()
+		{
+			bool invokeCallback = false;
+			{
+				SPIN_LOCK(lockConnections)
+				{
+					if (!stopped)
+					{
+						BeginStopBarrierUnsafe();
+						invokeCallback = true;
+					}
+				}
+			}
+			if (!invokeCallback)
+			{
+				return false;
+			}
+			return true;
+		}
+
+		void OnNetworkReadString(Connection* connection, const WString& str)
+		{
+			if (!TryBeginNetworkProtocolCallback())
+			{
+				return;
+			}
+			StopBarrierGuard stopBarrierGuard(this, true);
+			OnReadString(connection, str);
+		}
+
+		void OnNetworkReadError(const WString& error)
+		{
+			if (!TryBeginNetworkProtocolCallback())
+			{
+				return;
+			}
+			StopBarrierGuard stopBarrierGuard(this, true);
+			BroadcastError(error);
+		}
+
+		void OnNetworkDisconnected(Connection* connection)
+		{
+			if (!TryBeginNetworkProtocolCallback())
+			{
+				return;
+			}
+			StopBarrierGuard stopBarrierGuard(this, true);
+			OnConnectionDisconnected(connection);
+		}
+
+		void CompleteStopCore()
+		{
+			collections::List<Ptr<Connection>> stoppingConnections;
+			collections::List<Ptr<Connection>> stoppingPendingConnections;
+			collections::List<vint> stoppingLocalClientIds;
+			collections::List<Ptr<LocalChannelClient>> stoppingLocalClients;
+			{
+				SPIN_LOCK(lockConnections)
+				{
+					for (auto&& connection : connections.Values())
+					{
+						stoppingConnections.Add(connection);
+					}
+					for (auto&& connection : pendingConnections)
+					{
+						stoppingPendingConnections.Add(connection);
+					}
+					for (auto&& clientId : localClients.Keys())
+					{
+						stoppingLocalClientIds.Add(clientId);
+						stoppingLocalClients.Add(localClients[clientId]);
+					}
+					connections.Clear();
+					localClients.Clear();
+					localClientsAwaitingConnected.Clear();
+					pendingConnections.Clear();
+					clientChannels.Clear();
+				}
+			}
+
+			std::exception_ptr completionException;
+			auto recordException = [&completionException]()
+			{
+				if (!completionException)
+				{
+					completionException = std::current_exception();
+				}
+			};
+			for (vint i = 0; i < stoppingLocalClients.Count(); i++)
+			{
+				try
+				{
+					NotifyLocalClientDisconnected(stoppingLocalClients[i]);
+				}
+				catch (...)
+				{
+					recordException();
+				}
+				try
+				{
+					OnClientDisconnected(stoppingLocalClientIds[i]);
+				}
+				catch (...)
+				{
+					recordException();
+				}
+			}
+			try
+			{
+				TServerBase::Stop();
+			}
+			catch (...)
+			{
+				recordException();
+			}
+			// Network connections are owned and stopped by TServerBase.
+			for (auto&& connection : stoppingConnections)
+			{
+				try
+				{
+					OnClientDisconnected(connection->clientId);
+				}
+				catch (...)
+				{
+					recordException();
+				}
+			}
+			if (completionException)
+			{
+				SPIN_LOCK(lockConnections)
+				{
+					stopException = completionException;
+				}
+			}
+			eventStopCompleted.Signal();
+		}
+
+		void CompleteStop() noexcept
+		{
+			StopCompletionGuard stopCompletionGuard(this);
+			try
+			{
+				CompleteStopCore();
+			}
+			catch (...)
+			{
+				auto completionException = std::current_exception();
+				{
+					SPIN_LOCK(lockConnections)
+					{
+						stopException = completionException;
+					}
+				}
+				eventStopCompleted.Signal();
+			}
+		}
+
+		void RethrowStopException()
+		{
+			std::exception_ptr completionException;
+			{
+				SPIN_LOCK(lockConnections)
+				{
+					completionException = stopException;
+					stopException = nullptr;
+				}
+			}
+			if (completionException)
+			{
+				std::rethrow_exception(completionException);
+			}
+		}
+
+		bool ClientHasChannel(vint clientId, const WString& channelName)
+		{
+			bool result = false;
+			SPIN_LOCK(lockConnections)
+			{
+				result = (connections.Keys().Contains(clientId) || localClients.Keys().Contains(clientId)) && clientChannels.Contains(clientId, channelName);
+			}
+			return result;
+		}
+
+		Ptr<Connection> RemovePendingConnection(Connection* connection)
+		{
+			Ptr<Connection> pendingConnection;
+			for (vint i = 0; i < pendingConnections.Count(); i++)
+			{
+				if (pendingConnections[i].Obj() == connection)
+				{
+					pendingConnection = pendingConnections[i];
+					pendingConnections.RemoveAt(i);
+					break;
+				}
+			}
+			return pendingConnection;
+		}
+
+		void OnReadString(Connection* connection, const WString& str)
+		{
+			NetworkPackage package;
+			NetworkPackage::Parse(str, package);
+			if (package.channelName == ErrorChannel)
+			{
+				BroadcastError(package.messageBody);
+				return;
+			}
+
+			if (connection->clientId == -1)
+			{
+				CHECK_ERROR(!package.clientId && package.channelName == WString::Empty, L"NetworkProtocolChannelServer received an invalid connection request.");
+				ChannelMap availableChannels;
+				BaseChannel::SplitChannelNames(package.messageBody, availableChannels);
+
+				Ptr<Connection> pendingConnection;
+				vint assignedClientId = -1;
+				{
+					SPIN_LOCK(lockConnections)
+					{
+						pendingConnection = RemovePendingConnection(connection);
+						CHECK_ERROR(pendingConnection, L"NetworkProtocolChannelServer failed to find a pending connection.");
+						if (!broadcastingError && !stopped)
+						{
+							assignedClientId = nextClientId++;
+							BeginStopBarrierUnsafe();
+						}
+					}
+				}
+				if (assignedClientId == -1)
+				{
+					connection->connection->Stop();
+					return;
+				}
+				StopBarrierGuard stopBarrierGuard(this);
+
+				if (OnClientConnected(assignedClientId, availableChannels.Keys(), nullptr) == WaitForClientResult::Accept)
+				{
+					bool accepted = false;
+					bool deliverFatal = false;
+					WString fatalError;
+					{
+						SPIN_LOCK(lockConnections)
+						{
+							if (!broadcastingError && !stopped)
+							{
+								connection->clientId = assignedClientId;
+								connection->accepted = true;
+								connections.Add(assignedClientId, pendingConnection);
+								for (auto&& channelName : availableChannels.Keys())
+								{
+									clientChannels.Add(assignedClientId, channelName);
+								}
+								accepted = true;
+							}
+							else if (broadcastingError)
+							{
+								deliverFatal = true;
+								fatalError = broadcastingErrorMessage;
+							}
+						}
+					}
+					if (accepted)
+					{
+						connection->connection->SendString(NetworkPackage::ToString(NetworkPackage::Create(assignedClientId, WString::Empty, WString::Empty)));
+						bool deliverFatalAfterConnected = false;
+						WString fatalErrorAfterConnected;
+						{
+							SPIN_LOCK(lockConnections)
+							{
+								connection->readyForBroadcast = true;
+								if (broadcastingError)
+								{
+									deliverFatalAfterConnected = true;
+									fatalErrorAfterConnected = broadcastingErrorMessage;
+								}
+							}
+						}
+						if (deliverFatalAfterConnected)
+						{
+							try
+							{
+								connection->connection->SendString(NetworkPackage::ToString(NetworkPackage::Create({}, WString::Unmanaged(ErrorChannel), fatalErrorAfterConnected)));
+							}
+							catch (...)
+							{
+							}
+							Thread::Sleep(200);
+							connection->connection->Stop();
+						}
+					}
+					else
+					{
+						if (deliverFatal)
+						{
+							try
+							{
+								connection->connection->SendString(NetworkPackage::ToString(NetworkPackage::Create({}, WString::Unmanaged(ErrorChannel), fatalError)));
+							}
+							catch (...)
+							{
+							}
+							// Match BroadcastError's delivery grace for a client that
+							// was application-accepted after its target snapshot.
+							Thread::Sleep(200);
+						}
+						connection->connection->Stop();
+					}
+				}
+				else
+				{
+					connection->connection->Stop();
+				}
+				return;
+			}
+
+			CHECK_ERROR(ClientHasChannel(connection->clientId, package.channelName), L"NetworkProtocolChannelServer received a message from a client without the specified channel.");
+			NetworkPackage::ClientIdList noBlockedReceivers;
+			auto blockedReceivers = package.extraClientIds ? &package.extraClientIds.Value() : &noBlockedReceivers;
+			if (package.clientId)
+			{
+				auto receiverClientId = package.clientId.Value();
+				CHECK_ERROR(receiverClientId > 0 && ClientHasChannel(receiverClientId, package.channelName), L"NetworkProtocolChannelServer received a message to a client without the specified channel.");
+			}
+			else
+			{
+				for (auto blockedReceiver : *blockedReceivers)
+				{
+					CHECK_ERROR(blockedReceiver > 0 && ClientHasChannel(blockedReceiver, package.channelName), L"NetworkProtocolChannelServer received a message blocking a client without the specified channel.");
+				}
+			}
+
+			PackageList batch;
+			TSerialization::Deserialize(context, package.messageBody, batch);
+			SendBatch(package.clientId, *blockedReceivers, connection->clientId, connection->clientId, package.channelName, batch);
+		}
+
+		void OnConnectionDisconnected(Connection* connection)
+		{
+			Ptr<Connection> disconnectedConnection;
+			vint disconnectedClientId = -1;
+			{
+				SPIN_LOCK(lockConnections)
+				{
+					if (connection->clientId == -1)
+					{
+						disconnectedConnection = RemovePendingConnection(connection);
+					}
+					else if (connections.Keys().Contains(connection->clientId))
+					{
+						disconnectedClientId = connection->clientId;
+						disconnectedConnection = connections[connection->clientId];
+						connections.Remove(connection->clientId);
+						clientChannels.Remove(connection->clientId);
+					}
+				}
+			}
+
+			if (disconnectedClientId != -1)
+			{
+				OnClientDisconnected(disconnectedClientId);
+			}
+		}
+
+		void NotifyLocalClientDisconnected(Ptr<LocalChannelClient> localClient)
+		{
+			localClient->NotifyDisconnected();
+		}
+
+		void DeliverBatchToLocalClient(Ptr<LocalChannelClient> localClient, vint senderClientId, const WString& channelName, const PackageList& batch)
+		{
+			auto&& channels = localClient->GetChannels();
+			auto index = channels.Keys().IndexOf(channelName);
+			CHECK_ERROR(index != -1, L"NetworkProtocolChannelServer failed to find a local channel.");
+
+			auto channel = channels.Values()[index];
+			if (auto networkChannel = dynamic_cast<BaseChannel*>(channel))
+			{
+				networkChannel->ReadBatch(senderClientId, batch);
+			}
+			else
+			{
+				auto reader = channel->GetReader();
+				CHECK_ERROR(reader, L"NetworkProtocolChannelServer needs a readable local channel.");
+				for (auto&& package : batch)
+				{
+					reader->OnRead(senderClientId, package);
+				}
+			}
+		}
+
+		bool SendBatch(Nullable<vint> receiverClientId, const NetworkPackage::ClientIdList& blockedReceivers, vint senderClientId, vint excludedClientId, const WString& channelName, const PackageList& batch)
+		{
+			if (IsStopped())
+			{
+				return true;
+			}
+
+			WString messageBody;
+			TSerialization::Serialize(context, batch, messageBody);
+			if (receiverClientId)
+			{
+				Ptr<Connection> connection;
+				Ptr<LocalChannelClient> localClient;
+				{
+					SPIN_LOCK(lockConnections)
+					{
+						if (connections.Keys().Contains(receiverClientId.Value()) && clientChannels.Contains(receiverClientId.Value(), channelName))
+						{
+							connection = connections[receiverClientId.Value()];
+						}
+						else if (localClients.Keys().Contains(receiverClientId.Value()) && clientChannels.Contains(receiverClientId.Value(), channelName))
+						{
+							localClient = localClients[receiverClientId.Value()];
+						}
+					}
+				}
+				if (connection)
+				{
+					connection->connection->SendString(NetworkPackage::ToString(NetworkPackage::Create(senderClientId, channelName, messageBody)));
+				}
+				if (localClient)
+				{
+					DeliverBatchToLocalClient(localClient, senderClientId, channelName, batch);
+				}
+			}
+			else
+			{
+				collections::List<Ptr<Connection>> targetConnections;
+				collections::List<Ptr<LocalChannelClient>> targetLocalClients;
+				{
+					SPIN_LOCK(lockConnections)
+					{
+						for (auto&& connection : connections.Values())
+						{
+							if (connection->clientId != excludedClientId && !blockedReceivers.Contains(connection->clientId) && clientChannels.Contains(connection->clientId, channelName))
+							{
+								targetConnections.Add(connection);
+							}
+						}
+						for (auto&& clientId : localClients.Keys())
+						{
+							if (clientId != excludedClientId && !blockedReceivers.Contains(clientId) && clientChannels.Contains(clientId, channelName))
+							{
+								targetLocalClients.Add(localClients[clientId]);
+							}
+						}
+					}
+				}
+				for (auto&& connection : targetConnections)
+				{
+					connection->connection->SendString(NetworkPackage::ToString(NetworkPackage::Create(senderClientId, channelName, messageBody)));
+				}
+				for (auto&& localClient : targetLocalClients)
+				{
+					DeliverBatchToLocalClient(localClient, senderClientId, channelName, batch);
+				}
+			}
+			return false;
+		}
+
+		bool SendFromLocalClient(Nullable<vint> receiverClientId, const NetworkPackage::ClientIdList& blockedReceivers, vint senderClientId, const WString& channelName, const PackageList& batch) override
+		{
+			CHECK_ERROR(senderClientId > 0 && ClientHasChannel(senderClientId, channelName), L"NetworkProtocolChannelServer received a message from a local client without the specified channel.");
+			if (receiverClientId)
+			{
+				CHECK_ERROR(receiverClientId.Value() > 0 && ClientHasChannel(receiverClientId.Value(), channelName), L"NetworkProtocolChannelServer received a message from a local client to a client without the specified channel.");
+			}
+			else
+			{
+				for (auto blockedReceiver : blockedReceivers)
+				{
+					CHECK_ERROR(blockedReceiver > 0 && ClientHasChannel(blockedReceiver, channelName), L"NetworkProtocolChannelServer received a message from a local client blocking a client without the specified channel.");
+				}
+			}
+			return SendBatch(receiverClientId, blockedReceivers, senderClientId, senderClientId, channelName, batch);
+		}
+
+	public:
+
+		WaitForClientResult OnClientConnected(Ptr<INetworkProtocolConnection> connection) override
+		{
+			CHECK_ERROR(connection, L"NetworkProtocolChannelServer::OnClientConnected needs a valid connection.");
+			if (!TryBeginNetworkProtocolCallback())
+			{
+				return WaitForClientResult::Reject;
+			}
+			StopBarrierGuard stopBarrierGuard(this, true);
+
+			auto context = Ptr(new Connection(this));
+			context->connection = connection;
+			bool acceptConnection = false;
+			{
+				SPIN_LOCK(lockConnections)
+				{
+					if (started && !broadcastingError && !stopped)
+					{
+						pendingConnections.Add(context);
+						acceptConnection = true;
+					}
+				}
+			}
+			if (!acceptConnection)
+			{
+				return WaitForClientResult::Reject;
+			}
+			connection->InstallCallback(context.Obj());
+			connection->BeginReadingLoopUnsafe();
+			return WaitForClientResult::Accept;
+		}
+
+		void Start() override
+		{
+			SPIN_LOCK(lockConnections)
+			{
+				CHECK_ERROR(!stopped, L"NetworkProtocolChannelServer has stopped.");
+				started = true;
+			}
+			TServerBase::Start();
+		}
+
+		WaitForClientResult OnClientConnected(vint clientId, const typename IChannelClient<TPackage>::ChannelNameList& availableChannels, Ptr<IChannelClient<TPackage>> localClient) override
+		{
+			// default implementation allows all clients to connect
+			return WaitForClientResult::Accept;
+		}
+
+		void OnClientDisconnected(vint clientId) override
+		{
+			// default implementation does nothing
+		}
+
+		NetworkProtocolChannelServer()
+			: TServerBase()
+			, context()
+		{
+			InitializeBarriers();
+		}
+
+		template<typename TFirst, typename... TArgs>
+			requires (!std::is_constructible_v<typename TSerialization::ContextType, TFirst&&>)
+		NetworkProtocolChannelServer(TFirst&& first, TArgs&&... args)
+			: TServerBase(std::forward<TFirst>(first), std::forward<TArgs>(args)...)
+			, context()
+		{
+			InitializeBarriers();
+		}
+
+		template<typename... TArgs>
+		NetworkProtocolChannelServer(const typename TSerialization::ContextType& _context, TArgs&&... args)
+			: TServerBase(std::forward<TArgs>(args)...)
+			, context(_context)
+		{
+			InitializeBarriers();
+		}
+
+		~NetworkProtocolChannelServer()
+		{
+			try
+			{
+				Stop();
+			}
+			catch (...)
+			{
+			}
+		}
+
+		vint ConnectLocalClient(Ptr<IChannelClient<TPackage>> localClient) override
+		{
+			CHECK_ERROR(localClient, L"NetworkProtocolChannelServer::ConnectLocalClient needs a valid localClient.");
+			{
+				SPIN_LOCK(lockConnections)
+				{
+					if (broadcastingError)
+					{
+						return -1;
+					}
+					CHECK_ERROR(started, L"NetworkProtocolChannelServer has not started.");
+					CHECK_ERROR(!stopped, L"NetworkProtocolChannelServer has stopped.");
+				}
+			}
+
+			auto networkProtocolClient = localClient.template Cast<LocalChannelClient>();
+			CHECK_ERROR(networkProtocolClient, L"NetworkProtocolChannelServer::ConnectLocalClient needs a NetworkProtocolLocalChannelClient.");
+
+			if (networkProtocolClient->GetStatus() == ClientStatus::Connected || networkProtocolClient->GetStatus() == ClientStatus::Disconnected)
+			{
+				return -1;
+			}
+
+			auto&& channels = networkProtocolClient->GetChannels();
+			for (auto&& channelName : channels.Keys())
+			{
+				BaseChannel::ValidateChannelName(channelName);
+				auto index = channels.Keys().IndexOf(channelName);
+				CHECK_ERROR(channels.Values()[index], L"NetworkProtocolChannelServer::ConnectLocalClient needs valid local channels.");
+			}
+
+			vint assignedClientId = -1;
+			{
+				SPIN_LOCK(lockConnections)
+				{
+					if (!broadcastingError && !stopped)
+					{
+						assignedClientId = nextClientId++;
+						BeginStopBarrierUnsafe();
+					}
+				}
+			}
+			if (assignedClientId == -1)
+			{
+				return -1;
+			}
+			StopBarrierGuard stopBarrierGuard(this);
+
+			if (OnClientConnected(assignedClientId, channels.Keys(), localClient) == WaitForClientResult::Reject)
+			{
+				return -1;
+			}
+
+			if (!networkProtocolClient->ConnectLocalServer(this, assignedClientId))
+			{
+				return -1;
+			}
+
+			bool connected = false;
+			bool deliverFatal = false;
+			WString fatalError;
+			{
+				SPIN_LOCK(lockConnections)
+				{
+					if (!broadcastingError && !stopped)
+					{
+						localClients.Add(assignedClientId, networkProtocolClient);
+						localClientsAwaitingConnected.Add(assignedClientId);
+						for (auto&& channelName : channels.Keys())
+						{
+							clientChannels.Add(assignedClientId, channelName);
+						}
+						connected = true;
+					}
+					else if (broadcastingError)
+					{
+						deliverFatal = true;
+						fatalError = broadcastingErrorMessage;
+					}
+				}
+			}
+			if (!connected)
+			{
+				if (deliverFatal)
+				{
+					try
+					{
+						networkProtocolClient->OnReadError(fatalError);
+					}
+					catch (...)
+					{
+						networkProtocolClient->NotifyDisconnected();
+						throw;
+					}
+				}
+				networkProtocolClient->NotifyDisconnected();
+				return -1;
+			}
+
+			std::exception_ptr connectedException;
+			try
+			{
+				networkProtocolClient->NotifyLocalConnected();
+			}
+			catch (...)
+			{
+				connectedException = std::current_exception();
+			}
+			bool deliverFatalAfterConnected = false;
+			WString fatalErrorAfterConnected;
+			{
+				SPIN_LOCK(lockConnections)
+				{
+					localClientsAwaitingConnected.Remove(assignedClientId);
+					if (broadcastingError)
+					{
+						deliverFatalAfterConnected = true;
+						fatalErrorAfterConnected = broadcastingErrorMessage;
+					}
+				}
+			}
+			if (deliverFatalAfterConnected)
+			{
+				try
+				{
+					networkProtocolClient->OnReadError(fatalErrorAfterConnected);
+				}
+				catch (...)
+				{
+					if (!connectedException)
+					{
+						connectedException = std::current_exception();
+					}
+				}
+			}
+			if (connectedException)
+			{
+				std::rethrow_exception(connectedException);
+			}
+			return assignedClientId;
+		}
+
+		bool IsLocalClient(vint clientId) override
+		{
+			bool result = false;
+			SPIN_LOCK(lockConnections)
+			{
+				result = localClients.Keys().Contains(clientId);
+			}
+			return result;
+		}
+
+		bool DisconnectClient(vint clientId) override
+		{
+			Ptr<Connection> connection;
+			Ptr<LocalChannelClient> localClient;
+			{
+				SPIN_LOCK(lockConnections)
+				{
+					if (connections.Keys().Contains(clientId))
+					{
+						connection = connections[clientId];
+						connections.Remove(clientId);
+						clientChannels.Remove(clientId);
+					}
+					else if (localClients.Keys().Contains(clientId))
+					{
+						localClient = localClients[clientId];
+						localClients.Remove(clientId);
+						localClientsAwaitingConnected.Remove(clientId);
+						clientChannels.Remove(clientId);
+					}
+				}
+			}
+			if (connection)
+			{
+				connection->connection->Stop();
+				OnClientDisconnected(clientId);
+				return true;
+			}
+			if (localClient)
+			{
+				NotifyLocalClientDisconnected(localClient);
+				OnClientDisconnected(clientId);
+				return true;
+			}
+			return false;
+		}
+
+		const ClientIdList& GetClientIds() override
+		{
+			return clientChannels.Keys();
+		}
+
+		const ClientChannelMap& GetClientChannels() override
+		{
+			return clientChannels;
+		}
+
+		void BroadcastError(const WString& errorMessage) override
+		{
+			bool calledFromExistingStopBarrier = StopBarrierGuard::IsActiveFor(this);
+			collections::List<Ptr<Connection>> targetConnections;
+			collections::List<Ptr<LocalChannelClient>> targetLocalClients;
+			WString broadcastMessage;
+			{
+				SPIN_LOCK(lockConnections)
+				{
+					if (broadcastingError || stopped)
+					{
+						return;
+					}
+					broadcastingError = true;
+					broadcastingErrorMessage = errorMessage;
+					broadcastMessage = broadcastingErrorMessage;
+					for (auto&& connection : connections.Values())
+					{
+						if (connection->readyForBroadcast)
+						{
+							targetConnections.Add(connection);
+						}
+					}
+					for (auto&& clientId : localClients.Keys())
+					{
+						if (!localClientsAwaitingConnected.Contains(clientId))
+						{
+							targetLocalClients.Add(localClients[clientId]);
+						}
+					}
+					BeginStopBarrierUnsafe();
+				}
+			}
+
+			std::exception_ptr deliveryException;
+			{
+				StopBarrierGuard stopBarrierGuard(this);
+				for (auto&& connection : targetConnections)
+				{
+					try
+					{
+						connection->connection->SendString(NetworkPackage::ToString(NetworkPackage::Create({}, WString::Unmanaged(ErrorChannel), broadcastMessage)));
+					}
+					catch (...)
+					{
+						if (!deliveryException)
+						{
+							deliveryException = std::current_exception();
+						}
+					}
+				}
+				for (auto&& localClient : targetLocalClients)
+				{
+					try
+					{
+						localClient->OnReadError(broadcastMessage);
+					}
+					catch (...)
+					{
+						if (!deliveryException)
+						{
+							deliveryException = std::current_exception();
+						}
+					}
+				}
+				// Give transport clients a chance to consume the fatal package before closing.
+				Thread::Sleep(200);
+				try
+				{
+					Stop();
+				}
+				catch (...)
+				{
+					if (!deliveryException)
+					{
+						deliveryException = std::current_exception();
+					}
+				}
+			}
+			if (!calledFromExistingStopBarrier)
+			{
+				try
+				{
+					Stop();
+				}
+				catch (...)
+				{
+					if (!deliveryException)
+					{
+						deliveryException = std::current_exception();
+					}
+				}
+			}
+			if (deliveryException)
+			{
+				std::rethrow_exception(deliveryException);
+			}
+		}
+
+		void Stop() override
+		{
+			if (StopCompletionGuard::IsActiveFor(this))
+			{
+				return;
+			}
+			bool calledFromStopBarrier = StopBarrierGuard::IsActiveFor(this);
+			bool completeStop = false;
+			bool waitForStop = false;
+			{
+				SPIN_LOCK(lockConnections)
+				{
+					if (!stopped)
+					{
+						started = false;
+						stopped = true;
+						CHECK_ERROR(eventStopCompleted.Unsignal(), L"NetworkProtocolChannelServer failed to unsignal the stop completion event.");
+					}
+					if (!stopCompleting)
+					{
+						if (activeStopBarriers == 0)
+						{
+							stopCompleting = true;
+							completeStop = true;
+						}
+						else
+						{
+							stopAfterBarriersDrained = true;
+						}
+					}
+					waitForStop = !completeStop && !calledFromStopBarrier;
+				}
+			}
+
+			if (completeStop)
+			{
+				CompleteStop();
+			}
+			else if (waitForStop)
+			{
+				eventStopCompleted.Wait();
+			}
+			if (!calledFromStopBarrier)
+			{
+				JoinStopCompletionThread();
+				RethrowStopException();
+			}
+		}
+
+		bool IsStopped() override
+		{
+			bool result = false;
+			SPIN_LOCK(lockConnections)
+			{
+				result = stopped;
+			}
+			return result || TServerBase::IsStopped();
+		}
+	};
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\NETWORKPROTOCOLCHANNEL.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_NETWORKPROTOCOLCHANNEL
+#define VCZH_INTERPROCESS_NETWORKPROTOCOLCHANNEL
+
+
+/***********************************************************************
+Hooking IChannelServer/IChannelClient to INetworkProtocolServer/INetworkProtocolClient
+
+The serialization contract is the same to the one described in ChannelSerialization.h
+SourceType will be List<TPackage>
+DestType will be WString
+
+NetworkPackage will be used as text message parsing and formatting for INetworkProtocolConnection.
+BatchWrite belongs to IChannel, meaning each channel sends its own batch messages in one NetworkPackage.
+channelName will be either a system channel or a user defined channel.
+messageBody represents a list of TPackage.
+The first section is "clientId,extraClientId1,extraClientId2,...".
+  Empty clientId means no direct client id.
+  Empty or missing extra client ids are equivalent.
+When sending from client to server, clientId means the target client.
+  Empty means broadcasting.
+  When clientId is empty, extraClientIds means blocked receiver client ids.
+  When clientId is not empty, extraClientIds are ignored.
+When sending from server to client, clientId means the source client.
+  Channel messages delivered by the server always carry a source client id.
+
+When a client establishes a connection to the server, channel names will be sent to the server:
+  clientId will be empty, it does not mean broadcasting.
+  channelName will be empty.
+  messageBody will be all available channel names joined by "!", as "!" cannot be part of the channel name anyway.
+After the server receives the first message from a client, an client id will be sent to the client:
+  clientId is the assigned client id, starting from 1.
+  channelName will be empty.
+  messageBody will be empty.
+***********************************************************************/
+
 #endif
 
 
@@ -1243,6 +4574,30 @@ namespace vl
 			/// <param name="_size">The size of the content that is expected to read.</param>
 			virtual vint					Peek(void* _buffer, vint _size)=0;
 		};
+	}
+}
+
+#endif
+
+/***********************************************************************
+.\ENCODING\ENCODING.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_STREAM_ENCODING_ENCODING
+#define VCZH_STREAM_ENCODING_ENCODING
+
+
+namespace vl
+{
+	namespace stream
+	{
+/***********************************************************************
+IEncoder and IDecoder
+***********************************************************************/
 
 		/// <summary>Encoder interface. This interface defines a writable transformation from one stream to another stream. You can create a [T:vl.stream.EncoderStream] after you have an encoder.</summary>
 		class IEncoder : public Interface
@@ -1285,6 +4640,754 @@ namespace vl
 			/// <param name="_size">The expected size of the content in bytes in "_buffer" to receive.</param>
 			virtual vint					Read(void* _buffer, vint _size)=0;
 		};
+
+/***********************************************************************
+EncoderBase and DecoderBase
+***********************************************************************/
+
+		/// <summary>Basic implementation of IEncoder.</summary>
+		class EncoderBase : public Object, public IEncoder
+		{
+		protected:
+			IStream*						stream = nullptr;
+
+		public:
+
+			void							Setup(IStream* _stream) override;
+			void							Close() override;
+		};
+		
+		/// <summary>Basic implementation of IDecoder.</summary>
+		class DecoderBase : public Object, public IDecoder
+		{
+		protected:
+			IStream*						stream = nullptr;
+
+		public:
+
+			void							Setup(IStream* _stream) override;
+			void							Close() override;
+		};
+	}
+}
+
+#endif
+
+/***********************************************************************
+.\ENCODING\BASE64ENCODING.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_STREAM_ENCODING_BASE64ENCODING
+#define VCZH_STREAM_ENCODING_BASE64ENCODING
+
+
+namespace vl
+{
+	namespace stream
+	{
+		constexpr const vint Base64CycleBytes = 3;
+		constexpr const vint Base64CycleChars = 4;
+
+/***********************************************************************
+Utf8Base64Encoder
+***********************************************************************/
+
+		class Utf8Base64Encoder : public EncoderBase
+		{
+		protected:
+			uint8_t					cache[Base64CycleBytes];
+			vint					cacheSize = 0;
+
+			void					WriteBytesToCharArray(uint8_t* fromBytes, char8_t(&toChars)[Base64CycleChars], vint bytes);
+			bool					WriteCycle(uint8_t*& reading, vint& _size);
+			bool					WriteCache(uint8_t*& reading, vint& _size);
+		public:
+			vint					Write(void* _buffer, vint _size) override;
+			void					Close() override;
+		};
+
+/***********************************************************************
+Utf8Base64Decoder
+***********************************************************************/
+
+		class Utf8Base64Decoder : public DecoderBase
+		{
+		protected:
+			uint8_t					cache[Base64CycleBytes];
+			vint					cacheSize = 0;
+
+			vint					ReadBytesFromCharArray(char8_t(&fromChars)[Base64CycleChars], uint8_t* toBytes);
+			vint					ReadCycle(uint8_t*& writing, vint& _size);
+			void					ReadCache(uint8_t*& writing, vint& _size);
+		public:
+			vint					Read(void* _buffer, vint _size) override;
+		};
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\ENCODING\CHARFORMAT\BOMENCODING.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_STREAM_ENCODING_CHARFORMAT_BOMENCODING
+#define VCZH_STREAM_ENCODING_CHARFORMAT_BOMENCODING
+
+
+namespace vl
+{
+	namespace stream
+	{
+/***********************************************************************
+Bom
+***********************************************************************/
+		
+		/// <summary>Encoder to write text in a specified encoding. A BOM will be added at the beginning.</summary>
+		class BomEncoder : public Object, public IEncoder
+		{
+		public:
+			/// <summary>Text encoding.</summary>
+			enum Encoding
+			{
+				/// <summary>Multi-bytes character string.</summary>
+				Mbcs,
+				/// <summary>UTF-8. EF, BB, BF will be written before writing any text.</summary>
+				Utf8,
+				/// <summary>UTF-16. FF FE will be written before writing any text.</summary>
+				Utf16,
+				/// <summary>Big endian UTF-16. FE FF, BF will be written before writing any text.</summary>
+				Utf16BE
+			};
+		protected:
+			Encoding						encoding;
+			IEncoder*						encoder;
+		public:
+			/// <summary>Create an encoder with a specified encoding.</summary>
+			/// <param name="_encoding">The specified encoding.</param>
+			BomEncoder(Encoding _encoding);
+			~BomEncoder();
+
+			void							Setup(IStream* _stream);
+			void							Close();
+			vint							Write(void* _buffer, vint _size);
+		};
+		
+		/// <summary>Decoder to read text. This decoder depends on BOM at the beginning to decide the format of the input.</summary>
+		class BomDecoder : public Object, public IDecoder
+		{
+		private:
+			class BomStream : public Object, public IStream
+			{
+			protected:
+				IStream*					stream;
+				char						bom[3];
+				vint						bomLength;
+				vint						bomPosition;
+			public:
+				BomStream(IStream* _stream, char* _bom, vint _bomLength);
+
+				bool						CanRead()const;
+				bool						CanWrite()const;
+				bool						CanSeek()const;
+				bool						CanPeek()const;
+				bool						IsLimited()const;
+				bool						IsAvailable()const;
+				void						Close();
+				pos_t						Position()const;
+				pos_t						Size()const;
+				void						Seek(pos_t _size);
+				void						SeekFromBegin(pos_t _size);
+				void						SeekFromEnd(pos_t _size);
+				vint						Read(void* _buffer, vint _size);
+				vint						Write(void* _buffer, vint _size);
+				vint						Peek(void* _buffer, vint _size);
+			};
+		protected:
+			IDecoder*						decoder;
+			IStream*						stream;
+
+		public:
+			/// <summary>Create an decoder, BOM will be consumed before reading any text.</summary>
+			BomDecoder();
+			~BomDecoder();
+
+			void							Setup(IStream* _stream);
+			void							Close();
+			vint							Read(void* _buffer, vint _size);
+		};
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\ENCODING\CHARFORMAT\MBCSENCODING.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_STREAM_ENCODING_CHARFORMAT_MBCSENCODING
+#define VCZH_STREAM_ENCODING_CHARFORMAT_MBCSENCODING
+
+
+namespace vl
+{
+	namespace stream
+	{
+/***********************************************************************
+MbcsEncoder
+***********************************************************************/
+
+		/// <summary>Encoder to write text in the local code page.</summary>
+		class MbcsEncoder : public EncoderBase
+		{
+		protected:
+			vuint8_t						cacheBuffer[sizeof(char32_t)];
+			vint							cacheSize = 0;
+
+			vint							WriteString(wchar_t* _buffer, vint chars);
+		public:
+
+			vint							Write(void* _buffer, vint _size) override;
+		};
+
+/***********************************************************************
+MbcsDecoder
+***********************************************************************/
+
+		/// <summary>Decoder to read text in the local code page.</summary>
+		class MbcsDecoder : public DecoderBase
+		{
+		protected:
+			vuint8_t						cacheBuffer[sizeof(wchar_t)];
+			vint							cacheSize = 0;
+
+			vint							ReadString(wchar_t* _buffer, vint chars);
+		public:
+
+			vint							Read(void* _buffer, vint _size) override;
+		};
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\ENCODING\CHARFORMAT\UTFENCODING.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_STREAM_ENCODING_CHARFORMAT_UTFENCODING
+#define VCZH_STREAM_ENCODING_CHARFORMAT_UTFENCODING
+
+
+namespace vl
+{
+	namespace stream
+	{
+
+/***********************************************************************
+UtfStreamConsumer<T>
+***********************************************************************/
+
+		template<typename T>
+		class UtfStreamConsumer : public Object
+		{
+		protected:
+			IStream*				stream = nullptr;
+
+			T Consume()
+			{
+				T c;
+				vint size = stream->Read(&c, sizeof(c));
+				if (size != sizeof(c)) return 0;
+				return c;
+			}
+		public:
+			void Setup(IStream* _stream)
+			{
+				stream = _stream;
+			}
+
+			bool HasIllegalChar() const
+			{
+				return false;
+			}
+		};
+
+		template<typename T>
+		class UtfStreamConsumerApiRedirection : public Object
+		{
+		private:
+			T&						internalConsumer;
+
+		public:
+			UtfStreamConsumerApiRedirection(T& _internalConsumer)
+				: internalConsumer(_internalConsumer)
+			{
+			}
+
+			void Setup(IStream* _stream)
+			{
+				internalConsumer.Setup(_stream);
+			}
+
+			encoding::UtfCharCluster SourceCluster() const
+			{
+				return internalConsumer.SourceCluster();
+			}
+		};
+
+/***********************************************************************
+UtfStreamToStreamReader<TFrom, TTo>
+***********************************************************************/
+
+		template<typename TFrom, typename TTo>
+		using UtfStreamToStreamReader = encoding::UtfToUtfReaderBase<TFrom, TTo, UtfStreamConsumer<TFrom>, UtfStreamConsumerApiRedirection>;
+
+/***********************************************************************
+Unicode General
+***********************************************************************/
+
+		template<typename T>
+		struct MaxPossibleCodePoints
+		{
+			static const vint		Value = encoding::UtfConversion<T>::BufferLength;
+		};
+
+		template<>
+		struct MaxPossibleCodePoints<char32_t>
+		{
+			static const vint		Value = 1;
+		};
+
+		template<typename TNative, typename TExpect>
+		class UtfGeneralEncoder : public EncoderBase
+		{
+			using TStringRangeReader = encoding::UtfStringRangeToStringRangeReader<TExpect, TNative>;
+		protected:
+			vuint8_t						cacheBuffer[sizeof(TExpect) * MaxPossibleCodePoints<TExpect>::Value];
+			vint							cacheSize = 0;
+
+		public:
+
+			vint							Write(void* _buffer, vint _size) override;
+		};
+
+		template<typename TNative, typename TExpect>
+		class UtfGeneralDecoder : public DecoderBase
+		{
+			using TStreamReader = UtfStreamToStreamReader<TNative, TExpect>;
+		protected:
+			vuint8_t						cacheBuffer[sizeof(TExpect)];
+			vint							cacheSize = 0;
+			TStreamReader					reader;
+
+		public:
+
+			void							Setup(IStream* _stream) override;
+			vint							Read(void* _buffer, vint _size) override;
+		};
+
+/***********************************************************************
+Unicode General (without conversion)
+***********************************************************************/
+
+		template<typename T>
+		class UtfGeneralEncoder<T, T> : public EncoderBase
+		{
+		public:
+			vint							Write(void* _buffer, vint _size) override;
+		};
+
+		template<typename T>
+		class UtfGeneralDecoder<T, T> : public DecoderBase
+		{
+		public:
+			vint							Read(void* _buffer, vint _size) override;
+		};
+
+#if defined VCZH_WCHAR_UTF16
+
+		template<>
+		class UtfGeneralEncoder<char16_t, wchar_t> : public UtfGeneralEncoder<wchar_t, wchar_t> {};
+
+		template<>
+		class UtfGeneralEncoder<wchar_t, char16_t> : public UtfGeneralEncoder<wchar_t, wchar_t> {};
+
+#elif defined VCZH_WCHAR_UTF32
+
+		template<>
+		class UtfGeneralEncoder<char32_t, wchar_t> : public UtfGeneralEncoder<wchar_t, wchar_t> {};
+
+		template<>
+		class UtfGeneralEncoder<wchar_t, char32_t> : public UtfGeneralEncoder<wchar_t, wchar_t> {};
+
+#endif
+
+/***********************************************************************
+Unicode General (extern templates)
+***********************************************************************/
+
+		extern template class UtfGeneralEncoder<wchar_t, wchar_t>;
+		extern template class UtfGeneralEncoder<wchar_t, char8_t>;
+		extern template class UtfGeneralEncoder<wchar_t, char16_t>;
+		extern template class UtfGeneralEncoder<wchar_t, char16be_t>;
+		extern template class UtfGeneralEncoder<wchar_t, char32_t>;
+
+		extern template class UtfGeneralEncoder<char8_t, wchar_t>;
+		extern template class UtfGeneralEncoder<char8_t, char8_t>;
+		extern template class UtfGeneralEncoder<char8_t, char16_t>;
+		extern template class UtfGeneralEncoder<char8_t, char16be_t>;
+		extern template class UtfGeneralEncoder<char8_t, char32_t>;
+
+		extern template class UtfGeneralEncoder<char16_t, wchar_t>;
+		extern template class UtfGeneralEncoder<char16_t, char8_t>;
+		extern template class UtfGeneralEncoder<char16_t, char16_t>;
+		extern template class UtfGeneralEncoder<char16_t, char16be_t>;
+		extern template class UtfGeneralEncoder<char16_t, char32_t>;
+
+		extern template class UtfGeneralEncoder<char16be_t, wchar_t>;
+		extern template class UtfGeneralEncoder<char16be_t, char8_t>;
+		extern template class UtfGeneralEncoder<char16be_t, char16_t>;
+		extern template class UtfGeneralEncoder<char16be_t, char16be_t>;
+		extern template class UtfGeneralEncoder<char16be_t, char32_t>;
+
+		extern template class UtfGeneralEncoder<char32_t, wchar_t>;
+		extern template class UtfGeneralEncoder<char32_t, char8_t>;
+		extern template class UtfGeneralEncoder<char32_t, char16_t>;
+		extern template class UtfGeneralEncoder<char32_t, char16be_t>;
+		extern template class UtfGeneralEncoder<char32_t, char32_t>;
+
+		extern template class UtfGeneralDecoder<wchar_t, wchar_t>;
+		extern template class UtfGeneralDecoder<wchar_t, char8_t>;
+		extern template class UtfGeneralDecoder<wchar_t, char16_t>;
+		extern template class UtfGeneralDecoder<wchar_t, char16be_t>;
+		extern template class UtfGeneralDecoder<wchar_t, char32_t>;
+
+		extern template class UtfGeneralDecoder<char8_t, wchar_t>;
+		extern template class UtfGeneralDecoder<char8_t, char8_t>;
+		extern template class UtfGeneralDecoder<char8_t, char16_t>;
+		extern template class UtfGeneralDecoder<char8_t, char16be_t>;
+		extern template class UtfGeneralDecoder<char8_t, char32_t>;
+
+		extern template class UtfGeneralDecoder<char16_t, wchar_t>;
+		extern template class UtfGeneralDecoder<char16_t, char8_t>;
+		extern template class UtfGeneralDecoder<char16_t, char16_t>;
+		extern template class UtfGeneralDecoder<char16_t, char16be_t>;
+		extern template class UtfGeneralDecoder<char16_t, char32_t>;
+
+		extern template class UtfGeneralDecoder<char16be_t, wchar_t>;
+		extern template class UtfGeneralDecoder<char16be_t, char8_t>;
+		extern template class UtfGeneralDecoder<char16be_t, char16_t>;
+		extern template class UtfGeneralDecoder<char16be_t, char16be_t>;
+		extern template class UtfGeneralDecoder<char16be_t, char32_t>;
+
+		extern template class UtfGeneralDecoder<char32_t, wchar_t>;
+		extern template class UtfGeneralDecoder<char32_t, char8_t>;
+		extern template class UtfGeneralDecoder<char32_t, char16_t>;
+		extern template class UtfGeneralDecoder<char32_t, char16be_t>;
+		extern template class UtfGeneralDecoder<char32_t, char32_t>;
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\ENCODING\CHARFORMAT\CHARFORMAT.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_STREAM_ENCODING_CHARFORMAT
+#define VCZH_STREAM_ENCODING_CHARFORMAT
+
+
+namespace vl
+{
+	namespace stream
+	{
+/***********************************************************************
+Utf-8
+***********************************************************************/
+		
+		/// <summary>Encoder to write UTF-8 text.</summary>
+		class Utf8Encoder : public UtfGeneralEncoder<char8_t, wchar_t> {};
+		/// <summary>Decoder to read UTF-8 text.</summary>
+		class Utf8Decoder : public UtfGeneralDecoder<char8_t, wchar_t> {};
+
+/***********************************************************************
+Utf-16
+***********************************************************************/
+		
+		/// <summary>Encoder to write UTF-16 text.</summary>
+		class Utf16Encoder : public UtfGeneralEncoder<char16_t, wchar_t> {};
+		/// <summary>Decoder to read UTF-16 text.</summary>
+		class Utf16Decoder : public UtfGeneralDecoder<char16_t, wchar_t> {};
+
+/***********************************************************************
+Utf-16BE
+***********************************************************************/
+
+		/// <summary>Encoder to write big endian UTF-16 to.</summary>
+		class Utf16BEEncoder : public UtfGeneralEncoder<char16be_t, wchar_t> {};
+		/// <summary>Decoder to read big endian UTF-16 text.</summary>
+		class Utf16BEDecoder : public UtfGeneralDecoder<char16be_t, wchar_t> {};
+
+/***********************************************************************
+Utf-32
+***********************************************************************/
+
+		/// <summary>Encoder to write UTF-8 text.</summary>
+		class Utf32Encoder : public UtfGeneralEncoder<char32_t, wchar_t> {};
+		/// <summary>Decoder to read UTF-8 text.</summary>
+		class Utf32Decoder : public UtfGeneralDecoder<char32_t, wchar_t> {};
+
+/***********************************************************************
+Encoding Test
+***********************************************************************/
+
+		/// <summary>Guess the text encoding in a buffer.</summary>
+		/// <param name="buffer">The buffer to guess.</param>
+		/// <param name="size">Size of the buffer in bytes.</param>
+		/// <param name="encoding">Returns the most possible encoding.</param>
+		/// <param name="containsBom">Returns true if the BOM information is at the beginning of the buffer.</param>
+		extern void							TestEncoding(unsigned char* buffer, vint size, BomEncoder::Encoding& encoding, bool& containsBom);
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\ENCODING\LZWENCODING.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_STREAM_ENCODING_LZWENCODING
+#define VCZH_STREAM_ENCODING_LZWENCODING
+
+
+namespace vl
+{
+	namespace stream
+	{
+
+/***********************************************************************
+Compression
+***********************************************************************/
+
+		namespace lzw
+		{
+			static const vint						BufferSize = 1024;
+			static const vint						MaxDictionarySize = 1 << 24;
+
+			struct Code
+			{
+				typedef collections::PushOnlyAllocator<Code>			CodeAllocator;
+				typedef collections::ByteObjectMap<Code>::Allocator		MapAllocator;
+
+				vuint8_t							byte = 0;
+				vint								code = -1;
+				Code*								parent = 0;
+				vint								size = 0;
+				collections::ByteObjectMap<Code>	children;
+			};
+		}
+
+		class LzwBase : public Object
+		{
+		protected:
+			lzw::Code::CodeAllocator				codeAllocator;
+			lzw::Code::MapAllocator					mapAllocator;
+			lzw::Code*								root;
+			vint									eofIndex = -1;
+			vint									nextIndex = 0;
+			vint									indexBits = 1;
+
+			void									UpdateIndexBits();
+			lzw::Code*								CreateCode(lzw::Code* parent, vuint8_t byte);
+
+			LzwBase();
+			LzwBase(bool (&existingBytes)[256]);
+			~LzwBase();
+		};
+
+		/// <summary>An encoder to compress data using the Lzw algorithm.</summary>
+		/// <remarks>
+		/// You are not recommended to compress data more than 1 mega bytes at once using the encoder directly.
+		/// <see cref="CompressStream"/> and <see cref="DecompressStream"/> is recommended.
+		/// </remarks>
+		class LzwEncoder : public LzwBase, public EncoderBase
+		{
+		protected:
+			vuint8_t								buffer[lzw::BufferSize];
+			vint									bufferUsedBits = 0;
+			lzw::Code*								prefix;
+
+			void									Flush();
+			void									WriteNumber(vint number, vint bitSize);
+		public:
+			/// <summary>Create an encoder.</summary>
+			LzwEncoder();
+			/// <summary>Create an encoder, specifying what bytes will never appear in the data to compress.</summary>
+			/// <param name="existingBytes">
+			/// A filter array
+			/// If existingBytes[x] == true, it means x will possibly appear.
+			/// If existingBytes[x] == false, it means x will never appear.
+			/// </param>
+			/// <remarks>
+			/// The behavior is undefined, if existingBytes[x] == false, but byte x is actually in the data to compress.
+			/// </remarks>
+			LzwEncoder(bool (&existingBytes)[256]);
+			~LzwEncoder();
+
+			void									Close()override;
+			vint									Write(void* _buffer, vint _size)override;
+		};
+		
+		/// <summary>An decoder to decompress data using the Lzw algorithm.</summary>
+		/// <remarks>
+		/// You are not recommended to compress data more than 1 mega bytes at once using the encoder directly.
+		/// <see cref="CompressStream"/> and <see cref="DecompressStream"/> is recommended.
+		/// </remarks>
+		class LzwDecoder :public LzwBase, public DecoderBase
+		{
+		protected:
+			collections::List<lzw::Code*>			dictionary;
+			lzw::Code*								lastCode = 0;
+
+			vuint8_t								inputBuffer[lzw::BufferSize];
+			vint									inputBufferSize = 0;
+			vint									inputBufferUsedBits = 0;
+
+			collections::Array<vuint8_t>			outputBuffer;
+			vint									outputBufferSize = 0;
+			vint									outputBufferUsedBytes = 0;
+
+			bool									ReadNumber(vint& number, vint bitSize);
+			void									PrepareOutputBuffer(vint size);
+			void									ExpandCodeToOutputBuffer(lzw::Code* code);
+		public:
+			/// <summary>Create a decoder.</summary>
+			LzwDecoder();
+			/// <summary>Create an encoder, specifying what bytes will never appear in the decompressed data.</summary>
+			/// <param name="existingBytes">
+			/// A filter array
+			/// If existingBytes[x] == true, it means x will possibly appear.
+			/// If existingBytes[x] == false, it means x will never appear.
+			/// </param>
+			/// <remarks>
+			/// The array "existingBytes" should exactly match the one given to <see cref="LzwEncoder"/>.
+			/// </remarks>
+			LzwDecoder(bool (&existingBytes)[256]);
+			~LzwDecoder();
+
+			vint									Read(void* _buffer, vint _size)override;
+		};
+
+/***********************************************************************
+Helper Functions
+***********************************************************************/
+
+		/// <summary>Copy data from a <b>readable</b> input stream to a <b>writable</b> output stream.</summary>
+		/// <returns>Data copied in bytes.</returns>
+		/// <param name="inputStream">The <b>readable</b> input stream.</param>
+		/// <param name="outputStream">The <b>writable</b> output stream.</param>
+		extern vint						CopyStream(stream::IStream& inputStream, stream::IStream& outputStream);
+
+		/// <summary>Compress data from a <b>readable</b> input stream to a <b>writable</b> output stream.</summary>
+		/// <returns>Data copied in bytes.</returns>
+		/// <param name="inputStream">The <b>readable</b> input stream.</param>
+		/// <param name="outputStream">The <b>writable</b> output stream.</param>
+		/// <remarks>
+		/// Data is compressed in multiple batches,
+		/// the is expected output stream to have data in multiple parts.
+		/// In each part, the first 4 bytes is the data before compression in bytes.
+		/// the rest is the compressed data.
+		/// </remarks>
+		/// <example><![CDATA[
+		/// int main()
+		/// {
+		///     MemoryStream textStream, compressedStream, decompressedStream;
+		///     {
+		///         Utf8Encoder encoder;
+		///         EncoderStream encoderStream(textStream, encoder);
+		///         StreamWriter writer(encoderStream);
+		///         writer.WriteString(L"Some text to compress.");
+		///     }
+		///     textStream.SeekFromBegin(0);
+		///
+		///     CompressStream(textStream, compressedStream);
+		///     compressedStream.SeekFromBegin(0);
+		///     DecompressStream(compressedStream, decompressedStream);
+		///     decompressedStream.SeekFromBegin(0);
+		///
+		///     Utf8Decoder decoder;
+		///     DecoderStream decoderStream(decompressedStream, decoder);
+		///     StreamReader reader(decoderStream);
+		///     Console::WriteLine(reader.ReadToEnd());
+		/// }
+		/// ]]></example>
+		extern void						CompressStream(stream::IStream& inputStream, stream::IStream& outputStream);
+
+		/// <summary>Decompress data from a <b>readable</b> input stream (with compressed data) to a <b>writable</b> output stream (with uncompressed data).</summary>
+		/// <returns>Data copied in bytes.</returns>
+		/// <param name="inputStream">The <b>readable</b> input stream.</param>
+		/// <param name="outputStream">The <b>writable</b> output stream.</param>
+		/// <remarks>
+		/// Data is compressed in multiple batches,
+		/// the is expected input stream to have data in multiple parts.
+		/// In each part, the first 4 bytes is the data before compression in bytes.
+		/// the rest is the compressed data.
+		/// </remarks>
+		/// <example><![CDATA[
+		/// int main()
+		/// {
+		///     MemoryStream textStream, compressedStream, decompressedStream;
+		///     {
+		///         Utf8Encoder encoder;
+		///         EncoderStream encoderStream(textStream, encoder);
+		///         StreamWriter writer(encoderStream);
+		///         writer.WriteString(L"Some text to compress.");
+		///     }
+		///     textStream.SeekFromBegin(0);
+		///
+		///     CompressStream(textStream, compressedStream);
+		///     compressedStream.SeekFromBegin(0);
+		///     DecompressStream(compressedStream, decompressedStream);
+		///     decompressedStream.SeekFromBegin(0);
+		///
+		///     Utf8Decoder decoder;
+		///     DecoderStream decoderStream(decompressedStream, decoder);
+		///     StreamReader reader(decoderStream);
+		///     Console::WriteLine(reader.ReadToEnd());
+		/// }
+		/// ]]></example>
+		extern void						DecompressStream(stream::IStream& inputStream, stream::IStream& outputStream);
 	}
 }
 
@@ -1429,880 +5532,6 @@ namespace vl
 #endif
 
 /***********************************************************************
-.\STREAM\CHARFORMAT.H
-***********************************************************************/
-/***********************************************************************
-Author: Zihan Chen (vczh)
-Licensed under https://github.com/vczh-libraries/License
-***********************************************************************/
-
-#ifndef VCZH_STREAM_CHARFORMAT
-#define VCZH_STREAM_CHARFORMAT
-
-
-namespace vl
-{
-	namespace stream
-	{
-
-/***********************************************************************
-Helper Functions
-***********************************************************************/
-
-		template<typename T>
-		__forceinline void SwapByteForUtf16BE(T& c)
-		{
-			vuint8_t* bytes = (vuint8_t*)&c;
-			vuint8_t t = bytes[0];
-			bytes[0] = bytes[1];
-			bytes[1] = t;
-		}
-
-		template<typename T>
-		void SwapBytesForUtf16BE(T* _buffer, vint chars)
-		{
-			static_assert(sizeof(T) == sizeof(char16_t));
-			for (vint i = 0; i < chars; i++)
-			{
-				vuint8_t* bytes = (vuint8_t*)(_buffer + i);
-				vuint8_t t = bytes[0];
-				bytes[0] = bytes[1];
-				bytes[1] = t;
-			}
-		}
-
-/***********************************************************************
-WCharToUtfReader
-***********************************************************************/
-
-		class WCharTo32Reader : public encoding::UtfTo32ReaderBase<wchar_t, WCharTo32Reader>
-		{
-			template<typename T, typename TBase>
-			friend class encoding::UtfTo32ReaderBase;
-		protected:
-			const wchar_t* starting = nullptr;
-			const wchar_t* ending = nullptr;
-			const wchar_t* consuming = nullptr;
-
-			wchar_t Consume()
-			{
-				if (consuming == ending) return 0;
-				return *consuming++;
-			}
-
-		public:
-			WCharTo32Reader(const wchar_t* _starting, vint count)
-			{
-				starting = _starting;
-				ending = _starting + count;
-				consuming = _starting;
-			}
-		};
-
-		template<typename TTo>
-		class WCharToUtfReader : public encoding::UtfFrom32ReaderBase<TTo, WCharToUtfReader<TTo>>
-		{
-			template<typename T, typename TBase>
-			friend class encoding::UtfFrom32ReaderBase;
-		protected:
-			WCharTo32Reader internalReader;
-
-			char32_t Consume()
-			{
-				return internalReader.Read();
-			}
-		public:
-			WCharToUtfReader(const wchar_t* _starting, vint count)
-				: internalReader(_starting, count)
-			{
-			}
-
-			bool HasIllegalChar() const
-			{
-				return encoding::UtfFrom32ReaderBase<TTo, WCharToUtfReader<TTo>>::HasIllegalChar() || internalReader.HasIllegalChar();
-			}
-		};
-
-/***********************************************************************
-StreamToWCharReader
-***********************************************************************/
-
-		template<typename TFrom>
-		class StreamToWCharReader : public encoding::UtfFrom32ReaderBase<wchar_t, StreamToWCharReader<TFrom>>
-		{
-			template<typename T, typename TBase>
-			friend class encoding::UtfFrom32ReaderBase;
-
-			class InternalReader : public encoding::UtfTo32ReaderBase<TFrom, InternalReader>
-			{
-			public:
-				IStream* stream = nullptr;
-
-				TFrom Consume()
-				{
-					TFrom c;
-					vint size = stream->Read(&c, sizeof(c));
-					if (size != sizeof(c)) return 0;
-					return c;
-				}
-			};
-		protected:
-			InternalReader internalReader;
-
-			char32_t Consume()
-			{
-				return internalReader.Read();
-			}
-		public:
-
-			void Setup(IStream* _stream)
-			{
-				internalReader.stream = _stream;
-			}
-
-			bool HasIllegalChar() const
-			{
-				return encoding::UtfFrom32ReaderBase<wchar_t, StreamToWCharReader<TFrom>>::HasIllegalChar() || internalReader.HasIllegalChar();
-			}
-		};
-
-		template<>
-		class StreamToWCharReader<char32_t> : public encoding::UtfFrom32ReaderBase<wchar_t, StreamToWCharReader<char32_t>>
-		{
-			template<typename T, typename TBase>
-			friend class encoding::UtfFrom32ReaderBase;
-		protected:
-			IStream* stream = nullptr;
-
-			char32_t Consume()
-			{
-				char32_t c;
-				vint size = stream->Read(&c, sizeof(c));
-				if (size != sizeof(c)) return 0;
-				return c;
-			}
-		public:
-
-			void Setup(IStream* _stream)
-			{
-				stream = _stream;
-			}
-		};
-
-/***********************************************************************
-Utf16BEStreamToWCharReader
-***********************************************************************/
-
-		class Utf16BEStreamToWCharReader : public encoding::UtfFrom32ReaderBase<wchar_t, Utf16BEStreamToWCharReader>
-		{
-			template<typename T, typename TBase>
-			friend class encoding::UtfFrom32ReaderBase;
-
-			class InternalReader : public encoding::UtfTo32ReaderBase<char16_t, InternalReader>
-			{
-			public:
-				IStream* stream = nullptr;
-
-				char16_t Consume()
-				{
-					char16_t c;
-					vint size = stream->Read(&c, sizeof(c));
-					if (size != sizeof(c)) return 0;
-					SwapByteForUtf16BE(c);
-					return c;
-				}
-			};
-		protected:
-			InternalReader internalReader;
-
-			char32_t Consume()
-			{
-				return internalReader.Read();
-			}
-		public:
-
-			void Setup(IStream* _stream)
-			{
-				internalReader.stream = _stream;
-			}
-
-			bool HasIllegalChar() const
-			{
-				return encoding::UtfFrom32ReaderBase<wchar_t, Utf16BEStreamToWCharReader>::HasIllegalChar() || internalReader.HasIllegalChar();
-			}
-		};
-
-/***********************************************************************
-Char Encoder and Decoder
-***********************************************************************/
-
-		/// <summary>Base type of all character encoder.</summary>
-		class CharEncoder : public Object, public IEncoder
-		{
-		protected:
-			IStream*						stream = nullptr;
-			vuint8_t						cacheBuffer[sizeof(char32_t)];
-			vint							cacheSize = 0;
-
-			virtual vint					WriteString(wchar_t* _buffer, vint chars, bool freeToUpdate) = 0;
-		public:
-
-			void							Setup(IStream* _stream);
-			void							Close();
-			vint							Write(void* _buffer, vint _size);
-		};
-		
-		/// <summary>Base type of all character decoder.</summary>
-		class CharDecoder : public Object, public IDecoder
-		{
-		protected:
-			IStream*						stream = nullptr;
-			vuint8_t						cacheBuffer[sizeof(wchar_t)];
-			vint							cacheSize = 0;
-
-			virtual vint					ReadString(wchar_t* _buffer, vint chars) = 0;
-		public:
-
-			void							Setup(IStream* _stream);
-			void							Close();
-			vint							Read(void* _buffer, vint _size);
-		};
-
-/***********************************************************************
-Mbcs
-***********************************************************************/
-		
-		/// <summary>Encoder to write text in the local code page.</summary>
-		class MbcsEncoder : public CharEncoder
-		{
-		protected:
-			vint							WriteString(wchar_t* _buffer, vint chars, bool freeToUpdate);
-		};
-		
-		/// <summary>Decoder to read text in the local code page.</summary>
-		class MbcsDecoder : public CharDecoder
-		{
-		protected:
-			vint							ReadString(wchar_t* _buffer, vint chars);
-		};
-
-/***********************************************************************
-Utf-16
-***********************************************************************/
-		
-		/// <summary>Encoder to write UTF-16 text.</summary>
-		class Utf16Encoder : public CharEncoder
-		{
-		protected:
-			vint							WriteString(wchar_t* _buffer, vint chars, bool freeToUpdate);
-		};
-		
-		/// <summary>Decoder to read UTF-16 text.</summary>
-		class Utf16Decoder : public CharDecoder
-		{
-		protected:
-#if defined VCZH_WCHAR_UTF32
-			StreamToWCharReader<char16_t>	reader;
-#endif
-
-			vint							ReadString(wchar_t* _buffer, vint chars);
-		};
-
-/***********************************************************************
-Utf-16-be
-***********************************************************************/
-		
-		/// <summary>Encoder to write big endian UTF-16 to.</summary>
-		class Utf16BEEncoder : public CharEncoder
-		{
-		protected:
-			vint							WriteString(wchar_t* _buffer, vint chars, bool freeToUpdate);
-		};
-		
-		/// <summary>Decoder to read big endian UTF-16 text.</summary>
-		class Utf16BEDecoder : public CharDecoder
-		{
-		protected:
-			Utf16BEStreamToWCharReader		reader;
-
-			vint							ReadString(wchar_t* _buffer, vint chars);
-		};
-
-/***********************************************************************
-Utf-8
-***********************************************************************/
-		
-		/// <summary>Encoder to write UTF-8 text.</summary>
-		class Utf8Encoder : public CharEncoder
-		{
-		protected:
-			vint							WriteString(wchar_t* _buffer, vint chars, bool freeToUpdate);
-		};
-		
-		/// <summary>Decoder to read UTF-8 text.</summary>
-		class Utf8Decoder : public CharDecoder
-		{
-		protected:
-			StreamToWCharReader<char8_t>	reader;
-
-			vint							ReadString(wchar_t* _buffer, vint chars);
-		public:
-		};
-
-/***********************************************************************
-Utf-32
-***********************************************************************/
-		
-		/// <summary>Encoder to write UTF-8 text.</summary>
-		class Utf32Encoder : public CharEncoder
-		{
-		protected:
-			vint							WriteString(wchar_t* _buffer, vint chars, bool freeToUpdate);
-		};
-		
-		/// <summary>Decoder to read UTF-8 text.</summary>
-		class Utf32Decoder : public CharDecoder
-		{
-		protected:
-#if defined VCZH_WCHAR_UTF16
-			StreamToWCharReader<char32_t>	reader;
-#endif
-
-			vint							ReadString(wchar_t* _buffer, vint chars);
-		public:
-		};
-
-/***********************************************************************
-Bom
-***********************************************************************/
-		
-		/// <summary>Encoder to write text in a specified encoding. A BOM will be added at the beginning.</summary>
-		class BomEncoder : public Object, public IEncoder
-		{
-		public:
-			/// <summary>Text encoding.</summary>
-			enum Encoding
-			{
-				/// <summary>Multi-bytes character string.</summary>
-				Mbcs,
-				/// <summary>UTF-8. EF, BB, BF will be written before writing any text.</summary>
-				Utf8,
-				/// <summary>UTF-16. FF FE will be written before writing any text.</summary>
-				Utf16,
-				/// <summary>Big endian UTF-16. FE FF, BF will be written before writing any text.</summary>
-				Utf16BE
-			};
-		protected:
-			Encoding						encoding;
-			IEncoder*						encoder;
-		public:
-			/// <summary>Create an encoder with a specified encoding.</summary>
-			/// <param name="_encoding">The specified encoding.</param>
-			BomEncoder(Encoding _encoding);
-			~BomEncoder();
-
-			void							Setup(IStream* _stream);
-			void							Close();
-			vint							Write(void* _buffer, vint _size);
-		};
-		
-		/// <summary>Decoder to read text. This decoder depends on BOM at the beginning to decide the format of the input.</summary>
-		class BomDecoder : public Object, public IDecoder
-		{
-		private:
-			class BomStream : public Object, public IStream
-			{
-			protected:
-				IStream*					stream;
-				char						bom[3];
-				vint						bomLength;
-				vint						bomPosition;
-			public:
-				BomStream(IStream* _stream, char* _bom, vint _bomLength);
-
-				bool						CanRead()const;
-				bool						CanWrite()const;
-				bool						CanSeek()const;
-				bool						CanPeek()const;
-				bool						IsLimited()const;
-				bool						IsAvailable()const;
-				void						Close();
-				pos_t						Position()const;
-				pos_t						Size()const;
-				void						Seek(pos_t _size);
-				void						SeekFromBegin(pos_t _size);
-				void						SeekFromEnd(pos_t _size);
-				vint						Read(void* _buffer, vint _size);
-				vint						Write(void* _buffer, vint _size);
-				vint						Peek(void* _buffer, vint _size);
-			};
-		protected:
-			IDecoder*						decoder;
-			IStream*						stream;
-
-		public:
-			/// <summary>Create an decoder, BOM will be consumed before reading any text.</summary>
-			BomDecoder();
-			~BomDecoder();
-
-			void							Setup(IStream* _stream);
-			void							Close();
-			vint							Read(void* _buffer, vint _size);
-		};
-
-/***********************************************************************
-Encoding Test
-***********************************************************************/
-
-		/// <summary>Guess the text encoding in a buffer.</summary>
-		/// <param name="buffer">The buffer to guess.</param>
-		/// <param name="size">Size of the buffer in bytes.</param>
-		/// <param name="encoding">Returns the most possible encoding.</param>
-		/// <param name="containsBom">Returns true if the BOM information is at the beginning of the buffer.</param>
-		extern void							TestEncoding(unsigned char* buffer, vint size, BomEncoder::Encoding& encoding, bool& containsBom);
-	}
-}
-
-#endif
-
-
-/***********************************************************************
-.\FILESYSTEM.H
-***********************************************************************/
-/***********************************************************************
-Author: Zihan Chen (vczh)
-Licensed under https://github.com/vczh-libraries/License
-***********************************************************************/
-
-#ifndef VCZH_FILESYSTEM
-#define VCZH_FILESYSTEM
-
-
-namespace vl
-{
-	namespace filesystem
-	{
-		/// <summary>Absolute file path.</summary>
-		class FilePath : public Object
-		{
-		protected:
-			WString						fullPath;
-
-			static void					NormalizeDelimiters(collections::Array<wchar_t>& buffer);
-			static void					TrimLastDelimiter(WString& fullPath);
-			void						Initialize();
-
-			static void					GetPathComponents(WString path, collections::List<WString>& components);
-			static WString				ComponentsToPath(const collections::List<WString>& components);
-		public:
-#if defined VCZH_MSVC
-			/// <summary>The delimiter character used in a file path</summary>
-			/// <remarks>
-			/// In Windows, it is "\".
-			/// In Linux and macOS, it is "/".
-			/// But you can always use "/", it is also supported in Windows.
-			/// </remarks>
-			static const wchar_t		Delimiter = L'\\';
-#elif defined VCZH_GCC
-			static const wchar_t		Delimiter = L'/';
-#endif
-
-			/// <summary>Create a root path.</summary>
-			/// <remarks><see cref="GetFullPath"/> returns different values for root path on different platforms. Do not rely on the value.</remarks>
-			FilePath() = default;
-			/// <summary>Create a file path.</summary>
-			/// <param name="_filePath">Content of the file path. If it is a relative path, it will be converted to an absolute path.</param>
-			FilePath(const WString& _filePath);
-			/// <summary>Create a file path.</summary>
-			/// <param name="_filePath">Content of the file path. If it is a relative path, it will be converted to an absolute path.</param>
-			FilePath(const wchar_t* _filePath);
-			/// <summary>Copy a file path.</summary>
-			/// <param name="_filePath">The file path to copy.</param>
-			FilePath(const FilePath& _filePath);
-			~FilePath() = default;
-
-			std::strong_ordering		operator<=>(const FilePath& path)const { return fullPath <=> path.fullPath; }
-			bool						operator==(const FilePath& path)const { return fullPath == path.fullPath; }
-
-			/// <summary>Concat an absolute path and a relative path.</summary>
-			/// <returns>The result absolute path.</returns>
-			/// <param name="relativePath">The relative path to concat.</param>
-			FilePath					operator/(const WString& relativePath)const;
-
-			/// <summary>Test if the file path is a file.</summary>
-			/// <returns>Returns true if the file path is a file.</returns>
-			bool						IsFile()const;
-			/// <summary>Test if the file path is a folder.</summary>
-			/// <returns>Returns true if the file path is a folder.</returns>
-			/// <remarks>In Windows, a drive is also considered a folder.</remarks>
-			bool						IsFolder()const;
-			/// <summary>Test if the file path is a the root of all file system objects.</summary>
-			/// <returns>Returns true if the file path is the root of all file system objects.</returns>
-			bool						IsRoot()const;
-
-			/// <summary>Get the last piece of names in the file path.</summary>
-			/// <returns>The last piece of names in the file path.</returns>
-			WString						GetName()const;
-			/// <summary>Get the containing folder of this file path.</summary>
-			/// <returns>The containing folder.</returns>
-			FilePath					GetFolder()const;
-			/// <summary>Get the content of the file path.</summary>
-			/// <returns>The content of the file path.</returns>
-			WString						GetFullPath()const;
-			/// <summary>Calculate the relative path based on a specified referencing folder.</summary>
-			/// <returns>The relative path.</returns>
-			/// <param name="_filePath">The referencing folder.</param>
-			WString						GetRelativePathFor(const FilePath& _filePath);
-
-		};
-
-		/// <summary>A file.</summary>
-		class File : public Object
-		{
-		private:
-			FilePath					filePath;
-
-		public:
-			/// <summary>Create an empty reference. An empty reference does not refer to any file.</summary>
-			File() = default;
-			/// <summary>Create a reference to a specified file. The file is not required to exist.</summary>
-			/// <param name="_filePath">The specified file.</param>
-			File(const FilePath& _filePath);
-			~File() = default;
-
-			/// <summary>Get the file path of the file.</summary>
-			/// <returns>The file path.</returns>
-			const FilePath&				GetFilePath()const;
-
-			/// <summary>Get the content of a text file with encoding testing.</summary>
-			/// <returns>Returns true if this operation succeeded.</returns>
-			/// <param name="text">Returns the content of the file.</param>
-			/// <param name="encoding">Returns the encoding of the file.</param>
-			/// <param name="containsBom">Returns true if there is a BOM in the file.</param>
-			bool						ReadAllTextWithEncodingTesting(WString& text, stream::BomEncoder::Encoding& encoding, bool& containsBom);
-			/// <summary>Get the content of a text file. If there is no BOM in the file, the encoding is assumed to be aligned to the current code page.</summary>
-			/// <returns>The content of the file.</returns>
-			WString						ReadAllTextByBom()const;
-			/// <summary>Get the content of a text file.</summary>
-			/// <returns>Returns true if this operation succeeded.</returns>
-			/// <param name="text">The content of the file.</param>
-			bool						ReadAllTextByBom(WString& text)const;
-			/// <summary>Get the content of a text file by lines.</summary>
-			/// <returns>Returns true if this operation succeeded.</returns>
-			/// <param name="lines">The content of the file by lines.</param>
-			/// <remarks>
-			/// Lines could be separated by either CRLF or LF.
-			/// A text file is not required to ends with CRLF.
-			/// If the last character of the file is LF,
-			/// the last line is the line before LF.
-			/// </remarks>
-			bool						ReadAllLinesByBom(collections::List<WString>& lines)const;
-
-			/// <summary>Write text to the file.</summary>
-			/// <returns>Returns true if this operation succeeded.</returns>
-			/// <param name="text">The text to write.</param>
-			/// <param name="bom">Set to true to add a corresponding BOM at the beginning of the file according to the encoding, the default value is true.</param>
-			/// <param name="encoding">The text encoding, the default encoding is UTF-16.</param>
-			bool						WriteAllText(const WString& text, bool bom = true, stream::BomEncoder::Encoding encoding = stream::BomEncoder::Utf16);
-			/// <summary>Write text to the file.</summary>
-			/// <returns>Returns true if this operation succeeded.</returns>
-			/// <param name="lines">The text to write, with CRLF appended after all lines.</param>
-			/// <param name="bom">Set to true to add a corresponding BOM at the beginning of the file according to the encoding, the default value is true.</param>
-			/// <param name="encoding">The text encoding, the default encoding is UTF-16.</param>
-			bool						WriteAllLines(collections::List<WString>& lines, bool bom = true, stream::BomEncoder::Encoding encoding = stream::BomEncoder::Utf16);
-			
-			/// <summary>Test does the file exist or not.</summary>
-			/// <returns>Returns true if the file exists.</returns>
-			bool						Exists()const;
-			/// <summary>Delete the file.</summary>
-			/// <returns>Returns true if this operation succeeded.</returns>
-			/// <remarks>This function could return before the file is actually deleted.</remarks>
-			bool						Delete()const;
-			/// <summary>Rename the file.</summary>
-			/// <returns>Returns true if this operation succeeded.</returns>
-			/// <param name="newName">The new file name.</param>
-			bool						Rename(const WString& newName)const;
-		};
-		
-		/// <summary>A folder.</summary>
-		/// <remarks>In Windows, a drive is also considered a folder.</remarks>
-		class Folder : public Object
-		{
-		private:
-			FilePath					filePath;
-
-			bool						CreateNonRecursively()const;
-			bool						DeleteNonRecursively()const;
-		public:
-			/// <summary>Create a reference to the root folder.</summary>
-			Folder() = default;
-			/// <summary>Create a reference to a specified folder. The folder is not required to exist.</summary>
-			/// <param name="_filePath">The specified folder.</param>
-			Folder(const FilePath& _filePath);
-			~Folder() = default;
-			
-			/// <summary>Get the file path of the folder.</summary>
-			/// <returns>The file path.</returns>
-			const FilePath&				GetFilePath()const;
-			/// <summary>Get all folders in this folder.</summary>
-			/// <returns>Returns true if this operation succeeded.</returns>
-			/// <param name="folders">All folders.</param>
-			/// <remarks>In Windows, drives are considered sub folders in the root folder.</remarks>
-			bool						GetFolders(collections::List<Folder>& folders)const;
-			/// <summary>Get all files in this folder.</summary>
-			/// <returns>Returns true if this operation succeeded.</returns>
-			/// <param name="files">All files.</param>
-			bool						GetFiles(collections::List<File>& files)const;
-			
-			/// <summary>Test does the folder exist or not.</summary>
-			/// <returns>Returns true if the folder exists.</returns>
-			bool						Exists()const;
-			/// <summary>Create the folder.</summary>
-			/// <returns>Returns true if this operation succeeded.</returns>
-			/// <param name="recursively">Set to true to create all levels of containing folders if they do not exist.</param>
-			/// <remarks>
-			/// This function could return before the folder is actually created.
-			/// If "recursively" is false, this function will only attempt to create the specified folder directly,
-			/// it fails if the containing folder does not exist.
-			/// </remarks>
-			bool						Create(bool recursively)const;
-			/// <summary>Delete the folder.</summary>
-			/// <returns>Returns true if this operation succeeded.</returns>
-			/// <param name="recursively">Set to true to delete everything in the folder.</param>
-			/// <remarks>This function could return before the folder is actually deleted.</remarks>
-			bool						Delete(bool recursively)const;
-			/// <summary>Rename the folder.</summary>
-			/// <returns>Returns true if this operation succeeded.</returns>
-			/// <param name="newName">The new folder name.</param>
-			bool						Rename(const WString& newName)const;
-		};
-	}
-}
-
-#endif
-
-
-/***********************************************************************
-.\STREAM\COMPRESSIONSTREAM.H
-***********************************************************************/
-/***********************************************************************
-Author: Zihan Chen (vczh)
-Licensed under https://github.com/vczh-libraries/License
-***********************************************************************/
-
-#ifndef VCZH_STREAM_COMPRESSIONSTREAM
-#define VCZH_STREAM_COMPRESSIONSTREAM
-
-
-namespace vl
-{
-	namespace stream
-	{
-
-/***********************************************************************
-Compression
-***********************************************************************/
-
-		namespace lzw
-		{
-			static const vint						BufferSize = 1024;
-			static const vint						MaxDictionarySize = 1 << 24;
-
-			struct Code
-			{
-				typedef collections::PushOnlyAllocator<Code>			CodeAllocator;
-				typedef collections::ByteObjectMap<Code>::Allocator		MapAllocator;
-
-				vuint8_t							byte = 0;
-				vint								code = -1;
-				Code*								parent = 0;
-				vint								size = 0;
-				collections::ByteObjectMap<Code>	children;
-			};
-		}
-
-		class LzwBase : public Object
-		{
-		protected:
-			lzw::Code::CodeAllocator				codeAllocator;
-			lzw::Code::MapAllocator					mapAllocator;
-			lzw::Code*								root;
-			vint									eofIndex = -1;
-			vint									nextIndex = 0;
-			vint									indexBits = 1;
-
-			void									UpdateIndexBits();
-			lzw::Code*								CreateCode(lzw::Code* parent, vuint8_t byte);
-
-			LzwBase();
-			LzwBase(bool (&existingBytes)[256]);
-			~LzwBase();
-		};
-
-		/// <summary>An encoder to compress data using the Lzw algorithm.</summary>
-		/// <remarks>
-		/// You are not recommended to compress data more than 1 mega bytes at once using the encoder directly.
-		/// <see cref="CompressStream"/> and <see cref="DecompressStream"/> is recommended.
-		/// </remarks>
-		class LzwEncoder : public LzwBase, public IEncoder
-		{
-		protected:
-			IStream*								stream = 0;
-
-			vuint8_t								buffer[lzw::BufferSize];
-			vint									bufferUsedBits = 0;
-			lzw::Code*								prefix;
-
-			void									Flush();
-			void									WriteNumber(vint number, vint bitSize);
-		public:
-			/// <summary>Create an encoder.</summary>
-			LzwEncoder();
-			/// <summary>Create an encoder, specifying what bytes will never appear in the data to compress.</summary>
-			/// <param name="existingBytes">
-			/// A filter array
-			/// If existingBytes[x] == true, it means x will possibly appear.
-			/// If existingBytes[x] == false, it means x will never appear.
-			/// </param>
-			/// <remarks>
-			/// The behavior is undefined, if existingBytes[x] == false, but byte x is actually in the data to compress.
-			/// </remarks>
-			LzwEncoder(bool (&existingBytes)[256]);
-			~LzwEncoder();
-
-			void									Setup(IStream* _stream)override;
-			void									Close()override;
-			vint									Write(void* _buffer, vint _size)override;
-		};
-		
-		/// <summary>An decoder to decompress data using the Lzw algorithm.</summary>
-		/// <remarks>
-		/// You are not recommended to compress data more than 1 mega bytes at once using the encoder directly.
-		/// <see cref="CompressStream"/> and <see cref="DecompressStream"/> is recommended.
-		/// </remarks>
-		class LzwDecoder :public LzwBase, public IDecoder
-		{
-		protected:
-			IStream*								stream = 0;
-			collections::List<lzw::Code*>			dictionary;
-			lzw::Code*								lastCode = 0;
-
-			vuint8_t								inputBuffer[lzw::BufferSize];
-			vint									inputBufferSize = 0;
-			vint									inputBufferUsedBits = 0;
-
-			collections::Array<vuint8_t>			outputBuffer;
-			vint									outputBufferSize = 0;
-			vint									outputBufferUsedBytes = 0;
-
-			bool									ReadNumber(vint& number, vint bitSize);
-			void									PrepareOutputBuffer(vint size);
-			void									ExpandCodeToOutputBuffer(lzw::Code* code);
-		public:
-			/// <summary>Create a decoder.</summary>
-			LzwDecoder();
-			/// <summary>Create an encoder, specifying what bytes will never appear in the decompressed data.</summary>
-			/// <param name="existingBytes">
-			/// A filter array
-			/// If existingBytes[x] == true, it means x will possibly appear.
-			/// If existingBytes[x] == false, it means x will never appear.
-			/// </param>
-			/// <remarks>
-			/// The array "existingBytes" should exactly match the one given to <see cref="LzwEncoder"/>.
-			/// </remarks>
-			LzwDecoder(bool (&existingBytes)[256]);
-			~LzwDecoder();
-
-			void									Setup(IStream* _stream)override;
-			void									Close()override;
-			vint									Read(void* _buffer, vint _size)override;
-		};
-
-/***********************************************************************
-Helper Functions
-***********************************************************************/
-
-		/// <summary>Copy data from a <b>readable</b> input stream to a <b>writable</b> output stream.</summary>
-		/// <returns>Data copied in bytes.</returns>
-		/// <param name="inputStream">The <b>readable</b> input stream.</param>
-		/// <param name="outputStream">The <b>writable</b> output stream.</param>
-		extern vint						CopyStream(stream::IStream& inputStream, stream::IStream& outputStream);
-
-		/// <summary>Compress data from a <b>readable</b> input stream to a <b>writable</b> output stream.</summary>
-		/// <returns>Data copied in bytes.</returns>
-		/// <param name="inputStream">The <b>readable</b> input stream.</param>
-		/// <param name="outputStream">The <b>writable</b> output stream.</param>
-		/// <remarks>
-		/// Data is compressed in multiple batches,
-		/// the is expected output stream to have data in multiple parts.
-		/// In each part, the first 4 bytes is the data before compression in bytes.
-		/// the rest is the compressed data.
-		/// </remarks>
-		/// <example><![CDATA[
-		/// int main()
-		/// {
-		///     MemoryStream textStream, compressedStream, decompressedStream;
-		///     {
-		///         Utf8Encoder encoder;
-		///         EncoderStream encoderStream(textStream, encoder);
-		///         StreamWriter writer(encoderStream);
-		///         writer.WriteString(L"Some text to compress.");
-		///     }
-		///     textStream.SeekFromBegin(0);
-		///
-		///     CompressStream(textStream, compressedStream);
-		///     compressedStream.SeekFromBegin(0);
-		///     DecompressStream(compressedStream, decompressedStream);
-		///     decompressedStream.SeekFromBegin(0);
-		///
-		///     Utf8Decoder decoder;
-		///     DecoderStream decoderStream(decompressedStream, decoder);
-		///     StreamReader reader(decoderStream);
-		///     Console::WriteLine(reader.ReadToEnd());
-		/// }
-		/// ]]></example>
-		extern void						CompressStream(stream::IStream& inputStream, stream::IStream& outputStream);
-
-		/// <summary>Decompress data from a <b>readable</b> input stream (with compressed data) to a <b>writable</b> output stream (with uncompressed data).</summary>
-		/// <returns>Data copied in bytes.</returns>
-		/// <param name="inputStream">The <b>readable</b> input stream.</param>
-		/// <param name="outputStream">The <b>writable</b> output stream.</param>
-		/// <remarks>
-		/// Data is compressed in multiple batches,
-		/// the is expected input stream to have data in multiple parts.
-		/// In each part, the first 4 bytes is the data before compression in bytes.
-		/// the rest is the compressed data.
-		/// </remarks>
-		/// <example><![CDATA[
-		/// int main()
-		/// {
-		///     MemoryStream textStream, compressedStream, decompressedStream;
-		///     {
-		///         Utf8Encoder encoder;
-		///         EncoderStream encoderStream(textStream, encoder);
-		///         StreamWriter writer(encoderStream);
-		///         writer.WriteString(L"Some text to compress.");
-		///     }
-		///     textStream.SeekFromBegin(0);
-		///
-		///     CompressStream(textStream, compressedStream);
-		///     compressedStream.SeekFromBegin(0);
-		///     DecompressStream(compressedStream, decompressedStream);
-		///     decompressedStream.SeekFromBegin(0);
-		///
-		///     Utf8Decoder decoder;
-		///     DecoderStream decoderStream(decompressedStream, decoder);
-		///     StreamReader reader(decoderStream);
-		///     Console::WriteLine(reader.ReadToEnd());
-		/// }
-		/// ]]></example>
-		extern void						DecompressStream(stream::IStream& inputStream, stream::IStream& outputStream);
-	}
-}
-
-#endif
-
-/***********************************************************************
 .\STREAM\ENCODINGSTREAM.H
 ***********************************************************************/
 /***********************************************************************
@@ -2407,6 +5636,22 @@ namespace vl
 {
 	namespace stream
 	{
+		/// <summary>Platform-specific file stream implementation interface.</summary>
+		class IFileStreamImpl : public virtual Interface
+		{
+		public:
+			virtual bool			Open() = 0;
+			virtual void			Close() = 0;
+			virtual pos_t			Position() const = 0;
+			virtual pos_t			Size() const = 0;
+			virtual void			Seek(pos_t _size) = 0;
+			virtual void			SeekFromBegin(pos_t _size) = 0;
+			virtual void			SeekFromEnd(pos_t _size) = 0;
+			virtual vint			Read(void* _buffer, vint _size) = 0;
+			virtual vint			Write(void* _buffer, vint _size) = 0;
+			virtual vint			Peek(void* _buffer, vint _size) = 0;
+		};
+
 		/// <summary>A file stream. If the given file name is not working, the stream could be <b>unavailable</b>.</summary>
 		class FileStream : public Object, public virtual IStream
 		{
@@ -2423,7 +5668,7 @@ namespace vl
 			};
 		protected:
 			AccessRight				accessRight;
-			FILE*					file;
+			Ptr<IFileStreamImpl>	impl;
 		public:
 			/// <summary>Create a file stream from a given file name.</summary>
 			/// <param name="fileName">The file to operate.</param>
@@ -2451,6 +5696,301 @@ namespace vl
 }
 
 #endif
+
+/***********************************************************************
+.\FILESYSTEM.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_FILESYSTEM
+#define VCZH_FILESYSTEM
+
+
+namespace vl
+{
+	namespace filesystem
+	{
+		/// <summary>Metadata of an existing file or folder. Unavailable times are empty; all available times are UTC.</summary>
+		/// <remarks>Access flags describe the current process. Unsupported native attribute flags are false. Symbolic links are followed when target metadata is accessible, except for isSymbolicLink and isReparsePoint.</remarks>
+		struct FileInfo
+		{
+			vuint64_t					size = 0;
+			vuint64_t					hardLinkCount = 0;
+			Nullable<DateTime>			creationTime;
+			Nullable<DateTime>			lastAccessTime;
+			Nullable<DateTime>			lastModifiedTime;
+			Nullable<DateTime>			lastChangeTime;
+			bool						isDirectory = false;
+			bool						isSymbolicLink = false;
+			bool						isReparsePoint = false;
+			bool						canRead = false;
+			bool						canWrite = false;
+			bool						canExecute = false;
+			bool						isReadOnly = false;
+			bool						isHidden = false;
+			bool						isSystem = false;
+			bool						isArchive = false;
+			bool						isCompressed = false;
+			bool						isEncrypted = false;
+			bool						isSparse = false;
+			bool						isTemporary = false;
+			bool						isOffline = false;
+			bool						isNotContentIndexed = false;
+			bool						isImmutable = false;
+			bool						isAppendOnly = false;
+		};
+
+		/// <summary>Absolute file path.</summary>
+		class FilePath : public Object
+		{
+			friend class LinuxFileSystemImpl;
+			friend class OpfsFileSystemImpl;
+			friend class WindowsFileSystemImpl;
+		protected:
+			WString						fullPath;
+
+			static void					NormalizeDelimiters(collections::Array<wchar_t>& buffer);
+			static void					TrimLastDelimiter(WString& fullPath);
+			void						Initialize();
+
+			static void					GetPathComponents(WString path, collections::List<WString>& components);
+			static WString				ComponentsToPath(const collections::List<WString>& components);
+		public:
+			/// <summary>Get the delimiter character used in a file path.</summary>
+			static wchar_t				GetPathDelimiter();
+			/// <summary>Test whether a path is already in normalized absolute form, without resolving symbolic links.</summary>
+			/// <param name="path">The path to compare with its normalized full path.</param>
+			/// <returns>True when normalization does not change the path.</returns>
+			static bool					IsAbsolutePath(const WString& path);
+
+			/// <summary>Create a root path.</summary>
+			/// <remarks><see cref="GetFullPath"/> returns different values for root path on different platforms. Do not rely on the value.</remarks>
+			FilePath();
+			/// <summary>Create a file path.</summary>
+			/// <param name="_filePath">Content of the file path. If it is a relative path, it will be converted to an absolute path.</param>
+			FilePath(const WString& _filePath);
+			/// <summary>Create a file path.</summary>
+			/// <param name="_filePath">Content of the file path. If it is a relative path, it will be converted to an absolute path.</param>
+			FilePath(const wchar_t* _filePath);
+			/// <summary>Copy a file path.</summary>
+			/// <param name="_filePath">The file path to copy.</param>
+			FilePath(const FilePath& _filePath);
+			~FilePath() = default;
+
+			std::strong_ordering		operator<=>(const FilePath& path)const { return fullPath <=> path.fullPath; }
+			bool						operator==(const FilePath& path)const { return fullPath == path.fullPath; }
+
+			/// <summary>Concat an absolute path and a relative path.</summary>
+			/// <returns>The result absolute path.</returns>
+			/// <param name="relativePath">The relative path to concat.</param>
+			FilePath					operator/(const WString& relativePath)const;
+
+			/// <summary>Test if the file path is a file.</summary>
+			/// <returns>Returns true if the file path is a file.</returns>
+			bool						IsFile()const;
+			/// <summary>Test if the file path is a folder.</summary>
+			/// <returns>Returns true if the file path is a folder.</returns>
+			/// <remarks>In Windows, a drive is also considered a folder.</remarks>
+			bool						IsFolder()const;
+			/// <summary>Test if the file path is a the root of all file system objects.</summary>
+			/// <returns>Returns true if the file path is the root of all file system objects.</returns>
+			bool						IsRoot()const;
+
+			/// <summary>Get the last piece of names in the file path.</summary>
+			/// <returns>The last piece of names in the file path.</returns>
+			WString						GetName()const;
+			/// <summary>Get the containing folder of this file path.</summary>
+			/// <returns>The containing folder.</returns>
+			FilePath					GetFolder()const;
+			/// <summary>Get the content of the file path.</summary>
+			/// <returns>The content of the file path.</returns>
+			WString						GetFullPath()const;
+			/// <summary>Calculate the relative path based on a specified referencing folder.</summary>
+			/// <returns>The relative path.</returns>
+			/// <param name="_filePath">The referencing folder.</param>
+			WString						GetRelativePathFor(const FilePath& _filePath)const;
+
+		};
+
+		/// <summary>A file.</summary>
+		class File : public Object
+		{
+		private:
+			FilePath					filePath;
+
+		public:
+			/// <summary>Create an empty reference. An empty reference does not refer to any file.</summary>
+			File() = default;
+			/// <summary>Create a reference to a specified file. The file is not required to exist.</summary>
+			/// <param name="_filePath">The specified file.</param>
+			File(const FilePath& _filePath);
+			~File() = default;
+
+			/// <summary>Get the file path of the file.</summary>
+			/// <returns>The file path.</returns>
+			const FilePath&				GetFilePath()const;
+			/// <summary>Get metadata. Raises an error if the file does not exist or metadata cannot be read.</summary>
+			/// <returns>The file metadata.</returns>
+			FileInfo					GetFileInfo()const;
+			/// <summary>Copy this file into a folder, retaining its name and supported native metadata.</summary>
+			/// <param name="destination">The destination folder.</param>
+			/// <param name="recursively">Allow creating missing destination folders.</param>
+			/// <returns>False if copying or preserving supported metadata fails.</returns>
+			bool						CopyToFolder(const FilePath& destination, bool recursively)const;
+			/// <summary>Copy this file to another path, overwriting an existing file and preserving supported native metadata.</summary>
+			/// <param name="destination">The destination file.</param>
+			/// <param name="recursively">Allow creating missing containing folders.</param>
+			/// <returns>False on any I/O failure, an identical source/destination, or an unsupported copy operation.</returns>
+			/// <remarks>Follows symbolic links. Copies can leave partial output on failure. Metadata preservation depends on the native filesystem; immutable identity/change times cannot always be copied.</remarks>
+			bool						CopyToFile(const FilePath& destination, bool recursively)const;
+
+			/// <summary>Get the content of a text file with encoding testing.</summary>
+			/// <returns>Returns true if this operation succeeded.</returns>
+			/// <param name="text">Returns the content of the file.</param>
+			/// <param name="encoding">Returns the encoding of the file.</param>
+			/// <param name="containsBom">Returns true if there is a BOM in the file.</param>
+			bool						ReadAllTextWithEncodingTesting(WString& text, stream::BomEncoder::Encoding& encoding, bool& containsBom);
+			/// <summary>Get the content of a text file. If there is no BOM in the file, the encoding is assumed to be aligned to the current code page.</summary>
+			/// <returns>The content of the file.</returns>
+			WString						ReadAllTextByBom()const;
+			/// <summary>Get the content of a text file.</summary>
+			/// <returns>Returns true if this operation succeeded.</returns>
+			/// <param name="text">The content of the file.</param>
+			bool						ReadAllTextByBom(WString& text)const;
+			/// <summary>Get the content of a text file by lines.</summary>
+			/// <returns>Returns true if this operation succeeded.</returns>
+			/// <param name="lines">The content of the file by lines.</param>
+			/// <remarks>
+			/// Lines could be separated by either CRLF or LF.
+			/// A text file is not required to ends with CRLF.
+			/// If the last character of the file is LF,
+			/// the last line is the line before LF.
+			/// </remarks>
+			bool						ReadAllLinesByBom(collections::List<WString>& lines)const;
+
+			/// <summary>Write text to the file.</summary>
+			/// <returns>Returns true if this operation succeeded.</returns>
+			/// <param name="text">The text to write.</param>
+			/// <param name="bom">Set to true to add a corresponding BOM at the beginning of the file according to the encoding, the default value is true.</param>
+			/// <param name="encoding">The text encoding, the default encoding is UTF-16.</param>
+			bool						WriteAllText(const WString& text, bool bom = true, stream::BomEncoder::Encoding encoding = stream::BomEncoder::Utf16);
+			/// <summary>Write text to the file.</summary>
+			/// <returns>Returns true if this operation succeeded.</returns>
+			/// <param name="lines">The text to write, with CRLF appended after all lines.</param>
+			/// <param name="bom">Set to true to add a corresponding BOM at the beginning of the file according to the encoding, the default value is true.</param>
+			/// <param name="encoding">The text encoding, the default encoding is UTF-16.</param>
+			bool						WriteAllLines(collections::List<WString>& lines, bool bom = true, stream::BomEncoder::Encoding encoding = stream::BomEncoder::Utf16);
+			
+			/// <summary>Test does the file exist or not.</summary>
+			/// <returns>Returns true if the file exists.</returns>
+			bool						Exists()const;
+			/// <summary>Delete the file.</summary>
+			/// <returns>Returns true if this operation succeeded.</returns>
+			/// <remarks>This function could return before the file is actually deleted.</remarks>
+			bool						Delete()const;
+			/// <summary>Rename the file.</summary>
+			/// <returns>Returns true if this operation succeeded.</returns>
+			/// <param name="newName">The new file name.</param>
+			bool						Rename(const WString& newName)const;
+		};
+		
+		/// <summary>A folder.</summary>
+		/// <remarks>In Windows, a drive is also considered a folder.</remarks>
+		class Folder : public Object
+		{
+		private:
+			FilePath					filePath;
+
+			bool						CreateNonRecursively()const;
+			bool						DeleteNonRecursively()const;
+		public:
+			/// <summary>Create a reference to the root folder.</summary>
+			Folder() = default;
+			/// <summary>Create a reference to a specified folder. The folder is not required to exist.</summary>
+			/// <param name="_filePath">The specified folder.</param>
+			Folder(const FilePath& _filePath);
+			~Folder() = default;
+			
+			/// <summary>Get the file path of the folder.</summary>
+			/// <returns>The file path.</returns>
+			const FilePath&				GetFilePath()const;
+			/// <summary>Get metadata. Raises an error if the folder does not exist or metadata cannot be read.</summary>
+			/// <returns>The folder metadata.</returns>
+			FileInfo					GetFileInfo()const;
+			/// <summary>Get all folders in this folder.</summary>
+			/// <returns>Returns true if this operation succeeded.</returns>
+			/// <param name="folders">All folders.</param>
+			/// <remarks>In Windows, drives are considered sub folders in the root folder.</remarks>
+			bool						GetFolders(collections::List<Folder>& folders)const;
+			/// <summary>Get all files in this folder.</summary>
+			/// <returns>Returns true if this operation succeeded.</returns>
+			/// <param name="files">All files.</param>
+			bool						GetFiles(collections::List<File>& files)const;
+			
+			/// <summary>Test does the folder exist or not.</summary>
+			/// <returns>Returns true if the folder exists.</returns>
+			bool						Exists()const;
+			/// <summary>Create the folder.</summary>
+			/// <returns>Returns true if this operation succeeded.</returns>
+			/// <param name="recursively">Set to true to create all levels of containing folders if they do not exist.</param>
+			/// <remarks>
+			/// This function could return before the folder is actually created.
+			/// If "recursively" is false, this function will only attempt to create the specified folder directly,
+			/// it fails if the containing folder does not exist.
+			/// </remarks>
+			bool						Create(bool recursively)const;
+			/// <summary>Delete the folder.</summary>
+			/// <returns>Returns true if this operation succeeded.</returns>
+			/// <param name="recursively">Set to true to delete everything in the folder.</param>
+			/// <remarks>This function could return before the folder is actually deleted.</remarks>
+			bool						Delete(bool recursively)const;
+			/// <summary>Rename the folder.</summary>
+			/// <returns>Returns true if this operation succeeded.</returns>
+			/// <param name="newName">The new folder name.</param>
+			bool						Rename(const WString& newName)const;
+		};
+
+		/// <summary>Platform-specific file system implementation interface.</summary>
+		class IFileSystemImpl : public virtual feature_injection::IFeatureImpl
+		{
+		public:
+			// FilePath operations
+			virtual wchar_t GetPathDelimiter() const = 0;
+			virtual const wchar_t* GetCompatibleDelimiters() const = 0;
+			virtual WString ConcatPath(const WString& fullPath, const WString& relativePath) const = 0;
+			virtual void Initialize(WString& fullPath) const = 0;
+			virtual bool IsFile(const WString& fullPath) const = 0;
+			virtual bool IsFolder(const WString& fullPath) const = 0;
+			virtual bool IsRoot(const WString& fullPath) const = 0;
+			virtual WString GetRelativePathFor(const WString& fromPath, const WString& toPath) const = 0;
+			
+			// File operations
+			virtual FileInfo GetFileInfo(const FilePath& path) const = 0;
+			virtual bool FileCopy(const FilePath& source, const FilePath& destination) const = 0;
+			virtual bool FileDelete(const FilePath& filePath) const = 0;
+			virtual bool FileRename(const FilePath& filePath, const WString& newName) const = 0;
+			
+			// Folder operations
+			virtual bool GetFolders(const FilePath& folderPath, collections::List<Folder>& folders) const = 0;
+			virtual bool GetFiles(const FilePath& folderPath, collections::List<File>& files) const = 0;
+			virtual bool CreateFolder(const FilePath& folderPath) const = 0;
+			virtual bool DeleteFolder(const FilePath& folderPath) const = 0;
+			virtual bool FolderRename(const FilePath& folderPath, const WString& newName) const = 0;
+			
+			// Stream operations
+			virtual Ptr<stream::IFileStreamImpl> GetFileStreamImpl(const WString& fileName, stream::FileStream::AccessRight accessRight) const = 0;
+		};
+
+		extern void InjectFileSystemImpl(IFileSystemImpl* impl);
+		extern void EjectFileSystemImpl(IFileSystemImpl* impl);
+	}
+}
+
+#endif
+
 
 /***********************************************************************
 .\STREAM\MEMORYSTREAM.H
@@ -2533,69 +6073,73 @@ Text Related
 ***********************************************************************/
 
 		/// <summary>Text reader. All line breaks are normalized to CRLF regardless whatever in the input stream.</summary>
-		class TextReader : public Object
+		/// <typeparam name="T">The character type.</typeparam>
+		template<typename T>
+		class TextReader_ : public Object
 		{
 		public:
-			NOT_COPYABLE(TextReader);
-			TextReader() = default;
+			NOT_COPYABLE(TextReader_);
+			TextReader_() = default;
 
 			/// <summary>Test does the reader reach the end or not.</summary>
 			/// <returns>Returns true if the reader reaches the end.</returns>
 			virtual bool				IsEnd()=0;
 			/// <summary>Read a single character.</summary>
 			/// <returns>The character.</returns>
-			virtual wchar_t				ReadChar()=0;
+			virtual T					ReadChar()=0;
 			/// <summary>Read a string of a specified size in characters.</summary>
 			/// <returns>The read string. It could be shorter than the expected length if the reader reaches the end.</returns>
 			/// <param name="length">Expected length of the string to read.</param>
-			virtual WString				ReadString(vint length);
+			virtual ObjectString<T>		ReadString(vint length);
 			/// <summary>Read a string until a line breaks is reached.</summary>
 			/// <returns>The string without the line break. If the reader reaches the end, it returns an empty string.</returns>
-			virtual WString				ReadLine();
+			virtual ObjectString<T>		ReadLine();
 			/// <summary>Read everying remain.</summary>
 			/// <returns>The read string.</returns>
-			virtual WString				ReadToEnd();
+			virtual ObjectString<T>		ReadToEnd();
 		};
 		
 		/// <summary>Text writer.</summary>
-		class TextWriter : public Object
+		/// <typeparam name="T">The character type.</typeparam>
+		template<typename T>
+		class TextWriter_ : public Object
 		{
 		public:
-			NOT_COPYABLE(TextWriter);
-			TextWriter() = default;
+			NOT_COPYABLE(TextWriter_);
+			TextWriter_() = default;
 
 			/// <summary>Write a single character.</summary>
 			/// <param name="c">The character to write.</param>
-			virtual void				WriteChar(wchar_t c)=0;
+			virtual void				WriteChar(T c)=0;
 			/// <summary>Write a string.</summary>
 			/// <param name="string">Buffer of the string to write.</param>
 			/// <param name="charCount">Size of the string in characters, not including the zero terminator.</param>
-			virtual void				WriteString(const wchar_t* string, vint charCount);
+			virtual void				WriteString(const T* string, vint charCount);
 			/// <summary>Write a string.</summary>
 			/// <param name="string">Buffer of the zero terminated string to write.</param>
-			virtual void				WriteString(const wchar_t* string);
+			virtual void				WriteString(const T* string);
 			/// <summary>Write a string.</summary>
 			/// <param name="string">The string to write.</param>
-			virtual void				WriteString(const WString& string);
+			virtual void				WriteString(const ObjectString<T>& string);
 			/// <summary>Write a string with a CRLF.</summary>
 			/// <param name="string">Buffer to the string to write.</param>
 			/// <param name="charCount">Size of the string in characters, not including the zero terminator.</param>
-			virtual void				WriteLine(const wchar_t* string, vint charCount);
+			virtual void				WriteLine(const T* string, vint charCount);
 			/// <summary>Write a string with a CRLF.</summary>
 			/// <param name="string">Buffer to the zero terminated string to write.</param>
-			virtual void				WriteLine(const wchar_t* string);
+			virtual void				WriteLine(const T* string);
 			/// <summary>Write a string with a CRLF.</summary>
 			/// <param name="string">The string to write.</param>
-			virtual void				WriteLine(const WString& string);
-
-			virtual void				WriteMonospacedEnglishTable(collections::Array<WString>& tableByRow, vint rows, vint columns);
+			virtual void				WriteLine(const ObjectString<T>& string);
 		};
 
 		/// <summary>Text reader from a string.</summary>
-		class StringReader : public TextReader
+		/// <typeparam name="T">The character type.</typeparam>
+		template<typename T>
+		class StringReader_ : public TextReader_<T>
 		{
 		protected:
-			WString						string;
+			ObjectString<T>				string;
 			vint						current;
 			bool						lastCallIsReadLine;
 
@@ -2603,21 +6147,22 @@ Text Related
 		public:
 			/// <summary>Create a text reader.</summary>
 			/// <param name="_string">The string to read.</param>
-			StringReader(const WString& _string);
+			StringReader_(const ObjectString<T>& _string);
 
 			bool						IsEnd();
-			wchar_t						ReadChar();
-			WString						ReadString(vint length);
-			WString						ReadLine();
-			WString						ReadToEnd();
+			T							ReadChar();
+			ObjectString<T>				ReadString(vint length);
+			ObjectString<T>				ReadLine();
+			ObjectString<T>				ReadToEnd();
 		};
-		
+
 		/// <summary>
-		/// Text reader from a stream storing characters in wchar_t.
+		/// Text reader from a stream storing characters in code point.
 		/// </summary>
+		/// <typeparam name="T">The character type.</typeparam>
 		/// <remarks>
 		/// To specify the encoding in the input stream,
-		/// you are recommended to create a <see cref="DecoderStream"/> with a <see cref="CharDecoder"/>,
+		/// you are recommended to create a <see cref="DecoderStream"/> with a <see cref="UtfGeneralDecoder"/> implementation,
 		/// like <see cref="BomDecoder"/>, <see cref="MbcsDecoder"/>, <see cref="Utf16Decoder"/>, <see cref="Utf16BEDecoder"/> or <see cref="Utf8Decoder"/>.
 		/// </remarks>
 		/// <example output="false"><![CDATA[
@@ -2630,25 +6175,27 @@ Text Related
 		///     Console::WriteLine(reader.ReadToEnd());
 		/// }
 		/// ]]></example>
-		class StreamReader : public TextReader
+		template<typename T>
+		class StreamReader_ : public TextReader_<T>
 		{
 		protected:
 			IStream*					stream;
 		public:
 			/// <summary>Create a text reader.</summary>
 			/// <param name="_stream">The stream to read.</param>
-			StreamReader(IStream& _stream);
+			StreamReader_(IStream& _stream);
 
 			bool						IsEnd();
-			wchar_t						ReadChar();
+			T							ReadChar();
 		};
 
 		/// <summary>
-		/// Text reader from a stream storing characters in wchar_t.
+		/// Text reader from a stream storing characters in code point.
 		/// </summary>
+		/// <typeparam name="T">The character type.</typeparam>
 		/// <remarks>
 		/// To specify the encoding in the input stream,
-		/// you are recommended to create a <see cref="EncoderStream"/> with a <see cref="CharEncoder"/>,
+		/// you are recommended to create a <see cref="EncoderStream"/> with a <see cref="UtfGeneralEncoder"/> implementation,
 		/// like <see cref="BomEncoder"/>, <see cref="MbcsEncoder"/>, <see cref="Utf16Encoder"/>, <see cref="Utf16BEEncoder"/> or <see cref="Utf8Encoder"/>.
 		/// </remarks>
 		/// <example output="false"><![CDATA[
@@ -2661,23 +6208,61 @@ Text Related
 		///     writer.Write(L"Hello, world!");
 		/// }
 		/// ]]></example>
-		class StreamWriter : public TextWriter
+		template<typename T>
+		class StreamWriter_ : public TextWriter_<T>
 		{
 		protected:
-			IStream*					stream;
+			IStream* stream;
 		public:
 			/// <summary>Create a text writer.</summary>
 			/// <param name="_stream">The stream to write.</param>
-			StreamWriter(IStream& _stream);
-			using TextWriter::WriteString;
+			StreamWriter_(IStream& _stream);
+			using TextWriter_<T>::WriteString;
 
-			void						WriteChar(wchar_t c);
-			void						WriteString(const wchar_t* string, vint charCount);
+			void						WriteChar(T c);
+			void						WriteString(const T* string, vint charCount);
 		};
+
+/***********************************************************************
+Extern Templates
+***********************************************************************/
+
+		extern template class TextReader_<wchar_t>;
+		extern template class TextReader_<char8_t>;
+		extern template class TextReader_<char16_t>;
+		extern template class TextReader_<char32_t>;
+
+		extern template class TextWriter_<wchar_t>;
+		extern template class TextWriter_<char8_t>;
+		extern template class TextWriter_<char16_t>;
+		extern template class TextWriter_<char32_t>;
+
+		extern template class StringReader_<wchar_t>;
+		extern template class StringReader_<char8_t>;
+		extern template class StringReader_<char16_t>;
+		extern template class StringReader_<char32_t>;
+
+		extern template class StreamReader_<wchar_t>;
+		extern template class StreamReader_<char8_t>;
+		extern template class StreamReader_<char16_t>;
+		extern template class StreamReader_<char32_t>;
+
+		extern template class StreamWriter_<wchar_t>;
+		extern template class StreamWriter_<char8_t>;
+		extern template class StreamWriter_<char16_t>;
+		extern template class StreamWriter_<char32_t>;
 
 /***********************************************************************
 Helper Functions
 ***********************************************************************/
+
+		using TextReader = TextReader_<wchar_t>;
+		using TextWriter = TextWriter_<wchar_t>;
+		using StringReader = StringReader_<wchar_t>;
+		using StreamReader = StreamReader_<wchar_t>;
+		using StreamWriter = StreamWriter_<wchar_t>;
+
+		void WriteMonospacedEnglishTable(TextWriter& writer, collections::Array<WString>& tableByRow, vint rows, vint columns);
 
 		/// <summary>
 		/// Build a big string using <see cref="StreamWriter"/>.
@@ -3030,6 +6615,14 @@ Serialization (floats)
 					return value ? -1 : 0;
 				}
 			};
+
+/***********************************************************************
+Serialization (enum)
+***********************************************************************/
+
+			template<typename T>
+				requires(std::is_enum_v<T>)
+			struct Serialization<T> : Serialization_Conversion<T, vint64_t> {};
 
 /***********************************************************************
 Serialization (strings)
@@ -3386,28 +6979,1732 @@ Serialization (macros)
 				}\
 			};\
 
-#define SERIALIZE_ENUM(TYPE)\
-			template<>\
-			struct Serialization<TYPE>\
-			{\
-				template<typename TContext>\
-				static void IO(Reader<TContext>& reader, TYPE& value)\
-				{\
-					vint32_t v = 0;\
-					Serialization<vint32_t>::IO(reader, v);\
-					value = (TYPE)v;\
-				}\
-				template<typename TContext>\
-				static void IO(Writer<TContext>& writer, TYPE& value)\
-				{\
-					vint32_t v = (vint32_t)value;\
-					Serialization<vint32_t>::IO(writer, v);\
-				}\
-			};\
-
 		}
 	}
 }
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\ASYNCSOCKET\HTTPREQUEST.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+  IHttpRequest(Connection|Callback)
+
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_ASYNCSOCKET_HTTPREQUEST
+#define VCZH_INTERPROCESS_ASYNCSOCKET_HTTPREQUEST
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+namespace vl::inter_process::async_tcp_socket
+{
+	constexpr vint HttpIncompleteMessageTimeout = 30 * 1000;
+	constexpr vint HttpRequestLineSizeLimit = 8 * 1024;
+	constexpr vint HttpHeaderBlockSizeLimit = 64 * 1024;
+	constexpr vint HttpBodySizeLimit = 16 * 1024 * 1024;
+	constexpr vint HttpChunkSizeLineLimit = 4 * 1024;
+	constexpr vint HttpTrailerBlockSizeLimit = 64 * 1024;
+
+	struct HttpVersion
+	{
+		vint							major = 1;
+		vint							minor = 1;
+	};
+
+	struct HttpField
+	{
+		WString							name;
+		collections::Array<vuint8_t>		value;
+	};
+
+	enum class HttpFramingKind
+	{
+		None,
+		ContentLength,
+		Chunked,
+	};
+
+	enum class HttpFramingAnalysisResult
+	{
+		Succeeded,
+		Invalid,
+		UnsupportedTransferCoding,
+	};
+
+	struct HttpFraming
+	{
+		HttpFramingKind					kind = HttpFramingKind::None;
+		vuint64_t						contentLength = 0;
+		vint							contentLengthFieldCount = 0;
+		vint							contentLengthValueCount = 0;
+		bool							contentLengthValuesPlainDecimal = true;
+		bool							connectionClose = false;
+	};
+
+	struct HttpBodyChunk
+	{
+		collections::Array<vuint8_t>		data;
+	};
+
+	struct HttpBody
+	{
+		collections::List<HttpBodyChunk>	chunks;
+		collections::List<HttpField>		trailers;
+	};
+
+	extern HttpFramingAnalysisResult	AnalyzeHttpFraming(const collections::List<HttpField>& fields, HttpFraming& framing);
+	extern const HttpField*				FindHttpField(const collections::List<HttpField>& fields, const WString& normalizedName);
+	extern vint							CountHttpFields(const collections::List<HttpField>& fields, const WString& normalizedName);
+	extern HttpField						CreateAsciiHttpField(const WString& name, const WString& value);
+	extern bool							DecodeAsciiHttpFieldValue(const collections::Array<vuint8_t>& value, WString& text);
+	extern bool							HttpFieldValueEqualsAscii(const collections::Array<vuint8_t>& value, const WString& expected);
+	extern bool							TryGetHttpBodySize(const HttpBody& body, vint& size);
+	extern bool							FlattenHttpBody(const HttpBody& body, collections::Array<vuint8_t>& bytes);
+	extern void							SetHttpBodyBytes(HttpBody& body, collections::Array<vuint8_t>&& bytes);
+	extern bool							EncodeStrictUtf8(const WString& text, collections::Array<vuint8_t>& bytes);
+	extern bool							DecodeStrictUtf8(const vuint8_t* bytes, vint count, WString& text);
+
+	enum class HttpRequestLineValidationResult
+	{
+		Succeeded,
+		InvalidMethod,
+		InvalidRequestTarget,
+		TooLong,
+	};
+
+	extern HttpRequestLineValidationResult	ValidateHttpRequestLine(const WString& method, const WString& requestTarget);
+
+	class HttpRequest : public Object
+	{
+	public:
+		HttpVersion						version;
+		WString							method;
+		WString							requestTarget;
+		collections::List<HttpField>		headers;
+		HttpBody						body;
+	};
+
+	class HttpResponse : public Object
+	{
+	public:
+		HttpVersion						version;
+		vint							statusCode = 200;
+		WString							reason;
+		collections::List<HttpField>		headers;
+		HttpBody						body;
+	};
+
+	enum class HttpResponseFailure
+	{
+		NotFound = 404,
+	};
+
+	enum class HttpRequestBodyParsingResult
+	{
+		Succeeded,
+		Incomplete,
+		Invalid,
+	};
+
+	enum class HttpRequestFailure
+	{
+		BadRequest = 400,
+		RequestTimeout = 408,
+		PayloadTooLarge = 413,
+		UriTooLong = 414,
+		ExpectationFailed = 417,
+		RequestHeaderFieldsTooLarge = 431,
+		NotImplemented = 501,
+		HttpVersionNotSupported = 505,
+	};
+
+	extern HttpRequestBodyParsingResult		ParseHttpRequestBodyToChunks(
+		const vuint8_t*						buffer,
+		vint							availableBytes,
+		HttpBody&						output,
+		vint&							consumedBytes
+		);
+
+	class IHttpRequestConnection;
+
+	class IHttpRequestCallback : public virtual Interface
+	{
+	public:
+		virtual void						OnReadRequest(Ptr<HttpRequest> request);
+		virtual void						OnReadRequestFailure(HttpRequestFailure failure);
+		virtual void						OnReadResponse(Ptr<HttpResponse> response);
+		virtual void						OnReadResponseFailure(HttpResponseFailure failure);
+		virtual void						OnWriteCompleted();
+		virtual void						OnError(const WString& error, bool fatal);
+		virtual void						OnConnected();
+		virtual void						OnDisconnected();
+		virtual void						OnInstalled(IHttpRequestConnection* connection) = 0;
+	};
+
+	class IHttpRequestConnection : public virtual Interface
+	{
+	public:
+		virtual void						InstallCallback(IHttpRequestCallback* callback) = 0;
+		virtual void						BeginReadingLoopUnsafe() = 0;
+		virtual void						SendRequest(Ptr<HttpRequest> request, vint responseTimeout = HttpIncompleteMessageTimeout) = 0;
+		virtual void						SendResponse(Ptr<HttpResponse> response) = 0;
+		virtual void						Stop() = 0;
+	};
+}
+
+#endif
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\NETWORKPROTOCOLHTTP.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+	HttpRequest
+	HttpResponse
+	HttpError
+
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_NETWORKPROTOCOLHTTP
+#define VCZH_INTERPROCESS_NETWORKPROTOCOLHTTP
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+namespace vl::inter_process
+{
+	/*
+	* GET: /Connect
+	* Creates a new logical connection and returns its request and response URLs.
+	* Repeated calls create separate logical connections.
+	*/
+	constexpr const wchar_t* HttpServerUrl_Connect = L"/VlppInterProcess/Connect";
+
+	/*
+	* POST: /Request/GUID
+	* Client should always maintain a living request on the server.
+	*
+	* Returns only when a request is issued.
+	* It will be pending or timeout if no request is issued.
+	* If a request is issued but no living request available, it waits.
+	*/
+	constexpr const wchar_t* HttpServerUrl_Request = L"/VlppInterProcess/Request";
+
+	/*
+	* POST: /Response/GUID
+	* To send responses or events to the server.
+	* May return one queued server message in the same HTTP response.
+	*/
+	constexpr const wchar_t* HttpServerUrl_Response = L"/VlppInterProcess/Response";
+
+	constexpr const wchar_t* HttpNetworkProtocolContentType = L"application/json; charset=utf8";
+	constexpr vint HttpNetworkProtocolPollAcknowledgementTimeout = 5 * 1000;
+
+	class IHttpRequestTimeoutController : public virtual Interface
+	{
+	public:
+		virtual void Arm(vint milliseconds, const Func<void()>& callback) = 0;
+		virtual void Refresh() = 0;
+		virtual void CancelAndWait() = 0;
+	};
+
+	extern Ptr<IHttpRequestTimeoutController> CreateHttpRequestTimeoutController();
+
+	extern WString HttpUrlEncodeQuery(const WString& query);
+	extern WString HttpUrlDecodeQuery(const WString& query);
+	extern WString CreateHttpNetworkProtocolConnectBody(const WString& requestPath, const WString& responsePath);
+	extern bool ParseHttpNetworkProtocolConnectBody(const WString& body, WString& requestPath, WString& responsePath);
+	extern bool ValidateHttpNetworkProtocolBaseUrl(const WString& baseUrl);
+	extern bool ValidateHttpNetworkProtocolEndpointPath(const WString& path);
+	extern bool IsValidHttpNetworkProtocolMessage(const WString& message);
+}
+
+namespace vl::inter_process::windows_http
+{
+	/// <summary>An http request.</summary>
+	class HttpRequest
+	{
+		typedef collections::Array<char>					BodyBuffer;
+		typedef collections::List<WString>					StringList;
+		typedef collections::Dictionary<WString, WString>	HeaderMap;
+	public:
+		/// <summary>Query of the request, like "/index.html".</summary>
+		WString												query;
+		/// <summary>Set to true if the request uses SSL, or https.</summary>
+		bool												secure = false;
+		/// <summary>User name to authorize. Set to empty if authorization is not needed.</summary>
+		WString												username;
+		/// <summary>Password to authorize. Set to empty if authorization is not needed.</summary>
+		WString												password;
+		/// <summary>HTTP method, like "GET", "POST", "PUT", "DELETE", etc.</summary>
+		WString												method;
+		/// <summary>Cookie. Set to empty if cookie is not needed.</summary>
+		WString												cookie;
+		/// <summary>Request body. This is a byte array.</summary>
+		BodyBuffer											body;
+		/// <summary>Content type, like "text/xml".</summary>
+		WString												contentType;
+		/// <summary>Accept type list, elements like "text/xml".</summary>
+		StringList											acceptTypes;
+		/// <summary>A dictionary to contain extra headers.</summary>
+		HeaderMap											extraHeaders;
+		/// <summary>Set to true to let this request finish when <see cref="HttpClientApi.Stop"/> is called.</summary>
+		bool												keepAliveOnStop = false;
+		/// <summary>Timeout for resolving the host name. 0 or -1 means infinite.</summary>
+		vint												resolveTimeout = 0;
+		/// <summary>Timeout for connecting to the server. 0 or -1 means infinite.</summary>
+		vint												connectTimeout = 60000;
+		/// <summary>Timeout for sending the request. 0 or -1 means infinite.</summary>
+		vint												sendTimeout = 30000;
+		/// <summary>Timeout for receiving the response. 0 or -1 means infinite.</summary>
+		vint												receiveTimeout = 30000;
+
+		HttpRequest() = default;
+		void												SetBodyUtf8(const WString& bodyString);
+	};
+
+	/// <summary>A type representing an http response.</summary>
+	class HttpResponse
+	{
+		typedef collections::Array<char>					BodyBuffer;
+	public:
+		/// <summary>Status code, like 200.</summary>
+		vint												statusCode = 0;
+		/// <summary>Response body. This is a byte array.</summary>
+		BodyBuffer											body;
+		/// <summary>Returned cookie from the server.</summary>
+		WString												cookie;
+		/// <summary>Returned content type from the server.</summary>
+		WString												contentType;
+
+		HttpResponse() = default;
+		bool												TryGetBodyUtf8(WString& bodyString) const;
+		WString												GetBodyUtf8() const;
+	};
+
+	/// <summary>A transport error reported by the underlying HTTP implementation.</summary>
+	class HttpError
+	{
+	public:
+		vuint32_t											errorCode = 0;
+		WString												operation;
+		WString												message;
+	};
+}
+
+namespace vl::inter_process
+{
+	extern windows_http::HttpRequest CreateHttpNetworkProtocolConnectRequest(const WString& target);
+	extern windows_http::HttpRequest CreateHttpNetworkProtocolReceiveRequest(const WString& target);
+	extern windows_http::HttpRequest CreateHttpNetworkProtocolSendRequest(const WString& target, const collections::Array<char>& body);
+}
+
+#endif
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\ASYNCSOCKET\ASYNCSOCKET_HTTPREQUEST.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Async Socket HTTP/1.1 Connection
+
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_ASYNCSOCKET_HTTPREQUESTIMPL
+#define VCZH_INTERPROCESS_ASYNCSOCKET_HTTPREQUESTIMPL
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+namespace vl::inter_process::async_tcp_socket
+{
+	enum class HttpRequestConnectionDirection
+	{
+		Server,
+		Client,
+	};
+
+	class HttpRequestCallbackDomain : public Object
+	{
+	public:
+		struct CallbackFrame;
+
+	private:
+		static thread_local CallbackFrame*	currentCallbackFrame;
+		CriticalSection						lockState;
+		ConditionVariable					cvState;
+		vint							activeCallbacks = 0;
+
+	public:
+		struct CallbackFrame
+		{
+			Ptr<HttpRequestCallbackDomain>		domain;
+			CallbackFrame*					previous = nullptr;
+
+			CallbackFrame(Ptr<HttpRequestCallbackDomain> _domain);
+			~CallbackFrame();
+		};
+
+		vint							CurrentCallbackDepth();
+		void							WaitForCallbacks(vint callbackDepth);
+	};
+
+	class HttpRequestConnectionLifecycle;
+
+	class HttpRequestConnection final
+		: public Object
+		, public virtual IHttpRequestConnection
+		, public virtual IAsyncSocketCallback
+	{
+	private:
+		using Lifecycle = HttpRequestConnectionLifecycle;
+		struct CallbackFrame;
+		struct SocketCallbackFrame;
+		struct TimeoutCallbackFrame;
+		static thread_local CallbackFrame*	currentCallbackFrame;
+		static thread_local SocketCallbackFrame*
+										currentSocketCallbackFrame;
+		static thread_local TimeoutCallbackFrame*
+										currentTimeoutCallbackFrame;
+
+		Ptr<Lifecycle>						lifecycle;
+
+		static vint						CurrentCallbackDepth(Ptr<Lifecycle> state);
+		static vint						CurrentSocketCallbackDepth(Ptr<Lifecycle> state);
+		static vint						CurrentTimeoutCallbackDepth(Ptr<Lifecycle> state);
+		static void						FinishSocketCall(Ptr<Lifecycle> state);
+
+		template<typename TCallback>
+		static void						InvokeHttpCallback(Ptr<Lifecycle> state, bool allowTerminal, TCallback&& invoke);
+
+		static void						SubmitWrite(Ptr<Lifecycle> state, IAsyncSocketConnection* connection, Ptr<AsyncSocketBuffer> buffer);
+		static void						InstallTimeout(Ptr<Lifecycle> state, vint milliseconds, const WString& error);
+		static void						RefreshTimeout(Ptr<Lifecycle> state);
+		static void						ReportRequestFailure(Ptr<Lifecycle> state, HttpRequestFailure failure, bool timeoutOnly = false, bool reserved = false);
+		static void						ReportResponseFailure(Ptr<Lifecycle> state, HttpResponseFailure failure);
+		static void						DeliverResponse(Ptr<Lifecycle> state, Ptr<HttpResponse> response, bool closeAfterDelivery);
+		static void						ProcessBufferedInput(Ptr<Lifecycle> state);
+		static void						NotifyDisconnected(Ptr<Lifecycle> state);
+		static void						StopConnection(Ptr<Lifecycle> state, Ptr<Object> retainedAdapter = nullptr);
+		static void						ReportFatalError(Ptr<Lifecycle> state, const WString& error);
+
+	public:
+		HttpRequestConnection(
+			IAsyncSocketConnection* connection,
+			HttpRequestConnectionDirection direction,
+			Ptr<HttpRequestCallbackDomain> callbackDomain = nullptr,
+			Ptr<IHttpRequestTimeoutController> timeoutController = nullptr,
+			bool responseNotFoundIsFatal = false
+			);
+		~HttpRequestConnection();
+
+		void							RetainUntilStopped(Ptr<HttpRequestConnection> retainedAdapter, const Func<void()>& drainedCallback);
+		void							StopWithRetainedAdapter(Ptr<HttpRequestConnection> retainedAdapter);
+		bool							IsInsideCallback();
+
+		void							InstallCallback(IHttpRequestCallback* callback) override;
+		void							BeginReadingLoopUnsafe() override;
+		void							SendRequest(Ptr<HttpRequest> request, vint responseTimeout = HttpIncompleteMessageTimeout) override;
+		void							SendResponse(Ptr<HttpResponse> response) override;
+		void							Stop() override;
+
+		void							OnRead(const vuint8_t* buffer, vint size) override;
+		void							OnWriteCompleted(Ptr<AsyncSocketBuffer> buffer) override;
+		void							OnError(const WString& error, bool fatal) override;
+		void							OnConnected() override;
+		void							OnDisconnected() override;
+		void							OnInstalled(IAsyncSocketConnection* connection) override;
+	};
+}
+
+#endif
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\ASYNCSOCKET\ASYNCSOCKET_HTTPREQUESTCLIENT.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+	HttpRequestClient
+
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_ASYNCSOCKET_HTTPREQUESTCLIENT
+#define VCZH_INTERPROCESS_ASYNCSOCKET_HTTPREQUESTCLIENT
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+namespace vl::inter_process::async_tcp_socket
+{
+	/// <summary>Adapts an asynchronous TCP client to one HTTP/1.1 request connection.</summary>
+	class HttpRequestClient : public Object
+	{
+	private:
+		class Impl;
+		Ptr<Impl>							impl;
+
+	public:
+		/// <remarks>Requiring an asynchronous socket client is intentional. The caller selects and owns the transport composition, and this request adapter never creates or replaces the supplied client. Keep this dependency explicit; do not add internal client creation.</remarks>
+		explicit HttpRequestClient(Ptr<IAsyncSocketClient> client);
+		virtual ~HttpRequestClient();
+
+		virtual IHttpRequestConnection*		GetConnection();
+		virtual void							WaitForServer();
+		virtual ClientStatus					GetStatus();
+	};
+}
+
+#endif
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\ASYNCSOCKET\ASYNCSOCKET_HTTPREQUESTSERVER.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+	HttpRequestServer
+
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_ASYNCSOCKET_HTTPREQUESTSERVER
+#define VCZH_INTERPROCESS_ASYNCSOCKET_HTTPREQUESTSERVER
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+namespace vl::inter_process::async_tcp_socket
+{
+	/// <summary>Adapts an asynchronous TCP server to HTTP/1.1 request connections.</summary>
+	class HttpRequestServer : public Object
+	{
+	private:
+		class Impl;
+		Ptr<Impl>							impl;
+
+	protected:
+		virtual void							OnServerStopped();
+		HttpRequestServer(
+			Ptr<IAsyncSocketServer> server,
+			const Func<Ptr<IHttpRequestTimeoutController>()>& timeoutControllerFactory
+			);
+
+	public:
+		/// <remarks>Requiring an asynchronous socket server is intentional. The caller selects and owns the transport composition, and this request adapter never creates or replaces the supplied server. Keep this dependency explicit; do not add internal server creation.</remarks>
+		explicit HttpRequestServer(Ptr<IAsyncSocketServer> server);
+		/// <remarks>A derived destructor must call <see cref="Stop"/> before destroying any state accessed by <see cref="OnClientConnected"/>.</remarks>
+		virtual ~HttpRequestServer();
+
+		virtual WaitForClientResult			OnClientConnected(Ptr<IHttpRequestConnection> connection);
+		void							Start();
+		void							Stop();
+		bool							IsStopped();
+	};
+}
+
+#endif
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\ASYNCSOCKET\ASYNCSOCKET_HTTPSERVERAPI.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+	SocketHttp(ServerApi|RequestContext)
+
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_ASYNCSOCKET_HTTPSERVERAPI
+#define VCZH_INTERPROCESS_ASYNCSOCKET_HTTPSERVERAPI
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+namespace vl::inter_process::async_tcp_socket
+{
+	class SocketHttpServerApi;
+	class SocketHttpServerApiDispatcher;
+
+	class SocketHttpRequestContext : public Object
+	{
+		friend class SocketHttpServerApiDispatcher;
+
+		class Impl;
+		Ptr<Impl>							impl;
+
+		SocketHttpRequestContext(Ptr<Impl> _impl);
+
+	public:
+		~SocketHttpRequestContext();
+
+		SocketHttpRequestContext(const SocketHttpRequestContext&) = delete;
+		SocketHttpRequestContext(SocketHttpRequestContext&&) = delete;
+		SocketHttpRequestContext& operator=(const SocketHttpRequestContext&) = delete;
+		SocketHttpRequestContext& operator=(SocketHttpRequestContext&&) = delete;
+
+		Ptr<HttpRequest>					GetRequest();
+		WString								GetRelativePath();
+		WString								GetQuery();
+		bool								TryGetBodyUtf8(WString& body);
+
+		bool								Respond(
+			Ptr<HttpResponse> response,
+			Func<void(bool)> completion = {}
+			);
+		bool								RespondStatus(
+			vint statusCode,
+			const WString& reason,
+			Func<void(bool)> completion = {}
+			);
+		bool								RespondBytes(
+			vint statusCode,
+			const WString& reason,
+			const WString& contentType,
+			const collections::Array<vuint8_t>& body,
+			Func<void(bool)> completion = {}
+			);
+		bool								RespondUtf8(
+			vint statusCode,
+			const WString& reason,
+			const WString& contentType,
+			const WString& body,
+			Func<void(bool)> completion = {}
+			);
+		bool								Cancel();
+	};
+
+	class SocketHttpServerApi : public Object
+	{
+		friend class SocketHttpServerApiDispatcher;
+
+		class Impl;
+		Ptr<Impl>							impl;
+
+	protected:
+		virtual void						OnHttpRequestReceived(
+			Ptr<SocketHttpRequestContext> context
+			) = 0;
+		virtual void						OnHttpServerStopping();
+
+	public:
+		/// <remarks>Requiring an asynchronous socket server is intentional. The caller selects and owns the transport composition, the port comes from the supplied server, and multiple APIs share one listener only by receiving the same server. Keep this dependency explicit; do not add internal server creation.</remarks>
+		SocketHttpServerApi(
+			Ptr<IAsyncSocketServer> server,
+			const WString& urlPrefix,
+			bool respondToOptions = true
+			);
+		virtual ~SocketHttpServerApi();
+
+		SocketHttpServerApi(const SocketHttpServerApi&) = delete;
+		SocketHttpServerApi(SocketHttpServerApi&&) = delete;
+		SocketHttpServerApi& operator=(const SocketHttpServerApi&) = delete;
+		SocketHttpServerApi& operator=(SocketHttpServerApi&&) = delete;
+
+		void								Start();
+		void								Stop();
+		bool								IsStopped();
+		WString								GetUrlPrefix();
+	};
+}
+
+#endif
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\ASYNCSOCKET\ASYNCSOCKET_HTTPSERVER.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+	SocketHttpServer
+
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_ASYNCSOCKET_HTTPSERVER
+#define VCZH_INTERPROCESS_ASYNCSOCKET_HTTPSERVER
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+namespace vl::inter_process::async_tcp_socket
+{
+	class SocketHttpServer
+		: public SocketHttpServerApi
+		, public virtual INetworkProtocolServer
+	{
+		class Impl;
+		Ptr<Impl>							impl;
+
+	protected:
+		void								OnHttpRequestReceived(Ptr<SocketHttpRequestContext> context) override;
+		void								OnHttpServerStopping() override;
+
+	public:
+		/// <remarks>Requiring an asynchronous socket server is intentional. This protocol adapter takes its port from the server, forwards the caller-selected transport to <see cref="SocketHttpServerApi"/>, and never creates another server. Keep this dependency explicit; do not add an overload that selects a platform server internally.</remarks>
+		SocketHttpServer(Ptr<IAsyncSocketServer> server, const WString& urlPrefix);
+		~SocketHttpServer();
+
+		SocketHttpServer(const SocketHttpServer&) = delete;
+		SocketHttpServer(SocketHttpServer&&) = delete;
+		SocketHttpServer& operator=(const SocketHttpServer&) = delete;
+		SocketHttpServer& operator=(SocketHttpServer&&) = delete;
+
+		virtual WaitForClientResult			OnClientConnected(Ptr<INetworkProtocolConnection> connection) override;
+		void								Start() override;
+		void								Stop() override;
+		bool								IsStopped() override;
+	};
+}
+
+#endif
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\ASYNCSOCKET\ASYNCSOCKET_HTTPCLIENTAPI.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+	SocketHttpClientApi
+
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_ASYNCSOCKET_HTTPCLIENTAPI
+#define VCZH_INTERPROCESS_ASYNCSOCKET_HTTPCLIENTAPI
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+namespace vl::inter_process::async_tcp_socket
+{
+	enum class SocketHttpClientErrorCode : vuint32_t
+	{
+		InvalidRequest = 1,
+		Stopped = 2,
+		Transport = 3,
+		UnsupportedCoding = 4,
+		ResponseNotFound = 5,
+	};
+
+	class SocketHttpClientApi : public Object
+	{
+		class Impl;
+		Ptr<Impl>							impl;
+
+	public:
+		/// <remarks>Requiring an asynchronous socket client is intentional. The caller selects and owns the transport composition, the client supplies its locked-in port, and this API never creates or replaces it. Keep this dependency explicit; do not add internal client creation.</remarks>
+		SocketHttpClientApi(
+			Ptr<IAsyncSocketClient> client,
+			const WString& server
+			);
+		~SocketHttpClientApi();
+
+		SocketHttpClientApi(const SocketHttpClientApi&) = delete;
+		SocketHttpClientApi(SocketHttpClientApi&&) = delete;
+		SocketHttpClientApi& operator=(const SocketHttpClientApi&) = delete;
+		SocketHttpClientApi& operator=(SocketHttpClientApi&&) = delete;
+
+		void								WaitForServer();
+		ClientStatus						GetStatus();
+		/// <summary>Send an HTTP request on the injected socket connection.</summary>
+		/// <remarks>The injected socket owns name-resolution, connection, and send-phase timing. Only <see cref="windows_http::HttpRequest.receiveTimeout"/> controls the response deadline for this exchange.</remarks>
+		void								HttpQuery(
+			const windows_http::HttpRequest& request,
+			Func<void(Variant<
+				windows_http::HttpResponse,
+				windows_http::HttpError
+				>)> callback
+			);
+		void								Stop();
+
+		static WString						UrlEncodeQuery(const WString& query);
+		static WString						UrlDecodeQuery(const WString& query);
+	};
+}
+
+#endif
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\ASYNCSOCKET\ASYNCSOCKET_HTTPCLIENT.H
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+	SocketHttpClient
+
+***********************************************************************/
+
+#ifndef VCZH_INTERPROCESS_ASYNCSOCKET_HTTPCLIENT
+#define VCZH_INTERPROCESS_ASYNCSOCKET_HTTPCLIENT
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+namespace vl::inter_process::async_tcp_socket
+{
+	class SocketHttpClient
+		: public Object
+		, public virtual INetworkProtocolClient
+		, public virtual INetworkProtocolConnection
+	{
+		class Impl;
+		Ptr<Impl>						impl;
+
+	public:
+		/// <remarks>Requiring an asynchronous socket client is intentional. The supplied client is used directly for the first physical lane and creates fresh same-endpoint clients for the second lane and transport recovery. Keep this dependency explicit; do not add a factory parameter or select a platform socket internally.</remarks>
+		SocketHttpClient(
+			Ptr<IAsyncSocketClient> client,
+			const WString& server,
+			const WString& urlPrefix
+			);
+		~SocketHttpClient();
+
+		SocketHttpClient(const SocketHttpClient&) = delete;
+		SocketHttpClient(SocketHttpClient&&) = delete;
+		SocketHttpClient& operator=(const SocketHttpClient&) = delete;
+		SocketHttpClient& operator=(SocketHttpClient&&) = delete;
+
+		INetworkProtocolConnection*		GetConnection() override;
+		void							WaitForServer() override;
+		ClientStatus					GetStatus() override;
+		void							InstallCallback(INetworkProtocolCallback* callback) override;
+		void							BeginReadingLoopUnsafe() override;
+		void							SendString(const WString& str) override;
+		void							Stop() override;
+	};
+}
+
+#endif
+
+#endif
+
+
+
+/***********************************************************************
+.\INTERPROCESS\STDIOREDIRECTION\STDIOREDIRECTION.H
+***********************************************************************/
+#ifndef VCZH_INTERPROCESS_STDIOREDIRECTION
+#define VCZH_INTERPROCESS_STDIOREDIRECTION
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+namespace vl::inter_process::stdio_redirection
+{
+	class IStdioRedirectionProcess : public virtual Interface
+	{
+	public:
+		virtual vint								Read(vuint8_t* buffer, vint size, WString& errorMessage) = 0;
+		virtual bool								Write(const vuint8_t* buffer, vint size, WString& errorMessage) = 0;
+		virtual void								CloseInput() = 0;
+		virtual void								CloseOutput() = 0;
+		virtual void								WaitForExit() = 0;
+	};
+
+	extern Ptr<IStdioRedirectionProcess>				CreateStdioRedirectionProcess(const WString& command);
+
+	class StdioRedirectionConnection
+		: public Object
+		, public virtual INetworkProtocolConnection
+	{
+		class Lifecycle;
+		struct CallbackFrame;
+
+		static thread_local CallbackFrame*			currentCallbackFrame;
+		Ptr<Lifecycle>								lifecycle;
+
+		static vint								CurrentCallbackDepth(Ptr<Lifecycle> state);
+		static void								InvokeCallback(Ptr<Lifecycle> state, bool allowTerminal, const Func<void(INetworkProtocolCallback*)>& callback);
+		static void								NotifyDisconnected(Ptr<Lifecycle> state);
+		static void								ReportLocalError(Ptr<Lifecycle> state, const WString& errorMessage);
+		static void								Disconnect(Ptr<Lifecycle> state, bool sendExit);
+		static void								ReadLoop(Ptr<Lifecycle> state);
+		static bool								ProcessLine(Ptr<Lifecycle> state, const WString& line);
+		static void								FinishReader(Ptr<Lifecycle> state);
+
+	public:
+		StdioRedirectionConnection();
+		StdioRedirectionConnection(Ptr<IStdioRedirectionProcess> process);
+		~StdioRedirectionConnection();
+
+		void									InstallCallback(INetworkProtocolCallback* callback) override;
+		void									BeginReadingLoopUnsafe() override;
+		void									SendString(const WString& str) override;
+		void									Stop() override;
+
+		ClientStatus							GetStatus();
+		bool									IsInCurrentCallback();
+	};
+
+	class StdioRedirectionClient
+		: public Object
+		, public virtual INetworkProtocolClient
+	{
+	private:
+		Ptr<StdioRedirectionConnection>				connection;
+
+	public:
+		StdioRedirectionClient();
+
+		INetworkProtocolConnection*				GetConnection() override;
+		void									WaitForServer() override;
+		ClientStatus							GetStatus() override;
+	};
+
+	class StdioRedirectionServer
+		: public Object
+		, public virtual INetworkProtocolServer
+	{
+		class Lifecycle;
+		Ptr<Lifecycle>								lifecycle;
+
+		static void								FinalizeStop(Ptr<Lifecycle> state);
+		static void								FinishConnect(Ptr<Lifecycle> state, Ptr<StdioRedirectionConnection> connection, bool keepConnection);
+
+	public:
+		StdioRedirectionServer();
+		~StdioRedirectionServer();
+
+		WaitForClientResult					OnClientConnected(Ptr<INetworkProtocolConnection> connection) override;
+		void									Start() override;
+		void									Stop() override;
+		bool									IsStopped() override;
+
+		void									ConnectNewClient(const WString& command);
+	};
+}
+
+#endif
+
+#endif
+
+
+/***********************************************************************
+.\WINDOWTYPES.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_WINDOW_TYPES
+#define VCZH_WINDOW_TYPES
+
+
+namespace vl
+{
+	namespace presentation
+	{
+		/// <summary>
+		/// Represents a position in the local window coordinate space, which is DPI awared.
+		/// </summary>
+		using GuiCoordinate = vint;
+
+		/// <summary>
+		/// Represents a position in the global screen coordinate space.
+		/// </summary>
+		struct NativeCoordinate
+		{
+			vint				value;
+
+			NativeCoordinate() :value(0) {}
+			NativeCoordinate(vint _value) :value(_value) {}
+			NativeCoordinate(const NativeCoordinate& _value) = default;
+			NativeCoordinate(NativeCoordinate&& _value) = default;
+			NativeCoordinate& operator=(const NativeCoordinate& _value) = default;
+			NativeCoordinate& operator=(NativeCoordinate&& _value) = default;
+
+			auto operator<=>(const NativeCoordinate&) const = default;
+
+			inline NativeCoordinate operator+(NativeCoordinate c)const { return value + c.value; };
+			inline NativeCoordinate operator-(NativeCoordinate c)const { return value - c.value; };
+			inline NativeCoordinate operator*(NativeCoordinate c)const { return value * c.value; };
+			inline NativeCoordinate operator/(NativeCoordinate c)const { return value / c.value; };
+
+			inline NativeCoordinate& operator+=(NativeCoordinate c) { value += c.value; return *this; };
+			inline NativeCoordinate& operator-=(NativeCoordinate c) { value -= c.value; return *this; };
+			inline NativeCoordinate& operator*=(NativeCoordinate c) { value *= c.value; return *this; };
+			inline NativeCoordinate& operator/=(NativeCoordinate c) { value /= c.value; return *this; };
+		};
+
+		inline vint CompareCoordinate(vint a, vint b) { return a - b; }
+		inline vint CompareCoordinate(NativeCoordinate a, NativeCoordinate b) { return a.value - b.value; }
+
+#define GUI_DEFINE_KEYBOARD_CODE_BASIC(ITEM)									\
+/*																				\
+ * Virtual Keys, Standard Set													\
+ */																				\
+ITEM(LBUTTON,             0x01)													\
+ITEM(RBUTTON,             0x02)													\
+ITEM(CANCEL,              0x03)													\
+ITEM(MBUTTON,             0x04)		/* NOT contiguous with L & RBUTTON */		\
+ITEM(XBUTTON1,            0x05)		/* NOT contiguous with L & RBUTTON */		\
+ITEM(XBUTTON2,            0x06)		/* NOT contiguous with L & RBUTTON */		\
+ITEM(BACK,                0x08)													\
+ITEM(TAB,                 0x09)													\
+ITEM(CLEAR,               0x0C)													\
+ITEM(RETURN,              0x0D)													\
+ITEM(SHIFT,               0x10)													\
+ITEM(CONTROL,             0x11)													\
+ITEM(MENU,                0x12)													\
+ITEM(PAUSE,               0x13)													\
+ITEM(CAPITAL,             0x14)													\
+ITEM(KANA_HANGUL,         0x15)													\
+ITEM(JUNJA,               0x17)													\
+ITEM(FINAL,               0x18)													\
+ITEM(KANJI,               0x19)													\
+ITEM(ESCAPE,              0x1B)													\
+ITEM(CONVERT,             0x1C)													\
+ITEM(NONCONVERT,          0x1D)													\
+ITEM(ACCEPT,              0x1E)													\
+ITEM(MODECHANGE,          0x1F)													\
+ITEM(SPACE,               0x20)													\
+ITEM(PRIOR,               0x21)													\
+ITEM(NEXT,                0x22)													\
+ITEM(END,                 0x23)													\
+ITEM(HOME,                0x24)													\
+ITEM(LEFT,                0x25)													\
+ITEM(UP,                  0x26)													\
+ITEM(RIGHT,               0x27)													\
+ITEM(DOWN,                0x28)													\
+ITEM(SELECT,              0x29)													\
+ITEM(PRINT,               0x2A)													\
+ITEM(EXECUTE,             0x2B)													\
+ITEM(SNAPSHOT,            0x2C)													\
+ITEM(INSERT,              0x2D)													\
+ITEM(DELETE,              0x2E)													\
+ITEM(HELP,                0x2F)													\
+/*																				\
+ * VKEY_0 - VKEY_9 are the same as ASCII '0' - '9' (0x30 - 0x39)				\
+ * VKEY_A - VKEY_Z are the same as ASCII 'A' - 'Z' (0x41 - 0x5A)				\
+ */																				\
+ITEM(0,                   0x30)													\
+ITEM(1,                   0x31)													\
+ITEM(2,                   0x32)													\
+ITEM(3,                   0x33)													\
+ITEM(4,                   0x34)													\
+ITEM(5,                   0x35)													\
+ITEM(6,                   0x36)													\
+ITEM(7,                   0x37)													\
+ITEM(8,                   0x38)													\
+ITEM(9,                   0x39)													\
+ITEM(A,                   0x41)													\
+ITEM(B,                   0x42)													\
+ITEM(C,                   0x43)													\
+ITEM(D,                   0x44)													\
+ITEM(E,                   0x45)													\
+ITEM(F,                   0x46)													\
+ITEM(G,                   0x47)													\
+ITEM(H,                   0x48)													\
+ITEM(I,                   0x49)													\
+ITEM(J,                   0x4A)													\
+ITEM(K,                   0x4B)													\
+ITEM(L,                   0x4C)													\
+ITEM(M,                   0x4D)													\
+ITEM(N,                   0x4E)													\
+ITEM(O,                   0x4F)													\
+ITEM(P,                   0x50)													\
+ITEM(Q,                   0x51)													\
+ITEM(R,                   0x52)													\
+ITEM(S,                   0x53)													\
+ITEM(T,                   0x54)													\
+ITEM(U,                   0x55)													\
+ITEM(V,                   0x56)													\
+ITEM(W,                   0x57)													\
+ITEM(X,                   0x58)													\
+ITEM(Y,                   0x59)													\
+ITEM(Z,                   0x5A)													\
+ITEM(LWIN,                0x5B)													\
+ITEM(RWIN,                0x5C)													\
+ITEM(APPS,                0x5D)													\
+ITEM(SLEEP,               0x5F)													\
+ITEM(NUMPAD0,             0x60)													\
+ITEM(NUMPAD1,             0x61)													\
+ITEM(NUMPAD2,             0x62)													\
+ITEM(NUMPAD3,             0x63)													\
+ITEM(NUMPAD4,             0x64)													\
+ITEM(NUMPAD5,             0x65)													\
+ITEM(NUMPAD6,             0x66)													\
+ITEM(NUMPAD7,             0x67)													\
+ITEM(NUMPAD8,             0x68)													\
+ITEM(NUMPAD9,             0x69)													\
+ITEM(MULTIPLY,            0x6A)													\
+ITEM(ADD,                 0x6B)													\
+ITEM(SEPARATOR,           0x6C)													\
+ITEM(SUBTRACT,            0x6D)													\
+ITEM(DECIMAL,             0x6E)													\
+ITEM(DIVIDE,              0x6F)													\
+ITEM(F1,                  0x70)													\
+ITEM(F2,                  0x71)													\
+ITEM(F3,                  0x72)													\
+ITEM(F4,                  0x73)													\
+ITEM(F5,                  0x74)													\
+ITEM(F6,                  0x75)													\
+ITEM(F7,                  0x76)													\
+ITEM(F8,                  0x77)													\
+ITEM(F9,                  0x78)													\
+ITEM(F10,                 0x79)													\
+ITEM(F11,                 0x7A)													\
+ITEM(F12,                 0x7B)													\
+ITEM(F13,                 0x7C)													\
+ITEM(F14,                 0x7D)													\
+ITEM(F15,                 0x7E)													\
+ITEM(F16,                 0x7F)													\
+ITEM(F17,                 0x80)													\
+ITEM(F18,                 0x81)													\
+ITEM(F19,                 0x82)													\
+ITEM(F20,                 0x83)													\
+ITEM(F21,                 0x84)													\
+ITEM(F22,                 0x85)													\
+ITEM(F23,                 0x86)													\
+ITEM(F24,                 0x87)													\
+ITEM(NUMLOCK,             0x90)													\
+ITEM(SCROLL,              0x91)													\
+/*																				\
+ * Fujitsu/OASYS kbd definitions												\
+ */																				\
+ITEM(OEM_FJ_JISHO,        0x92)		/* 'Dictionary' key */						\
+ITEM(OEM_FJ_MASSHOU,      0x93)		/* 'Unregister word' key */					\
+ITEM(OEM_FJ_TOUROKU,      0x94)		/* 'Register word' key */					\
+ITEM(OEM_FJ_LOYA,         0x95)		/* 'Left OYAYUBI' key */					\
+ITEM(OEM_FJ_ROYA,         0x96)		/* 'Right OYAYUBI' key */					\
+/*																				\
+ * VKEY_L* & VKEY_R* - left and right Alt, Ctrl and Shift virtual keys.			\
+ * Used only as parameters to GetAsyncKeyState() and GetKeyState().				\
+ * No other API or message will distinguish left and right keys in this way.	\
+ */																				\
+ITEM(LSHIFT,              0xA0)													\
+ITEM(RSHIFT,              0xA1)													\
+ITEM(LCONTROL,            0xA2)													\
+ITEM(RCONTROL,            0xA3)													\
+ITEM(LMENU,               0xA4)													\
+ITEM(RMENU,               0xA5)													\
+ITEM(BROWSER_BACK,        0xA6)													\
+ITEM(BROWSER_FORWARD,     0xA7)													\
+ITEM(BROWSER_REFRESH,     0xA8)													\
+ITEM(BROWSER_STOP,        0xA9)													\
+ITEM(BROWSER_SEARCH,      0xAA)													\
+ITEM(BROWSER_FAVORITES,   0xAB)													\
+ITEM(BROWSER_HOME,        0xAC)													\
+ITEM(VOLUME_MUTE,         0xAD)													\
+ITEM(VOLUME_DOWN,         0xAE)													\
+ITEM(VOLUME_UP,           0xAF)													\
+ITEM(MEDIA_NEXT_TRACK,    0xB0)													\
+ITEM(MEDIA_PREV_TRACK,    0xB1)													\
+ITEM(MEDIA_STOP,          0xB2)													\
+ITEM(MEDIA_PLAY_PAUSE,    0xB3)													\
+ITEM(LAUNCH_MAIL,         0xB4)													\
+ITEM(LAUNCH_MEDIA_SELECT, 0xB5)													\
+ITEM(LAUNCH_APP1,         0xB6)													\
+ITEM(LAUNCH_APP2,         0xB7)													\
+ITEM(OEM_PLUS,            0xBB)		/* '+' any country */						\
+ITEM(OEM_COMMA,           0xBC)		/* ',' any country */						\
+ITEM(OEM_MINUS,           0xBD)		/* '-' any country */						\
+ITEM(OEM_PERIOD,          0xBE)		/* '.' any country */						\
+ITEM(OEM_8,               0xDF)													\
+/*																				\
+ * Various extended or enhanced keyboards										\
+ */																				\
+ITEM(OEM_AX,              0xE1)		/* 'AX' key on Japanese AX kbd */			\
+ITEM(OEM_102,             0xE2)		/* "<>" or "\|" on RT 102-key kbd */		\
+ITEM(ICO_HELP,            0xE3)		/* Help key on ICO */						\
+ITEM(ICO_00,              0xE4)		/* 00 key on ICO */							\
+ITEM(PROCESSKEY,          0xE5)													\
+ITEM(ICO_CLEAR,           0xE6)													\
+ITEM(PACKET,              0xE7)													\
+/*																				\
+ * Nokia/Ericsson definitions													\
+ */																				\
+ITEM(OEM_RESET,           0xE9)													\
+ITEM(OEM_JUMP,            0xEA)													\
+ITEM(OEM_PA1,             0xEB)													\
+ITEM(OEM_PA2,             0xEC)													\
+ITEM(OEM_PA3,             0xED)													\
+ITEM(OEM_WSCTRL,          0xEE)													\
+ITEM(OEM_CUSEL,           0xEF)													\
+ITEM(OEM_ATTN,            0xF0)													\
+ITEM(OEM_FINISH,          0xF1)													\
+ITEM(OEM_COPY,            0xF2)													\
+ITEM(OEM_AUTO,            0xF3)													\
+ITEM(OEM_ENLW,            0xF4)													\
+ITEM(OEM_BACKTAB,         0xF5)													\
+ITEM(ATTN,                0xF6)													\
+ITEM(CRSEL,               0xF7)													\
+ITEM(EXSEL,               0xF8)													\
+ITEM(EREOF,               0xF9)													\
+ITEM(PLAY,                0xFA)													\
+ITEM(ZOOM,                0xFB)													\
+ITEM(NONAME,              0xFC)													\
+ITEM(PA1,                 0xFD)													\
+ITEM(OEM_CLEAR,           0xFE)													\
+/*																				\
+ * Friendly names for common keys (US)											\
+ */																				\
+ITEM(SEMICOLON,           0xBA)		/* OEM_1 */									\
+ITEM(SLASH,               0xBF)		/* OEM_2 */									\
+ITEM(GRAVE_ACCENT,        0xC0)		/* OEM_3 */									\
+ITEM(LEFT_BRACKET,        0xDB)		/* OEM_4 */									\
+ITEM(BACKSLASH,           0xDC)		/* OEM_5 */									\
+ITEM(RIGHT_BRACKET,       0xDD)		/* OEM_6 */									\
+ITEM(APOSTROPHE,          0xDE)		/* OEM_7 */									\
+
+#define GUI_DEFINE_KEYBOARD_CODE_ADDITIONAL(ITEM)								\
+ITEM(OEM_1,               0xBA)		/* ';:' for US */							\
+ITEM(OEM_2,               0xBF)		/* '/?' for US */							\
+ITEM(OEM_3,               0xC0)		/* '`~' for US */							\
+ITEM(OEM_4,               0xDB)		/* '[{' for US */							\
+ITEM(OEM_5,               0xDC)		/* '\|' for US */							\
+ITEM(OEM_6,               0xDD)		/* ']}' for US */							\
+ITEM(OEM_7,               0xDE)		/* ''"' for US */							\
+ITEM(HANJA,               0x19)													\
+/*																				\
+ * NEC PC-9800 kbd definitions													\
+ */																				\
+ITEM(OEM_NEC_EQUAL,       0x92)		/* '=' key on numpad */						\
+
+#define GUI_DEFINE_KEYBOARD_CODE(ITEM)											\
+			GUI_DEFINE_KEYBOARD_CODE_BASIC(ITEM)								\
+			GUI_DEFINE_KEYBOARD_CODE_ADDITIONAL(ITEM)							\
+
+
+#define GUI_DEFINE_KEYBOARD_CODE_ENUM_ITEM(NAME, CODE) KEY_##NAME = CODE,
+		enum class VKEY
+		{
+			KEY_UNKNOWN = -1,
+			KEY_MAXIMUM = 255,
+			GUI_DEFINE_KEYBOARD_CODE(GUI_DEFINE_KEYBOARD_CODE_ENUM_ITEM)
+		};
+#undef GUI_DEFINE_KEYBOARD_CODE_ENUM_ITEM
+		static auto operator <=> (VKEY a, VKEY b) { return (vint)a <=> (vint)b; }
+		static VKEY operator &  (VKEY a, VKEY b) { return (VKEY)((vint)a & (vint)b); }
+		static VKEY operator |  (VKEY a, VKEY b) { return (VKEY)((vint)a | (vint)b); }
+
+
+
+		/// <summary>
+		/// Mouse message information.
+		/// </summary>
+		enum class NativeMouseButton
+		{
+			Left,
+			Middle,
+			Right,
+			Mouse4,
+			Mouse5,
+		};
+
+		/// <typeparam name="T">Type of the coordinate.</typeparam>
+		template<typename T>
+		struct WindowMouseInfo_
+		{
+			/// <summary>True if the control button is pressed.</summary>
+			bool						ctrl = false;
+			/// <summary>True if the shift button is pressed.</summary>
+			bool						shift = false;
+			/// <summary>True if the alt button is pressed.</summary>
+			bool						alt = false;
+			/// <summary>True if the operating system Super button is pressed.</summary>
+			bool						osSuper = false;
+			/// <summary>True if the left mouse button is pressed.</summary>
+			bool						left = false;
+			/// <summary>True if the middle mouse button is pressed.</summary>
+			bool						middle = false;
+			/// <summary>True if the right mouse button is pressed.</summary>
+			bool						right = false;
+			/// <summary>The mouse position of x dimension.</summary>
+			T							x = {};
+			/// <summary>The mouse position of y dimension.</summary>
+			T							y = {};
+			/// <summary>The delta of the wheel. 120 for every tick, position for up/right, negative for down/left</summary>
+			vint						wheel = 0;
+			/// <summary>True if the mouse is in the non-client area.</summary>
+			bool						nonClient = false;
+		};
+
+		using WindowMouseInfo = WindowMouseInfo_<GuiCoordinate>;
+		using NativeWindowMouseInfo = WindowMouseInfo_<NativeCoordinate>;
+
+		/// <summary>
+		/// Key message information.
+		/// </summary>
+		struct NativeWindowKeyInfo
+		{
+			/// <summary>Key code of the key that sends this message.</summary>
+			VKEY						code = VKEY::KEY_UNKNOWN;
+			/// <summary>True if the control button is pressed.</summary>
+			bool						ctrl = false;
+			/// <summary>True if the shift button is pressed.</summary>
+			bool						shift = false;
+			/// <summary>True if the alt button is pressed.</summary>
+			bool						alt = false;
+			/// <summary>True if the operating system Super button is pressed.</summary>
+			bool						osSuper = false;
+			/// <summary>True if the capslock button is pressed.</summary>
+			bool						capslock = false;
+			/// <summary>True if this repeated event is generated because a key is holding down.</summary>
+			bool						autoRepeatKeyDown = false;
+		};
+
+		using WindowKeyInfo = NativeWindowKeyInfo;
+
+		/// <summary>
+		/// Character message information.
+		/// </summary>
+		struct NativeWindowCharInfo
+		{
+			/// <summary>Character that sends this message.</summary>
+			wchar_t						code = 0;
+			/// <summary>True if the control button is pressed.</summary>
+			bool						ctrl = false;
+			/// <summary>True if the shift button is pressed.</summary>
+			bool						shift = false;
+			/// <summary>True if the alt button is pressed.</summary>
+			bool						alt = false;
+			/// <summary>True if the operating system Super button is pressed.</summary>
+			bool						osSuper = false;
+			/// <summary>True if the capslock button is pressed.</summary>
+			bool						capslock = false;
+		};
+
+		using WindowCharInfo = NativeWindowCharInfo;
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\TUI\TUITYPES.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_TUI_TYPES
+#define VCZH_TUI_TYPES
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+#endif
+
+#endif
+
+
+/***********************************************************************
+.\TUI\TUI.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_TUI
+#define VCZH_TUI
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+namespace vl
+{
+	namespace console
+	{
+		enum class TuiColorMode
+		{
+			Auto,
+			TrueColor,
+			Color256,
+			Color16,
+		};
+
+		struct TuiStartOptions
+		{
+			TuiColorMode					colorMode = TuiColorMode::Auto;
+		};
+
+		struct TuiColor
+		{
+			vuint8_t						r = 0;
+			vuint8_t						g = 0;
+			vuint8_t						b = 0;
+
+			auto operator<=>(const TuiColor&) const = default;
+		};
+
+		enum class TuiMergeableGlyph : vuint8_t
+		{
+			None = 0,
+			ThinLine = 1,
+			ThickLine = 2,
+			DoubleLine = 3,
+		};
+
+		struct TuiMergeablePixel
+		{
+			TuiMergeableGlyph				up = TuiMergeableGlyph::None;
+			TuiMergeableGlyph				down = TuiMergeableGlyph::None;
+			TuiMergeableGlyph				left = TuiMergeableGlyph::None;
+			TuiMergeableGlyph				right = TuiMergeableGlyph::None;
+		};
+
+		enum class TuiUnmergeableGlyph : vuint8_t
+		{
+			RoundCorner,
+		};
+
+		enum class TuiUnmergeableDirection : vuint8_t
+		{
+			LeftTop,
+			RightTop,
+			LeftBottom,
+			RightBottom,
+		};
+
+		struct TuiUnmergeablePixel
+		{
+			TuiUnmergeableGlyph				glyph = TuiUnmergeableGlyph::RoundCorner;
+			TuiUnmergeableDirection			direction = TuiUnmergeableDirection::LeftTop;
+		};
+
+		enum class TuiPixelGlyph : vuint8_t
+		{
+			Char,
+			Mergeable,
+			Unmergeable,
+			WideCharContinuation,
+		};
+
+		struct TuiTextStyle
+		{
+			bool							bold = false;
+			bool							italic = false;
+			bool							underline = false;
+			bool							strikeline = false;
+
+			auto operator<=>(const TuiTextStyle&) const = default;
+		};
+
+		struct TuiCharPixel
+		{
+			char32_t						c = 0;
+			TuiTextStyle					style;
+		};
+
+		struct TuiPixel
+		{
+			TuiPixelGlyph					glyph = TuiPixelGlyph::Char;
+			union
+			{
+				TuiCharPixel				character = {};
+				TuiMergeablePixel			mergeable;
+				TuiUnmergeablePixel			unmergeable;
+			};
+			TuiColor						foregroundColor = { 255, 255, 255 };
+			TuiColor						backgroundColor = { 0, 0, 0 };
+
+			char32_t						GetChar32() const;
+			wchar_t							GetWChar() const;
+		};
+
+		class ITuiCallback : public Interface
+		{
+		public:
+			virtual void					Starting();
+			virtual void					Stopping();
+			virtual void					BufferSizeChanged();
+			virtual void					MouseMove(const presentation::WindowMouseInfo& info);
+			virtual void					MouseDown(presentation::NativeMouseButton button, const presentation::WindowMouseInfo& info);
+			virtual void					MouseUp(presentation::NativeMouseButton button, const presentation::WindowMouseInfo& info);
+			virtual void					MouseDoubleClick(presentation::NativeMouseButton button, const presentation::WindowMouseInfo& info);
+			virtual void					MouseVerticalWheel(const presentation::WindowMouseInfo& info);
+			virtual void					MouseHorizontalWheel(const presentation::WindowMouseInfo& info);
+			virtual void					KeyDown(const presentation::NativeWindowKeyInfo& info);
+			virtual void					KeyUp(const presentation::NativeWindowKeyInfo& info);
+			virtual void					Char(const presentation::NativeWindowCharInfo& info);
+			virtual void					Timer();
+		};
+
+		struct TuiClipper
+		{
+			vint							x1 = 0;
+			vint							y1 = 0;
+			vint							x2 = 0;
+			vint							y2 = 0;
+		};
+
+		struct TuiPrintOptions
+		{
+			TuiColor						foregroundColor = { 255, 255, 255 };
+			TuiColor						backgroundColor = { 0, 0, 0 };
+			TuiTextStyle					style;
+		};
+
+		struct TuiLineOptions
+		{
+			TuiMergeableGlyph				glyph = TuiMergeableGlyph::ThinLine;
+			TuiColor						foregroundColor = { 255, 255, 255 };
+			Nullable<TuiColor>				backgroundColor;
+			Func<TuiColor(TuiColor)>			foregroundColorBlending;
+		};
+
+		enum class TuiRectCorner
+		{
+			Sharp,
+			Round,
+		};
+
+		struct TuiRectOptions
+		{
+			TuiMergeableGlyph				glyph = TuiMergeableGlyph::ThinLine;
+			TuiColor						foregroundColor = { 255, 255, 255 };
+			Nullable<TuiColor>				backgroundColor;
+			TuiRectCorner					corner = TuiRectCorner::Sharp;
+			Func<TuiColor(TuiColor)>			foregroundColorBlending;
+		};
+
+		namespace unittest
+		{
+			class ITuiBackend;
+			class ScopedTuiBackend;
+		}
+
+		class TUI abstract
+		{
+			friend class unittest::ScopedTuiBackend;
+
+		private:
+			class Impl;
+			class ListenerStorage;
+
+			static Impl*					impl;
+			static ListenerStorage*			listenerStorage;
+			static Ptr<unittest::ITuiBackend>* injectedBackend;
+			static Impl&					GetImpl();
+
+		public:
+			static bool						TryGetConsoleSize(vint& width, vint& height);
+			static void						Start(const TuiStartOptions& options);
+			static bool						RunOneCycle();
+			static void						Stop();
+			static bool						IsInUse();
+			static bool						IsStopRequested();
+			static TuiColorMode				GetColorMode();
+
+			static bool						InstallListener(ITuiCallback* listener);
+			static bool						UninstallListener(ITuiCallback* listener);
+			static void						StartTimer(vint milliseconds);
+			static void						StopTimer();
+
+			static TuiPixel*				GetBuffer();
+			static vint						GetBufferWidth();
+			static vint						GetBufferHeight();
+			static vint						MeasureChar(char32_t code);
+			static void						RenderBuffer();
+
+			static void						PrintChar(const TuiPrintOptions& options, char32_t code, vint x, vint y, const TuiClipper* clipper = nullptr);
+			static void						DrawLineV(const TuiLineOptions& options, vint x, vint y1, vint y2, const TuiClipper* clipper = nullptr);
+			static void						DrawLineH(const TuiLineOptions& options, vint x1, vint x2, vint y, const TuiClipper* clipper = nullptr);
+			static void						DrawRect(const TuiRectOptions& options, vint x1, vint y1, vint x2, vint y2, const TuiClipper* clipper = nullptr);
+			static void						Clear(TuiColor backgroundColor, vint x1, vint y1, vint x2, vint y2, const TuiClipper* clipper = nullptr);
+
+			static void						PrintChar(TuiPixel* buffer, vint width, vint height, const TuiPrintOptions& options, char32_t code, vint x, vint y, const TuiClipper* clipper = nullptr);
+			static void						DrawLineV(TuiPixel* buffer, vint width, vint height, const TuiLineOptions& options, vint x, vint y1, vint y2, const TuiClipper* clipper = nullptr);
+			static void						DrawLineH(TuiPixel* buffer, vint width, vint height, const TuiLineOptions& options, vint x1, vint x2, vint y, const TuiClipper* clipper = nullptr);
+			static void						DrawRect(TuiPixel* buffer, vint width, vint height, const TuiRectOptions& options, vint x1, vint y1, vint x2, vint y2, const TuiClipper* clipper = nullptr);
+			static void						Clear(TuiPixel* buffer, vint width, vint height, TuiColor backgroundColor, vint x1, vint y1, vint x2, vint y2, const TuiClipper* clipper = nullptr);
+		};
+
+		namespace unittest
+		{
+			enum class TuiBackendEventType
+			{
+				None,
+				Resize,
+				MouseMove,
+				MouseDown,
+				MouseUp,
+				MouseDoubleClick,
+				MouseVerticalWheel,
+				MouseHorizontalWheel,
+				KeyDown,
+				KeyUp,
+				Char,
+			};
+
+			struct TuiBackendEvent
+			{
+				TuiBackendEventType			type = TuiBackendEventType::None;
+				vint						width = 0;
+				vint						height = 0;
+				presentation::NativeMouseButton				mouseButton = presentation::NativeMouseButton::Left;
+				presentation::WindowMouseInfo				mouseInfo;
+				presentation::NativeWindowKeyInfo					keyInfo;
+				presentation::NativeWindowCharInfo					charInfo;
+			};
+
+			class ITuiBackend : public Interface
+			{
+			public:
+				virtual TuiColorMode			Start(const TuiStartOptions& options) = 0;
+				virtual void				Stop() = 0;
+				virtual bool				TryGetConsoleSize(vint& width, vint& height) = 0;
+				virtual vuint64_t			GetMonotonicTime() = 0;
+				virtual bool				ReadEvent(vint milliseconds, TuiBackendEvent& event) = 0;
+				virtual void				Render(const TuiPixel* buffer, vint width, vint height, TuiColorMode colorMode) = 0;
+			};
+
+			class ScopedTuiBackend
+			{
+			private:
+				Ptr<ITuiBackend>*			previous = nullptr;
+				Ptr<ITuiBackend>				current;
+
+			public:
+				NOT_COPYABLE(ScopedTuiBackend);
+				ScopedTuiBackend(Ptr<ITuiBackend> backend);
+				~ScopedTuiBackend() noexcept(false);
+			};
+		}
+	}
+}
+
+#endif
+
+#endif
+
+
+/***********************************************************************
+.\TUI\TUI.INTERNAL.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_TUI_INTERNAL
+#define VCZH_TUI_INTERNAL
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+namespace vl
+{
+	namespace console
+	{
+		namespace tui_internal
+		{
+			extern bool IsScalar(char32_t code);
+			extern vint QuantizeColor(TuiColor color, TuiColorMode colorMode, const TuiColor* customColor16 = nullptr);
+			extern TuiColor GetCanonicalColor(vint index);
+			extern TuiTextStyle GetTextStyle(const TuiPixel& pixel);
+			extern WString GetTextStyleSequence(TuiTextStyle style);
+			extern Ptr<unittest::ITuiBackend> CreateTuiBackend();
+		}
+	}
+}
+
+#endif
+
+#endif
+
+
+/***********************************************************************
+.\TUI\TUI.INPUT.H
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+#ifndef VCZH_TUI_INPUT
+#define VCZH_TUI_INPUT
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+namespace vl
+{
+	namespace console
+	{
+		namespace tui_internal
+		{
+			// Incremental xterm input conversion, shared by the POSIX backend and tests.
+			class PosixTuiInputDecoder
+			{
+			private:
+				Nullable<vuint64_t>			lastClickTime;
+				vint							lastClickX = -1;
+				vint							lastClickY = -1;
+				presentation::NativeMouseButton lastClickButton = presentation::NativeMouseButton::Left;
+				bool							left = false;
+				bool							middle = false;
+				bool							right = false;
+				bool							discardSequence = false;
+				vuint8_t						controlString = 0;
+				bool							kittyKeyboard = false;
+
+				void							QueueKey(presentation::NativeWindowKeyInfo info, Nullable<char32_t> text);
+				void							DecodeSequence(vint end, vuint64_t now);
+				bool							DecodeText(bool alt);
+			public:
+				collections::List<vuint8_t>	inputBytes;
+				collections::List<unittest::TuiBackendEvent> pendingEvents;
+				Nullable<vuint64_t>			escapeDeadline;
+
+				void							ParseInput(vuint64_t now);
+			};
+		}
+	}
+}
+
+#endif
 
 #endif
 

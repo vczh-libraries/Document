@@ -20,6 +20,18 @@ namespace vl
 		using namespace collections;
 		using namespace stream;
 
+		extern IFileSystemImpl* GetFileSystemImpl();
+
+		static wchar_t GetInjectedDelimiter()
+		{
+			return GetFileSystemImpl()->GetPathDelimiter();
+		}
+
+		static WString GetInjectedDelimiterString()
+		{
+			return WString::FromChar(GetInjectedDelimiter());
+		}
+
 		// ReadDirectoryChangesW
 
 /***********************************************************************
@@ -28,21 +40,38 @@ FilePath
 
 		void FilePath::NormalizeDelimiters(collections::Array<wchar_t>& buffer)
 		{
+			auto delimiter = GetInjectedDelimiter();
+			auto compatibleDelimiters = GetFileSystemImpl()->GetCompatibleDelimiters();
 			for (vint i = 0; i < buffer.Count(); i++)
 			{
-				if (buffer[i] == L'\\' || buffer[i] == L'/')
+				for (auto reading = compatibleDelimiters; *reading; reading++)
 				{
-					buffer[i] = Delimiter;
+					if (*reading == buffer[i])
+					{
+						buffer[i] = delimiter;
+						break;
+					}
 				}
 			}
 		}
 
 		void FilePath::TrimLastDelimiter(WString& fullPath)
 		{
-			if (fullPath != L"/" && fullPath.Length() > 0 && fullPath[fullPath.Length() - 1] == Delimiter)
+			auto delimiter = GetInjectedDelimiter();
+			if (!GetFileSystemImpl()->IsRoot(fullPath) && fullPath.Length() > 0 && fullPath[fullPath.Length() - 1] == delimiter)
 			{
 				fullPath = fullPath.Left(fullPath.Length() - 1);
 			}
+		}
+
+		FilePath::FilePath()
+		{
+			Initialize();
+		}
+
+		bool FilePath::IsAbsolutePath(const WString& path)
+		{
+			return FilePath(path).GetFullPath() == path;
 		}
 
 		FilePath::FilePath(const WString& _filePath)
@@ -62,21 +91,9 @@ FilePath
 		{
 		}
 
-		FilePath FilePath::operator/(const WString& relativePath)const
-		{
-			if (IsRoot())
-			{
-				return relativePath;
-			}
-			else
-			{
-				return fullPath + L"/" + relativePath;
-			}
-		}
-
 		WString FilePath::GetName()const
 		{
-			auto delimiter = WString::FromChar(Delimiter);
+			auto delimiter = GetInjectedDelimiterString();
 			auto index = INVLOC.FindLast(fullPath, delimiter, Locale::None);
 			if (index.key == -1) return fullPath;
 			return fullPath.Right(fullPath.Length() - index.key - 1);
@@ -84,7 +101,7 @@ FilePath
 
 		FilePath FilePath::GetFolder()const
 		{
-			auto delimiter = WString::FromChar(Delimiter);
+			auto delimiter = GetInjectedDelimiterString();
 			auto index = INVLOC.FindLast(fullPath, delimiter, Locale::None);
 			if (index.key == -1) return FilePath();
 			return fullPath.Left(index.key);
@@ -98,13 +115,15 @@ FilePath
 		void FilePath::GetPathComponents(WString path, collections::List<WString>& components)
 		{
 			WString pathRemaining = path;
-			auto delimiter = WString::FromChar(Delimiter);
+			auto delimiter = GetInjectedDelimiter();
+			auto delimiterString = WString::FromChar(delimiter);
+			auto doubleDelimiter = delimiterString + delimiterString;
 
 			components.Clear();
 
 			while (true)
 			{
-				auto index = INVLOC.FindFirst(pathRemaining, delimiter, Locale::None);
+				auto index = INVLOC.FindFirst(pathRemaining, delimiterString, Locale::None);
 				if (index.key == -1)
 					break;
 
@@ -112,19 +131,15 @@ FilePath
 					components.Add(pathRemaining.Left(index.key));
 				else
 				{
-#if defined VCZH_MSVC
-					if (pathRemaining.Length() >= 2 && pathRemaining[1] == Delimiter)
+					if (pathRemaining.Length() >= 2 && pathRemaining[1] == delimiter)
 					{
-						// Windows UNC Path starting with "\\"
-						// components[0] will be L"\\"
-						components.Add(L"\\");
+						components.Add(doubleDelimiter);
 						index.value++;
 					}
-#elif defined VCZH_GCC
-					// Unix absolute path starting with "/"
-					// components[0] will be L"/"
-					components.Add(delimiter);
-#endif
+					else if (GetFileSystemImpl()->IsRoot(delimiterString))
+					{
+						components.Add(delimiterString);
+					}
 				}
 
 				pathRemaining = pathRemaining.Right(pathRemaining.Length() - (index.key + index.value));
@@ -139,31 +154,32 @@ FilePath
 		WString FilePath::ComponentsToPath(const collections::List<WString>& components)
 		{
 			WString result;
-			auto delimiter = WString::FromChar(Delimiter);
+			auto delimiter = GetInjectedDelimiterString();
+			auto doubleDelimiter = delimiter + delimiter;
 
-			int i = 0;
-			
-#if defined VCZH_MSVC
-			// For Windows, if first component is "\\" then it is an UNC path
-			if(components.Count() > 0 && components[0] == L"\\")
-			{
-				result += delimiter;
-				i++;
-			}
-#elif defined VCZH_GCC
-			// For Unix-like OSes, if first component is "/" then take it as absolute path
-			if(components.Count() > 0 && components[0] == delimiter)
-			{
-				result += delimiter;
-				i++;
-			}
-#endif
+			vint i = 0;
 
-			for(; i < components.Count(); i++)
+			if (components.Count() > 0)
 			{
-				result += components[i];
-				if(i + 1 < components.Count())
+				if (components[0] == doubleDelimiter)
+				{
+					result += doubleDelimiter;
+					i++;
+				}
+				else if (components[0] == delimiter)
+				{
 					result += delimiter;
+					i++;
+				}
+			}
+
+			for (; i < components.Count(); i++)
+			{
+				if (result.Length() > 0 && result[result.Length() - 1] != GetInjectedDelimiter())
+				{
+					result += delimiter;
+				}
+				result += components[i];
 			}
 
 			return result;
@@ -361,6 +377,19 @@ File
 			return filePath.IsFile();
 		}
 
+		bool File::CopyToFolder(const FilePath& destination, bool recursively)const
+		{
+			return CopyToFile(destination / filePath.GetName(), recursively);
+		}
+
+		bool File::CopyToFile(const FilePath& destination, bool recursively)const
+		{
+			if (!Exists() || destination == filePath || destination.IsFolder()) return false;
+			auto folder = destination.GetFolder();
+			if (!folder.IsFolder() && (!recursively || !Folder(folder).Create(true))) return false;
+			return GetFileSystemImpl()->FileCopy(filePath, destination);
+		}
+
 /***********************************************************************
 Folder
 ***********************************************************************/
@@ -382,6 +411,7 @@ Folder
 
 		bool Folder::Create(bool recursively)const
 		{
+			if (filePath.IsRoot()) return false;
 			if (recursively)
 			{
 				auto folder = filePath.GetFolder();
@@ -424,6 +454,146 @@ Folder
 
 
 /***********************************************************************
+.\FILESYSTEM.INJECTABLE.CPP
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+
+namespace vl
+{
+	namespace filesystem
+	{
+		extern IFileSystemImpl* GetOSFileSystemImpl();
+
+		feature_injection::FeatureInjection<IFileSystemImpl>& GetFileSystemInjection()
+		{
+			static feature_injection::FeatureInjection<IFileSystemImpl> injection(GetOSFileSystemImpl());
+			return injection;
+		}
+
+		void InjectFileSystemImpl(IFileSystemImpl* impl)
+		{
+			GetFileSystemInjection().Inject(impl);
+		}
+
+		IFileSystemImpl* GetFileSystemImpl()
+		{
+			return GetFileSystemInjection().Get();
+		}
+
+		void EjectFileSystemImpl(IFileSystemImpl* impl)
+		{
+			if (impl == nullptr)
+			{
+				GetFileSystemInjection().EjectAll();
+			}
+			else
+			{
+				GetFileSystemInjection().Eject(impl);
+			}
+		}
+
+/***********************************************************************
+FilePath
+***********************************************************************/
+
+		wchar_t FilePath::GetPathDelimiter()
+		{
+			return GetFileSystemImpl()->GetPathDelimiter();
+		}
+
+		void FilePath::Initialize()
+		{
+			GetFileSystemImpl()->Initialize(fullPath);
+		}
+
+		FilePath FilePath::operator/(const WString& relativePath) const
+		{
+			return GetFileSystemImpl()->ConcatPath(fullPath, relativePath);
+		}
+
+		bool FilePath::IsFile() const
+		{
+			return GetFileSystemImpl()->IsFile(fullPath);
+		}
+
+		bool FilePath::IsFolder() const
+		{
+			return GetFileSystemImpl()->IsFolder(fullPath);
+		}
+
+		bool FilePath::IsRoot() const
+		{
+			return GetFileSystemImpl()->IsRoot(fullPath);
+		}
+
+		WString FilePath::GetRelativePathFor(const FilePath& _filePath) const
+		{
+			return GetFileSystemImpl()->GetRelativePathFor(fullPath, _filePath.GetFullPath());
+		}
+
+/***********************************************************************
+File
+***********************************************************************/
+
+		bool File::Delete() const
+		{
+			return GetFileSystemImpl()->FileDelete(filePath);
+		}
+
+		FileInfo File::GetFileInfo() const
+		{
+			CHECK_ERROR(Exists(), L"vl::filesystem::File::GetFileInfo()#File does not exist.");
+			return GetFileSystemImpl()->GetFileInfo(filePath);
+		}
+
+		bool File::Rename(const WString& newName) const
+		{
+			return GetFileSystemImpl()->FileRename(filePath, newName);
+		}
+
+/***********************************************************************
+Folder
+***********************************************************************/
+
+		bool Folder::GetFolders(collections::List<Folder>& folders) const
+		{
+			return GetFileSystemImpl()->GetFolders(filePath, folders);
+		}
+
+		FileInfo Folder::GetFileInfo() const
+		{
+			CHECK_ERROR(Exists(), L"vl::filesystem::Folder::GetFileInfo()#Folder does not exist.");
+			return GetFileSystemImpl()->GetFileInfo(filePath);
+		}
+
+		bool Folder::GetFiles(collections::List<File>& files) const
+		{
+			return GetFileSystemImpl()->GetFiles(filePath, files);
+		}
+
+		bool Folder::CreateNonRecursively() const
+		{
+			return GetFileSystemImpl()->CreateFolder(filePath);
+		}
+
+		bool Folder::DeleteNonRecursively() const
+		{
+			return GetFileSystemImpl()->DeleteFolder(filePath);
+		}
+
+		bool Folder::Rename(const WString& newName) const
+		{
+			return GetFileSystemImpl()->FolderRename(filePath, newName);
+		}
+	}
+}
+
+
+/***********************************************************************
 .\LOCALE.CPP
 ***********************************************************************/
 /***********************************************************************
@@ -434,6 +604,433 @@ Licensed under https://github.com/vczh-libraries/License
 
 namespace vl
 {
+	using namespace collections;
+
+/***********************************************************************
+EnUsLocaleImpl
+***********************************************************************/
+
+#if defined VCZH_GCC || defined VCZH_WASM
+#define _wcsicmp wcscasecmp
+#define _wcsnicmp wcsncasecmp
+#endif
+
+	Locale EnUsLocaleImpl::Invariant() const
+	{
+		return Locale(L"");
+	}
+
+	Locale EnUsLocaleImpl::SystemDefault() const
+	{
+		return Locale(L"en-US");
+	}
+
+	Locale EnUsLocaleImpl::UserDefault() const
+	{
+		return Locale(L"en-US");
+	}
+
+	void EnUsLocaleImpl::Enumerate(List<Locale>& locales) const
+	{
+		locales.Add(Locale(L"en-US"));
+	}
+
+	void EnUsLocaleImpl::GetShortDateFormats(const WString&, List<WString>& formats) const
+	{
+		formats.Add(L"MM/dd/yyyy");
+		formats.Add(L"yyyy-MM-dd");
+	}
+
+	void EnUsLocaleImpl::GetLongDateFormats(const WString&, List<WString>& formats) const
+	{
+		formats.Add(L"dddd, dd MMMM yyyy");
+	}
+
+	void EnUsLocaleImpl::GetYearMonthDateFormats(const WString&, List<WString>& formats) const
+	{
+		formats.Add(L"yyyy MMMM");
+	}
+
+	void EnUsLocaleImpl::GetLongTimeFormats(const WString&, List<WString>& formats) const
+	{
+		formats.Add(L"HH:mm:ss");
+	}
+
+	void EnUsLocaleImpl::GetShortTimeFormats(const WString&, List<WString>& formats) const
+	{
+		formats.Add(L"HH:mm");
+		formats.Add(L"hh:mm tt");
+	}
+
+	WString EnUsLocaleImpl::FormatDate(const WString& localeName, const WString& format, DateTime date) const
+	{
+		/*
+		auto df = L"yyyy,MM,MMM,MMMM,dd,ddd,dddd";
+		auto ds = L"2000,01,Jan,January,02,Sun,Sunday";
+		auto tf = L"hh,HH,mm,ss,tt";
+		auto ts = L"01,13,02,03,PM";
+		*/
+
+		WString result;
+		const wchar_t* reading = format.Buffer();
+		while (*reading)
+		{
+			if (wcsncmp(reading, L"yyyy", 4) == 0)
+			{
+				WString fragment = itow(date.year);
+				while (fragment.Length() < 4) fragment = L"0" + fragment;
+				result += fragment;
+				reading += 4;
+			}
+			else if (wcsncmp(reading, L"MMMM", 4) == 0)
+			{
+				result += GetLongMonthName(localeName, date.month);
+				reading += 4;
+			}
+			else if (wcsncmp(reading, L"MMM", 3) == 0)
+			{
+				result += GetShortMonthName(localeName, date.month);
+				reading += 3;
+			}
+			else if (wcsncmp(reading, L"MM", 2) == 0)
+			{
+				WString fragment = itow(date.month);
+				while (fragment.Length() < 2) fragment = L"0" + fragment;
+				result += fragment;
+				reading += 2;
+			}
+			else if (wcsncmp(reading, L"dddd", 4) == 0)
+			{
+				result += GetLongDayOfWeekName(localeName, date.dayOfWeek);
+				reading += 4;
+			}
+			else if (wcsncmp(reading, L"ddd", 3) == 0)
+			{
+				result += GetShortDayOfWeekName(localeName, date.dayOfWeek);
+				reading += 3;
+			}
+			else if (wcsncmp(reading, L"dd", 2) == 0)
+			{
+				WString fragment = itow(date.day);
+				while (fragment.Length() < 2) fragment = L"0" + fragment;
+				result += fragment;
+				reading += 2;
+			}
+			else if (wcsncmp(reading, L"hh", 2) == 0)
+			{
+				WString fragment = itow(date.hour > 12 ? date.hour - 12 : date.hour);
+				while (fragment.Length() < 2) fragment = L"0" + fragment;
+				result += fragment;
+				reading += 2;
+			}
+			else if (wcsncmp(reading, L"HH", 2) == 0)
+			{
+				WString fragment = itow(date.hour);
+				while (fragment.Length() < 2) fragment = L"0" + fragment;
+				result += fragment;
+				reading += 2;
+			}
+			else if (wcsncmp(reading, L"mm", 2) == 0)
+			{
+				WString fragment = itow(date.minute);
+				while (fragment.Length() < 2) fragment = L"0" + fragment;
+				result += fragment;
+				reading += 2;
+			}
+			else if (wcsncmp(reading, L"ss", 2) == 0)
+			{
+				WString fragment = itow(date.second);
+				while (fragment.Length() < 2) fragment = L"0" + fragment;
+				result += fragment;
+				reading += 2;
+			}
+			else if (wcsncmp(reading, L"tt", 2) == 0)
+			{
+				result += date.hour > 12 ? L"PM" : L"AM";
+				reading += 2;
+			}
+			else
+			{
+				result += WString::FromChar(*reading);
+				reading++;
+			}
+		}
+		return result;
+	}
+
+	WString EnUsLocaleImpl::FormatTime(const WString& localeName, const WString& format, DateTime time) const
+	{
+		return FormatDate(localeName, format, time);
+	}
+
+	WString EnUsLocaleImpl::FormatNumber(const WString&, const WString& number) const
+	{
+		return number;
+	}
+
+	WString EnUsLocaleImpl::FormatCurrency(const WString&, const WString& currency) const
+	{
+		return currency;
+	}
+
+	WString EnUsLocaleImpl::GetShortDayOfWeekName(const WString&, vint dayOfWeek) const
+	{
+		switch (dayOfWeek)
+		{
+		case 0: return L"Sun";
+		case 1: return L"Mon";
+		case 2: return L"Tue";
+		case 3: return L"Wed";
+		case 4: return L"Thu";
+		case 5: return L"Fri";
+		case 6: return L"Sat";
+		}
+		return L"";
+	}
+
+	WString EnUsLocaleImpl::GetLongDayOfWeekName(const WString&, vint dayOfWeek) const
+	{
+		switch (dayOfWeek)
+		{
+		case 0: return L"Sunday";
+		case 1: return L"Monday";
+		case 2: return L"Tuesday";
+		case 3: return L"Wednesday";
+		case 4: return L"Thursday";
+		case 5: return L"Friday";
+		case 6: return L"Saturday";
+		}
+		return L"";
+	}
+
+	WString EnUsLocaleImpl::GetShortMonthName(const WString&, vint month) const
+	{
+		switch (month)
+		{
+		case 1: return L"Jan";
+		case 2: return L"Feb";
+		case 3: return L"Mar";
+		case 4: return L"Apr";
+		case 5: return L"May";
+		case 6: return L"Jun";
+		case 7: return L"Jul";
+		case 8: return L"Aug";
+		case 9: return L"Sep";
+		case 10: return L"Oct";
+		case 11: return L"Nov";
+		case 12: return L"Dec";
+		}
+		return L"";
+	}
+
+	WString EnUsLocaleImpl::GetLongMonthName(const WString&, vint month) const
+	{
+		switch (month)
+		{
+		case 1: return L"January";
+		case 2: return L"February";
+		case 3: return L"March";
+		case 4: return L"April";
+		case 5: return L"May";
+		case 6: return L"June";
+		case 7: return L"July";
+		case 8: return L"August";
+		case 9: return L"September";
+		case 10: return L"October";
+		case 11: return L"November";
+		case 12: return L"December";
+		}
+		return L"";
+	}
+
+	WString EnUsLocaleImpl::ToLower(const WString&, const WString& str) const
+	{
+		return wlower(str);
+	}
+
+	WString EnUsLocaleImpl::ToUpper(const WString&, const WString& str) const
+	{
+		return wupper(str);
+	}
+
+	WString EnUsLocaleImpl::ToLinguisticLower(const WString&, const WString& str) const
+	{
+		return wlower(str);
+	}
+
+	WString EnUsLocaleImpl::ToLinguisticUpper(const WString&, const WString& str) const
+	{
+		return wupper(str);
+	}
+
+	vint EnUsLocaleImpl::Compare(const WString&, const WString& s1, const WString& s2, Locale::Normalization normalization) const
+	{
+		switch (normalization)
+		{
+		case Locale::Normalization::None:
+			return wcscmp(s1.Buffer(), s2.Buffer());
+		case Locale::Normalization::IgnoreCase:
+			return _wcsicmp(s1.Buffer(), s2.Buffer());
+		default:
+			return 0;
+		}
+	}
+
+	vint EnUsLocaleImpl::CompareOrdinal(const WString& s1, const WString& s2) const
+	{
+		return wcscmp(s1.Buffer(), s2.Buffer());
+	}
+
+	vint EnUsLocaleImpl::CompareOrdinalIgnoreCase(const WString& s1, const WString& s2) const
+	{
+		return _wcsicmp(s1.Buffer(), s2.Buffer());
+	}
+
+	Pair<vint, vint> EnUsLocaleImpl::FindFirst(const WString&, const WString& text, const WString& find, Locale::Normalization normalization) const
+	{
+		if (text.Length() < find.Length() || find.Length() == 0)
+		{
+			return Pair<vint, vint>(-1, 0);
+		}
+		const wchar_t* result = nullptr;
+		switch (normalization)
+		{
+		case Locale::Normalization::None:
+			{
+				const wchar_t* reading = text.Buffer();
+				while (*reading)
+				{
+					if (wcsncmp(reading, find.Buffer(), find.Length()) == 0)
+					{
+						result = reading;
+						break;
+					}
+					reading++;
+				}
+			}
+			break;
+		case Locale::Normalization::IgnoreCase:
+			{
+				const wchar_t* reading = text.Buffer();
+				while (*reading)
+				{
+					if (_wcsnicmp(reading, find.Buffer(), find.Length()) == 0)
+					{
+						result = reading;
+						break;
+					}
+					reading++;
+				}
+			}
+			break;
+		}
+		return result == nullptr ? Pair<vint, vint>(-1, 0) : Pair<vint, vint>(result - text.Buffer(), find.Length());
+	}
+
+	Pair<vint, vint> EnUsLocaleImpl::FindLast(const WString&, const WString& text, const WString& find, Locale::Normalization normalization) const
+	{
+		if (text.Length() < find.Length() || find.Length() == 0)
+		{
+			return Pair<vint, vint>(-1, 0);
+		}
+		const wchar_t* result = nullptr;
+		switch (normalization)
+		{
+		case Locale::Normalization::None:
+			{
+				const wchar_t* reading = text.Buffer();
+				while (*reading)
+				{
+					if (wcsncmp(reading, find.Buffer(), find.Length()) == 0)
+					{
+						result = reading;
+					}
+					reading++;
+				}
+			}
+			break;
+		case Locale::Normalization::IgnoreCase:
+			{
+				const wchar_t* reading = text.Buffer();
+				while (*reading)
+				{
+					if (_wcsnicmp(reading, find.Buffer(), find.Length()) == 0)
+					{
+						result = reading;
+					}
+					reading++;
+				}
+			}
+			break;
+		}
+		return result == nullptr ? Pair<vint, vint>(-1, 0) : Pair<vint, vint>(result - text.Buffer(), find.Length());
+	}
+
+	bool EnUsLocaleImpl::StartsWith(const WString&, const WString& text, const WString& find, Locale::Normalization normalization) const
+	{
+		if (text.Length() < find.Length() || find.Length() == 0)
+		{
+			return false;
+		}
+		switch (normalization)
+		{
+		case Locale::Normalization::None:
+			return wcsncmp(text.Buffer(), find.Buffer(), find.Length()) == 0;
+		case Locale::Normalization::IgnoreCase:
+			return _wcsnicmp(text.Buffer(), find.Buffer(), find.Length()) == 0;
+		}
+		return false;
+	}
+
+	bool EnUsLocaleImpl::EndsWith(const WString&, const WString& text, const WString& find, Locale::Normalization normalization) const
+	{
+		if (text.Length() < find.Length() || find.Length() == 0)
+		{
+			return false;
+		}
+		switch (normalization)
+		{
+		case Locale::Normalization::None:
+			return wcsncmp(text.Buffer() + text.Length() - find.Length(), find.Buffer(), find.Length()) == 0;
+		case Locale::Normalization::IgnoreCase:
+			return _wcsnicmp(text.Buffer() + text.Length() - find.Length(), find.Buffer(), find.Length()) == 0;
+		}
+		return false;
+	}
+
+#if defined VCZH_GCC || defined VCZH_WASM
+#undef _wcsicmp
+#undef _wcsnicmp
+#endif
+
+/***********************************************************************
+InjectLocaleImpl
+***********************************************************************/
+
+	extern ILocaleImpl* GetOSLocaleImpl();
+
+	feature_injection::FeatureInjection<ILocaleImpl>& GetLocaleInjection()
+	{
+		static feature_injection::FeatureInjection<ILocaleImpl> injection(GetOSLocaleImpl());
+		return injection;
+	}
+
+	void InjectLocaleImpl(ILocaleImpl* impl)
+	{
+		GetLocaleInjection().Inject(impl);
+	}
+
+	void EjectLocaleImpl(ILocaleImpl* impl)
+	{
+		if (impl == nullptr)
+		{
+			GetLocaleInjection().EjectAll();
+		}
+		else
+		{
+			GetLocaleInjection().Eject(impl);
+		}
+	}
 
 /***********************************************************************
 Locale
@@ -448,6 +1045,154 @@ Locale
 	{
 		return localeName;
 	}
+
+/***********************************************************************
+Locale (static)
+***********************************************************************/
+
+	Locale Locale::Invariant()
+	{
+		return GetLocaleInjection().Get()->Invariant();
+	}
+
+	Locale Locale::SystemDefault()
+	{
+		return GetLocaleInjection().Get()->SystemDefault();
+	}
+
+	Locale Locale::UserDefault()
+	{
+		return GetLocaleInjection().Get()->UserDefault();
+	}
+
+	void Locale::Enumerate(collections::List<Locale>& locales)
+	{
+		GetLocaleInjection().Get()->Enumerate(locales);
+	}
+
+/***********************************************************************
+Locale (ILocaleImpl redirections)
+***********************************************************************/
+
+	void Locale::GetShortDateFormats(collections::List<WString>& formats)const
+	{
+		GetLocaleInjection().Get()->GetShortDateFormats(localeName, formats);
+	}
+
+	void Locale::GetLongDateFormats(collections::List<WString>& formats)const
+	{
+		GetLocaleInjection().Get()->GetLongDateFormats(localeName, formats);
+	}
+
+	void Locale::GetYearMonthDateFormats(collections::List<WString>& formats)const
+	{
+		GetLocaleInjection().Get()->GetYearMonthDateFormats(localeName, formats);
+	}
+
+	void Locale::GetLongTimeFormats(collections::List<WString>& formats)const
+	{
+		GetLocaleInjection().Get()->GetLongTimeFormats(localeName, formats);
+	}
+
+	void Locale::GetShortTimeFormats(collections::List<WString>& formats)const
+	{
+		GetLocaleInjection().Get()->GetShortTimeFormats(localeName, formats);
+	}
+
+	WString Locale::FormatDate(const WString& format, DateTime date)const
+	{
+		return GetLocaleInjection().Get()->FormatDate(localeName, format, date);
+	}
+
+	WString Locale::FormatTime(const WString& format, DateTime time)const
+	{
+		return GetLocaleInjection().Get()->FormatTime(localeName, format, time);
+	}
+
+	WString Locale::FormatNumber(const WString& number)const
+	{
+		return GetLocaleInjection().Get()->FormatNumber(localeName, number);
+	}
+
+	WString Locale::FormatCurrency(const WString& currency)const
+	{
+		return GetLocaleInjection().Get()->FormatCurrency(localeName, currency);
+	}
+
+	WString Locale::GetShortDayOfWeekName(vint dayOfWeek)const
+	{
+		return GetLocaleInjection().Get()->GetShortDayOfWeekName(localeName, dayOfWeek);
+	}
+
+	WString Locale::GetLongDayOfWeekName(vint dayOfWeek)const
+	{
+		return GetLocaleInjection().Get()->GetLongDayOfWeekName(localeName, dayOfWeek);
+	}
+
+	WString Locale::GetShortMonthName(vint month)const
+	{
+		return GetLocaleInjection().Get()->GetShortMonthName(localeName, month);
+	}
+
+	WString Locale::GetLongMonthName(vint month)const
+	{
+		return GetLocaleInjection().Get()->GetLongMonthName(localeName, month);
+	}
+
+	WString Locale::ToLower(const WString& str)const
+	{
+		return GetLocaleInjection().Get()->ToLower(localeName, str);
+	}
+
+	WString Locale::ToUpper(const WString& str)const
+	{
+		return GetLocaleInjection().Get()->ToUpper(localeName, str);
+	}
+
+	WString Locale::ToLinguisticLower(const WString& str)const
+	{
+		return GetLocaleInjection().Get()->ToLinguisticLower(localeName, str);
+	}
+
+	WString Locale::ToLinguisticUpper(const WString& str)const
+	{
+		return GetLocaleInjection().Get()->ToLinguisticUpper(localeName, str);
+	}
+
+	vint Locale::Compare(const WString& s1, const WString& s2, Normalization normalization)const
+	{
+		return GetLocaleInjection().Get()->Compare(localeName, s1, s2, normalization);
+	}
+
+	vint Locale::CompareOrdinal(const WString& s1, const WString& s2)const
+	{
+		return GetLocaleInjection().Get()->CompareOrdinal(s1, s2);
+	}
+
+	vint Locale::CompareOrdinalIgnoreCase(const WString& s1, const WString& s2)const
+	{
+		return GetLocaleInjection().Get()->CompareOrdinalIgnoreCase(s1, s2);
+	}
+
+	collections::Pair<vint, vint> Locale::FindFirst(const WString& text, const WString& find, Normalization normalization)const
+	{
+		return GetLocaleInjection().Get()->FindFirst(localeName, text, find, normalization);
+	}
+
+	collections::Pair<vint, vint> Locale::FindLast(const WString& text, const WString& find, Normalization normalization)const
+	{
+		return GetLocaleInjection().Get()->FindLast(localeName, text, find, normalization);
+	}
+
+	bool Locale::StartsWith(const WString& text, const WString& find, Normalization normalization)const
+	{
+		return GetLocaleInjection().Get()->StartsWith(localeName, text, find, normalization);
+	}
+
+	bool Locale::EndsWith(const WString& text, const WString& find, Normalization normalization)const
+	{
+		return GetLocaleInjection().Get()->EndsWith(localeName, text, find, normalization);
+	}
 }
 
 
@@ -460,8 +1205,64 @@ Licensed under https://github.com/vczh-libraries/License
 ***********************************************************************/
 
 
+#if defined VCZH_ARM
+#include <arm_acle.h>
+#elif defined VCZH_MSVC || defined VCZH_GCC
+#include <emmintrin.h>
+#endif
+
 namespace vl
 {
+
+/***********************************************************************
+SpinLock
+***********************************************************************/
+
+	SpinLock::Scope::Scope(SpinLock& _spinLock)
+		:spinLock(&_spinLock)
+	{
+		spinLock->Enter();
+	}
+
+	SpinLock::Scope::~Scope()
+	{
+		spinLock->Leave();
+	}
+
+	bool SpinLock::TryEnter()
+	{
+		return token.exchange(1) == 0;
+	}
+
+	void SpinLock::Enter()
+	{
+		while (true)
+		{
+			vint expected = 0;
+			if (token.compare_exchange_strong(expected, 1))
+			{
+				return;
+			}
+			while (token != 0)
+			{
+#if defined VCZH_ARM
+				__yield();
+#elif defined VCZH_MSVC || defined VCZH_GCC
+				_mm_pause();
+#endif
+			}
+		}
+	}
+
+	void SpinLock::Leave()
+	{
+		token.exchange(0);
+	}
+
+/***********************************************************************
+ThreadLocalStorage
+***********************************************************************/
+
 	void ThreadLocalStorage::Clear()
 	{
 		CHECK_ERROR(!disposed, L"vl::ThreadLocalStorage::Clear()#Cannot access a disposed ThreadLocalStorage.");
@@ -532,6 +1333,1702 @@ namespace vl
 			delete temp;
 		}
 	}
+
+/***********************************************************************
+TaskQueue
+***********************************************************************/
+
+	TaskQueue::TaskQueue()
+	{
+		CHECK_ERROR(semaphoreTasks.Create(0, 65536), L"vl::TaskQueue::TaskQueue()#Failed to create the task semaphore.");
+	}
+
+	TaskQueue::~TaskQueue()
+	{
+	}
+
+	void TaskQueue::QueueTask(Func<void()> task)
+	{
+		SPIN_LOCK(lockTasks)
+		{
+			tasks.Add(task);
+		}
+		semaphoreTasks.Release();
+	}
+
+	void TaskQueue::QueueExitTask()
+	{
+		SPIN_LOCK(lockTasks)
+		{
+			exitTaskQueued = true;
+		}
+		semaphoreTasks.Release();
+	}
+
+	void TaskQueue::RunTaskQueue()
+	{
+		while (true)
+		{
+			Func<void()> task;
+			bool hasTask = false;
+			bool shouldExit = false;
+			SPIN_LOCK(lockTasks)
+			{
+				if (tasks.Count() > 0)
+				{
+					task = tasks[0];
+					tasks.RemoveAt(0);
+					hasTask = true;
+				}
+				else
+				{
+					shouldExit = exitTaskQueued;
+				}
+			}
+
+			if (shouldExit)
+			{
+				break;
+			}
+			if (!hasTask)
+			{
+				semaphoreTasks.Wait();
+				continue;
+			}
+			task();
+		}
+	}
+}
+
+
+/***********************************************************************
+.\ENCODING\BASE64ENCODING.CPP
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+
+namespace vl
+{
+	namespace stream
+	{
+		const char8_t Utf8Base64Codes[] = u8"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+/***********************************************************************
+Utf8Base64Encoder
+***********************************************************************/
+
+		void Utf8Base64Encoder::WriteBytesToCharArray(uint8_t* fromBytes, char8_t(&toChars)[Base64CycleChars], vint bytes)
+		{
+			switch (bytes)
+			{
+			case 1:
+				{
+					toChars[0] = Utf8Base64Codes[fromBytes[0] >> 2];
+					toChars[1] = Utf8Base64Codes[(fromBytes[0] % (1 << 2)) << 4];
+					toChars[2] = u8'=';
+					toChars[3] = u8'=';
+				}
+				break;
+			case 2:
+				{
+					toChars[0] = Utf8Base64Codes[fromBytes[0] >> 2];
+					toChars[1] = Utf8Base64Codes[((fromBytes[0] % (1 << 2)) << 4) | (fromBytes[1] >> 4)];
+					toChars[2] = Utf8Base64Codes[(fromBytes[1] % (1 << 4)) << 2];
+					toChars[3] = u8'=';
+				}
+				break;
+			case 3:
+				{
+					toChars[0] = Utf8Base64Codes[fromBytes[0] >> 2];
+					toChars[1] = Utf8Base64Codes[((fromBytes[0] % (1 << 2)) << 4) | (fromBytes[1] >> 4)];
+					toChars[2] = Utf8Base64Codes[((fromBytes[1] % (1 << 4)) << 2) | (fromBytes[2] >> 6)];
+					toChars[3] = Utf8Base64Codes[fromBytes[2] % (1 << 6)];
+				}
+				break;
+			default:
+				CHECK_FAIL(L"vl::stream::Utf8Base64Encoder::WriteBytesToCharArray(uint8_t*, char8_t(&)[Base64CycleChars], vint)#Parameter bytes should be 1, 2 or 3.");
+			}
+		}
+
+		bool Utf8Base64Encoder::WriteCycle(uint8_t*& reading, vint& _size)
+		{
+			if (_size <= 0) return false;
+			vint bytes = _size < Base64CycleBytes ? _size : Base64CycleBytes;
+
+			char8_t chars[Base64CycleChars];
+			WriteBytesToCharArray(reading, chars, bytes);
+			vint writtenBytes = stream->Write(chars, Base64CycleChars);
+			CHECK_ERROR(writtenBytes == Base64CycleChars, L"vl::stream::Utf8Base64Encoder::WriteCycle(uint8_t*&, vint&)#The underlying stream failed to accept enough base64 characters.");
+
+			reading += bytes;
+			_size -= bytes;
+			return true;
+		}
+
+		bool Utf8Base64Encoder::WriteCache(uint8_t*& reading, vint& _size)
+		{
+			if (cacheSize > 0 || _size < Base64CycleBytes)
+			{
+				vint copiedBytes = Base64CycleBytes - cacheSize;
+				if (copiedBytes > _size) copiedBytes = _size;
+				if (copiedBytes > 0)
+				{
+					memcpy(cache + cacheSize, reading, copiedBytes);
+					reading += copiedBytes;
+					_size -= copiedBytes;
+					cacheSize += copiedBytes;
+				}
+			}
+
+			if (cacheSize == 0) return _size > 0;
+			if (cacheSize == Base64CycleBytes)
+			{
+				uint8_t* cacheReading = cache;
+				return WriteCycle(cacheReading, cacheSize);
+			}
+			return true;
+		}
+
+		vint Utf8Base64Encoder::Write(void* _buffer, vint _size)
+		{
+			uint8_t* reading = (uint8_t*)_buffer;
+
+			// flush cache if any
+			if (!WriteCache(reading, _size)) goto FINISHED_WRITING;
+
+			// run Base64 encoding
+			while (_size >= Base64CycleBytes)
+			{
+				if (!WriteCycle(reading, _size)) goto FINISHED_WRITING;
+			}
+
+			// run the last Base64 encoding cycle and wrote a postfix to cache
+			WriteCache(reading, _size);
+
+		FINISHED_WRITING:
+			return reading - (uint8_t*)_buffer;
+		}
+
+		void Utf8Base64Encoder::Close()
+		{
+			if (cacheSize > 0)
+			{
+				char8_t chars[Base64CycleChars];
+				WriteBytesToCharArray(cache, chars, cacheSize);
+				vint writtenBytes = stream->Write(chars, Base64CycleChars);
+				CHECK_ERROR(writtenBytes == Base64CycleChars, L"vl::stream::Utf8Base64Encoder::Close()#The underlying stream failed to accept enough base64 characters.");
+
+				cacheSize = 0;
+			}
+			EncoderBase::Close();
+		}
+
+/***********************************************************************
+Utf8Base64Decoder
+***********************************************************************/
+
+		vint Utf8Base64Decoder::ReadBytesFromCharArray(char8_t(&fromChars)[Base64CycleChars], uint8_t* toBytes)
+		{
+			uint8_t nums[Base64CycleChars];
+			for (vint i = 0; i < Base64CycleChars; i++)
+			{
+				char8_t c = fromChars[i];
+				if (u8'A' <= c && c <= u8'Z') nums[i] = c - u8'A';
+				else if (u8'a' <= c && c <= u8'z') nums[i] = c - u8'a' + 26;
+				else if (u8'0' <= c && c <= u8'9') nums[i] = c - u8'0' + 52;
+				else switch (c)
+				{
+				case '+':nums[i] = 62; break;
+				case '/':nums[i] = 63; break;
+				case '=':nums[i] = 0; break;
+				default:
+					CHECK_FAIL(L"vl::stream::Utf8Base64Decoder::ReadBytesFromCharArray(char(&)[Base64CycleChars], uint8_t*)#Illegal Base64 character.");
+				}
+			}
+
+			toBytes[0] = (nums[0] << 2) | (nums[1] >> 4);
+			if (fromChars[2] == u8'=') return 1;
+			toBytes[1] = ((nums[1] % (1 << 4)) << 4) | (nums[2] >> 2);
+			if (fromChars[3] == u8'=') return 2;
+			toBytes[2] = ((nums[2] % (1 << 2)) << 6) | nums[3];
+			return 3;
+		}
+
+		vint Utf8Base64Decoder::ReadCycle(uint8_t*& writing, vint& _size)
+		{
+			char8_t chars[Base64CycleChars];
+			vint readChars = stream->Read((void*)chars, Base64CycleChars);
+			if (readChars == 0) return 0;
+			CHECK_ERROR(readChars == Base64CycleChars, L"vl::stream::Utf8Base64Decoder::ReadCycle(uint8_t*&, vint&)#The underlying stream failed to provide enough base64 characters.");
+
+			vint readBytes = ReadBytesFromCharArray(chars, writing);
+			writing += readBytes;
+			_size -= readBytes;
+			return readBytes;
+		}
+
+		void Utf8Base64Decoder::ReadCache(uint8_t*& writing, vint& _size)
+		{
+			if (cacheSize > 0)
+			{
+				vint copiedBytes = cacheSize;
+				if (copiedBytes > _size) copiedBytes = _size;
+				if (copiedBytes > 0)
+				{
+					memcpy(writing, cache, copiedBytes);
+					writing += copiedBytes;
+					_size -= copiedBytes;
+					cacheSize -= copiedBytes;
+					if (cacheSize > 0)
+					{
+						memmove(cache, cache + copiedBytes, cacheSize);
+					}
+				}
+			}
+		}
+
+		vint Utf8Base64Decoder::Read(void* _buffer, vint _size)
+		{
+			uint8_t* writing = (uint8_t*)_buffer;
+
+			// write cache to buffer if any
+			ReadCache(writing, _size);
+
+			// run Base64 decoding
+			while (_size >= Base64CycleBytes)
+			{
+				if (ReadCycle(writing, _size) == 0) goto FINISHED_READING;
+			}
+
+			// run the last Base64 decoding cycle and write a prefix to buffer
+			if (_size > 0)
+			{
+				uint8_t* cacheWriting = cache;
+				vint temp = 0;
+				if ((cacheSize = ReadCycle(cacheWriting, temp)) == 0) goto FINISHED_READING;
+				ReadCache(writing, _size);
+			}
+		FINISHED_READING:
+			return writing - (uint8_t*)_buffer;
+		}
+	}
+}
+
+
+/***********************************************************************
+.\ENCODING\ENCODING.CPP
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+
+namespace vl
+{
+	namespace stream
+	{
+/***********************************************************************
+EncoderBase
+***********************************************************************/
+
+		void EncoderBase::Setup(IStream* _stream)
+		{
+			stream = _stream;
+		}
+
+		void EncoderBase::Close()
+		{
+		}
+
+/***********************************************************************
+DecoderBase
+***********************************************************************/
+
+		void DecoderBase::Setup(IStream* _stream)
+		{
+			stream = _stream;
+		}
+
+		void DecoderBase::Close()
+		{
+		}
+	}
+}
+
+
+/***********************************************************************
+.\ENCODING\LZWENCODING.CPP
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+
+namespace vl
+{
+	namespace stream
+	{
+		using namespace collections;
+		using namespace lzw;
+
+/***********************************************************************
+LzwBase
+***********************************************************************/
+
+		void LzwBase::UpdateIndexBits()
+		{
+			if (nextIndex >=2 && (nextIndex & (nextIndex - 1)) == 0)
+			{
+				indexBits++;
+			}
+		}
+
+		lzw::Code* LzwBase::CreateCode(lzw::Code* prefix, vuint8_t byte)
+		{
+			if (nextIndex < MaxDictionarySize)
+			{
+				Code* code = codeAllocator.Create();
+				code->byte = byte;
+				code->code = nextIndex;
+				code->parent = prefix;
+				code->size = prefix->size + 1;
+				prefix->children.Set(byte, code, mapAllocator);
+				nextIndex++;
+
+				return code;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+
+		LzwBase::LzwBase()
+			:codeAllocator(65536)
+			, mapAllocator(1048576)
+		{
+			root = codeAllocator.Create();
+
+			for (vint i = 0; i < 256; i++)
+			{
+				UpdateIndexBits();
+				CreateCode(root, (vuint8_t)i);
+			}
+		}
+
+		LzwBase::LzwBase(bool (&existingBytes)[256])
+		{
+			root = codeAllocator.Create();
+			for (vint i = 0; i < 256; i++)
+			{
+				if (existingBytes[i])
+				{
+					UpdateIndexBits();
+					CreateCode(root, (vuint8_t)i);
+				}
+			}
+
+			if (indexBits < 8)
+			{
+				eofIndex = nextIndex++;
+			}
+		}
+
+		LzwBase::~LzwBase()
+		{
+		}
+
+/***********************************************************************
+LzwEncoder
+***********************************************************************/
+
+		void LzwEncoder::Flush()
+		{
+			vint written = 0;
+			vint bufferUsedSize = bufferUsedBits / 8;
+			if (bufferUsedBits % 8 != 0)
+			{
+				bufferUsedSize++;
+			}
+			while (written < bufferUsedSize)
+			{
+				vint size = stream->Write(buffer + written, bufferUsedSize - written);
+				CHECK_ERROR(size != 0, L"LzwEncoder::Flush()#Failed to flush the lzw buffer.");
+				written += size;
+			}
+			bufferUsedBits = 0;
+		}
+
+		vuint8_t highMarks[9] = { 0x00, 0x80, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC, 0xFE, 0xFF };
+		vuint8_t lowMarks[9] = { 0x00, 0x01, 0x03, 0x07, 0x0F, 0x1F, 0x3F, 0x7F, 0xFF };
+
+		void LzwEncoder::WriteNumber(vint number, vint bitSize)
+		{
+			vint bitStart = 0;
+			vint bitStep = 8 - bufferUsedBits % 8;
+			if (bitStep > bitSize)
+			{
+				bitStep = bitSize;
+			}
+			while (bitStart < bitSize)
+			{
+				if(bufferUsedBits == BufferSize * 8)
+				{
+					Flush();
+				}
+
+				vint writeStart = bufferUsedBits % 8;
+				vint byteIndex = bufferUsedBits / 8;
+				vuint8_t byte = buffer[byteIndex];
+				byte &= highMarks[writeStart];
+
+				vuint8_t content = (vuint8_t)((number >> bitStart)&lowMarks[bitStep]) << (8 - writeStart - bitStep);
+				byte |= content;
+
+				buffer[byteIndex] = byte;
+				bufferUsedBits += bitStep;
+
+				bitStart += bitStep;
+				vint remain = bitSize - bitStart;
+				bitStep = remain < 8 ? remain : 8;
+			}
+		}
+
+		LzwEncoder::LzwEncoder()
+		{
+			prefix = root;
+		}
+
+		LzwEncoder::LzwEncoder(bool (&existingBytes)[256])
+			:LzwBase(existingBytes)
+		{
+			prefix = root;
+		}
+
+		LzwEncoder::~LzwEncoder()
+		{
+		}
+
+		void LzwEncoder::Close()
+		{
+			if (prefix != root)
+			{
+				WriteNumber(prefix->code, indexBits);
+				prefix = root;
+			}
+
+			vint remain = 8 - bufferUsedBits % 8;
+			if (remain != 8 && remain >= indexBits)
+			{
+				CHECK_ERROR(eofIndex != -1, L"LzwEncoder::Close()#Internal error.");
+				WriteNumber(eofIndex, indexBits);
+			}
+			Flush();
+			EncoderBase::Close();
+		}
+
+		vint LzwEncoder::Write(void* _buffer, vint _size)
+		{
+			vuint8_t* bytes = (vuint8_t*)_buffer;
+			for (vint i = 0; i < _size; i++)
+			{
+				vuint8_t byte = bytes[i];
+				Code* next = prefix->children.Get(byte);
+				if (next)
+				{
+					prefix = next;
+				}
+				else
+				{
+					WriteNumber(prefix->code, indexBits);
+
+					if (nextIndex < MaxDictionarySize)
+					{
+						UpdateIndexBits();
+						CreateCode(prefix, byte);
+					}
+					prefix = root->children.Get(byte);
+				}
+			}
+			return _size;
+		}
+
+/***********************************************************************
+LzwDecoder
+***********************************************************************/
+
+		bool LzwDecoder::ReadNumber(vint& number, vint bitSize)
+		{
+			number = 0;
+			if (inputBufferSize == -1)
+			{
+				return false;
+			}
+
+			vint remainBits = inputBufferSize * 8 - inputBufferUsedBits;
+			vint writtenBits = 0;
+			vint bitStep = 8 - inputBufferUsedBits % 8;
+			if (bitStep > bitSize)
+			{
+				bitStep = bitSize;
+			}
+			while (writtenBits < bitSize)
+			{
+				if (remainBits == 0)
+				{
+					inputBufferSize = stream->Read(inputBuffer, BufferSize);
+					if (inputBufferSize == 0)
+					{
+						inputBufferSize = -1;
+						return false;
+					}
+					remainBits = inputBufferSize * 8;
+					inputBufferUsedBits = 0;
+				}
+
+				vuint8_t byte = inputBuffer[inputBufferUsedBits / 8];
+				byte >>= (8 - inputBufferUsedBits % 8 - bitStep);
+				byte &= lowMarks[bitStep];
+				number |= byte << writtenBits;
+
+				inputBufferUsedBits += bitStep;
+				remainBits -= bitStep;
+				writtenBits += bitStep;
+				vint remain = bitSize - writtenBits;
+				bitStep = remain < 8 ? remain : 8;
+			}
+
+			return true;
+		}
+
+		void LzwDecoder::PrepareOutputBuffer(vint size)
+		{
+			if (outputBuffer.Count() < size)
+			{
+				outputBuffer.Resize(size);
+			}
+			outputBufferSize = size;
+		}
+
+		void LzwDecoder::ExpandCodeToOutputBuffer(lzw::Code* code)
+		{
+			vuint8_t* outputByte = &outputBuffer[0] + code->size;
+			Code* current = code;
+			while (current != root)
+			{
+				*(--outputByte) = current->byte;
+				current = current->parent;
+			}
+			outputBufferUsedBytes = 0;
+		}
+
+		LzwDecoder::LzwDecoder()
+		{
+			for (vint i = 0; i < 256; i++)
+			{
+				dictionary.Add(root->children.Get((vuint8_t)i));
+			}
+		}
+
+		LzwDecoder::LzwDecoder(bool (&existingBytes)[256])
+			:LzwBase(existingBytes)
+		{
+			for (vint i = 0; i < 256; i++)
+			{
+				if (existingBytes[i])
+				{
+					dictionary.Add(root->children.Get((vuint8_t)i));
+				}
+			}
+			if (eofIndex != -1)
+			{
+				dictionary.Add(nullptr);
+			}
+		}
+
+		LzwDecoder::~LzwDecoder()
+		{
+		}
+
+		vint LzwDecoder::Read(void* _buffer, vint _size)
+		{
+			vint written = 0;
+			vuint8_t* bytes = (vuint8_t*)_buffer;
+			while (written < _size)
+			{
+				vint expect = _size - written;
+				vint remain = outputBufferSize - outputBufferUsedBytes;
+				if (remain == 0)
+				{
+					vint index = 0;
+					if (!ReadNumber(index, indexBits) || index == eofIndex)
+					{
+						break;
+					}
+
+					Code* prefix = 0;
+					if (index == dictionary.Count())
+					{
+						prefix = lastCode;
+						PrepareOutputBuffer(prefix->size + 1);
+						ExpandCodeToOutputBuffer(prefix);
+						outputBuffer[outputBufferSize - 1] = outputBuffer[0];
+					}
+					else
+					{
+						prefix = dictionary[index];
+						PrepareOutputBuffer(prefix->size);
+						ExpandCodeToOutputBuffer(prefix);
+					}
+					
+					if (nextIndex < MaxDictionarySize)
+					{
+						if (lastCode)
+						{
+							dictionary.Add(CreateCode(lastCode, outputBuffer[0]));
+						}
+						UpdateIndexBits();
+					}
+					lastCode = dictionary[index];
+				}
+				else
+				{
+					if (remain > expect)
+					{
+						remain = expect;
+					}
+					memcpy(bytes + written, &outputBuffer[outputBufferUsedBytes], remain);
+
+					outputBufferUsedBytes += remain;
+					written += remain;
+				}
+			}
+			return written;
+		}
+
+/***********************************************************************
+Helper Functions
+***********************************************************************/
+
+		vint CopyStream(stream::IStream& inputStream, stream::IStream& outputStream)
+		{
+			vint totalSize = 0;
+			while (true)
+			{
+				char buffer[1024];
+				vint copied = inputStream.Read(buffer, (vint)sizeof(buffer));
+				if (copied == 0)
+				{
+					break;
+				}
+				totalSize += outputStream.Write(buffer, copied);
+			}
+			return totalSize;
+		}
+
+		const vint CompressionFragmentSize = 1048576;
+
+		void CompressStream(stream::IStream& inputStream, stream::IStream& outputStream)
+		{
+			Array<char> buffer(CompressionFragmentSize);
+			while (true)
+			{
+				vint size = inputStream.Read(&buffer[0], buffer.Count());
+				if (size == 0) break;
+
+				MemoryStream compressedStream;
+				{
+					LzwEncoder encoder;
+					EncoderStream encoderStream(compressedStream, encoder);
+					encoderStream.Write(&buffer[0], size);
+				}
+
+				compressedStream.SeekFromBegin(0);
+				{
+					{
+						vint32_t bufferSize = (vint32_t)size;
+						outputStream.Write(&bufferSize, (vint)sizeof(bufferSize));
+					}
+					{
+						vint32_t compressedSize = (vint32_t)compressedStream.Size();
+						outputStream.Write(&compressedSize, (vint)sizeof(compressedSize));
+					}
+					CopyStream(compressedStream, outputStream);
+				}
+			}
+		}
+
+		void DecompressStream(stream::IStream& inputStream, stream::IStream& outputStream)
+		{
+			vint totalSize = 0;
+			vint totalWritten = 0;
+			while (true)
+			{
+				vint32_t bufferSize = 0;
+				if (inputStream.Read(&bufferSize, (vint)sizeof(bufferSize)) != sizeof(bufferSize))
+				{
+					break;
+				}
+
+				vint32_t compressedSize = 0;
+				CHECK_ERROR(inputStream.Read(&compressedSize, (vint)sizeof(compressedSize)) == sizeof(compressedSize), L"vl::stream::DecompressStream(MemoryStream&, MemoryStream&)#Incomplete input");
+
+				Array<char> buffer(compressedSize);
+				CHECK_ERROR(inputStream.Read(&buffer[0], compressedSize) == compressedSize, L"vl::stream::DecompressStream(MemoryStream&, MemoryStream&)#Incomplete input");
+
+				MemoryWrapperStream compressedStream(&buffer[0], compressedSize);
+				LzwDecoder decoder;
+				DecoderStream decoderStream(compressedStream, decoder);
+				totalWritten += CopyStream(decoderStream, outputStream);
+				totalSize += bufferSize;
+			}
+			CHECK_ERROR(outputStream.Size() == totalSize, L"vl::stream::DecompressStream(MemoryStream&, MemoryStream&)#Incomplete input");
+		}
+	}
+}
+
+/***********************************************************************
+.\ENCODING\CHARFORMAT\BOMENCODING.CPP
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+
+namespace vl
+{
+	namespace stream
+	{
+/***********************************************************************
+BomEncoder
+***********************************************************************/
+
+		BomEncoder::BomEncoder(Encoding _encoding)
+			:encoding(_encoding)
+			,encoder(0)
+		{
+			switch(encoding)
+			{
+			case Mbcs:
+				encoder=new MbcsEncoder;
+				break;
+			case Utf8:
+				encoder=new Utf8Encoder;
+				break;
+			case Utf16:
+				encoder=new Utf16Encoder;
+				break;
+			case Utf16BE:
+				encoder=new Utf16BEEncoder;
+				break;
+			}
+		}
+
+		BomEncoder::~BomEncoder()
+		{
+			Close();
+		}
+
+		void BomEncoder::Setup(IStream* _stream)
+		{
+			switch(encoding)
+			{
+			case Mbcs:
+				break;
+			case Utf8:
+				_stream->Write((void*)"\xEF\xBB\xBF", 3);
+				break;
+			case Utf16:
+				_stream->Write((void*)"\xFF\xFE", 2);
+				break;
+			case Utf16BE:
+				_stream->Write((void*)"\xFE\xFF", 2);
+				break;
+			}
+			encoder->Setup(_stream);
+		}
+
+		void BomEncoder::Close()
+		{
+			if(encoder)
+			{
+				encoder->Close();
+				delete encoder;
+				encoder=0;
+			}
+		}
+
+		vint BomEncoder::Write(void* _buffer, vint _size)
+		{
+			return encoder->Write(_buffer, _size);
+		}
+
+/***********************************************************************
+BomDecoder
+***********************************************************************/
+
+		BomDecoder::BomStream::BomStream(IStream* _stream, char* _bom, vint _bomLength)
+			:stream(_stream)
+			,bomPosition(0)
+			,bomLength(_bomLength)
+		{
+			memcpy(bom, _bom, bomLength);
+		}
+
+		bool BomDecoder::BomStream::CanRead()const
+		{
+			return IsAvailable();
+		}
+
+		bool BomDecoder::BomStream::CanWrite()const
+		{
+			return false;
+		}
+
+		bool BomDecoder::BomStream::CanSeek()const
+		{
+			return false;
+		}
+
+		bool BomDecoder::BomStream::CanPeek()const
+		{
+			return false;
+		}
+
+		bool BomDecoder::BomStream::IsLimited()const
+		{
+			return stream!=0 && stream->IsLimited();
+		}
+
+		bool BomDecoder::BomStream::IsAvailable()const
+		{
+			return stream!=0 && stream->IsAvailable();
+		}
+
+		void BomDecoder::BomStream::Close()
+		{
+			stream=0;
+		}
+
+		pos_t BomDecoder::BomStream::Position()const
+		{
+			return IsAvailable()?bomPosition+stream->Position():-1;
+		}
+
+		pos_t BomDecoder::BomStream::Size()const
+		{
+			return -1;
+		}
+
+		void BomDecoder::BomStream::Seek(pos_t _size)
+		{
+			CHECK_FAIL(L"BomDecoder::BomStream::Seek(pos_t)#Operation not supported.");
+		}
+
+		void BomDecoder::BomStream::SeekFromBegin(pos_t _size)
+		{
+			CHECK_FAIL(L"BomDecoder::BomStream::SeekFromBegin(pos_t)#Operation not supported.");
+		}
+
+		void BomDecoder::BomStream::SeekFromEnd(pos_t _size)
+		{
+			CHECK_FAIL(L"BomDecoder::BomStream::SeekFromEnd(pos_t)#Operation not supported.");
+		}
+
+		vint BomDecoder::BomStream::Read(void* _buffer, vint _size)
+		{
+			vint result=0;
+			unsigned char* buffer=(unsigned char*)_buffer;
+			if(bomPosition<bomLength)
+			{
+				vint remain=bomLength-bomPosition;
+				result=remain<_size?remain:_size;
+				memcpy(buffer, bom+bomPosition, result);
+				buffer+=result;
+				bomPosition+=result;
+				_size-=result;
+			}
+			if(_size)
+			{
+				result+=stream->Read(buffer, _size);
+			}
+			return result;
+		}
+
+		vint BomDecoder::BomStream::Write(void* _buffer, vint _size)
+		{
+			CHECK_FAIL(L"BomDecoder::BomStream::Write(void*, vint)#Operation not supported.");
+		}
+
+		vint BomDecoder::BomStream::Peek(void* _buffer, vint _size)
+		{
+			CHECK_FAIL(L"BomDecoder::BomStream::Peek(void*, vint)#Operation not supported.");
+		}
+
+		BomDecoder::BomDecoder()
+			:decoder(0)
+		{
+		}
+
+		BomDecoder::~BomDecoder()
+		{
+			Close();
+		}
+
+		void BomDecoder::Setup(IStream* _stream)
+		{
+			char bom[3]={0};
+			vint length=_stream->Read(bom, sizeof(bom));
+			if(strncmp(bom, "\xEF\xBB\xBF", 3)==0)
+			{
+				decoder=new Utf8Decoder;
+				stream=new BomStream(_stream, bom+3, 0);
+			}
+			else if(strncmp(bom, "\xFF\xFE", 2)==0)
+			{
+				decoder=new Utf16Decoder;
+				stream=new BomStream(_stream, bom+2, 1);
+			}
+			else if(strncmp(bom, "\xFE\xFF", 2)==0)
+			{
+				decoder=new Utf16BEDecoder;
+				stream=new BomStream(_stream, bom+2, 1);
+			}
+			else
+			{
+				decoder=new MbcsDecoder;
+				stream=new BomStream(_stream, bom, 3);
+			}
+			decoder->Setup(stream);
+		}
+
+		void BomDecoder::Close()
+		{
+			if(decoder)
+			{
+				decoder->Close();
+				delete decoder;
+				decoder=0;
+				stream->Close();
+				delete stream;
+				stream=0;
+			}
+		}
+
+		vint BomDecoder::Read(void* _buffer, vint _size)
+		{
+			return decoder->Read(_buffer, _size);
+		}
+	}
+}
+
+
+/***********************************************************************
+.\ENCODING\CHARFORMAT\CHARFORMAT.CPP
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+
+namespace vl
+{
+	namespace stream
+	{
+/***********************************************************************
+Helper Functions
+***********************************************************************/
+
+		bool CanBeMbcs(unsigned char* buffer, vint size)
+		{
+			for(vint i=0;i<size;i++)
+			{
+				if(buffer[i]==0) return false;
+			}
+			return true;
+		}
+
+		bool CanBeUtf8(unsigned char* buffer, vint size)
+		{
+			for(vint i=0;i<size;i++)
+			{
+				unsigned char c=(unsigned char)buffer[i];
+				if(c==0)
+				{
+					return false;
+				}
+				else
+				{
+					vint count10xxxxxx=0;
+					if((c&0x80)==0x00) /* 0x0xxxxxxx */ count10xxxxxx=0;
+					else if((c&0xE0)==0xC0) /* 0x110xxxxx */ count10xxxxxx=1;
+					else if((c&0xF0)==0xE0) /* 0x1110xxxx */ count10xxxxxx=2;
+					else if((c&0xF8)==0xF0) /* 0x11110xxx */ count10xxxxxx=3;
+					else if((c&0xFC)==0xF8) /* 0x111110xx */ count10xxxxxx=4;
+					else if((c&0xFE)==0xFC) /* 0x1111110x */ count10xxxxxx=5;
+
+					if(size<=i+count10xxxxxx)
+					{
+						return false;
+					}
+					else
+					{
+						for(vint j=0;j<count10xxxxxx;j++)
+						{
+							c=(unsigned char)buffer[i+j+1];
+							if((c&0xC0)!=0x80) /* 0x10xxxxxx */ return false;
+						}
+					}
+					i+=count10xxxxxx;
+				}
+			}
+			return true;
+		}
+
+		bool CanBeUtf16(unsigned char* buffer, vint size, bool& hitSurrogatePairs)
+		{
+			hitSurrogatePairs = false;
+			if (size % 2 != 0) return false;
+			bool needTrail = false;
+			for (vint i = 0; i < size; i += 2)
+			{
+				vuint16_t c = buffer[i] + (buffer[i + 1] << 8);
+				if (c == 0) return false;
+				vint type = 0;
+				if (0xD800 <= c && c <= 0xDBFF) type = 1;
+				else if (0xDC00 <= c && c <= 0xDFFF) type = 2;
+				if (needTrail)
+				{
+					if (type == 2)
+					{
+						needTrail = false;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					if (type == 1)
+					{
+						needTrail = true;
+						hitSurrogatePairs = true;
+					}
+					else if (type != 0)
+					{
+						return false;
+					}
+				}
+			}
+			return !needTrail;
+		}
+
+		bool CanBeUtf16BE(unsigned char* buffer, vint size, bool& hitSurrogatePairs)
+		{
+			hitSurrogatePairs = false;
+			if (size % 2 != 0) return false;
+			bool needTrail = false;
+			for (vint i = 0; i < size; i += 2)
+			{
+				vuint16_t c = buffer[i + 1] + (buffer[i] << 8);
+				if (c == 0) return false;
+				vint type = 0;
+				if (0xD800 <= c && c <= 0xDBFF) type = 1;
+				else if (0xDC00 <= c && c <= 0xDFFF) type = 2;
+				if (needTrail)
+				{
+					if (type == 2)
+					{
+						needTrail = false;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					if (type == 1)
+					{
+						needTrail = true;
+						hitSurrogatePairs = true;
+					}
+					else if (type != 0)
+					{
+						return false;
+					}
+				}
+			}
+			return !needTrail;
+		}
+		
+/***********************************************************************
+TestEncoding
+***********************************************************************/
+
+		extern void TestEncodingInternal(
+			unsigned char* buffer,
+			vint size,
+			BomEncoder::Encoding& encoding,
+			bool containsBom,
+			bool utf16HitSurrogatePairs,
+			bool utf16BEHitSurrogatePairs,
+			bool roughMbcs,
+			bool roughUtf8,
+			bool roughUtf16,
+			bool roughUtf16BE
+		);
+
+		void TestEncoding(unsigned char* buffer, vint size, BomEncoder::Encoding& encoding, bool& containsBom)
+		{
+			if (size >= 3 && strncmp((char*)buffer, "\xEF\xBB\xBF", 3) == 0)
+			{
+				encoding = BomEncoder::Utf8;
+				containsBom = true;
+			}
+			else if (size >= 2 && strncmp((char*)buffer, "\xFF\xFE", 2) == 0)
+			{
+				encoding = BomEncoder::Utf16;
+				containsBom = true;
+			}
+			else if (size >= 2 && strncmp((char*)buffer, "\xFE\xFF", 2) == 0)
+			{
+				encoding = BomEncoder::Utf16BE;
+				containsBom = true;
+			}
+			else
+			{
+				encoding = BomEncoder::Mbcs;
+				containsBom = false;
+
+				bool utf16HitSurrogatePairs = false;
+				bool utf16BEHitSurrogatePairs = false;
+				bool roughMbcs = CanBeMbcs(buffer, size);
+				bool roughUtf8 = CanBeUtf8(buffer, size);
+				bool roughUtf16 = CanBeUtf16(buffer, size, utf16HitSurrogatePairs);
+				bool roughUtf16BE = CanBeUtf16BE(buffer, size, utf16BEHitSurrogatePairs);
+
+				vint roughCount = (roughMbcs ? 1 : 0) + (roughUtf8 ? 1 : 0) + (roughUtf16 ? 1 : 0) + (roughUtf16BE ? 1 : 0);
+				if (roughCount == 1)
+				{
+					if (roughUtf8) encoding = BomEncoder::Utf8;
+					else if (roughUtf16) encoding = BomEncoder::Utf16;
+					else if (roughUtf16BE) encoding = BomEncoder::Utf16BE;
+				}
+				else if (roughCount > 1)
+				{
+					TestEncodingInternal(buffer, size, encoding, containsBom, utf16HitSurrogatePairs, utf16BEHitSurrogatePairs, roughMbcs, roughUtf8, roughUtf16, roughUtf16BE);
+				}
+			}
+		}
+	}
+}
+
+
+/***********************************************************************
+.\ENCODING\CHARFORMAT\MBCSENCODING.CPP
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+
+namespace vl
+{
+	namespace stream
+	{
+/***********************************************************************
+MbcsDecoder::ReadString
+***********************************************************************/
+
+		extern bool IsMbcsLeadByte(char c);
+		extern void MbcsToWChar(wchar_t* wideBuffer, vint wideChars, vint wideReaded, char* mbcsBuffer, vint mbcsChars);
+
+		vint MbcsDecoder::ReadString(wchar_t* _buffer, vint chars)
+		{
+			char* source = new char[chars * 2];
+			char* reading = source;
+			vint readed = 0;
+			while (readed < chars)
+			{
+				if (stream->Read(reading, 1) != 1)
+				{
+					break;
+				}
+				if (IsMbcsLeadByte(*reading))
+				{
+					if (stream->Read(reading + 1, 1) != 1)
+					{
+						break;
+					}
+					reading += 2;
+				}
+				else
+				{
+					reading++;
+				}
+				readed++;
+			}
+
+			MbcsToWChar(_buffer, chars, readed, source, (vint)(reading - source));
+			delete[] source;
+			return readed;
+		}
+
+/***********************************************************************
+MbcsEncoder
+***********************************************************************/
+
+		vint MbcsEncoder::Write(void* _buffer, vint _size)
+		{
+			// prepare a buffer for input
+			vint availableChars = (cacheSize + _size) / sizeof(wchar_t);
+			vint availableBytes = availableChars * sizeof(wchar_t);
+			bool needToFree = false;
+			vuint8_t* unicode = nullptr;
+			if (cacheSize > 0)
+			{
+				unicode = new vuint8_t[cacheSize + _size];
+				memcpy(unicode, cacheBuffer, cacheSize);
+				memcpy((vuint8_t*)unicode + cacheSize, _buffer, _size);
+				needToFree = true;
+			}
+			else
+			{
+				unicode = (vuint8_t*)_buffer;
+			}
+
+#if defined VCZH_WCHAR_UTF16
+			if (availableChars > 0)
+			{
+				// a surrogate pair must be written as a whole thing
+				vuint16_t c = (vuint16_t)((wchar_t*)unicode)[availableChars - 1];
+				if ((c & 0xFC00U) == 0xD800U)
+				{
+					availableChars -= 1;
+					availableBytes -= sizeof(wchar_t);
+				}
+			}
+#endif
+
+			// write the buffer
+			if (availableChars > 0)
+			{
+				vint written = WriteString((wchar_t*)unicode, availableChars) * sizeof(wchar_t);
+				CHECK_ERROR(written == availableBytes, L"MbcsEncoder::Write(void*, vint)#Failed to write a complete string.");
+			}
+
+			// cache the remaining
+			cacheSize = cacheSize + _size - availableBytes;
+			if (cacheSize > 0)
+			{
+				CHECK_ERROR(cacheSize <= sizeof(char32_t), L"MbcsEncoder::Write(void*, vint)#Unwritten text is too large to cache.");
+				memcpy(cacheBuffer, unicode + availableBytes, cacheSize);
+			}
+
+			if (needToFree) delete[] unicode;
+			return _size;
+		}
+
+/***********************************************************************
+MbcsDecoder::WriteString
+***********************************************************************/
+
+		// implemented in platform dependent files
+
+/***********************************************************************
+MbcsDecoder
+***********************************************************************/
+
+		vint MbcsDecoder::Read(void* _buffer, vint _size)
+		{
+			vuint8_t* writing = (vuint8_t*)_buffer;
+			vint filledBytes = 0;
+
+			// feed the cache first
+			if (cacheSize > 0)
+			{
+				filledBytes = cacheSize < _size ? cacheSize : _size;
+				memcpy(writing, cacheBuffer, cacheSize);
+				_size -= filledBytes;
+				writing += filledBytes;
+
+				// adjust the cache if it is not fully consumed
+				cacheSize -= filledBytes;
+				if (cacheSize > 0)
+				{
+					memcpy(cacheBuffer, cacheBuffer + filledBytes, cacheSize);
+				}
+
+				if (_size == 0)
+				{
+					return filledBytes;
+				}
+			}
+
+			// fill the buffer as many as possible
+			while (_size >= sizeof(wchar_t))
+			{
+				vint availableChars = _size / sizeof(wchar_t);
+				vint readBytes = ReadString((wchar_t*)writing, availableChars) * sizeof(wchar_t);
+				if (readBytes == 0) break;
+				filledBytes += readBytes;
+				_size -= readBytes;
+				writing += readBytes;
+			}
+
+			// cache the remaining wchar_t
+			if (_size < sizeof(wchar_t))
+			{
+				wchar_t c;
+				vint readChars = ReadString(&c, 1) * sizeof(wchar_t);
+				if (readChars == sizeof(wchar_t))
+				{
+					vuint8_t* reading = (vuint8_t*)&c;
+					memcpy(writing, reading, _size);
+					filledBytes += _size;
+					cacheSize = sizeof(wchar_t) - _size;
+					memcpy(cacheBuffer, reading + _size, cacheSize);
+				}
+			}
+
+			return filledBytes;
+		}
+	}
+}
+
+
+/***********************************************************************
+.\ENCODING\CHARFORMAT\UTFENCODING.CPP
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+
+namespace vl
+{
+	namespace stream
+	{
+/***********************************************************************
+UtfGeneralEncoder
+***********************************************************************/
+
+		template<typename TNative, typename TExpect>
+		vint UtfGeneralEncoder<TNative, TExpect>::Write(void* _buffer, vint _size)
+		{
+			// prepare a buffer for input
+			vint availableChars = (cacheSize + _size) / sizeof(TExpect);
+			vint availableBytes = availableChars * sizeof(TExpect);
+			bool needToFree = false;
+			vuint8_t* unicode = nullptr;
+			if (cacheSize > 0)
+			{
+				unicode = new vuint8_t[cacheSize + _size];
+				memcpy(unicode, cacheBuffer, cacheSize);
+				memcpy((vuint8_t*)unicode + cacheSize, _buffer, _size);
+				needToFree = true;
+			}
+			else
+			{
+				unicode = (vuint8_t*)_buffer;
+			}
+
+			// write the buffer
+			if (availableChars > 0)
+			{
+				TStringRangeReader reader((TExpect*)unicode, availableChars);
+				while (TNative c = reader.Read())
+				{
+					vint written = stream->Write(&c, sizeof(c));
+					if (written != sizeof(c))
+					{
+						Close();
+						CHECK_FAIL(L"UtfGeneralEncoder<T>::Write(void*, vint)#Failed to write a complete string.");
+					}
+				}
+				auto cluster = reader.SourceCluster();
+				availableChars = cluster.index + cluster.size;
+				availableBytes = availableChars * sizeof(TExpect);
+			}
+
+			// cache the remaining
+			cacheSize = cacheSize + _size - availableBytes;
+			if (cacheSize > 0)
+			{
+				CHECK_ERROR(cacheSize <= sizeof(cacheBuffer), L"UtfGeneralEncoder<T>::Write(void*, vint)#Unwritten text is too large to cache.");
+				memcpy(cacheBuffer, unicode + availableBytes, cacheSize);
+			}
+
+			if (needToFree) delete[] unicode;
+			return _size;
+		}
+
+/***********************************************************************
+UtfGeneralDecoder
+***********************************************************************/
+
+		template<typename TNative, typename TExpect>
+		void UtfGeneralDecoder<TNative, TExpect>::Setup(IStream* _stream)
+		{
+			DecoderBase::Setup(_stream);
+			reader.Setup(_stream);
+		}
+
+		template<typename TNative, typename TExpect>
+		vint UtfGeneralDecoder<TNative, TExpect>::Read(void* _buffer, vint _size)
+		{
+			vuint8_t* writing = (vuint8_t*)_buffer;
+			vint filledBytes = 0;
+
+			// feed the cache first
+			if (cacheSize > 0)
+			{
+				filledBytes = cacheSize < _size ? cacheSize : _size;
+				memcpy(writing, cacheBuffer, cacheSize);
+				_size -= filledBytes;
+				writing += filledBytes;
+
+				// adjust the cache if it is not fully consumed
+				cacheSize -= filledBytes;
+				if (cacheSize > 0)
+				{
+					memcpy(cacheBuffer, cacheBuffer + filledBytes, cacheSize);
+				}
+
+				if (_size == 0)
+				{
+					return filledBytes;
+				}
+			}
+
+			// fill the buffer as many as possible
+			while (_size >= sizeof(TExpect))
+			{
+				vint availableChars = _size / sizeof(TExpect);
+				vint readBytes = 0;
+				for (vint i = 0; i < availableChars; i++)
+				{
+					TExpect c = reader.Read();
+					if (!c) break;
+					*((TExpect*)writing) = c;
+					writing += sizeof(TExpect);
+					readBytes += sizeof(TExpect);
+				}
+				if (readBytes == 0) break;
+				filledBytes += readBytes;
+				_size -= readBytes;
+			}
+
+			// cache the remaining TExpect
+			if (_size < sizeof(TExpect))
+			{
+				if (TExpect c = reader.Read())
+				{
+					vuint8_t* reading = (vuint8_t*)&c;
+					memcpy(writing, reading, _size);
+					filledBytes += _size;
+					cacheSize = sizeof(TExpect) - _size;
+					memcpy(cacheBuffer, reading + _size, cacheSize);
+				}
+			}
+
+			return filledBytes;
+		}
+
+/***********************************************************************
+UtfGeneralEncoder<T, T>
+***********************************************************************/
+
+		template<typename T>
+		vint UtfGeneralEncoder<T, T>::Write(void* _buffer, vint _size)
+		{
+			return stream->Write(_buffer, _size);
+		}
+
+/***********************************************************************
+UtfGeneralDecoder<T, T>
+***********************************************************************/
+
+		template<typename T>
+		vint UtfGeneralDecoder<T, T>::Read(void* _buffer, vint _size)
+		{
+			return stream->Read(_buffer, _size);
+		}
+
+/***********************************************************************
+Unicode General (extern templates)
+***********************************************************************/
+
+		template class UtfGeneralEncoder<wchar_t, wchar_t>;
+		template class UtfGeneralEncoder<wchar_t, char8_t>;
+		template class UtfGeneralEncoder<wchar_t, char16_t>;
+		template class UtfGeneralEncoder<wchar_t, char16be_t>;
+		template class UtfGeneralEncoder<wchar_t, char32_t>;
+
+		template class UtfGeneralEncoder<char8_t, wchar_t>;
+		template class UtfGeneralEncoder<char8_t, char8_t>;
+		template class UtfGeneralEncoder<char8_t, char16_t>;
+		template class UtfGeneralEncoder<char8_t, char16be_t>;
+		template class UtfGeneralEncoder<char8_t, char32_t>;
+
+		template class UtfGeneralEncoder<char16_t, wchar_t>;
+		template class UtfGeneralEncoder<char16_t, char8_t>;
+		template class UtfGeneralEncoder<char16_t, char16_t>;
+		template class UtfGeneralEncoder<char16_t, char16be_t>;
+		template class UtfGeneralEncoder<char16_t, char32_t>;
+
+		template class UtfGeneralEncoder<char16be_t, wchar_t>;
+		template class UtfGeneralEncoder<char16be_t, char8_t>;
+		template class UtfGeneralEncoder<char16be_t, char16_t>;
+		template class UtfGeneralEncoder<char16be_t, char16be_t>;
+		template class UtfGeneralEncoder<char16be_t, char32_t>;
+
+		template class UtfGeneralEncoder<char32_t, wchar_t>;
+		template class UtfGeneralEncoder<char32_t, char8_t>;
+		template class UtfGeneralEncoder<char32_t, char16_t>;
+		template class UtfGeneralEncoder<char32_t, char16be_t>;
+		template class UtfGeneralEncoder<char32_t, char32_t>;
+
+		template class UtfGeneralDecoder<wchar_t, wchar_t>;
+		template class UtfGeneralDecoder<wchar_t, char8_t>;
+		template class UtfGeneralDecoder<wchar_t, char16_t>;
+		template class UtfGeneralDecoder<wchar_t, char16be_t>;
+		template class UtfGeneralDecoder<wchar_t, char32_t>;
+
+		template class UtfGeneralDecoder<char8_t, wchar_t>;
+		template class UtfGeneralDecoder<char8_t, char8_t>;
+		template class UtfGeneralDecoder<char8_t, char16_t>;
+		template class UtfGeneralDecoder<char8_t, char16be_t>;
+		template class UtfGeneralDecoder<char8_t, char32_t>;
+
+		template class UtfGeneralDecoder<char16_t, wchar_t>;
+		template class UtfGeneralDecoder<char16_t, char8_t>;
+		template class UtfGeneralDecoder<char16_t, char16_t>;
+		template class UtfGeneralDecoder<char16_t, char16be_t>;
+		template class UtfGeneralDecoder<char16_t, char32_t>;
+
+		template class UtfGeneralDecoder<char16be_t, wchar_t>;
+		template class UtfGeneralDecoder<char16be_t, char8_t>;
+		template class UtfGeneralDecoder<char16be_t, char16_t>;
+		template class UtfGeneralDecoder<char16be_t, char16be_t>;
+		template class UtfGeneralDecoder<char16be_t, char32_t>;
+
+		template class UtfGeneralDecoder<char32_t, wchar_t>;
+		template class UtfGeneralDecoder<char32_t, char8_t>;
+		template class UtfGeneralDecoder<char32_t, char16_t>;
+		template class UtfGeneralDecoder<char32_t, char16be_t>;
+		template class UtfGeneralDecoder<char32_t, char32_t>;
+	}
+}
+
+
+/***********************************************************************
+.\INTERPROCESS\CHANNELIMPLS\CHANNELPACKAGE.CPP
+***********************************************************************/
+
+namespace vl::inter_process
+{
+	NetworkPackage NetworkPackage::Create(Nullable<vint> _clientId, const WString& _channelName, const WString& _messageBody)
+	{
+		NetworkPackage package;
+		package.clientId = std::move(_clientId);
+		package.channelName = _channelName;
+		package.messageBody = _messageBody;
+		return package;
+	}
+
+	NetworkPackage NetworkPackage::Create(Nullable<vint> _clientId, const ClientIdList& _extraClientIds, const WString& _channelName, const WString& _messageBody)
+	{
+		auto package = Create(std::move(_clientId), _channelName, _messageBody);
+		if (_extraClientIds.Count() > 0)
+		{
+			ClientIdList extraClientIds;
+			for (auto clientId : _extraClientIds)
+			{
+				extraClientIds.Add(clientId);
+			}
+			package.extraClientIds = std::move(extraClientIds);
+		}
+		return package;
+	}
+
+	WString NetworkPackage::ToString(const NetworkPackage& package)
+	{
+		auto clientIds = package.clientId ? itow(package.clientId.Value()) : WString::Empty;
+		if (package.extraClientIds)
+		{
+			for (auto clientId : package.extraClientIds.Value())
+			{
+				clientIds += L",";
+				clientIds += itow(clientId);
+			}
+		}
+
+		return clientIds
+			+ L";" + package.channelName
+			+ L";" + package.messageBody
+			;
+	}
+
+	void NetworkPackage::Parse(const WString& str, NetworkPackage& package)
+	{
+#define ERROR_MESSAGE_PREFIX L"vl::inter_process::NetworkPackage::Parse(const WString&, NetworkPackage&)#"
+		const wchar_t* reading = str.Buffer();
+
+		const wchar_t* afterClientId = wcschr(reading, L';');
+		CHECK_ERROR(afterClientId != nullptr, ERROR_MESSAGE_PREFIX L"Invalid package format.");
+		package.clientId.Reset();
+		package.extraClientIds.Reset();
+		const wchar_t* firstExtraClientId = wcschr(reading, L',');
+		if (firstExtraClientId && firstExtraClientId > afterClientId)
+		{
+			firstExtraClientId = nullptr;
+		}
+		auto clientIdLength = firstExtraClientId ? (vint)(firstExtraClientId - reading) : (vint)(afterClientId - reading);
+		if (clientIdLength > 0)
+		{
+			package.clientId = wtoi(str.Left(clientIdLength));
+		}
+
+		if (firstExtraClientId)
+		{
+			ClientIdList extraClientIds;
+			auto readingExtraClientId = firstExtraClientId + 1;
+			while (readingExtraClientId < afterClientId)
+			{
+				auto delimiter = wcschr(readingExtraClientId, L',');
+				if (delimiter && delimiter > afterClientId)
+				{
+					delimiter = nullptr;
+				}
+				auto endingExtraClientId = delimiter ? delimiter : afterClientId;
+				CHECK_ERROR(endingExtraClientId > readingExtraClientId, ERROR_MESSAGE_PREFIX L"Invalid extra client id format.");
+				extraClientIds.Add(wtoi(WString::CopyFrom(readingExtraClientId, (vint)(endingExtraClientId - readingExtraClientId))));
+				readingExtraClientId = endingExtraClientId + (delimiter ? 1 : 0);
+			}
+			if (extraClientIds.Count() > 0)
+			{
+				package.extraClientIds = std::move(extraClientIds);
+			}
+		}
+
+		const wchar_t* afterChannelName = wcschr(afterClientId + 1, L';');
+		CHECK_ERROR(afterChannelName != nullptr, ERROR_MESSAGE_PREFIX L"Invalid package format.");
+		package.channelName = str.Sub((vint)(afterClientId - reading + 1), (vint)(afterChannelName - afterClientId - 1));
+		package.messageBody = str.Right(str.Length() - (vint)(afterChannelName - reading + 1));
+#undef ERROR_MESSAGE_PREFIX
+	}
 }
 
 
@@ -551,61 +3048,85 @@ namespace vl
 	{
 		using namespace collections;
 
+		template<typename T>
+		struct VCRLF_ {};
+
+		template<> struct VCRLF_<wchar_t> { static constexpr const wchar_t* Value = L"\r\n"; };
+		template<> struct VCRLF_<char8_t> { static constexpr const char8_t* Value = u8"\r\n"; };
+		template<> struct VCRLF_<char16_t> { static constexpr const char16_t* Value = u"\r\n"; };
+		template<> struct VCRLF_<char32_t> { static constexpr const char32_t* Value = U"\r\n"; };
+
+		template<typename T>
+		constexpr const T* VCRLF = VCRLF_<T>::Value;
+
+		template<typename T>
+		struct VEMPTYSTR_ {};
+
+		template<> struct VEMPTYSTR_<wchar_t> { static constexpr const wchar_t* Value = L""; };
+		template<> struct VEMPTYSTR_<char8_t> { static constexpr const char8_t* Value = u8""; };
+		template<> struct VEMPTYSTR_<char16_t> { static constexpr const char16_t* Value = u""; };
+		template<> struct VEMPTYSTR_<char32_t> { static constexpr const char32_t* Value = U""; };
+
+		template<typename T>
+		constexpr const T* VEMPTYSTR = VEMPTYSTR_<T>::Value;
+
 /***********************************************************************
-TextReader
+TextReader_<T>
 ***********************************************************************/
 
-		WString TextReader::ReadString(vint length)
+		template<typename T>
+		ObjectString<T> TextReader_<T>::ReadString(vint length)
 		{
-			wchar_t* buffer=new wchar_t[length+1];
-			vint i=0;
-			for(;i<length;i++)
+			T* buffer = new T[length + 1];
+			vint i = 0;
+			for (; i < length; i++)
 			{
-				if((buffer[i]=ReadChar())==L'\0')
+				if ((buffer[i] = ReadChar()) == 0)
 				{
 					break;
 				}
 			}
-			buffer[i]=L'\0';
-			WString result(buffer);
+			buffer[i] = 0;
+			ObjectString<T> result(buffer);
 			delete[] buffer;
 			return result;
 		}
 
-		WString TextReader::ReadLine()
+		template<typename T>
+		ObjectString<T> TextReader_<T>::ReadLine()
 		{
-			WString result;
-			auto buffer = new wchar_t[65537];
-			buffer[0]=L'\0';
-			vint i=0;
-			while(true)
+			ObjectString<T> result;
+			auto buffer = new T[65537];
+			buffer[0] = 0;
+			vint i = 0;
+			while (true)
 			{
-				wchar_t c=ReadChar();
-				if(c==L'\n' || c==L'\0')
+				T c = ReadChar();
+				if (c == L'\n' || c == 0)
 				{
-					buffer[i]=L'\0';
-					result+=buffer;
-					buffer[0]=L'\0';
-					i=0;
+					buffer[i] = 0;
+					result += buffer;
+					buffer[0] = 0;
+					i = 0;
 					break;
 				}
 				else
 				{
-					if(i==65536)
+					if (i == 65536)
 					{
-						buffer[i]=L'\0';
-						result+=buffer;
-						buffer[0]=L'\0';
-						i=0;
+						buffer[i] = 0;
+						result += buffer;
+						buffer[0] = 0;
+						i = 0;
 					}
-					buffer[i++]=c;
+					buffer[i++] = c;
 				}
 			}
-			result+=buffer;
+			result += buffer;
 			delete[] buffer;
-			if(result.Length()>0 && result[result.Length()-1]==L'\r')
+			if (result.Length() > 0 && result[result.Length() - 1] == L'\r')
 			{
-				return result.Left(result.Length()-1);
+				return result.Left(result.Length() - 1);
 			}
 			else
 			{
@@ -613,92 +3134,311 @@ TextReader
 			}
 		}
 
-		WString TextReader::ReadToEnd()
+		template<typename T>
+		ObjectString<T> TextReader_<T>::ReadToEnd()
 		{
-			WString result;
-			auto buffer = new wchar_t[65537];
-			buffer[0]=L'\0';
-			vint i=0;
-			while(true)
+			ObjectString<T> result;
+			auto buffer = new T[65537];
+			buffer[0] = 0;
+			vint i = 0;
+			while (true)
 			{
-				wchar_t c=ReadChar();
-				if(c==L'\0')
+				T c = ReadChar();
+				if (c == 0)
 				{
-					buffer[i]=L'\0';
-					result+=buffer;
-					buffer[0]=L'\0';
-					i=0;
+					buffer[i] = 0;
+					result += buffer;
+					buffer[0] = 0;
+					i = 0;
 					break;
 				}
 				else
 				{
-					if(i==65536)
+					if (i == 65536)
 					{
-						buffer[i]=L'\0';
-						result+=buffer;
-						buffer[0]=L'\0';
-						i=0;
+						buffer[i] = 0;
+						result += buffer;
+						buffer[0] = 0;
+						i = 0;
 					}
-					buffer[i++]=c;
+					buffer[i++] = c;
 				}
 			}
-			result+=buffer;
+			result += buffer;
 			delete[] buffer;
 			return result;
 		}
 
 /***********************************************************************
-TextWriter
+TextWriter_<T>
 ***********************************************************************/
 
-		void TextWriter::WriteString(const wchar_t* string, vint charCount)
+		template<typename T>
+		void TextWriter_<T>::WriteString(const T* string, vint charCount)
 		{
-			while(*string)
+			while (*string)
 			{
 				WriteChar(*string++);
 			}
 		}
 
-		void TextWriter::WriteString(const wchar_t* string)
+		template<typename T>
+		void TextWriter_<T>::WriteString(const T* string)
 		{
-			WriteString(string, (vint)wcslen(string));
+			vint len = 0;
+			if constexpr (std::is_same_v<T, char>)
+			{
+				len = strlen(string);
+			}
+			else if constexpr (std::is_same_v<T, char8_t>)
+			{
+				len = strlen((const char*)string);
+			}
+			else if constexpr (std::is_same_v<T, wchar_t>)
+			{
+				len = wcslen(string);
+			}
+#if defined VCZH_WCHAR_UTF16
+			else if constexpr (std::is_same_v<T, char16_t>)
+			{
+				len = wcslen((const wchar_t*)string);
+			}
+#elif defined VCZH_WCHAR_UTF32
+			else if constexpr (std::is_same_v<T, char32_t>)
+			{
+				len = wcslen((const wchar_t*)string);
+			}
+#endif
+			else
+			{
+				len = ObjectString<T>::Unmanaged(string).Length();
+			}
+			WriteString(string, len);
 		}
 
-		void TextWriter::WriteString(const WString& string)
+		template<typename T>
+		void TextWriter_<T>::WriteString(const ObjectString<T>& string)
 		{
-			if(string.Length())
+			if (string.Length())
 			{
 				WriteString(string.Buffer(), string.Length());
 			}
 		}
 
-		void TextWriter::WriteLine(const wchar_t* string, vint charCount)
+		template<typename T>
+		void TextWriter_<T>::WriteLine(const T* string, vint charCount)
 		{
 			WriteString(string, charCount);
-			WriteString(L"\r\n", 2);
+			WriteString(VCRLF<T>, 2);
 		}
 
-		void TextWriter::WriteLine(const wchar_t* string)
+		template<typename T>
+		void TextWriter_<T>::WriteLine(const T* string)
 		{
 			WriteString(string);
-			WriteString(L"\r\n", 2);
+			WriteString(VCRLF<T>, 2);
 		}
 
-		void TextWriter::WriteLine(const WString& string)
+		template<typename T>
+		void TextWriter_<T>::WriteLine(const ObjectString<T>& string)
 		{
 			WriteString(string);
-			WriteString(L"\r\n", 2);
+			WriteString(VCRLF<T>, 2);
 		}
+
+/***********************************************************************
+StringReader_<T>
+***********************************************************************/
+
+		template<typename T>
+		void StringReader_<T>::PrepareIfLastCallIsReadLine()
+		{
+			if (lastCallIsReadLine)
+			{
+				lastCallIsReadLine = false;
+				if (current < string.Length() && string[current] == L'\r') current++;
+				if (current < string.Length() && string[current] == L'\n') current++;
+			}
+		}
+
+		template<typename T>
+		StringReader_<T>::StringReader_(const ObjectString<T>& _string)
+			: string(_string)
+			, current(0)
+			, lastCallIsReadLine(false)
+		{
+		}
+
+		template<typename T>
+		bool StringReader_<T>::IsEnd()
+		{
+			return current == string.Length();
+		}
+
+		template<typename T>
+		T StringReader_<T>::ReadChar()
+		{
+			PrepareIfLastCallIsReadLine();
+			if (IsEnd())
+			{
+				return 0;
+			}
+			else
+			{
+				return string[current++];
+			}
+		}
+
+		template<typename T>
+		ObjectString<T> StringReader_<T>::ReadString(vint length)
+		{
+			PrepareIfLastCallIsReadLine();
+			if (IsEnd())
+			{
+				return VEMPTYSTR<T>;
+			}
+			else
+			{
+				vint remain = string.Length() - current;
+				if (length > remain) length = remain;
+				ObjectString<T> result = string.Sub(current, length);
+				current += length;
+				return result;
+			}
+		}
+
+		template<typename T>
+		ObjectString<T> StringReader_<T>::ReadLine()
+		{
+			PrepareIfLastCallIsReadLine();
+			if (IsEnd())
+			{
+				return VEMPTYSTR<T>;
+			}
+			else
+			{
+				vint lineEnd = current;
+				while (lineEnd < string.Length())
+				{
+					T c = string[lineEnd];
+					if (c == L'\r' || c == L'\n') break;
+					lineEnd++;
+				}
+				ObjectString<T> result = string.Sub(current, lineEnd - current);
+				current = lineEnd;
+				lastCallIsReadLine = true;
+				return result;
+			}
+		}
+
+		template<typename T>
+		ObjectString<T> StringReader_<T>::ReadToEnd()
+		{
+			return ReadString(string.Length() - current);
+		}
+
+/***********************************************************************
+StreamReader_<T>
+***********************************************************************/
+
+		template<typename T>
+		StreamReader_<T>::StreamReader_(IStream& _stream)
+			: stream(&_stream)
+		{
+		}
+
+		template<typename T>
+		bool StreamReader_<T>::IsEnd()
+		{
+			return stream == nullptr;
+		}
+
+		template<typename T>
+		T StreamReader_<T>::ReadChar()
+		{
+			if (stream)
+			{
+				T buffer = 0;
+				if (stream->Read(&buffer, sizeof(buffer)) == 0)
+				{
+					stream = nullptr;
+					return 0;
+				}
+				else
+				{
+					return buffer;
+				}
+			}
+			else
+			{
+				return 0;
+			}
+		}
+
+/***********************************************************************
+StreamWriter_<T>
+***********************************************************************/
+
+		template<typename T>
+		StreamWriter_<T>::StreamWriter_(IStream& _stream)
+			:stream(&_stream)
+		{
+		}
+
+		template<typename T>
+		void StreamWriter_<T>::WriteChar(T c)
+		{
+			stream->Write(&c, sizeof(c));
+		}
+
+		template<typename T>
+		void StreamWriter_<T>::WriteString(const T* string, vint charCount)
+		{
+			stream->Write((void*)string, charCount * sizeof(*string));
+		}
+
+/***********************************************************************
+Extern Templates
+***********************************************************************/
+
+		template class TextReader_<wchar_t>;
+		template class TextReader_<char8_t>;
+		template class TextReader_<char16_t>;
+		template class TextReader_<char32_t>;
+
+		template class TextWriter_<wchar_t>;
+		template class TextWriter_<char8_t>;
+		template class TextWriter_<char16_t>;
+		template class TextWriter_<char32_t>;
+
+		template class StringReader_<wchar_t>;
+		template class StringReader_<char8_t>;
+		template class StringReader_<char16_t>;
+		template class StringReader_<char32_t>;
+
+		template class StreamReader_<wchar_t>;
+		template class StreamReader_<char8_t>;
+		template class StreamReader_<char16_t>;
+		template class StreamReader_<char32_t>;
+
+		template class StreamWriter_<wchar_t>;
+		template class StreamWriter_<char8_t>;
+		template class StreamWriter_<char16_t>;
+		template class StreamWriter_<char32_t>;
+
+/***********************************************************************
+Extern Templates
+***********************************************************************/
 
 		namespace monospace_tabling
 		{
 			void WriteBorderLine(TextWriter& writer, Array<vint>& columnWidths, vint columns)
 			{
 				writer.WriteChar(L'+');
-				for(vint i=0;i<columns;i++)
+				for (vint i = 0; i < columns; i++)
 				{
-					vint c=columnWidths[i];
-					for(vint j=0;j<c;j++)
+					vint c = columnWidths[i];
+					for (vint j = 0; j < c; j++)
 					{
 						writer.WriteChar(L'-');
 					}
@@ -709,29 +3449,29 @@ TextWriter
 
 			void WriteContentLine(TextWriter& writer, Array<vint>& columnWidths, vint rowHeight, vint columns, Array<WString>& tableByRow, vint startRow)
 			{
-				vint cellStart=startRow*columns;
-				for(vint r=0;r<rowHeight;r++)
+				vint cellStart = startRow * columns;
+				for (vint r = 0; r < rowHeight; r++)
 				{
 					writer.WriteChar(L'|');
-					for(vint c=0;c<columns;c++)
+					for (vint c = 0; c < columns; c++)
 					{
-						const wchar_t* cell=tableByRow[cellStart+c].Buffer();
-						for(vint i=0;i<r;i++)
+						const wchar_t* cell = tableByRow[cellStart + c].Buffer();
+						for (vint i = 0; i < r; i++)
 						{
-							if(cell) cell=::wcsstr(cell, L"\r\n");
-							if(cell) cell+=2;
+							if (cell) cell = ::wcsstr(cell, L"\r\n");
+							if (cell) cell += 2;
 						}
 
 						writer.WriteChar(L' ');
-						vint length=0;
-						if(cell)
+						vint length = 0;
+						if (cell)
 						{
-							const wchar_t* end=::wcsstr(cell, L"\r\n");
-							length=end?end-cell:(vint)wcslen(cell);
+							const wchar_t* end = ::wcsstr(cell, L"\r\n");
+							length = end ? end - cell : (vint)wcslen(cell);
 							writer.WriteString(cell, length);
 						}
 
-						for(vint i=columnWidths[c]-2;i>=length;i--)
+						for (vint i = columnWidths[c] - 2; i >= length; i--)
 						{
 							writer.WriteChar(L' ');
 						}
@@ -741,191 +3481,52 @@ TextWriter
 				}
 			}
 		}
-		using namespace monospace_tabling;
 
-		void TextWriter::WriteMonospacedEnglishTable(collections::Array<WString>& tableByRow, vint rows, vint columns)
+		void WriteMonospacedEnglishTable(TextWriter& writer, collections::Array<WString>& tableByRow, vint rows, vint columns)
 		{
 			Array<vint> rowHeights(rows);
 			Array<vint> columnWidths(columns);
-			for(vint i=0;i<rows;i++) rowHeights[i]=0;
-			for(vint j=0;j<columns;j++) columnWidths[j]=0;
+			for (vint i = 0; i < rows; i++) rowHeights[i] = 0;
+			for (vint j = 0; j < columns; j++) columnWidths[j] = 0;
 
-			for(vint i=0;i<rows;i++)
+			for (vint i = 0; i < rows; i++)
 			{
-				for(vint j=0;j<columns;j++)
+				for (vint j = 0; j < columns; j++)
 				{
-					WString text=tableByRow[i*columns+j];
-					const wchar_t* reading=text.Buffer();
-					vint width=0;
-					vint height=0;
+					WString text = tableByRow[i * columns + j];
+					const wchar_t* reading = text.Buffer();
+					vint width = 0;
+					vint height = 0;
 
-					while(reading)
+					while (reading)
 					{
 						height++;
-						const wchar_t* crlf=::wcsstr(reading, L"\r\n");
-						if(crlf)
+						const wchar_t* crlf = ::wcsstr(reading, L"\r\n");
+						if (crlf)
 						{
-							vint length=crlf-reading+2;
-							if(width<length) width=length;
-							reading=crlf+2;
+							vint length = crlf - reading + 2;
+							if (width < length) width = length;
+							reading = crlf + 2;
 						}
 						else
 						{
-							vint length=(vint)wcslen(reading)+2;
-							if(width<length) width=length;
-							reading=0;
+							vint length = ::wcslen(reading) + 2;
+							if (width < length) width = length;
+							reading = 0;
 						}
 					}
 
-					if(rowHeights[i]<height) rowHeights[i]=height;
-					if(columnWidths[j]<width) columnWidths[j]=width;
+					if (rowHeights[i] < height) rowHeights[i] = height;
+					if (columnWidths[j] < width) columnWidths[j] = width;
 				}
 			}
 
-			WriteBorderLine(*this, columnWidths, columns);
-			for(vint i=0;i<rows;i++)
+			monospace_tabling::WriteBorderLine(writer, columnWidths, columns);
+			for (vint i = 0; i < rows; i++)
 			{
-				WriteContentLine(*this, columnWidths, rowHeights[i], columns, tableByRow, i);
-				WriteBorderLine(*this, columnWidths, columns);
+				monospace_tabling::WriteContentLine(writer, columnWidths, rowHeights[i], columns, tableByRow, i);
+				monospace_tabling::WriteBorderLine(writer, columnWidths, columns);
 			}
-		}
-
-/***********************************************************************
-StringReader
-***********************************************************************/
-
-		void StringReader::PrepareIfLastCallIsReadLine()
-		{
-			if(lastCallIsReadLine)
-			{
-				lastCallIsReadLine=false;
-				if(current<string.Length() && string[current]==L'\r') current++;
-				if(current<string.Length() && string[current]==L'\n') current++;
-			}
-		}
-
-		StringReader::StringReader(const WString& _string)
-			:string(_string)
-			,current(0)
-			,lastCallIsReadLine(false)
-		{
-		}
-
-		bool StringReader::IsEnd()
-		{
-			return current==string.Length();
-		}
-
-		wchar_t StringReader::ReadChar()
-		{
-			PrepareIfLastCallIsReadLine();
-			if(IsEnd())
-			{
-				return L'\0';
-			}
-			else
-			{
-				return string[current++];
-			}
-		}
-
-		WString StringReader::ReadString(vint length)
-		{
-			PrepareIfLastCallIsReadLine();
-			if(IsEnd())
-			{
-				return L"";
-			}
-			else
-			{
-				vint remain=string.Length()-current;
-				if(length>remain) length=remain;
-				WString result=string.Sub(current, length);
-				current+=length;
-				return result;
-			}
-		}
-
-		WString StringReader::ReadLine()
-		{
-			PrepareIfLastCallIsReadLine();
-			if(IsEnd())
-			{
-				return L"";
-			}
-			else
-			{
-				vint lineEnd=current;
-				while(lineEnd<string.Length())
-				{
-					wchar_t c=string[lineEnd];
-					if(c==L'\r' || c==L'\n') break;
-					lineEnd++;
-				}
-				WString result=string.Sub(current, lineEnd-current);
-				current=lineEnd;
-				lastCallIsReadLine=true;
-				return result;
-			}
-		}
-
-		WString StringReader::ReadToEnd()
-		{
-			return ReadString(string.Length()-current);
-		}
-
-/***********************************************************************
-StreamReader
-***********************************************************************/
-
-		StreamReader::StreamReader(IStream& _stream)
-			:stream(&_stream)
-		{
-		}
-
-		bool StreamReader::IsEnd()
-		{
-			return stream==0;
-		}
-
-		wchar_t StreamReader::ReadChar()
-		{
-			if(stream)
-			{
-				wchar_t buffer=0;
-				if(stream->Read(&buffer, sizeof(buffer))==0)
-				{
-					stream=0;
-					return 0;
-				}
-				else
-				{
-					return buffer;
-				}
-			}
-			else
-			{
-				return L'\0';
-			}
-		}
-
-/***********************************************************************
-StreamWriter
-***********************************************************************/
-
-		StreamWriter::StreamWriter(IStream& _stream)
-			:stream(&_stream)
-		{
-		}
-
-		void StreamWriter::WriteChar(wchar_t c)
-		{
-			stream->Write(&c, sizeof(c));
-		}
-
-		void StreamWriter::WriteString(const wchar_t* string, vint charCount)
-		{
-			stream->Write((void*)string, charCount*sizeof(*string));
 		}
 	}
 }
@@ -1031,6 +3632,7 @@ BroadcastStream
 
 		vint BroadcastStream::Write(void* _buffer, vint _size)
 		{
+			// TODO: (enumerable) foreach
 			for(vint i=0;i<streams.Count();i++)
 			{
 				vint written = streams[i]->Write(_buffer, _size);
@@ -1357,1286 +3959,6 @@ CacheStream
 }
 
 /***********************************************************************
-.\STREAM\CHARFORMAT.CPP
-***********************************************************************/
-/***********************************************************************
-Author: Zihan Chen (vczh)
-Licensed under https://github.com/vczh-libraries/License
-***********************************************************************/
-
-
-namespace vl
-{
-	namespace stream
-	{
-
-/***********************************************************************
-CharEncoder
-***********************************************************************/
-
-		void CharEncoder::Setup(IStream* _stream)
-		{
-			stream = _stream;
-		}
-
-		void CharEncoder::Close()
-		{
-		}
-
-		vint CharEncoder::Write(void* _buffer, vint _size)
-		{
-			// prepare a buffer for input
-			vint availableChars = (cacheSize + _size) / sizeof(wchar_t);
-			vint availableBytes = availableChars * sizeof(wchar_t);
-			bool needToFree = false;
-			vuint8_t* unicode = nullptr;
-			if (cacheSize > 0)
-			{
-				unicode = new vuint8_t[cacheSize + _size];
-				memcpy(unicode, cacheBuffer, cacheSize);
-				memcpy((vuint8_t*)unicode + cacheSize, _buffer, _size);
-				needToFree = true;
-			}
-			else
-			{
-				unicode = (vuint8_t*)_buffer;
-			}
-
-#if defined VCZH_WCHAR_UTF16
-			if (availableChars > 0)
-			{
-				// a surrogate pair must be written as a whole thing
-				vuint16_t c = (vuint16_t)((wchar_t*)unicode)[availableChars - 1];
-				if ((c & 0xFC00U) == 0xD800U)
-				{
-					availableChars -= 1;
-					availableBytes -= sizeof(wchar_t);
-				}
-			}
-#endif
-
-			// write the buffer
-			if (availableChars > 0)
-			{
-				vint written = WriteString((wchar_t*)unicode, availableChars, needToFree) * sizeof(wchar_t);
-				CHECK_ERROR(written == availableBytes, L"CharEncoder::Write(void*, vint)#Failed to write a complete string.");
-			}
-
-			// cache the remaining
-			cacheSize = cacheSize + _size - availableBytes;
-			if (cacheSize > 0)
-			{
-				CHECK_ERROR(cacheSize <= sizeof(char32_t), L"CharEncoder::Write(void*, vint)#Unwritten text is too large to cache.");
-				memcpy(cacheBuffer, unicode + availableBytes, cacheSize);
-			}
-
-			return _size;
-		}
-
-/***********************************************************************
-CharDecoder
-***********************************************************************/
-
-		void CharDecoder::Setup(IStream* _stream)
-		{
-			stream=_stream;
-		}
-
-		void CharDecoder::Close()
-		{
-		}
-
-		vint CharDecoder::Read(void* _buffer, vint _size)
-		{
-			vuint8_t* writing = (vuint8_t*)_buffer;
-			vint filledBytes = 0;
-
-			// feed the cache first
-			if (cacheSize > 0)
-			{
-				filledBytes = cacheSize < _size ? cacheSize : _size;
-				memcpy(writing, cacheBuffer, cacheSize);
-				_size -= filledBytes;
-				writing += filledBytes;
-
-				// adjust the cache if it is not fully consumed
-				cacheSize -= filledBytes;
-				if (cacheSize > 0)
-				{
-					memcpy(cacheBuffer, cacheBuffer + filledBytes, cacheSize);
-				}
-
-				if (_size == 0)
-				{
-					return filledBytes;
-				}
-			}
-
-			// fill the buffer as many as possible
-			while (_size >= sizeof(wchar_t))
-			{
-				vint availableChars = _size / sizeof(wchar_t);
-				vint readBytes = ReadString((wchar_t*)writing, availableChars) * sizeof(wchar_t);
-				if (readBytes == 0) break;
-				filledBytes += readBytes;
-				_size -= readBytes;
-				writing += readBytes;
-			}
-
-			// cache the remaining wchar_t
-			if (_size < sizeof(wchar_t))
-			{
-				wchar_t c;
-				vint readChars = ReadString(&c, 1) * sizeof(wchar_t);
-				if (readChars == sizeof(wchar_t))
-				{
-					vuint8_t* reading = (vuint8_t*)&c;
-					memcpy(writing, reading, _size);
-					filledBytes += _size;
-					cacheSize = sizeof(wchar_t) - _size;
-					memcpy(cacheBuffer, reading + _size, cacheSize);
-				}
-			}
-
-			return filledBytes;
-		}
-
-/***********************************************************************
-Mbcs
-***********************************************************************/
-
-		extern bool IsMbcsLeadByte(char c);
-		extern void MbcsToWChar(wchar_t* wideBuffer, vint wideChars, vint wideReaded, char* mbcsBuffer, vint mbcsChars);
-
-		vint MbcsDecoder::ReadString(wchar_t* _buffer, vint chars)
-		{
-			char* source = new char[chars * 2];
-			char* reading = source;
-			vint readed = 0;
-			while (readed < chars)
-			{
-				if (stream->Read(reading, 1) != 1)
-				{
-					break;
-				}
-				if (IsMbcsLeadByte(*reading))
-				{
-					if (stream->Read(reading + 1, 1) != 1)
-					{
-						break;
-					}
-					reading += 2;
-				}
-				else
-				{
-					reading++;
-				}
-				readed++;
-			}
-
-			MbcsToWChar(_buffer, chars, readed, source, (vint)(reading - source));
-			delete[] source;
-			return readed;
-		}
-
-/***********************************************************************
-Utf-16
-***********************************************************************/
-
-		vint Utf16Encoder::WriteString(wchar_t* _buffer, vint chars, bool freeToUpdate)
-		{
-#if defined VCZH_WCHAR_UTF16
-			vint size = chars * sizeof(wchar_t);
-			vint written = stream->Write(_buffer, size);
-			if (written != size)
-			{
-				Close();
-				return 0;
-			}
-			return chars;
-#elif defined VCZH_WCHAR_UTF32
-			WCharToUtfReader<char16_t> reader(_buffer, chars);
-			while (char16_t c = reader.Read())
-			{
-				vint written = stream->Write(&c, sizeof(c));
-				if (written != sizeof(c))
-				{
-					Close();
-					return 0;
-				}
-			}
-			if (reader.HasIllegalChar())
-			{
-				Close();
-				return 0;
-			}
-			return chars;
-#endif
-		}
-
-		vint Utf16Decoder::ReadString(wchar_t* _buffer, vint chars)
-		{
-#if defined VCZH_WCHAR_UTF16
-			vint read = stream->Read(_buffer, chars * sizeof(wchar_t));
-			CHECK_ERROR(read % sizeof(wchar_t) == 0, L"Utf16Decoder::ReadString(wchar_t*, vint)#Failed to read complete wchar_t characters.");
-			return read / sizeof(wchar_t);
-#elif defined VCZH_WCHAR_UTF32
-			reader.Setup(stream);
-			vint counter = 0;
-			for (vint i = 0; i < chars; i++)
-			{
-				wchar_t c = reader.Read();
-				if (!c) break;
-				_buffer[i] = c;
-				counter++;
-			}
-			return counter;
-#endif
-		}
-
-/***********************************************************************
-Utf-16-be
-***********************************************************************/
-
-		vint Utf16BEEncoder::WriteString(wchar_t* _buffer, vint chars, bool freeToUpdate)
-		{
-#if defined VCZH_WCHAR_UTF16
-			if (freeToUpdate)
-			{
-				SwapBytesForUtf16BE(_buffer, chars);
-				vint size = chars * sizeof(wchar_t);
-				vint written = stream->Write(_buffer, size);
-				SwapBytesForUtf16BE(_buffer, chars);
-				if (written != size)
-				{
-					Close();
-					return 0;
-				}
-				return chars;
-			}
-			else
-			{
-				vint counter = 0;
-				for (vint i = 0; i < chars; i++)
-				{
-					wchar_t c = _buffer[i];
-					SwapByteForUtf16BE(c);
-					vint written = stream->Write(&c, sizeof(c));
-					if (written != sizeof(c))
-					{
-						Close();
-						return 0;
-					}
-					counter++;
-				}
-				return counter;
-			}
-#elif defined VCZH_WCHAR_UTF32
-			WCharToUtfReader<char16_t> reader(_buffer, chars);
-			while (char16_t c = reader.Read())
-			{
-				SwapByteForUtf16BE(c);
-				vint written = stream->Write(&c, sizeof(c));
-				if (written != sizeof(c))
-				{
-					Close();
-					return 0;
-				}
-			}
-			if (reader.HasIllegalChar())
-			{
-				Close();
-				return 0;
-			}
-			return chars;
-#endif
-		}
-
-		vint Utf16BEDecoder::ReadString(wchar_t* _buffer, vint chars)
-		{
-#if defined VCZH_WCHAR_UTF16
-			vint read = stream->Read(_buffer, chars * sizeof(wchar_t));
-			CHECK_ERROR(read % sizeof(wchar_t) == 0, L"Utf16Decoder::ReadString(wchar_t*, vint)#Failed to read complete wchar_t characters.");
-			vint readChars = read / sizeof(wchar_t);
-			SwapBytesForUtf16BE(_buffer, readChars);
-			return readChars;
-#elif defined VCZH_WCHAR_UTF32
-			reader.Setup(stream);
-			vint counter = 0;
-			for (vint i = 0; i < chars; i++)
-			{
-				wchar_t c = reader.Read();
-				if (!c) break;
-				_buffer[i] = c;
-				counter++;
-			}
-			return counter;
-#endif
-		}
-
-/***********************************************************************
-Utf8
-***********************************************************************/
-
-		vint Utf8Decoder::ReadString(wchar_t* _buffer, vint chars)
-		{
-			reader.Setup(stream);
-			vint counter = 0;
-			for (vint i = 0; i < chars; i++)
-			{
-				wchar_t c = reader.Read();
-				if (!c) break;
-				_buffer[i] = c;
-				counter++;
-			}
-			return counter;
-		}
-
-/***********************************************************************
-Utf-32
-***********************************************************************/
-
-		vint Utf32Encoder::WriteString(wchar_t* _buffer, vint chars, bool freeToUpdate)
-		{
-#if defined VCZH_WCHAR_UTF16
-			WCharTo32Reader reader(_buffer, chars);
-			while (char32_t c = reader.Read())
-			{
-				vint written = stream->Write(&c, sizeof(c));
-				if (written != sizeof(c))
-				{
-					Close();
-					return 0;
-				}
-			}
-			if (reader.HasIllegalChar())
-			{
-				Close();
-				return 0;
-			}
-			return chars;
-#elif defined VCZH_WCHAR_UTF32
-			vint size = chars * sizeof(wchar_t);
-			vint written = stream->Write(_buffer, size);
-			if (written != size)
-			{
-				Close();
-				return 0;
-			}
-			return chars;
-#endif
-		}
-
-		vint Utf32Decoder::ReadString(wchar_t* _buffer, vint chars)
-		{
-#if defined VCZH_WCHAR_UTF16
-			reader.Setup(stream);
-			vint counter = 0;
-			for (vint i = 0; i < chars; i++)
-			{
-				wchar_t c = reader.Read();
-				if (!c) break;
-				_buffer[i] = c;
-				counter++;
-			}
-			return counter;
-#elif defined VCZH_WCHAR_UTF32
-			vint read = stream->Read(_buffer, chars * sizeof(wchar_t));
-			CHECK_ERROR(read % sizeof(wchar_t) == 0, L"Utf16Decoder::ReadString(wchar_t*, vint)#Failed to read complete wchar_t characters.");
-			return read / sizeof(wchar_t);
-#endif
-		}
-	}
-}
-
-
-/***********************************************************************
-.\STREAM\CHARFORMAT_BOM.CPP
-***********************************************************************/
-/***********************************************************************
-Author: Zihan Chen (vczh)
-Licensed under https://github.com/vczh-libraries/License
-***********************************************************************/
-
-
-namespace vl
-{
-	namespace stream
-	{
-/***********************************************************************
-BomEncoder
-***********************************************************************/
-
-		BomEncoder::BomEncoder(Encoding _encoding)
-			:encoding(_encoding)
-			,encoder(0)
-		{
-			switch(encoding)
-			{
-			case Mbcs:
-				encoder=new MbcsEncoder;
-				break;
-			case Utf8:
-				encoder=new Utf8Encoder;
-				break;
-			case Utf16:
-				encoder=new Utf16Encoder;
-				break;
-			case Utf16BE:
-				encoder=new Utf16BEEncoder;
-				break;
-			}
-		}
-
-		BomEncoder::~BomEncoder()
-		{
-			Close();
-		}
-
-		void BomEncoder::Setup(IStream* _stream)
-		{
-			switch(encoding)
-			{
-			case Mbcs:
-				break;
-			case Utf8:
-				_stream->Write((void*)"\xEF\xBB\xBF", 3);
-				break;
-			case Utf16:
-				_stream->Write((void*)"\xFF\xFE", 2);
-				break;
-			case Utf16BE:
-				_stream->Write((void*)"\xFE\xFF", 2);
-				break;
-			}
-			encoder->Setup(_stream);
-		}
-
-		void BomEncoder::Close()
-		{
-			if(encoder)
-			{
-				encoder->Close();
-				delete encoder;
-				encoder=0;
-			}
-		}
-
-		vint BomEncoder::Write(void* _buffer, vint _size)
-		{
-			return encoder->Write(_buffer, _size);
-		}
-
-/***********************************************************************
-BomDecoder
-***********************************************************************/
-
-		BomDecoder::BomStream::BomStream(IStream* _stream, char* _bom, vint _bomLength)
-			:stream(_stream)
-			,bomPosition(0)
-			,bomLength(_bomLength)
-		{
-			memcpy(bom, _bom, bomLength);
-		}
-
-		bool BomDecoder::BomStream::CanRead()const
-		{
-			return IsAvailable();
-		}
-
-		bool BomDecoder::BomStream::CanWrite()const
-		{
-			return false;
-		}
-
-		bool BomDecoder::BomStream::CanSeek()const
-		{
-			return false;
-		}
-
-		bool BomDecoder::BomStream::CanPeek()const
-		{
-			return false;
-		}
-
-		bool BomDecoder::BomStream::IsLimited()const
-		{
-			return stream!=0 && stream->IsLimited();
-		}
-
-		bool BomDecoder::BomStream::IsAvailable()const
-		{
-			return stream!=0 && stream->IsAvailable();
-		}
-
-		void BomDecoder::BomStream::Close()
-		{
-			stream=0;
-		}
-
-		pos_t BomDecoder::BomStream::Position()const
-		{
-			return IsAvailable()?bomPosition+stream->Position():-1;
-		}
-
-		pos_t BomDecoder::BomStream::Size()const
-		{
-			return -1;
-		}
-
-		void BomDecoder::BomStream::Seek(pos_t _size)
-		{
-			CHECK_FAIL(L"BomDecoder::BomStream::Seek(pos_t)#Operation not supported.");
-		}
-
-		void BomDecoder::BomStream::SeekFromBegin(pos_t _size)
-		{
-			CHECK_FAIL(L"BomDecoder::BomStream::SeekFromBegin(pos_t)#Operation not supported.");
-		}
-
-		void BomDecoder::BomStream::SeekFromEnd(pos_t _size)
-		{
-			CHECK_FAIL(L"BomDecoder::BomStream::SeekFromEnd(pos_t)#Operation not supported.");
-		}
-
-		vint BomDecoder::BomStream::Read(void* _buffer, vint _size)
-		{
-			vint result=0;
-			unsigned char* buffer=(unsigned char*)_buffer;
-			if(bomPosition<bomLength)
-			{
-				vint remain=bomLength-bomPosition;
-				result=remain<_size?remain:_size;
-				memcpy(buffer, bom+bomPosition, result);
-				buffer+=result;
-				bomPosition+=result;
-				_size-=result;
-			}
-			if(_size)
-			{
-				result+=stream->Read(buffer, _size);
-			}
-			return result;
-		}
-
-		vint BomDecoder::BomStream::Write(void* _buffer, vint _size)
-		{
-			CHECK_FAIL(L"BomDecoder::BomStream::Write(void*, vint)#Operation not supported.");
-		}
-
-		vint BomDecoder::BomStream::Peek(void* _buffer, vint _size)
-		{
-			CHECK_FAIL(L"BomDecoder::BomStream::Peek(void*, vint)#Operation not supported.");
-		}
-
-		BomDecoder::BomDecoder()
-			:decoder(0)
-		{
-		}
-
-		BomDecoder::~BomDecoder()
-		{
-			Close();
-		}
-
-		void BomDecoder::Setup(IStream* _stream)
-		{
-			char bom[3]={0};
-			vint length=_stream->Read(bom, sizeof(bom));
-			if(strncmp(bom, "\xEF\xBB\xBF", 3)==0)
-			{
-				decoder=new Utf8Decoder;
-				stream=new BomStream(_stream, bom+3, 0);
-			}
-			else if(strncmp(bom, "\xFF\xFE", 2)==0)
-			{
-				decoder=new Utf16Decoder;
-				stream=new BomStream(_stream, bom+2, 1);
-			}
-			else if(strncmp(bom, "\xFE\xFF", 2)==0)
-			{
-				decoder=new Utf16BEDecoder;
-				stream=new BomStream(_stream, bom+2, 1);
-			}
-			else
-			{
-				decoder=new MbcsDecoder;
-				stream=new BomStream(_stream, bom, 3);
-			}
-			decoder->Setup(stream);
-		}
-
-		void BomDecoder::Close()
-		{
-			if(decoder)
-			{
-				decoder->Close();
-				delete decoder;
-				decoder=0;
-				stream->Close();
-				delete stream;
-				stream=0;
-			}
-		}
-
-		vint BomDecoder::Read(void* _buffer, vint _size)
-		{
-			return decoder->Read(_buffer, _size);
-		}
-	}
-}
-
-
-/***********************************************************************
-.\STREAM\CHARFORMAT_TESTENCODING.CPP
-***********************************************************************/
-/***********************************************************************
-Author: Zihan Chen (vczh)
-Licensed under https://github.com/vczh-libraries/License
-***********************************************************************/
-
-
-namespace vl
-{
-	namespace stream
-	{
-/***********************************************************************
-Helper Functions
-***********************************************************************/
-
-		bool CanBeMbcs(unsigned char* buffer, vint size)
-		{
-			for(vint i=0;i<size;i++)
-			{
-				if(buffer[i]==0) return false;
-			}
-			return true;
-		}
-
-		bool CanBeUtf8(unsigned char* buffer, vint size)
-		{
-			for(vint i=0;i<size;i++)
-			{
-				unsigned char c=(unsigned char)buffer[i];
-				if(c==0)
-				{
-					return false;
-				}
-				else
-				{
-					vint count10xxxxxx=0;
-					if((c&0x80)==0x00) /* 0x0xxxxxxx */ count10xxxxxx=0;
-					else if((c&0xE0)==0xC0) /* 0x110xxxxx */ count10xxxxxx=1;
-					else if((c&0xF0)==0xE0) /* 0x1110xxxx */ count10xxxxxx=2;
-					else if((c&0xF8)==0xF0) /* 0x11110xxx */ count10xxxxxx=3;
-					else if((c&0xFC)==0xF8) /* 0x111110xx */ count10xxxxxx=4;
-					else if((c&0xFE)==0xFC) /* 0x1111110x */ count10xxxxxx=5;
-
-					if(size<=i+count10xxxxxx)
-					{
-						return false;
-					}
-					else
-					{
-						for(vint j=0;j<count10xxxxxx;j++)
-						{
-							c=(unsigned char)buffer[i+j+1];
-							if((c&0xC0)!=0x80) /* 0x10xxxxxx */ return false;
-						}
-					}
-					i+=count10xxxxxx;
-				}
-			}
-			return true;
-		}
-
-		bool CanBeUtf16(unsigned char* buffer, vint size, bool& hitSurrogatePairs)
-		{
-			hitSurrogatePairs = false;
-			if (size % 2 != 0) return false;
-			bool needTrail = false;
-			for (vint i = 0; i < size; i += 2)
-			{
-				vuint16_t c = buffer[i] + (buffer[i + 1] << 8);
-				if (c == 0) return false;
-				vint type = 0;
-				if (0xD800 <= c && c <= 0xDBFF) type = 1;
-				else if (0xDC00 <= c && c <= 0xDFFF) type = 2;
-				if (needTrail)
-				{
-					if (type == 2)
-					{
-						needTrail = false;
-					}
-					else
-					{
-						return false;
-					}
-				}
-				else
-				{
-					if (type == 1)
-					{
-						needTrail = true;
-						hitSurrogatePairs = true;
-					}
-					else if (type != 0)
-					{
-						return false;
-					}
-				}
-			}
-			return !needTrail;
-		}
-
-		bool CanBeUtf16BE(unsigned char* buffer, vint size, bool& hitSurrogatePairs)
-		{
-			hitSurrogatePairs = false;
-			if (size % 2 != 0) return false;
-			bool needTrail = false;
-			for (vint i = 0; i < size; i += 2)
-			{
-				vuint16_t c = buffer[i + 1] + (buffer[i] << 8);
-				if (c == 0) return false;
-				vint type = 0;
-				if (0xD800 <= c && c <= 0xDBFF) type = 1;
-				else if (0xDC00 <= c && c <= 0xDFFF) type = 2;
-				if (needTrail)
-				{
-					if (type == 2)
-					{
-						needTrail = false;
-					}
-					else
-					{
-						return false;
-					}
-				}
-				else
-				{
-					if (type == 1)
-					{
-						needTrail = true;
-						hitSurrogatePairs = true;
-					}
-					else if (type != 0)
-					{
-						return false;
-					}
-				}
-			}
-			return !needTrail;
-		}
-		
-/***********************************************************************
-TestEncoding
-***********************************************************************/
-
-		extern void TestEncodingInternal(
-			unsigned char* buffer,
-			vint size,
-			BomEncoder::Encoding& encoding,
-			bool containsBom,
-			bool utf16HitSurrogatePairs,
-			bool utf16BEHitSurrogatePairs,
-			bool roughMbcs,
-			bool roughUtf8,
-			bool roughUtf16,
-			bool roughUtf16BE
-		);
-
-		void TestEncoding(unsigned char* buffer, vint size, BomEncoder::Encoding& encoding, bool& containsBom)
-		{
-			if (size >= 3 && strncmp((char*)buffer, "\xEF\xBB\xBF", 3) == 0)
-			{
-				encoding = BomEncoder::Utf8;
-				containsBom = true;
-			}
-			else if (size >= 2 && strncmp((char*)buffer, "\xFF\xFE", 2) == 0)
-			{
-				encoding = BomEncoder::Utf16;
-				containsBom = true;
-			}
-			else if (size >= 2 && strncmp((char*)buffer, "\xFE\xFF", 2) == 0)
-			{
-				encoding = BomEncoder::Utf16BE;
-				containsBom = true;
-			}
-			else
-			{
-				encoding = BomEncoder::Mbcs;
-				containsBom = false;
-
-				bool utf16HitSurrogatePairs = false;
-				bool utf16BEHitSurrogatePairs = false;
-				bool roughMbcs = CanBeMbcs(buffer, size);
-				bool roughUtf8 = CanBeUtf8(buffer, size);
-				bool roughUtf16 = CanBeUtf16(buffer, size, utf16HitSurrogatePairs);
-				bool roughUtf16BE = CanBeUtf16BE(buffer, size, utf16BEHitSurrogatePairs);
-
-				vint roughCount = (roughMbcs ? 1 : 0) + (roughUtf8 ? 1 : 0) + (roughUtf16 ? 1 : 0) + (roughUtf16BE ? 1 : 0);
-				if (roughCount == 1)
-				{
-					if (roughUtf8) encoding = BomEncoder::Utf8;
-					else if (roughUtf16) encoding = BomEncoder::Utf16;
-					else if (roughUtf16BE) encoding = BomEncoder::Utf16BE;
-				}
-				else if (roughCount > 1)
-				{
-					TestEncodingInternal(buffer, size, encoding, containsBom, utf16HitSurrogatePairs, utf16BEHitSurrogatePairs, roughMbcs, roughUtf8, roughUtf16, roughUtf16BE);
-				}
-			}
-		}
-	}
-}
-
-
-/***********************************************************************
-.\STREAM\COMPRESSIONSTREAM.CPP
-***********************************************************************/
-/***********************************************************************
-Author: Zihan Chen (vczh)
-Licensed under https://github.com/vczh-libraries/License
-***********************************************************************/
-
-
-namespace vl
-{
-	namespace stream
-	{
-		using namespace collections;
-		using namespace lzw;
-
-/***********************************************************************
-LzwBase
-***********************************************************************/
-
-		void LzwBase::UpdateIndexBits()
-		{
-			if (nextIndex >=2 && (nextIndex & (nextIndex - 1)) == 0)
-			{
-				indexBits++;
-			}
-		}
-
-		lzw::Code* LzwBase::CreateCode(lzw::Code* prefix, vuint8_t byte)
-		{
-			if (nextIndex < MaxDictionarySize)
-			{
-				Code* code = codeAllocator.Create();
-				code->byte = byte;
-				code->code = nextIndex;
-				code->parent = prefix;
-				code->size = prefix->size + 1;
-				prefix->children.Set(byte, code, mapAllocator);
-				nextIndex++;
-
-				return code;
-			}
-			else
-			{
-				return 0;
-			}
-		}
-
-		LzwBase::LzwBase()
-			:codeAllocator(65536)
-			, mapAllocator(1048576)
-		{
-			root = codeAllocator.Create();
-
-			for (vint i = 0; i < 256; i++)
-			{
-				UpdateIndexBits();
-				CreateCode(root, (vuint8_t)i);
-			}
-		}
-
-		LzwBase::LzwBase(bool (&existingBytes)[256])
-		{
-			root = codeAllocator.Create();
-			for (vint i = 0; i < 256; i++)
-			{
-				if (existingBytes[i])
-				{
-					UpdateIndexBits();
-					CreateCode(root, (vuint8_t)i);
-				}
-			}
-
-			if (indexBits < 8)
-			{
-				eofIndex = nextIndex++;
-			}
-		}
-
-		LzwBase::~LzwBase()
-		{
-		}
-
-/***********************************************************************
-LzwEncoder
-***********************************************************************/
-
-		void LzwEncoder::Flush()
-		{
-			vint written = 0;
-			vint bufferUsedSize = bufferUsedBits / 8;
-			if (bufferUsedBits % 8 != 0)
-			{
-				bufferUsedSize++;
-			}
-			while (written < bufferUsedSize)
-			{
-				vint size = stream->Write(buffer + written, bufferUsedSize - written);
-				CHECK_ERROR(size != 0, L"LzwEncoder::Flush()#Failed to flush the lzw buffer.");
-				written += size;
-			}
-			bufferUsedBits = 0;
-		}
-
-		vuint8_t highMarks[9] = { 0x00, 0x80, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC, 0xFE, 0xFF };
-		vuint8_t lowMarks[9] = { 0x00, 0x01, 0x03, 0x07, 0x0F, 0x1F, 0x3F, 0x7F, 0xFF };
-
-		void LzwEncoder::WriteNumber(vint number, vint bitSize)
-		{
-			vint bitStart = 0;
-			vint bitStep = 8 - bufferUsedBits % 8;
-			if (bitStep > bitSize)
-			{
-				bitStep = bitSize;
-			}
-			while (bitStart < bitSize)
-			{
-				if(bufferUsedBits == BufferSize * 8)
-				{
-					Flush();
-				}
-
-				vint writeStart = bufferUsedBits % 8;
-				vint byteIndex = bufferUsedBits / 8;
-				vuint8_t byte = buffer[byteIndex];
-				byte &= highMarks[writeStart];
-
-				vuint8_t content = (vuint8_t)((number >> bitStart)&lowMarks[bitStep]) << (8 - writeStart - bitStep);
-				byte |= content;
-
-				buffer[byteIndex] = byte;
-				bufferUsedBits += bitStep;
-
-				bitStart += bitStep;
-				vint remain = bitSize - bitStart;
-				bitStep = remain < 8 ? remain : 8;
-			}
-		}
-
-		LzwEncoder::LzwEncoder()
-		{
-			prefix = root;
-		}
-
-		LzwEncoder::LzwEncoder(bool (&existingBytes)[256])
-			:LzwBase(existingBytes)
-		{
-			prefix = root;
-		}
-
-		LzwEncoder::~LzwEncoder()
-		{
-		}
-
-		void LzwEncoder::Setup(IStream* _stream)
-		{
-			stream = _stream;
-		}
-
-		void LzwEncoder::Close()
-		{
-			if (prefix != root)
-			{
-				WriteNumber(prefix->code, indexBits);
-				prefix = root;
-			}
-
-			vint remain = 8 - bufferUsedBits % 8;
-			if (remain != 8 && remain >= indexBits)
-			{
-				CHECK_ERROR(eofIndex != -1, L"LzwEncoder::Close()#Internal error.");
-				WriteNumber(eofIndex, indexBits);
-			}
-			Flush();
-		}
-
-		vint LzwEncoder::Write(void* _buffer, vint _size)
-		{
-			vuint8_t* bytes = (vuint8_t*)_buffer;
-			for (vint i = 0; i < _size; i++)
-			{
-				vuint8_t byte = bytes[i];
-				Code* next = prefix->children.Get(byte);
-				if (next)
-				{
-					prefix = next;
-				}
-				else
-				{
-					WriteNumber(prefix->code, indexBits);
-
-					if (nextIndex < MaxDictionarySize)
-					{
-						UpdateIndexBits();
-						CreateCode(prefix, byte);
-					}
-					prefix = root->children.Get(byte);
-				}
-			}
-			return _size;
-		}
-
-/***********************************************************************
-LzwDecoder
-***********************************************************************/
-
-		bool LzwDecoder::ReadNumber(vint& number, vint bitSize)
-		{
-			number = 0;
-			if (inputBufferSize == -1)
-			{
-				return false;
-			}
-
-			vint remainBits = inputBufferSize * 8 - inputBufferUsedBits;
-			vint writtenBits = 0;
-			vint bitStep = 8 - inputBufferUsedBits % 8;
-			if (bitStep > bitSize)
-			{
-				bitStep = bitSize;
-			}
-			while (writtenBits < bitSize)
-			{
-				if (remainBits == 0)
-				{
-					inputBufferSize = stream->Read(inputBuffer, BufferSize);
-					if (inputBufferSize == 0)
-					{
-						inputBufferSize = -1;
-						return false;
-					}
-					remainBits = inputBufferSize * 8;
-					inputBufferUsedBits = 0;
-				}
-
-				vuint8_t byte = inputBuffer[inputBufferUsedBits / 8];
-				byte >>= (8 - inputBufferUsedBits % 8 - bitStep);
-				byte &= lowMarks[bitStep];
-				number |= byte << writtenBits;
-
-				inputBufferUsedBits += bitStep;
-				remainBits -= bitStep;
-				writtenBits += bitStep;
-				vint remain = bitSize - writtenBits;
-				bitStep = remain < 8 ? remain : 8;
-			}
-
-			return true;
-		}
-
-		void LzwDecoder::PrepareOutputBuffer(vint size)
-		{
-			if (outputBuffer.Count() < size)
-			{
-				outputBuffer.Resize(size);
-			}
-			outputBufferSize = size;
-		}
-
-		void LzwDecoder::ExpandCodeToOutputBuffer(lzw::Code* code)
-		{
-			vuint8_t* outputByte = &outputBuffer[0] + code->size;
-			Code* current = code;
-			while (current != root)
-			{
-				*(--outputByte) = current->byte;
-				current = current->parent;
-			}
-			outputBufferUsedBytes = 0;
-		}
-
-		LzwDecoder::LzwDecoder()
-		{
-			for (vint i = 0; i < 256; i++)
-			{
-				dictionary.Add(root->children.Get((vuint8_t)i));
-			}
-		}
-
-		LzwDecoder::LzwDecoder(bool (&existingBytes)[256])
-			:LzwBase(existingBytes)
-		{
-			for (vint i = 0; i < 256; i++)
-			{
-				if (existingBytes[i])
-				{
-					dictionary.Add(root->children.Get((vuint8_t)i));
-				}
-			}
-			if (eofIndex != -1)
-			{
-				dictionary.Add(nullptr);
-			}
-		}
-
-		LzwDecoder::~LzwDecoder()
-		{
-		}
-
-		void LzwDecoder::Setup(IStream* _stream)
-		{
-			stream = _stream;
-		}
-
-		void LzwDecoder::Close()
-		{
-		}
-
-		vint LzwDecoder::Read(void* _buffer, vint _size)
-		{
-			vint written = 0;
-			vuint8_t* bytes = (vuint8_t*)_buffer;
-			while (written < _size)
-			{
-				vint expect = _size - written;
-				vint remain = outputBufferSize - outputBufferUsedBytes;
-				if (remain == 0)
-				{
-					vint index = 0;
-					if (!ReadNumber(index, indexBits) || index == eofIndex)
-					{
-						break;
-					}
-
-					Code* prefix = 0;
-					if (index == dictionary.Count())
-					{
-						prefix = lastCode;
-						PrepareOutputBuffer(prefix->size + 1);
-						ExpandCodeToOutputBuffer(prefix);
-						outputBuffer[outputBufferSize - 1] = outputBuffer[0];
-					}
-					else
-					{
-						prefix = dictionary[index];
-						PrepareOutputBuffer(prefix->size);
-						ExpandCodeToOutputBuffer(prefix);
-					}
-					
-					if (nextIndex < MaxDictionarySize)
-					{
-						if (lastCode)
-						{
-							dictionary.Add(CreateCode(lastCode, outputBuffer[0]));
-						}
-						UpdateIndexBits();
-					}
-					lastCode = dictionary[index];
-				}
-				else
-				{
-					if (remain > expect)
-					{
-						remain = expect;
-					}
-					memcpy(bytes + written, &outputBuffer[outputBufferUsedBytes], remain);
-
-					outputBufferUsedBytes += remain;
-					written += remain;
-				}
-			}
-			return written;
-		}
-
-/***********************************************************************
-Helper Functions
-***********************************************************************/
-
-		vint CopyStream(stream::IStream& inputStream, stream::IStream& outputStream)
-		{
-			vint totalSize = 0;
-			while (true)
-			{
-				char buffer[1024];
-				vint copied = inputStream.Read(buffer, (vint)sizeof(buffer));
-				if (copied == 0)
-				{
-					break;
-				}
-				totalSize += outputStream.Write(buffer, copied);
-			}
-			return totalSize;
-		}
-
-		const vint CompressionFragmentSize = 1048576;
-
-		void CompressStream(stream::IStream& inputStream, stream::IStream& outputStream)
-		{
-			Array<char> buffer(CompressionFragmentSize);
-			while (true)
-			{
-				vint size = inputStream.Read(&buffer[0], buffer.Count());
-				if (size == 0) break;
-
-				MemoryStream compressedStream;
-				{
-					LzwEncoder encoder;
-					EncoderStream encoderStream(compressedStream, encoder);
-					encoderStream.Write(&buffer[0], size);
-				}
-
-				compressedStream.SeekFromBegin(0);
-				{
-					{
-						vint32_t bufferSize = (vint32_t)size;
-						outputStream.Write(&bufferSize, (vint)sizeof(bufferSize));
-					}
-					{
-						vint32_t compressedSize = (vint32_t)compressedStream.Size();
-						outputStream.Write(&compressedSize, (vint)sizeof(compressedSize));
-					}
-					CopyStream(compressedStream, outputStream);
-				}
-			}
-		}
-
-		void DecompressStream(stream::IStream& inputStream, stream::IStream& outputStream)
-		{
-			vint totalSize = 0;
-			vint totalWritten = 0;
-			while (true)
-			{
-				vint32_t bufferSize = 0;
-				if (inputStream.Read(&bufferSize, (vint)sizeof(bufferSize)) != sizeof(bufferSize))
-				{
-					break;
-				}
-
-				vint32_t compressedSize = 0;
-				CHECK_ERROR(inputStream.Read(&compressedSize, (vint)sizeof(compressedSize)) == sizeof(compressedSize), L"vl::stream::DecompressStream(MemoryStream&, MemoryStream&)#Incomplete input");
-
-				Array<char> buffer(compressedSize);
-				CHECK_ERROR(inputStream.Read(&buffer[0], compressedSize) == compressedSize, L"vl::stream::DecompressStream(MemoryStream&, MemoryStream&)#Incomplete input");
-
-				MemoryWrapperStream compressedStream(&buffer[0], compressedSize);
-				LzwDecoder decoder;
-				DecoderStream decoderStream(compressedStream, decoder);
-				totalWritten += CopyStream(decoderStream, outputStream);
-				totalSize += bufferSize;
-			}
-			CHECK_ERROR(outputStream.Size() == totalSize, L"vl::stream::DecompressStream(MemoryStream&, MemoryStream&)#Incomplete input");
-		}
-	}
-}
-
-/***********************************************************************
 .\STREAM\ENCODINGSTREAM.CPP
 ***********************************************************************/
 /***********************************************************************
@@ -2861,9 +4183,13 @@ Licensed under https://github.com/vczh-libraries/License
 
 namespace vl
 {
+	namespace filesystem
+	{
+		extern IFileSystemImpl*			GetFileSystemImpl();
+	}
+
 	namespace stream
 	{
-
 #if defined VCZH_GCC
 		void _fseeki64(FILE* file, pos_t offset, int origin)
 		{
@@ -2872,36 +4198,225 @@ namespace vl
 #endif
 
 /***********************************************************************
+OSFileStreamImpl
+***********************************************************************/
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+		class OSFileStreamImpl : public Object, public virtual IFileStreamImpl
+		{
+		private:
+			WString					fileName;
+			FileStream::AccessRight	accessRight;
+			FILE*					file;
+
+		public:
+			OSFileStreamImpl(const WString& _fileName, FileStream::AccessRight _accessRight)
+				: fileName(_fileName), accessRight(_accessRight), file(nullptr)
+			{
+			}
+
+			~OSFileStreamImpl()
+			{
+				Close();
+			}
+
+			bool Open() override
+			{
+				const wchar_t* mode = L"rb";
+				switch(accessRight)
+				{
+				case FileStream::ReadOnly:
+					mode = L"rb";
+					break;
+				case FileStream::WriteOnly:
+					mode = L"wb";
+					break;
+				case FileStream::ReadWrite:
+					mode = L"w+b";
+					break;
+				}
+
+#if defined VCZH_MSVC
+				if(_wfopen_s(&file, fileName.Buffer(), mode) != 0)
+				{
+					file = nullptr;
+					return false;
+				}
+#elif defined VCZH_GCC
+				AString fileNameA = wtoa(fileName);
+				AString modeA = wtoa(mode);
+				file = fopen(fileNameA.Buffer(), modeA.Buffer());
+				if(file == nullptr)
+				{
+					return false;
+				}
+#endif
+				return true;
+			}
+
+			void Close() override
+			{
+				if(file != nullptr)
+				{
+					fclose(file);
+					file = nullptr;
+				}
+			}
+
+			pos_t Position() const override
+			{
+				if(file != nullptr)
+				{
+#if defined VCZH_MSVC
+					fpos_t position = 0;
+					if(fgetpos(file, &position) == 0)
+					{
+						return position;
+					}
+#elif defined VCZH_GCC
+					return (pos_t)ftell(file);
+#endif
+				}
+				return -1;
+			}
+
+			pos_t Size() const override
+			{
+				if(file != nullptr)
+				{
+#if defined VCZH_MSVC
+					fpos_t position = 0;
+					if(fgetpos(file, &position) == 0)
+					{
+						if(fseek(file, 0, SEEK_END) == 0)
+						{
+							pos_t size = Position();
+							if(fsetpos(file, &position) == 0)
+							{
+								return size;
+							}
+						}
+					}
+#elif defined VCZH_GCC
+					long position = ftell(file);
+					fseek(file, 0, SEEK_END);
+					long size = ftell(file);
+					fseek(file, position, SEEK_SET);
+					return (pos_t)size;
+#endif
+				}
+				return -1;
+			}
+
+			void Seek(pos_t _size) override
+			{
+				if(Position() + _size > Size())
+				{
+					_fseeki64(file, 0, SEEK_END);
+				}
+				else if(Position() + _size < 0)
+				{
+					_fseeki64(file, 0, SEEK_SET);
+				}
+				else
+				{
+					_fseeki64(file, _size, SEEK_CUR);
+				}
+			}
+
+			void SeekFromBegin(pos_t _size) override
+			{
+				if(_size > Size())
+				{
+					_fseeki64(file, 0, SEEK_END);
+				}
+				else if(_size < 0)
+				{
+					_fseeki64(file, 0, SEEK_SET);
+				}
+				else
+				{
+					_fseeki64(file, _size, SEEK_SET);
+				}
+			}
+
+			void SeekFromEnd(pos_t _size) override
+			{
+				if(_size < 0)
+				{
+					_fseeki64(file, 0, SEEK_END);
+				}
+				else if(_size > Size())
+				{
+					_fseeki64(file, 0, SEEK_SET);
+				}
+				else
+				{
+					_fseeki64(file, -_size, SEEK_END);
+				}
+			}
+
+			vint Read(void* _buffer, vint _size) override
+			{
+				CHECK_ERROR(file != nullptr, L"FileStream::Read(pos_t)#Stream is closed, cannot perform this operation.");
+				CHECK_ERROR(_size >= 0, L"FileStream::Read(void*, vint)#Argument size cannot be negative.");
+				return fread(_buffer, 1, _size, file);
+			}
+
+			vint Write(void* _buffer, vint _size) override
+			{
+				CHECK_ERROR(file != nullptr, L"FileStream::Write(pos_t)#Stream is closed, cannot perform this operation.");
+				CHECK_ERROR(_size >= 0, L"FileStream::Write(void*, vint)#Argument size cannot be negative.");
+				return fwrite(_buffer, 1, _size, file);
+			}
+
+			vint Peek(void* _buffer, vint _size) override
+			{
+				CHECK_ERROR(file != nullptr, L"FileStream::Peek(pos_t)#Stream is closed, cannot perform this operation.");
+				CHECK_ERROR(_size >= 0, L"FileStream::Peek(void*, vint)#Argument size cannot be negative.");
+#if defined VCZH_MSVC
+				fpos_t position = 0;
+				if(fgetpos(file, &position) == 0)
+				{
+					size_t count = fread(_buffer, 1, _size, file);
+					if(fsetpos(file, &position) == 0)
+					{
+						return count;
+					}
+				}
+				return -1;
+#elif defined VCZH_GCC
+				long position = ftell(file);
+				size_t count = fread(_buffer, 1, _size, file);
+				fseek(file, position, SEEK_SET);
+				return count;
+#endif
+			}
+		};
+
+/***********************************************************************
+CreateOSFileStreamImpl
+***********************************************************************/
+
+		Ptr<IFileStreamImpl> CreateOSFileStreamImpl(const WString& fileName, FileStream::AccessRight accessRight)
+		{
+			return Ptr(new OSFileStreamImpl(fileName, accessRight));
+		}
+
+#endif
+
+/***********************************************************************
 FileStream
 ***********************************************************************/
 
 		FileStream::FileStream(const WString& fileName, AccessRight _accessRight)
-			:accessRight(_accessRight)
+			: accessRight(_accessRight)
 		{
-			const wchar_t* mode=L"rb";
-			switch(accessRight)
+			impl = filesystem::GetFileSystemImpl()->GetFileStreamImpl(fileName, _accessRight);
+			if(!impl->Open())
 			{
-			case ReadOnly:
-				mode=L"rb";
-				break;
-			case WriteOnly:
-				mode=L"wb";
-				break;
-			case ReadWrite:
-				mode=L"w+b";
-				break;
+				impl = nullptr;
 			}
-
-#if defined VCZH_MSVC
-			if(_wfopen_s(&file, fileName.Buffer(), mode)!=0)
-			{
-				file=0;
-			}
-#elif defined VCZH_GCC
-			AString fileNameA = wtoa(fileName);
-			AString modeA = wtoa(mode);
-			file = fopen(fileNameA.Buffer(), modeA.Buffer());			
-#endif
 		}
 
 		FileStream::~FileStream()
@@ -2909,173 +4424,89 @@ FileStream
 			Close();
 		}
 
-		bool FileStream::CanRead()const
+		bool FileStream::CanRead() const
 		{
-			return file!=0 && (accessRight==ReadOnly || accessRight==ReadWrite);
+			return impl != nullptr && (accessRight == ReadOnly || accessRight == ReadWrite);
 		}
 
-		bool FileStream::CanWrite()const
+		bool FileStream::CanWrite() const
 		{
-			return file!=0 && (accessRight==WriteOnly || accessRight==ReadWrite);
+			return impl != nullptr && (accessRight == WriteOnly || accessRight == ReadWrite);
 		}
 
-		bool FileStream::CanSeek()const
+		bool FileStream::CanSeek() const
 		{
-			return file!=0;
+			return impl != nullptr;
 		}
 
-		bool FileStream::CanPeek()const
+		bool FileStream::CanPeek() const
 		{
-			return file!=0 && (accessRight==ReadOnly || accessRight==ReadWrite);
+			return impl != nullptr && (accessRight == ReadOnly || accessRight == ReadWrite);
 		}
 
-		bool FileStream::IsLimited()const
+		bool FileStream::IsLimited() const
 		{
-			return file!=0 && accessRight==ReadOnly;
+			return impl != nullptr && accessRight == ReadOnly;
 		}
 
-		bool FileStream::IsAvailable()const
+		bool FileStream::IsAvailable() const
 		{
-			return file!=0;
+			return impl != nullptr;
 		}
 
 		void FileStream::Close()
 		{
-			if(file!=0)
+			if(impl != nullptr)
 			{
-				fclose(file);
-				file=0;
+				impl->Close();
+				impl = nullptr;
 			}
 		}
 
-		pos_t FileStream::Position()const
+		pos_t FileStream::Position() const
 		{
-			if(file!=0)
-			{
-#if defined VCZH_MSVC
-				fpos_t position=0;
-				if(fgetpos(file, &position)==0)
-				{
-					return position;
-				}
-#elif defined VCZH_GCC
-				return (pos_t)ftell(file);
-#endif
-			}
-			return -1;
+			return impl != nullptr ? impl->Position() : -1;
 		}
 
-		pos_t FileStream::Size()const
+		pos_t FileStream::Size() const
 		{
-			if(file!=0)
-			{
-#if defined VCZH_MSVC
-				fpos_t position=0;
-				if(fgetpos(file, &position)==0)
-				{
-					if(fseek(file, 0, SEEK_END)==0)
-					{
-						pos_t size=Position();
-						if(fsetpos(file, &position)==0)
-						{
-							return size;
-						}
-					}
-				}
-#elif defined VCZH_GCC
-				long position = ftell(file);
-				fseek(file, 0, SEEK_END);
-				long size=ftell(file);
-				fseek(file, position, SEEK_SET);
-				return (pos_t)size;
-#endif
-			}
-			return -1;
+			return impl != nullptr ? impl->Size() : -1;
 		}
 
 		void FileStream::Seek(pos_t _size)
 		{
-			if(Position()+_size>Size())
-			{
-				_fseeki64(file, 0, SEEK_END);
-			}
-			else if(Position()+_size<0)
-			{
-				_fseeki64(file, 0, SEEK_SET);
-			}
-			else
-			{
-				_fseeki64(file, _size, SEEK_CUR);
-			}
+			CHECK_ERROR(impl != nullptr, L"FileStream::Seek(pos_t)#Stream is closed, cannot perform this operation.");
+			impl->Seek(_size);
 		}
 
 		void FileStream::SeekFromBegin(pos_t _size)
 		{
-			if(_size>Size())
-			{
-				_fseeki64(file, 0, SEEK_END);
-			}
-			else if(_size<0)
-			{
-				_fseeki64(file, 0, SEEK_SET);
-			}
-			else
-			{
-				_fseeki64(file, _size, SEEK_SET);
-			}
+			CHECK_ERROR(impl != nullptr, L"FileStream::SeekFromBegin(pos_t)#Stream is closed, cannot perform this operation.");
+			impl->SeekFromBegin(_size);
 		}
 
 		void FileStream::SeekFromEnd(pos_t _size)
 		{
-			if(_size<0)
-			{
-				_fseeki64(file, 0, SEEK_END);
-			}
-			else if(_size>Size())
-			{
-				_fseeki64(file, 0, SEEK_SET);
-			}
-			else
-			{
-				_fseeki64(file, -_size, SEEK_END);
-			}
+			CHECK_ERROR(impl != nullptr, L"FileStream::SeekFromEnd(pos_t)#Stream is closed, cannot perform this operation.");
+			impl->SeekFromEnd(_size);
 		}
 
 		vint FileStream::Read(void* _buffer, vint _size)
 		{
-			CHECK_ERROR(file!=0, L"FileStream::Read(pos_t)#Stream is closed, cannot perform this operation.");
-			CHECK_ERROR(_size>=0, L"FileStream::Read(void*, vint)#Argument size cannot be negative.");
-			return fread(_buffer, 1, _size, file);
+			CHECK_ERROR(impl != nullptr, L"FileStream::Read(pos_t)#Stream is closed, cannot perform this operation.");
+			return impl->Read(_buffer, _size);
 		}
 
 		vint FileStream::Write(void* _buffer, vint _size)
 		{
-			CHECK_ERROR(file!=0, L"FileStream::Write(pos_t)#Stream is closed, cannot perform this operation.");
-			CHECK_ERROR(_size>=0, L"FileStream::Write(void*, vint)#Argument size cannot be negative.");
-			return fwrite(_buffer, 1, _size, file);
+			CHECK_ERROR(impl != nullptr, L"FileStream::Write(pos_t)#Stream is closed, cannot perform this operation.");
+			return impl->Write(_buffer, _size);
 		}
 
 		vint FileStream::Peek(void* _buffer, vint _size)
 		{
-			CHECK_ERROR(file!=0, L"FileStream::Peek(pos_t)#Stream is closed, cannot perform this operation.");
-			CHECK_ERROR(_size>=0, L"FileStream::Peek(void*, vint)#Argument size cannot be negative.");
-#if defined VCZH_MSVC
-			fpos_t position=0;
-			if(fgetpos(file, &position)==0)
-			{
-				size_t count=fread(_buffer, 1, _size, file);
-				if(fsetpos(file, &position)==0)
-				{
-					return count;
-				}
-			}
-			return -1;
-#elif defined VCZH_GCC
-			long position=ftell(file);
-			size_t count=fread(_buffer, 1, _size, file);
-			fseek(file, position, SEEK_SET);
-			return count;
-#endif
+			CHECK_ERROR(impl != nullptr, L"FileStream::Peek(pos_t)#Stream is closed, cannot perform this operation.");
+			return impl->Peek(_buffer, _size);
 		}
 	}
 }
@@ -3519,3 +4950,12968 @@ RecorderStream
 		}
 	}
 }
+
+/***********************************************************************
+.\INTERPROCESS\ASYNCSOCKET\ASYNCSOCKET.CPP
+***********************************************************************/
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+#include <chrono>
+#include <cstring>
+#include <limits>
+
+namespace vl::inter_process::async_tcp_socket
+{
+	thread_local NetworkProtocolCallbackDomain::CallbackFrame*	NetworkProtocolCallbackDomain::currentCallbackFrame = nullptr;
+	thread_local NetworkProtocolConnection::CallbackFrame*	NetworkProtocolConnection::currentCallbackFrame = nullptr;
+	thread_local NetworkProtocolConnection::SocketCallbackFrame*
+										NetworkProtocolConnection::currentSocketCallbackFrame = nullptr;
+
+/***********************************************************************
+IAsyncSocketCallback
+***********************************************************************/
+
+	void IAsyncSocketCallback::OnWriteCompleted(Ptr<AsyncSocketBuffer>)
+	{
+	}
+
+	void IAsyncSocketCallback::OnError(const WString&, bool)
+	{
+	}
+
+	void IAsyncSocketCallback::OnConnected()
+	{
+	}
+
+	void IAsyncSocketCallback::OnDisconnected()
+	{
+	}
+
+	AsyncSocketServerStartException::AsyncSocketServerStartException(AsyncSocketServerStartFailure _failure, const WString& message)
+		: Exception(message)
+		, failure(_failure)
+	{
+	}
+
+	AsyncSocketServerStartFailure AsyncSocketServerStartException::GetFailure()const
+	{
+		return failure;
+	}
+
+	void IAsyncSocketServerCallback::OnServerStopped()
+	{
+	}
+
+/***********************************************************************
+NetworkProtocolCallbackDomain::CallbackFrame
+***********************************************************************/
+
+	NetworkProtocolCallbackDomain::CallbackFrame::CallbackFrame(Ptr<NetworkProtocolCallbackDomain> _domain)
+		: domain(_domain)
+	{
+		if (domain)
+		{
+			previous = currentCallbackFrame;
+			currentCallbackFrame = this;
+			CS_LOCK(domain->lockState)
+			{
+				domain->activeCallbacks++;
+			}
+		}
+	}
+
+	NetworkProtocolCallbackDomain::CallbackFrame::~CallbackFrame()
+	{
+		if (domain)
+		{
+			currentCallbackFrame = previous;
+			CS_LOCK(domain->lockState)
+			{
+				domain->activeCallbacks--;
+				domain->cvState.WakeAllPendings();
+			}
+		}
+	}
+
+/***********************************************************************
+NetworkProtocolCallbackDomain
+***********************************************************************/
+
+	vint NetworkProtocolCallbackDomain::CurrentCallbackDepth()
+	{
+		vint depth = 0;
+		for (auto frame = currentCallbackFrame; frame; frame = frame->previous)
+		{
+			if (frame->domain.Obj() == this)
+			{
+				depth++;
+			}
+		}
+		return depth;
+	}
+
+	void NetworkProtocolCallbackDomain::WaitForCallbacks(vint callbackDepth)
+	{
+		CS_LOCK(lockState)
+		{
+			while (activeCallbacks > callbackDepth)
+			{
+				cvState.SleepWith(lockState);
+			}
+		}
+	}
+
+/***********************************************************************
+NetworkProtocolConnectionLifecycle
+***********************************************************************/
+
+	void NetworkProtocolConnectionLifecycle::TakeRetainedAdapterIfDrained(Ptr<Object>& releasing)
+	{
+		if (stopFinished && disconnectFinished && activeCallbacks == 0 && activeSocketCallbacks == 0 && activeSocketCalls == 0)
+		{
+			releasing = std::move(retainedAdapter);
+		}
+	}
+
+/***********************************************************************
+NetworkProtocolConnection::CallbackFrame
+***********************************************************************/
+
+	NetworkProtocolConnection::CallbackFrame::CallbackFrame(Ptr<Lifecycle> _state)
+		: state(_state)
+		, previous(currentCallbackFrame)
+		, domainFrame(state->callbackDomain)
+	{
+		currentCallbackFrame = this;
+	}
+
+	NetworkProtocolConnection::CallbackFrame::~CallbackFrame()
+	{
+		currentCallbackFrame = previous;
+		Ptr<Object> releasing;
+		CS_LOCK(state->lockState)
+		{
+			state->activeCallbacks--;
+			state->TakeRetainedAdapterIfDrained(releasing);
+			state->cvState.WakeAllPendings();
+		}
+	}
+
+/***********************************************************************
+NetworkProtocolConnection::SocketCallbackFrame
+***********************************************************************/
+
+	NetworkProtocolConnection::SocketCallbackFrame::SocketCallbackFrame(Ptr<Lifecycle> _state)
+		: state(_state)
+		, previous(currentSocketCallbackFrame)
+	{
+		currentSocketCallbackFrame = this;
+		CS_LOCK(state->lockState)
+		{
+			state->activeSocketCallbacks++;
+		}
+	}
+
+	NetworkProtocolConnection::SocketCallbackFrame::~SocketCallbackFrame()
+	{
+		currentSocketCallbackFrame = previous;
+		Ptr<Object> releasing;
+		CS_LOCK(state->lockState)
+		{
+			state->activeSocketCallbacks--;
+			state->TakeRetainedAdapterIfDrained(releasing);
+			state->cvState.WakeAllPendings();
+		}
+	}
+
+/***********************************************************************
+NetworkProtocolConnection
+***********************************************************************/
+
+	vint NetworkProtocolConnection::CurrentCallbackDepth(Ptr<Lifecycle> state)
+	{
+		vint depth = 0;
+		for (auto frame = currentCallbackFrame; frame; frame = frame->previous)
+		{
+			if (frame->state.Obj() == state.Obj())
+			{
+				depth++;
+			}
+		}
+		return depth;
+	}
+
+	vint NetworkProtocolConnection::CurrentSocketCallbackDepth(Ptr<Lifecycle> state)
+	{
+		vint depth = 0;
+		for (auto frame = currentSocketCallbackFrame; frame; frame = frame->previous)
+		{
+			if (frame->state.Obj() == state.Obj())
+			{
+				depth++;
+			}
+		}
+		return depth;
+	}
+
+	void NetworkProtocolConnection::FinishSocketCall(Ptr<Lifecycle> state)
+	{
+		CS_LOCK(state->lockState)
+		{
+			state->activeSocketCalls--;
+			state->cvState.WakeAllPendings();
+		}
+	}
+
+	template<typename TCallback>
+	void NetworkProtocolConnection::InvokeProtocolCallback(Ptr<Lifecycle> state, bool allowTerminal, TCallback&& invoke)
+	{
+		INetworkProtocolCallback* installed = nullptr;
+		auto callbackDepth = CurrentCallbackDepth(state);
+		state->lockState.Enter();
+		while (state->callbackInstalling && callbackDepth == 0 && state->callback)
+		{
+			state->cvState.SleepWith(state->lockState);
+		}
+		if (state->callback && (allowTerminal || (!state->stopStarted && !state->terminal)))
+		{
+			installed = state->callback;
+			state->activeCallbacks++;
+		}
+		state->lockState.Leave();
+
+		if (installed)
+		{
+			CallbackFrame frame(state);
+			invoke(installed);
+		}
+	}
+
+	void NetworkProtocolConnection::SubmitWrite(Ptr<Lifecycle> state, IAsyncSocketConnection* connection, Ptr<AsyncSocketBuffer> buffer)
+	{
+		try
+		{
+			connection->WriteAsync(buffer);
+		}
+		catch (...)
+		{
+			CS_LOCK(state->lockState)
+			{
+				state->queuedWrites.Clear();
+				state->writePending = false;
+				state->cvState.WakeAllPendings();
+			}
+			FinishSocketCall(state);
+			throw;
+		}
+		FinishSocketCall(state);
+	}
+
+	void NetworkProtocolConnection::NotifyProtocolDisconnected(Ptr<Lifecycle> state)
+	{
+		auto callbackDepth = CurrentCallbackDepth(state);
+		state->lockState.Enter();
+		if (!state->disconnectedNotified)
+		{
+			state->disconnectedNotified = true;
+			state->terminal = true;
+			state->queuedWrites.Clear();
+			state->writePending = false;
+			state->cvState.WakeAllPendings();
+		}
+		if (state->disconnectFinished)
+		{
+			state->lockState.Leave();
+			return;
+		}
+
+		if (state->disconnectDelivering)
+		{
+			if (callbackDepth == 0)
+			{
+				while (!state->disconnectFinished)
+				{
+					state->cvState.SleepWith(state->lockState);
+				}
+			}
+			state->lockState.Leave();
+			return;
+		}
+
+		if (callbackDepth == 0)
+		{
+			while (state->activeCallbacks > 0 && !state->disconnectDelivering && !state->disconnectFinished)
+			{
+				state->cvState.SleepWith(state->lockState);
+			}
+			if (state->disconnectFinished)
+			{
+				state->lockState.Leave();
+				return;
+			}
+			if (state->disconnectDelivering)
+			{
+				while (!state->disconnectFinished)
+				{
+					state->cvState.SleepWith(state->lockState);
+				}
+				state->lockState.Leave();
+				return;
+			}
+		}
+
+		state->disconnectDelivering = true;
+		while (state->activeCallbacks > callbackDepth)
+		{
+			state->cvState.SleepWith(state->lockState);
+		}
+		state->lockState.Leave();
+
+		try
+		{
+			InvokeProtocolCallback(state, true, [](INetworkProtocolCallback* installed)
+			{
+				installed->OnDisconnected();
+			});
+		}
+		catch (...)
+		{
+			Ptr<Object> releasing;
+			CS_LOCK(state->lockState)
+			{
+				state->callback = nullptr;
+				while (state->activeCallbacks > callbackDepth)
+				{
+					state->cvState.SleepWith(state->lockState);
+				}
+				state->disconnectFinished = true;
+				state->TakeRetainedAdapterIfDrained(releasing);
+				state->cvState.WakeAllPendings();
+			}
+			throw;
+		}
+
+		Ptr<Object> releasing;
+		CS_LOCK(state->lockState)
+		{
+			state->callback = nullptr;
+			while (state->activeCallbacks > callbackDepth)
+			{
+				state->cvState.SleepWith(state->lockState);
+			}
+			state->disconnectFinished = true;
+			state->TakeRetainedAdapterIfDrained(releasing);
+			state->cvState.WakeAllPendings();
+		}
+	}
+
+	void NetworkProtocolConnection::DetachSocketCallback(Ptr<Lifecycle> state, IAsyncSocketConnection* connection)
+	{
+		if (connection)
+		{
+			connection->InstallCallback(nullptr);
+		}
+		CS_LOCK(state->lockState)
+		{
+			if (state->socketConnection == connection)
+			{
+				state->socketConnection = nullptr;
+			}
+			state->cvState.WakeAllPendings();
+		}
+	}
+
+	void NetworkProtocolConnection::StopConnection(Ptr<Lifecycle> state, Ptr<Object> retainedAdapter)
+	{
+		auto callbackDepth = CurrentCallbackDepth(state);
+		auto socketCallbackDepth = CurrentSocketCallbackDepth(state);
+		auto nestedCallback = callbackDepth > 0 || socketCallbackDepth > 0;
+		IAsyncSocketConnection* connection = nullptr;
+		bool executeStop = false;
+		bool nestedFollower = false;
+		Ptr<Object> releasing;
+
+		state->lockState.Enter();
+		if (retainedAdapter)
+		{
+			state->retainedAdapter = retainedAdapter;
+		}
+		if (!state->stopStarted)
+		{
+			state->stopStarted = true;
+			if (!nestedCallback && !state->terminal && state->queuedWrites.Count() > 0)
+			{
+				state->drainWrites = true;
+				auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(WriteDrainTimeout);
+				while (state->queuedWrites.Count() > 0 && !state->terminal)
+				{
+					auto now = std::chrono::steady_clock::now();
+					if (now >= deadline)
+					{
+						break;
+					}
+					auto remaining = std::chrono::ceil<std::chrono::milliseconds>(deadline - now).count();
+					state->cvState.SleepWithForTime(state->lockState, (vint)remaining);
+				}
+				state->drainWrites = false;
+			}
+			state->queuedWrites.Clear();
+			state->writePending = false;
+			while (state->activeSocketCalls > 0)
+			{
+				state->cvState.SleepWith(state->lockState);
+			}
+			connection = state->socketConnection;
+			executeStop = true;
+		}
+		else if (nestedCallback)
+		{
+			connection = state->socketConnection;
+			nestedFollower = true;
+		}
+		else
+		{
+			while (!state->stopFinished)
+			{
+				state->cvState.SleepWith(state->lockState);
+			}
+			while (state->activeCallbacks > 0 || state->activeSocketCallbacks > 0 || state->activeSocketCalls > 0)
+			{
+				state->cvState.SleepWith(state->lockState);
+			}
+			state->TakeRetainedAdapterIfDrained(releasing);
+			state->lockState.Leave();
+			return;
+		}
+		state->lockState.Leave();
+
+		if (nestedFollower)
+		{
+			if (connection && socketCallbackDepth > 0)
+			{
+				connection->Stop();
+			}
+			NotifyProtocolDisconnected(state);
+			return;
+		}
+
+		if (executeStop && connection)
+		{
+			connection->Stop();
+		}
+		NotifyProtocolDisconnected(state);
+
+		CS_LOCK(state->lockState)
+		{
+			while (state->activeCallbacks > callbackDepth || state->activeSocketCallbacks > socketCallbackDepth)
+			{
+				state->cvState.SleepWith(state->lockState);
+			}
+			state->stopFinished = true;
+			state->TakeRetainedAdapterIfDrained(releasing);
+			state->cvState.WakeAllPendings();
+		}
+	}
+
+	void NetworkProtocolConnection::ReportFatalError(Ptr<Lifecycle> state, const WString& error)
+	{
+		bool report = false;
+		CS_LOCK(state->lockState)
+		{
+			if (!state->terminal && !state->stopStarted)
+			{
+				state->terminal = true;
+				state->queuedWrites.Clear();
+				state->writePending = false;
+				state->cvState.WakeAllPendings();
+				report = true;
+			}
+		}
+		if (report)
+		{
+			try
+			{
+				InvokeProtocolCallback(state, true, [&](INetworkProtocolCallback* installed)
+				{
+					installed->OnLocalError(error, true);
+				});
+			}
+			catch (...)
+			{
+				StopConnection(state);
+				throw;
+			}
+			StopConnection(state);
+		}
+	}
+
+	void NetworkProtocolConnection::StopWithRetainedAdapter(Ptr<NetworkProtocolConnection> retainedAdapter)
+	{
+		StopConnection(lifecycle, retainedAdapter);
+	}
+
+	NetworkProtocolConnection::NetworkProtocolConnection(IAsyncSocketConnection* connection, Ptr<NetworkProtocolCallbackDomain> callbackDomain)
+		: lifecycle(Ptr(new Lifecycle))
+	{
+		CHECK_ERROR(connection, L"NetworkProtocolConnection requires a valid async socket connection.");
+		lifecycle->socketConnection = connection;
+		lifecycle->callbackDomain = callbackDomain;
+		connection->InstallCallback(this);
+	}
+
+	NetworkProtocolConnection::~NetworkProtocolConnection()
+	{
+		StopConnection(lifecycle);
+	}
+
+	void NetworkProtocolConnection::InstallCallback(INetworkProtocolCallback* value)
+	{
+		auto state = lifecycle;
+		if (!value)
+		{
+			auto callbackDepth = CurrentCallbackDepth(state);
+			bool uninstallOwner = false;
+			CS_LOCK(state->lockState)
+			{
+				uninstallOwner = state->callback != nullptr;
+				state->callback = nullptr;
+				while ((callbackDepth == 0 || uninstallOwner) && state->activeCallbacks > callbackDepth)
+				{
+					state->cvState.SleepWith(state->lockState);
+				}
+			}
+			return;
+		}
+
+		bool canInstall = false;
+		CS_LOCK(state->lockState)
+		{
+			if (!state->callback && !state->callbackInstalling && !state->stopStarted && !state->terminal)
+			{
+				state->callback = value;
+				state->callbackInstalling = true;
+				state->activeCallbacks++;
+				canInstall = true;
+			}
+		}
+		CHECK_ERROR(canInstall, L"NetworkProtocolConnection::InstallCallback cannot replace a callback or install one on a stopped connection.");
+
+		CallbackFrame frame(state);
+		try
+		{
+			value->OnInstalled(this);
+		}
+		catch (...)
+		{
+			CS_LOCK(state->lockState)
+			{
+				if (state->callback == value)
+				{
+					state->callback = nullptr;
+				}
+				state->callbackInstalling = false;
+				state->cvState.WakeAllPendings();
+			}
+			throw;
+		}
+
+		CS_LOCK(state->lockState)
+		{
+			state->callbackInstalling = false;
+			state->cvState.WakeAllPendings();
+		}
+	}
+
+	void NetworkProtocolConnection::BeginReadingLoopUnsafe()
+	{
+		auto state = lifecycle;
+		IAsyncSocketConnection* connection = nullptr;
+		CS_LOCK(state->lockState)
+		{
+			if (!state->stopStarted && !state->terminal && state->socketConnection)
+			{
+				connection = state->socketConnection;
+				state->activeSocketCalls++;
+			}
+		}
+		if (!connection)
+		{
+			return;
+		}
+
+		try
+		{
+			connection->BeginReadingLoopUnsafe();
+		}
+		catch (...)
+		{
+			FinishSocketCall(state);
+			throw;
+		}
+		FinishSocketCall(state);
+	}
+
+	void NetworkProtocolConnection::SendString(const WString& str)
+	{
+		auto state = lifecycle;
+		auto length = str.Length();
+		CHECK_ERROR(length >= 0 && length <= (std::numeric_limits<vint32_t>::max)(), L"NetworkProtocolConnection::SendString cannot encode a string longer than vint32_t.");
+		CHECK_ERROR((size_t)length <= ((size_t)(std::numeric_limits<vint>::max)() - sizeof(vint32_t)) / sizeof(wchar_t), L"NetworkProtocolConnection::SendString frame size overflow.");
+
+		auto buffer = Ptr(new AsyncSocketBuffer);
+		auto characterBytes = (size_t)length * sizeof(wchar_t);
+		auto frameBytes = sizeof(vint32_t) + characterBytes;
+		buffer->data.Resize((vint)frameBytes);
+		auto encodedLength = (vint32_t)length;
+		std::memcpy(&buffer->data[0], &encodedLength, sizeof(encodedLength));
+		if (characterBytes > 0)
+		{
+			std::memcpy(&buffer->data[sizeof(encodedLength)], str.Buffer(), characterBytes);
+		}
+
+		IAsyncSocketConnection* connection = nullptr;
+		Ptr<AsyncSocketBuffer> submitting;
+		CS_LOCK(state->lockState)
+		{
+			if (!state->stopStarted && !state->terminal && state->socketConnection)
+			{
+				state->queuedWrites.Add(buffer);
+				if (!state->writePending)
+				{
+					state->writePending = true;
+					connection = state->socketConnection;
+					submitting = state->queuedWrites[0];
+					state->activeSocketCalls++;
+				}
+			}
+		}
+		if (submitting)
+		{
+			SubmitWrite(state, connection, submitting);
+		}
+	}
+
+	void NetworkProtocolConnection::Stop()
+	{
+		StopConnection(lifecycle);
+	}
+
+	void NetworkProtocolConnection::OnRead(const vuint8_t* buffer, vint size)
+	{
+		auto state = lifecycle;
+		SocketCallbackFrame socketCallbackFrame(state);
+		if (!buffer || size <= 0)
+		{
+			return;
+		}
+
+		collections::List<WString> completedStrings;
+		bool malformed = false;
+		CS_LOCK(state->lockParser)
+		{
+			if (state->parserFailed)
+			{
+				return;
+			}
+
+			auto reading = buffer;
+			auto available = size;
+			while (available > 0)
+			{
+				if (state->expectedCharacters == -1)
+				{
+					auto required = (vint)sizeof(vint32_t) - state->lengthBytesReceived;
+					auto copied = required < available ? required : available;
+					std::memcpy(state->lengthBytes + state->lengthBytesReceived, reading, (size_t)copied);
+					state->lengthBytesReceived += copied;
+					reading += copied;
+					available -= copied;
+					if (state->lengthBytesReceived < (vint)sizeof(vint32_t))
+					{
+						continue;
+					}
+
+					std::memcpy(&state->expectedCharacters, state->lengthBytes, sizeof(state->expectedCharacters));
+					state->lengthBytesReceived = 0;
+					if (state->expectedCharacters < 0 || (size_t)state->expectedCharacters > ((size_t)(std::numeric_limits<vint>::max)() - sizeof(vint32_t)) / sizeof(wchar_t))
+					{
+						state->parserFailed = true;
+						malformed = true;
+						break;
+					}
+
+					state->characterBuffer.Resize((vint)state->expectedCharacters);
+					state->characterBytesReceived = 0;
+					if (state->expectedCharacters == 0)
+					{
+						completedStrings.Add(WString());
+						state->expectedCharacters = -1;
+					}
+				}
+
+				if (state->expectedCharacters >= 0)
+				{
+					auto characterBytes = (vint)((size_t)state->expectedCharacters * sizeof(wchar_t));
+					auto required = characterBytes - state->characterBytesReceived;
+					auto copied = required < available ? required : available;
+					std::memcpy((vuint8_t*)&state->characterBuffer[0] + state->characterBytesReceived, reading, (size_t)copied);
+					state->characterBytesReceived += copied;
+					reading += copied;
+					available -= copied;
+					if (state->characterBytesReceived == characterBytes)
+					{
+						completedStrings.Add(WString::CopyFrom(&state->characterBuffer[0], state->expectedCharacters));
+						state->characterBuffer.Resize(0);
+						state->characterBytesReceived = 0;
+						state->expectedCharacters = -1;
+					}
+				}
+			}
+		}
+
+		for (auto&& str : completedStrings)
+		{
+			InvokeProtocolCallback(state, false, [&](INetworkProtocolCallback* installed)
+			{
+				installed->OnReadString(str);
+			});
+		}
+		if (malformed)
+		{
+			ReportFatalError(state, L"The async socket protocol received an invalid string length.");
+		}
+	}
+
+	void NetworkProtocolConnection::OnWriteCompleted(Ptr<AsyncSocketBuffer> buffer)
+	{
+		auto state = lifecycle;
+		SocketCallbackFrame socketCallbackFrame(state);
+		IAsyncSocketConnection* connection = nullptr;
+		Ptr<AsyncSocketBuffer> submitting;
+		bool mismatched = false;
+		CS_LOCK(state->lockState)
+		{
+			if (state->queuedWrites.Count() == 0)
+			{
+				return;
+			}
+			if (state->queuedWrites[0].Obj() != buffer.Obj())
+			{
+				state->queuedWrites.Clear();
+				state->writePending = false;
+				mismatched = true;
+				state->cvState.WakeAllPendings();
+			}
+			else
+			{
+				state->queuedWrites.RemoveAt(0);
+				if ((!state->stopStarted || state->drainWrites) && !state->terminal && state->socketConnection && state->queuedWrites.Count() > 0)
+				{
+					connection = state->socketConnection;
+					submitting = state->queuedWrites[0];
+					state->activeSocketCalls++;
+				}
+				else
+				{
+					state->writePending = false;
+				}
+				state->cvState.WakeAllPendings();
+			}
+		}
+		CHECK_ERROR(!mismatched, L"NetworkProtocolConnection received a completion for an unexpected async socket buffer.");
+		if (submitting)
+		{
+			SubmitWrite(state, connection, submitting);
+		}
+	}
+
+	void NetworkProtocolConnection::OnError(const WString& error, bool fatal)
+	{
+		auto state = lifecycle;
+		SocketCallbackFrame socketCallbackFrame(state);
+		if (fatal)
+		{
+			ReportFatalError(state, error);
+		}
+		else
+		{
+			bool promoted = false;
+			InvokeProtocolCallback(state, false, [&](INetworkProtocolCallback* installed)
+			{
+				promoted = installed->OnLocalError(error, false);
+			});
+			if (promoted)
+			{
+				StopConnection(state);
+			}
+		}
+	}
+
+	void NetworkProtocolConnection::OnConnected()
+	{
+		auto state = lifecycle;
+		SocketCallbackFrame socketCallbackFrame(state);
+		InvokeProtocolCallback(state, false, [](INetworkProtocolCallback* installed)
+		{
+			installed->OnConnected();
+		});
+	}
+
+	void NetworkProtocolConnection::OnDisconnected()
+	{
+		auto state = lifecycle;
+		SocketCallbackFrame socketCallbackFrame(state);
+		IAsyncSocketConnection* connection = nullptr;
+		CS_LOCK(state->lockState)
+		{
+			while (state->activeSocketCalls > 0)
+			{
+				state->cvState.SleepWith(state->lockState);
+			}
+			connection = state->socketConnection;
+		}
+
+		try
+		{
+			DetachSocketCallback(state, connection);
+		}
+		catch (...)
+		{
+			CS_LOCK(state->lockState)
+			{
+				if (state->socketConnection == connection)
+				{
+					state->socketConnection = nullptr;
+				}
+				state->cvState.WakeAllPendings();
+			}
+			NotifyProtocolDisconnected(state);
+			throw;
+		}
+		NotifyProtocolDisconnected(state);
+	}
+
+	void NetworkProtocolConnection::OnInstalled(IAsyncSocketConnection* connection)
+	{
+		auto state = lifecycle;
+		SocketCallbackFrame socketCallbackFrame(state);
+		CHECK_ERROR(connection == state->socketConnection, L"NetworkProtocolConnection was installed on an unexpected async socket connection.");
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\ASYNCSOCKET\ASYNCSOCKET_HTTPCLIENT.CPP
+***********************************************************************/
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+
+namespace vl::inter_process::async_tcp_socket
+{
+	using namespace vl::collections;
+
+	namespace
+	{
+		constexpr vint				HttpRequestMaxAttempts = 3;
+		constexpr vint				SendDrainTimeout = 1000;
+
+		class SameEndpointClientContractException : public Exception
+		{
+		public:
+			SameEndpointClientContractException(const WString& message)
+				: Exception(message)
+			{
+			}
+		};
+
+		wchar_t FoldServerCharacter(wchar_t c)
+		{
+			return L'A' <= c && c <= L'Z' ? c - L'A' + L'a' : c;
+		}
+
+		bool ValidateLoopbackServer(const WString& server)
+		{
+			if (server == L"127.0.0.1") return true;
+			const wchar_t localhost[] = L"localhost";
+			if (server.Length() != 9) return false;
+			for (vint i = 0; i < 9; i++)
+			{
+				if (FoldServerCharacter(server[i]) != localhost[i]) return false;
+			}
+			return true;
+		}
+
+		WString NormalizeUrlPrefix(const WString& urlPrefix)
+		{
+			auto normalizedUrlPrefix = urlPrefix;
+			while (normalizedUrlPrefix.Length() > 0 && normalizedUrlPrefix[normalizedUrlPrefix.Length() - 1] == L'/')
+			{
+				normalizedUrlPrefix = normalizedUrlPrefix.Left(normalizedUrlPrefix.Length() - 1);
+			}
+			return normalizedUrlPrefix;
+		}
+
+		WString DescribeHttpError(const wchar_t* operation, const windows_http::HttpError& error)
+		{
+			return WString::Unmanaged(operation) + L" failed: " + error.message;
+		}
+
+		bool DecodeSuccessfulResponse(
+			const windows_http::HttpResponse& response,
+			const wchar_t* operation,
+			WString& body,
+			WString& error
+			)
+		{
+			if (response.statusCode != 200)
+			{
+				error = WString::Unmanaged(operation) + L" returned status code " + itow(response.statusCode) + L".";
+				return false;
+			}
+			if (response.contentType != HttpNetworkProtocolContentType)
+			{
+				error = WString::Unmanaged(operation) + L" did not return the required content type.";
+				return false;
+			}
+			if (!response.TryGetBodyUtf8(body) || (body.Length() > 0 && !IsValidHttpNetworkProtocolMessage(body)))
+			{
+				error = WString::Unmanaged(operation) + L" returned malformed UTF-8 or an embedded NUL.";
+				return false;
+			}
+			return true;
+		}
+
+		BEGIN_GLOBAL_STORAGE_CLASS(SocketHttpClientTestHooks)
+			SpinLock						lock;
+			Func<void()>					receiveSubmitted;
+			Func<void()>					fatalReserved;
+			Func<void()>					stopStarted;
+		INITIALIZE_GLOBAL_STORAGE_CLASS
+		FINALIZE_GLOBAL_STORAGE_CLASS
+			SPIN_LOCK(lock)
+			{
+				receiveSubmitted = {};
+				fatalReserved = {};
+				stopStarted = {};
+			}
+		END_GLOBAL_STORAGE_CLASS(SocketHttpClientTestHooks)
+
+		void InvokeReceiveSubmittedForTesting()
+		{
+			Func<void()> callback;
+			auto& hooks = GetSocketHttpClientTestHooks();
+			SPIN_LOCK(hooks.lock)
+			{
+				callback = hooks.receiveSubmitted;
+			}
+			if (callback)
+			{
+				try { callback(); }
+				catch (...) {}
+			}
+		}
+
+		void InvokeFatalReservedForTesting()
+		{
+			Func<void()> callback;
+			auto& hooks = GetSocketHttpClientTestHooks();
+			SPIN_LOCK(hooks.lock)
+			{
+				callback = hooks.fatalReserved;
+			}
+			if (callback)
+			{
+				try { callback(); }
+				catch (...) {}
+			}
+		}
+
+		void InvokeStopStartedForTesting()
+		{
+			Func<void()> callback;
+			auto& hooks = GetSocketHttpClientTestHooks();
+			SPIN_LOCK(hooks.lock)
+			{
+				callback = hooks.stopStarted;
+			}
+			if (callback)
+			{
+				try { callback(); }
+				catch (...) {}
+			}
+		}
+
+	}
+
+	void SetSocketHttpClientReceiveSubmittedCallbackForTesting(const Func<void()>& callback)
+	{
+		auto& hooks = GetSocketHttpClientTestHooks();
+		SPIN_LOCK(hooks.lock)
+		{
+			hooks.receiveSubmitted = callback;
+		}
+	}
+
+	void ResetSocketHttpClientReceiveSubmittedCallbackForTesting()
+	{
+		SetSocketHttpClientReceiveSubmittedCallbackForTesting({});
+	}
+
+	void SetSocketHttpClientFatalStopCallbacksForTesting(
+		const Func<void()>& fatalReserved,
+		const Func<void()>& stopStarted
+		)
+	{
+		auto& hooks = GetSocketHttpClientTestHooks();
+		SPIN_LOCK(hooks.lock)
+		{
+			hooks.fatalReserved = fatalReserved;
+			hooks.stopStarted = stopStarted;
+		}
+	}
+
+	void ResetSocketHttpClientFatalStopCallbacksForTesting()
+	{
+		SetSocketHttpClientFatalStopCallbacksForTesting({}, {});
+	}
+
+/***********************************************************************
+SocketHttpClient::Impl
+***********************************************************************/
+
+	class SocketHttpClient::Impl : public Object
+	{
+		using QueryResult = Variant<windows_http::HttpResponse, windows_http::HttpError>;
+
+		enum class State
+		{
+			Ready,
+			WaitingForServer,
+			Connected,
+			Stopping,
+		};
+
+		class SendItem : public Object
+		{
+		public:
+			Array<char>					body;
+			vint						attempt = 1;
+		};
+
+		class QueryWaiter : public Object
+		{
+		private:
+			CriticalSection				lock;
+			ConditionVariable			cv;
+			Ptr<QueryResult>				result;
+
+		public:
+			void Complete(QueryResult value)
+			{
+				CS_LOCK(lock)
+				{
+					if (!result)
+					{
+						result = Ptr(new QueryResult(std::move(value)));
+						cv.WakeAllPendings();
+					}
+				}
+			}
+
+			Ptr<QueryResult> Wait()
+			{
+				CS_LOCK(lock)
+				{
+					while (!result) cv.SleepWith(lock);
+					return result;
+				}
+				return nullptr;
+			}
+		};
+
+		struct CallbackFrame
+		{
+			Ptr<Impl>						state;
+			CallbackFrame*				previous = nullptr;
+			NetworkProtocolCallbackDomain::CallbackFrame
+										domainFrame;
+
+			CallbackFrame(Ptr<Impl> _state)
+				: state(_state)
+				, previous(currentCallbackFrame)
+				, domainFrame(state->callbackDomain)
+			{
+				currentCallbackFrame = this;
+			}
+
+			~CallbackFrame()
+			{
+				currentCallbackFrame = previous;
+				CS_LOCK(state->lockState)
+				{
+					state->activeCallbacks--;
+					state->cvState.WakeAllPendings();
+				}
+			}
+		};
+
+		struct WorkerFrame
+		{
+			Ptr<Impl>						state;
+			WorkerFrame*					previous = nullptr;
+
+			WorkerFrame(Ptr<Impl> _state)
+				: state(_state)
+				, previous(currentWorkerFrame)
+			{
+				currentWorkerFrame = this;
+			}
+
+			~WorkerFrame()
+			{
+				currentWorkerFrame = previous;
+				CS_LOCK(state->lockState)
+				{
+					state->activeWorkers--;
+					if (state->hardStopping)
+					{
+						state->sendReconnecting = false;
+						state->receiveReconnecting = false;
+					}
+					state->cvState.WakeAllPendings();
+				}
+			}
+		};
+
+		struct WaitFrame
+		{
+			Ptr<Impl>						state;
+			WaitFrame*					previous = nullptr;
+
+			WaitFrame(Ptr<Impl> _state)
+				: state(_state)
+				, previous(currentWaitFrame)
+			{
+				currentWaitFrame = this;
+				CS_LOCK(state->lockState)
+				{
+					state->activeWaits++;
+				}
+			}
+
+			~WaitFrame()
+			{
+				currentWaitFrame = previous;
+				CS_LOCK(state->lockState)
+				{
+					state->activeWaits--;
+					state->cvState.WakeAllPendings();
+				}
+			}
+		};
+
+		static thread_local CallbackFrame*	currentCallbackFrame;
+		static thread_local WorkerFrame*	currentWorkerFrame;
+		static thread_local WaitFrame*		currentWaitFrame;
+
+		SocketHttpClient*				owner = nullptr;
+		WString							server;
+		vint							port = 0;
+		Ptr<IAsyncSocketClient>			clientSource;
+		Ptr<IAsyncSocketClient>			initialClient;
+		WString							urlPrefix;
+		WString							urlConnect;
+		WString							urlRequest;
+		WString							urlResponse;
+		Ptr<Impl>						selfReference;
+		Ptr<NetworkProtocolCallbackDomain>	callbackDomain = Ptr(new NetworkProtocolCallbackDomain);
+
+		CriticalSection					lockState;
+		CriticalSection					lockClientCreation;
+		ConditionVariable				cvState;
+		State							state = State::Ready;
+		INetworkProtocolCallback*		callback = nullptr;
+		bool							callbackInstalling = false;
+		vint							activeCallbacks = 0;
+		vint							activeWorkers = 0;
+		vint							activeWaits = 0;
+		bool							readingStarted = false;
+		bool							receivePollActive = false;
+		bool							receiveReconnecting = false;
+		bool							sendActive = false;
+		bool							sendReconnecting = false;
+		bool							stopStarted = false;
+		bool							drainSends = false;
+		bool							hardStopping = false;
+		bool							stopFinished = false;
+		bool							fatalStarted = false;
+		bool							disconnectedNotified = false;
+		bool							disconnectDelivering = false;
+		bool							disconnectFinished = false;
+		Ptr<SocketHttpClientApi>			sendApi;
+		Ptr<SocketHttpClientApi>			receiveApi;
+		List<Ptr<SendItem>>				sendQueue;
+
+		Ptr<Impl> RetainSelf()
+		{
+			CS_LOCK(lockState)
+			{
+				return selfReference;
+			}
+			return nullptr;
+		}
+
+		vint CurrentCallbackDepth()
+		{
+			vint depth = 0;
+			for (auto frame = currentCallbackFrame; frame; frame = frame->previous)
+			{
+				if (frame->state.Obj() == this) depth++;
+			}
+			return depth;
+		}
+
+		vint CurrentWorkerDepth()
+		{
+			vint depth = 0;
+			for (auto frame = currentWorkerFrame; frame; frame = frame->previous)
+			{
+				if (frame->state.Obj() == this) depth++;
+			}
+			return depth;
+		}
+
+		vint CurrentWaitDepth()
+		{
+			vint depth = 0;
+			for (auto frame = currentWaitFrame; frame; frame = frame->previous)
+			{
+				if (frame->state.Obj() == this) depth++;
+			}
+			return depth;
+		}
+
+		template<typename TCallback>
+		void InvokeProtocolCallback(bool allowStopping, TCallback&& invoke)
+		{
+			INetworkProtocolCallback* installed = nullptr;
+			auto callbackDepth = CurrentCallbackDepth();
+			lockState.Enter();
+			while (callbackInstalling && callbackDepth == 0 && callback)
+			{
+				cvState.SleepWith(lockState);
+			}
+			if (callback && (allowStopping || !stopStarted))
+			{
+				installed = callback;
+				activeCallbacks++;
+			}
+			lockState.Leave();
+
+			if (installed)
+			{
+				CallbackFrame frame(RetainSelf());
+				invoke(installed);
+			}
+		}
+
+		bool IsStopped()
+		{
+			CS_LOCK(lockState)
+			{
+				return stopStarted;
+			}
+			return true;
+		}
+
+		bool CanReceiveUnsafe()
+		{
+			return state == State::Connected && readingStarted && !stopStarted && !hardStopping;
+		}
+
+		bool CanSendUnsafe()
+		{
+			return !hardStopping && (state == State::Connected || drainSends);
+		}
+
+		void StopApiNoThrow(Ptr<SocketHttpClientApi> api)
+		{
+			if (!api) return;
+			try
+			{
+				api->Stop();
+			}
+			catch (...)
+			{
+			}
+		}
+
+		Ptr<SocketHttpClientApi> CreateApi()
+		{
+			Ptr<IAsyncSocketClient> nativeClient;
+			bool sameEndpointClient = false;
+			try
+			{
+				CS_LOCK(lockClientCreation)
+				{
+					nativeClient = initialClient;
+					initialClient = nullptr;
+					if (!nativeClient)
+					{
+						sameEndpointClient = true;
+						nativeClient = clientSource->CreateSameEndpointClient();
+					}
+				}
+				if (!nativeClient)
+				{
+					throw SameEndpointClientContractException(L"IAsyncSocketClient::CreateSameEndpointClient returned null.");
+				}
+				if (sameEndpointClient && nativeClient.Obj() == clientSource.Obj())
+				{
+					throw SameEndpointClientContractException(L"IAsyncSocketClient::CreateSameEndpointClient returned the source client instead of a fresh client.");
+				}
+				if (nativeClient->GetPort() != port)
+				{
+					throw SameEndpointClientContractException(L"IAsyncSocketClient::CreateSameEndpointClient returned a client for a different port.");
+				}
+				if (nativeClient->GetStatus() != ClientStatus::Ready)
+				{
+					throw SameEndpointClientContractException(L"IAsyncSocketClient::CreateSameEndpointClient returned a client that is not ready.");
+				}
+				return Ptr(new SocketHttpClientApi(nativeClient, server));
+			}
+			catch (const SameEndpointClientContractException&)
+			{
+				throw;
+			}
+			catch (const Exception& exception)
+			{
+				throw SameEndpointClientContractException(L"IAsyncSocketClient::CreateSameEndpointClient failed: " + exception.Message());
+			}
+			catch (...)
+			{
+				throw SameEndpointClientContractException(L"IAsyncSocketClient::CreateSameEndpointClient failed.");
+			}
+		}
+
+		bool WaitApiForServer(Ptr<SocketHttpClientApi> api)
+		{
+			api->WaitForServer();
+			return api->GetStatus() == ClientStatus::Connected;
+		}
+
+		void ReportLocalError(const WString& error, bool fatal)
+		{
+			bool promoted = false;
+			InvokeProtocolCallback(fatal, [&](INetworkProtocolCallback* installed)
+			{
+				promoted = installed->OnLocalError(error, fatal);
+			});
+			if (fatal || promoted)
+			{
+				CS_LOCK(lockState)
+				{
+					fatalStarted = true;
+				}
+				Stop(true);
+			}
+		}
+
+		void NotifyDisconnected()
+		{
+			auto callbackDepth = CurrentCallbackDepth();
+			lockState.Enter();
+			if (!disconnectedNotified)
+			{
+				disconnectedNotified = true;
+				cvState.WakeAllPendings();
+			}
+			if (disconnectFinished)
+			{
+				lockState.Leave();
+				return;
+			}
+			if (disconnectDelivering)
+			{
+				if (callbackDepth == 0)
+				{
+					while (!disconnectFinished) cvState.SleepWith(lockState);
+				}
+				lockState.Leave();
+				return;
+			}
+			if (callbackDepth == 0)
+			{
+				while (activeCallbacks > 0 && !disconnectDelivering && !disconnectFinished)
+				{
+					cvState.SleepWith(lockState);
+				}
+				if (disconnectFinished)
+				{
+					lockState.Leave();
+					return;
+				}
+			}
+			disconnectDelivering = true;
+			while (activeCallbacks > callbackDepth) cvState.SleepWith(lockState);
+			lockState.Leave();
+
+			try
+			{
+				InvokeProtocolCallback(true, [](INetworkProtocolCallback* installed)
+				{
+					installed->OnDisconnected();
+				});
+			}
+			catch (...)
+			{
+				CS_LOCK(lockState)
+				{
+					callback = nullptr;
+					disconnectFinished = true;
+					cvState.WakeAllPendings();
+				}
+				throw;
+			}
+
+			CS_LOCK(lockState)
+			{
+				callback = nullptr;
+				disconnectFinished = true;
+				cvState.WakeAllPendings();
+			}
+		}
+
+		void ReportFatalError(const WString& error)
+		{
+			INetworkProtocolCallback* installed = nullptr;
+			auto callbackDepth = CurrentCallbackDepth();
+			bool report = false;
+			lockState.Enter();
+			while (callbackInstalling && callbackDepth == 0 && callback && !stopStarted)
+			{
+				cvState.SleepWith(lockState);
+			}
+			if (!fatalStarted && !stopStarted)
+			{
+				fatalStarted = true;
+				report = true;
+				if (callback)
+				{
+					installed = callback;
+					activeCallbacks++;
+				}
+			}
+			lockState.Leave();
+			if (!report) return;
+			InvokeFatalReservedForTesting();
+
+			try
+			{
+				if (installed)
+				{
+					CallbackFrame frame(RetainSelf());
+					installed->OnLocalError(error, true);
+				}
+			}
+			catch (...)
+			{
+				Stop(true);
+				throw;
+			}
+			Stop(true);
+		}
+
+		bool HandleConnectFailure(WString error, vint& attempt)
+		{
+			if (IsStopped()) return false;
+			if (attempt >= HttpRequestMaxAttempts)
+			{
+				ReportFatalError(error);
+				return false;
+			}
+			ReportLocalError(error, false);
+			attempt++;
+			return !IsStopped();
+		}
+
+		Ptr<QueryResult> QueryConnect(Ptr<SocketHttpClientApi> api)
+		{
+			auto request = CreateHttpNetworkProtocolConnectRequest(urlConnect);
+
+			auto waiter = Ptr(new QueryWaiter);
+			api->HttpQuery(request, [waiter](QueryResult result)
+			{
+				waiter->Complete(std::move(result));
+			});
+			return waiter->Wait();
+		}
+
+		bool ValidateConnectResponse(
+			const windows_http::HttpResponse& response,
+			WString& requestUrl,
+			WString& responseUrl,
+			WString& error
+			)
+		{
+			WString body;
+			if (!DecodeSuccessfulResponse(response, L"/Connect", body, error)) return false;
+			if (body.Length() == 0)
+			{
+				error = L"/Connect returned an empty body.";
+				return false;
+			}
+
+			WString requestPath;
+			WString responsePath;
+			if (!ParseHttpNetworkProtocolConnectBody(body, requestPath, responsePath))
+			{
+				error = L"/Connect did not return exactly two paths.";
+				return false;
+			}
+			if (!ValidateHttpNetworkProtocolEndpointPath(requestPath) || !ValidateHttpNetworkProtocolEndpointPath(responsePath))
+			{
+				error = L"/Connect returned an illegal path.";
+				return false;
+			}
+
+			auto requestTarget = urlPrefix + requestPath;
+			auto responseTarget = urlPrefix + responsePath;
+			if (
+				ValidateHttpRequestLine(L"POST", requestTarget) != HttpRequestLineValidationResult::Succeeded ||
+				ValidateHttpRequestLine(L"POST", responseTarget) != HttpRequestLineValidationResult::Succeeded
+				)
+			{
+				error = L"/Connect returned a path exceeding the HTTP request-target contract.";
+				return false;
+			}
+			requestUrl = std::move(requestTarget);
+			responseUrl = std::move(responseTarget);
+			return true;
+		}
+
+		bool PublishApi(Ptr<SocketHttpClientApi> api, bool receive)
+		{
+			CS_LOCK(lockState)
+			{
+				if (stopStarted || hardStopping) return false;
+				if (receive)
+				{
+					receiveApi = api;
+				}
+				else
+				{
+					sendApi = api;
+				}
+				return true;
+			}
+			return false;
+		}
+
+		void ClearApi(Ptr<SocketHttpClientApi> api, bool receive)
+		{
+			CS_LOCK(lockState)
+			{
+				if (receive)
+				{
+					if (receiveApi == api) receiveApi = nullptr;
+				}
+				else
+				{
+					if (sendApi == api) sendApi = nullptr;
+				}
+				cvState.WakeAllPendings();
+			}
+		}
+
+		void SubmitReceivePoll(Ptr<SocketHttpClientApi> api)
+		{
+			auto self = RetainSelf();
+			if (!self) return;
+			auto request = CreateHttpNetworkProtocolReceiveRequest(urlRequest);
+			request.receiveTimeout = 0;
+
+			try
+			{
+				api->HttpQuery(request, [self, api](QueryResult result)
+				{
+					self->OnReceiveCompleted(api, std::move(result));
+				});
+				InvokeReceiveSubmittedForTesting();
+			}
+			catch (...)
+			{
+				HandleReceiveTransportFailure(api);
+			}
+		}
+
+		bool ReserveReceivePoll(Ptr<SocketHttpClientApi> api)
+		{
+			CS_LOCK(lockState)
+			{
+				if (!CanReceiveUnsafe() || receiveReconnecting || receivePollActive || receiveApi != api) return false;
+				receivePollActive = true;
+				return true;
+			}
+			return false;
+		}
+
+		void HandleReceiveTransportFailure(Ptr<SocketHttpClientApi> api)
+		{
+			bool schedule = false;
+			CS_LOCK(lockState)
+			{
+				if (receiveApi == api && CanReceiveUnsafe() && !receiveReconnecting)
+				{
+					receivePollActive = false;
+					receiveReconnecting = true;
+					activeWorkers++;
+					schedule = true;
+				}
+			}
+			if (!schedule) return;
+
+			auto self = RetainSelf();
+			bool queued = false;
+			try
+			{
+				auto worker = Func<void()>([self, api]()
+				{
+					WorkerFrame frame(self);
+					try
+					{
+						self->RunReceiveReplacement(api);
+					}
+					catch (...)
+					{
+						try
+						{
+							self->ReportFatalError(L"/Request replacement worker failed unexpectedly.");
+						}
+						catch (...)
+						{
+							self->Stop();
+						}
+					}
+				});
+				if (self)
+				{
+					try
+					{
+						queued = ThreadPoolLite::Queue(worker);
+					}
+					catch (...)
+					{
+					}
+					if (!queued)
+					{
+						try
+						{
+							queued = Thread::CreateAndStart(worker) != nullptr;
+						}
+						catch (...)
+						{
+						}
+					}
+				}
+			}
+			catch (...)
+			{
+			}
+			if (!queued)
+			{
+				CS_LOCK(lockState)
+				{
+					activeWorkers--;
+					receiveReconnecting = false;
+					cvState.WakeAllPendings();
+				}
+				ReportFatalError(L"/Request could not queue its replacement worker.");
+			}
+		}
+
+		void RunReceiveReplacement(Ptr<SocketHttpClientApi> deadApi)
+		{
+			StopApiNoThrow(deadApi);
+			ClearApi(deadApi, true);
+
+			while (true)
+			{
+				CS_LOCK(lockState)
+				{
+					if (!CanReceiveUnsafe() || !receiveReconnecting) return;
+				}
+
+				Ptr<SocketHttpClientApi> api;
+				try
+				{
+					api = CreateApi();
+				}
+				catch (const SameEndpointClientContractException& exception)
+				{
+					ReportFatalError(exception.Message());
+					return;
+				}
+				catch (...)
+				{
+					ReportFatalError(L"IAsyncSocketClient::CreateSameEndpointClient failed.");
+					return;
+				}
+				if (!PublishApi(api, true))
+				{
+					StopApiNoThrow(api);
+					return;
+				}
+
+				bool connected = false;
+				try
+				{
+					connected = WaitApiForServer(api);
+				}
+				catch (...)
+				{
+				}
+				if (!connected)
+				{
+					StopApiNoThrow(api);
+					ClearApi(api, true);
+					continue;
+				}
+
+				bool submit = false;
+				CS_LOCK(lockState)
+				{
+					if (receiveApi == api && CanReceiveUnsafe() && receiveReconnecting)
+					{
+						receiveReconnecting = false;
+						receivePollActive = true;
+						submit = true;
+					}
+				}
+				if (!submit)
+				{
+					StopApiNoThrow(api);
+					return;
+				}
+				SubmitReceivePoll(api);
+				return;
+			}
+		}
+
+		void OnReceiveCompleted(Ptr<SocketHttpClientApi> api, QueryResult result)
+		{
+			bool current = false;
+			CS_LOCK(lockState)
+			{
+				if (receiveApi == api && receivePollActive)
+				{
+					receivePollActive = false;
+					current = true;
+				}
+			}
+			if (!current) return;
+
+			if (auto httpError = result.TryGet<windows_http::HttpError>())
+			{
+				ReportLocalError(DescribeHttpError(L"/Request", *httpError), false);
+				HandleReceiveTransportFailure(api);
+				return;
+			}
+
+			WString body;
+			WString error;
+			auto valid = DecodeSuccessfulResponse(result.Get<windows_http::HttpResponse>(), L"/Request", body, error);
+			if (!valid)
+			{
+				ReportLocalError(error, false);
+				if (ReserveReceivePoll(api))
+				{
+					SubmitReceivePoll(api);
+				}
+				return;
+			}
+			if (ReserveReceivePoll(api))
+			{
+				// SocketHttpClientApi starts this replacement from inside its response
+				// callback before any user callback below can create a receive gap.
+				SubmitReceivePoll(api);
+			}
+			if (body.Length() > 0)
+			{
+				InvokeProtocolCallback(false, [&](INetworkProtocolCallback* installed)
+				{
+					installed->OnReadString(body);
+				});
+			}
+		}
+
+		bool IsCurrentSendUnsafe(Ptr<SocketHttpClientApi> api, Ptr<SendItem> item)
+		{
+			return sendQueue.Count() > 0 && sendQueue[0] == item && sendApi == api;
+		}
+
+		void SubmitSend(Ptr<SocketHttpClientApi> api, Ptr<SendItem> item)
+		{
+			bool submit = false;
+			CS_LOCK(lockState)
+			{
+				submit = CanSendUnsafe() && sendActive && IsCurrentSendUnsafe(api, item);
+			}
+			if (!submit) return;
+
+			auto request = CreateHttpNetworkProtocolSendRequest(urlResponse, item->body);
+
+			auto self = RetainSelf();
+			try
+			{
+				api->HttpQuery(request, [self, api, item](QueryResult result)
+				{
+					self->OnSendCompleted(api, item, std::move(result));
+				});
+			}
+			catch (...)
+			{
+				HandleSendFailure(api, item, L"/Response could not submit the HTTP exchange.", true);
+			}
+		}
+
+		void QueueSendReplacement(Ptr<SocketHttpClientApi> deadApi, Ptr<SendItem> item)
+		{
+			bool schedule = false;
+			CS_LOCK(lockState)
+			{
+				if (CanSendUnsafe() && sendReconnecting && IsCurrentSendUnsafe(deadApi, item))
+				{
+					activeWorkers++;
+					schedule = true;
+				}
+				else
+				{
+					sendReconnecting = false;
+				}
+			}
+			if (!schedule) return;
+
+			auto self = RetainSelf();
+			bool queued = false;
+			try
+			{
+				auto worker = Func<void()>([self, deadApi, item]()
+				{
+					WorkerFrame frame(self);
+					try
+					{
+						self->RunSendReplacement(deadApi, item);
+					}
+					catch (...)
+					{
+						try
+						{
+							self->ReportFatalError(L"/Response replacement worker failed unexpectedly.");
+						}
+						catch (...)
+						{
+							self->Stop();
+						}
+					}
+				});
+				if (self)
+				{
+					try
+					{
+						queued = ThreadPoolLite::Queue(worker);
+					}
+					catch (...)
+					{
+					}
+					if (!queued)
+					{
+						try
+						{
+							queued = Thread::CreateAndStart(worker) != nullptr;
+						}
+						catch (...)
+						{
+						}
+					}
+				}
+			}
+			catch (...)
+			{
+			}
+			if (!queued)
+			{
+				CS_LOCK(lockState)
+				{
+					activeWorkers--;
+					sendReconnecting = false;
+					cvState.WakeAllPendings();
+				}
+				ReportFatalError(L"/Response could not queue its replacement worker.");
+			}
+		}
+
+		bool HandleSendPreparationFailure(Ptr<SendItem> item, const WString& error)
+		{
+			bool fatal = false;
+			CS_LOCK(lockState)
+			{
+				if (!CanSendUnsafe() || !sendReconnecting || sendQueue.Count() == 0 || sendQueue[0] != item) return false;
+				fatal = item->attempt >= HttpRequestMaxAttempts;
+				if (!fatal) item->attempt++;
+			}
+			if (fatal)
+			{
+				ReportFatalError(error);
+				return false;
+			}
+			ReportLocalError(error, false);
+			CS_LOCK(lockState)
+			{
+				return CanSendUnsafe() && sendReconnecting && sendQueue.Count() > 0 && sendQueue[0] == item;
+			}
+			return false;
+		}
+
+		void RunSendReplacement(Ptr<SocketHttpClientApi> deadApi, Ptr<SendItem> item)
+		{
+			StopApiNoThrow(deadApi);
+			ClearApi(deadApi, false);
+
+			while (true)
+			{
+				CS_LOCK(lockState)
+				{
+					if (!CanSendUnsafe() || !sendReconnecting || sendQueue.Count() == 0 || sendQueue[0] != item) return;
+				}
+
+				Ptr<SocketHttpClientApi> api;
+				try
+				{
+					api = CreateApi();
+				}
+				catch (const SameEndpointClientContractException& exception)
+				{
+					ReportFatalError(exception.Message());
+					return;
+				}
+				catch (...)
+				{
+					ReportFatalError(L"IAsyncSocketClient::CreateSameEndpointClient failed.");
+					return;
+				}
+				if (!PublishApi(api, false))
+				{
+					StopApiNoThrow(api);
+					return;
+				}
+
+				bool connected = false;
+				try
+				{
+					connected = WaitApiForServer(api);
+				}
+				catch (...)
+				{
+				}
+				if (!connected)
+				{
+					StopApiNoThrow(api);
+					ClearApi(api, false);
+					if (!HandleSendPreparationFailure(item, L"/Response replacement failed to connect.")) return;
+					continue;
+				}
+
+				bool submit = false;
+				CS_LOCK(lockState)
+				{
+					if (sendApi == api && CanSendUnsafe() && sendReconnecting && sendQueue.Count() > 0 && sendQueue[0] == item)
+					{
+						sendReconnecting = false;
+						sendActive = true;
+						submit = true;
+					}
+				}
+				if (!submit)
+				{
+					StopApiNoThrow(api);
+					return;
+				}
+				SubmitSend(api, item);
+				return;
+			}
+		}
+
+		void HandleSendFailure(Ptr<SocketHttpClientApi> api, Ptr<SendItem> item, WString error, bool transportFailure)
+		{
+			bool fatal = false;
+			bool retryHealthy = false;
+			bool replace = false;
+			CS_LOCK(lockState)
+			{
+				if (!sendActive || !CanSendUnsafe() || !IsCurrentSendUnsafe(api, item)) return;
+				sendActive = false;
+				fatal = item->attempt >= HttpRequestMaxAttempts;
+				if (!fatal)
+				{
+					item->attempt++;
+					if (transportFailure)
+					{
+						sendReconnecting = true;
+						replace = true;
+					}
+					else
+					{
+						sendActive = true;
+						retryHealthy = true;
+					}
+				}
+				cvState.WakeAllPendings();
+			}
+
+			if (fatal)
+			{
+				ReportFatalError(error);
+				return;
+			}
+
+			try
+			{
+				ReportLocalError(error, false);
+			}
+			catch (...)
+			{
+				if (replace) QueueSendReplacement(api, item);
+				if (retryHealthy) SubmitSend(api, item);
+				throw;
+			}
+			if (replace) QueueSendReplacement(api, item);
+			if (retryHealthy) SubmitSend(api, item);
+		}
+
+		void OnSendCompleted(Ptr<SocketHttpClientApi> api, Ptr<SendItem> item, QueryResult result)
+		{
+			if (auto httpError = result.TryGet<windows_http::HttpError>())
+			{
+				HandleSendFailure(api, item, DescribeHttpError(L"/Response", *httpError), true);
+				return;
+			}
+
+			WString body;
+			WString error;
+			if (!DecodeSuccessfulResponse(result.Get<windows_http::HttpResponse>(), L"/Response", body, error))
+			{
+				HandleSendFailure(api, item, error, false);
+				return;
+			}
+
+			Ptr<SendItem> next;
+			CS_LOCK(lockState)
+			{
+				if (!sendActive || !IsCurrentSendUnsafe(api, item)) return;
+				sendActive = false;
+				sendQueue.RemoveAt(0);
+				if (CanSendUnsafe() && sendQueue.Count() > 0)
+				{
+					next = sendQueue[0];
+					sendActive = true;
+				}
+				cvState.WakeAllPendings();
+			}
+
+			// Preserve FIFO ownership by submitting the next accepted send before
+			// delivering a piggybacked message to callback-reentrant application code.
+			if (next) SubmitSend(api, next);
+			if (body.Length() > 0)
+			{
+				InvokeProtocolCallback(false, [&](INetworkProtocolCallback* installed)
+				{
+					installed->OnReadString(body);
+				});
+			}
+		}
+
+	public:
+		Impl(
+			SocketHttpClient* _owner,
+			Ptr<IAsyncSocketClient> _initialClient,
+			const WString& _server,
+			const WString& _urlPrefix
+			)
+			: owner(_owner)
+			, server(_server)
+			, clientSource(_initialClient)
+			, initialClient(_initialClient)
+			, urlPrefix(NormalizeUrlPrefix(_urlPrefix))
+			, urlConnect(urlPrefix + HttpServerUrl_Connect)
+		{
+			CHECK_ERROR(owner, L"SocketHttpClient requires an owning adapter.");
+			CHECK_ERROR(initialClient, L"SocketHttpClient requires an initial native client.");
+			CHECK_ERROR(ValidateLoopbackServer(server), L"SocketHttpClient requires an explicit loopback server.");
+			port = initialClient->GetPort();
+			CHECK_ERROR(1 <= port && port <= 65535, L"SocketHttpClient requires the initial client port to be in 1..65535.");
+			CHECK_ERROR(initialClient->GetStatus() == ClientStatus::Ready, L"SocketHttpClient requires an initial client in the ready state.");
+			CHECK_ERROR(ValidateHttpNetworkProtocolBaseUrl(urlPrefix), L"SocketHttpClient requires an empty or legal origin-form URL prefix.");
+			CHECK_ERROR(ValidateHttpRequestLine(L"GET", urlConnect) == HttpRequestLineValidationResult::Succeeded, L"SocketHttpClient URL prefix makes /Connect exceed the HTTP request-line limit.");
+		}
+
+		void Initialize(Ptr<Impl> self)
+		{
+			CS_LOCK(lockState)
+			{
+				selfReference = self;
+			}
+		}
+
+		void ReleaseSelf()
+		{
+			CS_LOCK(lockState)
+			{
+				owner = nullptr;
+				selfReference = nullptr;
+			}
+		}
+
+		INetworkProtocolConnection* GetConnection()
+		{
+			return owner;
+		}
+
+		void WaitForServer()
+		{
+			auto self = RetainSelf();
+			CS_LOCK(lockState)
+			{
+				CHECK_ERROR(state == State::Ready && !stopStarted, L"SocketHttpClient::WaitForServer can only be called once.");
+				state = State::WaitingForServer;
+			}
+			WaitFrame waitFrame(self);
+
+			vint attempt = 1;
+			Ptr<SocketHttpClientApi> api;
+			while (!IsStopped())
+			{
+				if (!api)
+				{
+					try
+					{
+						api = CreateApi();
+					}
+					catch (const SameEndpointClientContractException& exception)
+					{
+						ReportFatalError(exception.Message());
+						return;
+					}
+					catch (...)
+					{
+						ReportFatalError(L"IAsyncSocketClient::CreateSameEndpointClient failed.");
+						return;
+					}
+					if (!PublishApi(api, false))
+					{
+						StopApiNoThrow(api);
+						return;
+					}
+					bool connected = false;
+					try
+					{
+						connected = WaitApiForServer(api);
+					}
+					catch (...)
+					{
+					}
+					if (!connected)
+					{
+						StopApiNoThrow(api);
+						ClearApi(api, false);
+						api = nullptr;
+						if (!HandleConnectFailure(L"/Connect native connection failed.", attempt)) return;
+						continue;
+					}
+				}
+
+				Ptr<QueryResult> result;
+				try
+				{
+					result = QueryConnect(api);
+				}
+				catch (...)
+				{
+					StopApiNoThrow(api);
+					ClearApi(api, false);
+					api = nullptr;
+					if (!HandleConnectFailure(L"/Connect could not submit its HTTP exchange.", attempt)) return;
+					continue;
+				}
+				if (IsStopped()) return;
+
+				if (auto httpError = result->TryGet<windows_http::HttpError>())
+				{
+					auto error = DescribeHttpError(L"/Connect", *httpError);
+					StopApiNoThrow(api);
+					ClearApi(api, false);
+					api = nullptr;
+					if (!HandleConnectFailure(error, attempt)) return;
+					continue;
+				}
+
+				WString requestUrl;
+				WString responseUrl;
+				WString error;
+				if (!ValidateConnectResponse(result->Get<windows_http::HttpResponse>(), requestUrl, responseUrl, error))
+				{
+					if (!HandleConnectFailure(error, attempt)) return;
+					continue;
+				}
+
+				CS_LOCK(lockState)
+				{
+					if (stopStarted) return;
+					urlRequest = requestUrl;
+					urlResponse = responseUrl;
+				}
+				break;
+			}
+			if (IsStopped()) return;
+
+			// The logical token is already fixed. Failures in this second physical
+			// bootstrap are silent and never repeat /Connect.
+			while (!IsStopped())
+			{
+				Ptr<SocketHttpClientApi> apiReceive;
+				try
+				{
+					apiReceive = CreateApi();
+				}
+				catch (const SameEndpointClientContractException& exception)
+				{
+					ReportFatalError(exception.Message());
+					return;
+				}
+				catch (...)
+				{
+					ReportFatalError(L"IAsyncSocketClient::CreateSameEndpointClient failed.");
+					return;
+				}
+				if (!PublishApi(apiReceive, true))
+				{
+					StopApiNoThrow(apiReceive);
+					return;
+				}
+				bool connected = false;
+				try
+				{
+					connected = WaitApiForServer(apiReceive);
+				}
+				catch (...)
+				{
+				}
+				if (!connected)
+				{
+					StopApiNoThrow(apiReceive);
+					ClearApi(apiReceive, true);
+					continue;
+				}
+
+				bool publishConnected = false;
+				CS_LOCK(lockState)
+				{
+					if (!stopStarted && receiveApi == apiReceive)
+					{
+						state = State::Connected;
+						publishConnected = true;
+					}
+				}
+				if (!publishConnected)
+				{
+					StopApiNoThrow(apiReceive);
+					return;
+				}
+				InvokeProtocolCallback(false, [](INetworkProtocolCallback* installed)
+				{
+					installed->OnConnected();
+				});
+				return;
+			}
+		}
+
+		ClientStatus GetStatus()
+		{
+			CS_LOCK(lockState)
+			{
+				switch (state)
+				{
+				case State::Ready:
+					return ClientStatus::Ready;
+				case State::WaitingForServer:
+					return ClientStatus::WaitingForServer;
+				case State::Connected:
+					return ClientStatus::Connected;
+				default:
+					return ClientStatus::Disconnected;
+				}
+			}
+			return ClientStatus::Disconnected;
+		}
+
+		void InstallCallback(INetworkProtocolCallback* value)
+		{
+			if (!value)
+			{
+				auto callbackDepth = CurrentCallbackDepth();
+				bool uninstallOwner = false;
+				CS_LOCK(lockState)
+				{
+					uninstallOwner = callback != nullptr;
+					callback = nullptr;
+					while ((callbackDepth == 0 || uninstallOwner) && activeCallbacks > callbackDepth)
+					{
+						cvState.SleepWith(lockState);
+					}
+				}
+				return;
+			}
+
+			bool canInstall = false;
+			CS_LOCK(lockState)
+			{
+				if (!callback && !callbackInstalling && !stopStarted)
+				{
+					callback = value;
+					callbackInstalling = true;
+					activeCallbacks++;
+					canInstall = true;
+				}
+			}
+			CHECK_ERROR(canInstall, L"SocketHttpClient::InstallCallback cannot replace a callback or install one on a stopped client.");
+
+			CallbackFrame frame(RetainSelf());
+			try
+			{
+				value->OnInstalled(owner);
+			}
+			catch (...)
+			{
+				CS_LOCK(lockState)
+				{
+					if (callback == value) callback = nullptr;
+					callbackInstalling = false;
+					cvState.WakeAllPendings();
+				}
+				throw;
+			}
+			CS_LOCK(lockState)
+			{
+				callbackInstalling = false;
+				cvState.WakeAllPendings();
+			}
+		}
+
+		void BeginReadingLoopUnsafe()
+		{
+			Ptr<SocketHttpClientApi> api;
+			CS_LOCK(lockState)
+			{
+				CHECK_ERROR(state == State::Connected && !stopStarted, L"SocketHttpClient::BeginReadingLoopUnsafe requires a connected client.");
+				CHECK_ERROR(!readingStarted, L"SocketHttpClient::BeginReadingLoopUnsafe can only be called once.");
+				readingStarted = true;
+				api = receiveApi;
+				CHECK_ERROR(api, L"SocketHttpClient has no receive API after connecting.");
+				receivePollActive = true;
+			}
+			SubmitReceivePoll(api);
+		}
+
+		void SendString(const WString& str)
+		{
+			CHECK_ERROR(str.Length() > 0, L"SocketHttpClient::SendString does not accept an empty string.");
+			CHECK_ERROR(IsValidHttpNetworkProtocolMessage(str), L"SocketHttpClient::SendString requires valid Unicode without embedded NUL characters.");
+			Array<vuint8_t> validated;
+			CHECK_ERROR(EncodeStrictUtf8(str, validated), L"SocketHttpClient::SendString requires valid Unicode without embedded NUL characters.");
+			CHECK_ERROR(validated.Count() <= HttpBodySizeLimit, L"SocketHttpClient::SendString exceeds the HTTP body size limit.");
+
+			auto item = Ptr(new SendItem);
+			item->body.Resize(validated.Count());
+			for (vint i = 0; i < validated.Count(); i++)
+			{
+				item->body[i] = (char)validated[i];
+			}
+			Ptr<SocketHttpClientApi> api;
+			bool submit = false;
+			CS_LOCK(lockState)
+			{
+				CHECK_ERROR(state == State::Connected && !stopStarted, L"SocketHttpClient::SendString requires a connected client.");
+				sendQueue.Add(item);
+				if (!sendActive && !sendReconnecting)
+				{
+					api = sendApi;
+					CHECK_ERROR(api, L"SocketHttpClient has no send API after connecting.");
+					sendActive = true;
+					submit = true;
+				}
+			}
+			if (submit) SubmitSend(api, item);
+		}
+
+		void Stop(bool internalFollower = false)
+		{
+			auto self = RetainSelf();
+			auto callbackDepth = CurrentCallbackDepth();
+			auto workerDepth = CurrentWorkerDepth();
+			auto waitDepth = CurrentWaitDepth();
+			auto nested = internalFollower || callbackDepth > 0 || workerDepth > 0 || waitDepth > 0;
+			bool executeStop = false;
+			Ptr<SocketHttpClientApi> cancellingReceive;
+
+			lockState.Enter();
+			if (stopFinished)
+			{
+				while (activeCallbacks > callbackDepth || activeWorkers > workerDepth || activeWaits > waitDepth)
+				{
+					cvState.SleepWith(lockState);
+				}
+				lockState.Leave();
+				return;
+			}
+			if (!stopStarted)
+			{
+				stopStarted = true;
+				state = State::Stopping;
+				drainSends = !fatalStarted && sendQueue.Count() > 0;
+				cancellingReceive = receiveApi;
+				executeStop = true;
+			}
+			else if (nested)
+			{
+				lockState.Leave();
+				return;
+			}
+			else
+			{
+				while (!stopFinished) cvState.SleepWith(lockState);
+				while (activeCallbacks > 0 || activeWorkers > 0 || activeWaits > 0) cvState.SleepWith(lockState);
+				lockState.Leave();
+				return;
+			}
+			lockState.Leave();
+
+			if (!executeStop) return;
+			InvokeStopStartedForTesting();
+			// The infinite receive exchange is always cancelled before the bounded
+			// opportunity given to already accepted send-lane messages.
+			StopApiNoThrow(cancellingReceive);
+
+			lockState.Enter();
+			if (drainSends)
+			{
+				auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(SendDrainTimeout);
+				while (sendQueue.Count() > 0)
+				{
+					auto now = std::chrono::steady_clock::now();
+					if (now >= deadline) break;
+					auto remaining = std::chrono::ceil<std::chrono::milliseconds>(deadline - now).count();
+					cvState.SleepWithForTime(lockState, (vint)remaining);
+				}
+			}
+			drainSends = false;
+			hardStopping = true;
+			sendQueue.Clear();
+			sendActive = false;
+			receivePollActive = false;
+			auto stoppingSend = sendApi;
+			auto stoppingReceive = receiveApi;
+			lockState.Leave();
+
+			StopApiNoThrow(stoppingReceive);
+			StopApiNoThrow(stoppingSend);
+
+			lockState.Enter();
+			while (activeWorkers > workerDepth || activeWaits > waitDepth)
+			{
+				cvState.SleepWith(lockState);
+			}
+			lockState.Leave();
+
+			try
+			{
+				NotifyDisconnected();
+			}
+			catch (...)
+			{
+				CS_LOCK(lockState)
+				{
+					while (activeCallbacks > callbackDepth) cvState.SleepWith(lockState);
+					stopFinished = true;
+					cvState.WakeAllPendings();
+				}
+				throw;
+			}
+			CS_LOCK(lockState)
+			{
+				while (activeCallbacks > callbackDepth) cvState.SleepWith(lockState);
+				stopFinished = true;
+				cvState.WakeAllPendings();
+			}
+		}
+	};
+
+	thread_local SocketHttpClient::Impl::CallbackFrame* SocketHttpClient::Impl::currentCallbackFrame = nullptr;
+	thread_local SocketHttpClient::Impl::WorkerFrame* SocketHttpClient::Impl::currentWorkerFrame = nullptr;
+	thread_local SocketHttpClient::Impl::WaitFrame* SocketHttpClient::Impl::currentWaitFrame = nullptr;
+
+/***********************************************************************
+SocketHttpClient
+***********************************************************************/
+
+	SocketHttpClient::SocketHttpClient(
+		Ptr<IAsyncSocketClient> client,
+		const WString& server,
+		const WString& urlPrefix
+		)
+	{
+#define ERROR_MESSAGE_PREFIX L"vl::inter_process::async_tcp_socket::SocketHttpClient::SocketHttpClient(Ptr<IAsyncSocketClient>, const WString&, const WString&)#"
+		CHECK_ERROR(client, ERROR_MESSAGE_PREFIX L"An initial native client is required.");
+		auto created = Ptr(new Impl(this, client, server, urlPrefix));
+		created->Initialize(created);
+		impl = created;
+#undef ERROR_MESSAGE_PREFIX
+	}
+
+	SocketHttpClient::~SocketHttpClient()
+	{
+		try
+		{
+			impl->Stop();
+		}
+		catch (...)
+		{
+		}
+		impl->ReleaseSelf();
+	}
+
+	INetworkProtocolConnection* SocketHttpClient::GetConnection()
+	{
+		return impl->GetConnection();
+	}
+
+	void SocketHttpClient::WaitForServer()
+	{
+		impl->WaitForServer();
+	}
+
+	ClientStatus SocketHttpClient::GetStatus()
+	{
+		return impl->GetStatus();
+	}
+
+	void SocketHttpClient::InstallCallback(INetworkProtocolCallback* callback)
+	{
+		impl->InstallCallback(callback);
+	}
+
+	void SocketHttpClient::BeginReadingLoopUnsafe()
+	{
+		impl->BeginReadingLoopUnsafe();
+	}
+
+	void SocketHttpClient::SendString(const WString& str)
+	{
+		impl->SendString(str);
+	}
+
+	void SocketHttpClient::Stop()
+	{
+		impl->Stop();
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\ASYNCSOCKET\ASYNCSOCKET_HTTPCLIENTAPI.CPP
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Interfaces:
+	SocketHttpClientApi
+
+***********************************************************************/
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+namespace vl::inter_process::async_tcp_socket
+{
+	using namespace vl::collections;
+
+	namespace
+	{
+		wchar_t FoldAscii(wchar_t c)
+		{
+			return L'A' <= c && c <= L'Z' ? c - L'A' + L'a' : c;
+		}
+
+		bool AsciiEqualsIgnoreCase(const WString& a, const WString& b)
+		{
+			if (a.Length() != b.Length()) return false;
+			for (vint i = 0; i < a.Length(); i++)
+			{
+				if (FoldAscii(a[i]) != FoldAscii(b[i])) return false;
+			}
+			return true;
+		}
+
+		WString FoldAsciiFieldName(const WString& name)
+		{
+			Array<wchar_t> characters(name.Length());
+			for (vint i = 0; i < name.Length(); i++)
+			{
+				characters[i] = FoldAscii(name[i]);
+			}
+			return characters.Count() == 0 ? WString() : WString::CopyFrom(&characters[0], characters.Count());
+		}
+
+		WString TrimHttpWhitespace(const WString& value)
+		{
+			vint begin = 0;
+			vint end = value.Length();
+			while (begin < end && (value[begin] == L' ' || value[begin] == L'\t')) begin++;
+			while (begin < end && (value[end - 1] == L' ' || value[end - 1] == L'\t')) end--;
+			return value.Sub(begin, end - begin);
+		}
+
+		bool ContainsOnlyIdentityCoding(const WString& value)
+		{
+			vint begin = 0;
+			bool found = false;
+			while (begin <= value.Length())
+			{
+				vint end = begin;
+				while (end < value.Length() && value[end] != L',') end++;
+				auto coding = TrimHttpWhitespace(value.Sub(begin, end - begin));
+				if (!AsciiEqualsIgnoreCase(coding, L"identity")) return false;
+				found = true;
+				if (end == value.Length()) break;
+				begin = end + 1;
+			}
+			return found;
+		}
+
+		bool ValidateServer(const WString& server)
+		{
+			return
+				AsciiEqualsIgnoreCase(server, L"localhost") ||
+				server == L"127.0.0.1";
+		}
+
+		HttpField CreateField(const WString& name, const WString& value)
+		{
+			HttpField field;
+			field.name = FoldAsciiFieldName(name);
+			auto utf8 = wtou8(value);
+			field.value.Resize(utf8.Length());
+			if (utf8.Length() > 0)
+			{
+				memcpy(&field.value[0], utf8.Buffer(), utf8.Length());
+			}
+			return field;
+		}
+
+		WString DecodeFieldValue(const Array<vuint8_t>& value)
+		{
+			if (value.Count() == 0) return WString::Empty;
+			Array<char8_t> utf8(value.Count());
+			for (vint i = 0; i < value.Count(); i++)
+			{
+				utf8[i] = (char8_t)value[i];
+			}
+			return u8tow(U8String::CopyFrom(&utf8[0], utf8.Count()));
+		}
+
+		windows_http::HttpError MakeError(const WString& operation, const WString& message, SocketHttpClientErrorCode code)
+		{
+			windows_http::HttpError error;
+			error.operation = operation;
+			error.errorCode = (vuint32_t)code;
+			error.message = message;
+			return error;
+		}
+	}
+
+/***********************************************************************
+SocketHttpClientApi::Impl
+***********************************************************************/
+
+	class SocketHttpClientApi::Impl : public Object, public virtual IHttpRequestCallback
+	{
+		using QueryResult = Variant<windows_http::HttpResponse, windows_http::HttpError>;
+		using QueryCallback = Func<void(QueryResult)>;
+
+		class Query : public Object
+		{
+		public:
+			Ptr<HttpRequest>				request;
+			vint						responseTimeout = 0;
+			QueryCallback				callback;
+			bool						completed = false;
+		};
+
+		struct CallbackFrame
+		{
+			Impl*						owner = nullptr;
+			Ptr<Impl>					self;
+			CallbackFrame*				previous = nullptr;
+
+			CallbackFrame(Impl* _owner, Ptr<Impl> _self)
+				: owner(_owner)
+				, self(_self)
+				, previous(currentCallbackFrame)
+			{
+				currentCallbackFrame = this;
+			}
+
+			~CallbackFrame()
+			{
+				currentCallbackFrame = previous;
+				CS_LOCK(owner->lockState)
+				{
+					owner->activeCallbacks--;
+					owner->cvState.WakeAllPendings();
+				}
+			}
+		};
+
+		struct ResponseFrame
+		{
+			Impl*						owner = nullptr;
+			Ptr<Impl>					self;
+			ResponseFrame*				previous = nullptr;
+
+			ResponseFrame(Impl* _owner, Ptr<Impl> _self)
+				: owner(_owner)
+				, self(_self)
+				, previous(currentResponseFrame)
+			{
+				currentResponseFrame = this;
+			}
+
+			~ResponseFrame()
+			{
+				currentResponseFrame = previous;
+			}
+		};
+
+		static thread_local CallbackFrame*	currentCallbackFrame;
+		static thread_local ResponseFrame*	currentResponseFrame;
+
+		Ptr<HttpRequestClient>			client;
+		IHttpRequestConnection*			connection = nullptr;
+		WString						authority;
+		Ptr<Impl>					selfReference;
+
+		CriticalSection					lockState;
+		ConditionVariable				cvState;
+		Ptr<Query>					activeQuery;
+		List<Ptr<Query>>				queuedQueries;
+		List<Ptr<Query>>				pendingQueries;
+		vint						activeCallbacks = 0;
+		bool						waitStarted = false;
+		bool						readingStarted = false;
+		bool						responseDispatching = false;
+		bool						terminal = false;
+		bool						stopStarted = false;
+		bool						stopFinished = false;
+
+		Ptr<Impl> RetainSelf()
+		{
+			Ptr<Impl> self;
+			CS_LOCK(lockState)
+			{
+				self = selfReference;
+			}
+			return self;
+		}
+
+		vint CurrentCallbackDepth()
+		{
+			vint depth = 0;
+			for (auto frame = currentCallbackFrame; frame; frame = frame->previous)
+			{
+				if (frame->owner == this) depth++;
+			}
+			return depth;
+		}
+
+		bool IsInsideResponseCallback()
+		{
+			for (auto frame = currentResponseFrame; frame; frame = frame->previous)
+			{
+				if (frame->owner == this) return true;
+			}
+			return false;
+		}
+
+		Ptr<Query> TakeFirstQueuedUnsafe()
+		{
+			auto query = queuedQueries[0];
+			queuedQueries.RemoveAt(0);
+			return query;
+		}
+
+		void TakeAllQueriesUnsafe(List<Ptr<Query>>& queries)
+		{
+			if (activeQuery)
+			{
+				queries.Add(activeQuery);
+				activeQuery = nullptr;
+			}
+			for (auto query : queuedQueries)
+			{
+				queries.Add(query);
+			}
+			queuedQueries.Clear();
+			for (auto query : pendingQueries)
+			{
+				queries.Add(query);
+			}
+			pendingQueries.Clear();
+		}
+
+		void MoveAllQueriesToPendingUnsafe()
+		{
+			if (activeQuery)
+			{
+				pendingQueries.Add(activeQuery);
+				activeQuery = nullptr;
+			}
+			for (auto query : queuedQueries)
+			{
+				pendingQueries.Add(query);
+			}
+			queuedQueries.Clear();
+		}
+
+		bool ReserveCallbackUnsafe(Ptr<Query> query, QueryCallback& callback)
+		{
+			if (!query || query->completed) return false;
+			query->completed = true;
+			callback = query->callback;
+			if (callback) activeCallbacks++;
+			return true;
+		}
+
+		void InvokeReserved(QueryCallback callback, QueryResult result)
+		{
+			if (!callback) return;
+			CallbackFrame frame(this, RetainSelf());
+			try
+			{
+				callback(std::move(result));
+			}
+			catch (...)
+			{
+			}
+		}
+
+		void CompleteWithError(Ptr<Query> query, const windows_http::HttpError& error)
+		{
+			QueryCallback callback;
+			bool reserved = false;
+			CS_LOCK(lockState)
+			{
+				reserved = ReserveCallbackUnsafe(query, callback);
+			}
+			if (reserved)
+			{
+				InvokeReserved(callback, QueryResult(error));
+			}
+		}
+
+		void CompleteAllWithError(List<Ptr<Query>>& queries, const windows_http::HttpError& error)
+		{
+			for (auto query : queries)
+			{
+				CompleteWithError(query, error);
+			}
+		}
+
+		void CompletePendingWithError(const windows_http::HttpError& error)
+		{
+			while (true)
+			{
+				QueryCallback callback;
+				bool reserved = false;
+				CS_LOCK(lockState)
+				{
+					if (!stopStarted && pendingQueries.Count() > 0)
+					{
+						auto query = pendingQueries[0];
+						pendingQueries.RemoveAt(0);
+						reserved = ReserveCallbackUnsafe(query, callback);
+					}
+				}
+				if (!reserved) return;
+				InvokeReserved(callback, QueryResult(error));
+			}
+		}
+
+		void InvokeDirect(QueryCallback callback, const windows_http::HttpError& error)
+		{
+			if (!callback) return;
+			CS_LOCK(lockState)
+			{
+				activeCallbacks++;
+			}
+			InvokeReserved(callback, QueryResult(error));
+		}
+
+		Ptr<Query> CreateQuery(const windows_http::HttpRequest& request, windows_http::HttpError& error)
+		{
+			if (request.secure)
+			{
+				error = MakeError(L"SocketHttpClientApi::HttpQuery", L"TLS is not supported by SocketHttpClientApi.", SocketHttpClientErrorCode::InvalidRequest);
+				return nullptr;
+			}
+			if (request.username != WString::Empty || request.password != WString::Empty)
+			{
+				error = MakeError(L"SocketHttpClientApi::HttpQuery", L"Credentials are not supported by SocketHttpClientApi.", SocketHttpClientErrorCode::InvalidRequest);
+				return nullptr;
+			}
+			if (request.keepAliveOnStop)
+			{
+				error = MakeError(L"SocketHttpClientApi::HttpQuery", L"keepAliveOnStop is not supported by SocketHttpClientApi.", SocketHttpClientErrorCode::InvalidRequest);
+				return nullptr;
+			}
+
+			auto query = Ptr(new Query);
+			query->request = Ptr(new HttpRequest);
+			query->responseTimeout = request.receiveTimeout;
+			query->callback = {};
+			query->request->method = request.method == WString::Empty ? WString::Unmanaged(L"GET") : request.method;
+			query->request->requestTarget = request.query == WString::Empty ? WString::Unmanaged(L"/") : request.query;
+
+			query->request->headers.Add(CreateAsciiHttpField(L"Host", authority));
+			query->request->headers.Add(CreateAsciiHttpField(L"Accept-Encoding", L"identity"));
+			for (vint i = 0; i < request.acceptTypes.Count(); i++)
+			{
+				query->request->headers.Add(CreateField(L"Accept", request.acceptTypes.Get(i)));
+			}
+			if (request.contentType != WString::Empty)
+			{
+				query->request->headers.Add(CreateField(L"Content-Type", request.contentType));
+			}
+			if (request.cookie != WString::Empty)
+			{
+				query->request->headers.Add(CreateField(L"Cookie", request.cookie));
+			}
+
+			for (vint i = 0; i < request.extraHeaders.Count(); i++)
+			{
+				auto name = request.extraHeaders.Keys()[i];
+				auto value = request.extraHeaders.Values()[i];
+				if (AsciiEqualsIgnoreCase(name, L"Host"))
+				{
+					if (!AsciiEqualsIgnoreCase(TrimHttpWhitespace(value), authority))
+					{
+						error = MakeError(L"SocketHttpClientApi::HttpQuery", L"A caller-supplied Host field conflicts with the configured server and injected client port.", SocketHttpClientErrorCode::InvalidRequest);
+						return nullptr;
+					}
+					continue;
+				}
+				if (AsciiEqualsIgnoreCase(name, L"Accept-Encoding"))
+				{
+					if (!ContainsOnlyIdentityCoding(value))
+					{
+						error = MakeError(L"SocketHttpClientApi::HttpQuery", L"SocketHttpClientApi only supports Accept-Encoding: identity.", SocketHttpClientErrorCode::InvalidRequest);
+						return nullptr;
+					}
+					continue;
+				}
+				query->request->headers.Add(CreateField(name, value));
+			}
+
+			if (request.body.Count() > 0)
+			{
+				HttpBodyChunk chunk;
+				chunk.data.Resize(request.body.Count());
+				memcpy(&chunk.data[0], &request.body.Get(0), request.body.Count());
+				query->request->body.chunks.Add(std::move(chunk));
+			}
+			return query;
+		}
+
+		bool ConvertResponse(Ptr<HttpResponse> response, windows_http::HttpResponse& output, windows_http::HttpError& error)
+		{
+			if (!response)
+			{
+				error = MakeError(L"SocketHttpClientApi::OnReadResponse", L"The HTTP request layer returned an empty response.", SocketHttpClientErrorCode::Transport);
+				return false;
+			}
+
+			output.statusCode = response->statusCode;
+			bool contentTypeAssigned = false;
+			bool cookieAssigned = false;
+			auto processField = [&](const HttpField& field)
+			{
+				if (AsciiEqualsIgnoreCase(field.name, L"Content-Encoding"))
+				{
+					if (!ContainsOnlyIdentityCoding(DecodeFieldValue(field.value)))
+					{
+						error = MakeError(L"SocketHttpClientApi::OnReadResponse", L"The server returned an unsupported Content-Encoding.", SocketHttpClientErrorCode::UnsupportedCoding);
+						return false;
+					}
+				}
+				else if (!contentTypeAssigned && AsciiEqualsIgnoreCase(field.name, L"Content-Type"))
+				{
+					output.contentType = DecodeFieldValue(field.value);
+					contentTypeAssigned = true;
+				}
+				else if (!cookieAssigned && AsciiEqualsIgnoreCase(field.name, L"Set-Cookie"))
+				{
+					output.cookie = DecodeFieldValue(field.value);
+					cookieAssigned = true;
+				}
+				return true;
+			};
+			for (auto&& field : response->headers)
+			{
+				if (!processField(field)) return false;
+			}
+			for (auto&& field : response->body.trailers)
+			{
+				if (!processField(field)) return false;
+			}
+
+			Array<vuint8_t> body;
+			if (!FlattenHttpBody(response->body, body))
+			{
+				error = MakeError(L"SocketHttpClientApi::OnReadResponse", L"The response body is too large to flatten.", SocketHttpClientErrorCode::Transport);
+				return false;
+			}
+			output.body.Resize(body.Count());
+			for (vint i = 0; i < body.Count(); i++)
+			{
+				output.body[i] = (char)body[i];
+			}
+			return true;
+		}
+
+		bool TrySend(Ptr<Query> query, windows_http::HttpError& error)
+		{
+			try
+			{
+				connection->SendRequest(query->request, query->responseTimeout);
+				return true;
+			}
+			catch (...)
+			{
+				error = MakeError(L"SocketHttpClientApi::HttpQuery", L"The HTTP request layer rejected the exchange.", SocketHttpClientErrorCode::Transport);
+				return false;
+			}
+		}
+
+		void StopConnectionNoThrow()
+		{
+			try
+			{
+				connection->Stop();
+			}
+			catch (...)
+			{
+			}
+		}
+
+		void HandleSendFailure(Ptr<Query> query, const windows_http::HttpError& error)
+		{
+			bool stopConnection = false;
+			CS_LOCK(lockState)
+			{
+				if (!query->completed && !stopStarted && !terminal)
+				{
+					terminal = true;
+					responseDispatching = false;
+					MoveAllQueriesToPendingUnsafe();
+					stopConnection = true;
+				}
+			}
+			if (stopConnection)
+			{
+				StopConnectionNoThrow();
+				CompletePendingWithError(error);
+			}
+		}
+
+		void HandleTerminalError(const windows_http::HttpError& error, bool stopConnectionImmediately)
+		{
+			bool shouldStop = false;
+			CS_LOCK(lockState)
+			{
+				if (!stopStarted && !terminal)
+				{
+					terminal = true;
+					responseDispatching = false;
+					MoveAllQueriesToPendingUnsafe();
+					shouldStop = stopConnectionImmediately;
+				}
+			}
+			if (shouldStop)
+			{
+				StopConnectionNoThrow();
+			}
+			CompletePendingWithError(error);
+		}
+
+	public:
+		Impl(Ptr<IAsyncSocketClient> socketClient, const WString& _authority)
+			: client(new HttpRequestClient(socketClient))
+			, authority(_authority)
+		{
+			connection = client->GetConnection();
+		}
+
+		void Initialize(Ptr<Impl> self)
+		{
+			CS_LOCK(lockState)
+			{
+				selfReference = self;
+			}
+			try
+			{
+				connection->InstallCallback(this);
+			}
+			catch (...)
+			{
+				CS_LOCK(lockState)
+				{
+					selfReference = nullptr;
+				}
+				throw;
+			}
+		}
+
+		void ReleaseSelf()
+		{
+			CS_LOCK(lockState)
+			{
+				selfReference = nullptr;
+			}
+		}
+
+		void WaitForServer()
+		{
+			CS_LOCK(lockState)
+			{
+				CHECK_ERROR(!waitStarted && !stopStarted && !terminal, L"SocketHttpClientApi::WaitForServer can only be called once on an active client.");
+				waitStarted = true;
+			}
+
+			try
+			{
+				client->WaitForServer();
+			}
+			catch (...)
+			{
+				CS_LOCK(lockState)
+				{
+					terminal = true;
+				}
+				throw;
+			}
+
+			bool beginReading = false;
+			CS_LOCK(lockState)
+			{
+				beginReading = !stopStarted && !terminal;
+			}
+			if (!beginReading) return;
+
+			try
+			{
+				connection->BeginReadingLoopUnsafe();
+			}
+			catch (...)
+			{
+				CS_LOCK(lockState)
+				{
+					terminal = true;
+				}
+				throw;
+			}
+			CS_LOCK(lockState)
+			{
+				readingStarted = !stopStarted && !terminal;
+			}
+		}
+
+		ClientStatus GetStatus()
+		{
+			return client->GetStatus();
+		}
+
+		void HttpQuery(const windows_http::HttpRequest& request, QueryCallback callback)
+		{
+			auto self = RetainSelf();
+			windows_http::HttpError error;
+			Ptr<Query> query;
+			try
+			{
+				query = CreateQuery(request, error);
+			}
+			catch (...)
+			{
+				error = MakeError(L"SocketHttpClientApi::HttpQuery", L"The request could not be translated to the socket HTTP representation.", SocketHttpClientErrorCode::InvalidRequest);
+			}
+			if (!query)
+			{
+				InvokeDirect(callback, error);
+				return;
+			}
+			query->callback = callback;
+
+			bool start = false;
+			bool reject = false;
+			bool notReady = false;
+			CS_LOCK(lockState)
+			{
+				if (stopStarted || terminal)
+				{
+					reject = true;
+				}
+				else if (!readingStarted)
+				{
+					notReady = true;
+				}
+				else if (!activeQuery && queuedQueries.Count() == 0 && (!responseDispatching || IsInsideResponseCallback()))
+				{
+					activeQuery = query;
+					start = true;
+				}
+				else
+				{
+					queuedQueries.Add(query);
+				}
+			}
+
+			if (reject)
+			{
+				CompleteWithError(query, MakeError(L"SocketHttpClientApi::HttpQuery", L"SocketHttpClientApi has stopped accepting work.", SocketHttpClientErrorCode::Stopped));
+			}
+			else if (notReady)
+			{
+				CompleteWithError(query, MakeError(L"SocketHttpClientApi::HttpQuery", L"WaitForServer must complete before sending an HTTP query.", SocketHttpClientErrorCode::InvalidRequest));
+			}
+			else if (start)
+			{
+				if (!TrySend(query, error))
+				{
+					HandleSendFailure(query, error);
+				}
+			}
+		}
+
+		void Stop()
+		{
+			auto self = RetainSelf();
+			List<Ptr<Query>> cancelledQueries;
+			auto callbackDepth = CurrentCallbackDepth();
+			bool executeStop = false;
+			lockState.Enter();
+			if (stopFinished)
+			{
+				while (activeCallbacks > callbackDepth) cvState.SleepWith(lockState);
+				lockState.Leave();
+				return;
+			}
+			if (!stopStarted)
+			{
+				stopStarted = true;
+				terminal = true;
+				responseDispatching = false;
+				TakeAllQueriesUnsafe(cancelledQueries);
+				executeStop = true;
+			}
+			else if (callbackDepth > 0)
+			{
+				lockState.Leave();
+				return;
+			}
+			else
+			{
+				while (!stopFinished) cvState.SleepWith(lockState);
+				while (activeCallbacks > 0) cvState.SleepWith(lockState);
+				lockState.Leave();
+				return;
+			}
+			lockState.Leave();
+
+			if (executeStop)
+			{
+				StopConnectionNoThrow();
+				CompleteAllWithError(
+					cancelledQueries,
+					MakeError(L"SocketHttpClientApi::Stop", L"The HTTP query was cancelled because the client stopped.", SocketHttpClientErrorCode::Stopped)
+					);
+			}
+
+			CS_LOCK(lockState)
+			{
+				while (activeCallbacks > callbackDepth) cvState.SleepWith(lockState);
+				stopFinished = true;
+				cvState.WakeAllPendings();
+			}
+		}
+
+		void OnReadRequest(Ptr<HttpRequest>) override
+		{
+			auto self = RetainSelf();
+			if (!self) return;
+			HandleTerminalError(
+				MakeError(L"SocketHttpClientApi::OnReadRequest", L"The client connection received a request instead of a response.", SocketHttpClientErrorCode::Transport),
+				true
+				);
+		}
+
+		void OnReadRequestFailure(HttpRequestFailure) override
+		{
+			auto self = RetainSelf();
+			if (!self) return;
+			HandleTerminalError(
+				MakeError(L"SocketHttpClientApi::OnReadRequestFailure", L"The client connection reported a request parsing failure.", SocketHttpClientErrorCode::Transport),
+				true
+				);
+		}
+
+		void OnReadResponse(Ptr<HttpResponse> response) override
+		{
+			auto self = RetainSelf();
+			if (!self) return;
+			ResponseFrame responseFrame(this, self);
+
+			windows_http::HttpResponse convertedResponse;
+			windows_http::HttpError responseError;
+			auto converted = ConvertResponse(response, convertedResponse, responseError);
+			Ptr<Query> completedQuery;
+			Ptr<Query> nextQuery;
+			QueryCallback completedCallback;
+			bool reserved = false;
+			bool stopForResponse = false;
+			windows_http::HttpError terminalError;
+			CS_LOCK(lockState)
+			{
+				if (activeQuery && !activeQuery->completed)
+				{
+					responseDispatching = true;
+					completedQuery = activeQuery;
+					activeQuery = nullptr;
+					reserved = ReserveCallbackUnsafe(completedQuery, completedCallback);
+					if (!converted)
+					{
+						terminal = true;
+						MoveAllQueriesToPendingUnsafe();
+						stopForResponse = true;
+						terminalError = responseError;
+					}
+					else if (!stopStarted && !terminal && queuedQueries.Count() > 0)
+					{
+						nextQuery = TakeFirstQueuedUnsafe();
+						activeQuery = nextQuery;
+					}
+				}
+			}
+			if (!reserved) return;
+
+			windows_http::HttpError sendError;
+			bool sendFailed = nextQuery && !TrySend(nextQuery, sendError);
+			if (sendFailed)
+			{
+				CS_LOCK(lockState)
+				{
+					if (!nextQuery->completed && !stopStarted && !terminal)
+					{
+						terminal = true;
+						MoveAllQueriesToPendingUnsafe();
+						stopForResponse = true;
+						terminalError = sendError;
+					}
+				}
+			}
+
+			if (converted)
+			{
+				InvokeReserved(completedCallback, QueryResult(std::move(convertedResponse)));
+			}
+			else
+			{
+				InvokeReserved(completedCallback, QueryResult(responseError));
+			}
+
+			Ptr<Query> lateQuery;
+			if (!stopForResponse)
+			{
+				CS_LOCK(lockState)
+				{
+					if (!stopStarted && !terminal && !activeQuery && queuedQueries.Count() > 0)
+					{
+						lateQuery = TakeFirstQueuedUnsafe();
+						activeQuery = lateQuery;
+					}
+					responseDispatching = false;
+				}
+				if (lateQuery && !TrySend(lateQuery, sendError))
+				{
+					CS_LOCK(lockState)
+					{
+						if (!lateQuery->completed && !stopStarted && !terminal)
+						{
+							terminal = true;
+							MoveAllQueriesToPendingUnsafe();
+							stopForResponse = true;
+							terminalError = sendError;
+						}
+					}
+				}
+			}
+			else
+			{
+				CS_LOCK(lockState)
+				{
+					responseDispatching = false;
+				}
+			}
+
+			if (stopForResponse)
+			{
+				StopConnectionNoThrow();
+				CompletePendingWithError(terminalError);
+			}
+		}
+
+		void OnReadResponseFailure(HttpResponseFailure failure) override
+		{
+			auto self = RetainSelf();
+			if (!self) return;
+#define ERROR_MESSAGE_PREFIX L"vl::inter_process::async_tcp_socket::SocketHttpClientApi::Impl::OnReadResponseFailure(HttpResponseFailure)#"
+			CHECK_ERROR(failure == HttpResponseFailure::NotFound, ERROR_MESSAGE_PREFIX L"Received an unsupported response failure.");
+			HandleTerminalError(
+				MakeError(L"SocketHttpClientApi::OnReadResponseFailure", L"The server returned 404 Not Found.", SocketHttpClientErrorCode::ResponseNotFound),
+				false
+				);
+#undef ERROR_MESSAGE_PREFIX
+		}
+
+		void OnWriteCompleted() override
+		{
+		}
+
+		void OnError(const WString& error, bool fatal) override
+		{
+			auto self = RetainSelf();
+			if (!self) return;
+			// The raw layer stops after delivering a fatal error. A nonfatal error
+			// needs an explicit stop after this wrapper terminalizes its queue.
+			auto stopConnectionImmediately = !fatal;
+			HandleTerminalError(
+				MakeError(L"SocketHttpClientApi::OnError", error, SocketHttpClientErrorCode::Transport),
+				stopConnectionImmediately
+				);
+		}
+
+		void OnConnected() override
+		{
+		}
+
+		void OnDisconnected() override
+		{
+			auto self = RetainSelf();
+			if (!self) return;
+			HandleTerminalError(
+				MakeError(L"SocketHttpClientApi::OnDisconnected", L"The HTTP connection was disconnected.", SocketHttpClientErrorCode::Transport),
+				false
+				);
+		}
+
+		void OnInstalled(IHttpRequestConnection* installedConnection) override
+		{
+			CHECK_ERROR(installedConnection == connection, L"SocketHttpClientApi was installed on an unexpected HTTP connection.");
+		}
+	};
+
+	thread_local SocketHttpClientApi::Impl::CallbackFrame* SocketHttpClientApi::Impl::currentCallbackFrame = nullptr;
+	thread_local SocketHttpClientApi::Impl::ResponseFrame* SocketHttpClientApi::Impl::currentResponseFrame = nullptr;
+
+/***********************************************************************
+SocketHttpClientApi
+***********************************************************************/
+
+	SocketHttpClientApi::SocketHttpClientApi(Ptr<IAsyncSocketClient> client, const WString& server)
+	{
+		CHECK_ERROR(client, L"SocketHttpClientApi requires an asynchronous socket client.");
+		CHECK_ERROR(ValidateServer(server), L"SocketHttpClientApi requires an explicit loopback server.");
+		auto port = client->GetPort();
+		CHECK_ERROR(1 <= port && port <= 65535, L"SocketHttpClientApi requires the injected client port to be in 1..65535.");
+		auto authority = server + WString::Unmanaged(L":") + itow(port);
+		auto created = Ptr(new Impl(client, authority));
+		created->Initialize(created);
+		impl = created;
+	}
+
+	SocketHttpClientApi::~SocketHttpClientApi()
+	{
+		impl->Stop();
+		impl->ReleaseSelf();
+	}
+
+	void SocketHttpClientApi::WaitForServer()
+	{
+		impl->WaitForServer();
+	}
+
+	ClientStatus SocketHttpClientApi::GetStatus()
+	{
+		return impl->GetStatus();
+	}
+
+	void SocketHttpClientApi::HttpQuery(
+		const windows_http::HttpRequest& request,
+		Func<void(Variant<windows_http::HttpResponse, windows_http::HttpError>)> callback
+		)
+	{
+		impl->HttpQuery(request, callback);
+	}
+
+	void SocketHttpClientApi::Stop()
+	{
+		impl->Stop();
+	}
+
+	WString SocketHttpClientApi::UrlEncodeQuery(const WString& query)
+	{
+		return HttpUrlEncodeQuery(query);
+	}
+
+	WString SocketHttpClientApi::UrlDecodeQuery(const WString& query)
+	{
+		return HttpUrlDecodeQuery(query);
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\ASYNCSOCKET\ASYNCSOCKET_HTTPREQUEST.CPP
+***********************************************************************/
+/***********************************************************************
+Vczh Library++ 3.0
+Developer: Zihan Chen(vczh)
+
+Async Socket HTTP/1.1 Connection
+
+***********************************************************************/
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+
+namespace vl::inter_process::async_tcp_socket
+{
+	using namespace collections;
+
+	namespace
+	{
+		constexpr vint HttpWireMessageSizeLimit = 128 * 1024 * 1024;
+		constexpr vint HttpChunkCountLimit = 64 * 1024;
+
+		bool IsOws(vuint8_t c)
+		{
+			return c == ' ' || c == '\t';
+		}
+
+		bool IsDigit(vuint8_t c)
+		{
+			return c >= '0' && c <= '9';
+		}
+
+		bool IsHexDigit(vuint8_t c)
+		{
+			return IsDigit(c) || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f');
+		}
+
+		vuint8_t HexDigitValue(vuint8_t c)
+		{
+			if (IsDigit(c)) return c - '0';
+			if (c >= 'A' && c <= 'F') return c - 'A' + 10;
+			return c - 'a' + 10;
+		}
+
+		bool IsTokenCharacter(vuint8_t c)
+		{
+			if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+			{
+				return true;
+			}
+			switch (c)
+			{
+			case '!': case '#': case '$': case '%': case '&': case '\'': case '*': case '+':
+			case '-': case '.': case '^': case '_': case '`': case '|': case '~':
+				return true;
+			default:
+				return false;
+			}
+		}
+
+		bool IsFieldValueCharacter(vuint8_t c)
+		{
+			return c == '\t' || (c >= 0x20 && c != 0x7F);
+		}
+
+		bool IsQuotedTextCharacter(vuint8_t c)
+		{
+			return c == '\t' || c == ' ' || c == '!' || (c >= '#' && c <= '[') || (c >= ']' && c != 0x7F);
+		}
+
+		vint FindCrlf(const vuint8_t* buffer, vint begin, vint end)
+		{
+			for (vint i = begin; i + 1 < end; i++)
+			{
+				if (buffer[i] == '\r' && buffer[i + 1] == '\n')
+				{
+					return i;
+				}
+			}
+			return -1;
+		}
+
+		WString CopyAscii(const vuint8_t* buffer, vint begin, vint end, bool lowercase)
+		{
+			if (begin == end)
+			{
+				return L"";
+			}
+			Array<wchar_t> text(end - begin);
+			for (vint i = begin; i < end; i++)
+			{
+				auto c = buffer[i];
+				if (lowercase && c >= 'A' && c <= 'Z')
+				{
+					c += 'a' - 'A';
+				}
+				text[i - begin] = (wchar_t)c;
+			}
+			return WString::CopyFrom(&text[0], text.Count());
+		}
+
+		bool IsAsciiEqual(const WString& text, const wchar_t* expected)
+		{
+			return text == expected;
+		}
+
+		bool ParseQuotedString(const vuint8_t* buffer, vint& reading, vint end)
+		{
+			if (reading >= end || buffer[reading] != '"')
+			{
+				return false;
+			}
+			reading++;
+			while (reading < end)
+			{
+				auto c = buffer[reading++];
+				if (c == '"')
+				{
+					return true;
+				}
+				if (c == '\\')
+				{
+					if (reading >= end || !IsFieldValueCharacter(buffer[reading]))
+					{
+						return false;
+					}
+					reading++;
+				}
+				else if (!IsQuotedTextCharacter(c))
+				{
+					return false;
+				}
+			}
+			return false;
+		}
+
+		bool ParseToken(const vuint8_t* buffer, vint& reading, vint end, WString* output = nullptr)
+		{
+			vint begin = reading;
+			while (reading < end && IsTokenCharacter(buffer[reading]))
+			{
+				reading++;
+			}
+			if (reading == begin)
+			{
+				return false;
+			}
+			if (output)
+			{
+				*output = CopyAscii(buffer, begin, reading, true);
+			}
+			return true;
+		}
+
+		bool ParseSemicolonParameters(const vuint8_t* buffer, vint& reading, vint end)
+		{
+			while (true)
+			{
+				while (reading < end && IsOws(buffer[reading])) reading++;
+				if (reading == end)
+				{
+					return true;
+				}
+				if (buffer[reading++] != ';')
+				{
+					return false;
+				}
+				while (reading < end && IsOws(buffer[reading])) reading++;
+				if (!ParseToken(buffer, reading, end))
+				{
+					return false;
+				}
+				while (reading < end && IsOws(buffer[reading])) reading++;
+				if (reading < end && buffer[reading] == '=')
+				{
+					reading++;
+					while (reading < end && IsOws(buffer[reading])) reading++;
+					if (reading < end && buffer[reading] == '"')
+					{
+						if (!ParseQuotedString(buffer, reading, end)) return false;
+					}
+					else if (!ParseToken(buffer, reading, end))
+					{
+						return false;
+					}
+				}
+			}
+		}
+
+		bool ValidateChunkSizeLinePrefix(const vuint8_t* buffer, vint begin, vint end)
+		{
+			vint reading = begin;
+			if (reading == end) return true;
+			if (!IsHexDigit(buffer[reading])) return false;
+			vuint64_t chunkSize = 0;
+			while (reading < end && IsHexDigit(buffer[reading]))
+			{
+				auto digit = (vuint64_t)HexDigitValue(buffer[reading++]);
+				if (chunkSize > ((std::numeric_limits<vuint64_t>::max)() - digit) / 16) return false;
+				chunkSize = chunkSize * 16 + digit;
+				if (chunkSize > (vuint64_t)HttpBodySizeLimit) return false;
+			}
+			while (true)
+			{
+				while (reading < end && IsOws(buffer[reading])) reading++;
+				if (reading == end) return true;
+				if (buffer[reading++] != ';') return false;
+				while (reading < end && IsOws(buffer[reading])) reading++;
+				if (reading == end) return true;
+				vint nameBegin = reading;
+				while (reading < end && IsTokenCharacter(buffer[reading])) reading++;
+				if (reading == nameBegin) return false;
+				while (reading < end && IsOws(buffer[reading])) reading++;
+				if (reading == end) return true;
+				if (buffer[reading] != '=') continue;
+				reading++;
+				while (reading < end && IsOws(buffer[reading])) reading++;
+				if (reading == end) return true;
+				if (buffer[reading] == '"')
+				{
+					reading++;
+					bool closed = false;
+					while (reading < end)
+					{
+						auto c = buffer[reading++];
+						if (c == '"')
+						{
+							closed = true;
+							break;
+						}
+						if (c == '\\')
+						{
+							if (reading == end) return true;
+							if (!IsFieldValueCharacter(buffer[reading++])) return false;
+						}
+						else if (!IsQuotedTextCharacter(c))
+						{
+							return false;
+						}
+					}
+					if (!closed) return true;
+				}
+				else
+				{
+					vint valueBegin = reading;
+					while (reading < end && IsTokenCharacter(buffer[reading])) reading++;
+					if (reading == valueBegin) return false;
+				}
+			}
+		}
+
+		bool ValidateCompleteChunkSizeLine(const vuint8_t* buffer, vint begin, vint end)
+		{
+			vint reading = begin;
+			vuint64_t chunkSize = 0;
+			while (reading < end && IsHexDigit(buffer[reading]))
+			{
+				auto digit = (vuint64_t)HexDigitValue(buffer[reading++]);
+				if (chunkSize > ((std::numeric_limits<vuint64_t>::max)() - digit) / 16) return false;
+				chunkSize = chunkSize * 16 + digit;
+			}
+			if (reading == begin || chunkSize > (vuint64_t)HttpBodySizeLimit) return false;
+			if (reading < end)
+			{
+				vint firstExtension = reading;
+				while (firstExtension < end && IsOws(buffer[firstExtension])) firstExtension++;
+				if (firstExtension == end || buffer[firstExtension] != ';') return false;
+			}
+			return ParseSemicolonParameters(buffer, reading, end);
+		}
+
+		bool ParseFieldLine(const vuint8_t* buffer, vint begin, vint end, HttpField& field)
+		{
+			vint colon = -1;
+			for (vint i = begin; i < end; i++)
+			{
+				if (buffer[i] == ':')
+				{
+					colon = i;
+					break;
+				}
+				if (!IsTokenCharacter(buffer[i]))
+				{
+					return false;
+				}
+			}
+			if (colon == begin || colon == -1)
+			{
+				return false;
+			}
+			for (vint i = begin; i < colon; i++)
+			{
+				if (!IsTokenCharacter(buffer[i])) return false;
+			}
+
+			vint valueBegin = colon + 1;
+			vint valueEnd = end;
+			while (valueBegin < valueEnd && IsOws(buffer[valueBegin])) valueBegin++;
+			while (valueBegin < valueEnd && IsOws(buffer[valueEnd - 1])) valueEnd--;
+			for (vint i = valueBegin; i < valueEnd; i++)
+			{
+				if (!IsFieldValueCharacter(buffer[i])) return false;
+			}
+
+			field.name = CopyAscii(buffer, begin, colon, true);
+			field.value.Resize(valueEnd - valueBegin);
+			if (valueEnd > valueBegin)
+			{
+				std::memcpy(&field.value[0], buffer + valueBegin, (size_t)(valueEnd - valueBegin));
+			}
+			return true;
+		}
+
+		bool ParseUnsignedDecimal(const Array<vuint8_t>& value, vint begin, vint end, vuint64_t& number)
+		{
+			if (begin == end) return false;
+			number = 0;
+			for (vint i = begin; i < end; i++)
+			{
+				if (!IsDigit(value[i])) return false;
+				auto digit = (vuint64_t)(value[i] - '0');
+				if (number > ((std::numeric_limits<vuint64_t>::max)() - digit) / 10)
+				{
+					return false;
+				}
+				number = number * 10 + digit;
+			}
+			return true;
+		}
+
+		bool ParseContentLength(const Array<vuint8_t>& value, bool& initialized, vuint64_t& contentLength, vint& valueCount)
+		{
+			vint reading = 0;
+			while (true)
+			{
+				while (reading < value.Count() && IsOws(value[reading])) reading++;
+				vint begin = reading;
+				while (reading < value.Count() && IsDigit(value[reading])) reading++;
+				vint end = reading;
+				while (reading < value.Count() && IsOws(value[reading])) reading++;
+				vuint64_t number = 0;
+				if (!ParseUnsignedDecimal(value, begin, end, number))
+				{
+					return false;
+				}
+				valueCount++;
+				if (!initialized)
+				{
+					initialized = true;
+					contentLength = number;
+				}
+				else if (contentLength != number)
+				{
+					return false;
+				}
+				if (reading == value.Count()) return true;
+				if (value[reading++] != ',') return false;
+				if (reading == value.Count()) return false;
+			}
+		}
+
+		bool ParseTransferCodings(const Array<vuint8_t>& value, List<WString>& codings, bool& hasParameters)
+		{
+			vint reading = 0;
+			while (true)
+			{
+				while (reading < value.Count() && IsOws(value[reading])) reading++;
+				WString coding;
+				if (!ParseToken(value.Count() == 0 ? nullptr : &value[0], reading, value.Count(), &coding))
+				{
+					return false;
+				}
+				codings.Add(coding);
+				while (reading < value.Count() && IsOws(value[reading])) reading++;
+				while (reading < value.Count() && value[reading] == ';')
+				{
+					hasParameters = true;
+					reading++;
+					while (reading < value.Count() && IsOws(value[reading])) reading++;
+					if (!ParseToken(&value[0], reading, value.Count())) return false;
+					while (reading < value.Count() && IsOws(value[reading])) reading++;
+					if (reading >= value.Count() || value[reading] != '=')
+					{
+						return false;
+					}
+					else
+					{
+						reading++;
+						while (reading < value.Count() && IsOws(value[reading])) reading++;
+						if (reading < value.Count() && value[reading] == '"')
+						{
+							if (!ParseQuotedString(&value[0], reading, value.Count())) return false;
+						}
+						else if (!ParseToken(&value[0], reading, value.Count()))
+						{
+							return false;
+						}
+					}
+					while (reading < value.Count() && IsOws(value[reading])) reading++;
+				}
+				if (reading == value.Count()) return true;
+				if (value[reading++] != ',' || reading == value.Count()) return false;
+			}
+		}
+
+		bool HasConnectionClose(const Array<vuint8_t>& value)
+		{
+			vint reading = 0;
+			while (reading < value.Count())
+			{
+				while (reading < value.Count() && IsOws(value[reading])) reading++;
+				vint begin = reading;
+				while (reading < value.Count() && value[reading] != ',') reading++;
+				vint end = reading;
+				while (begin < end && IsOws(value[begin])) begin++;
+				while (begin < end && IsOws(value[end - 1])) end--;
+				if (end - begin == 5)
+				{
+					const wchar_t* close = L"close";
+					bool matched = true;
+					for (vint i = 0; i < 5; i++)
+					{
+						auto c = value[begin + i];
+						if (c >= 'A' && c <= 'Z') c += 'a' - 'A';
+						if (c != close[i]) matched = false;
+					}
+					if (matched) return true;
+				}
+				if (reading < value.Count()) reading++;
+			}
+			return false;
+		}
+
+		bool ParseHttpVersion(const vuint8_t* buffer, vint begin, vint end, HttpVersion& version)
+		{
+			const wchar_t* prefix = L"HTTP/";
+			if (end - begin < 8) return false;
+			for (vint i = 0; i < 5; i++)
+			{
+				if (buffer[begin + i] != prefix[i]) return false;
+			}
+			vint reading = begin + 5;
+			vuint64_t major = 0;
+			vuint64_t minor = 0;
+			vint majorBegin = reading;
+			while (reading < end && IsDigit(buffer[reading]))
+			{
+				auto digit = (vuint64_t)(buffer[reading++] - '0');
+				if (major > ((std::numeric_limits<vuint64_t>::max)() - digit) / 10) return false;
+				major = major * 10 + digit;
+			}
+			if (reading == majorBegin || reading >= end || buffer[reading++] != '.') return false;
+			vint minorBegin = reading;
+			while (reading < end && IsDigit(buffer[reading]))
+			{
+				auto digit = (vuint64_t)(buffer[reading++] - '0');
+				if (minor > ((std::numeric_limits<vuint64_t>::max)() - digit) / 10) return false;
+				minor = minor * 10 + digit;
+			}
+			if (reading != end || reading == minorBegin || major > (vuint64_t)(std::numeric_limits<vint>::max)() || minor > (vuint64_t)(std::numeric_limits<vint>::max)())
+			{
+				return false;
+			}
+			version.major = (vint)major;
+			version.minor = (vint)minor;
+			return true;
+		}
+
+		bool ParseRequestLine(const vuint8_t* buffer, vint end, HttpVersion& version, WString& method, WString& target)
+		{
+			vint firstSpace = -1;
+			vint secondSpace = -1;
+			for (vint i = 0; i < end; i++)
+			{
+				if (buffer[i] == ' ')
+				{
+					if (firstSpace == -1) firstSpace = i;
+					else if (secondSpace == -1) secondSpace = i;
+					else return false;
+				}
+			}
+			if (firstSpace <= 0 || secondSpace <= firstSpace + 1 || secondSpace + 1 >= end) return false;
+			for (vint i = 0; i < firstSpace; i++) if (!IsTokenCharacter(buffer[i])) return false;
+			for (vint i = firstSpace + 1; i < secondSpace; i++)
+			{
+				if (buffer[i] < 0x21 || buffer[i] > 0x7E) return false;
+			}
+			method = CopyAscii(buffer, 0, firstSpace, false);
+			target = CopyAscii(buffer, firstSpace + 1, secondSpace, false);
+			return ParseHttpVersion(buffer, secondSpace + 1, end, version);
+		}
+
+		bool ParseStatusLine(const vuint8_t* buffer, vint end, HttpVersion& version, vint& statusCode, WString& reason)
+		{
+			vint firstSpace = -1;
+			for (vint i = 0; i < end; i++)
+			{
+				if (buffer[i] == ' ')
+				{
+					firstSpace = i;
+					break;
+				}
+			}
+			if (firstSpace == -1 || !ParseHttpVersion(buffer, 0, firstSpace, version)) return false;
+			if (firstSpace + 4 >= end || !IsDigit(buffer[firstSpace + 1]) || !IsDigit(buffer[firstSpace + 2]) || !IsDigit(buffer[firstSpace + 3])) return false;
+			if (buffer[firstSpace + 4] != ' ') return false;
+			statusCode = (buffer[firstSpace + 1] - '0') * 100 + (buffer[firstSpace + 2] - '0') * 10 + buffer[firstSpace + 3] - '0';
+			if (statusCode < 200 || statusCode > 599) return false;
+			vint reasonBegin = firstSpace + 5;
+			for (vint i = reasonBegin; i < end; i++)
+			{
+				if (buffer[i] < 0x20 || buffer[i] > 0x7E) return false;
+			}
+			reason = CopyAscii(buffer, reasonBegin, end, false);
+			return true;
+		}
+
+		enum class HttpBodyDetailedParsingResult
+		{
+			Succeeded,
+			Incomplete,
+			BadRequest,
+			PayloadTooLarge,
+			TrailerFieldsTooLarge,
+		};
+
+		HttpBodyDetailedParsingResult ParseHttpRequestBodyToChunksDetailed(
+			const vuint8_t* buffer,
+			vint availableBytes,
+			HttpBody& output,
+			vint& consumedBytes
+			);
+
+		enum class HttpMessageParsingResult
+		{
+			Succeeded,
+			Incomplete,
+			BadRequest,
+			PayloadTooLarge,
+			UriTooLong,
+			ExpectationFailed,
+			RequestHeaderFieldsTooLarge,
+			NotImplemented,
+			HttpVersionNotSupported,
+		};
+
+		HttpRequestFailure GetHttpRequestFailure(HttpMessageParsingResult result)
+		{
+			switch (result)
+			{
+			case HttpMessageParsingResult::PayloadTooLarge:
+				return HttpRequestFailure::PayloadTooLarge;
+			case HttpMessageParsingResult::UriTooLong:
+				return HttpRequestFailure::UriTooLong;
+			case HttpMessageParsingResult::ExpectationFailed:
+				return HttpRequestFailure::ExpectationFailed;
+			case HttpMessageParsingResult::RequestHeaderFieldsTooLarge:
+				return HttpRequestFailure::RequestHeaderFieldsTooLarge;
+			case HttpMessageParsingResult::NotImplemented:
+				return HttpRequestFailure::NotImplemented;
+			case HttpMessageParsingResult::HttpVersionNotSupported:
+				return HttpRequestFailure::HttpVersionNotSupported;
+			default:
+				return HttpRequestFailure::BadRequest;
+			}
+		}
+
+		bool HasHeader(const List<HttpField>& fields, const wchar_t* name)
+		{
+			for (auto&& field : fields)
+			{
+				if (IsAsciiEqual(field.name, name)) return true;
+			}
+			return false;
+		}
+
+		bool TryGetHttpRequestLineSize(const WString& method, const WString& requestTarget, vint& size)
+		{
+			if (
+				method.Length() > HttpRequestLineSizeLimit - 10 ||
+				requestTarget.Length() > HttpRequestLineSizeLimit - 10 - method.Length()
+				)
+			{
+				return false;
+			}
+			size = 10 + method.Length() + requestTarget.Length();
+			return true;
+		}
+
+		HttpMessageParsingResult ParseHttpMessage(
+			const vuint8_t* buffer,
+			vint availableBytes,
+			bool requestMessage,
+			const WString& responseToMethod,
+			WString& parsedRequestMethod,
+			Ptr<HttpRequest>& request,
+			Ptr<HttpResponse>& response,
+			vint& consumedBytes,
+			bool& connectionClose
+			)
+		{
+			consumedBytes = 0;
+			connectionClose = false;
+			parsedRequestMethod = L"";
+			vint startLineEnd = FindCrlf(buffer, 0, availableBytes);
+			if (startLineEnd == -1)
+			{
+				auto possibleLineBytes = availableBytes > 0 && buffer[availableBytes - 1] == '\r' ? availableBytes - 1 : availableBytes;
+				return possibleLineBytes > HttpRequestLineSizeLimit
+					? (requestMessage ? HttpMessageParsingResult::UriTooLong : HttpMessageParsingResult::BadRequest)
+					: HttpMessageParsingResult::Incomplete;
+			}
+			if (startLineEnd > HttpRequestLineSizeLimit)
+			{
+				return requestMessage ? HttpMessageParsingResult::UriTooLong : HttpMessageParsingResult::BadRequest;
+			}
+
+			HttpVersion version;
+			WString method;
+			WString target;
+			vint statusCode = 0;
+			WString reason;
+			if (requestMessage)
+			{
+				if (!ParseRequestLine(buffer, startLineEnd, version, method, target)) return HttpMessageParsingResult::BadRequest;
+				parsedRequestMethod = method;
+			}
+			else
+			{
+				if (!ParseStatusLine(buffer, startLineEnd, version, statusCode, reason)) return HttpMessageParsingResult::BadRequest;
+			}
+			if (version.major != 1 || version.minor != 1)
+			{
+				return HttpMessageParsingResult::HttpVersionNotSupported;
+			}
+
+			List<HttpField> headers;
+			vint headersBegin = startLineEnd + 2;
+			vint reading = headersBegin;
+			vint bodyBegin = -1;
+			while (true)
+			{
+				vint lineEnd = FindCrlf(buffer, reading, availableBytes);
+				if (lineEnd == -1)
+				{
+					return availableBytes - headersBegin >= HttpHeaderBlockSizeLimit
+						? (requestMessage ? HttpMessageParsingResult::RequestHeaderFieldsTooLarge : HttpMessageParsingResult::BadRequest)
+						: HttpMessageParsingResult::Incomplete;
+				}
+				if (lineEnd + 2 - headersBegin > HttpHeaderBlockSizeLimit)
+				{
+					return requestMessage ? HttpMessageParsingResult::RequestHeaderFieldsTooLarge : HttpMessageParsingResult::BadRequest;
+				}
+				if (lineEnd == reading)
+				{
+					bodyBegin = lineEnd + 2;
+					break;
+				}
+				HttpField field;
+				if (!ParseFieldLine(buffer, reading, lineEnd, field)) return HttpMessageParsingResult::BadRequest;
+				headers.Add(std::move(field));
+				reading = lineEnd + 2;
+			}
+
+			HttpFraming framing;
+			auto framingResult = AnalyzeHttpFraming(headers, framing);
+			if (framingResult == HttpFramingAnalysisResult::Invalid) return HttpMessageParsingResult::BadRequest;
+			if (framingResult == HttpFramingAnalysisResult::UnsupportedTransferCoding) return HttpMessageParsingResult::NotImplemented;
+			if (requestMessage && HasHeader(headers, L"expect")) return HttpMessageParsingResult::ExpectationFailed;
+			auto hasContentLength = framing.kind == HttpFramingKind::ContentLength;
+			auto hasTransferEncoding = framing.kind == HttpFramingKind::Chunked;
+
+			auto headResponse = !requestMessage && responseToMethod == L"HEAD";
+			auto noContentResponse = !requestMessage && statusCode == 204;
+			auto notModifiedResponse = !requestMessage && statusCode == 304;
+			auto responseWithoutBody = headResponse || noContentResponse || notModifiedResponse;
+			if (noContentResponse && (hasContentLength || hasTransferEncoding)) return HttpMessageParsingResult::BadRequest;
+			if (notModifiedResponse && hasTransferEncoding) return HttpMessageParsingResult::BadRequest;
+			if (!requestMessage && !responseWithoutBody && !hasContentLength && !hasTransferEncoding) return HttpMessageParsingResult::BadRequest;
+
+			HttpBody body;
+			vint bodyBytes = 0;
+			if (!responseWithoutBody && hasTransferEncoding)
+			{
+				auto result = ParseHttpRequestBodyToChunksDetailed(buffer + bodyBegin, availableBytes - bodyBegin, body, bodyBytes);
+				if (result == HttpBodyDetailedParsingResult::Incomplete) return HttpMessageParsingResult::Incomplete;
+				if (result == HttpBodyDetailedParsingResult::PayloadTooLarge) return HttpMessageParsingResult::PayloadTooLarge;
+				if (result == HttpBodyDetailedParsingResult::TrailerFieldsTooLarge) return HttpMessageParsingResult::RequestHeaderFieldsTooLarge;
+				if (result == HttpBodyDetailedParsingResult::BadRequest) return HttpMessageParsingResult::BadRequest;
+			}
+			else if (!responseWithoutBody && hasContentLength)
+			{
+				if (framing.contentLength > (vuint64_t)HttpBodySizeLimit) return HttpMessageParsingResult::PayloadTooLarge;
+				bodyBytes = (vint)framing.contentLength;
+				if (availableBytes - bodyBegin < bodyBytes) return HttpMessageParsingResult::Incomplete;
+				if (bodyBytes > 0)
+				{
+					HttpBodyChunk chunk;
+					chunk.data.Resize(bodyBytes);
+					std::memcpy(&chunk.data[0], buffer + bodyBegin, (size_t)bodyBytes);
+					body.chunks.Add(std::move(chunk));
+				}
+			}
+
+			consumedBytes = bodyBegin + bodyBytes;
+			connectionClose = framing.connectionClose;
+			if (requestMessage)
+			{
+				request = Ptr(new HttpRequest);
+				request->version = version;
+				request->method = method;
+				request->requestTarget = target;
+				request->headers = std::move(headers);
+				request->body = std::move(body);
+			}
+			else
+			{
+				response = Ptr(new HttpResponse);
+				response->version = version;
+				response->statusCode = statusCode;
+				response->reason = reason;
+				response->headers = std::move(headers);
+				response->body = std::move(body);
+			}
+			return HttpMessageParsingResult::Succeeded;
+		}
+
+		bool ValidateField(const HttpField& field, bool trailer)
+		{
+			if (field.name.Length() == 0) return false;
+			for (vint i = 0; i < field.name.Length(); i++)
+			{
+				auto c = field.name[i];
+				if ((vuint32_t)c > 0x7F || !IsTokenCharacter((vuint8_t)c) || (c >= L'A' && c <= L'Z')) return false;
+			}
+			for (auto c : field.value)
+			{
+				if (!IsFieldValueCharacter(c)) return false;
+			}
+			if (trailer && (field.name == L"content-length" || field.name == L"transfer-encoding")) return false;
+			return true;
+		}
+
+		void AppendAscii(List<vuint8_t>& bytes, const wchar_t* text)
+		{
+			while (*text)
+			{
+				CHECK_ERROR(*text <= 0x7F, L"HTTP serialization requires ASCII protocol text.");
+				bytes.Add((vuint8_t)*text++);
+			}
+		}
+
+		void AppendAscii(List<vuint8_t>& bytes, const WString& text)
+		{
+			for (vint i = 0; i < text.Length(); i++)
+			{
+				CHECK_ERROR(text[i] <= 0x7F, L"HTTP serialization requires ASCII protocol text.");
+				bytes.Add((vuint8_t)text[i]);
+			}
+		}
+
+		void AppendDecimal(List<vuint8_t>& bytes, vint number)
+		{
+			CHECK_ERROR(number >= 0, L"HTTP serialization requires a non-negative decimal number.");
+			vuint8_t digits[32];
+			auto count = 0;
+			auto value = (vuint64_t)number;
+			do
+			{
+				digits[count++] = (vuint8_t)('0' + value % 10);
+				value /= 10;
+			} while (value > 0);
+			for (vint i = count - 1; i >= 0; i--) bytes.Add(digits[i]);
+		}
+
+		void AppendHexadecimal(List<vuint8_t>& bytes, vint number)
+		{
+			CHECK_ERROR(number > 0, L"HTTP chunk serialization requires a positive chunk size.");
+			vuint8_t digits[32];
+			auto count = 0;
+			auto value = (vuint64_t)number;
+			const wchar_t* hex = L"0123456789abcdef";
+			while (value > 0)
+			{
+				digits[count++] = (vuint8_t)hex[value % 16];
+				value /= 16;
+			}
+			for (vint i = count - 1; i >= 0; i--) bytes.Add(digits[i]);
+		}
+
+		void AppendCrlf(List<vuint8_t>& bytes)
+		{
+			bytes.Add('\r');
+			bytes.Add('\n');
+		}
+
+		void AppendField(List<vuint8_t>& bytes, const HttpField& field)
+		{
+			AppendAscii(bytes, field.name);
+			bytes.Add(':');
+			bytes.Add(' ');
+			for (auto c : field.value) bytes.Add(c);
+			AppendCrlf(bytes);
+		}
+
+		vint DecimalDigitCount(vint number)
+		{
+			vint count = 1;
+			while (number >= 10)
+			{
+				number /= 10;
+				count++;
+			}
+			return count;
+		}
+
+		vint HexadecimalDigitCount(vint number)
+		{
+			vint count = 1;
+			while (number >= 16)
+			{
+				number /= 16;
+				count++;
+			}
+			return count;
+		}
+
+		vint AsciiLength(const wchar_t* text)
+		{
+			vint count = 0;
+			while (text[count]) count++;
+			return count;
+		}
+
+		void AddBoundedSize(vint& total, vint adding, vint limit, const wchar_t* error)
+		{
+			CHECK_ERROR(adding >= 0 && total <= limit - adding, error);
+			total += adding;
+		}
+
+		vint ValidateBody(const HttpBody& body)
+		{
+			CHECK_ERROR(body.chunks.Count() <= HttpChunkCountLimit, L"HTTP body contains too many chunks.");
+			vint total = 0;
+			for (auto&& chunk : body.chunks)
+			{
+				CHECK_ERROR(chunk.data.Count() > 0, L"HTTP body chunks must contain at least one octet.");
+				CHECK_ERROR(total <= HttpBodySizeLimit - chunk.data.Count(), L"HTTP body exceeds the configured size limit.");
+				total += chunk.data.Count();
+			}
+			for (auto&& trailer : body.trailers)
+			{
+				CHECK_ERROR(ValidateField(trailer, true), L"HTTP body contains an invalid trailer field.");
+			}
+			return total;
+		}
+
+		Ptr<AsyncSocketBuffer> SerializeHttpMessage(HttpRequest* request, HttpResponse* response, const WString& responseToMethod, bool& connectionClose)
+		{
+			auto requestMessage = request != nullptr;
+			CHECK_ERROR(requestMessage != (response != nullptr), L"HTTP serialization requires exactly one message.");
+			auto&& version = requestMessage ? request->version : response->version;
+			auto&& headers = requestMessage ? request->headers : response->headers;
+			auto&& body = requestMessage ? request->body : response->body;
+			CHECK_ERROR(version.major == 1 && version.minor == 1, L"HTTP serialization only supports HTTP/1.1.");
+
+			vint startLineSize = 0;
+			if (requestMessage)
+			{
+				switch (ValidateHttpRequestLine(request->method, request->requestTarget))
+				{
+				case HttpRequestLineValidationResult::InvalidMethod:
+					CHECK_FAIL(L"HTTP request serialization received an invalid method.");
+				case HttpRequestLineValidationResult::InvalidRequestTarget:
+					CHECK_FAIL(L"HTTP request serialization received an invalid request target.");
+				case HttpRequestLineValidationResult::TooLong:
+					CHECK_FAIL(L"HTTP start line exceeds the configured size limit.");
+				default:
+					break;
+				}
+				CHECK_ERROR(TryGetHttpRequestLineSize(request->method, request->requestTarget, startLineSize), L"HTTP start line exceeds the configured size limit.");
+			}
+			else
+			{
+				CHECK_ERROR(response->statusCode >= 200 && response->statusCode <= 599, L"HTTP response serialization only supports final status codes from 200 through 599.");
+				for (vint i = 0; i < response->reason.Length(); i++)
+				{
+					CHECK_ERROR(response->reason[i] >= 0x20 && response->reason[i] <= 0x7E, L"HTTP response serialization received an invalid reason phrase.");
+				}
+				startLineSize = 13;
+				AddBoundedSize(startLineSize, response->reason.Length(), HttpRequestLineSizeLimit, L"HTTP start line exceeds the configured size limit.");
+			}
+
+			vint headerBlockSize = 2;
+			for (auto&& field : headers)
+			{
+				CHECK_ERROR(ValidateField(field, false), L"HTTP serialization received an invalid header field.");
+				AddBoundedSize(headerBlockSize, field.name.Length(), HttpHeaderBlockSizeLimit, L"HTTP header block exceeds the configured size limit.");
+				AddBoundedSize(headerBlockSize, 2, HttpHeaderBlockSizeLimit, L"HTTP header block exceeds the configured size limit.");
+				AddBoundedSize(headerBlockSize, field.value.Count(), HttpHeaderBlockSizeLimit, L"HTTP header block exceeds the configured size limit.");
+				AddBoundedSize(headerBlockSize, 2, HttpHeaderBlockSizeLimit, L"HTTP header block exceeds the configured size limit.");
+			}
+
+			HttpFraming framing;
+			CHECK_ERROR(AnalyzeHttpFraming(headers, framing) == HttpFramingAnalysisResult::Succeeded, L"HTTP serialization received invalid, ambiguous, or unsupported body framing.");
+			auto bodySize = ValidateBody(body);
+			auto headResponse = !requestMessage && responseToMethod == L"HEAD";
+			auto noContentResponse = !requestMessage && response->statusCode == 204;
+			auto notModifiedResponse = !requestMessage && response->statusCode == 304;
+			auto suppressBody = headResponse || noContentResponse || notModifiedResponse;
+			auto hasContentLength = framing.kind == HttpFramingKind::ContentLength;
+			auto hasTransferEncoding = framing.kind == HttpFramingKind::Chunked;
+			auto chunked = hasTransferEncoding;
+			auto generateContentLength = false;
+			auto generateTransferEncoding = false;
+			if (noContentResponse)
+			{
+				CHECK_ERROR(body.chunks.Count() == 0 && body.trailers.Count() == 0, L"An HTTP 204 response cannot contain a body.");
+				CHECK_ERROR(!hasContentLength && !hasTransferEncoding, L"An HTTP 204 response cannot contain body framing.");
+				chunked = false;
+			}
+			else if (notModifiedResponse)
+			{
+				CHECK_ERROR(body.chunks.Count() == 0 && body.trailers.Count() == 0, L"An HTTP 304 response cannot contain a body.");
+				CHECK_ERROR(!hasTransferEncoding, L"An HTTP 304 response cannot contain Transfer-Encoding.");
+				chunked = false;
+			}
+			else if (!hasContentLength && !hasTransferEncoding)
+			{
+				chunked = body.chunks.Count() > 1 || body.trailers.Count() > 0;
+				generateTransferEncoding = chunked;
+				generateContentLength = !chunked && (!requestMessage || body.chunks.Count() > 0);
+			}
+			if (!noContentResponse && !notModifiedResponse && !chunked)
+			{
+				CHECK_ERROR(body.trailers.Count() == 0 && body.chunks.Count() <= 1, L"A fixed HTTP body cannot contain multiple chunks or trailers.");
+				if (hasContentLength)
+				{
+					if (!headResponse || body.chunks.Count() > 0)
+					{
+						CHECK_ERROR(framing.contentLength == (vuint64_t)bodySize, L"HTTP Content-Length does not match the supplied body.");
+					}
+				}
+				else if (!generateContentLength && !headResponse)
+				{
+					CHECK_ERROR(requestMessage && bodySize == 0, L"An HTTP response requires explicit body framing.");
+				}
+			}
+			if (generateContentLength)
+			{
+				AddBoundedSize(headerBlockSize, AsciiLength(L"content-length: ") + DecimalDigitCount(bodySize) + 2, HttpHeaderBlockSizeLimit, L"HTTP header block exceeds the configured size limit.");
+			}
+			if (generateTransferEncoding)
+			{
+				AddBoundedSize(headerBlockSize, AsciiLength(L"transfer-encoding: chunked\r\n"), HttpHeaderBlockSizeLimit, L"HTTP header block exceeds the configured size limit.");
+			}
+
+			vint trailerBlockSize = 2;
+			for (auto&& trailer : body.trailers)
+			{
+				AddBoundedSize(trailerBlockSize, trailer.name.Length(), HttpTrailerBlockSizeLimit, L"HTTP trailer block exceeds the configured size limit.");
+				AddBoundedSize(trailerBlockSize, 2, HttpTrailerBlockSizeLimit, L"HTTP trailer block exceeds the configured size limit.");
+				AddBoundedSize(trailerBlockSize, trailer.value.Count(), HttpTrailerBlockSizeLimit, L"HTTP trailer block exceeds the configured size limit.");
+				AddBoundedSize(trailerBlockSize, 2, HttpTrailerBlockSizeLimit, L"HTTP trailer block exceeds the configured size limit.");
+			}
+			vint wireSize = startLineSize;
+			AddBoundedSize(wireSize, 2, HttpWireMessageSizeLimit, L"HTTP wire message exceeds the configured size limit.");
+			AddBoundedSize(wireSize, headerBlockSize, HttpWireMessageSizeLimit, L"HTTP wire message exceeds the configured size limit.");
+			if (!suppressBody && chunked)
+			{
+				for (auto&& chunk : body.chunks)
+				{
+					AddBoundedSize(wireSize, HexadecimalDigitCount(chunk.data.Count()) + 4, HttpWireMessageSizeLimit, L"HTTP wire message exceeds the configured size limit.");
+					AddBoundedSize(wireSize, chunk.data.Count(), HttpWireMessageSizeLimit, L"HTTP wire message exceeds the configured size limit.");
+				}
+				AddBoundedSize(wireSize, 3, HttpWireMessageSizeLimit, L"HTTP wire message exceeds the configured size limit.");
+				AddBoundedSize(wireSize, trailerBlockSize, HttpWireMessageSizeLimit, L"HTTP wire message exceeds the configured size limit.");
+			}
+			else if (!suppressBody)
+			{
+				AddBoundedSize(wireSize, bodySize, HttpWireMessageSizeLimit, L"HTTP wire message exceeds the configured size limit.");
+			}
+
+			List<vuint8_t> bytes;
+			if (requestMessage)
+			{
+				AppendAscii(bytes, request->method);
+				bytes.Add(' ');
+				AppendAscii(bytes, request->requestTarget);
+				bytes.Add(' ');
+			}
+			AppendAscii(bytes, L"HTTP/");
+			AppendDecimal(bytes, version.major);
+			bytes.Add('.');
+			AppendDecimal(bytes, version.minor);
+			if (!requestMessage)
+			{
+				bytes.Add(' ');
+				AppendDecimal(bytes, response->statusCode);
+				bytes.Add(' ');
+				AppendAscii(bytes, response->reason);
+			}
+			CHECK_ERROR(bytes.Count() <= HttpRequestLineSizeLimit, L"HTTP start line exceeds the configured size limit.");
+			AppendCrlf(bytes);
+
+			for (auto&& field : headers) AppendField(bytes, field);
+			if (generateContentLength)
+			{
+				AppendAscii(bytes, L"content-length: ");
+				AppendDecimal(bytes, bodySize);
+				AppendCrlf(bytes);
+			}
+			if (generateTransferEncoding)
+			{
+				AppendAscii(bytes, L"transfer-encoding: chunked\r\n");
+			}
+			AppendCrlf(bytes);
+
+			if (!suppressBody && chunked)
+			{
+				for (auto&& chunk : body.chunks)
+				{
+					AppendHexadecimal(bytes, chunk.data.Count());
+					AppendCrlf(bytes);
+					for (auto c : chunk.data) bytes.Add(c);
+					AppendCrlf(bytes);
+				}
+				AppendAscii(bytes, L"0\r\n");
+				for (auto&& trailer : body.trailers) AppendField(bytes, trailer);
+				AppendCrlf(bytes);
+			}
+			else if (!suppressBody && body.chunks.Count() == 1)
+			{
+				for (auto c : body.chunks[0].data) bytes.Add(c);
+			}
+			CHECK_ERROR(bytes.Count() <= HttpWireMessageSizeLimit, L"HTTP wire message exceeds the configured size limit.");
+
+			auto buffer = Ptr(new AsyncSocketBuffer);
+			buffer->data.Resize(bytes.Count());
+			if (bytes.Count() > 0)
+			{
+				std::memcpy(&buffer->data[0], &bytes[0], (size_t)bytes.Count());
+			}
+			connectionClose = framing.connectionClose;
+			return buffer;
+		}
+	}
+
+	HttpFramingAnalysisResult AnalyzeHttpFraming(const List<HttpField>& fields, HttpFraming& framing)
+	{
+		framing = HttpFraming();
+		bool contentLengthInitialized = false;
+		bool hasTransferEncoding = false;
+		List<WString> transferCodings;
+		bool transferCodingParameters = false;
+		for (auto&& field : fields)
+		{
+			if (field.name == L"content-length")
+			{
+				framing.contentLengthFieldCount++;
+				if (field.value.Count() == 0)
+				{
+					framing.contentLengthValuesPlainDecimal = false;
+				}
+				else
+				{
+					for (auto c : field.value)
+					{
+						if (!IsDigit(c))
+						{
+							framing.contentLengthValuesPlainDecimal = false;
+							break;
+						}
+					}
+				}
+				if (!ParseContentLength(field.value, contentLengthInitialized, framing.contentLength, framing.contentLengthValueCount))
+				{
+					return HttpFramingAnalysisResult::Invalid;
+				}
+			}
+			else if (field.name == L"transfer-encoding")
+			{
+				hasTransferEncoding = true;
+				if (!ParseTransferCodings(field.value, transferCodings, transferCodingParameters))
+				{
+					return HttpFramingAnalysisResult::Invalid;
+				}
+			}
+			else if (field.name == L"connection")
+			{
+				framing.connectionClose |= HasConnectionClose(field.value);
+			}
+		}
+		if (hasTransferEncoding && contentLengthInitialized)
+		{
+			return HttpFramingAnalysisResult::Invalid;
+		}
+		if (hasTransferEncoding)
+		{
+			if (
+				transferCodings.Count() != 1 ||
+				transferCodings[0] != L"chunked" ||
+				transferCodingParameters
+				)
+			{
+				return HttpFramingAnalysisResult::UnsupportedTransferCoding;
+			}
+			framing.kind = HttpFramingKind::Chunked;
+		}
+		else if (contentLengthInitialized)
+		{
+			framing.kind = HttpFramingKind::ContentLength;
+		}
+		return HttpFramingAnalysisResult::Succeeded;
+	}
+
+	const HttpField* FindHttpField(const List<HttpField>& fields, const WString& normalizedName)
+	{
+		for (auto&& field : fields)
+		{
+			if (field.name == normalizedName)
+			{
+				return &field;
+			}
+		}
+		return nullptr;
+	}
+
+	vint CountHttpFields(const List<HttpField>& fields, const WString& normalizedName)
+	{
+		vint count = 0;
+		for (auto&& field : fields)
+		{
+			if (field.name == normalizedName)
+			{
+				count++;
+			}
+		}
+		return count;
+	}
+
+	HttpField CreateAsciiHttpField(const WString& name, const WString& value)
+	{
+		CHECK_ERROR(name.Length() > 0, L"An HTTP field name cannot be empty.");
+		HttpField field;
+		Array<wchar_t> normalizedName(name.Length());
+		for (vint i = 0; i < name.Length(); i++)
+		{
+			auto c = name[i];
+			CHECK_ERROR((vuint32_t)c <= 0x7F && IsTokenCharacter((vuint8_t)c), L"An HTTP field name must contain only ASCII token characters.");
+			if (L'A' <= c && c <= L'Z') c += L'a' - L'A';
+			normalizedName[i] = c;
+		}
+		field.name = WString::CopyFrom(&normalizedName[0], normalizedName.Count());
+		field.value.Resize(value.Length());
+		for (vint i = 0; i < value.Length(); i++)
+		{
+			auto c = value[i];
+			CHECK_ERROR((vuint32_t)c <= 0x7F && IsFieldValueCharacter((vuint8_t)c), L"An HTTP field value must contain only valid ASCII field characters.");
+			field.value[i] = (vuint8_t)c;
+		}
+		return field;
+	}
+
+	bool DecodeAsciiHttpFieldValue(const Array<vuint8_t>& value, WString& text)
+	{
+		for (auto c : value)
+		{
+			if (c > 0x7F) return false;
+		}
+		if (value.Count() == 0)
+		{
+			text = WString::Empty;
+			return true;
+		}
+		Array<wchar_t> characters(value.Count());
+		for (vint i = 0; i < value.Count(); i++)
+		{
+			characters[i] = (wchar_t)value[i];
+		}
+		text = WString::CopyFrom(&characters[0], characters.Count());
+		return true;
+	}
+
+	bool HttpFieldValueEqualsAscii(const Array<vuint8_t>& value, const WString& expected)
+	{
+		if (value.Count() != expected.Length()) return false;
+		for (vint i = 0; i < value.Count(); i++)
+		{
+			if ((vuint32_t)expected[i] > 0x7F || value[i] != (vuint8_t)expected[i]) return false;
+		}
+		return true;
+	}
+
+	bool TryGetHttpBodySize(const HttpBody& body, vint& size)
+	{
+		vint total = 0;
+		for (auto&& chunk : body.chunks)
+		{
+			if (chunk.data.Count() > HttpBodySizeLimit - total) return false;
+			total += chunk.data.Count();
+		}
+		size = total;
+		return true;
+	}
+
+	bool FlattenHttpBody(const HttpBody& body, Array<vuint8_t>& bytes)
+	{
+		vint size = 0;
+		if (!TryGetHttpBodySize(body, size)) return false;
+		Array<vuint8_t> flattened(size);
+		vint offset = 0;
+		for (auto&& chunk : body.chunks)
+		{
+			if (chunk.data.Count() > 0)
+			{
+				std::memcpy(&flattened[offset], &chunk.data[0], (size_t)chunk.data.Count());
+				offset += chunk.data.Count();
+			}
+		}
+		bytes = std::move(flattened);
+		return true;
+	}
+
+	void SetHttpBodyBytes(HttpBody& body, Array<vuint8_t>&& bytes)
+	{
+		CHECK_ERROR(bytes.Count() <= HttpBodySizeLimit, L"HTTP body exceeds the configured size limit.");
+		Array<vuint8_t> replacement = std::move(bytes);
+		body.chunks.Clear();
+		body.trailers.Clear();
+		if (replacement.Count() > 0)
+		{
+			HttpBodyChunk chunk;
+			chunk.data = std::move(replacement);
+			body.chunks.Add(std::move(chunk));
+		}
+	}
+
+	bool EncodeStrictUtf8(const WString& text, Array<vuint8_t>& bytes)
+	{
+		List<vuint8_t> encoded;
+		for (vint i = 0; i < text.Length(); i++)
+		{
+			auto code = (vuint32_t)text[i];
+			if constexpr (sizeof(wchar_t) == 2)
+			{
+				if (0xD800 <= code && code <= 0xDBFF)
+				{
+					if (++i == text.Length()) return false;
+					auto low = (vuint32_t)text[i];
+					if (low < 0xDC00 || low > 0xDFFF) return false;
+					code = 0x10000 + ((code - 0xD800) << 10) + (low - 0xDC00);
+				}
+				else if (0xDC00 <= code && code <= 0xDFFF)
+				{
+					return false;
+				}
+			}
+			else if (code > 0x10FFFF || (0xD800 <= code && code <= 0xDFFF))
+			{
+				return false;
+			}
+
+			vint adding = code < 0x80 ? 1 : code < 0x800 ? 2 : code < 0x10000 ? 3 : 4;
+			if (encoded.Count() > (std::numeric_limits<vint>::max)() - adding) return false;
+			if (adding == 1)
+			{
+				encoded.Add((vuint8_t)code);
+			}
+			else
+			{
+				static const vuint8_t prefixes[] = { 0, 0xC0, 0xE0, 0xF0 };
+				vuint8_t output[4];
+				for (vint j = adding - 1; j > 0; j--)
+				{
+					output[j] = 0x80 | (code & 0x3F);
+					code >>= 6;
+				}
+				output[0] = prefixes[adding - 1] | (vuint8_t)code;
+				for (vint j = 0; j < adding; j++) encoded.Add(output[j]);
+			}
+		}
+		Array<vuint8_t> result(encoded.Count());
+		for (vint i = 0; i < encoded.Count(); i++) result[i] = encoded[i];
+		bytes = std::move(result);
+		return true;
+	}
+
+	bool DecodeStrictUtf8(const vuint8_t* bytes, vint count, WString& text)
+	{
+		if (count < 0 || (!bytes && count > 0)) return false;
+		List<wchar_t> characters;
+		for (vint i = 0; i < count;)
+		{
+			auto first = bytes[i++];
+			vuint32_t code = 0;
+			vint following = 0;
+			if (first < 0x80)
+			{
+				code = first;
+			}
+			else if (0xC2 <= first && first <= 0xDF)
+			{
+				code = first & 0x1F;
+				following = 1;
+			}
+			else if (0xE0 <= first && first <= 0xEF)
+			{
+				code = first & 0x0F;
+				following = 2;
+			}
+			else if (0xF0 <= first && first <= 0xF4)
+			{
+				code = first & 0x07;
+				following = 3;
+			}
+			else
+			{
+				return false;
+			}
+			if (following > count - i) return false;
+			for (vint j = 0; j < following; j++)
+			{
+				auto next = bytes[i++];
+				if ((next & 0xC0) != 0x80) return false;
+				code = (code << 6) | (next & 0x3F);
+			}
+			if (
+				(following == 1 && code < 0x80) ||
+				(following == 2 && code < 0x800) ||
+				(following == 3 && code < 0x10000) ||
+				code > 0x10FFFF ||
+				(0xD800 <= code && code <= 0xDFFF)
+				)
+			{
+				return false;
+			}
+			if constexpr (sizeof(wchar_t) == 2)
+			{
+				if (code <= 0xFFFF)
+				{
+					characters.Add((wchar_t)code);
+				}
+				else
+				{
+					if (characters.Count() > (std::numeric_limits<vint>::max)() - 2) return false;
+					code -= 0x10000;
+					characters.Add((wchar_t)(0xD800 + (code >> 10)));
+					characters.Add((wchar_t)(0xDC00 + (code & 0x3FF)));
+				}
+			}
+			else
+			{
+				characters.Add((wchar_t)code);
+			}
+		}
+		text = characters.Count() == 0 ? WString::Empty : WString::CopyFrom(&characters[0], characters.Count());
+		return true;
+	}
+
+	HttpRequestLineValidationResult ValidateHttpRequestLine(const WString& method, const WString& requestTarget)
+	{
+		if (method.Length() == 0) return HttpRequestLineValidationResult::InvalidMethod;
+		for (vint i = 0; i < method.Length(); i++)
+		{
+			auto c = method[i];
+			if ((vuint32_t)c > 0x7F || !IsTokenCharacter((vuint8_t)c)) return HttpRequestLineValidationResult::InvalidMethod;
+		}
+		if (requestTarget.Length() == 0) return HttpRequestLineValidationResult::InvalidRequestTarget;
+		for (vint i = 0; i < requestTarget.Length(); i++)
+		{
+			auto c = requestTarget[i];
+			if (c < 0x21 || c > 0x7E) return HttpRequestLineValidationResult::InvalidRequestTarget;
+		}
+		vint requestLineSize = 0;
+		if (!TryGetHttpRequestLineSize(method, requestTarget, requestLineSize)) return HttpRequestLineValidationResult::TooLong;
+		return HttpRequestLineValidationResult::Succeeded;
+	}
+
+/***********************************************************************
+HttpRequestBody
+***********************************************************************/
+
+	namespace
+	{
+		HttpBodyDetailedParsingResult ParseHttpRequestBodyToChunksDetailed(
+			const vuint8_t* buffer,
+			vint availableBytes,
+			HttpBody& output,
+			vint& consumedBytes
+			)
+		{
+			consumedBytes = 0;
+			if (availableBytes < 0 || (!buffer && availableBytes > 0)) return HttpBodyDetailedParsingResult::BadRequest;
+			HttpBody parsed;
+			vint reading = 0;
+			vint decodedBytes = 0;
+			while (true)
+			{
+				vint lineEnd = FindCrlf(buffer, reading, availableBytes);
+				if (lineEnd == -1)
+				{
+					auto trailingCrlfPrefix = availableBytes > reading && buffer[availableBytes - 1] == '\r';
+					vint prefixEnd = trailingCrlfPrefix ? availableBytes - 1 : availableBytes;
+					auto validPrefix = trailingCrlfPrefix
+						? ValidateCompleteChunkSizeLine(buffer, reading, prefixEnd)
+						: ValidateChunkSizeLinePrefix(buffer, reading, prefixEnd);
+					if (prefixEnd - reading > HttpChunkSizeLineLimit || !validPrefix)
+					{
+						return HttpBodyDetailedParsingResult::BadRequest;
+					}
+					return HttpBodyDetailedParsingResult::Incomplete;
+				}
+				if (lineEnd - reading > HttpChunkSizeLineLimit) return HttpBodyDetailedParsingResult::BadRequest;
+				if (lineEnd + 2 > HttpWireMessageSizeLimit) return HttpBodyDetailedParsingResult::PayloadTooLarge;
+				vint numberEnd = reading;
+				vuint64_t chunkSize = 0;
+				while (numberEnd < lineEnd && IsHexDigit(buffer[numberEnd]))
+				{
+					auto digit = (vuint64_t)HexDigitValue(buffer[numberEnd++]);
+					if (chunkSize > ((std::numeric_limits<vuint64_t>::max)() - digit) / 16) return HttpBodyDetailedParsingResult::PayloadTooLarge;
+					chunkSize = chunkSize * 16 + digit;
+				}
+				if (numberEnd == reading) return HttpBodyDetailedParsingResult::BadRequest;
+				if (chunkSize > (vuint64_t)HttpBodySizeLimit) return HttpBodyDetailedParsingResult::PayloadTooLarge;
+				if (numberEnd < lineEnd)
+				{
+					vint firstExtension = numberEnd;
+					while (firstExtension < lineEnd && IsOws(buffer[firstExtension])) firstExtension++;
+					if (firstExtension == lineEnd || buffer[firstExtension] != ';') return HttpBodyDetailedParsingResult::BadRequest;
+				}
+				vint extensionReading = numberEnd;
+				if (!ParseSemicolonParameters(buffer, extensionReading, lineEnd)) return HttpBodyDetailedParsingResult::BadRequest;
+				reading = lineEnd + 2;
+
+				if (chunkSize == 0)
+				{
+					vint trailerBegin = reading;
+					while (true)
+					{
+						vint trailerEnd = FindCrlf(buffer, reading, availableBytes);
+						if (trailerEnd == -1)
+						{
+							return availableBytes - trailerBegin >= HttpTrailerBlockSizeLimit
+								? HttpBodyDetailedParsingResult::TrailerFieldsTooLarge
+								: HttpBodyDetailedParsingResult::Incomplete;
+						}
+						if (trailerEnd + 2 - trailerBegin > HttpTrailerBlockSizeLimit) return HttpBodyDetailedParsingResult::TrailerFieldsTooLarge;
+						if (trailerEnd + 2 > HttpWireMessageSizeLimit) return HttpBodyDetailedParsingResult::PayloadTooLarge;
+						if (trailerEnd == reading)
+						{
+							consumedBytes = trailerEnd + 2;
+							output = std::move(parsed);
+							return HttpBodyDetailedParsingResult::Succeeded;
+						}
+						HttpField trailer;
+						if (!ParseFieldLine(buffer, reading, trailerEnd, trailer) || trailer.name == L"content-length" || trailer.name == L"transfer-encoding")
+						{
+							return HttpBodyDetailedParsingResult::BadRequest;
+						}
+						parsed.trailers.Add(std::move(trailer));
+						reading = trailerEnd + 2;
+					}
+				}
+
+				if (chunkSize > (vuint64_t)(HttpBodySizeLimit - decodedBytes)) return HttpBodyDetailedParsingResult::PayloadTooLarge;
+				vint chunkBytes = (vint)chunkSize;
+				if (availableBytes - reading < chunkBytes) return HttpBodyDetailedParsingResult::Incomplete;
+				auto terminatorBytes = availableBytes - reading - chunkBytes;
+				if (terminatorBytes == 0) return HttpBodyDetailedParsingResult::Incomplete;
+				if (buffer[reading + chunkBytes] != '\r') return HttpBodyDetailedParsingResult::BadRequest;
+				if (terminatorBytes == 1) return HttpBodyDetailedParsingResult::Incomplete;
+				if (buffer[reading + chunkBytes + 1] != '\n') return HttpBodyDetailedParsingResult::BadRequest;
+				if (reading > HttpWireMessageSizeLimit - chunkBytes - 2) return HttpBodyDetailedParsingResult::PayloadTooLarge;
+				if (parsed.chunks.Count() >= HttpChunkCountLimit) return HttpBodyDetailedParsingResult::PayloadTooLarge;
+				HttpBodyChunk chunk;
+				chunk.data.Resize(chunkBytes);
+				std::memcpy(&chunk.data[0], buffer + reading, (size_t)chunkBytes);
+				parsed.chunks.Add(std::move(chunk));
+				decodedBytes += chunkBytes;
+				reading += chunkBytes + 2;
+			}
+		}
+	}
+
+	HttpRequestBodyParsingResult ParseHttpRequestBodyToChunks(
+		const vuint8_t* buffer,
+		vint availableBytes,
+		HttpBody& output,
+		vint& consumedBytes
+		)
+	{
+		auto result = ParseHttpRequestBodyToChunksDetailed(buffer, availableBytes, output, consumedBytes);
+		switch (result)
+		{
+		case HttpBodyDetailedParsingResult::Succeeded:
+			return HttpRequestBodyParsingResult::Succeeded;
+		case HttpBodyDetailedParsingResult::Incomplete:
+			return HttpRequestBodyParsingResult::Incomplete;
+		default:
+			return HttpRequestBodyParsingResult::Invalid;
+		}
+	}
+
+/***********************************************************************
+IHttpRequestCallback
+***********************************************************************/
+
+	void IHttpRequestCallback::OnReadRequest(Ptr<HttpRequest>)
+	{
+	}
+
+	void IHttpRequestCallback::OnReadRequestFailure(HttpRequestFailure)
+	{
+	}
+
+	void IHttpRequestCallback::OnReadResponse(Ptr<HttpResponse>)
+	{
+	}
+
+	void IHttpRequestCallback::OnReadResponseFailure(HttpResponseFailure)
+	{
+		OnError(L"The HTTP client received a 404 Not Found response.", true);
+	}
+
+	void IHttpRequestCallback::OnWriteCompleted()
+	{
+	}
+
+	void IHttpRequestCallback::OnError(const WString&, bool)
+	{
+	}
+
+	void IHttpRequestCallback::OnConnected()
+	{
+	}
+
+	void IHttpRequestCallback::OnDisconnected()
+	{
+	}
+
+/***********************************************************************
+HttpRequestCallbackDomain
+***********************************************************************/
+
+	thread_local HttpRequestCallbackDomain::CallbackFrame* HttpRequestCallbackDomain::currentCallbackFrame = nullptr;
+
+	HttpRequestCallbackDomain::CallbackFrame::CallbackFrame(Ptr<HttpRequestCallbackDomain> _domain)
+		: domain(_domain)
+		, previous(currentCallbackFrame)
+	{
+		currentCallbackFrame = this;
+		CS_LOCK(domain->lockState)
+		{
+			domain->activeCallbacks++;
+		}
+	}
+
+	HttpRequestCallbackDomain::CallbackFrame::~CallbackFrame()
+	{
+		currentCallbackFrame = previous;
+		CS_LOCK(domain->lockState)
+		{
+			domain->activeCallbacks--;
+			domain->cvState.WakeAllPendings();
+		}
+	}
+
+	vint HttpRequestCallbackDomain::CurrentCallbackDepth()
+	{
+		vint depth = 0;
+		for (auto frame = currentCallbackFrame; frame; frame = frame->previous)
+		{
+			if (frame->domain.Obj() == this) depth++;
+		}
+		return depth;
+	}
+
+	void HttpRequestCallbackDomain::WaitForCallbacks(vint callbackDepth)
+	{
+		CS_LOCK(lockState)
+		{
+			while (activeCallbacks > callbackDepth)
+			{
+				cvState.SleepWith(lockState);
+			}
+		}
+	}
+
+/***********************************************************************
+HttpRequestConnectionLifecycle
+***********************************************************************/
+
+	class HttpRequestConnectionLifecycle : public Object
+	{
+	public:
+		class RetainedAdapterRelease
+		{
+		public:
+			Ptr<Object>						adapter;
+			Func<void()>						drainedCallback;
+
+			~RetainedAdapterRelease()
+			{
+				if (drainedCallback)
+				{
+					try
+					{
+						drainedCallback();
+					}
+					catch (...)
+					{
+					}
+				}
+			}
+		};
+
+		IAsyncSocketConnection*				socketConnection = nullptr;
+		HttpRequestConnectionDirection		direction = HttpRequestConnectionDirection::Server;
+		bool							responseNotFoundIsFatal = false;
+		Ptr<HttpRequestCallbackDomain>		callbackDomain;
+		Ptr<IHttpRequestTimeoutController>	timeoutController;
+		Ptr<Object>						retainedAdapter;
+		Func<void()>						drainedCallback;
+
+		CriticalSection						lockState;
+		ConditionVariable					cvState;
+		IHttpRequestCallback*				callback = nullptr;
+		bool							callbackInstalling = false;
+		vint							activeCallbacks = 0;
+		vint							activeSocketCallbacks = 0;
+		vint							activeSocketCalls = 0;
+		bool							stopStarted = false;
+		bool							stopFinished = false;
+		bool							terminal = false;
+		bool							disconnectedNotified = false;
+		bool							disconnectDelivering = false;
+		bool							disconnectFinished = false;
+		bool							readingStarted = false;
+		bool							parserFailed = false;
+		bool							peerDisconnected = false;
+
+		List<vuint8_t>						receiveBuffer;
+		bool							timeoutArmed = false;
+		bool							awaitingResponse = false;
+		bool							exchangeActive = false;
+		bool							closeAfterExchange = false;
+		WString						activeRequestMethod;
+		vint							activeResponseTimeout = HttpIncompleteMessageTimeout;
+		Ptr<HttpResponse>					heldResponse;
+		bool							fatalAfterResponse = false;
+		bool							responseDelivering = false;
+		bool							responseFinalizing = false;
+		Ptr<AsyncSocketBuffer>				deferredRequestWrite;
+		bool							deferredRequestClose = false;
+		WString						deferredRequestMethod;
+		vint							deferredResponseTimeout = HttpIncompleteMessageTimeout;
+		Ptr<AsyncSocketBuffer>				pendingWrite;
+		bool							writePending = false;
+
+		void TakeRetainedAdapterIfDrained(RetainedAdapterRelease& releasing)
+		{
+			if (stopFinished && disconnectFinished && activeCallbacks == 0 && activeSocketCallbacks == 0 && activeSocketCalls == 0)
+			{
+				releasing.adapter = std::move(retainedAdapter);
+				releasing.drainedCallback = drainedCallback;
+				drainedCallback = {};
+			}
+		}
+	};
+
+/***********************************************************************
+HttpRequestConnection callback frames
+***********************************************************************/
+
+	struct HttpRequestConnection::CallbackFrame
+	{
+		Ptr<Lifecycle>						state;
+		CallbackFrame*						previous = nullptr;
+		HttpRequestCallbackDomain::CallbackFrame	domainFrame;
+
+		CallbackFrame(Ptr<Lifecycle> _state)
+			: state(_state)
+			, previous(currentCallbackFrame)
+			, domainFrame(state->callbackDomain)
+		{
+			currentCallbackFrame = this;
+		}
+
+		~CallbackFrame()
+		{
+			currentCallbackFrame = previous;
+			Lifecycle::RetainedAdapterRelease releasing;
+			CS_LOCK(state->lockState)
+			{
+				state->activeCallbacks--;
+				state->TakeRetainedAdapterIfDrained(releasing);
+				state->cvState.WakeAllPendings();
+			}
+		}
+	};
+
+	struct HttpRequestConnection::SocketCallbackFrame
+	{
+		Ptr<Lifecycle>						state;
+		SocketCallbackFrame*				previous = nullptr;
+
+		SocketCallbackFrame(Ptr<Lifecycle> _state)
+			: state(_state)
+			, previous(currentSocketCallbackFrame)
+		{
+			currentSocketCallbackFrame = this;
+			CS_LOCK(state->lockState)
+			{
+				state->activeSocketCallbacks++;
+			}
+		}
+
+		~SocketCallbackFrame()
+		{
+			currentSocketCallbackFrame = previous;
+			Lifecycle::RetainedAdapterRelease releasing;
+			CS_LOCK(state->lockState)
+			{
+				state->activeSocketCallbacks--;
+				state->TakeRetainedAdapterIfDrained(releasing);
+				state->cvState.WakeAllPendings();
+			}
+		}
+	};
+
+	struct HttpRequestConnection::TimeoutCallbackFrame
+	{
+		Ptr<Lifecycle>						state;
+		TimeoutCallbackFrame*				previous = nullptr;
+
+		TimeoutCallbackFrame(Ptr<Lifecycle> _state)
+			: state(_state)
+			, previous(currentTimeoutCallbackFrame)
+		{
+			currentTimeoutCallbackFrame = this;
+		}
+
+		~TimeoutCallbackFrame()
+		{
+			currentTimeoutCallbackFrame = previous;
+		}
+	};
+
+	thread_local HttpRequestConnection::CallbackFrame* HttpRequestConnection::currentCallbackFrame = nullptr;
+	thread_local HttpRequestConnection::SocketCallbackFrame* HttpRequestConnection::currentSocketCallbackFrame = nullptr;
+	thread_local HttpRequestConnection::TimeoutCallbackFrame* HttpRequestConnection::currentTimeoutCallbackFrame = nullptr;
+
+/***********************************************************************
+HttpRequestConnection helpers
+***********************************************************************/
+
+	vint HttpRequestConnection::CurrentCallbackDepth(Ptr<Lifecycle> state)
+	{
+		vint depth = 0;
+		for (auto frame = currentCallbackFrame; frame; frame = frame->previous)
+		{
+			if (frame->state.Obj() == state.Obj()) depth++;
+		}
+		return depth;
+	}
+
+	vint HttpRequestConnection::CurrentSocketCallbackDepth(Ptr<Lifecycle> state)
+	{
+		vint depth = 0;
+		for (auto frame = currentSocketCallbackFrame; frame; frame = frame->previous)
+		{
+			if (frame->state.Obj() == state.Obj()) depth++;
+		}
+		return depth;
+	}
+
+	vint HttpRequestConnection::CurrentTimeoutCallbackDepth(Ptr<Lifecycle> state)
+	{
+		vint depth = 0;
+		for (auto frame = currentTimeoutCallbackFrame; frame; frame = frame->previous)
+		{
+			if (frame->state.Obj() == state.Obj()) depth++;
+		}
+		return depth;
+	}
+
+	void HttpRequestConnection::FinishSocketCall(Ptr<Lifecycle> state)
+	{
+		bool completePeerStop = false;
+		CS_LOCK(state->lockState)
+		{
+			state->activeSocketCalls--;
+			completePeerStop = state->activeSocketCalls == 0 && state->peerDisconnected && !state->stopFinished;
+			state->cvState.WakeAllPendings();
+		}
+		if (completePeerStop)
+		{
+			StopConnection(state);
+		}
+
+		Lifecycle::RetainedAdapterRelease releasing;
+		CS_LOCK(state->lockState)
+		{
+			state->TakeRetainedAdapterIfDrained(releasing);
+		}
+	}
+
+	template<typename TCallback>
+	void HttpRequestConnection::InvokeHttpCallback(Ptr<Lifecycle> state, bool allowTerminal, TCallback&& invoke)
+	{
+		IHttpRequestCallback* installed = nullptr;
+		auto callbackDepth = CurrentCallbackDepth(state);
+		state->lockState.Enter();
+		while (state->callbackInstalling && callbackDepth == 0 && state->callback)
+		{
+			state->cvState.SleepWith(state->lockState);
+		}
+		if (state->callback && (allowTerminal || (!state->stopStarted && !state->terminal)))
+		{
+			installed = state->callback;
+			state->activeCallbacks++;
+		}
+		state->lockState.Leave();
+		if (installed)
+		{
+			CallbackFrame frame(state);
+			invoke(installed);
+		}
+	}
+
+	void HttpRequestConnection::SubmitWrite(Ptr<Lifecycle> state, IAsyncSocketConnection* connection, Ptr<AsyncSocketBuffer> buffer)
+	{
+		try
+		{
+			connection->WriteAsync(buffer);
+		}
+		catch (...)
+		{
+			CS_LOCK(state->lockState)
+			{
+				if (state->pendingWrite.Obj() == buffer.Obj())
+				{
+					state->pendingWrite = nullptr;
+					state->writePending = false;
+					if (state->direction == HttpRequestConnectionDirection::Client)
+					{
+						state->exchangeActive = false;
+						state->closeAfterExchange = false;
+					}
+				}
+				state->cvState.WakeAllPendings();
+			}
+			FinishSocketCall(state);
+			throw;
+		}
+		FinishSocketCall(state);
+	}
+
+	void HttpRequestConnection::ReportRequestFailure(Ptr<Lifecycle> state, HttpRequestFailure failure, bool timeoutOnly, bool reserved)
+	{
+		bool report = false;
+		bool cancelTimeout = false;
+		CS_LOCK(state->lockState)
+		{
+			if (
+				reserved &&
+				state->direction == HttpRequestConnectionDirection::Server &&
+				!state->stopStarted &&
+				!state->terminal &&
+				state->parserFailed &&
+				state->awaitingResponse
+				)
+			{
+				cancelTimeout = state->timeoutArmed;
+				state->timeoutArmed = false;
+				report = true;
+			}
+			else if (
+				state->direction == HttpRequestConnectionDirection::Server &&
+				!state->stopStarted &&
+				!state->terminal &&
+				!state->parserFailed &&
+				!state->awaitingResponse &&
+				(!timeoutOnly || state->timeoutArmed)
+				)
+			{
+				state->parserFailed = true;
+				state->awaitingResponse = true;
+				state->closeAfterExchange = true;
+				state->receiveBuffer.Clear();
+				cancelTimeout = state->timeoutArmed;
+				state->timeoutArmed = false;
+				report = true;
+				state->cvState.WakeAllPendings();
+			}
+		}
+		if (!report)
+		{
+			return;
+		}
+		if (cancelTimeout)
+		{
+			state->timeoutController->CancelAndWait();
+		}
+
+		try
+		{
+			InvokeHttpCallback(state, false, [&](IHttpRequestCallback* installed)
+			{
+				installed->OnReadRequestFailure(failure);
+			});
+		}
+		catch (...)
+		{
+			StopConnection(state);
+			throw;
+		}
+
+		bool closeWithoutResponse = false;
+		CS_LOCK(state->lockState)
+		{
+			closeWithoutResponse = !state->stopStarted && !state->terminal && !state->peerDisconnected && !state->writePending;
+		}
+		if (closeWithoutResponse)
+		{
+			StopConnection(state);
+		}
+	}
+
+	void HttpRequestConnection::InstallTimeout(Ptr<Lifecycle> state, vint milliseconds, const WString& error)
+	{
+		CHECK_ERROR(milliseconds > 0, L"HttpRequestConnection requires a positive timeout when arming a deadline.");
+		auto captured = state;
+		auto capturedError = error;
+		try
+		{
+			state->timeoutController->Arm(milliseconds, Func<void()>([captured, capturedError]()
+			{
+				TimeoutCallbackFrame timeoutCallbackFrame(captured);
+				if (captured->direction == HttpRequestConnectionDirection::Server)
+				{
+					ReportRequestFailure(captured, HttpRequestFailure::RequestTimeout, true);
+					return;
+				}
+
+				bool expired = false;
+				CS_LOCK(captured->lockState)
+				{
+					if (captured->timeoutArmed && !captured->stopStarted && !captured->terminal && !captured->parserFailed)
+					{
+						captured->timeoutArmed = false;
+						captured->parserFailed = true;
+						expired = true;
+					}
+				}
+				if (expired)
+				{
+					ReportFatalError(captured, capturedError);
+				}
+			}));
+			bool cancelStaleTimeout = false;
+			CS_LOCK(state->lockState)
+			{
+				cancelStaleTimeout = !state->timeoutArmed || state->stopStarted || state->terminal;
+			}
+			if (cancelStaleTimeout)
+			{
+				state->timeoutController->CancelAndWait();
+			}
+		}
+		catch (...)
+		{
+			CS_LOCK(state->lockState)
+			{
+				state->timeoutArmed = false;
+			}
+			ReportFatalError(state, L"The HTTP timeout controller failed while arming a message timeout.");
+		}
+	}
+
+	void HttpRequestConnection::RefreshTimeout(Ptr<Lifecycle> state)
+	{
+		try
+		{
+			state->timeoutController->Refresh();
+		}
+		catch (...)
+		{
+			CS_LOCK(state->lockState)
+			{
+				state->timeoutArmed = false;
+			}
+			ReportFatalError(state, L"The HTTP timeout controller failed while refreshing a message timeout.");
+		}
+	}
+
+	void HttpRequestConnection::ReportResponseFailure(Ptr<Lifecycle> state, HttpResponseFailure failure)
+	{
+		bool report = false;
+		CS_LOCK(state->lockState)
+		{
+			if (!state->terminal && !state->stopStarted)
+			{
+				state->terminal = true;
+				state->parserFailed = true;
+				state->timeoutArmed = false;
+				state->pendingWrite = nullptr;
+				state->writePending = false;
+				state->heldResponse = nullptr;
+				state->fatalAfterResponse = false;
+				state->responseDelivering = false;
+				state->deferredRequestWrite = nullptr;
+				state->deferredRequestClose = false;
+				state->deferredRequestMethod = L"";
+				report = true;
+				state->cvState.WakeAllPendings();
+			}
+		}
+		if (report)
+		{
+			state->timeoutController->CancelAndWait();
+			try
+			{
+				InvokeHttpCallback(state, true, [&](IHttpRequestCallback* installed)
+				{
+					installed->OnReadResponseFailure(failure);
+				});
+			}
+			catch (...)
+			{
+				StopConnection(state);
+				throw;
+			}
+			StopConnection(state);
+		}
+	}
+
+	void HttpRequestConnection::DeliverResponse(Ptr<Lifecycle> state, Ptr<HttpResponse> response, bool closeAfterDelivery)
+	{
+		if (state->responseNotFoundIsFatal && response->statusCode == (vint)HttpResponseFailure::NotFound)
+		{
+			ReportResponseFailure(state, HttpResponseFailure::NotFound);
+			return;
+		}
+
+		try
+		{
+			InvokeHttpCallback(state, false, [&](IHttpRequestCallback* installed)
+			{
+				installed->OnReadResponse(response);
+			});
+		}
+		catch (...)
+		{
+			bool notifyDisconnected = false;
+			CS_LOCK(state->lockState)
+			{
+				state->responseDelivering = false;
+				state->deferredRequestWrite = nullptr;
+				state->deferredRequestClose = false;
+				state->deferredRequestMethod = L"";
+				notifyDisconnected = state->peerDisconnected;
+				state->responseFinalizing = notifyDisconnected;
+				state->cvState.WakeAllPendings();
+			}
+			if (notifyDisconnected)
+			{
+				StopConnection(state);
+				CS_LOCK(state->lockState)
+				{
+					state->responseFinalizing = false;
+					state->cvState.WakeAllPendings();
+				}
+			}
+			throw;
+		}
+
+		bool fatalAfterDelivery = false;
+		bool notifyDisconnected = false;
+		Ptr<AsyncSocketBuffer> deferredRequestWrite;
+		IAsyncSocketConnection* deferredRequestConnection = nullptr;
+		CS_LOCK(state->lockState)
+		{
+			fatalAfterDelivery = state->fatalAfterResponse;
+			state->fatalAfterResponse = false;
+			notifyDisconnected = state->peerDisconnected;
+			state->responseDelivering = false;
+			state->responseFinalizing = fatalAfterDelivery || closeAfterDelivery || notifyDisconnected;
+			if (state->responseFinalizing)
+			{
+				state->deferredRequestWrite = nullptr;
+				state->deferredRequestClose = false;
+				state->deferredRequestMethod = L"";
+			}
+			else if (state->deferredRequestWrite && !state->stopStarted && !state->terminal && state->socketConnection)
+			{
+				deferredRequestWrite = std::move(state->deferredRequestWrite);
+				state->exchangeActive = true;
+				state->closeAfterExchange = state->deferredRequestClose;
+				state->deferredRequestClose = false;
+				state->activeRequestMethod = std::move(state->deferredRequestMethod);
+				state->activeResponseTimeout = state->deferredResponseTimeout;
+				state->pendingWrite = deferredRequestWrite;
+				state->writePending = true;
+				deferredRequestConnection = state->socketConnection;
+				state->activeSocketCalls++;
+			}
+			state->cvState.WakeAllPendings();
+		}
+
+		try
+		{
+			if (fatalAfterDelivery)
+			{
+				ReportFatalError(state, L"The HTTP client received an unsolicited response after its exchange completed.");
+			}
+			else if (notifyDisconnected)
+			{
+				StopConnection(state);
+			}
+			else if (closeAfterDelivery)
+			{
+				StopConnection(state);
+			}
+		}
+		catch (...)
+		{
+			CS_LOCK(state->lockState)
+			{
+				state->responseFinalizing = false;
+				state->cvState.WakeAllPendings();
+			}
+			throw;
+		}
+
+		CS_LOCK(state->lockState)
+		{
+			state->responseFinalizing = false;
+			state->cvState.WakeAllPendings();
+		}
+		if (!fatalAfterDelivery && !closeAfterDelivery && !notifyDisconnected)
+		{
+			if (deferredRequestWrite)
+			{
+				try
+				{
+					SubmitWrite(state, deferredRequestConnection, deferredRequestWrite);
+				}
+				catch (...)
+				{
+					ReportFatalError(state, L"The HTTP client failed to submit a deferred request write.");
+					return;
+				}
+			}
+			ProcessBufferedInput(state);
+		}
+	}
+
+	void HttpRequestConnection::ProcessBufferedInput(Ptr<Lifecycle> state)
+	{
+		Ptr<HttpRequest> request;
+		Ptr<HttpResponse> response;
+		bool cancelTimeout = false;
+		bool deliverRequest = false;
+		bool deliverResponse = false;
+		bool closeAfterDelivery = false;
+		bool requestFailure = false;
+		bool clientFailure = false;
+		HttpRequestFailure failure = HttpRequestFailure::BadRequest;
+		WString parsedRequestMethod;
+
+		state->lockState.Enter();
+		if (state->stopStarted || state->terminal || state->parserFailed || state->peerDisconnected)
+		{
+			state->lockState.Leave();
+			return;
+		}
+		auto parseEnabled = state->direction == HttpRequestConnectionDirection::Server
+			? !state->awaitingResponse
+			: state->exchangeActive && !state->heldResponse && !state->responseDelivering && !state->responseFinalizing;
+		if (!parseEnabled)
+		{
+			state->lockState.Leave();
+			return;
+		}
+		if (state->receiveBuffer.Count() == 0)
+		{
+			state->lockState.Leave();
+			return;
+		}
+
+		vint consumedBytes = 0;
+		bool messageClose = false;
+		auto result = ParseHttpMessage(
+			&state->receiveBuffer[0],
+			state->receiveBuffer.Count(),
+			state->direction == HttpRequestConnectionDirection::Server,
+			state->activeRequestMethod,
+			parsedRequestMethod,
+			request,
+			response,
+			consumedBytes,
+			messageClose
+			);
+		if (result == HttpMessageParsingResult::Incomplete)
+		{
+			bool armTimeout = false;
+			bool refreshTimeout = false;
+			auto serverSide = state->direction == HttpRequestConnectionDirection::Server;
+			if (serverSide && parsedRequestMethod.Length() > 0)
+			{
+				state->activeRequestMethod = parsedRequestMethod;
+			}
+			auto timeout = serverSide ? HttpIncompleteMessageTimeout : state->activeResponseTimeout;
+			auto canArm = timeout > 0 && (serverSide || !state->writePending);
+			if (canArm && !state->timeoutArmed)
+			{
+				state->timeoutArmed = true;
+				armTimeout = true;
+			}
+			else if (canArm && serverSide)
+			{
+				refreshTimeout = true;
+			}
+			state->lockState.Leave();
+			if (armTimeout)
+			{
+				InstallTimeout(state, timeout, L"The HTTP peer timed out while sending an incomplete message.");
+			}
+			else if (refreshTimeout)
+			{
+				RefreshTimeout(state);
+			}
+			return;
+		}
+		if (result != HttpMessageParsingResult::Succeeded)
+		{
+			if (state->direction == HttpRequestConnectionDirection::Server)
+			{
+				state->activeRequestMethod = parsedRequestMethod;
+				state->parserFailed = true;
+				state->awaitingResponse = true;
+				state->closeAfterExchange = true;
+				state->receiveBuffer.Clear();
+				failure = GetHttpRequestFailure(result);
+				requestFailure = true;
+			}
+			else
+			{
+				clientFailure = true;
+			}
+			state->lockState.Leave();
+		}
+		else
+		{
+			state->receiveBuffer.RemoveRange(0, consumedBytes);
+			if (state->timeoutArmed)
+			{
+				state->timeoutArmed = false;
+				cancelTimeout = true;
+			}
+			state->closeAfterExchange |= messageClose;
+			if (state->direction == HttpRequestConnectionDirection::Server)
+			{
+				state->activeRequestMethod = request->method;
+				state->awaitingResponse = true;
+				deliverRequest = true;
+			}
+			else if (state->writePending)
+			{
+				state->heldResponse = response;
+				if (state->receiveBuffer.Count() > 0)
+				{
+					state->fatalAfterResponse = true;
+					state->receiveBuffer.Clear();
+				}
+			}
+			else
+			{
+				state->exchangeActive = false;
+				state->responseDelivering = true;
+				deliverResponse = true;
+				closeAfterDelivery = state->closeAfterExchange;
+				if (state->receiveBuffer.Count() > 0)
+				{
+					state->fatalAfterResponse = true;
+					state->receiveBuffer.Clear();
+				}
+			}
+			state->lockState.Leave();
+		}
+
+		if (requestFailure)
+		{
+			ReportRequestFailure(state, failure, false, true);
+			return;
+		}
+		if (clientFailure)
+		{
+			ReportFatalError(state, L"The HTTP peer sent malformed or unsafe HTTP/1.1 framing.");
+			return;
+		}
+		if (cancelTimeout)
+		{
+			state->timeoutController->CancelAndWait();
+		}
+		if (deliverRequest)
+		{
+			InvokeHttpCallback(state, false, [&](IHttpRequestCallback* installed)
+			{
+				installed->OnReadRequest(request);
+			});
+		}
+		else if (deliverResponse)
+		{
+			DeliverResponse(state, response, closeAfterDelivery);
+		}
+	}
+
+	void HttpRequestConnection::NotifyDisconnected(Ptr<Lifecycle> state)
+	{
+		auto callbackDepth = CurrentCallbackDepth(state);
+		state->lockState.Enter();
+		if (!state->disconnectedNotified)
+		{
+			state->disconnectedNotified = true;
+			state->terminal = true;
+			state->pendingWrite = nullptr;
+			state->writePending = false;
+			state->heldResponse = nullptr;
+			state->fatalAfterResponse = false;
+			state->deferredRequestWrite = nullptr;
+			state->deferredRequestClose = false;
+			state->deferredRequestMethod = L"";
+			state->cvState.WakeAllPendings();
+		}
+		if (state->disconnectFinished)
+		{
+			state->lockState.Leave();
+			return;
+		}
+		if (state->disconnectDelivering)
+		{
+			if (callbackDepth == 0)
+			{
+				while (!state->disconnectFinished) state->cvState.SleepWith(state->lockState);
+			}
+			state->lockState.Leave();
+			return;
+		}
+		if (callbackDepth == 0)
+		{
+			while (state->activeCallbacks > 0 && !state->disconnectDelivering && !state->disconnectFinished)
+			{
+				state->cvState.SleepWith(state->lockState);
+			}
+			if (state->disconnectFinished)
+			{
+				state->lockState.Leave();
+				return;
+			}
+		}
+		state->disconnectDelivering = true;
+		while (state->activeCallbacks > callbackDepth)
+		{
+			state->cvState.SleepWith(state->lockState);
+		}
+		state->lockState.Leave();
+
+		try
+		{
+			InvokeHttpCallback(state, true, [](IHttpRequestCallback* installed)
+			{
+				installed->OnDisconnected();
+			});
+		}
+		catch (...)
+		{
+			Lifecycle::RetainedAdapterRelease releasing;
+			CS_LOCK(state->lockState)
+			{
+				state->callback = nullptr;
+				state->disconnectFinished = true;
+				state->TakeRetainedAdapterIfDrained(releasing);
+				state->cvState.WakeAllPendings();
+			}
+			throw;
+		}
+
+		Lifecycle::RetainedAdapterRelease releasing;
+		CS_LOCK(state->lockState)
+		{
+			state->callback = nullptr;
+			while (state->activeCallbacks > callbackDepth)
+			{
+				state->cvState.SleepWith(state->lockState);
+			}
+			state->disconnectFinished = true;
+			state->TakeRetainedAdapterIfDrained(releasing);
+			state->cvState.WakeAllPendings();
+		}
+	}
+
+	void HttpRequestConnection::StopConnection(Ptr<Lifecycle> state, Ptr<Object> retainedAdapter)
+	{
+		auto callbackDepth = CurrentCallbackDepth(state);
+		auto socketCallbackDepth = CurrentSocketCallbackDepth(state);
+		auto timeoutCallbackDepth = CurrentTimeoutCallbackDepth(state);
+		auto nestedCallback = callbackDepth > 0 || socketCallbackDepth > 0;
+		IAsyncSocketConnection* connection = nullptr;
+		bool executeStop = false;
+		bool nestedFollower = false;
+		bool timeoutFollower = false;
+		Lifecycle::RetainedAdapterRelease releasing;
+
+		state->lockState.Enter();
+		if (retainedAdapter) state->retainedAdapter = retainedAdapter;
+		if (!state->stopStarted)
+		{
+			state->stopStarted = true;
+			state->timeoutArmed = false;
+			state->pendingWrite = nullptr;
+			state->writePending = false;
+			state->heldResponse = nullptr;
+			state->fatalAfterResponse = false;
+			state->deferredRequestWrite = nullptr;
+			state->deferredRequestClose = false;
+			state->deferredRequestMethod = L"";
+			if (!nestedCallback)
+			{
+				while (state->activeSocketCalls > 0) state->cvState.SleepWith(state->lockState);
+			}
+			connection = state->peerDisconnected ? nullptr : state->socketConnection;
+			executeStop = true;
+		}
+		else if (nestedCallback)
+		{
+			connection = state->socketConnection;
+			nestedFollower = true;
+		}
+		else if (timeoutCallbackDepth > 0)
+		{
+			timeoutFollower = true;
+		}
+		else
+		{
+			while (!state->stopFinished) state->cvState.SleepWith(state->lockState);
+			while (state->activeCallbacks > 0 || state->activeSocketCallbacks > 0 || state->activeSocketCalls > 0)
+			{
+				state->cvState.SleepWith(state->lockState);
+			}
+			state->TakeRetainedAdapterIfDrained(releasing);
+			state->lockState.Leave();
+			return;
+		}
+		state->lockState.Leave();
+
+		if (nestedFollower)
+		{
+			if (connection && socketCallbackDepth > 0) connection->Stop();
+			NotifyDisconnected(state);
+			return;
+		}
+		if (timeoutFollower)
+		{
+			return;
+		}
+		state->timeoutController->CancelAndWait();
+		if (executeStop && connection) connection->Stop();
+		NotifyDisconnected(state);
+
+		CS_LOCK(state->lockState)
+		{
+			while (state->activeCallbacks > callbackDepth || state->activeSocketCallbacks > socketCallbackDepth)
+			{
+				state->cvState.SleepWith(state->lockState);
+			}
+			state->stopFinished = true;
+			state->TakeRetainedAdapterIfDrained(releasing);
+			state->cvState.WakeAllPendings();
+		}
+	}
+
+	void HttpRequestConnection::ReportFatalError(Ptr<Lifecycle> state, const WString& error)
+	{
+		bool report = false;
+		CS_LOCK(state->lockState)
+		{
+			if (!state->terminal && !state->stopStarted)
+			{
+				state->terminal = true;
+				state->parserFailed = true;
+				state->timeoutArmed = false;
+				state->pendingWrite = nullptr;
+				state->writePending = false;
+				state->heldResponse = nullptr;
+				state->fatalAfterResponse = false;
+				state->deferredRequestWrite = nullptr;
+				state->deferredRequestClose = false;
+				state->deferredRequestMethod = L"";
+				report = true;
+				state->cvState.WakeAllPendings();
+			}
+		}
+		if (report)
+		{
+			state->timeoutController->CancelAndWait();
+			try
+			{
+				InvokeHttpCallback(state, true, [&](IHttpRequestCallback* installed)
+				{
+					installed->OnError(error, true);
+				});
+			}
+			catch (...)
+			{
+				StopConnection(state);
+				throw;
+			}
+			StopConnection(state);
+		}
+	}
+
+/***********************************************************************
+HttpRequestConnection
+***********************************************************************/
+
+	HttpRequestConnection::HttpRequestConnection(
+		IAsyncSocketConnection* connection,
+		HttpRequestConnectionDirection direction,
+		Ptr<HttpRequestCallbackDomain> callbackDomain,
+		Ptr<IHttpRequestTimeoutController> timeoutController,
+		bool responseNotFoundIsFatal
+		)
+		: lifecycle(Ptr(new Lifecycle))
+	{
+		CHECK_ERROR(connection, L"HttpRequestConnection requires a valid async socket connection.");
+		lifecycle->socketConnection = connection;
+		lifecycle->direction = direction;
+		lifecycle->responseNotFoundIsFatal = responseNotFoundIsFatal;
+		lifecycle->callbackDomain = callbackDomain ? callbackDomain : Ptr(new HttpRequestCallbackDomain);
+		lifecycle->timeoutController = timeoutController ? timeoutController : CreateHttpRequestTimeoutController();
+		connection->InstallCallback(this);
+	}
+
+	HttpRequestConnection::~HttpRequestConnection()
+	{
+		StopConnection(lifecycle);
+	}
+
+	void HttpRequestConnection::RetainUntilStopped(Ptr<HttpRequestConnection> retainedAdapter, const Func<void()>& drainedCallback)
+	{
+		CHECK_ERROR(retainedAdapter.Obj() == this, L"HttpRequestConnection::RetainUntilStopped requires this connection as its retained adapter.");
+		CHECK_ERROR(drainedCallback, L"HttpRequestConnection::RetainUntilStopped requires a drained callback.");
+		bool canRetain = false;
+		CS_LOCK(lifecycle->lockState)
+		{
+			if (!lifecycle->retainedAdapter && !lifecycle->drainedCallback && !lifecycle->stopStarted)
+			{
+				lifecycle->retainedAdapter = retainedAdapter;
+				lifecycle->drainedCallback = drainedCallback;
+				canRetain = true;
+			}
+		}
+		CHECK_ERROR(canRetain, L"HttpRequestConnection::RetainUntilStopped can only be called once before stopping.");
+	}
+
+	void HttpRequestConnection::StopWithRetainedAdapter(Ptr<HttpRequestConnection> retainedAdapter)
+	{
+		StopConnection(lifecycle, retainedAdapter);
+	}
+
+	bool HttpRequestConnection::IsInsideCallback()
+	{
+		return CurrentCallbackDepth(lifecycle) > 0 || CurrentSocketCallbackDepth(lifecycle) > 0;
+	}
+
+	void HttpRequestConnection::InstallCallback(IHttpRequestCallback* value)
+	{
+		auto state = lifecycle;
+		if (!value)
+		{
+			auto callbackDepth = CurrentCallbackDepth(state);
+			bool uninstallOwner = false;
+			CS_LOCK(state->lockState)
+			{
+				uninstallOwner = state->callback != nullptr;
+				state->callback = nullptr;
+				while ((callbackDepth == 0 || uninstallOwner) && state->activeCallbacks > callbackDepth)
+				{
+					state->cvState.SleepWith(state->lockState);
+				}
+			}
+			return;
+		}
+
+		bool canInstall = false;
+		CS_LOCK(state->lockState)
+		{
+			if (!state->callback && !state->callbackInstalling && !state->stopStarted && !state->terminal)
+			{
+				state->callback = value;
+				state->callbackInstalling = true;
+				state->activeCallbacks++;
+				canInstall = true;
+			}
+		}
+		CHECK_ERROR(canInstall, L"HttpRequestConnection::InstallCallback cannot replace a callback or install one on a stopped connection.");
+
+		CallbackFrame frame(state);
+		try
+		{
+			value->OnInstalled(this);
+		}
+		catch (...)
+		{
+			CS_LOCK(state->lockState)
+			{
+				if (state->callback == value) state->callback = nullptr;
+				state->callbackInstalling = false;
+				state->cvState.WakeAllPendings();
+			}
+			throw;
+		}
+		CS_LOCK(state->lockState)
+		{
+			state->callbackInstalling = false;
+			state->cvState.WakeAllPendings();
+		}
+	}
+
+	void HttpRequestConnection::BeginReadingLoopUnsafe()
+	{
+		auto state = lifecycle;
+		IAsyncSocketConnection* connection = nullptr;
+		Ptr<Object> callRetainer;
+		bool canBegin = false;
+		CS_LOCK(state->lockState)
+		{
+			if (!state->readingStarted && !state->stopStarted && !state->terminal && state->socketConnection)
+			{
+				state->readingStarted = true;
+				connection = state->socketConnection;
+				callRetainer = state->retainedAdapter;
+				state->activeSocketCalls++;
+				canBegin = true;
+			}
+		}
+		CHECK_ERROR(canBegin, L"HttpRequestConnection::BeginReadingLoopUnsafe can only be called once on an active connection.");
+		try
+		{
+			connection->BeginReadingLoopUnsafe();
+		}
+		catch (...)
+		{
+			FinishSocketCall(state);
+			throw;
+		}
+		FinishSocketCall(state);
+	}
+
+	void HttpRequestConnection::SendRequest(Ptr<HttpRequest> request, vint responseTimeout)
+	{
+		auto state = lifecycle;
+		CHECK_ERROR(state->direction == HttpRequestConnectionDirection::Client, L"HttpRequestConnection::SendRequest is only available on a client connection.");
+		CHECK_ERROR(request, L"HttpRequestConnection::SendRequest requires a request.");
+		bool requestClose = false;
+		auto buffer = SerializeHttpMessage(request.Obj(), nullptr, L"", requestClose);
+		IAsyncSocketConnection* connection = nullptr;
+		Ptr<Object> callRetainer;
+		bool canSend = false;
+		bool deferSend = false;
+		CS_LOCK(state->lockState)
+		{
+			auto commonStateAvailable = !state->stopStarted && !state->terminal && !state->peerDisconnected
+				&& !state->exchangeActive && !state->writePending && !state->deferredRequestWrite
+				&& !state->responseFinalizing && !state->fatalAfterResponse && !state->closeAfterExchange && state->socketConnection;
+			if (commonStateAvailable && state->responseDelivering)
+			{
+				state->deferredRequestWrite = buffer;
+				state->deferredRequestClose = requestClose;
+				state->deferredRequestMethod = request->method;
+				state->deferredResponseTimeout = responseTimeout;
+				deferSend = true;
+				canSend = true;
+			}
+			else if (commonStateAvailable && !state->responseDelivering)
+			{
+				state->exchangeActive = true;
+				state->closeAfterExchange = requestClose;
+				state->activeRequestMethod = request->method;
+				state->activeResponseTimeout = responseTimeout;
+				state->pendingWrite = buffer;
+				state->writePending = true;
+				connection = state->socketConnection;
+				callRetainer = state->retainedAdapter;
+				state->activeSocketCalls++;
+				canSend = true;
+			}
+		}
+		CHECK_ERROR(canSend, L"HttpRequestConnection::SendRequest requires an idle active client connection.");
+		if (deferSend) return;
+		SubmitWrite(state, connection, buffer);
+		ProcessBufferedInput(state);
+	}
+
+	void HttpRequestConnection::SendResponse(Ptr<HttpResponse> response)
+	{
+		auto state = lifecycle;
+		CHECK_ERROR(state->direction == HttpRequestConnectionDirection::Server, L"HttpRequestConnection::SendResponse is only available on a server connection.");
+		CHECK_ERROR(response, L"HttpRequestConnection::SendResponse requires a response.");
+		WString responseToMethod;
+		CS_LOCK(state->lockState)
+		{
+			responseToMethod = state->activeRequestMethod;
+		}
+		bool responseClose = false;
+		auto buffer = SerializeHttpMessage(nullptr, response.Obj(), responseToMethod, responseClose);
+		IAsyncSocketConnection* connection = nullptr;
+		Ptr<Object> callRetainer;
+		bool canSend = false;
+		CS_LOCK(state->lockState)
+		{
+			if (!state->stopStarted && !state->terminal && state->awaitingResponse && !state->writePending && state->socketConnection)
+			{
+				state->closeAfterExchange |= responseClose;
+				state->pendingWrite = buffer;
+				state->writePending = true;
+				connection = state->socketConnection;
+				callRetainer = state->retainedAdapter;
+				state->activeSocketCalls++;
+				canSend = true;
+			}
+		}
+		CHECK_ERROR(canSend, L"HttpRequestConnection::SendResponse requires one delivered request without a response in progress.");
+		SubmitWrite(state, connection, buffer);
+	}
+
+	void HttpRequestConnection::Stop()
+	{
+		StopConnection(lifecycle);
+	}
+
+	void HttpRequestConnection::OnRead(const vuint8_t* buffer, vint size)
+	{
+		auto state = lifecycle;
+		SocketCallbackFrame frame(state);
+		if (!buffer || size <= 0) return;
+		bool tooLarge = false;
+		bool requestTooLarge = false;
+		bool unsolicited = false;
+		CS_LOCK(state->lockState)
+		{
+			if (state->stopStarted || state->terminal || state->parserFailed || state->peerDisconnected) return;
+			if (state->direction == HttpRequestConnectionDirection::Client && state->heldResponse)
+			{
+				state->fatalAfterResponse = true;
+			}
+			else if (state->direction == HttpRequestConnectionDirection::Client && (state->responseDelivering || state->responseFinalizing) && !state->exchangeActive)
+			{
+				state->fatalAfterResponse = true;
+			}
+			else if (state->direction == HttpRequestConnectionDirection::Client && !state->exchangeActive)
+			{
+				state->parserFailed = true;
+				unsolicited = true;
+			}
+			else if (size > HttpWireMessageSizeLimit - state->receiveBuffer.Count())
+			{
+				if (state->direction == HttpRequestConnectionDirection::Server)
+				{
+					state->parserFailed = true;
+					state->awaitingResponse = true;
+					state->closeAfterExchange = true;
+					state->receiveBuffer.Clear();
+					requestTooLarge = true;
+				}
+				else
+				{
+					state->parserFailed = true;
+					tooLarge = true;
+				}
+			}
+			else
+			{
+				for (vint i = 0; i < size; i++) state->receiveBuffer.Add(buffer[i]);
+			}
+		}
+		if (unsolicited)
+		{
+			ReportFatalError(state, L"The HTTP client received bytes without an active request exchange.");
+			return;
+		}
+		if (tooLarge)
+		{
+			ReportFatalError(state, L"The HTTP peer exceeded the configured wire-message size limit.");
+			return;
+		}
+		if (requestTooLarge)
+		{
+			ReportRequestFailure(state, HttpRequestFailure::PayloadTooLarge, false, true);
+			return;
+		}
+		ProcessBufferedInput(state);
+	}
+
+	void HttpRequestConnection::OnWriteCompleted(Ptr<AsyncSocketBuffer> buffer)
+	{
+		auto state = lifecycle;
+		SocketCallbackFrame frame(state);
+		bool mismatched = false;
+		bool ignored = false;
+		CS_LOCK(state->lockState)
+		{
+			if (!state->writePending || state->pendingWrite.Obj() != buffer.Obj())
+			{
+				if (state->stopStarted || state->terminal || state->peerDisconnected)
+				{
+					ignored = true;
+				}
+				else
+				{
+					mismatched = true;
+				}
+			}
+			else
+			{
+				state->pendingWrite = nullptr;
+			}
+		}
+		if (ignored) return;
+		CHECK_ERROR(!mismatched, L"HttpRequestConnection received a completion for an unexpected async socket buffer.");
+
+		InvokeHttpCallback(state, false, [](IHttpRequestCallback* installed)
+		{
+			installed->OnWriteCompleted();
+		});
+
+		Ptr<HttpResponse> response;
+		bool serverSide = false;
+		bool closeAfterDelivery = false;
+		bool armTimeout = false;
+		vint responseTimeout = 0;
+		CS_LOCK(state->lockState)
+		{
+			if (state->stopStarted || state->terminal) return;
+			state->writePending = false;
+			serverSide = state->direction == HttpRequestConnectionDirection::Server;
+			if (serverSide)
+			{
+				state->awaitingResponse = false;
+				state->activeRequestMethod = L"";
+				closeAfterDelivery = state->closeAfterExchange;
+			}
+			else if (state->heldResponse)
+			{
+				response = std::move(state->heldResponse);
+				state->exchangeActive = false;
+				state->responseDelivering = true;
+				closeAfterDelivery = state->closeAfterExchange;
+			}
+			else if (!state->peerDisconnected && !state->timeoutArmed && state->activeResponseTimeout > 0)
+			{
+				state->timeoutArmed = true;
+				responseTimeout = state->activeResponseTimeout;
+				armTimeout = true;
+			}
+		}
+
+		if (response)
+		{
+			DeliverResponse(state, response, closeAfterDelivery);
+		}
+		else if (closeAfterDelivery)
+		{
+			StopConnection(state);
+		}
+		else if (serverSide)
+		{
+			ProcessBufferedInput(state);
+		}
+		else if (armTimeout)
+		{
+			InstallTimeout(state, responseTimeout, L"The HTTP peer timed out before sending a response header.");
+		}
+	}
+
+	void HttpRequestConnection::OnError(const WString& error, bool fatal)
+	{
+		auto state = lifecycle;
+		SocketCallbackFrame frame(state);
+		if (fatal)
+		{
+			ReportFatalError(state, error);
+		}
+		else
+		{
+			InvokeHttpCallback(state, false, [&](IHttpRequestCallback* installed)
+			{
+				installed->OnError(error, false);
+			});
+		}
+	}
+
+	void HttpRequestConnection::OnConnected()
+	{
+		auto state = lifecycle;
+		SocketCallbackFrame frame(state);
+		InvokeHttpCallback(state, false, [](IHttpRequestCallback* installed)
+		{
+			installed->OnConnected();
+		});
+	}
+
+	void HttpRequestConnection::OnDisconnected()
+	{
+		auto state = lifecycle;
+		SocketCallbackFrame frame(state);
+		IAsyncSocketConnection* connection = nullptr;
+		bool incomplete = false;
+		bool surplusAfterHeldResponse = false;
+		bool deferDisconnected = false;
+		bool cancelTimeout = false;
+		CS_LOCK(state->lockState)
+		{
+			state->peerDisconnected = true;
+			state->timeoutArmed = false;
+			cancelTimeout = !state->stopStarted;
+			connection = state->socketConnection;
+			if (!state->terminal && !state->stopStarted && state->direction == HttpRequestConnectionDirection::Client && state->heldResponse)
+			{
+				surplusAfterHeldResponse = state->fatalAfterResponse;
+				incomplete = !surplusAfterHeldResponse;
+				state->terminal = true;
+				state->pendingWrite = nullptr;
+				state->writePending = false;
+			}
+			else if (state->direction == HttpRequestConnectionDirection::Client && (state->responseDelivering || state->responseFinalizing))
+			{
+				deferDisconnected = true;
+			}
+			else
+			{
+				incomplete = !state->terminal && !state->stopStarted && (
+					state->direction == HttpRequestConnectionDirection::Client
+						? state->exchangeActive
+						: !state->awaitingResponse && state->receiveBuffer.Count() > 0
+					);
+				state->terminal = true;
+			}
+		}
+		if (connection)
+		{
+			connection->InstallCallback(nullptr);
+		}
+		CS_LOCK(state->lockState)
+		{
+			if (state->socketConnection == connection) state->socketConnection = nullptr;
+			state->cvState.WakeAllPendings();
+		}
+		if (cancelTimeout)
+		{
+			state->timeoutController->CancelAndWait();
+		}
+		if (deferDisconnected)
+		{
+			return;
+		}
+		if (surplusAfterHeldResponse)
+		{
+			InvokeHttpCallback(state, true, [](IHttpRequestCallback* installed)
+			{
+				installed->OnError(L"The HTTP client received an unsolicited response after its exchange completed.", true);
+			});
+		}
+		else if (incomplete)
+		{
+			InvokeHttpCallback(state, true, [](IHttpRequestCallback* installed)
+			{
+				installed->OnError(L"The HTTP peer disconnected while a message was incomplete.", true);
+			});
+		}
+		NotifyDisconnected(state);
+		StopConnection(state);
+	}
+
+	void HttpRequestConnection::OnInstalled(IAsyncSocketConnection* connection)
+	{
+		auto state = lifecycle;
+		SocketCallbackFrame frame(state);
+		CHECK_ERROR(connection == state->socketConnection, L"HttpRequestConnection was installed on an unexpected async socket connection.");
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\ASYNCSOCKET\ASYNCSOCKET_HTTPREQUESTCLIENT.CPP
+***********************************************************************/
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+namespace vl::inter_process::async_tcp_socket
+{
+/***********************************************************************
+HttpRequestClient::Impl
+***********************************************************************/
+
+	class HttpRequestClient::Impl : public Object
+	{
+	private:
+		class DeferredClientRelease : public Object
+		{
+		private:
+			CriticalSection					lockState;
+			Ptr<DeferredClientRelease>		selfReference;
+			Ptr<IAsyncSocketClient>			retainedClient;
+
+		public:
+			DeferredClientRelease(Ptr<IAsyncSocketClient> client)
+				: retainedClient(client)
+			{
+			}
+
+			void InitializeSelf(Ptr<DeferredClientRelease> self)
+			{
+				CS_LOCK(lockState)
+				{
+					selfReference = self;
+				}
+			}
+
+			void Run()
+			{
+				Ptr<IAsyncSocketClient> client;
+				CS_LOCK(lockState)
+				{
+					client = retainedClient;
+				}
+				try
+				{
+					client->GetConnection()->Stop();
+				}
+				catch (...)
+				{
+				}
+				CS_LOCK(lockState)
+				{
+					retainedClient = nullptr;
+					selfReference = nullptr;
+				}
+			}
+		};
+
+		Ptr<IAsyncSocketClient>				client;
+		Ptr<HttpRequestConnection>			connection;
+
+		static void QueueDeferredRelease(Ptr<DeferredClientRelease> deferredRelease)
+		{
+			auto finalize = Func<void()>([deferredRelease]()
+			{
+				deferredRelease->Run();
+			});
+			if (!ThreadPoolLite::Queue(finalize))
+			{
+				// The holder self-reference keeps the native client alive if the
+				// operating system cannot start either asynchronous cleanup path.
+				if (!Thread::CreateAndStart(finalize)) return;
+			}
+		}
+
+	public:
+		Impl(Ptr<IAsyncSocketClient> _client)
+			: client(_client)
+		{
+#define ERROR_MESSAGE_PREFIX L"vl::inter_process::async_tcp_socket::HttpRequestClient::HttpRequestClient(Ptr<IAsyncSocketClient>)#"
+			CHECK_ERROR(client, ERROR_MESSAGE_PREFIX L"Requires a client.");
+			connection = Ptr(new HttpRequestConnection(
+				client->GetConnection(),
+				HttpRequestConnectionDirection::Client,
+				nullptr,
+				nullptr,
+				true
+				));
+#undef ERROR_MESSAGE_PREFIX
+		}
+
+		~Impl()
+		{
+			auto deferFinalization = connection->IsInsideCallback();
+			Ptr<DeferredClientRelease> deferredRelease;
+			if (deferFinalization)
+			{
+				deferredRelease = Ptr(new DeferredClientRelease(client));
+				deferredRelease->InitializeSelf(deferredRelease);
+			}
+			connection->StopWithRetainedAdapter(connection);
+			if (deferFinalization)
+			{
+				QueueDeferredRelease(deferredRelease);
+			}
+		}
+
+		IHttpRequestConnection* GetConnection()
+		{
+			return connection.Obj();
+		}
+
+		void WaitForServer()
+		{
+			client->WaitForServer();
+		}
+
+		ClientStatus GetStatus()
+		{
+			return client->GetStatus();
+		}
+	};
+
+/***********************************************************************
+HttpRequestClient
+***********************************************************************/
+
+	HttpRequestClient::HttpRequestClient(Ptr<IAsyncSocketClient> client)
+		: impl(Ptr(new Impl(client)))
+	{
+	}
+
+	HttpRequestClient::~HttpRequestClient()
+	{
+	}
+
+	IHttpRequestConnection* HttpRequestClient::GetConnection()
+	{
+		return impl->GetConnection();
+	}
+
+	void HttpRequestClient::WaitForServer()
+	{
+		impl->WaitForServer();
+	}
+
+	ClientStatus HttpRequestClient::GetStatus()
+	{
+		return impl->GetStatus();
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\ASYNCSOCKET\ASYNCSOCKET_HTTPREQUESTSERVER.CPP
+***********************************************************************/
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+namespace vl::inter_process::async_tcp_socket
+{
+/***********************************************************************
+HttpRequestServer::Impl
+***********************************************************************/
+
+	class HttpRequestServer::Impl : public Object
+	{
+	private:
+		class Lifecycle : public Object
+		{
+		public:
+			HttpRequestServer*					owner = nullptr;
+			Ptr<IAsyncSocketServer>				server;
+			Ptr<HttpRequestCallbackDomain>		callbackDomain = Ptr(new HttpRequestCallbackDomain);
+			Func<Ptr<IHttpRequestTimeoutController>()>
+										timeoutControllerFactory;
+
+			// covers owner, connections, and all lifecycle flags below
+			CriticalSection						lockState;
+			ConditionVariable					cvState;
+			collections::List<Ptr<HttpRequestConnection>>
+										connections;
+			bool								startCalled = false;
+			bool								stopStarted = false;
+			bool								unexpectedStopNotified = false;
+			bool								stopFinished = false;
+			bool								nativeStopCalling = false;
+			bool								destroyStarted = false;
+			bool								destroyAdaptersRetained = false;
+
+			Lifecycle(
+				HttpRequestServer* _owner,
+				Ptr<IAsyncSocketServer> _server,
+				const Func<Ptr<IHttpRequestTimeoutController>()>& _timeoutControllerFactory
+				)
+				: owner(_owner)
+				, server(_server)
+				, timeoutControllerFactory(_timeoutControllerFactory)
+			{
+			}
+		};
+
+		class SocketServerCallback
+			: public Object
+			, public virtual IAsyncSocketServerCallback
+		{
+		private:
+			Ptr<Lifecycle>						lifecycle;
+			CriticalSection						lockSelf;
+			Ptr<SocketServerCallback>			selfReference;
+
+		public:
+			SocketServerCallback(Ptr<Lifecycle> _lifecycle)
+				: lifecycle(_lifecycle)
+			{
+			}
+
+			void InitializeSelf(Ptr<SocketServerCallback> self)
+			{
+				CS_LOCK(lockSelf)
+				{
+					selfReference = self;
+				}
+			}
+
+			void ReleaseSelfReference()
+			{
+				CS_LOCK(lockSelf)
+				{
+					selfReference = nullptr;
+				}
+			}
+
+			WaitForClientResult OnClientConnected(Ptr<IAsyncSocketConnection> connection) override
+			{
+				Ptr<SocketServerCallback> self;
+				CS_LOCK(lockSelf)
+				{
+					self = selfReference;
+				}
+				return self
+					? Impl::OnSocketClientConnected(lifecycle, connection)
+					: WaitForClientResult::Reject;
+			}
+
+			void OnServerStopped() override
+			{
+				Ptr<SocketServerCallback> self;
+				CS_LOCK(lockSelf)
+				{
+					self = selfReference;
+				}
+				if (self)
+				{
+					Impl::OnSocketServerStopped(lifecycle);
+				}
+			}
+		};
+
+		Ptr<Lifecycle>						lifecycle;
+		Ptr<SocketServerCallback>			callback;
+
+		static void StopConnections(Ptr<Lifecycle> state, bool retainAdapters = false)
+		{
+			collections::List<Ptr<HttpRequestConnection>> stoppingConnections;
+			CS_LOCK(state->lockState)
+			{
+				for (auto connection : state->connections)
+				{
+					stoppingConnections.Add(connection);
+				}
+			}
+			for (auto connection : stoppingConnections)
+			{
+				if (retainAdapters)
+				{
+					connection->StopWithRetainedAdapter(connection);
+				}
+				else
+				{
+					connection->Stop();
+				}
+			}
+		}
+
+		static void FinalizeDestroyedOwner(Ptr<Lifecycle> state)
+		{
+			CS_LOCK(state->lockState)
+			{
+				if (state->destroyStarted && state->destroyAdaptersRetained)
+				{
+					state->owner = nullptr;
+					state->connections.Clear();
+				}
+			}
+		}
+
+		static void QueueDeferredStop(Ptr<Lifecycle> state, Ptr<SocketServerCallback> retainedCallback)
+		{
+			auto finalize = Func<void()>([state, retainedCallback]()
+			{
+				state->lockState.Enter();
+				while (!state->stopFinished || state->nativeStopCalling)
+				{
+					state->cvState.SleepWith(state->lockState);
+				}
+				state->nativeStopCalling = true;
+				state->lockState.Leave();
+
+				try
+				{
+					state->server->Stop();
+				}
+				catch (...)
+				{
+				}
+				try
+				{
+					StopConnections(state);
+				}
+				catch (...)
+				{
+				}
+				state->callbackDomain->WaitForCallbacks(0);
+				FinalizeDestroyedOwner(state);
+
+				CS_LOCK(state->lockState)
+				{
+					state->nativeStopCalling = false;
+					state->cvState.WakeAllPendings();
+				}
+				retainedCallback->ReleaseSelfReference();
+			});
+			if (!ThreadPoolLite::Queue(finalize))
+			{
+				// The callback self-reference keeps all deferred state alive if the
+				// operating system cannot start either asynchronous cleanup path.
+				if (!Thread::CreateAndStart(finalize)) return;
+			}
+		}
+
+		static WaitForClientResult OnSocketClientConnected(Ptr<Lifecycle> state, Ptr<IAsyncSocketConnection> connection)
+		{
+			HttpRequestCallbackDomain::CallbackFrame callbackFrame(state->callbackDomain);
+			HttpRequestServer* owner = nullptr;
+			CS_LOCK(state->lockState)
+			{
+				if (!state->stopStarted)
+				{
+					owner = state->owner;
+				}
+			}
+			if (!owner)
+			{
+				return WaitForClientResult::Reject;
+			}
+
+			Ptr<IHttpRequestTimeoutController> timeoutController;
+			try
+			{
+				if (state->timeoutControllerFactory)
+				{
+					timeoutController = state->timeoutControllerFactory();
+					CHECK_ERROR(timeoutController, L"The HTTP request timeout controller factory returned null.");
+				}
+			}
+			catch (...)
+			{
+				return WaitForClientResult::Reject;
+			}
+
+			auto httpConnection = Ptr(new HttpRequestConnection(
+				connection.Obj(),
+				HttpRequestConnectionDirection::Server,
+				state->callbackDomain,
+				timeoutController
+				));
+			auto connectionObject = httpConnection.Obj();
+			httpConnection->RetainUntilStopped(httpConnection, Func<void()>([state, connectionObject]()
+			{
+				CS_LOCK(state->lockState)
+				{
+					state->connections.Remove(connectionObject);
+					state->cvState.WakeAllPendings();
+				}
+			}));
+			bool invoke = false;
+			CS_LOCK(state->lockState)
+			{
+				if (!state->stopStarted && state->owner == owner)
+				{
+					state->connections.Add(httpConnection);
+					invoke = true;
+				}
+			}
+			if (!invoke)
+			{
+				httpConnection->StopWithRetainedAdapter(httpConnection);
+				return WaitForClientResult::Reject;
+			}
+
+			auto result = WaitForClientResult::Reject;
+			try
+			{
+				result = owner->OnClientConnected(httpConnection);
+			}
+			catch (...)
+			{
+				result = WaitForClientResult::Reject;
+			}
+
+			bool accepted = false;
+			CS_LOCK(state->lockState)
+			{
+				accepted = result == WaitForClientResult::Accept && !state->stopStarted;
+				if (!accepted)
+				{
+					state->connections.Remove(httpConnection.Obj());
+				}
+			}
+			if (!accepted)
+			{
+				httpConnection->StopWithRetainedAdapter(httpConnection);
+			}
+			return accepted ? WaitForClientResult::Accept : WaitForClientResult::Reject;
+		}
+
+		static void OnSocketServerStopped(Ptr<Lifecycle> state)
+		{
+			HttpRequestCallbackDomain::CallbackFrame callbackFrame(state->callbackDomain);
+			HttpRequestServer* owner = nullptr;
+			CS_LOCK(state->lockState)
+			{
+				if (!state->stopStarted && !state->unexpectedStopNotified)
+				{
+					state->unexpectedStopNotified = true;
+					owner = state->owner;
+				}
+			}
+			if (owner)
+			{
+				try
+				{
+					owner->OnServerStopped();
+				}
+				catch (...)
+				{
+				}
+			}
+		}
+
+	public:
+		Impl(
+			HttpRequestServer* owner,
+			Ptr<IAsyncSocketServer> server,
+			const Func<Ptr<IHttpRequestTimeoutController>()>& timeoutControllerFactory
+			)
+		{
+#define ERROR_MESSAGE_PREFIX L"vl::inter_process::async_tcp_socket::HttpRequestServer::HttpRequestServer(Ptr<IAsyncSocketServer>)#"
+			CHECK_ERROR(server, ERROR_MESSAGE_PREFIX L"Requires a server.");
+			lifecycle = Ptr(new Lifecycle(owner, server, timeoutControllerFactory));
+			callback = Ptr(new SocketServerCallback(lifecycle));
+#undef ERROR_MESSAGE_PREFIX
+		}
+
+		~Impl()
+		{
+			Destroy();
+		}
+
+		void Start()
+		{
+#define ERROR_MESSAGE_PREFIX L"vl::inter_process::async_tcp_socket::HttpRequestServer::Start()#"
+			auto state = lifecycle;
+			bool canStart = false;
+			CS_LOCK(state->lockState)
+			{
+				if (!state->startCalled && !state->stopStarted)
+				{
+					state->startCalled = true;
+					canStart = true;
+				}
+			}
+			CHECK_ERROR(canStart, ERROR_MESSAGE_PREFIX L"Can only be called once before stopping.");
+
+			callback->InitializeSelf(callback);
+			try
+			{
+				state->server->Start(callback.Obj());
+			}
+			catch (...)
+			{
+				try
+				{
+					Stop();
+				}
+				catch (...)
+				{
+				}
+				throw;
+			}
+#undef ERROR_MESSAGE_PREFIX
+		}
+
+		void Stop()
+		{
+			auto state = lifecycle;
+			auto retainedCallback = callback;
+			auto callbackDepth = state->callbackDomain->CurrentCallbackDepth();
+			bool firstStop = false;
+			bool nestedFollower = false;
+			bool deferFinalization = false;
+			state->lockState.Enter();
+			if (!state->stopStarted)
+			{
+				state->stopStarted = true;
+				state->nativeStopCalling = true;
+				firstStop = true;
+			}
+			else if (callbackDepth > 0)
+			{
+				nestedFollower = true;
+			}
+			else
+			{
+				while (!state->stopFinished || state->nativeStopCalling)
+				{
+					state->cvState.SleepWith(state->lockState);
+				}
+				state->nativeStopCalling = true;
+			}
+			state->lockState.Leave();
+			if (nestedFollower)
+			{
+				StopConnections(state);
+				return;
+			}
+
+			try
+			{
+				state->server->Stop();
+				StopConnections(state);
+				state->callbackDomain->WaitForCallbacks(firstStop ? callbackDepth : 0);
+				deferFinalization = firstStop && callbackDepth > 0;
+				if (!deferFinalization)
+				{
+					FinalizeDestroyedOwner(state);
+					retainedCallback->ReleaseSelfReference();
+				}
+			}
+			catch (...)
+			{
+				if (!firstStop || callbackDepth == 0)
+				{
+					retainedCallback->ReleaseSelfReference();
+				}
+				CS_LOCK(state->lockState)
+				{
+					state->nativeStopCalling = false;
+					if (firstStop)
+					{
+						state->stopFinished = true;
+					}
+					state->cvState.WakeAllPendings();
+				}
+				throw;
+			}
+
+			CS_LOCK(state->lockState)
+			{
+				state->nativeStopCalling = false;
+				if (firstStop)
+				{
+					state->stopFinished = true;
+				}
+				state->cvState.WakeAllPendings();
+			}
+			if (deferFinalization)
+			{
+				QueueDeferredStop(state, retainedCallback);
+			}
+		}
+
+		void Destroy()
+		{
+			auto state = lifecycle;
+			bool execute = false;
+			CS_LOCK(state->lockState)
+			{
+				if (!state->destroyStarted)
+				{
+					state->destroyStarted = true;
+					execute = true;
+				}
+			}
+			if (!execute)
+			{
+				return;
+			}
+
+			Stop();
+			StopConnections(state, true);
+			CS_LOCK(state->lockState)
+			{
+				state->destroyAdaptersRetained = true;
+			}
+			if (state->callbackDomain->CurrentCallbackDepth() == 0)
+			{
+				state->callbackDomain->WaitForCallbacks(0);
+				FinalizeDestroyedOwner(state);
+			}
+		}
+
+		bool IsStopped()
+		{
+			return lifecycle->server->IsStopped();
+		}
+	};
+
+/***********************************************************************
+HttpRequestServer
+***********************************************************************/
+
+	HttpRequestServer::HttpRequestServer(Ptr<IAsyncSocketServer> server)
+		: HttpRequestServer(server, {})
+	{
+	}
+
+	HttpRequestServer::HttpRequestServer(
+		Ptr<IAsyncSocketServer> server,
+		const Func<Ptr<IHttpRequestTimeoutController>()>& timeoutControllerFactory
+		)
+		: impl(Ptr(new Impl(this, server, timeoutControllerFactory)))
+	{
+	}
+
+	HttpRequestServer::~HttpRequestServer()
+	{
+		impl->Destroy();
+	}
+
+	WaitForClientResult HttpRequestServer::OnClientConnected(Ptr<IHttpRequestConnection>)
+	{
+		return WaitForClientResult::Accept;
+	}
+
+	void HttpRequestServer::OnServerStopped()
+	{
+		Stop();
+	}
+
+	void HttpRequestServer::Start()
+	{
+		impl->Start();
+	}
+
+	void HttpRequestServer::Stop()
+	{
+		impl->Stop();
+	}
+
+	bool HttpRequestServer::IsStopped()
+	{
+		return impl->IsStopped();
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\ASYNCSOCKET\ASYNCSOCKET_HTTPSERVER.CPP
+***********************************************************************/
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+#include <random>
+
+namespace vl::inter_process::async_tcp_socket
+{
+	using namespace collections;
+
+	namespace
+	{
+		constexpr vint						GeneratedTokenLength = 36;
+
+		WString ValidateServerUrlPrefix(const WString& urlPrefix)
+		{
+#define ERROR_MESSAGE_PREFIX L"vl::inter_process::async_tcp_socket::SocketHttpServer::SocketHttpServer(Ptr<IAsyncSocketServer>, const WString&)#"
+			auto normalizedUrlPrefix = urlPrefix;
+			while (normalizedUrlPrefix.Length() > 0 && normalizedUrlPrefix[normalizedUrlPrefix.Length() - 1] == L'/')
+			{
+				normalizedUrlPrefix = normalizedUrlPrefix.Left(normalizedUrlPrefix.Length() - 1);
+			}
+			CHECK_ERROR(ValidateHttpNetworkProtocolBaseUrl(normalizedUrlPrefix), ERROR_MESSAGE_PREFIX L"urlPrefix must be empty or a legal ASCII origin-form path prefix.");
+			CHECK_ERROR(ValidateHttpRequestLine(L"GET", normalizedUrlPrefix + HttpServerUrl_Connect) == HttpRequestLineValidationResult::Succeeded, ERROR_MESSAGE_PREFIX L"The /Connect target exceeds the HTTP request-line limit.");
+			const WString tokenPlaceholder = L"000000000000000000000000000000000000";
+			CHECK_ERROR(ValidateHttpRequestLine(L"POST", normalizedUrlPrefix + HttpServerUrl_Request + L"/" + tokenPlaceholder) == HttpRequestLineValidationResult::Succeeded, ERROR_MESSAGE_PREFIX L"The /Request target plus a generated token exceeds the HTTP request-line limit.");
+			CHECK_ERROR(ValidateHttpRequestLine(L"POST", normalizedUrlPrefix + HttpServerUrl_Response + L"/" + tokenPlaceholder) == HttpRequestLineValidationResult::Succeeded, ERROR_MESSAGE_PREFIX L"The /Response target plus a generated token exceeds the HTTP request-line limit.");
+			return normalizedUrlPrefix;
+#undef ERROR_MESSAGE_PREFIX
+		}
+
+		bool HasEmptyBody(Ptr<HttpRequest> request)
+		{
+			if (!request || request->body.chunks.Count() != 0 || request->body.trailers.Count() != 0) return false;
+			HttpFraming framing;
+			if (AnalyzeHttpFraming(request->headers, framing) != HttpFramingAnalysisResult::Succeeded) return false;
+			if (framing.kind == HttpFramingKind::None) return true;
+			return
+				framing.kind == HttpFramingKind::ContentLength &&
+				framing.contentLength == 0 &&
+				framing.contentLengthFieldCount == 1 &&
+				framing.contentLengthValueCount == 1 &&
+				framing.contentLengthValuesPlainDecimal;
+		}
+
+		bool DecodeSubmittedMessage(Ptr<SocketHttpRequestContext> context, Ptr<HttpRequest> request, WString& message)
+		{
+			if (!request || request->body.trailers.Count() != 0) return false;
+			HttpFraming framing;
+			if (AnalyzeHttpFraming(request->headers, framing) != HttpFramingAnalysisResult::Succeeded) return false;
+			if (
+				framing.kind != HttpFramingKind::ContentLength ||
+				framing.contentLength == 0 ||
+				framing.contentLengthFieldCount != 1 ||
+				framing.contentLengthValueCount != 1 ||
+				!framing.contentLengthValuesPlainDecimal ||
+				CountHttpFields(request->headers, L"content-type") != 1
+				)
+			{
+				return false;
+			}
+			auto contentType = FindHttpField(request->headers, L"content-type");
+			return
+				HttpFieldValueEqualsAscii(contentType->value, HttpNetworkProtocolContentType) &&
+				context->TryGetBodyUtf8(message) &&
+				IsValidHttpNetworkProtocolMessage(message);
+		}
+
+		bool ExtractToken(const WString& path, const wchar_t* route, WString& token)
+		{
+			auto prefix = WString::Unmanaged(route) + L"/";
+			if (path.Length() <= prefix.Length() || path.Left(prefix.Length()) != prefix) return false;
+			token = path.Right(path.Length() - prefix.Length());
+			return token.Length() > 0;
+		}
+
+		WString GenerateToken()
+		{
+			vuint8_t bytes[16];
+			std::random_device random;
+			for (vint i = 0; i < 16; i++) bytes[i] = (vuint8_t)random();
+			bytes[6] = (bytes[6] & 0x0F) | 0x40;
+			bytes[8] = (bytes[8] & 0x3F) | 0x80;
+
+			const wchar_t* hex = L"0123456789abcdef";
+			wchar_t text[GeneratedTokenLength];
+			vint writing = 0;
+			for (vint i = 0; i < 16; i++)
+			{
+				if (i == 4 || i == 6 || i == 8 || i == 10) text[writing++] = L'-';
+				text[writing++] = hex[bytes[i] >> 4];
+				text[writing++] = hex[bytes[i] & 0x0F];
+			}
+			return WString::CopyFrom(text, GeneratedTokenLength);
+		}
+
+		BEGIN_GLOBAL_STORAGE_CLASS(SocketHttpServerTestHooks)
+			SpinLock							lock;
+			Func<void(const WString&)>			claimed;
+			Func<void(const WString&, bool)>		completed;
+			Func<void(const WString&)>			registered;
+			Func<bool(const WString&)>			cancelBeforeResponse;
+		INITIALIZE_GLOBAL_STORAGE_CLASS
+		FINALIZE_GLOBAL_STORAGE_CLASS
+			SPIN_LOCK(lock)
+			{
+				claimed = {};
+				completed = {};
+				registered = {};
+				cancelBeforeResponse = {};
+			}
+		END_GLOBAL_STORAGE_CLASS(SocketHttpServerTestHooks)
+
+		void InvokePollClaimed(const WString& token)
+		{
+			Func<void(const WString&)> callback;
+			auto& hooks = GetSocketHttpServerTestHooks();
+			SPIN_LOCK(hooks.lock) { callback = hooks.claimed; }
+			if (callback) try { callback(token); } catch (...) {}
+		}
+
+		void InvokePollCompleted(const WString& token, bool succeeded)
+		{
+			Func<void(const WString&, bool)> callback;
+			auto& hooks = GetSocketHttpServerTestHooks();
+			SPIN_LOCK(hooks.lock) { callback = hooks.completed; }
+			if (callback) try { callback(token, succeeded); } catch (...) {}
+		}
+
+		void InvokePollRegistered(const WString& token)
+		{
+			Func<void(const WString&)> callback;
+			auto& hooks = GetSocketHttpServerTestHooks();
+			SPIN_LOCK(hooks.lock) { callback = hooks.registered; }
+			if (callback) try { callback(token); } catch (...) {}
+		}
+
+		bool ShouldCancelPollBeforeResponse(const WString& token)
+		{
+			Func<bool(const WString&)> callback;
+			auto& hooks = GetSocketHttpServerTestHooks();
+			SPIN_LOCK(hooks.lock) { callback = hooks.cancelBeforeResponse; }
+			if (callback) try { return callback(token); } catch (...) {}
+			return false;
+		}
+
+		class SocketHttpServerConnection;
+		class SocketHttpServerLifecycle;
+		class SocketHttpServerOutboundMessage : public Object
+		{
+		public:
+			Array<vuint8_t>					body;
+		};
+
+		class SocketHttpServerConnectionLifecycle : public Object
+		{
+		public:
+			CriticalSection						lockState;
+			ConditionVariable					cvState;
+			SocketHttpServerConnection*			owner = nullptr;
+			Ptr<SocketHttpServerLifecycle>		server;
+			WString								token;
+			INetworkProtocolCallback*			callback = nullptr;
+			List<WString>						queuedInbound;
+			List<Ptr<SocketHttpServerOutboundMessage>>
+										queuedOutbound;
+			List<Ptr<SocketHttpRequestContext>>
+										queuedPollRegistrations;
+			Ptr<SocketHttpRequestContext>		pendingPoll;
+			Ptr<SocketHttpRequestContext>		inFlightPoll;
+			Ptr<SocketHttpServerOutboundMessage>
+										inFlightMessage;
+			Ptr<IHttpRequestTimeoutController>
+										pollAcknowledgementTimeout = CreateHttpRequestTimeoutController();
+			vint								activeCallbacks = 0;
+			bool								callbackInstalling = false;
+			bool								pollRegistrationProcessing = false;
+			bool								pollFailureReporting = false;
+			bool								pollAcknowledgementPending = false;
+			bool								pollAcknowledgementReporting = false;
+			bool								accepted = false;
+			bool								stopStarted = false;
+			bool								stopCancellationFinished = false;
+			bool								stopFinished = false;
+			bool								stopAssistProcessing = false;
+			bool								disconnectDelivering = false;
+			bool								disconnectFinished = false;
+		};
+
+		class SocketHttpServerConnection
+			: public Object
+			, public virtual INetworkProtocolConnection
+		{
+			struct CallbackFrame
+			{
+				Ptr<SocketHttpServerConnectionLifecycle>	state;
+				CallbackFrame*					previous = nullptr;
+
+				CallbackFrame(Ptr<SocketHttpServerConnectionLifecycle> _state);
+				~CallbackFrame();
+			};
+
+			struct InboundFrame
+			{
+				Ptr<SocketHttpServerConnectionLifecycle>	state;
+				InboundFrame*					previous = nullptr;
+				List<Ptr<SocketHttpServerOutboundMessage>>
+										generated;
+
+				InboundFrame(Ptr<SocketHttpServerConnectionLifecycle> _state);
+				~InboundFrame();
+			};
+
+			struct PollWork
+			{
+				Ptr<SocketHttpRequestContext>		context;
+				Ptr<SocketHttpServerOutboundMessage>
+										message;
+
+				operator bool() const { return context != nullptr; }
+			};
+
+			static thread_local CallbackFrame*	currentCallbackFrame;
+			static thread_local InboundFrame*	currentInboundFrame;
+			Ptr<SocketHttpServerConnectionLifecycle>
+										lifecycle;
+
+			static vint CurrentCallbackDepth(Ptr<SocketHttpServerConnectionLifecycle> state);
+			static void ReleaseStoppedConnection(Ptr<SocketHttpServerConnectionLifecycle> state);
+			static bool ClaimPollUnsafe(Ptr<SocketHttpServerConnectionLifecycle> state, PollWork& work);
+			static void StartPollResponse(Ptr<SocketHttpServerConnectionLifecycle> state, PollWork work);
+			static void FinishPollResponse(Ptr<SocketHttpServerConnectionLifecycle> state, Ptr<SocketHttpRequestContext> context, bool succeeded);
+			static void ReportPollAcknowledgementTimeout(Ptr<SocketHttpServerConnectionLifecycle> state);
+			static void ProcessPollRegistrations(Ptr<SocketHttpServerConnectionLifecycle> state);
+			void StopCore(bool removeFromServer, bool waitForPoll);
+
+		public:
+			SocketHttpServerConnection(Ptr<SocketHttpServerLifecycle> server, const WString& token);
+
+			void DetachServer(SocketHttpServerLifecycle* server);
+			bool MarkAccepted();
+			bool IsAccepted();
+			bool HasCurrentCallback();
+			WString GetToken();
+			WaitForClientResult InvokeClientConnected(SocketHttpServer* server, Ptr<SocketHttpServerConnection> connection);
+			bool RegisterPoll(Ptr<SocketHttpRequestContext> context);
+			bool DispatchInbound(const WString& message, Ptr<SocketHttpServerOutboundMessage>& response);
+			void StopFromServer();
+			void WaitForPollCompletion();
+
+			void InstallCallback(INetworkProtocolCallback* callback) override;
+			void BeginReadingLoopUnsafe() override;
+			void SendString(const WString& str) override;
+			void Stop() override;
+		};
+
+		class SocketHttpServerLifecycle : public Object
+		{
+		public:
+			SocketHttpServer*					owner = nullptr;
+			CriticalSection						lockState;
+			ConditionVariable					cvState;
+			Dictionary<WString, Ptr<SocketHttpServerConnection>>
+										connections;
+			List<Ptr<SocketHttpServerConnection>>
+										stoppingConnections;
+			bool								startCalled = false;
+			bool								started = false;
+			bool								stopStarted = false;
+			bool								stopProcessing = false;
+			bool								stopProcessed = false;
+			bool								stopAssistProcessing = false;
+
+			SocketHttpServerLifecycle(SocketHttpServer* _owner)
+				: owner(_owner)
+			{
+			}
+
+			void PrepareStart()
+			{
+				CS_LOCK(lockState)
+				{
+					CHECK_ERROR(!startCalled && !stopStarted, L"SocketHttpServer::Start can only be called once before stopping.");
+					startCalled = true;
+					started = true;
+				}
+			}
+
+			Ptr<SocketHttpServerConnection> CreateConnection(Ptr<SocketHttpServerLifecycle> retainedSelf)
+			{
+				while (true)
+				{
+					auto token = GenerateToken();
+					auto connection = Ptr(new SocketHttpServerConnection(retainedSelf, token));
+					CS_LOCK(lockState)
+					{
+						if (!started || stopStarted) return nullptr;
+						if (!connections.Keys().Contains(token))
+						{
+							connections.Add(token, connection);
+							return connection;
+						}
+					}
+				}
+			}
+
+			Ptr<SocketHttpServerConnection> FindConnection(const WString& token)
+			{
+				CS_LOCK(lockState)
+				{
+					if (stopStarted) return nullptr;
+					auto index = connections.Keys().IndexOf(token);
+					return index == -1 ? nullptr : connections.Values()[index];
+				}
+				return nullptr;
+			}
+
+			bool TryAccept(const WString& token, SocketHttpServerConnection* connection)
+			{
+				CS_LOCK(lockState)
+				{
+					if (stopStarted) return false;
+					auto index = connections.Keys().IndexOf(token);
+					if (index == -1 || connections.Values()[index].Obj() != connection) return false;
+					return connection->MarkAccepted();
+				}
+				return false;
+			}
+
+			bool IsStopped()
+			{
+				CS_LOCK(lockState) { return stopStarted; }
+				return true;
+			}
+
+			void RemoveConnection(const WString& token, SocketHttpServerConnection* connection)
+			{
+				bool removed = false;
+				bool retained = false;
+				CS_LOCK(lockState)
+				{
+					auto index = connections.Keys().IndexOf(token);
+					if (index != -1 && connections.Values()[index].Obj() == connection)
+					{
+						if (connection->IsAccepted())
+						{
+							stoppingConnections.Add(connections.Values()[index]);
+							retained = true;
+						}
+						connections.Remove(token);
+						removed = true;
+					}
+				}
+				if (removed && !retained) connection->DetachServer(this);
+			}
+
+			void PrepareStop(List<Ptr<SocketHttpServerConnection>>& stopping)
+			{
+				CS_LOCK(lockState)
+				{
+					if (!stopStarted)
+					{
+						stopStarted = true;
+						started = false;
+						for (auto connection : connections.Values()) stoppingConnections.Add(connection);
+						connections.Clear();
+					}
+					for (auto connection : stoppingConnections) stopping.Add(connection);
+				}
+			}
+
+			void PrepareStopProcessing(bool callbackNested, bool inheritsAssist, bool& execute, bool& assist)
+			{
+				CS_LOCK(lockState)
+				{
+					if (!stopProcessing && !stopProcessed)
+					{
+						stopProcessing = true;
+						execute = true;
+						if (callbackNested)
+						{
+							stopAssistProcessing = true;
+							assist = true;
+						}
+					}
+					else if (callbackNested && !inheritsAssist && !stopProcessed && !stopAssistProcessing)
+					{
+						stopAssistProcessing = true;
+						assist = true;
+					}
+				}
+			}
+
+			void FinishStop(bool ownsAssist)
+			{
+				lockState.Enter();
+				if (ownsAssist)
+				{
+					stopAssistProcessing = false;
+				}
+				else
+				{
+					while (stopAssistProcessing) cvState.SleepWith(lockState);
+				}
+				stopProcessing = false;
+				stopProcessed = true;
+				cvState.WakeAllPendings();
+				lockState.Leave();
+			}
+
+			void FinishStopAssist()
+			{
+				CS_LOCK(lockState)
+				{
+					stopAssistProcessing = false;
+					cvState.WakeAllPendings();
+				}
+			}
+
+			void WaitForStop()
+			{
+				CS_LOCK(lockState)
+				{
+					while (!stopProcessed) cvState.SleepWith(lockState);
+				}
+			}
+
+			Ptr<SocketHttpServerConnection> ReleaseStoppedConnection(SocketHttpServerConnection* connection)
+			{
+				Ptr<SocketHttpServerConnection> releasing;
+				CS_LOCK(lockState)
+				{
+					for (vint i = 0; i < stoppingConnections.Count(); i++)
+					{
+						if (stoppingConnections[i].Obj() == connection)
+						{
+							releasing = stoppingConnections[i];
+							stoppingConnections.RemoveAt(i);
+							break;
+						}
+					}
+				}
+				if (releasing) connection->DetachServer(this);
+				return releasing;
+			}
+		};
+
+		struct SocketHttpServerStopFrame
+		{
+			SocketHttpServerLifecycle*		lifecycle = nullptr;
+			SocketHttpServerStopFrame*		previous = nullptr;
+			bool							ownsAssist = false;
+		};
+
+		thread_local SocketHttpServerStopFrame* currentSocketHttpServerStopFrame = nullptr;
+
+		SocketHttpServerStopFrame* FindSocketHttpServerStopFrame(SocketHttpServerLifecycle* lifecycle)
+		{
+			for (auto frame = currentSocketHttpServerStopFrame; frame; frame = frame->previous)
+			{
+				if (frame->lifecycle == lifecycle) return frame;
+			}
+			return nullptr;
+		}
+
+		struct SocketHttpServerStopScope
+		{
+			SocketHttpServerStopFrame		frame;
+
+			SocketHttpServerStopScope(SocketHttpServerLifecycle* lifecycle, bool ownsAssist)
+			{
+				frame.lifecycle = lifecycle;
+				frame.previous = currentSocketHttpServerStopFrame;
+				frame.ownsAssist = ownsAssist;
+				currentSocketHttpServerStopFrame = &frame;
+			}
+
+			~SocketHttpServerStopScope()
+			{
+				currentSocketHttpServerStopFrame = frame.previous;
+			}
+		};
+
+		thread_local SocketHttpServerConnection::CallbackFrame* SocketHttpServerConnection::currentCallbackFrame = nullptr;
+		thread_local SocketHttpServerConnection::InboundFrame* SocketHttpServerConnection::currentInboundFrame = nullptr;
+
+		SocketHttpServerConnection::CallbackFrame::CallbackFrame(Ptr<SocketHttpServerConnectionLifecycle> _state)
+			: state(_state)
+			, previous(currentCallbackFrame)
+		{
+			currentCallbackFrame = this;
+		}
+
+		SocketHttpServerConnection::CallbackFrame::~CallbackFrame()
+		{
+			currentCallbackFrame = previous;
+			CS_LOCK(state->lockState)
+			{
+				state->activeCallbacks--;
+				state->cvState.WakeAllPendings();
+			}
+			ReleaseStoppedConnection(state);
+		}
+
+		SocketHttpServerConnection::InboundFrame::InboundFrame(Ptr<SocketHttpServerConnectionLifecycle> _state)
+			: state(_state)
+			, previous(currentInboundFrame)
+		{
+			currentInboundFrame = this;
+		}
+
+		SocketHttpServerConnection::InboundFrame::~InboundFrame()
+		{
+			currentInboundFrame = previous;
+		}
+
+		vint SocketHttpServerConnection::CurrentCallbackDepth(Ptr<SocketHttpServerConnectionLifecycle> state)
+		{
+			vint depth = 0;
+			for (auto frame = currentCallbackFrame; frame; frame = frame->previous)
+			{
+				if (frame->state == state) depth++;
+			}
+			return depth;
+		}
+
+		void SocketHttpServerConnection::ReleaseStoppedConnection(Ptr<SocketHttpServerConnectionLifecycle> state)
+		{
+			Ptr<SocketHttpServerLifecycle> server;
+			SocketHttpServerConnection* owner = nullptr;
+			CS_LOCK(state->lockState)
+			{
+				if (state->stopFinished && state->activeCallbacks == 0 && !state->inFlightPoll && !state->pollRegistrationProcessing)
+				{
+					server = state->server;
+					owner = state->owner;
+				}
+			}
+			Ptr<SocketHttpServerConnection> releasing;
+			if (server && owner) releasing = server->ReleaseStoppedConnection(owner);
+		}
+
+		bool SocketHttpServerConnection::ClaimPollUnsafe(Ptr<SocketHttpServerConnectionLifecycle> state, PollWork& work)
+		{
+			if (
+				state->stopStarted ||
+				!state->accepted ||
+				state->inFlightPoll ||
+				state->pollFailureReporting ||
+				state->pollAcknowledgementReporting ||
+				!state->pendingPoll ||
+				state->queuedOutbound.Count() == 0
+				)
+			{
+				return false;
+			}
+
+			state->inFlightPoll = state->pendingPoll;
+			state->pendingPoll = nullptr;
+			state->inFlightMessage = state->queuedOutbound[0];
+			state->queuedOutbound.RemoveAt(0);
+			work.context = state->inFlightPoll;
+			work.message = state->inFlightMessage;
+			return true;
+		}
+
+		void SocketHttpServerConnection::StartPollResponse(Ptr<SocketHttpServerConnectionLifecycle> state, PollWork work)
+		{
+			if (!work) return;
+			InvokePollClaimed(state->token);
+			if (ShouldCancelPollBeforeResponse(state->token)) work.context->Cancel();
+			bool submitted = false;
+			try
+			{
+				submitted = work.context->RespondBytes(
+					200,
+					L"OK",
+					HttpNetworkProtocolContentType,
+					work.message->body,
+					Func<void(bool)>([state, context = work.context](bool succeeded)
+					{
+						FinishPollResponse(state, context, succeeded);
+					})
+					);
+			}
+			catch (...)
+			{
+			}
+			if (!submitted) FinishPollResponse(state, work.context, false);
+		}
+
+		void SocketHttpServerConnection::FinishPollResponse(Ptr<SocketHttpServerConnectionLifecycle> state, Ptr<SocketHttpRequestContext> context, bool succeeded)
+		{
+			PollWork next;
+			INetworkProtocolCallback* installed = nullptr;
+			SocketHttpServerConnection* owner = nullptr;
+			bool completed = false;
+			CS_LOCK(state->lockState)
+			{
+				if (state->inFlightPoll == context)
+				{
+					if (!succeeded && !state->stopStarted)
+					{
+						state->queuedOutbound.Insert(0, state->inFlightMessage);
+					}
+					state->inFlightPoll = nullptr;
+					state->inFlightMessage = nullptr;
+					if (succeeded && !state->stopStarted)
+					{
+						state->pollAcknowledgementPending = true;
+						state->pollAcknowledgementTimeout->Arm(
+							HttpNetworkProtocolPollAcknowledgementTimeout,
+							Func<void()>([state]() { ReportPollAcknowledgementTimeout(state); })
+							);
+					}
+					if (!succeeded && !state->stopStarted && state->callback && !state->callbackInstalling)
+					{
+						state->pollFailureReporting = true;
+						installed = state->callback;
+						owner = state->owner;
+						state->activeCallbacks++;
+					}
+					else
+					{
+						ClaimPollUnsafe(state, next);
+					}
+					state->cvState.WakeAllPendings();
+					completed = true;
+				}
+			}
+			if (!completed) return;
+			InvokePollCompleted(state->token, succeeded);
+			ReleaseStoppedConnection(state);
+			if (installed)
+			{
+				bool promoted = false;
+				try
+				{
+					CallbackFrame frame(state);
+					promoted = installed->OnLocalError(L"SocketHttpServerConnection failed to respond to /Request because the polling connection was lost.", false);
+					if (promoted)
+					{
+						CS_LOCK(state->lockState)
+						{
+							state->pollFailureReporting = false;
+							state->cvState.WakeAllPendings();
+						}
+						owner->Stop();
+					}
+				}
+				catch (...)
+				{
+					CS_LOCK(state->lockState)
+					{
+						state->pollFailureReporting = false;
+						state->cvState.WakeAllPendings();
+					}
+					owner->Stop();
+					throw;
+				}
+				if (!promoted)
+				{
+					CS_LOCK(state->lockState)
+					{
+						state->pollFailureReporting = false;
+						ClaimPollUnsafe(state, next);
+						state->cvState.WakeAllPendings();
+					}
+				}
+			}
+			StartPollResponse(state, next);
+		}
+
+		void SocketHttpServerConnection::ReportPollAcknowledgementTimeout(Ptr<SocketHttpServerConnectionLifecycle> state)
+		{
+			INetworkProtocolCallback* installed = nullptr;
+			SocketHttpServerConnection* owner = nullptr;
+			CS_LOCK(state->lockState)
+			{
+				if (state->pollAcknowledgementPending && !state->stopStarted)
+				{
+					state->pollAcknowledgementPending = false;
+					if (state->callback && !state->callbackInstalling)
+					{
+						state->pollAcknowledgementReporting = true;
+						installed = state->callback;
+						owner = state->owner;
+						state->activeCallbacks++;
+					}
+				}
+			}
+			if (!installed) return;
+
+			bool promoted = false;
+			try
+			{
+				CallbackFrame frame(state);
+				promoted = installed->OnLocalError(L"SocketHttpServerConnection did not receive the replacement /Request after delivering a server message.", false);
+				if (promoted)
+				{
+					CS_LOCK(state->lockState)
+					{
+						state->pollAcknowledgementReporting = false;
+						state->cvState.WakeAllPendings();
+					}
+					owner->Stop();
+				}
+			}
+			catch (...)
+			{
+				CS_LOCK(state->lockState)
+				{
+					state->pollAcknowledgementReporting = false;
+					state->cvState.WakeAllPendings();
+				}
+				owner->Stop();
+				throw;
+			}
+			if (!promoted)
+			{
+				CS_LOCK(state->lockState)
+				{
+					state->pollAcknowledgementReporting = false;
+					state->cvState.WakeAllPendings();
+				}
+			}
+		}
+
+		void SocketHttpServerConnection::ProcessPollRegistrations(Ptr<SocketHttpServerConnectionLifecycle> state)
+		{
+			while (true)
+			{
+				Ptr<SocketHttpRequestContext> context;
+				Ptr<SocketHttpRequestContext> replaced;
+				PollWork work;
+				bool cancel = false;
+				state->lockState.Enter();
+				if (state->queuedPollRegistrations.Count() == 0)
+				{
+					auto registered = state->pendingPoll && !state->stopStarted && state->accepted;
+					state->pollRegistrationProcessing = false;
+					state->cvState.WakeAllPendings();
+					state->lockState.Leave();
+					if (registered) InvokePollRegistered(state->token);
+					return;
+				}
+				context = state->queuedPollRegistrations[0];
+				state->queuedPollRegistrations.RemoveAt(0);
+				replaced = state->pendingPoll;
+				state->pendingPoll = nullptr;
+				state->lockState.Leave();
+
+				if (replaced) replaced->Cancel();
+
+				CS_LOCK(state->lockState)
+				{
+					if (state->stopStarted || !state->accepted)
+					{
+						cancel = true;
+					}
+					else
+					{
+						state->pendingPoll = context;
+						ClaimPollUnsafe(state, work);
+					}
+				}
+				if (cancel) context->Cancel();
+				StartPollResponse(state, work);
+			}
+		}
+
+		SocketHttpServerConnection::SocketHttpServerConnection(Ptr<SocketHttpServerLifecycle> server, const WString& token)
+			: lifecycle(Ptr(new SocketHttpServerConnectionLifecycle))
+		{
+			lifecycle->owner = this;
+			lifecycle->server = server;
+			lifecycle->token = token;
+		}
+
+		void SocketHttpServerConnection::DetachServer(SocketHttpServerLifecycle* server)
+		{
+			CS_LOCK(lifecycle->lockState)
+			{
+				if (lifecycle->server.Obj() == server) lifecycle->server = nullptr;
+			}
+		}
+
+		bool SocketHttpServerConnection::MarkAccepted()
+		{
+			CS_LOCK(lifecycle->lockState)
+			{
+				if (!lifecycle->stopStarted)
+				{
+					lifecycle->accepted = true;
+					return true;
+				}
+			}
+			return false;
+		}
+
+		bool SocketHttpServerConnection::IsAccepted()
+		{
+			CS_LOCK(lifecycle->lockState) { return lifecycle->accepted; }
+			return false;
+		}
+
+		bool SocketHttpServerConnection::HasCurrentCallback()
+		{
+			return CurrentCallbackDepth(lifecycle) > 0;
+		}
+
+		WString SocketHttpServerConnection::GetToken()
+		{
+			return lifecycle->token;
+		}
+
+		WaitForClientResult SocketHttpServerConnection::InvokeClientConnected(SocketHttpServer* server, Ptr<SocketHttpServerConnection> connection)
+		{
+			CHECK_ERROR(connection.Obj() == this, L"SocketHttpServerConnection received an unexpected owning connection.");
+			auto state = lifecycle;
+			bool invoke = false;
+			CS_LOCK(state->lockState)
+			{
+				if (!state->stopStarted)
+				{
+					state->activeCallbacks++;
+					invoke = true;
+				}
+			}
+			if (!invoke) return WaitForClientResult::Reject;
+
+			WaitForClientResult result;
+			{
+				CallbackFrame frame(state);
+				result = server->OnClientConnected(connection);
+			}
+			if (result != WaitForClientResult::Accept) return WaitForClientResult::Reject;
+
+			Ptr<SocketHttpServerLifecycle> retainedServer;
+			CS_LOCK(state->lockState) { retainedServer = state->server; }
+			return retainedServer && retainedServer->TryAccept(state->token, this)
+				? WaitForClientResult::Accept
+				: WaitForClientResult::Reject;
+		}
+
+		bool SocketHttpServerConnection::RegisterPoll(Ptr<SocketHttpRequestContext> context)
+		{
+			auto state = lifecycle;
+			bool cancelAcknowledgement = false;
+			CS_LOCK(state->lockState)
+			{
+				if (state->stopStarted || !state->accepted) return false;
+				cancelAcknowledgement = state->pollAcknowledgementPending || state->pollAcknowledgementReporting;
+				state->pollAcknowledgementPending = false;
+			}
+			if (cancelAcknowledgement)
+			{
+				state->pollAcknowledgementTimeout->CancelAndWait();
+			}
+
+			bool process = false;
+			CS_LOCK(state->lockState)
+			{
+				if (state->stopStarted || !state->accepted) return false;
+				state->queuedPollRegistrations.Add(context);
+				if (!state->pollRegistrationProcessing)
+				{
+					state->pollRegistrationProcessing = true;
+					process = true;
+				}
+			}
+			if (process) ProcessPollRegistrations(state);
+			return true;
+		}
+
+		bool SocketHttpServerConnection::DispatchInbound(const WString& message, Ptr<SocketHttpServerOutboundMessage>& response)
+		{
+			auto state = lifecycle;
+			INetworkProtocolCallback* installed = nullptr;
+			PollWork work;
+			CS_LOCK(state->lockState)
+			{
+				if (state->stopStarted || !state->accepted) return false;
+				if (state->callback && !state->callbackInstalling)
+				{
+					installed = state->callback;
+					state->activeCallbacks++;
+				}
+				else
+				{
+					state->queuedInbound.Add(message);
+					if (state->queuedOutbound.Count() > 0)
+					{
+						response = state->queuedOutbound[0];
+						state->queuedOutbound.RemoveAt(0);
+					}
+					ClaimPollUnsafe(state, work);
+				}
+			}
+
+			if (!installed)
+			{
+				StartPollResponse(state, work);
+				return true;
+			}
+
+			List<Ptr<SocketHttpServerOutboundMessage>> generated;
+			{
+				CallbackFrame callbackFrame(state);
+				InboundFrame inboundFrame(state);
+				installed->OnReadString(message);
+				generated = std::move(inboundFrame.generated);
+			}
+
+			CS_LOCK(state->lockState)
+			{
+				if (state->stopStarted) return false;
+				if (generated.Count() > 0)
+				{
+					response = generated[0];
+					for (vint i = 1; i < generated.Count(); i++) state->queuedOutbound.Add(generated[i]);
+				}
+				else if (state->queuedOutbound.Count() > 0)
+				{
+					response = state->queuedOutbound[0];
+					state->queuedOutbound.RemoveAt(0);
+				}
+				ClaimPollUnsafe(state, work);
+			}
+			StartPollResponse(state, work);
+			return true;
+		}
+
+		void SocketHttpServerConnection::StopCore(bool removeFromServer, bool waitForPoll)
+		{
+			auto state = lifecycle;
+			if (removeFromServer)
+			{
+				Ptr<SocketHttpServerLifecycle> server;
+				CS_LOCK(state->lockState) { server = state->server; }
+				if (server) server->RemoveConnection(state->token, this);
+			}
+
+			auto callbackDepth = CurrentCallbackDepth(state);
+			List<Ptr<SocketHttpRequestContext>> cancelling;
+			bool first = false;
+			bool ownsAssist = false;
+			state->lockState.Enter();
+			if (!state->stopStarted)
+			{
+				first = true;
+				state->stopStarted = true;
+				if (callbackDepth > 0)
+				{
+					state->stopAssistProcessing = true;
+					ownsAssist = true;
+				}
+				if (state->pendingPoll) cancelling.Add(state->pendingPoll);
+				state->pendingPoll = nullptr;
+				state->pollAcknowledgementPending = false;
+				for (auto context : state->queuedPollRegistrations) cancelling.Add(context);
+				state->queuedPollRegistrations.Clear();
+				state->queuedInbound.Clear();
+				state->queuedOutbound.Clear();
+			}
+			else if (callbackDepth > 0)
+			{
+				if (
+					state->stopFinished ||
+					state->disconnectDelivering ||
+					state->disconnectFinished ||
+					state->stopAssistProcessing
+					)
+				{
+					state->lockState.Leave();
+					return;
+				}
+				state->stopAssistProcessing = true;
+				ownsAssist = true;
+				state->lockState.Leave();
+			}
+			else
+			{
+				while (!state->stopFinished) state->cvState.SleepWith(state->lockState);
+				while (state->activeCallbacks > 0 || (waitForPoll && (state->inFlightPoll || state->pollRegistrationProcessing)))
+				{
+					state->cvState.SleepWith(state->lockState);
+				}
+				state->lockState.Leave();
+				return;
+			}
+			if (first) state->lockState.Leave();
+
+			if (first)
+			{
+				for (auto context : cancelling)
+				{
+					try { context->Cancel(); } catch (...) {}
+				}
+				CS_LOCK(state->lockState)
+				{
+					state->stopCancellationFinished = true;
+					state->cvState.WakeAllPendings();
+				}
+				state->pollAcknowledgementTimeout->CancelAndWait();
+			}
+
+			INetworkProtocolCallback* disconnected = nullptr;
+			state->lockState.Enter();
+			while (!state->stopCancellationFinished || state->pollRegistrationProcessing)
+			{
+				state->cvState.SleepWith(state->lockState);
+			}
+			if (first && !ownsAssist)
+			{
+				while (state->stopAssistProcessing) state->cvState.SleepWith(state->lockState);
+			}
+			while (state->activeCallbacks > callbackDepth)
+			{
+				state->cvState.SleepWith(state->lockState);
+			}
+			if (state->accepted && state->callback && !state->disconnectDelivering && !state->disconnectFinished)
+			{
+				disconnected = state->callback;
+				state->disconnectDelivering = true;
+				state->activeCallbacks++;
+			}
+			state->lockState.Leave();
+
+			if (disconnected)
+			{
+				try
+				{
+					CallbackFrame frame(state);
+					disconnected->OnDisconnected();
+				}
+				catch (...)
+				{
+				}
+			}
+
+			CS_LOCK(state->lockState)
+			{
+				state->callback = nullptr;
+				state->callbackInstalling = false;
+				state->disconnectDelivering = false;
+				state->disconnectFinished = true;
+				if (ownsAssist) state->stopAssistProcessing = false;
+				if (first)
+				{
+					state->stopFinished = true;
+				}
+				state->cvState.WakeAllPendings();
+			}
+			if (first && waitForPoll)
+			{
+				CS_LOCK(state->lockState)
+				{
+					while (state->inFlightPoll) state->cvState.SleepWith(state->lockState);
+				}
+			}
+			ReleaseStoppedConnection(state);
+		}
+
+		void SocketHttpServerConnection::StopFromServer()
+		{
+			StopCore(false, false);
+		}
+
+		void SocketHttpServerConnection::WaitForPollCompletion()
+		{
+			CS_LOCK(lifecycle->lockState)
+			{
+				while (lifecycle->inFlightPoll || lifecycle->pollRegistrationProcessing)
+				{
+					lifecycle->cvState.SleepWith(lifecycle->lockState);
+				}
+			}
+		}
+
+		void SocketHttpServerConnection::InstallCallback(INetworkProtocolCallback* callback)
+		{
+			auto state = lifecycle;
+			if (!callback)
+			{
+				auto callbackDepth = CurrentCallbackDepth(state);
+				CS_LOCK(state->lockState)
+				{
+					state->callback = nullptr;
+					while (state->activeCallbacks > callbackDepth)
+					{
+						state->cvState.SleepWith(state->lockState);
+					}
+				}
+				return;
+			}
+
+			bool canInstall = false;
+			CS_LOCK(state->lockState)
+			{
+				if (!state->callback && !state->callbackInstalling && !state->stopStarted)
+				{
+					state->callback = callback;
+					state->callbackInstalling = true;
+					state->activeCallbacks++;
+					canInstall = true;
+				}
+			}
+			CHECK_ERROR(canInstall, L"SocketHttpServerConnection::InstallCallback cannot replace a callback or install one on a stopped connection.");
+
+			try
+			{
+				CallbackFrame frame(state);
+				callback->OnInstalled(this);
+				while (true)
+				{
+					WString message;
+					bool replay = false;
+					CS_LOCK(state->lockState)
+					{
+						if (!state->stopStarted && state->callback == callback && state->queuedInbound.Count() > 0)
+						{
+							message = state->queuedInbound[0];
+							state->queuedInbound.RemoveAt(0);
+							replay = true;
+						}
+						else
+						{
+							state->callbackInstalling = false;
+							state->cvState.WakeAllPendings();
+						}
+					}
+					if (!replay) break;
+					callback->OnReadString(message);
+				}
+			}
+			catch (...)
+			{
+				CS_LOCK(state->lockState)
+				{
+					if (state->callback == callback) state->callback = nullptr;
+					state->callbackInstalling = false;
+					state->cvState.WakeAllPendings();
+				}
+				throw;
+			}
+		}
+
+		void SocketHttpServerConnection::BeginReadingLoopUnsafe()
+		{
+		}
+
+		void SocketHttpServerConnection::SendString(const WString& str)
+		{
+#define ERROR_MESSAGE_PREFIX L"vl::inter_process::async_tcp_socket::SocketHttpServerConnection::SendString(const WString&)#"
+			Array<vuint8_t> validated;
+			CHECK_ERROR(str.Length() > 0, ERROR_MESSAGE_PREFIX L"A logical HTTP message cannot be empty.");
+			CHECK_ERROR(IsValidHttpNetworkProtocolMessage(str), ERROR_MESSAGE_PREFIX L"A logical HTTP message must contain valid Unicode without NUL.");
+			CHECK_ERROR(EncodeStrictUtf8(str, validated), ERROR_MESSAGE_PREFIX L"A logical HTTP message must contain valid Unicode without NUL.");
+			CHECK_ERROR(validated.Count() <= HttpBodySizeLimit, ERROR_MESSAGE_PREFIX L"The UTF-8 message exceeds HttpBodySizeLimit.");
+#undef ERROR_MESSAGE_PREFIX
+			auto message = Ptr(new SocketHttpServerOutboundMessage);
+			message->body = std::move(validated);
+			auto state = lifecycle;
+			PollWork work;
+			CS_LOCK(state->lockState)
+			{
+				CHECK_ERROR(!state->stopStarted, L"SocketHttpServerConnection::SendString cannot send on a stopped connection.");
+				if (currentInboundFrame && currentInboundFrame->state == state)
+				{
+					currentInboundFrame->generated.Add(message);
+					return;
+				}
+				state->queuedOutbound.Add(message);
+				ClaimPollUnsafe(state, work);
+			}
+			StartPollResponse(state, work);
+		}
+
+		void SocketHttpServerConnection::Stop()
+		{
+			StopCore(true, true);
+		}
+	}
+
+	class SocketHttpServer::Impl : public Object
+	{
+	public:
+		enum class BeginStopResult
+		{
+			Continue,
+			ReturnFollower,
+		};
+
+		Ptr<SocketHttpServerLifecycle> lifecycle;
+
+		Impl(SocketHttpServer* owner)
+			: lifecycle(Ptr(new SocketHttpServerLifecycle(owner)))
+		{
+		}
+
+		static bool HasCurrentCallback(List<Ptr<SocketHttpServerConnection>>& stopping)
+		{
+			for (auto connection : stopping)
+			{
+				if (connection->HasCurrentCallback()) return true;
+			}
+			return false;
+		}
+
+		static void DrainConnections(List<Ptr<SocketHttpServerConnection>>& stopping)
+		{
+			for (auto connection : stopping)
+			{
+				if (!connection->HasCurrentCallback()) connection->StopFromServer();
+			}
+			for (auto connection : stopping)
+			{
+				if (connection->HasCurrentCallback()) connection->StopFromServer();
+			}
+		}
+
+		void ExecuteAssistant(List<Ptr<SocketHttpServerConnection>>& stopping)
+		{
+			try
+			{
+				SocketHttpServerStopScope scope(lifecycle.Obj(), true);
+				DrainConnections(stopping);
+			}
+			catch (...)
+			{
+				lifecycle->FinishStopAssist();
+				throw;
+			}
+			lifecycle->FinishStopAssist();
+		}
+
+		BeginStopResult BeginStop(List<Ptr<SocketHttpServerConnection>>& stopping)
+		{
+			lifecycle->PrepareStop(stopping);
+			auto existingFrame = FindSocketHttpServerStopFrame(lifecycle.Obj());
+			auto callbackNested = HasCurrentCallback(stopping);
+			bool execute = false;
+			bool assist = false;
+			lifecycle->PrepareStopProcessing(
+				callbackNested,
+				existingFrame && existingFrame->ownsAssist,
+				execute,
+				assist
+				);
+
+			if (execute)
+			{
+				try
+				{
+					SocketHttpServerStopScope scope(lifecycle.Obj(), assist);
+					DrainConnections(stopping);
+				}
+				catch (...)
+				{
+					lifecycle->FinishStop(assist);
+					throw;
+				}
+				lifecycle->FinishStop(assist);
+				return BeginStopResult::Continue;
+			}
+
+			if (existingFrame)
+			{
+				if (existingFrame->ownsAssist)
+				{
+					DrainConnections(stopping);
+				}
+				else if (assist)
+				{
+					ExecuteAssistant(stopping);
+				}
+				return BeginStopResult::ReturnFollower;
+			}
+
+			if (callbackNested)
+			{
+				if (assist) ExecuteAssistant(stopping);
+				return BeginStopResult::ReturnFollower;
+			}
+
+			lifecycle->WaitForStop();
+			DrainConnections(stopping);
+			return BeginStopResult::Continue;
+		}
+
+		void OnRequest(SocketHttpServer* owner, Ptr<SocketHttpRequestContext> context)
+		{
+			auto request = context->GetRequest();
+			auto path = context->GetRelativePath();
+			if (!request || context->GetQuery() != WString::Empty)
+			{
+				context->RespondStatus(404, L"Route not found");
+				return;
+			}
+
+			if (request->method == L"GET" && path == HttpServerUrl_Connect && HasEmptyBody(request))
+			{
+				auto connection = lifecycle->CreateConnection(lifecycle);
+				if (!connection)
+				{
+					context->RespondStatus(404, L"Connection rejected");
+					return;
+				}
+
+				WaitForClientResult result = WaitForClientResult::Reject;
+				try { result = connection->InvokeClientConnected(owner, connection); }
+				catch (...) { result = WaitForClientResult::Reject; }
+				if (result != WaitForClientResult::Accept)
+				{
+					connection->Stop();
+					context->RespondStatus(404, L"Connection rejected");
+					return;
+				}
+
+				auto token = connection->GetToken();
+				auto body = CreateHttpNetworkProtocolConnectBody(
+					WString::Unmanaged(HttpServerUrl_Request) + L"/" + token,
+					WString::Unmanaged(HttpServerUrl_Response) + L"/" + token
+					);
+				context->RespondUtf8(200, L"OK", HttpNetworkProtocolContentType, body);
+				return;
+			}
+
+			WString token;
+			if (request->method == L"POST" && ExtractToken(path, HttpServerUrl_Request, token) && HasEmptyBody(request))
+			{
+				auto connection = lifecycle->FindConnection(token);
+				if (connection && connection->RegisterPoll(context)) return;
+				context->RespondStatus(404, L"Connection not found");
+				return;
+			}
+
+			WString message;
+			if (request->method == L"POST" && ExtractToken(path, HttpServerUrl_Response, token) && DecodeSubmittedMessage(context, request, message))
+			{
+				auto connection = lifecycle->FindConnection(token);
+				Ptr<SocketHttpServerOutboundMessage> response;
+				if (connection && connection->DispatchInbound(message, response))
+				{
+					Array<vuint8_t> empty;
+					context->RespondBytes(200, L"OK", HttpNetworkProtocolContentType, response ? response->body : empty);
+					return;
+				}
+			}
+
+			context->RespondStatus(404, L"Route not found");
+		}
+	};
+
+	void SetSocketHttpServerPollCallbacksForTesting(
+		const Func<void(const WString&)>& claimed,
+		const Func<void(const WString&, bool)>& completed,
+		const Func<void(const WString&)>& registered,
+		const Func<bool(const WString&)>& cancelBeforeResponse
+		)
+	{
+		auto& hooks = GetSocketHttpServerTestHooks();
+		SPIN_LOCK(hooks.lock)
+		{
+			hooks.claimed = claimed;
+			hooks.completed = completed;
+			hooks.registered = registered;
+			hooks.cancelBeforeResponse = cancelBeforeResponse;
+		}
+	}
+
+	void ResetSocketHttpServerPollCallbacksForTesting()
+	{
+		SetSocketHttpServerPollCallbacksForTesting({}, {}, {}, {});
+	}
+
+	SocketHttpServer::SocketHttpServer(Ptr<IAsyncSocketServer> server, const WString& urlPrefix)
+		: SocketHttpServerApi(server, ValidateServerUrlPrefix(urlPrefix))
+		, impl(Ptr(new Impl(this)))
+	{
+	}
+
+	SocketHttpServer::~SocketHttpServer()
+	{
+		try { Stop(); } catch (...) {}
+		CS_LOCK(impl->lifecycle->lockState) { impl->lifecycle->owner = nullptr; }
+	}
+
+	WaitForClientResult SocketHttpServer::OnClientConnected(Ptr<INetworkProtocolConnection>)
+	{
+		return WaitForClientResult::Accept;
+	}
+
+	void SocketHttpServer::OnHttpRequestReceived(Ptr<SocketHttpRequestContext> context)
+	{
+		impl->OnRequest(this, context);
+	}
+
+	void SocketHttpServer::OnHttpServerStopping()
+	{
+		List<Ptr<SocketHttpServerConnection>> stopping;
+		impl->BeginStop(stopping);
+	}
+
+	void SocketHttpServer::Start()
+	{
+		impl->lifecycle->PrepareStart();
+		try
+		{
+			SocketHttpServerApi::Start();
+		}
+		catch (...)
+		{
+			List<Ptr<SocketHttpServerConnection>> stopping;
+			impl->BeginStop(stopping);
+			throw;
+		}
+	}
+
+	void SocketHttpServer::Stop()
+	{
+		List<Ptr<SocketHttpServerConnection>> stopping;
+		if (impl->BeginStop(stopping) == Impl::BeginStopResult::ReturnFollower) return;
+		SocketHttpServerApi::Stop();
+		for (auto connection : stopping) connection->WaitForPollCompletion();
+	}
+
+	bool SocketHttpServer::IsStopped()
+	{
+		return impl->lifecycle->IsStopped() || SocketHttpServerApi::IsStopped();
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\ASYNCSOCKET\ASYNCSOCKET_HTTPSERVERAPI.CPP
+***********************************************************************/
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+
+namespace vl::inter_process::async_tcp_socket
+{
+	using namespace collections;
+
+	namespace
+	{
+		class ApiRegistration;
+		class RegistryEntry;
+		class SharedServer;
+		class ConnectionState;
+
+		struct PrefixInfo
+		{
+			WString						normalizedUrl;
+			WString						decodedPath;
+		};
+
+		wchar_t Lower(wchar_t c)
+		{
+			return c >= L'A' && c <= L'Z' ? c - L'A' + L'a' : c;
+		}
+
+		WString Lower(const WString& text)
+		{
+			if (text.Length() == 0) return {};
+			auto buffer = new wchar_t[text.Length() + 1];
+			for (vint i = 0; i < text.Length(); i++) buffer[i] = Lower(text[i]);
+			buffer[text.Length()] = 0;
+			return WString::TakeOver(buffer, text.Length());
+		}
+
+		bool Token(wchar_t c)
+		{
+			if ((c >= L'a' && c <= L'z') || (c >= L'A' && c <= L'Z') || (c >= L'0' && c <= L'9')) return true;
+			switch (c)
+			{
+			case L'!': case L'#': case L'$': case L'%': case L'&': case L'\'': case L'*':
+			case L'+': case L'-': case L'.': case L'^': case L'_': case L'`': case L'|': case L'~':
+				return true;
+			default:
+				return false;
+			}
+		}
+
+		vint Hex(wchar_t c)
+		{
+			if (c >= L'0' && c <= L'9') return c - L'0';
+			if (c >= L'a' && c <= L'f') return c - L'a' + 10;
+			if (c >= L'A' && c <= L'F') return c - L'A' + 10;
+			return -1;
+		}
+
+		bool DecodePath(const WString& raw, WString& decoded)
+		{
+			List<vuint8_t> bytes;
+			for (vint i = 0; i < raw.Length(); i++)
+			{
+				auto c = raw[i];
+				if (c == L'%')
+				{
+					if (i + 2 >= raw.Length()) return false;
+					auto h1 = Hex(raw[i + 1]);
+					auto h2 = Hex(raw[i + 2]);
+					if (h1 < 0 || h2 < 0) return false;
+					auto b = (vuint8_t)(h1 * 16 + h2);
+					if (b == 0 || b == '/' || b == '\\') return false;
+					bytes.Add(b);
+					i += 2;
+				}
+				else
+				{
+					if (c == 0 || c == L'\\' || c > 0x7F) return false;
+					bytes.Add((vuint8_t)c);
+				}
+			}
+
+			Array<vuint8_t> encoded(bytes.Count());
+			for (vint i = 0; i < bytes.Count(); i++) encoded[i] = bytes[i];
+			return ::vl::inter_process::async_tcp_socket::DecodeStrictUtf8(
+				encoded.Count() == 0 ? nullptr : &encoded[0],
+				encoded.Count(),
+				decoded
+				);
+		}
+
+		bool ParseAuthority(const WString& text, vint& port)
+		{
+			vint colon = -1;
+			for (vint i = 0; i < text.Length(); i++)
+			{
+				if (text[i] == L':')
+				{
+					if (colon != -1) return false;
+					colon = i;
+				}
+				else if (text[i] == L'@' || text[i] == L'/' || text[i] == L'?' || text[i] == L'#') return false;
+			}
+			if (colon <= 0 || colon + 1 >= text.Length()) return false;
+			auto host = Lower(text.Left(colon));
+			if (host != L"localhost" && host != L"127.0.0.1") return false;
+			vuint64_t number = 0;
+			for (vint i = colon + 1; i < text.Length(); i++)
+			{
+				if (text[i] < L'0' || text[i] > L'9') return false;
+				number = number * 10 + text[i] - L'0';
+				if (number > 65535) return false;
+			}
+			if (number == 0) return false;
+			port = (vint)number;
+			return true;
+		}
+
+		PrefixInfo ParsePrefix(vint port, const WString& urlPrefix)
+		{
+#define ERROR_PREFIX L"vl::inter_process::async_tcp_socket::SocketHttpServerApi::SocketHttpServerApi(Ptr<IAsyncSocketServer>, const WString&, bool)#"
+			CHECK_ERROR(1 <= port && port <= 65535, ERROR_PREFIX L"The injected server port must be in 1..65535.");
+			CHECK_ERROR(urlPrefix.Length() == 0 || urlPrefix[0] == L'/', ERROR_PREFIX L"The URL prefix must be empty or begin with /.");
+			CHECK_ERROR(urlPrefix.IndexOf(L'?') == -1 && urlPrefix.IndexOf(L'#') == -1, ERROR_PREFIX L"Query and fragment components are not supported.");
+			auto rawPath = urlPrefix;
+			PrefixInfo info;
+			while (rawPath.Length() > 0 && rawPath[rawPath.Length() - 1] == L'/') rawPath = rawPath.Left(rawPath.Length() - 1);
+			CHECK_ERROR(DecodePath(rawPath, info.decodedPath), ERROR_PREFIX L"The path contains invalid escaping, UTF-8, NUL, or an encoded separator.");
+			info.normalizedUrl = L"http://localhost:" + itow(port) + rawPath;
+			return info;
+#undef ERROR_PREFIX
+		}
+
+		WString TrimOws(const WString& text)
+		{
+			vint begin = 0, end = text.Length();
+			while (begin < end && (text[begin] == L' ' || text[begin] == L'\t')) begin++;
+			while (begin < end && (text[end - 1] == L' ' || text[end - 1] == L'\t')) end--;
+			return text.Sub(begin, end - begin);
+		}
+
+		bool AnalyzeCacheControl(const Array<vuint8_t>& bytes, bool& noStore)
+		{
+			WString text;
+			if (!DecodeAsciiHttpFieldValue(bytes, text)) return false;
+			noStore = false;
+			vint begin = 0;
+			bool quoted = false, escaped = false;
+			for (vint i = 0; i <= text.Length(); i++)
+			{
+				if (i < text.Length())
+				{
+					auto c = text[i];
+					if (escaped) { escaped = false; continue; }
+					if (quoted)
+					{
+						if (c == L'\\') escaped = true;
+						else if (c == L'"') quoted = false;
+						continue;
+					}
+					if (c == L'"') { quoted = true; continue; }
+					if (c != L',') continue;
+				}
+				else if (quoted || escaped) return false;
+
+				auto item = TrimOws(text.Sub(begin, i - begin));
+				if (item.Length() == 0) return false;
+				auto equals = item.IndexOf(L'=');
+				auto name = TrimOws(equals == -1 ? item : item.Left(equals));
+				if (name.Length() == 0) return false;
+				for (vint j = 0; j < name.Length(); j++) if (!Token(name[j])) return false;
+				if (equals != -1 && TrimOws(item.Right(item.Length() - equals - 1)).Length() == 0) return false;
+				if (Lower(name) == L"no-store")
+				{
+					if (equals != -1) return false;
+					noStore = true;
+				}
+				begin = i + 1;
+			}
+			return true;
+		}
+
+		bool ValidHttpDate(const Array<vuint8_t>& bytes)
+		{
+			WString text;
+			if (!DecodeAsciiHttpFieldValue(bytes, text)) return false;
+			text = TrimOws(text);
+			if (text.Length() != 29
+				|| text[3] != L',' || text[4] != L' ' || text[7] != L' ' || text[11] != L' '
+				|| text[16] != L' ' || text[19] != L':' || text[22] != L':' || text[25] != L' '
+				|| text.Sub(26, 3) != L"GMT") return false;
+			auto dayName = text.Sub(0, 3);
+			if (dayName != L"Sun" && dayName != L"Mon" && dayName != L"Tue" && dayName != L"Wed" && dayName != L"Thu" && dayName != L"Fri" && dayName != L"Sat") return false;
+			vint digitIndexes[] = { 5, 6, 12, 13, 14, 15, 17, 18, 20, 21, 23, 24 };
+			for (auto index : digitIndexes)
+			{
+				if (text[index] < L'0' || text[index] > L'9') return false;
+			}
+			auto monthName = text.Sub(8, 3);
+			vint month =
+				monthName == L"Jan" ? 1 : monthName == L"Feb" ? 2 : monthName == L"Mar" ? 3 :
+				monthName == L"Apr" ? 4 : monthName == L"May" ? 5 : monthName == L"Jun" ? 6 :
+				monthName == L"Jul" ? 7 : monthName == L"Aug" ? 8 : monthName == L"Sep" ? 9 :
+				monthName == L"Oct" ? 10 : monthName == L"Nov" ? 11 : monthName == L"Dec" ? 12 : 0;
+			if (month == 0) return false;
+			auto day = (text[5] - L'0') * 10 + text[6] - L'0';
+			auto year = (text[12] - L'0') * 1000 + (text[13] - L'0') * 100 + (text[14] - L'0') * 10 + text[15] - L'0';
+			auto hour = (text[17] - L'0') * 10 + text[18] - L'0';
+			auto minute = (text[20] - L'0') * 10 + text[21] - L'0';
+			auto second = (text[23] - L'0') * 10 + text[24] - L'0';
+			if (year == 0 || hour > 23 || minute > 59 || second > 60) return false;
+			vint monthDays[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+			if (month == 2 && (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0))) monthDays[1] = 29;
+			return day >= 1 && day <= monthDays[month - 1];
+		}
+
+		const wchar_t* Reason(vint code)
+		{
+			switch (code)
+			{
+			case 200: return L"OK"; case 204: return L"No Content"; case 304: return L"Not Modified";
+			case 400: return L"Bad Request"; case 404: return L"Not Found"; case 405: return L"Method Not Allowed";
+			case 408: return L"Request Timeout"; case 413: return L"Payload Too Large"; case 414: return L"URI Too Long";
+			case 415: return L"Unsupported Media Type"; case 417: return L"Expectation Failed";
+			case 431: return L"Request Header Fields Too Large"; case 500: return L"Internal Server Error";
+			case 501: return L"Not Implemented"; case 505: return L"HTTP Version Not Supported";
+			default: return L"Response";
+			}
+		}
+
+		void ValidateConvenienceResponseArguments(vint statusCode, const WString& reason, const WString& contentType, vint bodySize)
+		{
+			CHECK_ERROR(statusCode >= 200 && statusCode <= 599, L"Invalid HTTP response status.");
+			for (vint i = 0; i < reason.Length(); i++)
+			{
+				CHECK_ERROR((vuint32_t)reason[i] >= 0x20 && (vuint32_t)reason[i] <= 0x7E, L"Invalid HTTP response reason phrase.");
+			}
+			if (contentType != WString::Empty)
+			{
+				CreateAsciiHttpField(L"content-type", contentType);
+			}
+			CHECK_ERROR(bodySize <= HttpBodySizeLimit, L"The response body is too large.");
+		}
+
+		Ptr<HttpResponse> CreateConvenienceResponse(vint statusCode, const WString& reason, const WString& contentType, Array<vuint8_t>&& body)
+		{
+			auto response = Ptr(new HttpResponse);
+			response->statusCode = statusCode;
+			response->reason = reason;
+			if (contentType != WString::Empty)
+			{
+				response->headers.Add(CreateAsciiHttpField(L"content-type", contentType));
+			}
+			SetHttpBodyBytes(response->body, std::move(body));
+			return response;
+		}
+
+		WString Two(vint value) { return value < 10 ? L"0" + itow(value) : itow(value); }
+
+		WString DateHeader()
+		{
+			const wchar_t* days[] = { L"Sun", L"Mon", L"Tue", L"Wed", L"Thu", L"Fri", L"Sat" };
+			const wchar_t* months[] = { L"Jan", L"Feb", L"Mar", L"Apr", L"May", L"Jun", L"Jul", L"Aug", L"Sep", L"Oct", L"Nov", L"Dec" };
+			auto now = DateTime::UtcTime();
+			return WString::Unmanaged(days[now.dayOfWeek]) + L", " + Two(now.day) + L" " + months[now.month - 1] + L" " + itow(now.year) + L" " + Two(now.hour) + L":" + Two(now.minute) + L":" + Two(now.second) + L" GMT";
+		}
+
+		Ptr<HttpResponse> Normalize(Ptr<HttpResponse> input, const WString& method)
+		{
+			CHECK_ERROR(input, L"SocketHttpRequestContext::Respond requires a response.");
+			CHECK_ERROR(input->statusCode >= 200 && input->statusCode <= 599, L"Invalid HTTP response status.");
+			CHECK_ERROR(input->body.trailers.Count() == 0, L"Response trailers are not supported.");
+			Array<vuint8_t> body;
+			CHECK_ERROR(FlattenHttpBody(input->body, body), L"The response body is too large.");
+			auto bodySize = body.Count();
+			auto bodyAllowed = method != L"HEAD" && input->statusCode != 204 && input->statusCode != 304;
+			auto length = bodyAllowed || method == L"HEAD" ? bodySize : 0;
+			auto output = Ptr(new HttpResponse);
+			output->statusCode = input->statusCode;
+			output->reason = input->reason == WString::Empty ? Reason(input->statusCode) : input->reason;
+			for (vint i = 0; i < output->reason.Length(); i++)
+			{
+				CHECK_ERROR(output->reason[i] >= 0x20 && output->reason[i] <= 0x7E, L"Invalid HTTP response reason phrase.");
+			}
+
+			List<HttpField> normalizedHeaders;
+			for (auto&& source : input->headers)
+			{
+				auto copy = CreateAsciiHttpField(source.name, WString::Empty);
+				for (auto c : source.value) CHECK_ERROR(c == '\t' || (c >= 0x20 && c != 0x7F), L"Invalid response field value.");
+				copy.value.Resize(source.value.Count());
+				for (vint i = 0; i < source.value.Count(); i++) copy.value[i] = source.value[i];
+				normalizedHeaders.Add(std::move(copy));
+			}
+
+			HttpFraming framing;
+			CHECK_ERROR(AnalyzeHttpFraming(normalizedHeaders, framing) == HttpFramingAnalysisResult::Succeeded, L"Invalid or unsupported HTTP response framing.");
+			CHECK_ERROR(framing.kind != HttpFramingKind::Chunked, L"Response Transfer-Encoding is not supported.");
+			CHECK_ERROR(framing.contentLengthValuesPlainDecimal, L"Application Content-Length values must be plain decimal numbers.");
+			CHECK_ERROR(framing.contentLength <= (vuint64_t)std::numeric_limits<vint>::max(), L"The application Content-Length is too large.");
+
+			bool date = false, noStore = false, cors = false;
+			for (auto&& source : normalizedHeaders)
+			{
+				if (source.name == L"content-length") continue;
+				if (source.name == L"date")
+				{
+					CHECK_ERROR(!date && ValidHttpDate(source.value), L"A response requires at most one valid IMF-fixdate Date field.");
+					date = true;
+				}
+				else if (source.name == L"cache-control")
+				{
+					bool sourceNoStore = false;
+					CHECK_ERROR(AnalyzeCacheControl(source.value, sourceNoStore), L"Invalid Cache-Control response field.");
+					noStore |= sourceNoStore;
+				}
+				else if (source.name == L"access-control-allow-origin")
+				{
+					WString value;
+					CHECK_ERROR(!cors && DecodeAsciiHttpFieldValue(source.value, value) && TrimOws(value) == L"*", L"The loopback CORS policy requires exactly one Access-Control-Allow-Origin: * field.");
+					cors = true;
+				}
+				HttpField copy;
+				copy.name = source.name;
+				copy.value.Resize(source.value.Count());
+				if (source.value.Count() > 0)
+				{
+					memcpy(&copy.value[0], &source.value[0], source.value.Count());
+				}
+				output->headers.Add(std::move(copy));
+			}
+			auto contentLength = framing.kind == HttpFramingKind::ContentLength;
+			auto suppliedLength = (vint)framing.contentLength;
+			auto outputLength = length;
+			if (contentLength && input->statusCode == 304 && method != L"HEAD") outputLength = suppliedLength;
+			else CHECK_ERROR(!contentLength || suppliedLength == length, L"Contradictory response Content-Length.");
+			if (!date) output->headers.Add(CreateAsciiHttpField(L"date", DateHeader()));
+			if (!noStore) output->headers.Add(CreateAsciiHttpField(L"cache-control", L"no-store"));
+			if (!cors) output->headers.Add(CreateAsciiHttpField(L"access-control-allow-origin", L"*"));
+			if (input->statusCode != 204) output->headers.Add(CreateAsciiHttpField(L"content-length", itow(outputLength)));
+			if (bodyAllowed && bodySize > 0)
+			{
+				SetHttpBodyBytes(output->body, std::move(body));
+			}
+			return output;
+		}
+
+		Ptr<HttpResponse> Automatic(vint code, bool close, bool preflight = false)
+		{
+			auto response = Ptr(new HttpResponse);
+			response->statusCode = code;
+			response->reason = Reason(code);
+			if (close) response->headers.Add(CreateAsciiHttpField(L"connection", L"close"));
+			if (preflight)
+			{
+				response->headers.Add(CreateAsciiHttpField(L"access-control-allow-methods", L"GET, HEAD, POST, OPTIONS"));
+				response->headers.Add(CreateAsciiHttpField(L"access-control-allow-headers", L"Accept, Content-Type"));
+				response->headers.Add(CreateAsciiHttpField(L"allow", L"GET, HEAD, POST, OPTIONS"));
+			}
+			return response;
+		}
+	}
+}
+
+namespace vl::inter_process::async_tcp_socket
+{
+	using namespace collections;
+
+	namespace
+	{
+		class ApiRegistration : public Object
+		{
+		public:
+			struct Frame
+			{
+				ApiRegistration*				registration;
+				Frame*						previous;
+				Frame(ApiRegistration* value);
+				~Frame();
+			};
+			static thread_local Frame*		currentFrame;
+
+			PrefixInfo						prefix;
+			bool							respondToOptions;
+			Ptr<RegistryEntry>				entry;
+			CriticalSection					lock;
+			ConditionVariable				cv;
+			List<Ptr<SocketHttpRequestContext>> contexts;
+			List<Func<void()>>				contextCancellations;
+			Func<void(Ptr<SocketHttpRequestContext>)> requestCallback;
+			Func<void()>						stoppingCallback;
+			vint							activeCallbacks = 0;
+			bool							stopping = false;
+			bool							stopped = false;
+
+			ApiRegistration(const PrefixInfo& _prefix, bool _respondToOptions)
+				: prefix(_prefix), respondToOptions(_respondToOptions)
+			{
+			}
+
+			static vint Depth(ApiRegistration* registration)
+			{
+				vint depth = 0;
+				for (auto frame = currentFrame; frame; frame = frame->previous) if (frame->registration == registration) depth++;
+				return depth;
+			}
+
+			bool AddContext(Ptr<SocketHttpRequestContext> context, const Func<void()>& cancellation)
+			{
+				bool added = false;
+				CS_LOCK(lock)
+				{
+					if (!stopping)
+					{
+						contexts.Add(context);
+						contextCancellations.Add(cancellation);
+						added = true;
+					}
+				}
+				return added;
+			}
+
+			void RemoveContext(SocketHttpRequestContext* context)
+			{
+				CS_LOCK(lock)
+				{
+					vint index = -1;
+					for (vint i = 0; i < contexts.Count(); i++)
+					{
+						if (contexts[i].Obj() == context) { index = i; break; }
+					}
+					if (index != -1)
+					{
+						contexts.RemoveAt(index);
+						contextCancellations.RemoveAt(index);
+					}
+					cv.WakeAllPendings();
+				}
+			}
+
+			bool InvokeRequest(Ptr<SocketHttpRequestContext> context)
+			{
+				Func<void(Ptr<SocketHttpRequestContext>)> callback;
+				CS_LOCK(lock)
+				{
+					if (!stopping && requestCallback)
+					{
+						callback = requestCallback;
+						activeCallbacks++;
+					}
+				}
+				if (!callback) return false;
+				Frame frame(this);
+				try
+				{
+					callback(context);
+				}
+				catch (...)
+				{
+					CS_LOCK(lock) { activeCallbacks--; cv.WakeAllPendings(); }
+					throw;
+				}
+				CS_LOCK(lock) { activeCallbacks--; cv.WakeAllPendings(); }
+				return true;
+			}
+
+			bool ReserveCompletion(const Func<void(bool)>& callback)
+			{
+				if (!callback) return false;
+				bool reserved = false;
+				CS_LOCK(lock)
+				{
+					if (!stopped) { activeCallbacks++; reserved = true; }
+				}
+				return reserved;
+			}
+
+			void InvokeReservedCompletion(const Func<void(bool)>& callback, bool succeeded)
+			{
+				Frame frame(this);
+				try { callback(succeeded); } catch (...) {}
+				CS_LOCK(lock) { activeCallbacks--; cv.WakeAllPendings(); }
+			}
+
+			void Stop(bool notify)
+			{
+				List<Func<void()>> cancelling;
+				Func<void()> callback;
+				auto depth = Depth(this);
+				lock.Enter();
+				if (stopped) { lock.Leave(); return; }
+				if (stopping)
+				{
+					if (depth > 0) { lock.Leave(); return; }
+					while (!stopped) cv.SleepWith(lock);
+					lock.Leave();
+					return;
+				}
+				stopping = true;
+				if (notify) callback = stoppingCallback;
+				for (auto cancellation : contextCancellations) cancelling.Add(cancellation);
+				lock.Leave();
+
+				if (callback)
+				{
+					CS_LOCK(lock) { activeCallbacks++; }
+					Frame frame(this);
+					try { callback(); } catch (...) {}
+					CS_LOCK(lock) { activeCallbacks--; cv.WakeAllPendings(); }
+				}
+				for (auto cancellation : cancelling) cancellation();
+				lock.Enter();
+				while (contexts.Count() > 0 || activeCallbacks > depth) cv.SleepWith(lock);
+				requestCallback = {};
+				stoppingCallback = {};
+				stopped = true;
+				cv.WakeAllPendings();
+				lock.Leave();
+			}
+
+			bool IsStopped()
+			{
+				bool result = false;
+				CS_LOCK(lock) { result = stopping; }
+				return result;
+			}
+		};
+
+		thread_local ApiRegistration::Frame* ApiRegistration::currentFrame = nullptr;
+		ApiRegistration::Frame::Frame(ApiRegistration* value) : registration(value), previous(currentFrame) { currentFrame = this; }
+		ApiRegistration::Frame::~Frame() { currentFrame = previous; }
+
+		class RegistryEntry : public Object
+		{
+		public:
+			Ptr<IAsyncSocketServer>			socketServer;
+			EventObject						readyEvent;
+			List<Ptr<ApiRegistration>>		registrations;
+			Ptr<HttpRequestServer>				server;
+			WString							failureMessage;
+			AsyncSocketServerStartFailure		failure = AsyncSocketServerStartFailure::Other;
+			bool succeeded = false, terminal = false;
+
+			RegistryEntry(Ptr<IAsyncSocketServer> _socketServer)
+				: socketServer(_socketServer)
+			{
+				CHECK_ERROR(readyEvent.CreateManualUnsignal(false), L"Failed to create a socket HTTP registry event.");
+			}
+		};
+
+		class ConnectionState : public Object
+		{
+		public:
+			CriticalSection					lock;
+			Ptr<RegistryEntry>				entry;
+			Ptr<IHttpRequestConnection>		connection;
+			Ptr<SocketHttpRequestContext>	context;
+			bool automaticWrite = false;
+			bool closeAfterWrite = false;
+			bool terminal = false;
+
+			ConnectionState(Ptr<RegistryEntry> _entry, Ptr<IHttpRequestConnection> _connection)
+				: entry(_entry)
+				, connection(_connection)
+			{
+			}
+		};
+	}
+
+	class SocketHttpRequestContext::Impl : public Object
+	{
+	public:
+		enum class State { Pending, Sending, Completed, Cancelled };
+		CriticalSection					lock;
+		Ptr<ConnectionState>				connectionState;
+		Ptr<ApiRegistration>				registration;
+		Ptr<HttpRequest>					request;
+		WString relativePath, query;
+		SocketHttpRequestContext*			owner = nullptr;
+		Func<void(bool)>					completion;
+		State state = State::Pending;
+
+		Impl(Ptr<ConnectionState> cs, Ptr<ApiRegistration> reg, Ptr<HttpRequest> req, const WString& relative, const WString& _query)
+			: connectionState(cs), registration(reg), request(req), relativePath(relative), query(_query)
+		{
+		}
+
+		bool Finish(bool succeeded, bool includePending, bool includeSending, bool stopConnection)
+		{
+			Func<void(bool)> callback;
+			bool won = false;
+			CS_LOCK(lock)
+			{
+				if ((includeSending && state == State::Sending) || (includePending && state == State::Pending))
+				{
+					if (state == State::Sending)
+					{
+						callback = completion;
+						completion = {};
+					}
+					state = succeeded ? State::Completed : State::Cancelled;
+					won = true;
+				}
+			}
+			if (!won) return false;
+			auto completionReserved = registration->ReserveCompletion(callback);
+			Ptr<IHttpRequestConnection> connection;
+			CS_LOCK(connectionState->lock)
+			{
+				if (connectionState->context.Obj() == owner) connectionState->context = nullptr;
+				if (stopConnection) { connectionState->terminal = true; connection = connectionState->connection; }
+			}
+			registration->RemoveContext(owner);
+			if (connection) try { connection->Stop(); } catch (...) {}
+			if (completionReserved) registration->InvokeReservedCompletion(callback, succeeded);
+			return true;
+		}
+	};
+
+	class SocketHttpServerApiDispatcher : public Object, public virtual IHttpRequestCallback
+	{
+	private:
+		CriticalSection					lockSelf;
+		Ptr<SocketHttpServerApiDispatcher>	selfReference;
+		Ptr<ConnectionState>				state;
+		Ptr<SocketHttpServerApiDispatcher> Retain();
+		void SendAutomatic(vint code, bool close, bool preflight = false);
+		void Process(Ptr<HttpRequest> request);
+
+	public:
+		SocketHttpServerApiDispatcher(Ptr<RegistryEntry> entry, Ptr<IHttpRequestConnection> connection)
+			: state(Ptr(new ConnectionState(entry, connection)))
+		{
+		}
+		void InitializeSelf(Ptr<SocketHttpServerApiDispatcher> self) { CS_LOCK(lockSelf) { selfReference = self; } }
+		void OnReadRequest(Ptr<HttpRequest> request) override;
+		void OnReadRequestFailure(HttpRequestFailure failure) override;
+		void OnWriteCompleted() override;
+		void OnError(const WString& error, bool fatal) override;
+		void OnDisconnected() override;
+		void OnInstalled(IHttpRequestConnection* connection) override;
+	};
+
+	namespace
+	{
+		void UnexpectedStop(Ptr<RegistryEntry> entry);
+
+		class SharedServer : public HttpRequestServer
+		{
+		private:
+			CriticalSection				lock;
+			Ptr<SharedServer>				selfReference;
+			Ptr<RegistryEntry>				entry;
+		protected:
+			void OnServerStopped() override;
+		public:
+			SharedServer(
+				Ptr<IAsyncSocketServer> server,
+				Ptr<RegistryEntry> _entry,
+				const Func<Ptr<IHttpRequestTimeoutController>()>& timeoutControllerFactory
+				)
+				: HttpRequestServer(server, timeoutControllerFactory)
+				, entry(_entry)
+			{
+			}
+			void InitializeSelf(Ptr<SharedServer> self) { CS_LOCK(lock) { selfReference = self; } }
+			WaitForClientResult OnClientConnected(Ptr<IHttpRequestConnection> connection) override;
+			void StopAndRelease();
+		};
+
+		BEGIN_GLOBAL_STORAGE_CLASS(SocketHttpRegistry)
+			SpinLock						lock;
+			Dictionary<IAsyncSocketServer*, Ptr<RegistryEntry>> entries;
+			Func<Ptr<IHttpRequestTimeoutController>()>
+										timeoutControllerFactory;
+		INITIALIZE_GLOBAL_STORAGE_CLASS
+		FINALIZE_GLOBAL_STORAGE_CLASS
+			List<Ptr<HttpRequestServer>> servers;
+			List<Ptr<RegistryEntry>> retainedEntries;
+			SPIN_LOCK(lock)
+			{
+				for (auto entry : entries.Values())
+				{
+					retainedEntries.Add(entry);
+					if (entry->server) servers.Add(entry->server);
+				}
+				entries.Clear();
+				timeoutControllerFactory = {};
+			}
+			for (auto server : servers)
+			{
+				auto shared = server.Cast<SharedServer>();
+				if (shared) shared->StopAndRelease(); else server->Stop();
+			}
+		END_GLOBAL_STORAGE_CLASS(SocketHttpRegistry)
+	}
+}
+
+namespace vl::inter_process::async_tcp_socket
+{
+	using namespace collections;
+
+	namespace
+	{
+		Func<Ptr<IHttpRequestTimeoutController>()> GetTimeoutControllerFactory()
+		{
+			Func<Ptr<IHttpRequestTimeoutController>()> factory;
+			auto& registry = GetSocketHttpRegistry();
+			SPIN_LOCK(registry.lock) { factory = registry.timeoutControllerFactory; }
+			return factory;
+		}
+
+		bool CurrentEntry(SocketHttpRegistry& registry, Ptr<RegistryEntry> entry)
+		{
+			auto index = registry.entries.Keys().IndexOf(entry->socketServer.Obj());
+			return index != -1 && registry.entries.Values()[index] == entry;
+		}
+
+		bool Duplicate(Ptr<RegistryEntry> entry, Ptr<ApiRegistration> registration)
+		{
+			for (auto existing : entry->registrations)
+			{
+				if (existing != registration && existing->prefix.decodedPath == registration->prefix.decodedPath) return true;
+			}
+			return false;
+		}
+
+		void RegisterApi(Ptr<IAsyncSocketServer> socketServer, Ptr<ApiRegistration> registration)
+		{
+			auto& registry = GetSocketHttpRegistry();
+			Ptr<RegistryEntry> entry;
+			bool creator = false;
+			SPIN_LOCK(registry.lock)
+			{
+				auto index = registry.entries.Keys().IndexOf(socketServer.Obj());
+				if (index != -1) entry = registry.entries.Values()[index];
+			}
+			if (!entry)
+			{
+				auto candidate = Ptr(new RegistryEntry(socketServer));
+				SPIN_LOCK(registry.lock)
+				{
+					auto index = registry.entries.Keys().IndexOf(socketServer.Obj());
+					if (index == -1)
+					{
+						entry = candidate;
+						entry->registrations.Add(registration);
+						registration->entry = entry;
+						registry.entries.Add(socketServer.Obj(), entry);
+						creator = true;
+					}
+					else entry = registry.entries.Values()[index];
+				}
+			}
+			if (!creator)
+			{
+				CHECK_ERROR(entry->readyEvent.Wait(), L"Failed to wait for a shared socket HTTP listener.");
+				bool joined = false, duplicate = false;
+				AsyncSocketServerStartFailure failure = AsyncSocketServerStartFailure::Other;
+				WString message;
+				SPIN_LOCK(registry.lock)
+				{
+					if (entry->succeeded && !entry->terminal && CurrentEntry(registry, entry))
+					{
+						duplicate = Duplicate(entry, registration);
+						if (!duplicate)
+						{
+							entry->registrations.Add(registration);
+							registration->entry = entry;
+							joined = true;
+						}
+					}
+					else
+					{
+						failure = entry->failure;
+						message = entry->failureMessage;
+					}
+				}
+				CHECK_ERROR(!duplicate, L"A SocketHttpServerApi with the same normalized prefix has already started.");
+				if (joined) return;
+				if (message == WString::Empty) message = L"The injected async socket server stopped before the API could join it.";
+				throw AsyncSocketServerStartException(failure, message);
+			}
+
+			Ptr<SharedServer> server;
+			AsyncSocketServerStartFailure failure = AsyncSocketServerStartFailure::Other;
+			WString message;
+			bool started = false;
+			try
+			{
+				server = Ptr(new SharedServer(socketServer, entry, GetTimeoutControllerFactory()));
+				server->InitializeSelf(server);
+				server->Start();
+				started = true;
+			}
+			catch (const AsyncSocketServerStartException& exception) { failure = exception.GetFailure(); message = exception.Message(); }
+			catch (const Exception& exception) { message = exception.Message(); }
+			catch (...) { message = L"The socket HTTP listener failed to start."; }
+
+			bool published = false;
+			SPIN_LOCK(registry.lock)
+			{
+				if (started && !entry->terminal && CurrentEntry(registry, entry))
+				{
+					entry->server = server;
+					entry->succeeded = true;
+					published = true;
+				}
+				else
+				{
+					if (started)
+					{
+						failure = AsyncSocketServerStartFailure::Other;
+						message = L"The listener stopped while starting.";
+					}
+					else if (message == WString::Empty)
+					{
+						message = L"The socket HTTP listener failed to start.";
+					}
+					if (CurrentEntry(registry, entry)) registry.entries.Remove(entry->socketServer.Obj());
+					entry->registrations.Remove(registration.Obj());
+					registration->entry = nullptr;
+					entry->failure = failure;
+					entry->failureMessage = message;
+					entry->terminal = true;
+				}
+			}
+			entry->readyEvent.Signal();
+			if (published) return;
+			if (server) server->StopAndRelease();
+			throw AsyncSocketServerStartException(failure, message);
+		}
+
+		Ptr<HttpRequestServer> UnregisterApi(Ptr<ApiRegistration> registration)
+		{
+			Ptr<HttpRequestServer> server;
+			Ptr<RegistryEntry> entry;
+			auto& registry = GetSocketHttpRegistry();
+			SPIN_LOCK(registry.lock)
+			{
+				entry = registration->entry;
+				if (entry)
+				{
+					entry->registrations.Remove(registration.Obj());
+					registration->entry = nullptr;
+					if (entry->registrations.Count() == 0)
+					{
+						if (CurrentEntry(registry, entry)) registry.entries.Remove(entry->socketServer.Obj());
+						entry->terminal = true;
+						server = entry->server;
+						entry->server = nullptr;
+					}
+				}
+			}
+			return server;
+		}
+
+		List<Ptr<ApiRegistration>> Registrations(Ptr<RegistryEntry> entry)
+		{
+			List<Ptr<ApiRegistration>> result;
+			auto& registry = GetSocketHttpRegistry();
+			SPIN_LOCK(registry.lock)
+			{
+				if (!entry->terminal) for (auto item : entry->registrations) result.Add(item);
+			}
+			return result;
+		}
+
+		void UnexpectedStop(Ptr<RegistryEntry> entry)
+		{
+			List<Ptr<ApiRegistration>> stopping;
+			auto& registry = GetSocketHttpRegistry();
+			SPIN_LOCK(registry.lock)
+			{
+				if (!entry->terminal)
+				{
+					entry->terminal = true;
+					if (CurrentEntry(registry, entry)) registry.entries.Remove(entry->socketServer.Obj());
+					for (auto registration : entry->registrations) { registration->entry = nullptr; stopping.Add(registration); }
+					entry->registrations.Clear();
+					entry->server = nullptr;
+				}
+			}
+			for (auto registration : stopping) registration->Stop(true);
+		}
+
+		bool Match(const WString& prefix, const WString& path)
+		{
+			return prefix.Length() == 0 || path == prefix || (path.Length() > prefix.Length() && path.Left(prefix.Length()) == prefix && path[prefix.Length()] == L'/');
+		}
+
+		bool SingleHeader(Ptr<HttpRequest> request, const WString& name, WString& value, bool& exists)
+		{
+			auto count = CountHttpFields(request->headers, name);
+			if (count > 1) return false;
+			exists = count == 1;
+			if (!exists) return true;
+			return DecodeAsciiHttpFieldValue(FindHttpField(request->headers, name)->value, value);
+		}
+
+		WString Trim(const WString& text)
+		{
+			vint begin = 0, end = text.Length();
+			while (begin < end && (text[begin] == L' ' || text[begin] == L'\t')) begin++;
+			while (begin < end && (text[end - 1] == L' ' || text[end - 1] == L'\t')) end--;
+			return text.Sub(begin, end - begin);
+		}
+
+		bool Preflight(Ptr<HttpRequest> request, bool& present, bool& supportedMethod)
+		{
+			present = false;
+			supportedMethod = false;
+			WString method;
+			bool exists = false;
+			if (!SingleHeader(request, L"access-control-request-method", method, exists)) return false;
+			if (!exists) return true;
+			present = true;
+			method = Trim(method);
+			supportedMethod = method == L"GET" || method == L"HEAD" || method == L"POST" || method == L"OPTIONS";
+			if (method.Length() == 0) return false;
+			for (auto&& field : request->headers)
+			{
+				if (field.name != L"access-control-request-headers") continue;
+				WString headers;
+				if (!DecodeAsciiHttpFieldValue(field.value, headers)) return false;
+				vint reading = 0;
+				while (reading <= headers.Length())
+				{
+					vint comma = reading;
+					while (comma < headers.Length() && headers[comma] != L',') comma++;
+					auto item = Lower(Trim(headers.Sub(reading, comma - reading)));
+					if (item.Length() == 0 || (item != L"accept" && item != L"content-type")) return false;
+					if (comma == headers.Length()) break;
+					reading = comma + 1;
+				}
+			}
+			return true;
+		}
+	}
+
+	void SetSocketHttpServerTimeoutControllerFactoryForTesting(const Func<Ptr<IHttpRequestTimeoutController>()>& factory)
+	{
+		auto& registry = GetSocketHttpRegistry();
+		SPIN_LOCK(registry.lock)
+		{
+			CHECK_ERROR(registry.entries.Count() == 0, L"The test timeout controller factory can only change while no API is started.");
+			registry.timeoutControllerFactory = factory;
+		}
+	}
+
+	void ResetSocketHttpServerTimeoutControllerFactoryForTesting() { SetSocketHttpServerTimeoutControllerFactoryForTesting({}); }
+
+	WaitForClientResult SharedServer::OnClientConnected(Ptr<IHttpRequestConnection> connection)
+	{
+		Ptr<RegistryEntry> retained;
+		CS_LOCK(lock) { retained = entry; }
+		if (!retained) return WaitForClientResult::Reject;
+		try
+		{
+			auto dispatcher = Ptr(new SocketHttpServerApiDispatcher(retained, connection));
+			dispatcher->InitializeSelf(dispatcher);
+			connection->InstallCallback(dispatcher.Obj());
+			return WaitForClientResult::Accept;
+		}
+		catch (...) { return WaitForClientResult::Reject; }
+	}
+
+	void SharedServer::StopAndRelease()
+	{
+		Ptr<SharedServer> retained;
+		CS_LOCK(lock) { retained = selfReference; }
+		try { HttpRequestServer::Stop(); } catch (...) {}
+		CS_LOCK(lock) { entry = nullptr; selfReference = nullptr; }
+	}
+
+	void SharedServer::OnServerStopped()
+	{
+		Ptr<SharedServer> retained;
+		Ptr<RegistryEntry> retainedEntry;
+		CS_LOCK(lock) { retained = selfReference; retainedEntry = entry; }
+		if (retainedEntry) UnexpectedStop(retainedEntry);
+		try { HttpRequestServer::OnServerStopped(); } catch (...) {}
+		CS_LOCK(lock) { entry = nullptr; selfReference = nullptr; }
+	}
+}
+
+namespace vl::inter_process::async_tcp_socket
+{
+	using namespace collections;
+
+	Ptr<SocketHttpServerApiDispatcher> SocketHttpServerApiDispatcher::Retain()
+	{
+		Ptr<SocketHttpServerApiDispatcher> retained;
+		CS_LOCK(lockSelf) { retained = selfReference; }
+		return retained;
+	}
+
+	void SocketHttpServerApiDispatcher::SendAutomatic(vint code, bool close, bool preflight)
+	{
+		auto response = Normalize(Automatic(code, close, preflight), L"GET");
+		Ptr<IHttpRequestConnection> connection;
+		CS_LOCK(state->lock)
+		{
+			if (state->terminal || state->automaticWrite || state->context) return;
+			state->automaticWrite = true;
+			state->closeAfterWrite = close;
+			connection = state->connection;
+		}
+		if (!connection) return;
+		try
+		{
+			connection->SendResponse(response);
+		}
+		catch (...)
+		{
+			CS_LOCK(state->lock)
+			{
+				state->automaticWrite = false;
+				state->terminal = true;
+			}
+			try { connection->Stop(); } catch (...) {}
+		}
+	}
+
+	void SocketHttpServerApiDispatcher::Process(Ptr<HttpRequest> request)
+	{
+		if (!request || request->version.major != 1 || request->version.minor != 1)
+		{
+			SendAutomatic(505, true);
+			return;
+		}
+
+		WString host;
+		bool hostExists = false;
+		if (!SingleHeader(request, L"host", host, hostExists) || !hostExists)
+		{
+			SendAutomatic(400, true);
+			return;
+		}
+		vint port = 0;
+		if (!ParseAuthority(host, port))
+		{
+			SendAutomatic(400, true);
+			return;
+		}
+
+		auto supportedMethod = request->method == L"GET" || request->method == L"HEAD" || request->method == L"POST" || request->method == L"OPTIONS";
+		if (!supportedMethod)
+		{
+			SendAutomatic(501, false);
+			return;
+		}
+
+		auto registrations = Registrations(state->entry);
+		auto matchesPort = state->entry->socketServer->GetPort() == port;
+		if (request->requestTarget == L"*")
+		{
+			if (request->method != L"OPTIONS")
+			{
+				SendAutomatic(400, true);
+				return;
+			}
+			bool automaticOptions = false;
+			for (auto registration : registrations)
+			{
+				if (matchesPort && registration->respondToOptions)
+				{
+					automaticOptions = true;
+					break;
+				}
+			}
+			if (!automaticOptions)
+			{
+				SendAutomatic(501, false);
+				return;
+			}
+			bool present = false, methodSupported = false;
+			if (!Preflight(request, present, methodSupported))
+			{
+				SendAutomatic(400, false, true);
+				return;
+			}
+			SendAutomatic(present && !methodSupported ? 405 : 200, false, true);
+			return;
+		}
+
+		auto target = request->requestTarget;
+		if (target.Length() == 0 || target[0] != L'/' || target.IndexOf(L'#') != -1)
+		{
+			SendAutomatic(400, true);
+			return;
+		}
+		vint question = target.IndexOf(L'?');
+		auto rawPath = question == -1 ? target : target.Left(question);
+		auto query = question == -1 ? WString::Empty : target.Right(target.Length() - question - 1);
+		WString path;
+		if (!DecodePath(rawPath, path))
+		{
+			SendAutomatic(400, true);
+			return;
+		}
+
+		Ptr<ApiRegistration> selected;
+		for (auto registration : registrations)
+		{
+			if (matchesPort && Match(registration->prefix.decodedPath, path))
+			{
+				if (!selected || registration->prefix.decodedPath.Length() > selected->prefix.decodedPath.Length()) selected = registration;
+			}
+		}
+		if (!selected)
+		{
+			SendAutomatic(404, false);
+			return;
+		}
+
+		if (request->method == L"OPTIONS" && selected->respondToOptions)
+		{
+			bool present = false, methodSupported = false;
+			if (!Preflight(request, present, methodSupported))
+			{
+				SendAutomatic(400, false, true);
+				return;
+			}
+			if (present)
+			{
+				SendAutomatic(methodSupported ? 200 : 405, false, true);
+				return;
+			}
+		}
+
+		WString relative;
+		if (selected->prefix.decodedPath.Length() == 0) relative = path;
+		else if (path == selected->prefix.decodedPath) relative = L"/";
+		else relative = path.Right(path.Length() - selected->prefix.decodedPath.Length());
+		if (relative.Length() == 0) relative = L"/";
+
+		auto contextImpl = Ptr(new SocketHttpRequestContext::Impl(state, selected, request, relative, query));
+		auto context = Ptr(new SocketHttpRequestContext(contextImpl));
+		contextImpl->owner = context.Obj();
+		auto cancelForStop = Func<void()>([contextImpl]()
+		{
+			contextImpl->Finish(false, true, true, true);
+		});
+		bool installed = false;
+		CS_LOCK(state->lock)
+		{
+			if (!state->terminal && !state->context && !state->automaticWrite)
+			{
+				state->context = context;
+				installed = true;
+			}
+		}
+		if (!installed || !selected->AddContext(context, cancelForStop))
+		{
+			CS_LOCK(state->lock) { if (state->context == context) state->context = nullptr; }
+			SendAutomatic(404, false);
+			return;
+		}
+
+		try
+		{
+			if (!selected->InvokeRequest(context)) context->Cancel();
+		}
+		catch (...)
+		{
+			context->Respond(Automatic(500, false));
+		}
+	}
+
+	void SocketHttpServerApiDispatcher::OnReadRequest(Ptr<HttpRequest> request)
+	{
+		auto retained = Retain();
+		if (!retained) return;
+		try { Process(request); } catch (...) { SendAutomatic(500, true); }
+	}
+
+	void SocketHttpServerApiDispatcher::OnReadRequestFailure(HttpRequestFailure failure)
+	{
+		auto retained = Retain();
+		if (!retained) return;
+		SendAutomatic((vint)failure, true);
+	}
+
+	void SocketHttpServerApiDispatcher::OnWriteCompleted()
+	{
+		auto retained = Retain();
+		if (!retained) return;
+		Ptr<SocketHttpRequestContext> context;
+		bool automatic = false, close = false;
+		CS_LOCK(state->lock)
+		{
+			context = state->context;
+			if (!context && state->automaticWrite)
+			{
+				automatic = true;
+				close = state->closeAfterWrite;
+				state->automaticWrite = false;
+				state->closeAfterWrite = false;
+			}
+		}
+		if (context) context->impl->Finish(true, false, true, false);
+		if (!context && !automatic) return;
+
+		if (close)
+		{
+			Ptr<IHttpRequestConnection> stopping;
+			CS_LOCK(state->lock)
+			{
+				state->terminal = true;
+				stopping = state->connection;
+			}
+			if (stopping) try { stopping->Stop(); } catch (...) {}
+		}
+	}
+
+	void SocketHttpServerApiDispatcher::OnError(const WString&, bool fatal)
+	{
+		auto retained = Retain();
+		if (!retained) return;
+		Ptr<SocketHttpRequestContext> context;
+		Ptr<IHttpRequestConnection> connection;
+		CS_LOCK(state->lock)
+		{
+			context = state->context;
+			if (fatal || context || state->automaticWrite)
+			{
+				state->terminal = true;
+				connection = state->connection;
+			}
+		}
+		if (context) context->impl->Finish(false, true, true, true);
+		else if (connection) try { connection->Stop(); } catch (...) {}
+	}
+
+	void SocketHttpServerApiDispatcher::OnDisconnected()
+	{
+		auto retained = Retain();
+		if (!retained) return;
+		Ptr<SocketHttpRequestContext> context;
+		CS_LOCK(state->lock)
+		{
+			state->terminal = true;
+			state->connection = nullptr;
+			state->automaticWrite = false;
+			context = state->context;
+		}
+		if (context) context->impl->Finish(false, true, true, false);
+		CS_LOCK(lockSelf) { selfReference = nullptr; }
+	}
+
+	void SocketHttpServerApiDispatcher::OnInstalled(IHttpRequestConnection* connection)
+	{
+		bool valid = false;
+		CS_LOCK(state->lock) { valid = state->connection.Obj() == connection; }
+		CHECK_ERROR(valid, L"SocketHttpServerApiDispatcher was installed on an unexpected HTTP request connection.");
+		connection->BeginReadingLoopUnsafe();
+	}
+
+	SocketHttpRequestContext::SocketHttpRequestContext(Ptr<Impl> _impl) : impl(_impl) {}
+	SocketHttpRequestContext::~SocketHttpRequestContext() {}
+	Ptr<HttpRequest> SocketHttpRequestContext::GetRequest() { return impl->request; }
+	WString SocketHttpRequestContext::GetRelativePath() { return impl->relativePath; }
+	WString SocketHttpRequestContext::GetQuery() { return impl->query; }
+	bool SocketHttpRequestContext::TryGetBodyUtf8(WString& body)
+	{
+		Array<vuint8_t> bytes;
+		if (!FlattenHttpBody(impl->request->body, bytes)) return false;
+		return ::vl::inter_process::async_tcp_socket::DecodeStrictUtf8(
+			bytes.Count() == 0 ? nullptr : &bytes[0],
+			bytes.Count(),
+			body
+			);
+	}
+
+	bool SocketHttpRequestContext::Respond(Ptr<HttpResponse> response, Func<void(bool)> completion)
+	{
+		Ptr<HttpResponse> normalized;
+		Ptr<IHttpRequestConnection> connection;
+		CS_LOCK(impl->lock)
+		{
+			if (impl->state != Impl::State::Pending) return false;
+			normalized = Normalize(response, impl->request->method);
+			impl->state = Impl::State::Sending;
+			impl->completion = completion;
+		}
+		CS_LOCK(impl->connectionState->lock)
+		{
+			if (!impl->connectionState->terminal && impl->connectionState->context.Obj() == this) connection = impl->connectionState->connection;
+		}
+		if (!connection)
+		{
+			impl->Finish(false, false, true, false);
+			return true;
+		}
+		try { connection->SendResponse(normalized); }
+		catch (...) { impl->Finish(false, false, true, true); }
+		return true;
+	}
+
+	bool SocketHttpRequestContext::RespondStatus(vint statusCode, const WString& reason, Func<void(bool)> completion)
+	{
+		ValidateConvenienceResponseArguments(statusCode, reason, WString::Empty, 0);
+		Array<vuint8_t> body;
+		return Respond(CreateConvenienceResponse(statusCode, reason, WString::Empty, std::move(body)), completion);
+	}
+
+	bool SocketHttpRequestContext::RespondBytes(vint statusCode, const WString& reason, const WString& contentType, const Array<vuint8_t>& body, Func<void(bool)> completion)
+	{
+		ValidateConvenienceResponseArguments(statusCode, reason, contentType, body.Count());
+		Array<vuint8_t> copy(body.Count());
+		if (body.Count() > 0) memcpy(&copy[0], &body[0], body.Count());
+		return Respond(CreateConvenienceResponse(statusCode, reason, contentType, std::move(copy)), completion);
+	}
+
+	bool SocketHttpRequestContext::RespondUtf8(vint statusCode, const WString& reason, const WString& contentType, const WString& body, Func<void(bool)> completion)
+	{
+		ValidateConvenienceResponseArguments(statusCode, reason, contentType, 0);
+		Array<vuint8_t> encoded;
+		CHECK_ERROR(EncodeStrictUtf8(body, encoded), L"The response body contains invalid Unicode.");
+		CHECK_ERROR(encoded.Count() <= HttpBodySizeLimit, L"The response body is too large.");
+		return Respond(CreateConvenienceResponse(statusCode, reason, contentType, std::move(encoded)), completion);
+	}
+
+	bool SocketHttpRequestContext::Cancel()
+	{
+		return impl->Finish(false, true, false, true);
+	}
+}
+
+namespace vl::inter_process::async_tcp_socket
+{
+	class SocketHttpServerApi::Impl : public Object
+	{
+	private:
+		SocketHttpServerApi*				owner;
+		Ptr<IAsyncSocketServer>			socketServer;
+		Ptr<ApiRegistration>				registration;
+		CriticalSection					lock;
+		ConditionVariable				cv;
+		bool startCalled = false;
+		bool startInProgress = false;
+		bool startSucceeded = false;
+		bool stopRequested = false;
+		bool stopRequestedNotify = false;
+		bool stopStarted = false;
+		bool stopFinished = false;
+
+		void Request(Ptr<SocketHttpRequestContext> context)
+		{
+			SocketHttpServerApi* target = nullptr;
+			CS_LOCK(lock) { target = owner; }
+			if (target) target->OnHttpRequestReceived(context);
+			else context->Cancel();
+		}
+
+		void Stopping()
+		{
+			SocketHttpServerApi* target = nullptr;
+			CS_LOCK(lock) { target = owner; }
+			if (target) target->OnHttpServerStopping();
+		}
+
+		void StopInternal(bool notify)
+		{
+			bool first = false;
+			bool notifyRegistration = false;
+			auto callbackDepth = ApiRegistration::Depth(registration.Obj());
+			lock.Enter();
+			if (startInProgress && callbackDepth > 0)
+			{
+				stopRequested = true;
+				stopRequestedNotify |= notify;
+				lock.Leave();
+				return;
+			}
+			while (startInProgress) cv.SleepWith(lock);
+			if (!stopStarted)
+			{
+				stopStarted = true;
+				first = true;
+				notifyRegistration = notify && startSucceeded;
+			}
+			else if (callbackDepth > 0)
+			{
+				lock.Leave();
+				return;
+			}
+			else
+			{
+				while (!stopFinished) cv.SleepWith(lock);
+			}
+			lock.Leave();
+			if (!first) return;
+
+			auto server = UnregisterApi(registration);
+			registration->Stop(notifyRegistration);
+			if (server)
+			{
+				auto shared = server.Cast<SharedServer>();
+				if (shared) shared->StopAndRelease();
+				else server->Stop();
+			}
+			CS_LOCK(lock)
+			{
+				stopFinished = true;
+				cv.WakeAllPendings();
+			}
+		}
+
+	public:
+		Impl(SocketHttpServerApi* _owner, Ptr<IAsyncSocketServer> _socketServer, const WString& urlPrefix, bool respondToOptions)
+			: owner(_owner)
+			, socketServer(_socketServer)
+		{
+#define ERROR_PREFIX L"vl::inter_process::async_tcp_socket::SocketHttpServerApi::SocketHttpServerApi(Ptr<IAsyncSocketServer>, const WString&, bool)#"
+			CHECK_ERROR(socketServer, ERROR_PREFIX L"Requires a server.");
+			registration = Ptr(new ApiRegistration(ParsePrefix(socketServer->GetPort(), urlPrefix), respondToOptions));
+			registration->requestCallback = Func<void(Ptr<SocketHttpRequestContext>)>([this](Ptr<SocketHttpRequestContext> context) { Request(context); });
+			registration->stoppingCallback = Func<void()>([this]() { Stopping(); });
+#undef ERROR_PREFIX
+		}
+
+		void Start()
+		{
+#define ERROR_PREFIX L"vl::inter_process::async_tcp_socket::SocketHttpServerApi::Start()#"
+			CS_LOCK(lock)
+			{
+				CHECK_ERROR(!startCalled && !stopStarted, ERROR_PREFIX L"Can only be called once before stopping.");
+				startCalled = true;
+				startInProgress = true;
+			}
+			try
+			{
+				RegisterApi(socketServer, registration);
+			}
+			catch (...)
+			{
+				bool stopAfterStart = false, notifyAfterStart = false;
+				CS_LOCK(lock)
+				{
+					startInProgress = false;
+					stopAfterStart = stopRequested;
+					notifyAfterStart = stopRequestedNotify;
+					stopRequested = false;
+					stopRequestedNotify = false;
+					cv.WakeAllPendings();
+				}
+				if (stopAfterStart)
+				{
+					try { StopInternal(notifyAfterStart); } catch (...) {}
+				}
+				throw;
+			}
+			bool stopAfterStart = false, notifyAfterStart = false;
+			CS_LOCK(lock)
+			{
+				startSucceeded = true;
+				startInProgress = false;
+				stopAfterStart = stopRequested;
+				notifyAfterStart = stopRequestedNotify;
+				stopRequested = false;
+				stopRequestedNotify = false;
+				cv.WakeAllPendings();
+			}
+			if (stopAfterStart) StopInternal(notifyAfterStart);
+#undef ERROR_PREFIX
+		}
+
+		void Stop() { StopInternal(true); }
+
+		void Destroy()
+		{
+			CS_LOCK(lock) { owner = nullptr; }
+			StopInternal(false);
+		}
+
+		bool IsStopped()
+		{
+			CS_LOCK(lock)
+			{
+				if (stopStarted) return true;
+			}
+			return registration->IsStopped();
+		}
+
+		WString GetUrlPrefix() { return registration->prefix.normalizedUrl; }
+	};
+
+	SocketHttpServerApi::SocketHttpServerApi(Ptr<IAsyncSocketServer> server, const WString& urlPrefix, bool respondToOptions)
+		: impl(Ptr(new Impl(this, server, urlPrefix, respondToOptions)))
+	{
+	}
+
+	SocketHttpServerApi::~SocketHttpServerApi() { impl->Destroy(); }
+	void SocketHttpServerApi::OnHttpServerStopping() {}
+	void SocketHttpServerApi::Start() { impl->Start(); }
+	void SocketHttpServerApi::Stop() { impl->Stop(); }
+	bool SocketHttpServerApi::IsStopped() { return impl->IsStopped(); }
+	WString SocketHttpServerApi::GetUrlPrefix() { return impl->GetUrlPrefix(); }
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\NETWORKPROTOCOLHTTP.CPP
+***********************************************************************/
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+
+namespace vl::inter_process
+{
+	using namespace vl::collections;
+
+	namespace http_network_protocol_helper
+	{
+		class HttpRequestTimeoutController : public Object, public virtual IHttpRequestTimeoutController
+		{
+		private:
+			class State : public Object
+			{
+			public:
+				CriticalSection					lock;
+				ConditionVariable				cv;
+				Func<void()>					callback;
+				std::chrono::steady_clock::time_point
+										deadline;
+				vint							duration = 0;
+				bool							armed = false;
+				bool							workerRunning = false;
+				vint							activeCallbacks = 0;
+			};
+
+			static thread_local State*		currentCallbackState;
+			Ptr<State>						state = Ptr(new State);
+
+			static void Run(Ptr<State> state)
+			{
+				while (true)
+				{
+					Func<void()> callback;
+					state->lock.Enter();
+					while (state->armed)
+					{
+						auto now = std::chrono::steady_clock::now();
+						if (now >= state->deadline)
+						{
+							callback = state->callback;
+							state->callback = {};
+							state->armed = false;
+							state->activeCallbacks++;
+							break;
+						}
+						auto remaining = std::chrono::ceil<std::chrono::milliseconds>(state->deadline - now).count();
+						auto wait = remaining > (std::numeric_limits<vint>::max)()
+							? (std::numeric_limits<vint>::max)()
+							: (vint)remaining;
+						state->cv.SleepWithForTime(state->lock, wait);
+					}
+					if (!callback)
+					{
+						state->workerRunning = false;
+						state->cv.WakeAllPendings();
+						state->lock.Leave();
+						return;
+					}
+					state->lock.Leave();
+
+					auto previous = currentCallbackState;
+					currentCallbackState = state.Obj();
+					try
+					{
+						callback();
+					}
+					catch (...)
+					{
+					}
+					callback = {};
+					currentCallbackState = previous;
+
+					CS_LOCK(state->lock)
+					{
+						state->activeCallbacks--;
+						state->cv.WakeAllPendings();
+					}
+				}
+			}
+
+		public:
+			~HttpRequestTimeoutController()
+			{
+				CancelAndWait();
+			}
+
+			void Arm(vint milliseconds, const Func<void()>& callback) override
+			{
+				CHECK_ERROR(milliseconds > 0, L"The HTTP timeout controller requires a positive duration.");
+				bool queueWorker = false;
+				CS_LOCK(state->lock)
+				{
+					CHECK_ERROR(!state->armed, L"The HTTP timeout controller is already armed.");
+					state->callback = callback;
+					state->duration = milliseconds;
+					state->deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(milliseconds);
+					state->armed = true;
+					if (!state->workerRunning)
+					{
+						state->workerRunning = true;
+						queueWorker = true;
+					}
+					state->cv.WakeAllPendings();
+				}
+				if (queueWorker)
+				{
+					auto captured = state;
+					auto queued = ThreadPoolLite::Queue(Func<void()>([captured]()
+					{
+						Run(captured);
+					}));
+					if (!queued)
+					{
+						CS_LOCK(state->lock)
+						{
+							state->callback = {};
+							state->armed = false;
+							state->workerRunning = false;
+							state->cv.WakeAllPendings();
+						}
+						CHECK_ERROR(false, L"The HTTP timeout controller could not queue its deadline worker.");
+					}
+				}
+			}
+
+			void Refresh() override
+			{
+				CS_LOCK(state->lock)
+				{
+					if (state->armed)
+					{
+						state->deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(state->duration);
+						state->cv.WakeAllPendings();
+					}
+				}
+			}
+
+			void CancelAndWait() override
+			{
+				auto nestedCallback = currentCallbackState == state.Obj();
+				state->lock.Enter();
+				state->armed = false;
+				state->callback = {};
+				state->cv.WakeAllPendings();
+				if (!nestedCallback)
+				{
+					while (state->workerRunning || state->activeCallbacks > 0)
+					{
+						state->cv.SleepWith(state->lock);
+					}
+				}
+				state->lock.Leave();
+			}
+		};
+
+		thread_local HttpRequestTimeoutController::State* HttpRequestTimeoutController::currentCallbackState = nullptr;
+	}
+
+	Ptr<IHttpRequestTimeoutController> CreateHttpRequestTimeoutController()
+	{
+		return Ptr(new http_network_protocol_helper::HttpRequestTimeoutController);
+	}
+
+	namespace
+	{
+		void EncodeUtf8(const WString& text, Array<char>& utf8)
+		{
+			stream::MemoryStream memoryStream;
+			{
+				stream::Utf8Encoder encoder;
+				stream::EncoderStream encoderStream(memoryStream, encoder);
+				stream::StreamWriter writer(encoderStream);
+				writer.WriteString(text);
+			}
+
+			utf8.Resize((vint)memoryStream.Size());
+			if (utf8.Count() > 0)
+			{
+				memoryStream.SeekFromBegin(0);
+				memoryStream.Read(&utf8[0], utf8.Count());
+			}
+		}
+
+		WString DecodeUtf8(const void* buffer, vint size)
+		{
+			if (size == 0)
+			{
+				return WString::Empty;
+			}
+
+			stream::MemoryWrapperStream memoryStream((void*)buffer, size);
+			stream::Utf8Decoder decoder;
+			stream::DecoderStream decoderStream(memoryStream, decoder);
+			stream::StreamReader reader(decoderStream);
+			return reader.ReadToEnd();
+		}
+
+		vint HexValue(char c)
+		{
+			if ('0' <= c && c <= '9') return c - '0';
+			if ('a' <= c && c <= 'f') return c - 'a' + 10;
+			if ('A' <= c && c <= 'F') return c - 'A' + 10;
+			return -1;
+		}
+
+		bool IsHttpNetworkProtocolPathCharacter(wchar_t c)
+		{
+			if (L'a' <= c && c <= L'z') return true;
+			if (L'A' <= c && c <= L'Z') return true;
+			if (L'0' <= c && c <= L'9') return true;
+			switch (c)
+			{
+			case L'-': case L'.': case L'_': case L'~':
+			case L'!': case L'$': case L'&': case L'\'': case L'(':
+			case L')': case L'*': case L'+': case L',': case L';': case L'=':
+			case L':': case L'@': case L'/':
+				return true;
+			default:
+				return false;
+			}
+		}
+
+		bool ValidateHttpNetworkProtocolPath(const WString& path, bool allowEmpty, bool rejectTrailingSlash)
+		{
+			if (path.Length() == 0) return allowEmpty;
+			if (path[0] != L'/') return false;
+			if (rejectTrailingSlash && path[path.Length() - 1] == L'/') return false;
+
+			List<vuint8_t> decoded;
+			for (vint i = 0; i < path.Length(); i++)
+			{
+				wchar_t c = path[i];
+				if (c == L'%')
+				{
+					if (i + 2 >= path.Length()) return false;
+					wchar_t highChar = path[i + 1];
+					wchar_t lowChar = path[i + 2];
+					if (highChar > 0x7F || lowChar > 0x7F) return false;
+					vint high = HexValue((char)highChar);
+					vint low = HexValue((char)lowChar);
+					if (high == -1 || low == -1) return false;
+					vuint8_t byte = (vuint8_t)(high * 16 + low);
+					if (byte == 0 || byte == '/' || byte == '\\') return false;
+					decoded.Add(byte);
+					i += 2;
+				}
+				else
+				{
+					if (c > 0x7F || !IsHttpNetworkProtocolPathCharacter(c)) return false;
+					decoded.Add((vuint8_t)c);
+				}
+			}
+
+			WString ignored;
+			return async_tcp_socket::DecodeStrictUtf8(
+				decoded.Count() == 0 ? nullptr : &decoded[0],
+				decoded.Count(),
+				ignored
+				);
+		}
+	}
+
+	WString CreateHttpNetworkProtocolConnectBody(const WString& requestPath, const WString& responsePath)
+	{
+		CHECK_ERROR(requestPath.Length() > 0, L"CreateHttpNetworkProtocolConnectBody(const WString&, const WString&): The request path cannot be empty.");
+		CHECK_ERROR(responsePath.Length() > 0, L"CreateHttpNetworkProtocolConnectBody(const WString&, const WString&): The response path cannot be empty.");
+		CHECK_ERROR(requestPath.IndexOf(L';') == -1, L"CreateHttpNetworkProtocolConnectBody(const WString&, const WString&): The request path cannot contain a semicolon.");
+		CHECK_ERROR(responsePath.IndexOf(L';') == -1, L"CreateHttpNetworkProtocolConnectBody(const WString&, const WString&): The response path cannot contain a semicolon.");
+		return requestPath + L";" + responsePath;
+	}
+
+	bool ParseHttpNetworkProtocolConnectBody(const WString& body, WString& requestPath, WString& responsePath)
+	{
+		vint delimiter = body.IndexOf(L';');
+		if (delimiter <= 0 || delimiter == body.Length() - 1) return false;
+		if (body.Right(body.Length() - delimiter - 1).IndexOf(L';') != -1) return false;
+
+		WString parsedRequestPath = body.Left(delimiter);
+		WString parsedResponsePath = body.Right(body.Length() - delimiter - 1);
+		requestPath = parsedRequestPath;
+		responsePath = parsedResponsePath;
+		return true;
+	}
+
+	bool ValidateHttpNetworkProtocolBaseUrl(const WString& baseUrl)
+	{
+		return ValidateHttpNetworkProtocolPath(baseUrl, true, true);
+	}
+
+	bool ValidateHttpNetworkProtocolEndpointPath(const WString& path)
+	{
+		return ValidateHttpNetworkProtocolPath(path, false, false);
+	}
+
+	bool IsValidHttpNetworkProtocolMessage(const WString& message)
+	{
+		if (message.Length() == 0) return false;
+		for (vint i = 0; i < message.Length(); i++)
+		{
+			if (message[i] == 0) return false;
+		}
+		return true;
+	}
+
+	WString HttpUrlEncodeQuery(const WString& query)
+	{
+		Array<char> utf8;
+		EncodeUtf8(query, utf8);
+
+		Array<wchar_t> encoded(utf8.Count() * 3 + 1);
+		wchar_t* writing = &encoded[0];
+		for (vint i = 0; i < utf8.Count(); i++)
+		{
+			vuint8_t x = (vuint8_t)utf8[i];
+			if ((L'a' <= x && x <= L'z') || (L'A' <= x && x <= L'Z') || (L'0' <= x && x <= L'9'))
+			{
+				*writing++ = (wchar_t)x;
+			}
+			else
+			{
+				*writing++ = L'%';
+				*writing++ = L"0123456789ABCDEF"[x / 16];
+				*writing++ = L"0123456789ABCDEF"[x % 16];
+			}
+		}
+		*writing = 0;
+		return &encoded[0];
+	}
+
+	WString HttpUrlDecodeQuery(const WString& query)
+	{
+		Array<char> encoded;
+		EncodeUtf8(query, encoded);
+
+		List<char> utf8;
+		for (vint i = 0; i < encoded.Count(); i++)
+		{
+			char c = encoded[i];
+			if (c == '%' && i + 2 < encoded.Count())
+			{
+				vint high = HexValue(encoded[i + 1]);
+				vint low = HexValue(encoded[i + 2]);
+				if (high != -1 && low != -1)
+				{
+					utf8.Add((char)(high * 16 + low));
+					i += 2;
+					continue;
+				}
+			}
+
+			utf8.Add(c == '+' ? ' ' : c);
+		}
+
+		return utf8.Count() == 0
+			? WString::Empty
+			: DecodeUtf8(&utf8[0], utf8.Count());
+	}
+}
+
+namespace vl::inter_process::windows_http
+{
+	void HttpRequest::SetBodyUtf8(const WString& bodyString)
+	{
+		EncodeUtf8(bodyString, body);
+	}
+
+	bool HttpResponse::TryGetBodyUtf8(WString& bodyString) const
+	{
+		return ::vl::inter_process::async_tcp_socket::DecodeStrictUtf8(
+			body.Count() == 0 ? nullptr : reinterpret_cast<const vuint8_t*>(&body[0]),
+			body.Count(),
+			bodyString
+			);
+	}
+
+	WString HttpResponse::GetBodyUtf8() const
+	{
+		return body.Count() == 0
+			? WString::Empty
+			: DecodeUtf8(&body[0], body.Count());
+	}
+}
+
+namespace vl::inter_process
+{
+	windows_http::HttpRequest CreateHttpNetworkProtocolConnectRequest(const WString& target)
+	{
+		windows_http::HttpRequest request;
+		request.method = L"GET";
+		request.query = target;
+		request.acceptTypes.Add(HttpNetworkProtocolContentType);
+		return request;
+	}
+
+	windows_http::HttpRequest CreateHttpNetworkProtocolReceiveRequest(const WString& target)
+	{
+		windows_http::HttpRequest request;
+		request.method = L"POST";
+		request.query = target;
+		request.acceptTypes.Add(HttpNetworkProtocolContentType);
+		request.extraHeaders.Add(L"Content-Length", L"0");
+		return request;
+	}
+
+	windows_http::HttpRequest CreateHttpNetworkProtocolSendRequest(const WString& target, const Array<char>& body)
+	{
+		windows_http::HttpRequest request;
+		request.method = L"POST";
+		request.query = target;
+		request.acceptTypes.Add(HttpNetworkProtocolContentType);
+		request.contentType = HttpNetworkProtocolContentType;
+		request.body.Resize(body.Count());
+		for (vint i = 0; i < body.Count(); i++)
+		{
+			request.body[i] = body[i];
+		}
+		return request;
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\TUI\TUI.CPP
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+#include <algorithm>
+
+using namespace vl;
+using namespace vl::presentation;
+using namespace vl::collections;
+
+namespace vl
+{
+	namespace console
+	{
+		namespace tui_internal
+		{
+			struct ListenerEntry
+			{
+				ITuiCallback*				listener = nullptr;
+				vuint64_t					generation = 0;
+			};
+		}
+
+		class TUI::Impl
+		{
+		public:
+			bool							active = false;
+			bool							stopRequested = false;
+			bool							shuttingDown = false;
+			bool							backendStarted = false;
+			bool							consoleDisabled = false;
+			vint							ownerThreadId = -1;
+			vint							width = 0;
+			vint							height = 0;
+			vint							timerPeriod = 0;
+			vuint64_t						nextTimer = 0;
+			TuiColorMode					colorMode = TuiColorMode::Auto;
+			Array<TuiPixel>					buffer;
+			List<unittest::TuiBackendEvent>	eventQueue;
+			Ptr<unittest::ITuiBackend>		backend;
+			std::exception_ptr				callbackException;
+			std::exception_ptr*				cleanupException = nullptr;
+
+			~Impl()
+			{
+				if (backendStarted)
+				{
+					try
+					{
+						backend->Stop();
+					}
+					catch (...)
+					{
+						if (cleanupException && !*cleanupException)
+						{
+							*cleanupException = std::current_exception();
+						}
+					}
+				}
+				if (consoleDisabled)
+				{
+					Console::Enable();
+				}
+			}
+		};
+
+		class TUI::ListenerStorage
+		{
+		public:
+			vuint64_t						nextGeneration = 0;
+			List<tui_internal::ListenerEntry>	listeners;
+		};
+
+		TUI::Impl* TUI::impl = nullptr;
+		TUI::ListenerStorage* TUI::listenerStorage = nullptr;
+		Ptr<unittest::ITuiBackend>* TUI::injectedBackend = nullptr;
+
+		namespace tui_internal
+		{
+			constexpr vuint8_t PackState(vuint8_t up, vuint8_t down, vuint8_t left, vuint8_t right)
+			{
+				return (vuint8_t)((up << 6) | (down << 4) | (left << 2) | right);
+			}
+
+			char32_t GetMergeableChar(const TuiMergeablePixel& pixel)
+			{
+				auto up = (vuint8_t)pixel.up;
+				auto down = (vuint8_t)pixel.down;
+				auto left = (vuint8_t)pixel.left;
+				auto right = (vuint8_t)pixel.right;
+				if (up > 3 || down > 3 || left > 3 || right > 3) return 0;
+
+				switch (PackState(up, down, left, right))
+				{
+				case PackState(0, 0, 0, 0): return 0;
+				case PackState(0, 0, 1, 1): return U'\u2500';
+				case PackState(0, 0, 2, 2): return U'\u2501';
+				case PackState(1, 1, 0, 0): return U'\u2502';
+				case PackState(2, 2, 0, 0): return U'\u2503';
+				case PackState(0, 1, 0, 1): return U'\u250C';
+				case PackState(0, 1, 0, 2): return U'\u250D';
+				case PackState(0, 2, 0, 1): return U'\u250E';
+				case PackState(0, 2, 0, 2): return U'\u250F';
+				case PackState(0, 1, 1, 0): return U'\u2510';
+				case PackState(0, 1, 2, 0): return U'\u2511';
+				case PackState(0, 2, 1, 0): return U'\u2512';
+				case PackState(0, 2, 2, 0): return U'\u2513';
+				case PackState(1, 0, 0, 1): return U'\u2514';
+				case PackState(1, 0, 0, 2): return U'\u2515';
+				case PackState(2, 0, 0, 1): return U'\u2516';
+				case PackState(2, 0, 0, 2): return U'\u2517';
+				case PackState(1, 0, 1, 0): return U'\u2518';
+				case PackState(1, 0, 2, 0): return U'\u2519';
+				case PackState(2, 0, 1, 0): return U'\u251A';
+				case PackState(2, 0, 2, 0): return U'\u251B';
+				case PackState(1, 1, 0, 1): return U'\u251C';
+				case PackState(1, 1, 0, 2): return U'\u251D';
+				case PackState(2, 1, 0, 1): return U'\u251E';
+				case PackState(1, 2, 0, 1): return U'\u251F';
+				case PackState(2, 2, 0, 1): return U'\u2520';
+				case PackState(2, 1, 0, 2): return U'\u2521';
+				case PackState(1, 2, 0, 2): return U'\u2522';
+				case PackState(2, 2, 0, 2): return U'\u2523';
+				case PackState(1, 1, 1, 0): return U'\u2524';
+				case PackState(1, 1, 2, 0): return U'\u2525';
+				case PackState(2, 1, 1, 0): return U'\u2526';
+				case PackState(1, 2, 1, 0): return U'\u2527';
+				case PackState(2, 2, 1, 0): return U'\u2528';
+				case PackState(2, 1, 2, 0): return U'\u2529';
+				case PackState(1, 2, 2, 0): return U'\u252A';
+				case PackState(2, 2, 2, 0): return U'\u252B';
+				case PackState(0, 1, 1, 1): return U'\u252C';
+				case PackState(0, 1, 2, 1): return U'\u252D';
+				case PackState(0, 1, 1, 2): return U'\u252E';
+				case PackState(0, 1, 2, 2): return U'\u252F';
+				case PackState(0, 2, 1, 1): return U'\u2530';
+				case PackState(0, 2, 2, 1): return U'\u2531';
+				case PackState(0, 2, 1, 2): return U'\u2532';
+				case PackState(0, 2, 2, 2): return U'\u2533';
+				case PackState(1, 0, 1, 1): return U'\u2534';
+				case PackState(1, 0, 2, 1): return U'\u2535';
+				case PackState(1, 0, 1, 2): return U'\u2536';
+				case PackState(1, 0, 2, 2): return U'\u2537';
+				case PackState(2, 0, 1, 1): return U'\u2538';
+				case PackState(2, 0, 2, 1): return U'\u2539';
+				case PackState(2, 0, 1, 2): return U'\u253A';
+				case PackState(2, 0, 2, 2): return U'\u253B';
+				case PackState(1, 1, 1, 1): return U'\u253C';
+				case PackState(1, 1, 2, 1): return U'\u253D';
+				case PackState(1, 1, 1, 2): return U'\u253E';
+				case PackState(1, 1, 2, 2): return U'\u253F';
+				case PackState(2, 1, 1, 1): return U'\u2540';
+				case PackState(1, 2, 1, 1): return U'\u2541';
+				case PackState(2, 2, 1, 1): return U'\u2542';
+				case PackState(2, 1, 2, 1): return U'\u2543';
+				case PackState(2, 1, 1, 2): return U'\u2544';
+				case PackState(1, 2, 2, 1): return U'\u2545';
+				case PackState(1, 2, 1, 2): return U'\u2546';
+				case PackState(2, 1, 2, 2): return U'\u2547';
+				case PackState(1, 2, 2, 2): return U'\u2548';
+				case PackState(2, 2, 2, 1): return U'\u2549';
+				case PackState(2, 2, 1, 2): return U'\u254A';
+				case PackState(2, 2, 2, 2): return U'\u254B';
+				case PackState(0, 0, 3, 3): return U'\u2550';
+				case PackState(3, 3, 0, 0): return U'\u2551';
+				case PackState(0, 1, 0, 3): return U'\u2552';
+				case PackState(0, 3, 0, 1): return U'\u2553';
+				case PackState(0, 3, 0, 3): return U'\u2554';
+				case PackState(0, 1, 3, 0): return U'\u2555';
+				case PackState(0, 3, 1, 0): return U'\u2556';
+				case PackState(0, 3, 3, 0): return U'\u2557';
+				case PackState(1, 0, 0, 3): return U'\u2558';
+				case PackState(3, 0, 0, 1): return U'\u2559';
+				case PackState(3, 0, 0, 3): return U'\u255A';
+				case PackState(1, 0, 3, 0): return U'\u255B';
+				case PackState(3, 0, 1, 0): return U'\u255C';
+				case PackState(3, 0, 3, 0): return U'\u255D';
+				case PackState(1, 1, 0, 3): return U'\u255E';
+				case PackState(3, 3, 0, 1): return U'\u255F';
+				case PackState(3, 3, 0, 3): return U'\u2560';
+				case PackState(1, 1, 3, 0): return U'\u2561';
+				case PackState(3, 3, 1, 0): return U'\u2562';
+				case PackState(3, 3, 3, 0): return U'\u2563';
+				case PackState(0, 1, 3, 3): return U'\u2564';
+				case PackState(0, 3, 1, 1): return U'\u2565';
+				case PackState(0, 3, 3, 3): return U'\u2566';
+				case PackState(1, 0, 3, 3): return U'\u2567';
+				case PackState(3, 0, 1, 1): return U'\u2568';
+				case PackState(3, 0, 3, 3): return U'\u2569';
+				case PackState(1, 1, 3, 3): return U'\u256A';
+				case PackState(3, 3, 1, 1): return U'\u256B';
+				case PackState(3, 3, 3, 3): return U'\u256C';
+				case PackState(0, 0, 1, 0): return U'\u2574';
+				case PackState(1, 0, 0, 0): return U'\u2575';
+				case PackState(0, 0, 0, 1): return U'\u2576';
+				case PackState(0, 1, 0, 0): return U'\u2577';
+				case PackState(0, 0, 2, 0): return U'\u2578';
+				case PackState(2, 0, 0, 0): return U'\u2579';
+				case PackState(0, 0, 0, 2): return U'\u257A';
+				case PackState(0, 2, 0, 0): return U'\u257B';
+				case PackState(0, 0, 1, 2): return U'\u257C';
+				case PackState(1, 2, 0, 0): return U'\u257D';
+				case PackState(0, 0, 2, 1): return U'\u257E';
+				case PackState(2, 1, 0, 0): return U'\u257F';
+				default: return 0;
+				}
+			}
+
+			bool IsEmptyMergeable(const TuiMergeablePixel& pixel)
+			{
+				return
+					pixel.up == TuiMergeableGlyph::None &&
+					pixel.down == TuiMergeableGlyph::None &&
+					pixel.left == TuiMergeableGlyph::None &&
+					pixel.right == TuiMergeableGlyph::None;
+			}
+
+			bool IsLineGlyph(TuiMergeableGlyph glyph)
+			{
+				return
+					glyph == TuiMergeableGlyph::ThinLine ||
+					glyph == TuiMergeableGlyph::ThickLine ||
+					glyph == TuiMergeableGlyph::DoubleLine;
+			}
+
+			bool IsColorMode(TuiColorMode colorMode, bool allowAuto)
+			{
+				return
+					(allowAuto && colorMode == TuiColorMode::Auto) ||
+					colorMode == TuiColorMode::TrueColor ||
+					colorMode == TuiColorMode::Color256 ||
+					colorMode == TuiColorMode::Color16;
+			}
+
+			char32_t GetUnmergeableChar(const TuiUnmergeablePixel& pixel)
+			{
+				if (pixel.glyph != TuiUnmergeableGlyph::RoundCorner) return 0;
+				switch (pixel.direction)
+				{
+				case TuiUnmergeableDirection::LeftTop: return U'\u256D';
+				case TuiUnmergeableDirection::RightTop: return U'\u256E';
+				case TuiUnmergeableDirection::LeftBottom: return U'\u2570';
+				case TuiUnmergeableDirection::RightBottom: return U'\u256F';
+				default: return 0;
+				}
+			}
+
+			bool IsScalar(char32_t code)
+			{
+				return code <= 0x10FFFF && !(code >= 0xD800 && code <= 0xDFFF);
+			}
+
+			TuiTextStyle GetTextStyle(const TuiPixel& pixel)
+			{
+				return pixel.glyph == TuiPixelGlyph::Char && pixel.character.c != 0
+					? pixel.character.style
+					: TuiTextStyle{};
+			}
+
+			WString GetTextStyleSequence(TuiTextStyle style)
+			{
+				return WString::Unmanaged(L"\x1B[")
+					+ (style.bold ? L"1;" : L"22;")
+					+ (style.italic ? L"3;" : L"23;")
+					+ (style.underline ? L"4;" : L"24;")
+					+ (style.strikeline ? L"9m" : L"29m");
+			}
+
+			TuiPixel EmptyPixel(TuiColor background = { 0, 0, 0 })
+			{
+				TuiPixel pixel;
+				pixel.backgroundColor = background;
+				return pixel;
+			}
+
+			void CheckBuffer(TuiPixel* buffer, vint width, vint height)
+			{
+				CHECK_ERROR(buffer != nullptr, L"vl::console::TUI drawing helper requires a non-null buffer.");
+				CHECK_ERROR(width >= 0 && height >= 0, L"vl::console::TUI drawing helper requires non-negative dimensions.");
+			}
+
+			TuiClipper NormalizeClipper(vint width, vint height, const TuiClipper* clipper)
+			{
+				TuiClipper result{ 0, 0, width, height };
+				if (clipper)
+				{
+					result.x1 = std::max(result.x1, clipper->x1);
+					result.y1 = std::max(result.y1, clipper->y1);
+					result.x2 = std::min(result.x2, clipper->x2);
+					result.y2 = std::min(result.y2, clipper->y2);
+				}
+				if (result.x1 >= result.x2 || result.y1 >= result.y2) return {};
+				return result;
+			}
+
+			void RepairWide(TuiPixel* buffer, vint width, vint height, vint x, vint y)
+			{
+				if (x < 0 || x >= width || y < 0 || y >= height) return;
+				auto index = y * width + x;
+				auto& pixel = buffer[index];
+				if (pixel.glyph == TuiPixelGlyph::WideCharContinuation)
+				{
+					pixel = EmptyPixel(pixel.backgroundColor);
+					if (x > 0)
+					{
+						auto& leading = buffer[index - 1];
+						if (leading.glyph == TuiPixelGlyph::Char && TUI::MeasureChar(leading.character.c) == 2)
+						{
+							leading = EmptyPixel(leading.backgroundColor);
+						}
+					}
+				}
+				else if (pixel.glyph == TuiPixelGlyph::Char && TUI::MeasureChar(pixel.character.c) == 2)
+				{
+					pixel = EmptyPixel(pixel.backgroundColor);
+					if (x + 1 < width && buffer[index + 1].glyph == TuiPixelGlyph::WideCharContinuation)
+					{
+						auto background = buffer[index + 1].backgroundColor;
+						buffer[index + 1] = EmptyPixel(background);
+					}
+				}
+			}
+
+			void PlaceMergeable(TuiPixel* buffer, vint width, vint height, vint x, vint y, const TuiMergeablePixel& drawing, TuiColor foreground, Nullable<TuiColor> background, const TuiClipper& clipper, const Func<TuiColor(TuiColor)>& foregroundColorBlending)
+			{
+				if (x < clipper.x1 || x >= clipper.x2 || y < clipper.y1 || y >= clipper.y2) return;
+				if (foregroundColorBlending) foreground = foregroundColorBlending(buffer[y * width + x].foregroundColor);
+				RepairWide(buffer, width, height, x, y);
+				auto& pixel = buffer[y * width + x];
+				auto candidate = drawing;
+				if (pixel.glyph == TuiPixelGlyph::Mergeable)
+				{
+					candidate = pixel.mergeable;
+					if (drawing.up != TuiMergeableGlyph::None) candidate.up = drawing.up;
+					if (drawing.down != TuiMergeableGlyph::None) candidate.down = drawing.down;
+					if (drawing.left != TuiMergeableGlyph::None) candidate.left = drawing.left;
+					if (drawing.right != TuiMergeableGlyph::None) candidate.right = drawing.right;
+					if (GetMergeableChar(candidate) == 0)
+					{
+						candidate = drawing;
+					}
+				}
+				pixel.glyph = TuiPixelGlyph::Mergeable;
+				pixel.mergeable = candidate;
+				pixel.foregroundColor = foreground;
+				if (background) pixel.backgroundColor = background.Value();
+			}
+
+			void PlaceUnmergeable(TuiPixel* buffer, vint width, vint height, vint x, vint y, TuiUnmergeableDirection direction, TuiColor foreground, Nullable<TuiColor> background, const TuiClipper& clipper, const Func<TuiColor(TuiColor)>& foregroundColorBlending)
+			{
+				if (x < clipper.x1 || x >= clipper.x2 || y < clipper.y1 || y >= clipper.y2) return;
+				if (foregroundColorBlending) foreground = foregroundColorBlending(buffer[y * width + x].foregroundColor);
+				RepairWide(buffer, width, height, x, y);
+				auto& pixel = buffer[y * width + x];
+				pixel.glyph = TuiPixelGlyph::Unmergeable;
+				pixel.unmergeable = { TuiUnmergeableGlyph::RoundCorner, direction };
+				pixel.foregroundColor = foreground;
+				if (background) pixel.backgroundColor = background.Value();
+			}
+
+			void CheckOwner(auto& storage)
+			{
+				CHECK_ERROR(storage.active, L"vl::console::TUI operation requires an active TUI.");
+				CHECK_ERROR(storage.ownerThreadId == Thread::GetCurrentThreadId(), L"vl::console::TUI operation must run on the owner thread.");
+			}
+
+			vint FindListener(auto* storage, ITuiCallback* listener, vuint64_t generation = 0)
+			{
+				if (!storage) return -1;
+				for (vint i = 0; i < storage->listeners.Count(); i++)
+				{
+					auto entry = storage->listeners[i];
+					if (entry.listener == listener && (generation == 0 || entry.generation == generation)) return i;
+				}
+				return -1;
+			}
+
+			template<typename TCallback>
+			void InvokeListeners(auto& storage, auto* listenerStorage, TCallback&& callback, bool stopping = false)
+			{
+				if (!listenerStorage) return;
+				List<ListenerEntry> snapshot;
+				for (auto entry : listenerStorage->listeners) snapshot.Add(entry);
+				for (auto entry : snapshot)
+				{
+					if (!stopping && storage.stopRequested) break;
+					if (FindListener(listenerStorage, entry.listener, entry.generation) == -1) continue;
+					try
+					{
+						callback(entry.listener);
+					}
+					catch (...)
+					{
+						if (!storage.callbackException) storage.callbackException = std::current_exception();
+						storage.stopRequested = true;
+						throw;
+					}
+					if (storage.callbackException) std::rethrow_exception(storage.callbackException);
+				}
+			}
+
+			void ResizeBuffer(auto& storage, vint width, vint height)
+			{
+				CHECK_ERROR(width > 0 && height > 0, L"vl::console::TUI backend returned an invalid terminal size.");
+				Array<TuiPixel> newBuffer(width * height);
+				auto copyWidth = width < storage.width ? width : storage.width;
+				auto copyHeight = height < storage.height ? height : storage.height;
+				for (vint y = 0; y < copyHeight; y++)
+				{
+					for (vint x = 0; x < copyWidth; x++)
+					{
+						newBuffer[y * width + x] = storage.buffer[y * storage.width + x];
+					}
+				}
+				for (vint y = 0; y < height; y++)
+				{
+					for (vint x = 0; x < width; x++)
+					{
+						auto index = y * width + x;
+						auto& pixel = newBuffer[index];
+						if (pixel.glyph == TuiPixelGlyph::WideCharContinuation)
+						{
+							if (x == 0 || newBuffer[index - 1].glyph != TuiPixelGlyph::Char || TUI::MeasureChar(newBuffer[index - 1].character.c) != 2)
+							{
+								pixel = EmptyPixel(pixel.backgroundColor);
+							}
+						}
+						else if (pixel.glyph == TuiPixelGlyph::Char && TUI::MeasureChar(pixel.character.c) == 2)
+						{
+							if (x + 1 >= width || newBuffer[index + 1].glyph != TuiPixelGlyph::WideCharContinuation)
+							{
+								pixel = EmptyPixel(pixel.backgroundColor);
+								if (x + 1 < width && newBuffer[index + 1].glyph == TuiPixelGlyph::WideCharContinuation)
+								{
+									auto background = newBuffer[index + 1].backgroundColor;
+									newBuffer[index + 1] = EmptyPixel(background);
+								}
+							}
+						}
+					}
+				}
+				storage.buffer = std::move(newBuffer);
+				storage.width = width;
+				storage.height = height;
+			}
+
+			void DispatchEvent(auto& storage, auto* listenerStorage, const unittest::TuiBackendEvent& event)
+			{
+				if (storage.stopRequested) return;
+				switch (event.type)
+				{
+				case unittest::TuiBackendEventType::Resize:
+					if (event.width != storage.width || event.height != storage.height)
+					{
+						ResizeBuffer(storage, event.width, event.height);
+						InvokeListeners(storage, listenerStorage, [](ITuiCallback* listener) { listener->BufferSizeChanged(); });
+					}
+					break;
+				case unittest::TuiBackendEventType::MouseMove:
+					InvokeListeners(storage, listenerStorage, [&](ITuiCallback* listener) { listener->MouseMove(event.mouseInfo); });
+					break;
+				case unittest::TuiBackendEventType::MouseDown:
+					InvokeListeners(storage, listenerStorage, [&](ITuiCallback* listener) { listener->MouseDown(event.mouseButton, event.mouseInfo); });
+					break;
+				case unittest::TuiBackendEventType::MouseUp:
+					InvokeListeners(storage, listenerStorage, [&](ITuiCallback* listener) { listener->MouseUp(event.mouseButton, event.mouseInfo); });
+					break;
+				case unittest::TuiBackendEventType::MouseDoubleClick:
+					InvokeListeners(storage, listenerStorage, [&](ITuiCallback* listener) { listener->MouseDoubleClick(event.mouseButton, event.mouseInfo); });
+					break;
+				case unittest::TuiBackendEventType::MouseVerticalWheel:
+					InvokeListeners(storage, listenerStorage, [&](ITuiCallback* listener) { listener->MouseVerticalWheel(event.mouseInfo); });
+					break;
+				case unittest::TuiBackendEventType::MouseHorizontalWheel:
+					InvokeListeners(storage, listenerStorage, [&](ITuiCallback* listener) { listener->MouseHorizontalWheel(event.mouseInfo); });
+					break;
+				case unittest::TuiBackendEventType::KeyDown:
+					InvokeListeners(storage, listenerStorage, [&](ITuiCallback* listener) { listener->KeyDown(event.keyInfo); });
+					break;
+				case unittest::TuiBackendEventType::KeyUp:
+					InvokeListeners(storage, listenerStorage, [&](ITuiCallback* listener) { listener->KeyUp(event.keyInfo); });
+					break;
+				case unittest::TuiBackendEventType::Char:
+					InvokeListeners(storage, listenerStorage, [&](ITuiCallback* listener) { listener->Char(event.charInfo); });
+					break;
+				default:
+					break;
+				}
+			}
+
+			const TuiColor canonicalColor16[] =
+			{
+				{ 0x00, 0x00, 0x00 }, { 0x80, 0x00, 0x00 }, { 0x00, 0x80, 0x00 }, { 0x80, 0x80, 0x00 },
+				{ 0x00, 0x00, 0x80 }, { 0x80, 0x00, 0x80 }, { 0x00, 0x80, 0x80 }, { 0xC0, 0xC0, 0xC0 },
+				{ 0x80, 0x80, 0x80 }, { 0xFF, 0x00, 0x00 }, { 0x00, 0xFF, 0x00 }, { 0xFF, 0xFF, 0x00 },
+				{ 0x00, 0x00, 0xFF }, { 0xFF, 0x00, 0xFF }, { 0x00, 0xFF, 0xFF }, { 0xFF, 0xFF, 0xFF },
+			};
+
+			TuiColor GetCanonicalColor(vint index)
+			{
+				CHECK_ERROR(index >= 0 && index < 256, L"vl::console::tui_internal::GetCanonicalColor(vint)#Index out of range.");
+				if (index < 16) return canonicalColor16[index];
+				if (index < 232)
+				{
+					auto value = index - 16;
+					vuint8_t levels[] = { 0, 95, 135, 175, 215, 255 };
+					return { levels[value / 36], levels[(value / 6) % 6], levels[value % 6] };
+				}
+				auto level = (vuint8_t)(8 + 10 * (index - 232));
+				return { level, level, level };
+			}
+
+			vint QuantizeColor(TuiColor color, TuiColorMode colorMode, const TuiColor* customColor16)
+			{
+				auto count = colorMode == TuiColorMode::Color16 ? 16 : 256;
+				vint best = 0;
+				vint bestDistance = -1;
+				for (vint i = 0; i < count; i++)
+				{
+					auto candidate = customColor16 && i < 16 ? customColor16[i] : GetCanonicalColor(i);
+					auto dr = (vint)color.r - candidate.r;
+					auto dg = (vint)color.g - candidate.g;
+					auto db = (vint)color.b - candidate.b;
+					auto distance = dr * dr + dg * dg + db * db;
+					if (bestDistance == -1 || distance < bestDistance)
+					{
+						best = i;
+						bestDistance = distance;
+					}
+				}
+				return best;
+			}
+		}
+
+		using namespace tui_internal;
+
+/***********************************************************************
+TuiPixel
+***********************************************************************/
+
+		char32_t TuiPixel::GetChar32() const
+		{
+			switch (glyph)
+			{
+			case TuiPixelGlyph::Char:
+				return character.c;
+			case TuiPixelGlyph::Mergeable:
+				return GetMergeableChar(mergeable);
+			case TuiPixelGlyph::Unmergeable:
+				return GetUnmergeableChar(unmergeable);
+			default:
+				return 0;
+			}
+		}
+
+		wchar_t TuiPixel::GetWChar() const
+		{
+			auto code = GetChar32();
+			if (!IsScalar(code) || code == 0) return 0;
+			if constexpr (sizeof(wchar_t) == 2)
+			{
+				return code <= 0xFFFF ? (wchar_t)code : 0;
+			}
+			else
+			{
+				return (wchar_t)code;
+			}
+		}
+
+/***********************************************************************
+ITuiCallback
+***********************************************************************/
+
+		void ITuiCallback::Starting() {}
+		void ITuiCallback::Stopping() {}
+		void ITuiCallback::BufferSizeChanged() {}
+		void ITuiCallback::MouseMove(const WindowMouseInfo&) {}
+		void ITuiCallback::MouseDown(NativeMouseButton, const WindowMouseInfo&) {}
+		void ITuiCallback::MouseUp(NativeMouseButton, const WindowMouseInfo&) {}
+		void ITuiCallback::MouseDoubleClick(NativeMouseButton, const WindowMouseInfo&) {}
+		void ITuiCallback::MouseVerticalWheel(const WindowMouseInfo&) {}
+		void ITuiCallback::MouseHorizontalWheel(const WindowMouseInfo&) {}
+		void ITuiCallback::KeyDown(const NativeWindowKeyInfo&) {}
+		void ITuiCallback::KeyUp(const NativeWindowKeyInfo&) {}
+		void ITuiCallback::Char(const NativeWindowCharInfo&) {}
+		void ITuiCallback::Timer() {}
+
+/***********************************************************************
+TUI
+***********************************************************************/
+
+		TUI::Impl& TUI::GetImpl()
+		{
+			CHECK_ERROR(impl, L"vl::console::TUI operation requires an active TUI.");
+			CheckOwner(*impl);
+			return *impl;
+		}
+
+		bool TUI::TryGetConsoleSize(vint& width, vint& height)
+		{
+			if (impl && impl->active)
+			{
+				CheckOwner(*impl);
+				return impl->backend->TryGetConsoleSize(width, height);
+			}
+			if (injectedBackend)
+			{
+				return (*injectedBackend)->TryGetConsoleSize(width, height);
+			}
+			auto backend = CreateTuiBackend();
+			return backend->TryGetConsoleSize(width, height);
+		}
+
+		void TUI::Start(const TuiStartOptions& options)
+		{
+			if (impl)
+			{
+				if (impl->active) CheckOwner(*impl);
+				return;
+			}
+			CHECK_ERROR(IsColorMode(options.colorMode, true), L"vl::console::TUI::Start(const TuiStartOptions&)#The requested color mode is invalid.");
+			CHECK_ERROR(Console::IsEnabled(), L"vl::console::TUI::Start(const TuiStartOptions&)#Console must be enabled before TUI starts.");
+
+			auto storage = new Impl;
+			impl = storage;
+			std::exception_ptr thrown;
+			try
+			{
+				storage->backend = injectedBackend ? *injectedBackend : CreateTuiBackend();
+				storage->colorMode = storage->backend->Start(options);
+				storage->backendStarted = true;
+				CHECK_ERROR(IsColorMode(storage->colorMode, false), L"vl::console::TUI::Start(const TuiStartOptions&)#The backend selected an invalid color mode.");
+
+				vint width = 0;
+				vint height = 0;
+				CHECK_ERROR(storage->backend->TryGetConsoleSize(width, height), L"vl::console::TUI::Start(const TuiStartOptions&)#Failed to query the terminal size.");
+				Console::Disable();
+				storage->consoleDisabled = true;
+				ResizeBuffer(*storage, width, height);
+				storage->ownerThreadId = Thread::GetCurrentThreadId();
+				storage->active = true;
+
+				InvokeListeners(*storage, listenerStorage, [](ITuiCallback* listener) { listener->Starting(); });
+				if (!storage->stopRequested)
+				{
+					InvokeListeners(*storage, listenerStorage, [](ITuiCallback* listener) { listener->BufferSizeChanged(); });
+				}
+				while (!storage->stopRequested)
+				{
+					if (!RunOneCycle()) break;
+				}
+				if (!storage->callbackException)
+				{
+					storage->shuttingDown = true;
+					InvokeListeners(*storage, listenerStorage, [](ITuiCallback* listener) { listener->Stopping(); }, true);
+				}
+			}
+			catch (...)
+			{
+				thrown = std::current_exception();
+			}
+			storage->cleanupException = &thrown;
+			impl = nullptr;
+			delete storage;
+			if (listenerStorage && listenerStorage->listeners.Count() == 0)
+			{
+				delete listenerStorage;
+				listenerStorage = nullptr;
+			}
+			if (thrown) std::rethrow_exception(thrown);
+		}
+
+		bool TUI::RunOneCycle()
+		{
+			auto& storage = GetImpl();
+			if (storage.callbackException) std::rethrow_exception(storage.callbackException);
+			if (storage.stopRequested) return false;
+
+			if (storage.eventQueue.Count() == 0)
+			{
+				auto now = storage.backend->GetMonotonicTime();
+				vint timeout = -1;
+				if (storage.timerPeriod > 0)
+				{
+					if (now >= storage.nextTimer)
+					{
+						storage.nextTimer += storage.timerPeriod;
+						InvokeListeners(storage, listenerStorage, [](ITuiCallback* listener) { listener->Timer(); });
+						return !storage.stopRequested;
+					}
+					auto remaining = storage.nextTimer - now;
+					timeout = remaining > (vuint64_t)0x7FFFFFFF ? 0x7FFFFFFF : (vint)remaining;
+				}
+				unittest::TuiBackendEvent event;
+				if (storage.backend->ReadEvent(timeout, event))
+				{
+					storage.eventQueue.Add(event);
+				}
+				else if (storage.timerPeriod > 0 && storage.backend->GetMonotonicTime() >= storage.nextTimer)
+				{
+					storage.nextTimer += storage.timerPeriod;
+					InvokeListeners(storage, listenerStorage, [](ITuiCallback* listener) { listener->Timer(); });
+					return !storage.stopRequested;
+				}
+			}
+
+			if (storage.eventQueue.Count() > 0)
+			{
+				auto event = storage.eventQueue[0];
+				storage.eventQueue.RemoveAt(0);
+				DispatchEvent(storage, listenerStorage, event);
+			}
+			if (storage.callbackException) std::rethrow_exception(storage.callbackException);
+			return !storage.stopRequested;
+		}
+
+		void TUI::Stop()
+		{
+			if (!impl || !impl->active) return;
+			auto& storage = *impl;
+			CheckOwner(storage);
+			if (storage.shuttingDown) return;
+			storage.stopRequested = true;
+		}
+
+		bool TUI::IsInUse()
+		{
+			if (!impl || !impl->active) return false;
+			CheckOwner(*impl);
+			return true;
+		}
+
+		bool TUI::IsStopRequested()
+		{
+			if (!impl || !impl->active) return false;
+			auto& storage = *impl;
+			CheckOwner(storage);
+			return storage.stopRequested;
+		}
+
+		TuiColorMode TUI::GetColorMode()
+		{
+			auto& storage = GetImpl();
+			return storage.colorMode;
+		}
+
+		bool TUI::InstallListener(ITuiCallback* listener)
+		{
+			if (impl && impl->active) CheckOwner(*impl);
+			if (!listener || FindListener(listenerStorage, listener) != -1) return false;
+			if (!listenerStorage) listenerStorage = new ListenerStorage;
+			listenerStorage->listeners.Add({ listener, ++listenerStorage->nextGeneration });
+			return true;
+		}
+
+		bool TUI::UninstallListener(ITuiCallback* listener)
+		{
+			if (impl && impl->active) CheckOwner(*impl);
+			if (!listener) return false;
+			auto index = FindListener(listenerStorage, listener);
+			if (index == -1) return false;
+			listenerStorage->listeners.RemoveAt(index);
+			if (!impl && listenerStorage->listeners.Count() == 0)
+			{
+				delete listenerStorage;
+				listenerStorage = nullptr;
+			}
+			return true;
+		}
+
+		void TUI::StartTimer(vint milliseconds)
+		{
+			auto& storage = GetImpl();
+			CHECK_ERROR(milliseconds > 0, L"vl::console::TUI::StartTimer(vint)#The timer period must be positive.");
+			storage.timerPeriod = milliseconds;
+			storage.nextTimer = storage.backend->GetMonotonicTime() + milliseconds;
+		}
+
+		void TUI::StopTimer()
+		{
+			auto& storage = GetImpl();
+			storage.timerPeriod = 0;
+			storage.nextTimer = 0;
+		}
+
+		TuiPixel* TUI::GetBuffer()
+		{
+			auto& storage = GetImpl();
+			return storage.buffer.Count() == 0 ? nullptr : &storage.buffer[0];
+		}
+
+		vint TUI::GetBufferWidth()
+		{
+			auto& storage = GetImpl();
+			return storage.width;
+		}
+
+		vint TUI::GetBufferHeight()
+		{
+			auto& storage = GetImpl();
+			return storage.height;
+		}
+
+		void TUI::RenderBuffer()
+		{
+			auto& storage = GetImpl();
+			for (vint y = 0; y < storage.height; y++)
+			{
+				for (vint x = 0; x < storage.width; x++)
+				{
+					auto index = y * storage.width + x;
+					auto& pixel = storage.buffer[index];
+					switch (pixel.glyph)
+					{
+					case TuiPixelGlyph::Char:
+						if (pixel.character.c != 0)
+						{
+							CHECK_ERROR(IsScalar(pixel.character.c), L"vl::console::TUI::RenderBuffer()#A Char cell contains an invalid Unicode scalar.");
+							auto width = MeasureChar(pixel.character.c);
+							CHECK_ERROR(width == 1 || width == 2, L"vl::console::TUI::RenderBuffer()#A Char cell contains a zero-width or non-printable scalar.");
+							if (width == 2)
+							{
+								CHECK_ERROR(x + 1 < storage.width && storage.buffer[index + 1].glyph == TuiPixelGlyph::WideCharContinuation, L"vl::console::TUI::RenderBuffer()#A width-two Char cell has no continuation.");
+								CHECK_ERROR(storage.buffer[index + 1].foregroundColor == pixel.foregroundColor && storage.buffer[index + 1].backgroundColor == pixel.backgroundColor, L"vl::console::TUI::RenderBuffer()#A width-two continuation has different colors.");
+							}
+						}
+						break;
+					case TuiPixelGlyph::Mergeable:
+						CHECK_ERROR(GetMergeableChar(pixel.mergeable) != 0 || IsEmptyMergeable(pixel.mergeable), L"vl::console::TUI::RenderBuffer()#A Mergeable cell contains an unsupported arm state.");
+						break;
+					case TuiPixelGlyph::Unmergeable:
+						CHECK_ERROR(GetUnmergeableChar(pixel.unmergeable) != 0, L"vl::console::TUI::RenderBuffer()#An Unmergeable cell contains an invalid glyph.");
+						break;
+					case TuiPixelGlyph::WideCharContinuation:
+						CHECK_ERROR(x > 0 && storage.buffer[index - 1].glyph == TuiPixelGlyph::Char && MeasureChar(storage.buffer[index - 1].character.c) == 2, L"vl::console::TUI::RenderBuffer()#A continuation cell has no width-two leading cell.");
+						break;
+					default:
+						CHECK_FAIL(L"vl::console::TUI::RenderBuffer()#A cell contains an invalid glyph type.");
+					}
+				}
+			}
+			storage.backend->Render(&storage.buffer[0], storage.width, storage.height, storage.colorMode);
+		}
+
+		void TUI::PrintChar(const TuiPrintOptions& options, char32_t code, vint x, vint y, const TuiClipper* clipper)
+		{
+			PrintChar(GetBuffer(), GetBufferWidth(), GetBufferHeight(), options, code, x, y, clipper);
+		}
+
+		void TUI::DrawLineV(const TuiLineOptions& options, vint x, vint y1, vint y2, const TuiClipper* clipper)
+		{
+			DrawLineV(GetBuffer(), GetBufferWidth(), GetBufferHeight(), options, x, y1, y2, clipper);
+		}
+
+		void TUI::DrawLineH(const TuiLineOptions& options, vint x1, vint x2, vint y, const TuiClipper* clipper)
+		{
+			DrawLineH(GetBuffer(), GetBufferWidth(), GetBufferHeight(), options, x1, x2, y, clipper);
+		}
+
+		void TUI::DrawRect(const TuiRectOptions& options, vint x1, vint y1, vint x2, vint y2, const TuiClipper* clipper)
+		{
+			DrawRect(GetBuffer(), GetBufferWidth(), GetBufferHeight(), options, x1, y1, x2, y2, clipper);
+		}
+
+		void TUI::Clear(TuiColor backgroundColor, vint x1, vint y1, vint x2, vint y2, const TuiClipper* clipper)
+		{
+			Clear(GetBuffer(), GetBufferWidth(), GetBufferHeight(), backgroundColor, x1, y1, x2, y2, clipper);
+		}
+
+		void TUI::PrintChar(TuiPixel* buffer, vint width, vint height, const TuiPrintOptions& options, char32_t code, vint x, vint y, const TuiClipper* clipper)
+		{
+			CheckBuffer(buffer, width, height);
+			CHECK_ERROR(IsScalar(code), L"vl::console::TUI::PrintChar(...)#The character must be a Unicode scalar.");
+			auto charWidth = MeasureChar(code);
+			auto clip = NormalizeClipper(width, height, clipper);
+			if (charWidth == 0 || x < clip.x1 || x >= clip.x2 || y < clip.y1 || y >= clip.y2) return;
+			if (charWidth == 2 && x + 1 >= clip.x2) return;
+			RepairWide(buffer, width, height, x, y);
+			if (charWidth == 2) RepairWide(buffer, width, height, x + 1, y);
+			buffer[y * width + x] = TuiPixel
+			{
+				.glyph = TuiPixelGlyph::Char,
+				.character = { .c = code, .style = options.style },
+				.foregroundColor = options.foregroundColor,
+				.backgroundColor = options.backgroundColor,
+			};
+			if (charWidth == 2)
+			{
+				buffer[y * width + x + 1] = TuiPixel
+				{
+					.glyph = TuiPixelGlyph::WideCharContinuation,
+					.foregroundColor = options.foregroundColor,
+					.backgroundColor = options.backgroundColor,
+				};
+			}
+		}
+
+		void TUI::DrawLineV(TuiPixel* buffer, vint width, vint height, const TuiLineOptions& options, vint x, vint y1, vint y2, const TuiClipper* clipper)
+		{
+			CheckBuffer(buffer, width, height);
+			CHECK_ERROR(y1 <= y2, L"vl::console::TUI::DrawLineV(...)#The ordered range is invalid.");
+			CHECK_ERROR(IsLineGlyph(options.glyph), L"vl::console::TUI::DrawLineV(...)#The line style is invalid.");
+			auto clip = NormalizeClipper(width, height, clipper);
+			if (x < clip.x1 || x >= clip.x2) return;
+			auto begin = std::max(y1, clip.y1);
+			auto end = std::min(y2, clip.y2 - 1);
+			TuiMergeablePixel drawing = { options.glyph, options.glyph, TuiMergeableGlyph::None, TuiMergeableGlyph::None };
+			for (vint y = begin; y <= end; y++) PlaceMergeable(buffer, width, height, x, y, drawing, options.foregroundColor, options.backgroundColor, clip, options.foregroundColorBlending);
+		}
+
+		void TUI::DrawLineH(TuiPixel* buffer, vint width, vint height, const TuiLineOptions& options, vint x1, vint x2, vint y, const TuiClipper* clipper)
+		{
+			CheckBuffer(buffer, width, height);
+			CHECK_ERROR(x1 <= x2, L"vl::console::TUI::DrawLineH(...)#The ordered range is invalid.");
+			CHECK_ERROR(IsLineGlyph(options.glyph), L"vl::console::TUI::DrawLineH(...)#The line style is invalid.");
+			auto clip = NormalizeClipper(width, height, clipper);
+			if (y < clip.y1 || y >= clip.y2) return;
+			auto begin = std::max(x1, clip.x1);
+			auto end = std::min(x2, clip.x2 - 1);
+			TuiMergeablePixel drawing = { TuiMergeableGlyph::None, TuiMergeableGlyph::None, options.glyph, options.glyph };
+			for (vint x = begin; x <= end; x++) PlaceMergeable(buffer, width, height, x, y, drawing, options.foregroundColor, options.backgroundColor, clip, options.foregroundColorBlending);
+		}
+
+		void TUI::DrawRect(TuiPixel* buffer, vint width, vint height, const TuiRectOptions& options, vint x1, vint y1, vint x2, vint y2, const TuiClipper* clipper)
+		{
+			CheckBuffer(buffer, width, height);
+			CHECK_ERROR(x1 < x2 && y1 < y2, L"vl::console::TUI::DrawRect(...)#A rectangle must have distinct corners.");
+			CHECK_ERROR(IsLineGlyph(options.glyph), L"vl::console::TUI::DrawRect(...)#The line style is invalid.");
+			CHECK_ERROR(options.corner == TuiRectCorner::Sharp || options.corner == TuiRectCorner::Round, L"vl::console::TUI::DrawRect(...)#The corner style is invalid.");
+			CHECK_ERROR(options.corner == TuiRectCorner::Sharp || options.glyph == TuiMergeableGlyph::ThinLine, L"vl::console::TUI::DrawRect(...)#Rounded corners require a thin line.");
+			auto clip = NormalizeClipper(width, height, clipper);
+			if (clip.x1 >= clip.x2 || x2 < clip.x1 || y2 < clip.y1 || x1 >= clip.x2 || y1 >= clip.y2) return;
+
+			TuiMergeablePixel horizontal = { TuiMergeableGlyph::None, TuiMergeableGlyph::None, options.glyph, options.glyph };
+			TuiMergeablePixel vertical = { options.glyph, options.glyph, TuiMergeableGlyph::None, TuiMergeableGlyph::None };
+			auto left = std::max(x1 + 1, clip.x1);
+			auto right = std::min(x2 - 1, clip.x2 - 1);
+			if ((y1 >= clip.y1 && y1 < clip.y2) || (y2 >= clip.y1 && y2 < clip.y2))
+			{
+				for (vint x = left; x <= right; x++)
+				{
+					PlaceMergeable(buffer, width, height, x, y1, horizontal, options.foregroundColor, options.backgroundColor, clip, options.foregroundColorBlending);
+					PlaceMergeable(buffer, width, height, x, y2, horizontal, options.foregroundColor, options.backgroundColor, clip, options.foregroundColorBlending);
+				}
+			}
+			auto top = std::max(y1 + 1, clip.y1);
+			auto bottom = std::min(y2 - 1, clip.y2 - 1);
+			if ((x1 >= clip.x1 && x1 < clip.x2) || (x2 >= clip.x1 && x2 < clip.x2))
+			{
+				for (vint y = top; y <= bottom; y++)
+				{
+					PlaceMergeable(buffer, width, height, x1, y, vertical, options.foregroundColor, options.backgroundColor, clip, options.foregroundColorBlending);
+					PlaceMergeable(buffer, width, height, x2, y, vertical, options.foregroundColor, options.backgroundColor, clip, options.foregroundColorBlending);
+				}
+			}
+
+			if (options.corner == TuiRectCorner::Round)
+			{
+				PlaceUnmergeable(buffer, width, height, x1, y1, TuiUnmergeableDirection::LeftTop, options.foregroundColor, options.backgroundColor, clip, options.foregroundColorBlending);
+				PlaceUnmergeable(buffer, width, height, x2, y1, TuiUnmergeableDirection::RightTop, options.foregroundColor, options.backgroundColor, clip, options.foregroundColorBlending);
+				PlaceUnmergeable(buffer, width, height, x1, y2, TuiUnmergeableDirection::LeftBottom, options.foregroundColor, options.backgroundColor, clip, options.foregroundColorBlending);
+				PlaceUnmergeable(buffer, width, height, x2, y2, TuiUnmergeableDirection::RightBottom, options.foregroundColor, options.backgroundColor, clip, options.foregroundColorBlending);
+			}
+			else
+			{
+				PlaceMergeable(buffer, width, height, x1, y1, { TuiMergeableGlyph::None, options.glyph, TuiMergeableGlyph::None, options.glyph }, options.foregroundColor, options.backgroundColor, clip, options.foregroundColorBlending);
+				PlaceMergeable(buffer, width, height, x2, y1, { TuiMergeableGlyph::None, options.glyph, options.glyph, TuiMergeableGlyph::None }, options.foregroundColor, options.backgroundColor, clip, options.foregroundColorBlending);
+				PlaceMergeable(buffer, width, height, x1, y2, { options.glyph, TuiMergeableGlyph::None, TuiMergeableGlyph::None, options.glyph }, options.foregroundColor, options.backgroundColor, clip, options.foregroundColorBlending);
+				PlaceMergeable(buffer, width, height, x2, y2, { options.glyph, TuiMergeableGlyph::None, options.glyph, TuiMergeableGlyph::None }, options.foregroundColor, options.backgroundColor, clip, options.foregroundColorBlending);
+			}
+		}
+
+		void TUI::Clear(TuiPixel* buffer, vint width, vint height, TuiColor backgroundColor, vint x1, vint y1, vint x2, vint y2, const TuiClipper* clipper)
+		{
+			CheckBuffer(buffer, width, height);
+			CHECK_ERROR(x1 <= x2 && y1 <= y2, L"vl::console::TUI::Clear(...)#The ordered rectangle is invalid.");
+			auto clip = NormalizeClipper(width, height, clipper);
+			auto left = std::max(x1, clip.x1);
+			auto top = std::max(y1, clip.y1);
+			auto right = std::min(x2, clip.x2 - 1);
+			auto bottom = std::min(y2, clip.y2 - 1);
+			for (vint y = top; y <= bottom; y++)
+			{
+				for (vint x = left; x <= right; x++)
+				{
+					RepairWide(buffer, width, height, x, y);
+					buffer[y * width + x] = EmptyPixel(backgroundColor);
+				}
+			}
+		}
+
+/***********************************************************************
+ScopedTuiBackend
+***********************************************************************/
+
+		namespace unittest
+		{
+			ScopedTuiBackend::ScopedTuiBackend(Ptr<ITuiBackend> backend)
+			{
+				CHECK_ERROR(!TUI::impl, L"vl::console::unittest::ScopedTuiBackend::ScopedTuiBackend(...)#Cannot replace the backend while TUI is active.");
+				CHECK_ERROR(backend, L"vl::console::unittest::ScopedTuiBackend::ScopedTuiBackend(...)#The backend cannot be null.");
+				previous = TUI::injectedBackend;
+				current = backend;
+				TUI::injectedBackend = &current;
+			}
+
+			ScopedTuiBackend::~ScopedTuiBackend() noexcept(false)
+			{
+				CHECK_ERROR(!TUI::impl, L"vl::console::unittest::ScopedTuiBackend::~ScopedTuiBackend()#Cannot restore the backend while TUI is active.");
+				TUI::injectedBackend = previous;
+			}
+		}
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\INTERPROCESS\STDIOREDIRECTION\STDIOREDIRECTION.CPP
+***********************************************************************/
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+#include <cstdlib>
+
+namespace vl::inter_process::stdio_redirection
+{
+	using namespace collections;
+	using namespace console;
+	using namespace stream;
+
+	WString EncodeStdioRedirectionMessage(const WString& message)
+	{
+#define ERROR_MESSAGE_PREFIX L"vl::inter_process::stdio_redirection::EncodeStdioRedirectionMessage(const WString&)#"
+		Array<vuint8_t> utf8;
+		CHECK_ERROR(async_tcp_socket::EncodeStrictUtf8(message, utf8), ERROR_MESSAGE_PREFIX L"The message is not valid Unicode.");
+
+		MemoryStream base64WStringStream;
+		{
+			UtfGeneralEncoder<wchar_t, char8_t> utf8ToWCharEncoder;
+			EncoderStream utf8ToWCharStream(base64WStringStream, utf8ToWCharEncoder);
+			Utf8Base64Encoder binaryToBase64Utf8Encoder;
+			EncoderStream binaryToBase64Utf8Stream(utf8ToWCharStream, binaryToBase64Utf8Encoder);
+			if (utf8.Count() > 0)
+			{
+				MemoryWrapperStream utf8Stream(&utf8[0], utf8.Count());
+				CopyStream(utf8Stream, binaryToBase64Utf8Stream);
+			}
+		}
+		base64WStringStream.SeekFromBegin(0);
+		StreamReader reader(base64WStringStream);
+		return reader.ReadToEnd();
+#undef ERROR_MESSAGE_PREFIX
+	}
+
+	static vint GetStdioRedirectionBase64Value(wchar_t c)
+	{
+		if (L'A' <= c && c <= L'Z') return c - L'A';
+		if (L'a' <= c && c <= L'z') return c - L'a' + 26;
+		if (L'0' <= c && c <= L'9') return c - L'0' + 52;
+		if (c == L'+') return 62;
+		if (c == L'/') return 63;
+		return -1;
+	}
+
+	static bool IsCanonicalStdioRedirectionBase64(const WString& base64)
+	{
+		auto lengthValue = base64.Length();
+		if (lengthValue > (pos_t)std::numeric_limits<vint>::max())
+		{
+			return false;
+		}
+		auto length = (vint)lengthValue;
+		if (length == 0)
+		{
+			return true;
+		}
+		if (length % 4 != 0)
+		{
+			return false;
+		}
+
+		vint padding = 0;
+		if (base64[length - 1] == L'=') padding++;
+		if (base64[length - 2] == L'=') padding++;
+		for (vint i = 0; i < length - padding; i++)
+		{
+			if (GetStdioRedirectionBase64Value(base64[i]) == -1)
+			{
+				return false;
+			}
+		}
+		for (vint i = length - padding; i < length; i++)
+		{
+			if (base64[i] != L'=')
+			{
+				return false;
+			}
+		}
+
+		if (padding == 1)
+		{
+			return (GetStdioRedirectionBase64Value(base64[length - 2]) & 0x03) == 0;
+		}
+		if (padding == 2)
+		{
+			return (GetStdioRedirectionBase64Value(base64[length - 3]) & 0x0F) == 0;
+		}
+		return true;
+	}
+
+	bool DecodeStdioRedirectionMessage(const WString& base64, WString& message)
+	{
+		if (!IsCanonicalStdioRedirectionBase64(base64))
+		{
+			return false;
+		}
+		try
+		{
+			MemoryWrapperStream base64WStringStream((void*)base64.Buffer(), base64.Length() * sizeof(wchar_t));
+			UtfGeneralDecoder<wchar_t, char8_t> wcharToUtf8Decoder;
+			DecoderStream wcharToUtf8Stream(base64WStringStream, wcharToUtf8Decoder);
+			Utf8Base64Decoder base64Utf8ToBinaryDecoder;
+			DecoderStream base64Utf8ToBinaryStream(wcharToUtf8Stream, base64Utf8ToBinaryDecoder);
+			MemoryStream utf8Stream;
+			CopyStream(base64Utf8ToBinaryStream, utf8Stream);
+
+			auto sizeValue = utf8Stream.Size();
+			if (sizeValue > (pos_t)std::numeric_limits<vint>::max())
+			{
+				return false;
+			}
+			auto size = (vint)sizeValue;
+			Array<vuint8_t> utf8(size);
+			utf8Stream.SeekFromBegin(0);
+			if (size > 0 && utf8Stream.Read(&utf8[0], size) != size)
+			{
+				return false;
+			}
+			return async_tcp_socket::DecodeStrictUtf8(size == 0 ? nullptr : &utf8[0], size, message);
+		}
+		catch (const Error&)
+		{
+			return false;
+		}
+		catch (const Exception&)
+		{
+			return false;
+		}
+	}
+
+/***********************************************************************
+StdioRedirectionConnection::Lifecycle
+***********************************************************************/
+
+	class StdioRedirectionConnection::Lifecycle : public Object
+	{
+	public:
+		Ptr<IStdioRedirectionProcess>				process;
+
+		CriticalSection							lockState;
+		ConditionVariable						cvState;
+		INetworkProtocolCallback*					callback = nullptr;
+		bool									callbackInstalling = false;
+		vint									activeCallbacks = 0;
+		bool									readingStarted = false;
+		bool									readerFinished = false;
+		vint									readerThreadId = -1;
+		bool									stopStarted = false;
+		bool									disconnectDelivering = false;
+		bool									disconnectFinished = false;
+
+		CriticalSection							lockWrite;
+	};
+
+/***********************************************************************
+StdioRedirectionConnection::CallbackFrame
+***********************************************************************/
+
+	struct StdioRedirectionConnection::CallbackFrame
+	{
+		Ptr<Lifecycle>								state;
+		CallbackFrame*								previous = nullptr;
+
+		CallbackFrame(Ptr<Lifecycle> _state)
+			: state(_state)
+			, previous(currentCallbackFrame)
+		{
+			currentCallbackFrame = this;
+		}
+
+		~CallbackFrame()
+		{
+			currentCallbackFrame = previous;
+			CS_LOCK(state->lockState)
+			{
+				state->activeCallbacks--;
+				state->cvState.WakeAllPendings();
+			}
+		}
+	};
+
+	thread_local StdioRedirectionConnection::CallbackFrame* StdioRedirectionConnection::currentCallbackFrame = nullptr;
+
+/***********************************************************************
+StdioRedirectionConnection
+***********************************************************************/
+
+	vint StdioRedirectionConnection::CurrentCallbackDepth(Ptr<Lifecycle> state)
+	{
+		vint depth = 0;
+		for (auto frame = currentCallbackFrame; frame; frame = frame->previous)
+		{
+			if (frame->state.Obj() == state.Obj())
+			{
+				depth++;
+			}
+		}
+		return depth;
+	}
+
+	void StdioRedirectionConnection::InvokeCallback(
+		Ptr<Lifecycle> state,
+		bool allowTerminal,
+		const Func<void(INetworkProtocolCallback*)>& callback
+		)
+	{
+		INetworkProtocolCallback* installed = nullptr;
+		auto callbackDepth = CurrentCallbackDepth(state);
+		state->lockState.Enter();
+		while (state->callbackInstalling && callbackDepth == 0 && state->callback)
+		{
+			state->cvState.SleepWith(state->lockState);
+		}
+		if (state->callback && (allowTerminal || !state->stopStarted))
+		{
+			installed = state->callback;
+			state->activeCallbacks++;
+		}
+		state->lockState.Leave();
+
+		if (installed)
+		{
+			CallbackFrame frame(state);
+			callback(installed);
+		}
+	}
+
+	void StdioRedirectionConnection::NotifyDisconnected(Ptr<Lifecycle> state)
+	{
+		auto callbackDepth = CurrentCallbackDepth(state);
+		state->lockState.Enter();
+		if (state->disconnectFinished)
+		{
+			state->lockState.Leave();
+			return;
+		}
+		if (state->disconnectDelivering)
+		{
+			if (callbackDepth == 0)
+			{
+				while (!state->disconnectFinished)
+				{
+					state->cvState.SleepWith(state->lockState);
+				}
+			}
+			state->lockState.Leave();
+			return;
+		}
+		if (callbackDepth == 0)
+		{
+			while (state->activeCallbacks > 0)
+			{
+				state->cvState.SleepWith(state->lockState);
+			}
+		}
+		state->disconnectDelivering = true;
+		while (state->activeCallbacks > callbackDepth)
+		{
+			state->cvState.SleepWith(state->lockState);
+		}
+		state->lockState.Leave();
+
+		auto finishDisconnect = [&]()
+		{
+			CS_LOCK(state->lockState)
+			{
+				state->callback = nullptr;
+				while (state->activeCallbacks > callbackDepth)
+				{
+					state->cvState.SleepWith(state->lockState);
+				}
+				state->disconnectFinished = true;
+				state->cvState.WakeAllPendings();
+			}
+		};
+
+		try
+		{
+			InvokeCallback(state, true, [](INetworkProtocolCallback* installed)
+			{
+				installed->OnDisconnected();
+			});
+		}
+		catch (...)
+		{
+			finishDisconnect();
+			throw;
+		}
+		finishDisconnect();
+	}
+
+	void StdioRedirectionConnection::ReportLocalError(Ptr<Lifecycle> state, const WString& errorMessage)
+	{
+		InvokeCallback(state, true, [&](INetworkProtocolCallback* installed)
+		{
+			installed->OnLocalError(errorMessage, true);
+		});
+	}
+
+	void StdioRedirectionConnection::Disconnect(Ptr<Lifecycle> state, bool sendExit)
+	{
+		bool firstStop = false;
+		CS_LOCK(state->lockWrite)
+		{
+			CS_LOCK(state->lockState)
+			{
+				if (!state->stopStarted)
+				{
+					state->stopStarted = true;
+					firstStop = true;
+				}
+			}
+			if (firstStop && sendExit && state->process)
+			{
+				const vuint8_t exitLine[] = { '!', 'E', 'x', 'i', 't', '\n' };
+				WString errorMessage;
+				state->process->Write(exitLine, sizeof(exitLine), errorMessage);
+			}
+		}
+
+		if (firstStop && state->process)
+		{
+			state->process->CloseInput();
+		}
+		NotifyDisconnected(state);
+
+		if (state->process && Thread::GetCurrentThreadId() != state->readerThreadId)
+		{
+			bool readerStarted = false;
+			CS_LOCK(state->lockState)
+			{
+				readerStarted = state->readingStarted;
+			}
+			if (readerStarted)
+			{
+				CS_LOCK(state->lockState)
+				{
+					while (!state->readerFinished)
+					{
+						state->cvState.SleepWith(state->lockState);
+					}
+				}
+			}
+			else if (firstStop)
+			{
+				state->process->WaitForExit();
+				state->process->CloseOutput();
+				CS_LOCK(state->lockState)
+				{
+					state->readerFinished = true;
+					state->cvState.WakeAllPendings();
+				}
+			}
+			else
+			{
+				CS_LOCK(state->lockState)
+				{
+					while (!state->readerFinished)
+					{
+						state->cvState.SleepWith(state->lockState);
+					}
+				}
+			}
+		}
+	}
+
+	bool StdioRedirectionConnection::ProcessLine(Ptr<Lifecycle> state, const WString& line)
+	{
+		if (line == L"!Exit")
+		{
+			Disconnect(state, false);
+			return false;
+		}
+		if (line.Length() > 0 && line[0] == L'!')
+		{
+			return true;
+		}
+
+		WString message;
+		if (DecodeStdioRedirectionMessage(line, message))
+		{
+			InvokeCallback(state, false, [&](INetworkProtocolCallback* installed)
+			{
+				installed->OnReadString(message);
+			});
+		}
+		return true;
+	}
+
+	void StdioRedirectionConnection::FinishReader(Ptr<Lifecycle> state)
+	{
+		if (state->process)
+		{
+			state->process->WaitForExit();
+			state->process->CloseOutput();
+		}
+		CS_LOCK(state->lockState)
+		{
+			state->readerFinished = true;
+			state->cvState.WakeAllPendings();
+		}
+	}
+
+	void StdioRedirectionConnection::ReadLoop(Ptr<Lifecycle> state)
+	{
+		CS_LOCK(state->lockState)
+		{
+			state->readerThreadId = Thread::GetCurrentThreadId();
+		}
+
+		try
+		{
+			if (state->process)
+			{
+				List<vuint8_t> lineBytes;
+				vuint8_t buffer[4096];
+				bool continueReading = true;
+				while (continueReading)
+				{
+					WString errorMessage;
+					auto read = state->process->Read(buffer, sizeof(buffer), errorMessage);
+					if (read < 0)
+					{
+						ReportLocalError(state, errorMessage);
+						Disconnect(state, false);
+						break;
+					}
+					if (read == 0)
+					{
+						Disconnect(state, false);
+						break;
+					}
+
+					for (vint i = 0; i < read && continueReading; i++)
+					{
+						if (buffer[i] == '\n')
+						{
+							if (lineBytes.Count() > 0 && lineBytes[lineBytes.Count() - 1] == '\r')
+							{
+								lineBytes.RemoveAt(lineBytes.Count() - 1);
+							}
+							bool ascii = true;
+							Array<wchar_t> characters(lineBytes.Count());
+							for (vint j = 0; j < lineBytes.Count(); j++)
+							{
+								if (lineBytes[j] > 0x7F)
+								{
+									ascii = false;
+									break;
+								}
+								characters[j] = (wchar_t)lineBytes[j];
+							}
+							if (ascii)
+							{
+								auto line = characters.Count() == 0
+									? WString::Empty
+									: WString::CopyFrom(&characters[0], characters.Count());
+								continueReading = ProcessLine(state, line);
+							}
+							lineBytes.Clear();
+						}
+						else
+						{
+							lineBytes.Add(buffer[i]);
+						}
+					}
+				}
+			}
+			else
+			{
+				for (;;)
+				{
+					auto line = Console::TryRead();
+					if (!line)
+					{
+						Disconnect(state, false);
+						break;
+					}
+					if (!ProcessLine(state, line.Value()))
+					{
+						break;
+					}
+				}
+			}
+			FinishReader(state);
+		}
+		catch (...)
+		{
+			std::_Exit(1);
+		}
+	}
+
+	StdioRedirectionConnection::StdioRedirectionConnection()
+		: lifecycle(Ptr(new Lifecycle))
+	{
+	}
+
+	StdioRedirectionConnection::StdioRedirectionConnection(Ptr<IStdioRedirectionProcess> process)
+		: lifecycle(Ptr(new Lifecycle))
+	{
+		CHECK_ERROR(process, L"StdioRedirectionConnection::StdioRedirectionConnection(...)#The process is null.");
+		lifecycle->process = process;
+	}
+
+	StdioRedirectionConnection::~StdioRedirectionConnection()
+	{
+		Stop();
+		InstallCallback(nullptr);
+	}
+
+	void StdioRedirectionConnection::InstallCallback(INetworkProtocolCallback* callback)
+	{
+		auto state = lifecycle;
+		if (!callback)
+		{
+			auto callbackDepth = CurrentCallbackDepth(state);
+			CS_LOCK(state->lockState)
+			{
+				state->callback = nullptr;
+				while (state->activeCallbacks > callbackDepth)
+				{
+					state->cvState.SleepWith(state->lockState);
+				}
+			}
+			return;
+		}
+
+		bool canInstall = false;
+		CS_LOCK(state->lockState)
+		{
+			if (!state->callback && !state->callbackInstalling && !state->stopStarted)
+			{
+				state->callback = callback;
+				state->callbackInstalling = true;
+				state->activeCallbacks++;
+				canInstall = true;
+			}
+		}
+		CHECK_ERROR(canInstall, L"StdioRedirectionConnection::InstallCallback(...)#A callback cannot be replaced or installed after disconnection.");
+
+		CallbackFrame frame(state);
+		try
+		{
+			callback->OnInstalled(this);
+		}
+		catch (...)
+		{
+			CS_LOCK(state->lockState)
+			{
+				if (state->callback == callback)
+				{
+					state->callback = nullptr;
+				}
+				state->callbackInstalling = false;
+				state->cvState.WakeAllPendings();
+			}
+			throw;
+		}
+		CS_LOCK(state->lockState)
+		{
+			state->callbackInstalling = false;
+			state->cvState.WakeAllPendings();
+		}
+	}
+
+	void StdioRedirectionConnection::BeginReadingLoopUnsafe()
+	{
+		auto state = lifecycle;
+		CS_LOCK(state->lockState)
+		{
+			CHECK_ERROR(!state->stopStarted, L"StdioRedirectionConnection::BeginReadingLoopUnsafe()#The connection has disconnected.");
+			CHECK_ERROR(state->callback, L"StdioRedirectionConnection::BeginReadingLoopUnsafe()#No callback is installed.");
+			CHECK_ERROR(!state->readingStarted, L"StdioRedirectionConnection::BeginReadingLoopUnsafe()#The reading loop has already started.");
+			state->readingStarted = true;
+		}
+		if (!ThreadPoolLite::Queue(Func<void()>([state]()
+		{
+			ReadLoop(state);
+		})))
+		{
+			CS_LOCK(state->lockState)
+			{
+				state->readingStarted = false;
+			}
+			CHECK_ERROR(false, L"StdioRedirectionConnection::BeginReadingLoopUnsafe()#Failed to start the reading loop.");
+		}
+	}
+
+	void StdioRedirectionConnection::SendString(const WString& str)
+	{
+		auto state = lifecycle;
+		auto line = EncodeStdioRedirectionMessage(str);
+		bool writeFailed = false;
+		WString errorMessage;
+		CS_LOCK(state->lockWrite)
+		{
+			bool canWrite = false;
+			CS_LOCK(state->lockState)
+			{
+				canWrite = !state->stopStarted;
+			}
+			if (!canWrite)
+			{
+				return;
+			}
+
+			if (state->process)
+			{
+				Array<vuint8_t> bytes(line.Length() + 1);
+				for (vint i = 0; i < line.Length(); i++)
+				{
+					bytes[i] = (vuint8_t)line[i];
+				}
+				bytes[line.Length()] = '\n';
+				writeFailed = !state->process->Write(&bytes[0], bytes.Count(), errorMessage);
+			}
+			else
+			{
+				try
+				{
+					Console::WriteLine(line);
+				}
+				catch (const Error& error)
+				{
+					errorMessage = WString::Unmanaged(error.Description());
+					writeFailed = true;
+				}
+				catch (const Exception& error)
+				{
+					errorMessage = error.Message();
+					writeFailed = true;
+				}
+			}
+		}
+		if (writeFailed)
+		{
+			ReportLocalError(state, errorMessage);
+			Disconnect(state, false);
+		}
+	}
+
+	void StdioRedirectionConnection::Stop()
+	{
+		Disconnect(lifecycle, lifecycle->process != nullptr);
+	}
+
+	ClientStatus StdioRedirectionConnection::GetStatus()
+	{
+		bool stopped = false;
+		CS_LOCK(lifecycle->lockState)
+		{
+			stopped = lifecycle->stopStarted;
+		}
+		return stopped ? ClientStatus::Disconnected : ClientStatus::Connected;
+	}
+
+	bool StdioRedirectionConnection::IsInCurrentCallback()
+	{
+		return CurrentCallbackDepth(lifecycle) > 0;
+	}
+
+/***********************************************************************
+StdioRedirectionClient
+***********************************************************************/
+
+	StdioRedirectionClient::StdioRedirectionClient()
+		: connection(Ptr(new StdioRedirectionConnection))
+	{
+	}
+
+	INetworkProtocolConnection* StdioRedirectionClient::GetConnection()
+	{
+		return connection.Obj();
+	}
+
+	void StdioRedirectionClient::WaitForServer()
+	{
+	}
+
+	ClientStatus StdioRedirectionClient::GetStatus()
+	{
+		return connection->GetStatus();
+	}
+
+/***********************************************************************
+StdioRedirectionServer::Lifecycle
+***********************************************************************/
+
+	class StdioRedirectionServer::Lifecycle : public Object
+	{
+	public:
+		enum class State
+		{
+			Ready,
+			Started,
+			Stopped,
+		};
+
+		CriticalSection							lockState;
+		ConditionVariable						cvState;
+		State									state = State::Ready;
+		vint									activeConnects = 0;
+		List<Ptr<StdioRedirectionConnection>>			connections;
+		bool									stopCompleted = false;
+	};
+
+/***********************************************************************
+StdioRedirectionServer
+***********************************************************************/
+
+	void StdioRedirectionServer::FinalizeStop(Ptr<Lifecycle> state)
+	{
+		List<Ptr<StdioRedirectionConnection>> connections;
+		CS_LOCK(state->lockState)
+		{
+			while (state->activeConnects > 0)
+			{
+				state->cvState.SleepWith(state->lockState);
+			}
+			for (auto&& connection : state->connections)
+			{
+				connections.Add(connection);
+			}
+			state->connections.Clear();
+		}
+
+		try
+		{
+			for (auto&& connection : connections)
+			{
+				connection->Stop();
+			}
+		}
+		catch (...)
+		{
+			std::_Exit(1);
+		}
+
+		CS_LOCK(state->lockState)
+		{
+			state->stopCompleted = true;
+			state->cvState.WakeAllPendings();
+		}
+	}
+
+	void StdioRedirectionServer::FinishConnect(
+		Ptr<Lifecycle> state,
+		Ptr<StdioRedirectionConnection> connection,
+		bool keepConnection
+		)
+	{
+		CS_LOCK(state->lockState)
+		{
+			if (!keepConnection)
+			{
+				for (vint i = 0; i < state->connections.Count(); i++)
+				{
+					if (state->connections[i].Obj() == connection.Obj())
+					{
+						state->connections.RemoveAt(i);
+						break;
+					}
+				}
+			}
+			state->activeConnects--;
+			state->cvState.WakeAllPendings();
+		}
+	}
+
+	StdioRedirectionServer::StdioRedirectionServer()
+		: lifecycle(Ptr(new Lifecycle))
+	{
+	}
+
+	StdioRedirectionServer::~StdioRedirectionServer()
+	{
+		try
+		{
+			Stop();
+		}
+		catch (...)
+		{
+		}
+	}
+
+	WaitForClientResult StdioRedirectionServer::OnClientConnected(Ptr<INetworkProtocolConnection>)
+	{
+		return WaitForClientResult::Accept;
+	}
+
+	void StdioRedirectionServer::Start()
+	{
+		CS_LOCK(lifecycle->lockState)
+		{
+			CHECK_ERROR(lifecycle->state == Lifecycle::State::Ready, L"StdioRedirectionServer::Start()#The server has already started or stopped.");
+			lifecycle->state = Lifecycle::State::Started;
+		}
+	}
+
+	void StdioRedirectionServer::Stop()
+	{
+		auto state = lifecycle;
+		bool firstStop = false;
+		bool reentrant = false;
+		CS_LOCK(state->lockState)
+		{
+			if (state->state != Lifecycle::State::Stopped)
+			{
+				state->state = Lifecycle::State::Stopped;
+				firstStop = true;
+				for (auto&& connection : state->connections)
+				{
+					if (connection->IsInCurrentCallback())
+					{
+						reentrant = true;
+						break;
+					}
+				}
+			}
+			else if (!state->stopCompleted)
+			{
+				for (auto&& connection : state->connections)
+				{
+					if (connection->IsInCurrentCallback())
+					{
+						reentrant = true;
+						break;
+					}
+				}
+			}
+		}
+
+		if (firstStop)
+		{
+			if (reentrant)
+			{
+				if (!ThreadPoolLite::Queue(Func<void()>([state]()
+				{
+					FinalizeStop(state);
+				})))
+				{
+					std::_Exit(1);
+				}
+				return;
+			}
+			FinalizeStop(state);
+			return;
+		}
+
+		if (!reentrant)
+		{
+			CS_LOCK(state->lockState)
+			{
+				while (!state->stopCompleted)
+				{
+					state->cvState.SleepWith(state->lockState);
+				}
+			}
+		}
+	}
+
+	bool StdioRedirectionServer::IsStopped()
+	{
+		bool stopped = false;
+		CS_LOCK(lifecycle->lockState)
+		{
+			stopped = lifecycle->state == Lifecycle::State::Stopped;
+		}
+		return stopped;
+	}
+
+	void StdioRedirectionServer::ConnectNewClient(const WString& command)
+	{
+#define ERROR_MESSAGE_PREFIX L"vl::inter_process::stdio_redirection::StdioRedirectionServer::ConnectNewClient(const WString&)#"
+		auto state = lifecycle;
+		CHECK_ERROR(command != L"", ERROR_MESSAGE_PREFIX L"The command is empty.");
+		CS_LOCK(state->lockState)
+		{
+			CHECK_ERROR(state->state == Lifecycle::State::Started, ERROR_MESSAGE_PREFIX L"The server has not started or has stopped.");
+			state->activeConnects++;
+		}
+
+		Ptr<StdioRedirectionConnection> connection;
+		bool connectPending = true;
+		try
+		{
+			auto process = CreateStdioRedirectionProcess(command);
+			connection = Ptr(new StdioRedirectionConnection(process));
+			bool admitted = false;
+			CS_LOCK(state->lockState)
+			{
+				if (state->state == Lifecycle::State::Started)
+				{
+					state->connections.Add(connection);
+					admitted = true;
+				}
+			}
+			if (!admitted)
+			{
+				connection->Stop();
+				FinishConnect(state, connection, false);
+				connectPending = false;
+				CHECK_ERROR(false, ERROR_MESSAGE_PREFIX L"The server stopped while launching the client.");
+			}
+
+			auto accepted = OnClientConnected(connection) == WaitForClientResult::Accept;
+			if (!accepted)
+			{
+				connection->Stop();
+			}
+			FinishConnect(state, connection, accepted);
+			connectPending = false;
+		}
+		catch (...)
+		{
+			if (connection)
+			{
+				connection->Stop();
+			}
+			if (connectPending)
+			{
+				FinishConnect(state, connection, false);
+			}
+			throw;
+		}
+#undef ERROR_MESSAGE_PREFIX
+	}
+}
+
+#endif
+
+
+/***********************************************************************
+.\TUI\TUI.INPUT.CPP
+***********************************************************************/
+/***********************************************************************
+Author: Zihan Chen (vczh)
+Licensed under https://github.com/vczh-libraries/License
+***********************************************************************/
+
+
+#if defined VCZH_MSVC || defined VCZH_GCC
+
+using namespace vl;
+using namespace vl::collections;
+using namespace vl::presentation;
+
+namespace vl
+{
+	namespace console
+	{
+		namespace tui_internal
+		{
+			VKEY KeyFromAscii(char32_t code)
+			{
+				if (code >= U'a' && code <= U'z') return (VKEY)(code - U'a' + U'A');
+				if ((code >= U'A' && code <= U'Z') || (code >= U'0' && code <= U'9')) return (VKEY)code;
+				switch (code)
+				{
+				case U'\t': return VKEY::KEY_TAB;
+				case U'\r': case U'\n': return VKEY::KEY_RETURN;
+				case U'\b': case 0x7F: return VKEY::KEY_BACK;
+				case 0x1B: return VKEY::KEY_ESCAPE;
+				case U' ': return VKEY::KEY_SPACE;
+				case U';': case U':': return VKEY::KEY_SEMICOLON;
+				case U'/': case U'?': return VKEY::KEY_SLASH;
+				case U'`': case U'~': return VKEY::KEY_GRAVE_ACCENT;
+				case U'[': case U'{': return VKEY::KEY_LEFT_BRACKET;
+				case U']': case U'}': return VKEY::KEY_RIGHT_BRACKET;
+				case U'\\': case U'|': return VKEY::KEY_BACKSLASH;
+				case U'\'': case U'"': return VKEY::KEY_APOSTROPHE;
+				case U'=': case U'+': return VKEY::KEY_OEM_PLUS;
+				case U',': case U'<': return VKEY::KEY_OEM_COMMA;
+				case U'-': case U'_': return VKEY::KEY_OEM_MINUS;
+				case U'.': case U'>': return VKEY::KEY_OEM_PERIOD;
+				default:
+					const char32_t shifted[] = U")!@#$%^&*(";
+					for (vint i = 0; i < 10; i++)
+					{
+						if (code == shifted[i]) return (VKEY)((vint)VKEY::KEY_0 + i);
+					}
+					return VKEY::KEY_UNKNOWN;
+				}
+			}
+
+/***********************************************************************
+PosixTuiInputDecoder
+***********************************************************************/
+
+			void PosixTuiInputDecoder::QueueKey(NativeWindowKeyInfo info, Nullable<char32_t> text)
+			{
+				unittest::TuiBackendEvent event;
+				event.type = unittest::TuiBackendEventType::KeyDown;
+				event.keyInfo = info;
+				pendingEvents.Add(event);
+				if (text)
+				{
+					// POSIX terminals use DEL for Backspace and may use LF for Enter.
+					// Char follows the native key identity, so controls do not also
+					// insert DEL or a second newline after handling KeyDown.
+					auto code = text.Value();
+					if (code == 0x7F) code = U'\b';
+					else if (code == U'\n') code = U'\r';
+					wchar_t units[encoding::UtfConversion<wchar_t>::BufferLength];
+					auto count = encoding::UtfConversion<wchar_t>::From32(code, units);
+					for (vint i = 0; i < count; i++)
+					{
+						event.type = unittest::TuiBackendEventType::Char;
+						event.charInfo.code = units[i];
+						event.charInfo.ctrl = info.ctrl;
+						event.charInfo.shift = info.shift;
+						event.charInfo.alt = info.alt;
+						event.charInfo.osSuper = info.osSuper;
+						event.charInfo.capslock = info.capslock;
+						pendingEvents.Add(event);
+					}
+				}
+			}
+
+			void PosixTuiInputDecoder::DecodeSequence(vint end, vuint64_t now)
+			{
+				auto mouse = inputBytes[1] == '[' && inputBytes[2] == '<';
+				auto final = inputBytes[end];
+				auto keyboardStatus = inputBytes[1] == '[' && inputBytes[2] == '?' && final == 'u';
+				vint values[3] = {};
+				vint count = 0;
+				auto begin = mouse || keyboardStatus ? 3 : 2;
+				if (begin < end)
+				{
+					count = 1;
+					auto hasDigit = false;
+					for (vint i = begin; i < end; i++)
+					{
+						auto byte = inputBytes[i];
+						if (byte >= '0' && byte <= '9')
+						{
+							auto digit = byte - '0';
+							if (values[count - 1] > (std::numeric_limits<vint>::max() - digit) / 10) return;
+							values[count - 1] = values[count - 1] * 10 + digit;
+							hasDigit = true;
+						}
+						else if (byte == ';' && hasDigit && count < 3)
+						{
+							count++;
+							hasDigit = false;
+						}
+						else return;
+					}
+					if (!hasDigit) return;
+				}
+
+				if (keyboardStatus)
+				{
+					if (count == 1) kittyKeyboard = (values[0] & 1) != 0;
+					return;
+				}
+
+				if (mouse)
+				{
+					if (count != 3 || values[1] <= 0 || values[2] <= 0 || (final != 'M' && final != 'm')) return;
+					auto cb = values[0];
+					auto base = cb & ~(4 | 8 | 16 | 32);
+					if (base > 3 && (base < 64 || base > 67)) return;
+					unittest::TuiBackendEvent event;
+					auto& info = event.mouseInfo;
+					info.x = values[1] - 1;
+					info.y = values[2] - 1;
+					info.shift = (cb & 4) != 0;
+					info.alt = (cb & 8) != 0;
+					info.ctrl = (cb & 16) != 0;
+					if (base >= 64)
+					{
+						if (final != 'M' || (cb & 32)) return;
+						event.type = base <= 65 ? unittest::TuiBackendEventType::MouseVerticalWheel : unittest::TuiBackendEventType::MouseHorizontalWheel;
+						info.wheel = base == 64 || base == 67 ? 120 : -120;
+					}
+					else if (cb & 32)
+					{
+						if (final != 'M') return;
+						event.type = unittest::TuiBackendEventType::MouseMove;
+						// SGR motion identifies a held button; button 3 explicitly means none.
+						if (base == 3) left = middle = right = false;
+						if (base == 0) left = true;
+						if (base == 1) middle = true;
+						if (base == 2) right = true;
+					}
+					else
+					{
+						if (base == 3) return;
+						auto button = base == 0 ? NativeMouseButton::Left : base == 1 ? NativeMouseButton::Middle : NativeMouseButton::Right;
+						event.mouseButton = button;
+						auto pressed = final == 'M';
+						if (base == 0) left = pressed;
+						if (base == 1) middle = pressed;
+						if (base == 2) right = pressed;
+						event.type = pressed ? unittest::TuiBackendEventType::MouseDown : unittest::TuiBackendEventType::MouseUp;
+						if (pressed)
+						{
+							if (lastClickTime && now - lastClickTime.Value() <= 500 && lastClickX == info.x && lastClickY == info.y && lastClickButton == button)
+							{
+								event.type = unittest::TuiBackendEventType::MouseDoubleClick;
+								lastClickTime.Reset();
+							}
+							else
+							{
+								lastClickTime = now;
+								lastClickX = info.x;
+								lastClickY = info.y;
+								lastClickButton = button;
+							}
+						}
+					}
+					info.left = left;
+					info.middle = middle;
+					info.right = right;
+					pendingEvents.Add(event);
+					return;
+				}
+
+				NativeWindowKeyInfo info;
+				Nullable<char32_t> text;
+				auto unicodeKey = inputBytes[1] == '[' && final == 'u';
+				if (count > 2) return;
+				if (count == 2)
+				{
+					auto modifiers = values[1];
+					if (modifiers < 1 || modifiers > (kittyKeyboard || unicodeKey ? 256 : 16)) return;
+					modifiers--;
+					info.shift = (modifiers & 1) != 0;
+					// Legacy xterm Meta is Alt; Kitty assigns that bit to OS Super.
+					info.alt = (modifiers & (kittyKeyboard || unicodeKey ? 2 | 32 : 2 | 8)) != 0;
+					info.ctrl = (modifiers & 4) != 0;
+					info.osSuper = (kittyKeyboard || unicodeKey) && (modifiers & 8) != 0;
+					info.capslock = (kittyKeyboard || unicodeKey) && (modifiers & 64) != 0;
+				}
+				if (unicodeKey)
+				{
+					if (count == 0 || values[0] > 0x10FFFF || !IsScalar((char32_t)values[0])) return;
+					auto code = (char32_t)values[0];
+					info.code = KeyFromAscii(code);
+					// CSI u describes a key, not committed text. Only control characters
+					// with existing Char semantics accompany the key event.
+					if (code == 9 || code == 13 || code == 27 || code == 127) text = code;
+					switch (code)
+					{
+					case 57358: info.code = VKEY::KEY_CAPITAL; break;
+					case 57359: info.code = VKEY::KEY_SCROLL; break;
+					case 57360: info.code = VKEY::KEY_NUMLOCK; break;
+					case 57361: info.code = VKEY::KEY_SNAPSHOT; break;
+					case 57362: info.code = VKEY::KEY_PAUSE; break;
+					case 57363: info.code = VKEY::KEY_APPS; break;
+					case 57414: info.code = VKEY::KEY_RETURN; text = U'\r'; break;
+					case 57417: info.code = VKEY::KEY_LEFT; break;
+					case 57418: info.code = VKEY::KEY_RIGHT; break;
+					case 57419: info.code = VKEY::KEY_UP; break;
+					case 57420: info.code = VKEY::KEY_DOWN; break;
+					case 57421: info.code = VKEY::KEY_PRIOR; break;
+					case 57422: info.code = VKEY::KEY_NEXT; break;
+					case 57423: info.code = VKEY::KEY_HOME; break;
+					case 57424: info.code = VKEY::KEY_END; break;
+					case 57425: info.code = VKEY::KEY_INSERT; break;
+					case 57426: info.code = VKEY::KEY_DELETE; break;
+					default:
+						if (code >= 57364 && code <= 57387) info.code = (VKEY)((vint)VKEY::KEY_F1 + code - 57364);
+					}
+				}
+				else if (final == '~' && inputBytes[1] == '[')
+				{
+					if (count == 0) return;
+					switch (values[0])
+					{
+					case 1: case 7: info.code = VKEY::KEY_HOME; break;
+					case 2: info.code = VKEY::KEY_INSERT; break;
+					case 3: info.code = VKEY::KEY_DELETE; break;
+					case 4: case 8: info.code = VKEY::KEY_END; break;
+					case 5: info.code = VKEY::KEY_PRIOR; break;
+					case 6: info.code = VKEY::KEY_NEXT; break;
+					default:
+						const vint functionNumbers[] = { 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 23, 24, 25, 26, 28, 29, 31, 32, 33, 34 };
+						for (vint i = 0; i < (vint)(sizeof(functionNumbers) / sizeof(*functionNumbers)); i++)
+						{
+							if (values[0] == functionNumbers[i]) info.code = (VKEY)((vint)VKEY::KEY_F1 + i);
+						}
+					}
+				}
+				else
+				{
+					if (count > 0 && values[0] != 1) return;
+					switch (final)
+					{
+					case 'A': info.code = VKEY::KEY_UP; break;
+					case 'B': info.code = VKEY::KEY_DOWN; break;
+					case 'C': info.code = VKEY::KEY_RIGHT; break;
+					case 'D': info.code = VKEY::KEY_LEFT; break;
+					case 'H': info.code = VKEY::KEY_HOME; break;
+					case 'F': info.code = VKEY::KEY_END; break;
+					case 'P': info.code = VKEY::KEY_F1; break;
+					case 'Q': info.code = VKEY::KEY_F2; break;
+					case 'R': info.code = VKEY::KEY_F3; break;
+					case 'S': info.code = VKEY::KEY_F4; break;
+					case 'Z': info.code = VKEY::KEY_TAB; info.shift = true; text = U'\t'; break;
+					default:
+						if (inputBytes[1] != 'O') return;
+						if (final >= 'p' && final <= 'y')
+						{
+							info.code = (VKEY)((vint)VKEY::KEY_NUMPAD0 + final - 'p');
+							text = U'0' + final - 'p';
+						}
+						else switch (final)
+						{
+						case 'M': info.code = VKEY::KEY_RETURN; text = U'\r'; break;
+						case 'X': info.code = VKEY::KEY_OEM_NEC_EQUAL; text = U'='; break;
+						case 'j': info.code = VKEY::KEY_MULTIPLY; text = U'*'; break;
+						case 'k': info.code = VKEY::KEY_ADD; text = U'+'; break;
+						case 'l': info.code = VKEY::KEY_SEPARATOR; text = U','; break;
+						case 'm': info.code = VKEY::KEY_SUBTRACT; text = U'-'; break;
+						case 'n': info.code = VKEY::KEY_DECIMAL; text = U'.'; break;
+						case 'o': info.code = VKEY::KEY_DIVIDE; text = U'/'; break;
+						}
+					}
+				}
+				if (info.code != VKEY::KEY_UNKNOWN) QueueKey(info, text);
+			}
+
+			bool PosixTuiInputDecoder::DecodeText(bool alt)
+			{
+				auto offset = alt ? 1 : 0;
+				auto first = inputBytes[offset];
+				vint length = first < 0x80 ? 1 : first >= 0xC2 && first <= 0xDF ? 2 : first >= 0xE0 && first <= 0xEF ? 3 : first >= 0xF0 && first <= 0xF4 ? 4 : 0;
+				char32_t code = length == 1 ? first : length == 2 ? first & 0x1F : length == 3 ? first & 0x0F : first & 0x07;
+				vint consumed = 1;
+				for (vint i = 1; i < length; i++)
+				{
+					if (offset + i >= inputBytes.Count()) return false;
+					auto next = inputBytes[offset + i];
+					if ((next & 0xC0) != 0x80)
+					{
+						length = 0;
+						break;
+					}
+					code = (code << 6) | (next & 0x3F);
+					consumed++;
+				}
+				char32_t minimum = length == 1 ? 0 : length == 2 ? 0x80 : length == 3 ? 0x800 : 0x10000;
+				if (length == 0 || code < minimum || !IsScalar(code)) code = U'\uFFFD';
+				inputBytes.RemoveRange(0, offset + consumed);
+				NativeWindowKeyInfo info;
+				info.code = KeyFromAscii(code);
+				info.alt = alt;
+				if (info.code == VKEY::KEY_UNKNOWN && code > 0 && code < 0x20)
+				{
+					info.code = KeyFromAscii(code + U'A' - 1);
+					info.ctrl = true;
+				}
+				QueueKey(info, code);
+				return true;
+			}
+
+			void PosixTuiInputDecoder::ParseInput(vuint64_t now)
+			{
+				while (pendingEvents.Count() == 0 && inputBytes.Count() > 0)
+				{
+					if (controlString)
+					{
+						if (inputBytes[0] == 0x1B)
+						{
+							if (inputBytes.Count() == 1) return;
+							controlString = 0;
+							if (inputBytes[1] == '\\') inputBytes.RemoveRange(0, 2);
+						}
+						else
+						{
+							if (inputBytes[0] == 7 && controlString == ']') controlString = 0;
+							inputBytes.RemoveAt(0);
+						}
+						continue;
+					}
+					if (discardSequence)
+					{
+						auto byte = inputBytes[0];
+						if (byte == 0x1B) discardSequence = false;
+						else
+						{
+							inputBytes.RemoveAt(0);
+							if (byte >= 0x40 && byte <= 0x7E) discardSequence = false;
+							continue;
+						}
+					}
+					if (inputBytes[0] != 0x1B)
+					{
+						escapeDeadline.Reset();
+						if (!DecodeText(false)) return;
+					}
+					else if (inputBytes.Count() == 1)
+					{
+						if (!escapeDeadline) escapeDeadline = now + 30;
+						if (now < escapeDeadline.Value()) return;
+						escapeDeadline.Reset();
+						DecodeText(false);
+					}
+					else
+					{
+						escapeDeadline.Reset();
+						if (inputBytes[1] == ']' || inputBytes[1] == 'P' || inputBytes[1] == '^' || inputBytes[1] == '_' || inputBytes[1] == 'X')
+						{
+							controlString = inputBytes[1];
+							inputBytes.RemoveRange(0, 2);
+						}
+						else if (inputBytes[1] == '[' || inputBytes[1] == 'O')
+						{
+							vint end = 2;
+							while (end < inputBytes.Count() && inputBytes[end] >= 0x20 && inputBytes[end] < 0x40) end++;
+							if (end == inputBytes.Count())
+							{
+								if (end > 256)
+								{
+									inputBytes.Clear();
+									discardSequence = true;
+								}
+								return;
+							}
+							if (inputBytes[end] >= 0x40 && inputBytes[end] <= 0x7E)
+							{
+								DecodeSequence(end, now);
+								inputBytes.RemoveRange(0, end + 1);
+							}
+							else inputBytes.RemoveRange(0, end);
+						}
+						else if (inputBytes[1] == 0x1B) DecodeText(false);
+						else if (!DecodeText(true)) return;
+					}
+				}
+			}
+		}
+	}
+}
+
+#endif
+
